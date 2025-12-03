@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grammar Breakdown｜ランダムテスト2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg-base: #0a0a0f;
+  --card-bg: linear-gradient(145deg, rgba(255,255,255,0.97) 0%, rgba(250,250,252,0.98) 50%, rgba(245,245,250,0.97) 100%);
+  --card-border: rgba(255,255,255,0.12);
+  --card-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-light: #f5f5f7;
+  --accent-red: #bf4040;
+  --accent-red-light: #e85d5d;
+  --accent-warm: #d4603a;
+  --hint-bg: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  --hint-border: #fdba74;
+  --answer-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  --answer-border: #86efac;
+  --correct: #16a34a;
+  --wrong: #dc2626;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(191, 64, 64, 0.35), transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(212, 96, 58, 0.3), transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(120, 40, 80, 0.25), transparent 55%),
+    linear-gradient(160deg, #0f0a0a 0%, #0a0608 40%, #080510 100%);
+  background-attachment: fixed;
+  color: var(--text-light);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 16px 60px;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 48px 24px 80px; }
+}
+
+/* ===== HEADER ===== */
+.header {
+  margin-bottom: 32px;
+  transition: var(--transition);
+}
+
+.header.collapsed .header-content { display: none; }
+.header.collapsed { margin-bottom: 20px; }
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+
+.header-badge-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #bf4040 0%, #d4603a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+
+.header-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+
+.header h1 {
+  font-size: clamp(26px, 4.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+  color: var(--text-light);
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.header-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+
+.header-toggle:hover {
+  background: rgba(255,255,255,0.12);
+  color: white;
+}
+
+/* ===== CONTROLS BAR ===== */
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  padding: 14px 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.ctrl-btn.primary {
+  background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-warm) 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.ctrl-btn.primary:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(191, 64, 64, 0.4);
+}
+
+.ctrl-btn.ghost {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.12);
+}
+
+.ctrl-btn.ghost:hover {
+  background: rgba(255,255,255,0.12);
+  color: white;
+}
+
+/* ===== SECTION CARDS ===== */
+.section {
+  margin-bottom: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  color: var(--text-primary);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: var(--transition);
+  border-bottom: 1px solid transparent;
+}
+
+.section-header:hover {
+  background: rgba(0,0,0,0.02);
+}
+
+.section-content.active + .section-header,
+.section-header:has(+ .section-content.active) {
+  border-bottom-color: rgba(0,0,0,0.06);
+}
+
+.section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-index {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-warm) 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.section-badge {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(191, 64, 64, 0.1);
+  color: var(--accent-red);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.toggle-icon {
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: transform 0.3s ease;
+}
+
+.toggle-icon.active { transform: rotate(180deg); }
+
+.section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section-content.active { max-height: 100000px; }
+
+.section-body { padding: 20px 22px 24px; }
+
+/* ===== QUESTION ITEMS ===== */
+.q-item {
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  background: rgba(0,0,0,0.02);
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: var(--transition);
+}
+
+.q-item:last-child { margin-bottom: 0; }
+
+.q-item:hover {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.08);
+}
+
+.q-label {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-warm) 100%);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.q-en {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.q-en u {
+  text-decoration: none;
+  border-bottom: 2px solid var(--accent-red);
+  padding-bottom: 1px;
+}
+
+.q-jp {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  line-height: 1.7;
+}
+
+.q-raw {
+  font-family: "SF Mono", "Menlo", "Monaco", monospace;
+  font-size: 13px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: rgba(0,0,0,0.04);
+  border: 1px dashed rgba(0,0,0,0.12);
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+/* ===== BUTTONS ===== */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hint-btn, .answer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
+
+.hint-btn {
+  background: var(--hint-bg);
+  color: #c2410c;
+  border: 1px solid var(--hint-border);
+}
+
+.hint-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(251, 146, 60, 0.25);
+}
+
+.answer-btn {
+  background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-warm) 100%);
+  color: white;
+}
+
+.answer-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(191, 64, 64, 0.35);
+}
+
+/* ===== HINT & ANSWER BOXES ===== */
+.hint-box, .answer-box {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, margin 0.3s ease;
+  margin: 0;
+}
+
+.hint-box.show { max-height: 600px; margin-top: 16px; }
+.answer-box.show { max-height: 8000px; margin-top: 16px; }
+
+.hint-content {
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  background: var(--hint-bg);
+  border: 1px solid var(--hint-border);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.hint-content strong { color: #c2410c; }
+
+.answer-content {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  background: var(--answer-bg);
+  border: 1px solid var(--answer-border);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.answer-label {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--correct);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.correct-choice { color: var(--correct); font-weight: 700; }
+.wrong-choice { color: var(--wrong); font-weight: 600; }
+
+.wrong-box {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  background: rgba(220, 38, 38, 0.06);
+  border-left: 3px solid var(--wrong);
+}
+
+.wrong-box div { margin-bottom: 8px; }
+.wrong-box div:last-child { margin-bottom: 0; }
+
+.ref-box {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-left: 3px solid #f59e0b;
+  font-size: 13px;
+  color: #92400e;
+}
+
+/* ===== FLOATING BUTTONS ===== */
+.fab-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(15, 15, 20, 0.9);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: var(--transition);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  z-index: 100;
+}
+
+.fab-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.fab-top:hover {
+  background: rgba(30, 30, 40, 0.95);
+  transform: scale(1.05);
+}
+
+.jump-btn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 15, 20, 0.9);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  z-index: 100;
+}
+
+@media (max-width: 700px) { .jump-btn { display: block; } }
+
+/* ===== COMMAND PALETTE ===== */
+.palette-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  justify-content: center;
+  padding-top: 15vh;
+}
+
+.palette-overlay.open { display: flex; }
+
+.palette-box {
+  width: 90%;
+  max-width: 500px;
+  max-height: 50vh;
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.98);
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-input {
+  width: 100%;
+  padding: 18px 22px;
+  border: none;
+  font-size: 16px;
+  background: transparent;
+  color: var(--text-primary);
+  outline: none;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.palette-input::placeholder { color: var(--text-secondary); }
+
+.palette-list {
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.palette-item {
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: background 0.15s ease;
+}
+
+.palette-item:hover {
+  background: rgba(191, 64, 64, 0.08);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .container { padding: 20px 12px 50px; }
+  .header h1 { font-size: 24px; }
+  .section-header { padding: 14px 16px; }
+  .section-body { padding: 16px; }
+  .q-item { padding: 16px; }
+  .controls { padding: 12px; gap: 8px; }
+  .ctrl-btn { padding: 7px 12px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header class="header" id="mainHeader">
+    <div class="header-content">
+      <div class="header-badge">
+        <span class="header-badge-icon">文</span>
+        <span>Grammar Breakdown</span>
+      </div>
+      <div class="header-eyebrow">英文法・語法問題1100</div>
+      <h1>動詞の語法｜確認テスト 全演習 発展</h1>
+      <p class="header-subtitle">
+        関係詞・接続詞・分詞構文・仮定法など、入試頻出の文法事項を20問で総復習。
+        各問題にヒントと詳しい解説付き。
+      </p>
+    </div>
+    <button class="header-toggle" id="headerToggle">
+      <span>🔼</span>
+      <span>Hide Header</span>
+    </button>
+  </header>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="ctrl-btn primary" id="themeBtn">🌗 Dark Mode</button>
+    <button class="ctrl-btn ghost" id="expandAllBtn">📂 Expand All</button>
+    <button class="ctrl-btn ghost" id="collapseAllBtn">✨ Collapse All</button>
+    <button class="ctrl-btn ghost" id="paletteBtn">⌘K Jump</button>
+    <button class="ctrl-btn ghost" id="topBtn">↑ Top</button>
+  </div>
+
+  <!-- ========== [A] 空所補充 ========== -->
+  <div class="section" data-sec="1">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-wrap">
+        <div class="section-index">A</div>
+        <span class="section-title">空所補充</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-badge">4問</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="section-body">
+
+        <!-- Q1 -->
+        <div class="q-item">
+          <div class="q-label">(1)</div>
+          <div class="q-en">There are cases (　　) honesty does not pay.<br>
+          ① where　② how　③ why　④ which</div>
+          <div class="q-jp">正直が割に合わない場合もある。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> cases（場合）は「場所」と同様に考えて、関係副詞を使います。「〜する場合」という意味を作るのはどれ？
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ① where（〜する場合）</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">訳：正直が割に合わない場合もある。</div>
+              <div style="margin-top:14px;">
+                <b>関係副詞 where の特殊用法：</b><br>
+                where は通常「場所」を表す先行詞を受けますが、<b>case（場合）、situation（状況）、point（点）</b>など抽象的な「場」を表す名詞も先行詞になります。<br><br>
+                
+                <b>なぜ where なのか：</b><br>
+                先行詞 cases の後ろの節「honesty does not pay」は完全な文なので、関係代名詞ではなく関係副詞が必要。<br><br>
+                
+                <b>例文：</b><br>
+                • There are cases where rules don't apply.<br>
+                　（ルールが当てはまらない場合がある）<br>
+                • This is a situation where patience is needed.<br>
+                　（これは忍耐が必要な状況だ）
+              </div>
+              <div class="wrong-box">
+                <div><span class="wrong-choice">✗ ② how：</span>「方法」を表す。cases とは合わない。</div>
+                <div><span class="wrong-choice">✗ ③ why：</span>「理由」を表す。先行詞は the reason のみ。</div>
+                <div><span class="wrong-choice">✗ ④ which：</span>関係代名詞。後ろに不完全な文が必要。</div>
+              </div>
+              <div class="ref-box">📖 関係詞の用法｜抽象名詞を先行詞にする where</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="q-item">
+          <div class="q-label">(2)</div>
+          <div class="q-en">He is determined to finish the job (　　) long it takes.<br>
+          ① no matter　② however　③ whenever　④ whatever</div>
+          <div class="q-jp">どんなに時間がかかっても、彼はその仕事を終わらせる決意だ。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> 空所の後ろは「long（長い）」という形容詞。「どんなに〜でも」で形容詞を修飾できるのは？
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ② however（どんなに〜でも）</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">訳：どんなに時間がかかっても、彼はその仕事を終わらせる決意だ。</div>
+              <div style="margin-top:14px;">
+                <b>however + 形容詞/副詞 + S + V：</b><br>
+                however は「どんなに〜でも」という譲歩を表し、形容詞や副詞を直接修飾できます。<br>
+                ＝ no matter how + 形容詞/副詞 + S + V<br><br>
+                
+                <b>例文：</b><br>
+                • However hard you try, you won't succeed.<br>
+                　（どんなに頑張っても、成功しないだろう）
+              </div>
+              <div class="wrong-box">
+                <div><span class="wrong-choice">✗ ① no matter：</span>単独では使えない。no matter how なら OK。</div>
+                <div><span class="wrong-choice">✗ ③ whenever：</span>形容詞を修飾できない。</div>
+                <div><span class="wrong-choice">✗ ④ whatever：</span>名詞を修飾する。形容詞は不可。</div>
+              </div>
+              <div class="ref-box">📖 複合関係詞｜however = no matter how</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="q-item">
+          <div class="q-label">(3)</div>
+          <div class="q-en">Tired (　　) he was, he decided to walk all the way without taking a taxi.<br>
+          ① so　② as to　③ as　④ so as</div>
+          <div class="q-jp">疲れていたけれども、彼はタクシーに乗らずに最後まで歩くことにした。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> 「形容詞 + ○○ + S + V」で「〜だけれども」という譲歩の倒置構文！
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ③ as（〜だけれども）</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">訳：疲れていたけれども、彼はタクシーに乗らずに最後まで歩くことにした。</div>
+              <div style="margin-top:14px;">
+                <b>譲歩の as 構文（倒置）：</b><br>
+                形容詞/副詞/名詞 + as + S + V「〜だけれども」<br>
+                = Though he was tired<br><br>
+                
+                <b>例文：</b><br>
+                • Young as she is, she is very wise.<br>
+                　（若いけれども、とても賢い）
+              </div>
+              <div class="wrong-box">
+                <div><span class="wrong-choice">✗ ① so：</span>この語順では不可。</div>
+                <div><span class="wrong-choice">✗ ② as to：</span>so as to の一部。文脈に合わない。</div>
+                <div><span class="wrong-choice">✗ ④ so as：</span>ここでは不成立。</div>
+              </div>
+              <div class="ref-box">📖 接続詞の用法｜譲歩の as（倒置構文）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="q-item">
+          <div class="q-label">(4)</div>
+          <div class="q-en">(　　) the river, we put up a tent for the night.<br>
+          ① To reach　② Reach　③ Reached　④ Reaching</div>
+          <div class="q-jp">川に着いて、私たちは一晩過ごすためにテントを張った。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> 「私たちが川に着く」→ 能動関係なので -ing 形！
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ④ Reaching（川に着いて）</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">訳：川に着いて、私たちは一晩過ごすためにテントを張った。</div>
+              <div style="margin-top:14px;">
+                <b>分詞構文の基本：</b><br>
+                • 主語が「する」側 → 現在分詞（-ing）<br>
+                • 主語が「される」側 → 過去分詞（-ed）<br><br>
+                
+                「we が reach する」→ Reaching
+              </div>
+              <div class="wrong-box">
+                <div><span class="wrong-choice">✗ ① To reach：</span>「〜して」の意味にならない。</div>
+                <div><span class="wrong-choice">✗ ② Reach：</span>原形のみでは文不成立。</div>
+                <div><span class="wrong-choice">✗ ③ Reached：</span>受動態。we が reach される側ではない。</div>
+              </div>
+              <div class="ref-box">📖 分詞｜分詞構文の作り方</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== [B] 下線部の意味 ========== -->
+  <div class="section" data-sec="2">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-wrap">
+        <div class="section-index">B</div>
+        <span class="section-title">下線部の意味</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-badge">1問</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="section-body">
+
+        <!-- Q5 -->
+        <div class="q-item">
+          <div class="q-label">(5)</div>
+          <div class="q-en">Please <u>pick out</u> another book.<br>
+          ① read　② select　③ recommend　④ buy</div>
+          <div class="q-jp">別の本を選んでください。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> pick out は「いくつかの中から選び出す」という句動詞。
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ② select（選ぶ）</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">訳：別の本を選んでください。</div>
+              <div style="margin-top:14px;">
+                <b>pick out = select, choose</b><br>
+                「（複数の中から）選び出す、見分ける」<br><br>
+                
+                <b>pick を使った表現：</b><br>
+                pick out / pick up / pick on
+              </div>
+              <div class="wrong-box">
+                <div><span class="wrong-choice">✗ ① read：</span>「読む」ではない。</div>
+                <div><span class="wrong-choice">✗ ③ recommend：</span>「勧める」は別の行為。</div>
+                <div><span class="wrong-choice">✗ ④ buy：</span>購入は含まない。</div>
+              </div>
+              <div class="ref-box">📖 イディオム｜pick out = select</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== [C] 日本文の意味になるように ========== -->
+  <div class="section" data-sec="3">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-wrap">
+        <div class="section-index">C</div>
+        <span class="section-title">日本文の意味になるように</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-badge">1問</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="section-body">
+
+        <!-- Q6 -->
+        <div class="q-item">
+          <div class="q-label">(6)</div>
+          <div class="q-en">ひと雨来そうだ。<br>
+          It looks (　　) (　　) it is going to rain.</div>
+          <div class="q-jp">空所に入る適切な語（句）を書きなさい。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> look as if / look as though「〜のように見える」
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ as if / as though</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">完成文：It looks as if it is going to rain.</div>
+              <div style="margin-top:14px;">
+                <b>as if / as though：</b>「まるで〜のように」<br>
+                事実かもしれない場合は直説法（現在形）を使用。
+              </div>
+              <div class="ref-box">📖 接続詞｜as if / as though</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== [D] 書きかえ ========== -->
+  <div class="section" data-sec="4">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-wrap">
+        <div class="section-index">D</div>
+        <span class="section-title">書きかえ</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-badge">3問</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="section-body">
+
+        <!-- Q7 -->
+        <div class="q-item">
+          <div class="q-label">(7)</div>
+          <div class="q-en">(a) The boys who have finished their work may go home.<br>
+          (b) The boys (　　) work (　　) been finished may go home.</div>
+          <div class="q-jp">(a)(b)がほぼ同じ意味になるように。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> 関係代名詞の所有格 whose を使って書き換え！
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ whose, has</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">The boys whose work has been finished may go home.</div>
+              <div style="margin-top:14px;">
+                <b>whose（〜の）：</b>所有を表す関係代名詞。人でも物でも使える。
+              </div>
+              <div class="ref-box">📖 関係詞｜所有格の whose</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="q-item">
+          <div class="q-label">(8)</div>
+          <div class="q-en">(a) I didn't want to hear her hard-luck story. I had heard it many times before.<br>
+          (b) (　　) (　　) it many times before, I didn't want to hear her hard-luck story.</div>
+          <div class="q-jp">(a)(b)がほぼ同じ意味になるように。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> 主節より前の時制 → 完了形の分詞構文 Having + p.p.
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ Having heard</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">Having heard it many times before, I didn't want to hear her hard-luck story.</div>
+              <div style="margin-top:14px;">
+                <b>完了形の分詞構文：</b>主節より前に起こった動作は Having + p.p.
+              </div>
+              <div class="ref-box">📖 分詞｜Having + p.p.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="q-item">
+          <div class="q-label">(9)</div>
+          <div class="q-en">(a) Bob is proud that he was chosen chairperson.<br>
+          (b) Bob is proud of (　　) (　　) chosen chairperson.</div>
+          <div class="q-jp">(a)(b)がほぼ同じ意味になるように。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> 「was chosen」→「having been chosen」（完了受動動名詞）
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ having been</span></div>
+              <div style="margin-top:10px;color:var(--text-secondary);">Bob is proud of having been chosen chairperson.</div>
+              <div style="margin-top:14px;">
+                <b>完了受動動名詞：</b>having been + p.p.「〜されたこと」
+              </div>
+              <div class="ref-box">📖 動名詞｜having been + p.p.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== [E] 共通語補充 ========== -->
+  <div class="section" data-sec="5">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-wrap">
+        <div class="section-index">E</div>
+        <span class="section-title">共通語補充</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-badge">1問</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="section-body">
+
+        <!-- Q10 -->
+        <div class="q-item">
+          <div class="q-label">(10)</div>
+          <div class="q-en">(a) Susan was offered a really nice job in New York, but had to (　　) it down.<br>
+          (b) It is very rude to interrupt other people; you should wait for your (　　) to speak.</div>
+          <div class="q-jp">両方に共通して入る語を書きなさい。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> ○○ down = 断る / your ○○ = あなたの番
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ turn</span></div>
+              <div style="margin-top:14px;">
+                <b>turn down：</b>断る<br>
+                <b>one's turn：</b>〜の番
+              </div>
+              <div class="ref-box">📖 共通語｜turn down / one's turn</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== [F] 誤り指摘 ========== -->
+  <div class="section" data-sec="6">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-wrap">
+        <div class="section-index">F</div>
+        <span class="section-title">誤り指摘</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-badge">5問</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="section-body">
+
+        <!-- Q11 -->
+        <div class="q-item">
+          <div class="q-label">(11)</div>
+          <div class="q-en">My <u>①elder brother</u> <u>②is belonging</u> <u>③to</u> <u>④his company's</u> basketball team.</div>
+          <div class="q-jp">私の兄は会社のバスケチームに所属している。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> belong は状態動詞！進行形にできない。
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ② is belonging → belongs</span></div>
+              <div style="margin-top:14px;">
+                <b>状態動詞は進行形にできない：</b>belong, know, love など
+              </div>
+              <div class="ref-box">📖 時制｜状態動詞</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="q-item">
+          <div class="q-label">(12)</div>
+          <div class="q-en"><u>①Without never asking permission</u> <u>②Karen got up</u> and <u>③walked out</u> <u>④of the classroom</u>.</div>
+          <div class="q-jp">許可を求めることなく、カレンは立ち上がって教室を出た。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> without と never で二重否定！
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ① Without never → Without</span></div>
+              <div style="margin-top:14px;">
+                <b>without は否定の意味を含む：</b>never を加えると二重否定。
+              </div>
+              <div class="ref-box">📖 前置詞｜without の二重否定</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="q-item">
+          <div class="q-label">(13)</div>
+          <div class="q-en">Do you mind <u>①letting me knowing</u> if <u>②your family is going to</u> <u>③take a trip</u> to my hometown <u>④this coming summer</u>?</div>
+          <div class="q-jp">今度の夏、ご家族が私の故郷に旅行されるか教えていただけますか。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> let + 人 + 動詞の原形！
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ① letting me knowing → letting me know</span></div>
+              <div style="margin-top:14px;">
+                <b>使役動詞 let：</b>let + O + 原形（-ing は不可）
+              </div>
+              <div class="ref-box">📖 動詞の語法｜let + O + 原形</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="q-item">
+          <div class="q-label">(14)</div>
+          <div class="q-en">The number of students <u>①coming</u> <u>②late to class</u> <u>③have</u> recently been <u>④increasing</u>.</div>
+          <div class="q-jp">授業に遅れてくる生徒の数が最近増えている。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> 主語は「The number」！単数扱い。
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ③ have → has</span></div>
+              <div style="margin-top:14px;">
+                <b>the number of → 単数動詞</b><br>
+                a number of → 複数動詞
+              </div>
+              <div class="ref-box">📖 主語と動詞の一致</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="q-item">
+          <div class="q-label">(15)</div>
+          <div class="q-en"><u>①Either Agnes or Bill</u> <u>②are coming</u> to the concert, because <u>③one of them has to stay home</u> <u>④and look after</u> little Teddy.</div>
+          <div class="q-jp">アグネスかビルのどちらかがコンサートに来る。</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> either A or B → 動詞に近い方（B）に合わせる！
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ ② are coming → is coming</span></div>
+              <div style="margin-top:14px;">
+                <b>either A or B：</b>動詞はBに一致。Bill（単数）→ is
+              </div>
+              <div class="ref-box">📖 主語と動詞の一致｜either A or B</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== [G] 整序英作文 ========== -->
+  <div class="section" data-sec="7">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-wrap">
+        <div class="section-index">G</div>
+        <span class="section-title">整序英作文</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-badge">5問</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="section-body">
+
+        <!-- Q16 -->
+        <div class="q-item">
+          <div class="q-label">(16)</div>
+          <div class="q-jp">彼に電話なんかしなければよかった。（1語不要）</div>
+          <div class="q-raw">I ( better / him / should have / known / much / than / to call ).</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> should have known better than to do（much 不要）
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ I should have known better than to call him.</span></div>
+              <div style="margin-top:14px;">
+                「〜しなければよかった」= 後悔の表現
+              </div>
+              <div class="ref-box">📖 助動詞｜should have known better than to do</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="q-item">
+          <div class="q-label">(17)</div>
+          <div class="q-jp">ぼくの言おうとすることがお前にもわかるときがくるだろう。</div>
+          <div class="q-raw">A time will come ( what / you / mean / I / when / understand / will ).</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> A time will come when 〜 + what I mean
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ when you will understand what I mean</span></div>
+              <div class="ref-box">📖 関係詞｜A time will come when 〜</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="q-item">
+          <div class="q-label">(18)</div>
+          <div class="q-jp">われわれは何百回と会っているのだが、話題にこと欠かなかった。</div>
+          <div class="q-raw">Although we met several hundred times, ( about / never / of / out / ran / talk / things / to / we ).</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> run out of + things to talk about
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ we never ran out of things to talk about</span></div>
+              <div class="ref-box">📖 不定詞｜run out of / things to do</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="q-item">
+          <div class="q-label">(19)</div>
+          <div class="q-jp">この本によって私はカナダの生活がどんなものか多少わかった。</div>
+          <div class="q-raw">This book gave me some idea ( what / is / to / life in Canada / as / like ).</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> as to + what ... is like
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ as to what life in Canada is like</span></div>
+              <div class="ref-box">📖 前置詞｜as to / what ... is like</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="q-item">
+          <div class="q-label">(20)</div>
+          <div class="q-jp">君もそろそろ結婚して落ち着いたらどうだい。（1語不要）</div>
+          <div class="q-raw">Don't you think ( married / you / time / got / it's / are / about ) and settled down?</div>
+          <div class="btn-row">
+            <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+            <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+          </div>
+          <div class="hint-box">
+            <div class="hint-content">
+              <strong>ヒント：</strong> It's about time + 仮定法過去 → got（are 不要）
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="answer-content">
+              <div class="answer-label">正解</div>
+              <div><span class="correct-choice">✔ it's about time you got married</span></div>
+              <div style="margin-top:14px;">
+                time の後は<b>過去形</b>（仮定法）を使う！
+              </div>
+              <div class="ref-box">📖 仮定法｜It's about time + 仮定法過去</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Floating Buttons -->
+<button class="fab-top" id="goTopBtn">↑</button>
+<button class="jump-btn" id="jumpBtn">🔍 Jump</button>
+
+<!-- Command Palette -->
+<div class="palette-overlay" id="paletteOverlay">
+  <div class="palette-box">
+    <input class="palette-input" id="paletteInput" placeholder="セクション名や問題番号を入力… (Esc で閉じる)" />
+    <div class="palette-list" id="paletteList"></div>
+  </div>
+</div>
+
+<script>
+const SECTIONS = [
+  { id: 1, title: "[A] 空所補充" },
+  { id: 2, title: "[B] 下線部の意味" },
+  { id: 3, title: "[C] 日本文の意味になるように" },
+  { id: 4, title: "[D] 書きかえ" },
+  { id: 5, title: "[E] 共通語補充" },
+  { id: 6, title: "[F] 誤り指摘" },
+  { id: 7, title: "[G] 整序英作文" }
+];
+const TOTAL_QUESTIONS = 20;
+
+// Header toggle
+document.getElementById("headerToggle").addEventListener("click", function() {
+  const header = document.getElementById("mainHeader");
+  header.classList.toggle("collapsed");
+  const isCollapsed = header.classList.contains("collapsed");
+  this.innerHTML = isCollapsed ? "<span>🔽</span><span>Show Header</span>" : "<span>🔼</span><span>Hide Header</span>";
+});
+
+// Section toggle
+function toggleSection(header) {
+  const content = header.nextElementSibling;
+  const icon = header.querySelector(".toggle-icon");
+  content.classList.toggle("active");
+  icon.classList.toggle("active");
+}
+
+// Hint toggle
+function toggleHint(btn) {
+  const hintBox = btn.parentElement.nextElementSibling;
+  hintBox.classList.toggle("show");
+  btn.textContent = hintBox.classList.contains("show") ? "💡 Hide Hint" : "💡 Hint";
+}
+
+// Answer toggle
+function toggleAnswer(btn) {
+  const hintBox = btn.parentElement.nextElementSibling;
+  const answerBox = hintBox.nextElementSibling;
+  answerBox.classList.toggle("show");
+  btn.textContent = answerBox.classList.contains("show") ? "Hide Answer" : "Show Answer";
+}
+
+// Dark mode (inverts for dark cards)
+let isDark = false;
+document.getElementById("themeBtn").addEventListener("click", function() {
+  isDark = !isDark;
+  document.body.style.filter = isDark ? "invert(0.88) hue-rotate(180deg)" : "none";
+  this.textContent = isDark ? "☀️ Light Mode" : "🌗 Dark Mode";
+});
+
+// Expand all
+document.getElementById("expandAllBtn").addEventListener("click", function() {
+  document.querySelectorAll(".section-content").forEach(c => c.classList.add("active"));
+  document.querySelectorAll(".toggle-icon").forEach(i => i.classList.add("active"));
+});
+
+// Collapse all
+document.getElementById("collapseAllBtn").addEventListener("click", function() {
+  document.querySelectorAll(".section-content").forEach(c => c.classList.remove("active"));
+  document.querySelectorAll(".toggle-icon").forEach(i => i.classList.remove("active"));
+  document.querySelectorAll(".hint-box, .answer-box").forEach(b => b.classList.remove("show"));
+  document.querySelectorAll(".hint-btn").forEach(b => b.textContent = "💡 Hint");
+  document.querySelectorAll(".answer-btn").forEach(b => b.textContent = "Show Answer");
+});
+
+// Scroll to top
+document.getElementById("topBtn").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+document.getElementById("goTopBtn").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+// FAB visibility
+window.addEventListener("scroll", function() {
+  document.getElementById("goTopBtn").classList.toggle("visible", window.scrollY > 300);
+});
+
+// Command palette
+const paletteOverlay = document.getElementById("paletteOverlay");
+const paletteInput = document.getElementById("paletteInput");
+const paletteList = document.getElementById("paletteList");
+
+function openPalette() {
+  paletteOverlay.classList.add("open");
+  paletteInput.focus();
+  buildPaletteList();
+}
+
+function closePalette() {
+  paletteOverlay.classList.remove("open");
+  paletteInput.value = "";
+}
+
+function buildPaletteList(filter = "") {
+  const f = filter.toLowerCase();
+  let html = "";
+  SECTIONS.forEach(sec => {
+    if (sec.title.toLowerCase().includes(f) || f === "") {
+      html += `<div class="palette-item" data-sec="${sec.id}">${sec.title}</div>`;
+    }
+  });
+  for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+    if (String(i).includes(f) || f === "") {
+      html += `<div class="palette-item" data-q="${i}">問題 ${i}</div>`;
+    }
+  }
+  paletteList.innerHTML = html || '<div class="palette-item">見つかりません</div>';
+  
+  paletteList.querySelectorAll(".palette-item").forEach(item => {
+    item.addEventListener("click", function() {
+      if (this.dataset.sec) {
+        const sec = document.querySelector(`[data-sec="${this.dataset.sec}"]`);
+        sec.scrollIntoView({ behavior: "smooth" });
+        sec.querySelector(".section-content").classList.add("active");
+        sec.querySelector(".toggle-icon").classList.add("active");
+      } else if (this.dataset.q) {
+        document.querySelectorAll(".q-label").forEach(l => {
+          if (l.textContent.includes(`(${this.dataset.q})`)) {
+            const qItem = l.closest(".q-item");
+            const section = qItem.closest(".section");
+            section.querySelector(".section-content").classList.add("active");
+            section.querySelector(".toggle-icon").classList.add("active");
+            qItem.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      }
+      closePalette();
+    });
+  });
+}
+
+document.getElementById("paletteBtn").addEventListener("click", openPalette);
+document.getElementById("jumpBtn").addEventListener("click", openPalette);
+paletteOverlay.addEventListener("click", e => { if (e.target === paletteOverlay) closePalette(); });
+paletteInput.addEventListener("input", () => buildPaletteList(paletteInput.value));
+document.addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "k") { e.preventDefault(); openPalette(); }
+  if (e.key === "Escape") closePalette();
+});
+
+// Open first section by default
+document.addEventListener("DOMContentLoaded", function() {
+  const first = document.querySelector(".section-content");
+  const firstIcon = document.querySelector(".toggle-icon");
+  if (first && firstIcon) {
+    first.classList.add("active");
+    firstIcon.classList.add("active");
+  }
+});
+</script>
+</body>
+</html>
