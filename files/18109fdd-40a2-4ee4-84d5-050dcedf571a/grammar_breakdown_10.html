@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>動詞の語法｜ランダムテスト 全20問 友だち解説（Smooth Preload）</title>
+  <style>
+    :root{
+      --bg1:#667eea; --bg2:#764ba2;
+      --ink:#1f2937; --muted:#6b7280;
+      --card:#ffffff; --soft:#f6f7fb;
+      --hint:#fff8e1; --hintBorder:#ffb300;
+      --ans:#e8f5e9; --ansBorder:#4caf50;
+      --wrong:#f8d7da; --wrongBorder:#dc3545;
+      --blue:#2196f3; --blueSoft:#e3f2fd;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Segoe UI","Hiragino Kaku Gothic ProN","Meiryo",system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--ink);
+      line-height:1.8;
+      padding:16px;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:0 16px 50px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    header{
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:#fff;
+      padding:28px 24px;
+      position:sticky; top:0; z-index:10;
+    }
+    header h1{font-size:24px;margin-bottom:6px}
+    header p{opacity:.95;font-size:14px}
+    .toolbar{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border:0; cursor:pointer; font-weight:700;
+      padding:8px 14px; border-radius:999px;
+      transition:.15s transform,.15s opacity,.15s box-shadow;
+      box-shadow:0 3px 10px rgba(0,0,0,.16);
+    }
+    .btn:hover{transform:translateY(-1px); opacity:.96}
+    .btn-ghost{background:#fff;color:#111827}
+    .btn-dark{background:#111827;color:#fff}
+    .content{padding:18px}
+    .section{
+      border:2px solid #e5e7eb; border-radius:var(--radius);
+      overflow:hidden; margin:14px 0; background:var(--soft);
+      contain: layout paint style; /* helps scrolling smooth */
+    }
+    .section-header{
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:#fff; padding:14px 16px; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      font-weight:800;
+      user-select:none;
+    }
+    .section-header .arrow{transition:.2s transform}
+    .section-header.open .arrow{transform:rotate(180deg)}
+    .section-body{
+      max-height:0; overflow:hidden; transition:max-height .35s ease;
+      padding:0 14px;
+      will-change:max-height;
+      overscroll-behavior:contain;
+    }
+    .section-body.open{
+      padding:14px;
+      overflow:auto;                /* scroll inside section */
+      scrollbar-gutter: stable both-edges;
+    }
+    .qcard{
+      background:#fff; border-radius:12px; padding:14px 14px 10px;
+      margin:10px 0 14px; border-left:5px solid var(--bg1);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
+      contain: content; /* isolates internal layout */
+    }
+    .qnum{font-weight:900;color:#4f46e5}
+    .qtext{margin-top:6px}
+    .choices{margin-top:6px;padding-left:8px;color:#111827}
+    .button-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    .hint-btn{background:linear-gradient(135deg,#ffe082,#ffb74d);color:#3e2723}
+    .ans-btn{background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#fff}
+    .collapsible{
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+      margin-top:6px;
+      will-change:max-height;
+    }
+    .box{
+      border-radius:10px; padding:10px 12px; font-size:14px;
+      border-left:4px solid;
+      background:#fff;
+    }
+    .hint-box{background:var(--hint); border-left-color:var(--hintBorder)}
+    .ans-box{background:var(--ans); border-left-color:var(--ansBorder)}
+    .wrong-box{background:var(--wrong); border-left-color:var(--wrongBorder); margin-top:8px}
+    .ref-box{background:var(--blueSoft); border-left-color:var(--blue); margin-top:8px}
+    .label{font-weight:800}
+    .muted{color:var(--muted)}
+    .jp{margin-top:6px; font-style:italic}
+    footer{
+      padding:18px; text-align:center; color:#fff;
+      font-size:13px; opacity:.95;
+    }
+    @media (max-width:768px){
+      header h1{font-size:20px}
+      .content{padding:12px}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header id="topHeader">
+    <h1>📚 動詞の語法｜ランダムテスト 全20問（友だち解説）</h1>
+    <p>全演習 発展 英文法・語法問題1100 P4〜P89｜先に全部高さを計算してヌルヌル動く版</p>
+    <div class="toolbar">
+      <button class="btn btn-ghost" data-action="open-all">全部ひらく</button>
+      <button class="btn btn-ghost" data-action="close-all">全部とじる</button>
+      <button class="btn btn-dark" data-action="download">⬇️ このページをダウンロード</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- A -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[A] 空所補充 (1)〜(5)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+        <!-- Q1 -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">This is one of the most peaceful places (　　).</div>
+          <div class="choices">① imaginable　② no matter　③ for the world　④ being</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「最も〜な場所の一つ」と言いたい。<br>
+              <span class="label">one of the most + 形容詞 + 名詞</span> のあと、どういう語が自然？
+            </div>
+          </div>
+
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>① imaginable</div>
+              <div class="jp">訳：ここは想像できる中で最も平和な場所の一つだ。</div>
+              <div class="muted">imaginable = 「想像できる」。“the most peaceful places imaginable”で鉄板コロケ。</div>
+
+              <div class="box wrong-box">
+                <div><span class="label">② no matter：</span>「〜に関係なく」で、文の形が合わない。</div>
+                <div><span class="label">③ for the world：</span>「絶対に〜しない」で否定と使う表現。ここは形容詞の後ろで不自然。</div>
+                <div><span class="label">④ being：</span>「being + 形容詞」の形にならず、文が崩れる。</div>
+              </div>
+              <div class="box ref-box">Grammar：形容詞の後置修飾 “places imaginable”</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">The quality of school facilities in Japan is at about the same level (　　) in British schools.</div>
+          <div class="choices">① as that　② so that　③ as those　④ as one</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            「同じレベルだよ」って比較の文。<br>
+            “the same level as ___” の ___ に入る代名詞は？
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>① as that</div>
+            <div class="jp">訳：日本の学校設備の質は、イギリスの学校とほぼ同じレベルだ。</div>
+            <div class="muted">level（単数）を受けるので <span class="label">that</span>（=the level）でOK。</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">② so that：</span>目的/結果「〜するために」になって意味がズレる。</div>
+              <div><span class="label">③ as those：</span>thoseは複数。levelは単数だから一致しない。</div>
+              <div><span class="label">④ as one：</span>oneだけだと何を指すか弱く、比較の定番じゃない。</div>
+            </div>
+            <div class="box ref-box">Grammar：比較 “the same + 名詞 + as that/those …”</div>
+          </div></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">It (　　) twelve years to build the castle.</div>
+          <div class="choices">① spent the king for　② took the king　③ took the king for　④ spent the king</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            「〜するのに12年かかった」って言いたい。<br>
+            主語が <span class="label">It</span> のときの定番動詞は？
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>② took the king</div>
+            <div class="jp">訳：その城を建てるのに12年かかった。</div>
+            <div class="muted"><span class="label">It takes (人) 時間 to do</span> の形。</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">① spent the king for：</span>spendは「人が時間を使う」側。It主語では使わない。</div>
+              <div><span class="label">③ took the king for：</span>take A for B「AをBだと思う」で意味違い。</div>
+              <div><span class="label">④ spent the king：</span>spend + 人 は不可。目的語は時間/お金。</div>
+            </div>
+            <div class="box ref-box">Grammar：形式主語 It / take 構文</div>
+          </div></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">Your quick response to our request would be (　　).</div>
+          <div class="choices">① appreciated　② thankful　③ obliged　④ pleased</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            「〜してくれたらありがたい」って丁寧な受け身表現。<br>
+            “would be ___” に自然に来る語は？
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>① appreciated</div>
+            <div class="jp">訳：ご依頼にすぐご対応いただけるとありがたいです。</div>
+            <div class="muted">“would be appreciated” = 「ありがたく思われます」→丁寧依頼の型。</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">② thankful / ④ pleased：</span>人が主語ならOK。でも主語が response なので不自然。</div>
+              <div><span class="label">③ obliged：</span>be obliged to do「〜する義務がある」。意味が違う。</div>
+            </div>
+            <div class="box ref-box">Grammar：丁寧表現 “It would be appreciated if …”</div>
+          </div></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">He is (　　) clever and friendly.</div>
+          <div class="choices">① at once　② either　③ between　④ both of</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            2つの形容詞を「両方〜」でつなぎたい。<br>
+            “__ clever and friendly” の定番は？
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>① at once</div>
+            <div class="jp">訳：彼は賢くて親切でもある。</div>
+            <div class="muted">at once = 「同時に / 併せ持って」。“clever and friendly at once”で自然。</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">② either：</span>either A or B「どちらか」。and と一緒に使えない。</div>
+              <div><span class="label">③ between：</span>between A and B「AとBの間」。意味が違う。</div>
+              <div><span class="label">④ both of：</span>both of + 名詞/代名詞。形容詞の前で単独は不可。</div>
+            </div>
+            <div class="box ref-box">Grammar：副詞 at once の語法</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- B -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[B] 共通語補充 (6)〜(8)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+
+        <!-- Q6 -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            (a) I wanted to give you a (　　) before I came, but I did not have any small change in my purse.<br>
+            (b) As you probably know, Switzerland has no language which she can (　　) her own.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            (a) “give you a ___” = 出発前に「電話する」やつ。<br>
+            (b) “___ A one's own” = “Aを自分のものと呼ぶ”。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>call</div>
+            <div class="jp">
+              (a) 訳：来る前に電話したかったんだけど、小銭がなかった。<br>
+              (b) 訳：スイスには「自国語」と呼べる言語がない。
+            </div>
+
+            <div class="box wrong-box">
+              <div>他の語だと (a)(b) の両方にハマらない。（give you a call / call A one's own がセット）</div>
+            </div>
+            <div class="box ref-box">Grammar：共通語補充（句動詞 / 慣用）</div>
+          </div></div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="qcard">
+          <div class="qnum">(7)</div>
+          <div class="qtext">
+            (a) It rained five days on (　　).<br>
+            (b) The festival will (　　) up with fireworks.<br>
+            (c) His invention is sure to serve a useful (　　).
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            on ___ = 「連続で」 / end up = 「〜で終わる」 / serve a useful ___ = 「役割を果たす」。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>end</div>
+            <div class="jp">
+              (a) 訳：雨が5日間連続で降った。<br>
+              (b) 訳：祭りは花火で終わるだろう。<br>
+              (c) 訳：彼の発明はきっと役に立つ目的を果たす。
+            </div>
+
+            <div class="box wrong-box">
+              <div>他語だと on __ / __ up / serve a useful __ の3つが同時に成立しない。</div>
+            </div>
+            <div class="box ref-box">Grammar：共通語補充（end の多義）</div>
+          </div></div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="qcard">
+          <div class="qnum">(8)</div>
+          <div class="qtext">
+            (a) He never breaks his promise; he is always as good as his (　　).<br>
+            (b) At the end of the party, our president will give us a (　　) or two.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            as good as one's ___ = 「言った通り」 / give a ___ = 「スピーチする」。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>word</div>
+            <div class="jp">
+              (a) 訳：彼は約束を破らない。言った通りの人だ。<br>
+              (b) 訳：パーティーの最後に社長が一言スピーチする。
+            </div>
+
+            <div class="box wrong-box">
+              <div>“one's word” と “give a word” のセットで成立。</div>
+            </div>
+            <div class="box ref-box">Grammar：共通語補充（word の慣用）</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- C -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[C] 同意味文完成 (9)〜(10)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+
+        <!-- Q9 -->
+        <div class="qcard">
+          <div class="qnum">(9)</div>
+          <div class="qtext">
+            (a) I did not know that he was a teacher, and spoke ill of teachers in his presence.<br>
+            (b) (　　) I known that he was a teacher, I should not have (　　) ill of teachers in his presence.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            (b) は仮定法過去完了の倒置。<br>
+            「もし知っていたら〜しなかったのに」＝ Had I ..., I would not have ...
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>Had / spoken</div>
+            <div class="jp">
+              (a) 訳：彼が先生だと知らず、目の前で先生の悪口を言ってしまった。<br>
+              (b) 訳：もし彼が先生だと知っていたら、目の前で悪口は言わなかっただろう。
+            </div>
+
+            <div class="box wrong-box">
+              <div>倒置なので <span class="label">If I had known</span> → <span class="label">Had I known</span>。</div>
+              <div>「悪口を言う」は <span class="label">speak ill of</span> の過去分詞 spoken。</div>
+            </div>
+            <div class="box ref-box">Grammar：仮定法過去完了 / If省略の倒置</div>
+          </div></div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="qcard">
+          <div class="qnum">(10)</div>
+          <div class="qtext">
+            (a) We cannot predict what may happen.<br>
+            (b) (　　) is (　　) predicting what may happen.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            “There is no ~ing” の形にすると同じ意味になる。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">正解：</span>There / no</div>
+            <div class="jp">
+              (a) 訳：何が起こるか予測できない。<br>
+              (b) 訳：何が起こるか予測することはできない。
+            </div>
+
+            <div class="box wrong-box">
+              <div><span class="label">There is no ~ing</span> = 「〜することはできない」</div>
+            </div>
+            <div class="box ref-box">Grammar：There is no ~ing</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- D -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[D] 誤り指摘・訂正 (11)〜(15)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+
+        <!-- Q11 -->
+        <div class="qcard">
+          <div class="qnum">(11)</div>
+          <div class="qtext">①The building ②which ③is standing on the hill is ④a famous church.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            「建物がそこに“存在している”一般事実」なら進行形は不自然。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">誤り：</span>③ is standing → <span class="label">stands</span></div>
+            <div class="jp">訳：丘の上に立っているその建物は有名な教会だ。</div>
+            <div class="box wrong-box">一般事実は現在形。進行形だと「今だけ立ってる」みたいな変なニュアンス。</div>
+            <div class="box ref-box">Grammar：時制（一般事実）</div>
+          </div></div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="qcard">
+          <div class="qnum">(12)</div>
+          <div class="qtext">Were ①schools increase ②the number of courses they offered, students ③would benefit from the wider selection ④and smaller classes.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            “Were S to V, …” の仮定法倒置の形を思い出して。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">誤り：</span>① schools increase → <span class="label">schools to increase</span></div>
+            <div class="jp">訳：もし学校が提供コースを増やせば、生徒はより多い選択肢と少人数授業の恩恵を受けるだろう。</div>
+            <div class="box wrong-box">increase のままだと倒置のルールが崩れる。</div>
+            <div class="box ref-box">Grammar：仮定法（Were の倒置）</div>
+          </div></div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="qcard">
+          <div class="qnum">(13)</div>
+          <div class="qtext">I ①have been dreaming ②to climb that mountain to watch the sun ③rise above ④the horizon.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            dream の語法は <span class="label">dream of ~ing</span> が定番。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">誤り：</span>② to climb → <span class="label">of climbing</span></div>
+            <div class="jp">訳：あの山に登って地平線の上に昇る太陽を見ることをずっと夢見てきた。</div>
+            <div class="box wrong-box">dream は to 不定詞より “of ~ing” の方が自然で頻出。</div>
+            <div class="box ref-box">Grammar：dream + of ~ing</div>
+          </div></div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="qcard">
+          <div class="qnum">(14)</div>
+          <div class="qtext">He ①showed me a book ②described children's literature ③which he ④had taken from the library.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            book が “describe する側” なら現在分詞で後ろから修飾。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">誤り：</span>② described → <span class="label">describing</span></div>
+            <div class="jp">訳：彼は図書館から借りてきた、児童文学について書かれた本を見せてくれた。</div>
+            <div class="box wrong-box">described は受け身の意味で「説明された本」になりがち。ここは能動。</div>
+            <div class="box ref-box">Grammar：分詞の後置修飾</div>
+          </div></div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="qcard">
+          <div class="qnum">(15)</div>
+          <div class="qtext">I've never ①believed in telepathy but ②once I start ③thinking of him in a certain way, the telephone is sure ④of ringing.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            be sure to V = 「きっと〜する（出来事）」。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">誤り：</span>④ of ringing → <span class="label">to ring</span></div>
+            <div class="jp">訳：テレパシーなんて信じてなかったけど、彼のことを考え始めると電話が必ず鳴る。</div>
+            <div class="box wrong-box">sure of ~ing は「人が確信する」。電話（出来事）は sure to V。</div>
+            <div class="box ref-box">Grammar：be sure to do / be sure of doing</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- E -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[E] 語句整序 (16)〜(20)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+        <!-- Q16 -->
+        <div class="qcard">
+          <div class="qnum">(16)</div>
+          <div class="qtext">
+            独占のもっとも危険な点は，消費者が競争の恩恵を受けられないことである。<br>
+            The greatest danger of monopoly is ( competition / consumers / denies / it / of / that / the benefit ).
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            “is that S V …” の形にするとスッキリ。 deny A B = AからBを奪う。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            The greatest danger of monopoly is that it denies consumers the benefit of competition.
+            <div class="jp">訳：独占の最大の危険は、消費者から競争の利益を奪うことだ。</div>
+            <div class="box wrong-box">deny の語順は deny + 人 + 物。</div>
+            <div class="box ref-box">Grammar：that節 / deny + O1 + O2</div>
+          </div></div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="qcard">
+          <div class="qnum">(17)</div>
+          <div class="qtext">
+            いつまでもそんなことをくよくよしていたって，はじまらないじゃないか。<br>
+            It won't do ( about / any / good / it / keep / thinking / to / you ) all the time.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            “It won’t do you any good to do …” は丸暗記でOK。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            It won't do you any good to keep thinking about it all the time.
+            <div class="jp">訳：そんなことをずっと考えてても、何の得にもならないよ。</div>
+            <div class="box wrong-box">won’t do + 人 + any good + to V の型。</div>
+            <div class="box ref-box">Grammar：It won’t do you any good to V</div>
+          </div></div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="qcard">
+          <div class="qnum">(18)</div>
+          <div class="qtext">
+            混んだバスの中で彼女は少ないが持っていたお金をすべて奪われた。（1語不要）<br>
+            In the crowded bus she was robbed ( all / of / had / little / money / she / what ).
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            “what little money she had” が一塊。all は余計。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            In the crowded bus she was robbed of what little money she had.（all 不要）
+            <div class="jp">訳：混んだバスの中で、彼女は持っていたわずかな金を全部奪われた。</div>
+            <div class="box wrong-box">all を入れると “all what little money” で変。</div>
+            <div class="box ref-box">Grammar：what / rob A of B</div>
+          </div></div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="qcard">
+          <div class="qnum">(19)</div>
+          <div class="qtext">
+            彼は厚かましくも私に結婚を申し込んだ。<br>
+            He ( propose / the / nerve / to / had / marriage ) to me.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            have the nerve to V / propose marriage to 人。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            He had the nerve to propose marriage to me.
+            <div class="jp">訳：彼は図々しくも私に結婚を申し込んだ。</div>
+            <div class="box wrong-box">the nerve は冠詞込みで慣用表現。</div>
+            <div class="box ref-box">Grammar：have the nerve to V</div>
+          </div></div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="qcard">
+          <div class="qnum">(20)</div>
+          <div class="qtext">
+            パーティーの前に食べ物の用意はすっかりできていた。（2語不要）<br>
+            All the food had already ( started / before / was / been / for / prepared / we ) the party.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            過去完了受け身：had already been prepared が核。started / we が邪魔。
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            All the food had already been prepared before the party.（started / we 不要）
+            <div class="jp">訳：パーティーの前に食べ物はすでに全部用意されていた。</div>
+            <div class="box wrong-box">we を入れると主語二重。started は意味不明。</div>
+            <div class="box ref-box">Grammar：過去完了受け身 / before</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  © Tetsuya's Grammar Gym｜Smooth Preload edition
+</footer>
+
+<script>
+(() => {
+  // --- Preload heights for smooth toggles ---
+  function primeHeights(){
+    const blocks = document.querySelectorAll('.collapsible');
+    blocks.forEach(b=>{
+      // temporarily open to measure
+      b.style.maxHeight = 'none';
+      const h = b.scrollHeight;
+      b.dataset.h = h;
+      b.style.maxHeight = '0px';
+    });
+    const bodies = document.querySelectorAll('[data-role="section-body"]');
+    bodies.forEach(body=>{
+      body.style.maxHeight = 'none';
+      const h = body.scrollHeight;
+      body.dataset.h = h;
+      body.style.maxHeight = '0px';
+    });
+  }
+
+  
+  function openBlock(el){
+    el.classList.add('open');
+    const fullH = Number(el.dataset.h || el.scrollHeight);
+    // Cap section bodies so they get their own scrollbar (prevents layout jams)
+    if(el.dataset.role === 'section-body'){
+      const cap = Math.floor(window.innerHeight * 0.72);
+      el.style.maxHeight = Math.min(fullH, cap) + 'px';
+    }else{
+      el.style.maxHeight = fullH + 'px';
+    }
+  }
+
+  function closeBlock(el){
+    el.classList.remove('open');
+    el.style.maxHeight = '0px';
+  }
+
+  // Event delegation for speed & correctness
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('[data-toggle]');
+    if(btn){
+      const card = btn.closest('.qcard');
+      const key = btn.dataset.toggle;
+      const block = card.querySelector(`.collapsible[data-block="${key}"]`);
+      if(!block) return;
+      if(block.classList.contains('open')) closeBlock(block);
+      else openBlock(block);
+      return;
+    }
+
+    const header = e.target.closest('[data-role="section-header"]');
+    if(header){
+      const body = header.nextElementSibling;
+      header.classList.toggle('open');
+      if(body.classList.contains('open')) closeBlock(body);
+      else openBlock(body);
+      return;
+    }
+
+    const actionBtn = e.target.closest('[data-action]');
+    if(actionBtn){
+      const act = actionBtn.dataset.action;
+      if(act === 'open-all'){
+        document.querySelectorAll('[data-role="section-header"]').forEach(h=>{
+          const body=h.nextElementSibling;
+          h.classList.add('open'); openBlock(body);
+        });
+      }
+      if(act === 'close-all'){
+        document.querySelectorAll('[data-role="section-header"]').forEach(h=>{
+          const body=h.nextElementSibling;
+          h.classList.remove('open'); closeBlock(body);
+        });
+      }
+      if(act === 'download'){
+        downloadHTML();
+      }
+    }
+  });
+
+  // Download button (in‑page)
+  function downloadHTML(){
+    const html = '<!DOCTYPE html>\\n' + document.documentElement.outerHTML;
+    const blob = new Blob([html], {type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'grammar_breakdown_ランダムテスト_動詞の語法_FULL_SMOOTH.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  }
+  window.downloadHTML = downloadHTML;
+
+  // Prime heights after full layout
+  window.addEventListener('load', () => { primeHeights(); });
+  window.addEventListener('resize', () => { primeHeights(); });
+})();
+</script>
+</body>
+</html>
