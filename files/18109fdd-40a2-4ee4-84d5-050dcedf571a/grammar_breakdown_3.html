@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verb Usage Test Breakdown - 動詞の語法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title .emoji {
+            font-size: 1.2em;
+        }
+        
+        .question {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .question:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .answer {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        
+        .idiom {
+            background: #fff3cd;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #ffc107;
+        }
+        
+        .idiom strong {
+            color: #856404;
+        }
+        
+        .wrong-answers {
+            background: #f8d7da;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #dc3545;
+        }
+        
+        .wrong-answers strong {
+            color: #721c24;
+        }
+        
+        .rule-box {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .rule-box strong {
+            color: #0c5460;
+        }
+        
+        .note {
+            background: #e2e3e5;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-style: italic;
+            border-left: 3px solid #6c757d;
+        }
+        
+        .mistakes-section {
+            background: #fff3e0;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .mistakes-section h2 {
+            color: #e65100;
+            margin-bottom: 20px;
+        }
+        
+        .mistake-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #ff9800;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .teaching-tip {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .teaching-tip h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .teaching-tip p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Verb Usage Test Breakdown</h1>
+            <p>動詞の語法｜確認テスト - Complete Analysis</p>
+        </header>
+        
+        <div class="content">
+            <!-- Section A -->
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">📝</span>[A] Fill in the Blanks</h2>
+                
+                <div class="question">
+                    <span class="question-number">(1)</span>
+                    <p><strong>It never (　) me that you had done it.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：君がそれをしたなんて思いもよらなかった。</p>
+                    <p class="answer">✓ Answer: ② occurred to</p>
+                    <div class="idiom">
+                        <strong>Idiom:</strong> "It occurred to me" = 思いついた、気づいた
+                    </div>
+                    <div class="wrong-answers">
+                        <strong>Wrong answers:</strong>
+                        <ul>
+                            <li>① struck up = 始める (strike up a conversation = 会話を始める)</li>
+                            <li>③ happened to = たまたま〜する</li>
+                            <li>④ wrote off = 帳消しにする、見捨てる</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(2)</span>
+                    <p><strong>They are on good (　) with their neighbors.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：彼らは隣人たちと良好な関係にある。</p>
+                    <p class="answer">✓ Answer: ① terms</p>
+                    <div class="idiom">
+                        <strong>Idiom:</strong> "on good terms with" = 仲がいい、良好な関係である
+                    </div>
+                    <div class="note">
+                        <strong>Remember:</strong> terms = 関係、条件、言葉
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(3)</span>
+                    <p><strong>A: May I join you in the game?<br>B: (　) not?</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：A: ゲームに参加してもいいですか？ B: もちろん。</p>
+                    <p class="answer">✓ Answer: ③ Why</p>
+                    <div class="idiom">
+                        <strong>Expression:</strong> "Why not?" = もちろんいいよ、いいですよ
+                    </div>
+                    <div class="note">
+                        <strong>Usage:</strong> Casual agreement/acceptance (カジュアルな同意・承諾の表現)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section B -->
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">🔍</span>[B] Find the Closest Meaning</h2>
+                
+                <div class="question">
+                    <span class="question-number">(4)</span>
+                    <p><strong>I will never forgive you if you did it on purpose.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：もしわざとやったのなら、絶対に許さない。</p>
+                    <p><strong>on purpose = ?</strong></p>
+                    <p class="answer">✓ Answer: ④ intentionally (わざと、故意に)</p>
+                    <div class="wrong-answers">
+                        <strong>Other options:</strong>
+                        <ul>
+                            <li>① desperately = 必死に、絶望的に</li>
+                            <li>② hopefully = うまくいけば、願わくば</li>
+                            <li>③ willingly = 喜んで、進んで</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(5)</span>
+                    <p><strong>It was an accident, so there is no reason to lose your temper.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：事故だったのだから、怒る理由はない。</p>
+                    <p><strong>lose your temper = ?</strong></p>
+                    <p class="answer">✓ Answer: ② become very angry (怒る、かんしゃくを起こす)</p>
+                    <div class="idiom">
+                        <strong>Idiom alert:</strong> This phrase is mad common in everyday English<br>
+                        (この表現は日常英語で超よく使われる)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section C -->
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">✍️</span>[C] Fill in the Appropriate Words</h2>
+                
+                <div class="question">
+                    <span class="question-number">(6)</span>
+                    <p><strong>When I looked through the window, I saw a girl whose beauty took my (　) away.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：窓の外を見たとき、はっとするほどきれいな女の人が見えた。</p>
+                    <p class="answer">✓ Answer: breath</p>
+                    <div class="idiom">
+                        <strong>Idiom:</strong> "take one's breath away" = 息をのむほど美しい、びっくりさせる
+                    </div>
+                    <div class="note">
+                        <strong>Note:</strong> Always use "breath" (名詞：息), NOT "breathe" (動詞：息をする)
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(7)</span>
+                    <p><strong>He (　) himself flat on the floor.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：彼は床に身を伏せた。</p>
+                    <p class="answer">✓ Answer: laid</p>
+                    <div class="rule-box">
+                        <strong>Verb:</strong> lay-laid-laid (他動詞) = 横たえる、置く<br>
+                        <strong>Don't confuse with:</strong> lie-lay-lain (自動詞) = 横たわる、横になる
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(8)</span>
+                    <p><strong>To my (　), his letter didn't come.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：がっかりしたことに彼の手紙は来ませんでした。</p>
+                    <p class="answer">✓ Answer: disappointment</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong> "To my + emotion noun" = ~なことに<br>
+                        <strong>Examples:</strong> <br>
+                        • To my surprise = 驚いたことに<br>
+                        • To my relief = ほっとしたことに<br>
+                        • To my delight = 嬉しいことに
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section D -->
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">🔄</span>[D] Rewrite with Same Meaning</h2>
+                
+                <div class="question">
+                    <span class="question-number">(9)</span>
+                    <p><strong>(a) My grandmother lived till she was ninety.</strong></p>
+                    <p><strong>(b) My grandmother lived (　)(　) ninety.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：私の祖母は90歳まで生きた。</p>
+                    <p class="answer">✓ Answer: to be</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong> "live to be + age" = ~歳まで生きる<br>
+                        <strong>Note:</strong> "till" と "to be" はどちらもその年齢に「達する」ことを表す
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section E -->
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">🎯</span>[E] Common Word for Both Sentences</h2>
+                
+                <div class="question">
+                    <span class="question-number">(10)</span>
+                    <p><strong>(a) We must keep an (　) on the political situation.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：我々は政治情勢を注視しなければならない。</p>
+                    <p><strong>(b) She hit him hard and gave him a black (　).</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：彼女は彼を強く殴り、青あざを作った。</p>
+                    <p class="answer">✓ Answer: eye</p>
+                    <div class="idiom">
+                        <strong>(a)</strong> keep an eye on = 監視する、注意する、目を配る<br>
+                        <strong>(b)</strong> black eye = 殴られてできた青あざ、目の周りの打撲傷
+                    </div>
+                    <div class="note">
+                        <strong>Students mess this up:</strong> They think (a) needs "attention" or (b) needs "bruise"<br>
+                        (学生がよく間違える：(a)に「attention」、(b)に「bruise」が必要だと思ってしまう)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section F -->
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">❌</span>[F] Find and Correct the Error</h2>
+                
+                <div class="question">
+                    <span class="question-number">(11)</span>
+                    <p><strong>John ①is resembling his late ②grandfather ③in appearance ④but not in character.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：ジョンは亡くなった祖父に外見は似ているが、性格は似ていない。</p>
+                    <p class="answer">✓ Error: ①is resembling → resembles</p>
+                    <div class="rule-box">
+                        <strong>Rule:</strong> "resemble" は状態動詞 (state verb) - 進行形にできない<br>
+                        <strong>Other state verbs:</strong> know, understand, believe, like, love
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(12)</span>
+                    <p><strong>When the lady ①spoke to me I ②didn't recognize her at first, but she ③turned out to be one of ④my mother's friend.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：その女性が私に話しかけてきたとき、最初は誰だか分からなかったが、母の友人の一人だと分かった。</p>
+                    <p class="answer">✓ Error: ④my mother's friend → my mother's friends</p>
+                    <div class="rule-box">
+                        <strong>Logic:</strong> "one of + 複数名詞" がパターン<br>
+                        <strong>Students always forget the plural here!</strong><br>
+                        (学生はここで複数形を忘れがち!)
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(13)</span>
+                    <p><strong>Ken and Mari ①play ②tennis every Sunday ③with ④Tom and I.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：ケンとマリは毎週日曜日にトムと私とテニスをする。</p>
+                    <p class="answer">✓ Error: ④Tom and I → Tom and me</p>
+                    <div class="rule-box">
+                        <strong>Rule:</strong> 前置詞 "with" の後は目的格 (object form) を使う: me, him, her, us, them<br>
+                        <strong>Test:</strong> "Tom and" を消してみる - "with me" と言うはずで、"with I" とは言わない
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(14)</span>
+                    <p><strong>①During the ②recent gasoline shortage, the ③amount of accidents on our highways ④decreased markedly.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：最近のガソリン不足の間、我々の高速道路での事故の数は著しく減少した。</p>
+                    <p class="answer">✓ Error: ③amount → number</p>
+                    <div class="rule-box">
+                        <strong>Rule:</strong><br>
+                        • amount = 数えられないもの (water, money, time)<br>
+                        • number = 数えられるもの (accidents, people, cars)<br>
+                        事故は数えられるので "number" を使う
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(15)</span>
+                    <p><strong>①Each of girls applying ②for the job is eager to be chosen, and can't wait ③until tomorrow when the decision ④is to be made.</strong></p>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：その仕事に応募した女の子たちのそれぞれが選ばれることを熱望していて、決定がなされる明日まで待ちきれない。</p>
+                    <p class="answer">✓ Error: ①Each of girls → Each of the girls OR Each girl</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong><br>
+                        • "Each of + THE + 複数名詞"<br>
+                        • または "Each + 単数名詞" だけ<br>
+                        <strong>Never:</strong> "Each of 複数名詞" (the なしはダメ)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section G -->
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">🔀</span>[G] Rearrange the Words</h2>
+                
+                <div class="question">
+                    <span class="question-number">(16)</span>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：彼女は今晩テレビで話すことになっている。</p>
+                    <p class="answer">✓ Answer: She is going to speak on television tonight. (will不要)</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong> "be going to" = 計画された未来を表す<br>
+                        <strong>Note:</strong> "will" が余分な語 - 未来形を混ぜないこと
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(17)</span>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：結局、人を外見で判断しようとしてもしようがない。</p>
+                    <p class="answer">✓ Answer: Consequently it is no use trying to make judgements about people on the basis of their appearances.</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong> "It is no use ~ing" = ~しても無駄だ、~してもしようがない<br>
+                        <strong>Note:</strong> 必ず動名詞 (-ing形) を使う
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(18)</span>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：彼女は自分をいわゆる教養ある女だと信じている。</p>
+                    <p class="answer">✓ Answer: She believes she is what you call a woman of culture. (what不足)</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong> "what you call" = いわゆる<br>
+                        <strong>Usage:</strong> 一般的な表現方法を挿入する
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(19)</span>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：君はとても楽しい人だから何度でも来てください。</p>
+                    <p class="answer">✓ Answer: Such is the pleasure you give that you cannot come too often.</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong> "Such is... that..." = とても~なので<br>
+                        <strong>Inversion:</strong> 文頭の "Such" により主語と動詞が倒置される<br>
+                        <strong>Note:</strong> "cannot... too often" = いくら~してもしすぎることはない
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <span class="question-number">(20)</span>
+                    <p style="color: #666; margin: 5px 0;">日本語訳：私は母親の愛情なしに成長することがどのようなものか、想像もできない。</p>
+                    <p class="answer">✓ Answer: I can't imagine what it is like to grow up without a mother's love.</p>
+                    <div class="rule-box">
+                        <strong>Pattern:</strong> "what it is like to ~" = ~することがどのようなものか<br>
+                        <strong>Structure:</strong> 平叙文形式の埋め込み疑問文
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Common Mistakes Section -->
+            <div class="mistakes-section">
+                <h2>🎯 よくある間違い - COMMON STUDENT MISTAKES</h2>
+                
+                <div class="mistake-item">
+                    <strong>1. 状態動詞を進行形にしてしまう (State verbs in progressive)</strong><br>
+                    "is resembling" と書いてしまうが、正しくは "resembles"
+                </div>
+                
+                <div class="mistake-item">
+                    <strong>2. Amount vs. Number の使い分け</strong><br>
+                    学生の約80%がこれでつまずく
+                </div>
+                
+                <div class="mistake-item">
+                    <strong>3. 前置詞の後の代名詞の格 (Pronoun cases after prepositions)</strong><br>
+                    "with me" とすべきところを "with I" と書いてしまう
+                </div>
+                
+                <div class="mistake-item">
+                    <strong>4. "Each of + 名詞" で the を忘れる</strong><br>
+                    超頻出の間違い
+                </div>
+                
+                <div class="mistake-item">
+                    <strong>5. 未来形の混同 (Mixing future forms)</strong><br>
+                    "will" と "be going to" を一緒に使ってしまう
+                </div>
+            </div>
+            
+            <!-- Teaching Tip -->
+            <div class="teaching-tip">
+                <h2>🏀 授業のコツ - TEACHING TIP</h2>
+                <p>生徒にこの問題を解説するときは、NBAの実例を使って説明すると効果的！例えば "keep an eye on" は、教科書の退屈な例文よりも <strong>「ステフ・カリーの3ポイントシュートに目を光らせる」</strong> みたいな言い方をすれば、生徒の記憶に残りやすい。</p>
+                <p style="margin-top: 15px;">レブロンがペイントエリアで存在感を示すように、授業でも印象に残る教え方をしよう！🔥</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
