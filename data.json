@@ -41,6 +41,15 @@
       "color": "#932546",
       "order": 2,
       "iconImage": null
+    },
+    {
+      "id": "d157d289-5646-4c09-80f1-62f697e08b83",
+      "parentId": "104f491e-6aa2-4931-a2e5-3f8e1bdb027b",
+      "name": "英語コミュニケーションIII",
+      "icon": "📁",
+      "color": "#e5c93e",
+      "order": 3,
+      "iconImage": null
     }
   ],
   "items": [
@@ -188,5 +197,5 @@
       "minutes": ""
     }
   ],
-  "lastUpdated": "2025-12-03T15:17:56.917Z"
+  "lastUpdated": "2025-12-03T15:26:05.386Z"
 }
