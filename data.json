@@ -7,70 +7,28 @@
   },
   "folders": [
     {
-      "id": "c094c1d2-77df-4122-884f-3d54318c6ebb",
+      "id": "f7c0ba4b-8549-4245-977b-dd23a063fb2d",
       "parentId": null,
-      "name": "First Term",
-      "icon": "📗",
-      "color": "#10b981",
+      "name": "New Folder",
+      "icon": "📁",
+      "color": "#2e55a3",
       "order": 0
-    },
-    {
-      "id": "8c962463-7117-4ce3-8fcb-d940d06eec87",
-      "parentId": null,
-      "name": "Mid Term",
-      "icon": "📘",
-      "color": "#3b82f6",
-      "order": 1
-    },
-    {
-      "id": "8a580117-5890-4c7d-9568-3033aab7873e",
-      "parentId": null,
-      "name": "Third Term",
-      "icon": "📙",
-      "color": "#f59e0b",
-      "order": 2
     }
   ],
   "items": [
     {
-      "id": "45631ae7-e216-4994-9de4-62b2076cbcbe",
-      "folderId": "8c962463-7117-4ce3-8fcb-d940d06eec87",
+      "id": "cdff8b09-18e8-4f3a-8806-6cb4272b2010",
+      "folderId": "f7c0ba4b-8549-4245-977b-dd23a063fb2d",
       "title": "grammar_breakdown_2",
       "fileName": "grammar_breakdown_2.html",
-      "filePath": "files/8c962463-7117-4ce3-8fcb-d940d06eec87/grammar_breakdown_2.html",
+      "filePath": "files/f7c0ba4b-8549-4245-977b-dd23a063fb2d/grammar_breakdown_2.html",
       "fileSize": 54849,
       "mimeType": "text/html",
       "date": "2025-12-03",
       "tags": [],
       "keywords": "",
       "minutes": ""
-    },
-    {
-      "id": "4e22d5a5-fb61-4dd5-8799-e512c94e2154",
-      "folderId": "8a580117-5890-4c7d-9568-3033aab7873e",
-      "title": "grammar_breakdown_3",
-      "fileName": "grammar_breakdown_3.html",
-      "filePath": "files/8a580117-5890-4c7d-9568-3033aab7873e/grammar_breakdown_3.html",
-      "fileSize": 25967,
-      "mimeType": "text/html",
-      "date": "2025-12-03",
-      "tags": [],
-      "keywords": "",
-      "minutes": ""
-    },
-    {
-      "id": "97197107-9a1f-4415-b5f7-c5ec1ea8166d",
-      "folderId": "c094c1d2-77df-4122-884f-3d54318c6ebb",
-      "title": "grammar_breakdown_1",
-      "fileName": "grammar_breakdown_1.html",
-      "filePath": "files/c094c1d2-77df-4122-884f-3d54318c6ebb/grammar_breakdown_1.html",
-      "fileSize": 71872,
-      "mimeType": "text/html",
-      "date": "2025-12-03",
-      "tags": [],
-      "keywords": "",
-      "minutes": ""
     }
   ],
-  "lastUpdated": "2025-12-03T09:41:50.925Z"
+  "lastUpdated": "2025-12-03T09:47:43.062Z"
 }
