@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>12 仮定法｜Grammar Breakdown 全40問</title>
+  <style>
+    :root{
+      --bg1:#f97316; --bg2:#ea580c;
+      --teal:#115e59; --tealLight:#134e4a;
+      --ink:#1f2937; --muted:#6b7280;
+      --card:#ffffff; --soft:#fff7ed;
+      --hint:#fef3c7; --hintBorder:#f59e0b;
+      --ans:#ccfbf1; --ansBorder:#0d9488;
+      --wrong:#fef2f2; --wrongBorder:#ef4444;
+      --blue:#0891b2; --blueSoft:#ecfeff;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Segoe UI","Hiragino Kaku Gothic ProN","Meiryo",system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--ink);
+      line-height:1.8;
+      padding:16px;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:0 16px 50px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff;
+      padding:28px 24px;
+      position:sticky; top:0; z-index:10;
+    }
+    header h1{font-size:24px;margin-bottom:6px}
+    header p{opacity:.95;font-size:14px}
+    .toolbar{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border:0; cursor:pointer; font-weight:700;
+      padding:8px 14px; border-radius:999px;
+      transition:.15s transform,.15s opacity,.15s box-shadow;
+      box-shadow:0 3px 10px rgba(0,0,0,.16);
+    }
+    .btn:hover{transform:translateY(-1px); opacity:.96}
+    .btn-ghost{background:#fff;color:#111827}
+    .btn-dark{background:#0c4a4a;color:#fff}
+    .content{padding:18px}
+    .section{
+      border:2px solid #99f6e4; border-radius:var(--radius);
+      overflow:hidden; margin:14px 0; background:var(--soft);
+    }
+    .section-header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff; padding:14px 16px; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      font-weight:800;
+      user-select:none;
+    }
+    .section-header .arrow{transition:.2s transform}
+    .section-header.open .arrow{transform:rotate(180deg)}
+    .section-body{
+      display:none;
+      padding:14px;
+    }
+    .section-body.open{
+      display:block;
+    }
+    .qcard{
+      background:#fff; border-radius:12px; padding:14px 14px 10px;
+      margin:10px 0 14px; border-left:5px solid var(--teal);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
+    }
+    .qnum{font-weight:900;color:var(--teal)}
+    .qtext{margin-top:6px}
+    .choices{margin-top:6px;padding-left:8px;color:#111827}
+    .button-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    .hint-btn{background:linear-gradient(135deg,#fcd34d,#f59e0b);color:#78350f}
+    .ans-btn{background:linear-gradient(135deg,var(--teal),var(--tealLight));color:#fff}
+    .collapsible{
+      display:none;
+      margin-top:6px;
+    }
+    .collapsible.open{
+      display:block;
+    }
+    .box{
+      border-radius:10px; padding:10px 12px; font-size:14px;
+      border-left:4px solid;
+      background:#fff;
+    }
+    .ans-box{
+      font-size:16px;
+      line-height:1.9;
+    }
+    .ans-box .label{
+      font-size:17px;
+    }
+    .ans-box .jp{
+      font-size:16px;
+      margin-top:8px;
+    }
+    .ans-box .muted{
+      font-size:15px;
+      margin-top:8px;
+    }
+    .hint-box{background:var(--hint); border-left-color:var(--hintBorder)}
+    .ans-box{background:var(--ans); border-left-color:var(--ansBorder)}
+    .wrong-box{background:var(--wrong); border-left-color:var(--wrongBorder); margin-top:8px}
+    .ref-box{background:var(--blueSoft); border-left-color:var(--blue); margin-top:8px}
+    .label{font-weight:800}
+    .muted{color:var(--muted)}
+    .jp{margin-top:6px; font-style:italic}
+    .correct-choice{color:#16a34a;font-weight:800}
+    .wrong-choice{color:#ef4444;font-weight:800}
+    .scramble{margin-top:8px;padding:10px 12px;background:#f0fdfa;border-radius:8px;font-family:monospace;font-size:14px;border:1px solid #99f6e4}
+    footer{
+      padding:18px; text-align:center; color:#fff;
+      font-size:13px; opacity:.95;
+    }
+    @media (max-width:768px){
+      header h1{font-size:20px}
+      .content{padding:12px}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📚 12 仮定法｜Grammar Breakdown 全40問</h1>
+    <p>DUALSCOPE 実戦問題｜✓/✗ 詳細解説付き</p>
+    <div class="toolbar">
+      <button class="btn btn-ghost" data-action="open-all">全部ひらく</button>
+      <button class="btn btn-ghost" data-action="close-all">全部とじる</button>
+      <button class="btn btn-dark" data-action="download">⬇️ このページをダウンロード</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Section 1: 基本問題 -->
+    <section class="section">
+      <div class="section-header"><span>[1] 基本問題｜語句選択 (1)～(7)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">If she (had, had had) enough time, she could read a long novel.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">主節が <span class="label">could read</span>（仮定法過去）なので、if節も過去形</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ had</span></div>
+              <div class="jp">訳：もし彼女に十分な時間があれば、長編小説を読めるのに。</div>
+              <div class="muted">仮定法過去の文。主節に could read があるので、if節には過去形 <b>had</b> を使う。<br><br>
+              <b>仮定法過去のポイント：</b><br>
+              • 現在の事実に反することを仮定する<br>
+              • if節：過去形（had, were）<br>
+              • 主節：助動詞の過去形（would「～だろう」, could「～できるのに」, might「～かもしれない」）+ 動詞の原形<br>
+              • 実際は「彼女には時間がない」→ だから「もしあったら読めるのに」という願望を表す</div>
+              <div class="box ref-box">📖 Grammar：仮定法過去 If S + 過去形, S + 助動詞の過去形 + 動詞の原形</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">I wish I (studied, had studied) harder last night.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">last night</span>（過去の時点）→ 仮定法過去完了</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ had studied</span></div>
+              <div class="jp">訳：昨夜もっと勉強していればよかったのに。</div>
+              <div class="muted"><b>I wish + S + had 過去分詞</b> は過去の事実と異なる願望を表す。<br><br>
+              <b>I wish の使い分け：</b><br>
+              • <b>I wish S + 過去形</b> → 現在の願望（今～だったらいいのに）<br>
+              　例：I wish I were rich.（お金持ちだったらいいのに）<br>
+              • <b>I wish S + had 過去分詞</b> → 過去の願望（あの時～していればよかった）<br>
+              　例：I wish I had studied harder.（もっと勉強していればよかった）<br>
+              • この問題は <b>last night</b>（昨夜）があるので、過去の出来事についての後悔 → <b>had studied</b><br>
+              • 実際は「昨夜勉強しなかった」→ だから「勉強していればよかった」と後悔している</div>
+              <div class="box ref-box">📖 Grammar：I wish + S + had + 過去分詞（過去の願望・後悔）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">If it (were not, had not been) for music, life would be boring.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">主節が <span class="label">would be</span> → 仮定法過去</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ were not</span></div>
+              <div class="jp">訳：もし音楽がなければ、人生は退屈だろう。</div>
+              <div class="muted"><b>If it were not for ~</b> 「もし～がなければ」（仮定法過去）<br><br>
+              <b>重要表現の使い分け：</b><br>
+              • <b>If it were not for ~</b>（もし～がなければ）<br>
+              • <b>Were it not for ~</b>（もし～がなければ）※if省略の倒置<br>
+              • <b>Without ~</b>（～がなければ）<br>
+              • <b>But for ~</b>（～がなければ）<br>
+              • すべて同じ意味で、現在の仮定を表す<br>
+              • 主節は <b>would/could/might + 動詞の原形</b><br><br>
+              <b>過去の仮定なら：</b><br>
+              • <b>If it had not been for ~</b>（もしあの時～がなかったら）<br>
+              • <b>Had it not been for ~</b>（もしあの時～がなかったら）※if省略の倒置<br>
+              • 主節は <b>would/could/might + have + 過去分詞</b><br><br>
+              この問題は主節が <b>would be</b>（～だろう）なので、現在の仮定 → <b>were not</b></div>
+              <div class="box ref-box">📖 Grammar：If it were not for ~ = Were it not for ~ = Without ~<br>📖 If it had not been for ~ = Had it not been for ~ = But for ~（過去）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">If I had had another week until the deadline, I (could write, could have written) a better essay.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">if節が <span class="label">had had</span> → 仮定法過去完了</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ could have written</span></div>
+              <div class="jp">訳：もし締め切りまでもう1週間あったら、もっとよいエッセイが書けたのに。</div>
+              <div class="muted">仮定法過去完了。if節が had had なので、主節は <b>could have 過去分詞</b> の形。<br><br>
+              <b>仮定法過去完了のポイント：</b><br>
+              • 過去の事実に反することを仮定・後悔する<br>
+              • if節：<b>had + 過去分詞</b><br>
+              • 主節：<b>助動詞の過去形 + have + 過去分詞</b><br>
+              • この問題：実際は「締め切りまで1週間なかった」→ だから「あったら書けたのに」と後悔<br><br>
+              <b>助動詞の使い分け：</b><br>
+              • <b>could have 過去分詞</b> →「～できたのに」（能力・可能性）<br>
+              　例：I could have passed the test.（テストに合格できたのに）<br>
+              • <b>would have 過去分詞</b> →「～しただろうに」（意志・推量）<br>
+              　例：He would have helped you.（彼は助けてくれただろうに）<br>
+              • <b>might have 過去分詞</b> →「～したかもしれない」（可能性低め）<br>
+              　例：She might have forgotten.（彼女は忘れたかもしれない）<br><br>
+              <b>間違いやすい：</b><br>
+              • could write（×）→ これは仮定法過去（現在の仮定）になる</div>
+              <div class="box ref-box">📖 Grammar：仮定法過去完了 If S + had 過去分詞, S + 助動詞過去形 + have + 過去分詞</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">She loves him as if he (were, had been) her own child.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">主節 <span class="label">loves</span>（現在）と同時 → 仮定法過去</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ were</span></div>
+              <div class="jp">訳：彼女は彼が自分の子どもであるかのように彼を愛している。</div>
+              <div class="muted"><b>as if + S + 過去形</b> で主節と同時の仮定を表す。<br><br>
+              <b>as if の使い分け：</b><br>
+              • <b>as if S + 過去形</b> → 主節と同時の仮定（まるで～であるかのように）<br>
+              　例：He talks as if he <b>were</b> rich.（彼はまるでお金持ちであるかのように話す）<br>
+              • <b>as if S + had 過去分詞</b> → 主節より前の仮定（まるで～だったかのように）<br>
+              　例：She looks as if she <b>had seen</b> a ghost.（彼女はまるで幽霊を見たかのような顔をしている）<br><br>
+              <b>重要ポイント：</b><br>
+              • 主節が <b>loves</b>（現在形）なので、as if 以下も現在と同時 → <b>were</b><br>
+              • <b>as if = as though</b>（まるで～かのように）同じ意味<br>
+              • be動詞の仮定法では、主語に関係なく <b>were</b> を使うのが正式<br><br>
+              <b>重要表現：</b><br>
+              • <b>her own child</b>（彼女自身の子ども）<br>
+              • <b>own</b> は「自分自身の」という強調</div>
+              <div class="box ref-box">📖 Grammar：as if + S + 過去形（主節と同時）/ had 過去分詞（主節より前）<br>📖 as if = as though「まるで～かのように」</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">If you (should, were to) find any mistakes, please let me know.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">「万が一～したら」→ <span class="label">If S should</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ should</span></div>
+              <div class="jp">訳：もし何か間違いを見つけたら、教えてください。</div>
+              <div class="muted"><b>If S should do</b> 「万が一～したら」起こる可能性が低い仮定。<br><br>
+              <b>should と were to の使い分け：</b><br>
+              • <b>If S should do</b> →「万が一～したら」（可能性は低いが起こりうる）<br>
+              　例：If it <b>should</b> rain, take an umbrella.（万が一雨が降ったら、傘を持って行きなさい）<br>
+              　※主節は命令文・未来形でOK<br>
+              • <b>If S were to do</b> →「仮に～するとすれば」（実現可能性が極めて低い・ほぼありえない）<br>
+              　例：If the sun <b>were to</b> rise in the west, I would believe you.<br>
+              　（もし太陽が西から昇るなら、あなたを信じるだろう）<br>
+              　※主節は仮定法（would/could/might + 動詞原形）<br><br>
+              <b>この問題：</b><br>
+              • 主節が <b>please let me know</b>（命令文）<br>
+              • 「間違いを見つける」は可能性が低いが起こりうる<br>
+              • だから <b>should</b> が適切<br><br>
+              <b>重要表現：</b><br>
+              • <b>find mistakes</b>（間違いを見つける）<br>
+              • <b>let me know</b>（私に知らせる・教える）</div>
+              <div class="box ref-box">📖 Grammar：If S should do「万が一～したら」（可能性低いが起こりうる）<br>📖 If S were to do「仮に～するとすれば」（実現可能性が極めて低い）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(7)</div>
+          <div class="qtext">If I had caught the bus, I (would be, would have been) there now.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">if節は過去、主節は現在（<span class="label">now</span>）→ 混合仮定法</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ would be</span></div>
+              <div class="jp">訳：もしバスに乗っていたら、今そこにいるのに。</div>
+              <div class="muted">if節（過去）と主節（現在）の時制が異なる混合仮定法。<br><br>
+              <b>混合仮定法のポイント：</b><br>
+              • 過去の行動が現在の状態に影響を与える場合に使う<br>
+              • if節：過去の仮定 → <b>had 過去分詞</b><br>
+              • 主節：現在の結果 → <b>助動詞の過去形 + 動詞の原形</b><br>
+              • この問題：「バスに乗った」（過去）→「今そこにいる」（現在）<br>
+              • <b>now</b>（今）が現在を示すキーワード！<br><br>
+              <b>比較してみよう：</b><br>
+              • <b>would be there now</b>（今そこにいるだろう）← 混合仮定法<br>
+              • <b>would have been there</b>（あの時そこにいただろう）← 仮定法過去完了<br><br>
+              <b>混合仮定法の例：</b><br>
+              • If I had studied harder, I would be a doctor now.<br>
+              　（もっと勉強していたら、今医者になっているのに）<br>
+              • If he had saved money, he could buy a car now.<br>
+              　（お金を貯めていたら、今車が買えるのに）</div>
+              <div class="box ref-box">📖 Grammar：混合仮定法 If S + had 過去分詞（過去）, S + 助動詞過去形 + 動詞原形（現在）</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="section">
+      <div class="section-header"><span>[2] 日本文の意味に合うように（　）に適当な語を入れなさい (1)～(5)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">ハリーは何もなかったかのように振る舞った。<br>Harry behaved as if nothing (　　　) (　　　).</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">主節より前の時点 → <span class="label">had happened</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>had happened</div>
+              <div class="jp">訳：ハリーは何もなかったかのように振る舞った。</div>
+              <div class="muted">behaved（過去）より前の時点を仮定 → 仮定法過去完了<br><br>
+              <b>as if の時制：</b><br>
+              • 主節が過去で、as if以下も同時 → <b>過去形</b><br>
+              　例：He acted as if he <b>knew</b> everything.（まるで全部知っているかのように振る舞った）<br>
+              • 主節が過去で、as if以下はそれより前 → <b>had 過去分詞</b><br>
+              　例：She looked as if she <b>had cried</b>.（泣いていたかのような顔をしていた）<br><br>
+              <b>重要表現：</b><br>
+              • <b>behave</b>（振る舞う・行動する）<br>
+              • <b>as if nothing had happened</b>（何もなかったかのように）← 超頻出表現！</div>
+              <div class="box ref-box">📖 Grammar：as if + S + had 過去分詞（主節より前）<br>📖 behave「振る舞う」/ happen「起こる」</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">彼が私の立場だったら、動揺していただろう。<br>(　　　) (　　　) (　　　), I would have been upset.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">In his place</span> = If I had been in his place</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>In his place / If I had been in his place</div>
+              <div class="jp">訳：もし彼の立場だったら、動揺していただろう。</div>
+              <div class="muted"><b>In one's place</b> は if節の代用表現。<br><br>
+              <b>if節を省略する表現：</b><br>
+              • <b>In one's place</b>（～の立場なら）= <b>If I were/had been in one's place</b><br>
+              　例：In your place, I would refuse.（君の立場なら、断るだろう）<br>
+              • <b>In one's position</b>（～の立場・状況なら）も同じ意味<br>
+              　例：In his position, I wouldn't worry.（彼の状況なら、心配しないだろう）<br><br>
+              <b>この問題：</b><br>
+              • 主節が <b>would have been upset</b>（動揺しただろう）← 仮定法過去完了<br>
+              • だから if節も過去完了 → <b>If I had been in his place</b><br>
+              • 省略形は <b>In his place</b> のみでOK<br><br>
+              <b>重要表現：</b><br>
+              • <b>be upset</b>（動揺する・取り乱す）<br>
+              • <b>in one's place/position</b>（～の立場・状況で）</div>
+              <div class="box ref-box">📖 Grammar：In one's place = If ... in one's place「～の立場なら」<br>📖 be upset「動揺する」</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">あなたは将来のことを考えている頃だ。<br>(　　　) (　　　) time you (　　　) thinking about your future.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">It's time S 過去形</span> 「もう～する時だ」</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>It is ... were / started / began</div>
+              <div class="jp">訳：あなたはもう将来のことを考える時だ。</div>
+              <div class="muted"><b>It's (about/high) time + S + 過去形</b>「もう～する時だ」<br><br>
+              <b>It's time の使い方：</b><br>
+              • <b>It's time S + 過去形</b> →「もう～する時だ」（提案・忠告）<br>
+              　例：It's time you <b>went</b> to bed.（もう寝る時間だよ）<br>
+              • <b>It's about time S + 過去形</b> →「そろそろ～する頃だ」<br>
+              　例：It's about time we <b>left</b>.（そろそろ出発する頃だ）<br>
+              • <b>It's high time S + 過去形</b> →「とっくに～する時だ」（もっと強い表現）<br>
+              　例：It's high time he <b>found</b> a job.（彼はとっくに仕事を見つけるべきだ）<br><br>
+              <b>この問題：</b><br>
+              • <b>thinking about your future</b>（将来について考える）<br>
+              • were thinking / started thinking / began thinking すべて可能<br>
+              • 現在のことなのに過去形を使うのがポイント！<br><br>
+              <b>重要表現：</b><br>
+              • <b>think about ~</b>（～について考える）<br>
+              • <b>future</b>（将来・未来）</div>
+              <div class="box ref-box">📖 Grammar：It's (about/high) time + S + 過去形「もう～する時だ」<br>📖 think about ~「～について考える」</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">もし地球が太陽の周りを回るのをやめたら、何が起こるだろうか。<br>What would happen if the earth (　　　) (　　　) stop spinning around the sun?</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">実現不可能な仮定 → <span class="label">were to</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>were to / should</div>
+              <div class="jp">訳：もし地球が太陽の周りを回るのをやめたら、何が起こるだろうか。</div>
+              <div class="muted"><b>If S were to do</b> 実現可能性が極めて低い仮定。<br><br>
+              <b>were to の使い方：</b><br>
+              • <b>If S were to do</b> →「仮に～するとすれば」（ほぼありえない仮定）<br>
+              　例：If I <b>were to</b> win the lottery, I would travel the world.<br>
+              　（もし宝くじに当たったら、世界中を旅するだろう）<br>
+              • 地球が回転を止める → 物理的にありえない → <b>were to</b> が最適<br><br>
+              <b>重要表現：</b><br>
+              • <b>stop -ing</b>（～するのをやめる）<br>
+              • <b>spin around ~</b>（～の周りを回る）<br>
+              • <b>the sun</b>（太陽）/ <b>the earth</b>（地球）</div>
+              <div class="box ref-box">📖 Grammar：If S were to do「仮に～するとすれば」（実現不可能）<br>📖 stop -ing「～するのをやめる」/ spin「回る」</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">もし今朝よい朝食をとっていたら、今空腹でないだろうに。<br>If I (　　　) (　　　) a good breakfast this morning, I wouldn't be hungry now.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">if節：過去、主節：現在 → 混合仮定法</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>had had / had eaten</div>
+              <div class="jp">訳：もし今朝よい朝食をとっていたら、今空腹でないだろうに。</div>
+              <div class="muted">混合仮定法：if節（過去）＋主節（現在）</div>
+              <div class="box ref-box">📖 Grammar：混合仮定法</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="section">
+      <div class="section-header"><span>[3] 英文を下線部に注意して日本文に直しなさい (1)～(4)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext"><u>To see her face</u>, you would know she is a nice person.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div class="jp"><span class="label">訳：</span>彼女の顔を見れば、彼女がよい人だとわかるだろう。</div>
+              <div class="muted"><b>To do, S would ...</b> = <b>If S did, S would ...</b></div>
+              <div class="box ref-box">📖 Grammar：不定詞による仮定法（if節の代用）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext"><u>With a little more care</u>, you could have avoided the accident.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div class="jp"><span class="label">訳：</span>もう少し注意していれば、事故を避けられたのに。</div>
+              <div class="muted"><b>With ~</b> = <b>If you had had ~</b></div>
+              <div class="box ref-box">📖 Grammar：With/Without ＋名詞（if節の代用）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">I ran all the way to the station; <u>otherwise</u>, I could not have caught the train.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div class="jp"><span class="label">訳：</span>駅までずっと走った。そうでなければ電車に乗れなかっただろう。</div>
+              <div class="muted"><b>otherwise</b> 「そうでなければ」（if節の代用）</div>
+              <div class="box ref-box">📖 Grammar：otherwise = if not</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext"><u>Without typhoons</u>, Japan would be more comfortable to live in.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div class="jp"><span class="label">訳：</span>台風がなければ、日本はもっと住みやすいだろう。</div>
+              <div class="muted"><b>Without ~</b> = <b>If it were not for ~</b></div>
+              <div class="box ref-box">📖 Grammar：Without ＋名詞（if節の代用）</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section class="section">
+      <div class="section-header"><span>[4] 各組の文が同じ意味になるように（　）に適当な語を入れなさい (1)～(3)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            A scientist would not have drawn such a conclusion.<br>
+            If he (　　　) (　　　) a scientist, he would not have drawn such a conclusion.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">「科学者なら～しなかっただろう」→ 否定の仮定</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>had been</div>
+              <div class="jp">訳：もし彼が科学者だったら、そんな結論は出さなかっただろう。</div>
+              <div class="muted">仮定法過去完了の形。</div>
+              <div class="box ref-box">📖 Grammar：If he had been a scientist</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            But for your advice, I wouldn't have passed the exam.<br>
+            If it (　　　) not (　　　) (　　　) your advice, I wouldn't have passed the exam.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">But for ~</span> = <span class="label">If it had not been for ~</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>had ... been for</div>
+              <div class="jp">訳：あなたの助言がなければ、試験に合格しなかっただろう。</div>
+              <div class="muted"><b>But for ~</b> = <b>If it had not been for ~</b></div>
+              <div class="box ref-box">📖 Grammar：But for ~ = If it had not been for ~</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            I'm sorry I can't swim like a dolphin.<br>
+            I wish I (　　　) (　　　) like a dolphin.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">現在の願望 → <span class="label">I wish S 過去形</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>could swim</div>
+              <div class="jp">訳：イルカのように泳げたらいいのに。</div>
+              <div class="muted"><b>I wish I could do</b> 現在の願望</div>
+              <div class="box ref-box">📖 Grammar：I wish S + 過去形（現在の願望）</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 5 -->
+    <section class="section">
+      <div class="section-header"><span>[5] 日本文の意味に合うように［　］内の語句を並べなさい (1)～(4)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">私が言った通りにしていれば、成功しただろう。</div>
+          <div class="scramble">If you [ I, as, you, had, told, done ], you would have succeeded.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">as S 過去分詞</span> 「Sが～したように」</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>If you had done as I told you, you would have succeeded.</div>
+              <div class="muted"><b>as S 過去分詞</b> の語順に注意。</div>
+              <div class="box ref-box">📖 Grammar：as S + 過去分詞</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">彼女は小さな子どものように泣いた。</div>
+          <div class="scramble">She [ if, a little child, as, cried, she, were ].</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">as if she were</span> 仮定法</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>She cried as if she were a little child.</div>
+              <div class="muted"><b>as if + S + 過去形</b> の語順。</div>
+              <div class="box ref-box">📖 Grammar：as if S + were</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">あなたはそろそろ散髪する時だ。</div>
+          <div class="scramble">It [ is, you, had, a haircut, time, about ].</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">It's about time S 過去形</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>It is about time you had a haircut.</div>
+              <div class="muted"><b>It's about/high time + S + 過去形</b></div>
+              <div class="box ref-box">📖 Grammar：It's about time S + 過去形</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">注意深い運転手なら、そんな事故は起こさなかっただろう。</div>
+          <div class="scramble">A [ not, caused, driver, have, would, careful ] such an accident.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">仮定法過去完了 <span class="label">would not have caused</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>A careful driver would not have caused such an accident.</div>
+              <div class="muted">条件節省略の仮定法過去完了。</div>
+              <div class="box ref-box">📖 Grammar：S would not have 過去分詞</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 6: FOR COMMUNICATION -->
+    <section class="section">
+      <div class="section-header"><span>[6] FOR COMMUNICATION (1)～(2)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">A: Why don't you sing with us at our concert next week?<br>
+B: I wish I (　　　), but I'm really a poor singer.</div>
+          <div class="choices">a. can　b. could　c. couldn't　d. didn't</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">「できればいいのだが」→ <span class="label">I wish I could</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ b. could</span></div>
+              <div class="jp">訳：A「来週のコンサートで歌わない？」<br>B「歌えればいいんだけど、本当に下手なんだ。」</div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. can：</span>仮定法では過去形を使う</div>
+                <div><span class="wrong-choice">✗ c. couldn't：</span>否定形は文脈に合わない</div>
+                <div><span class="wrong-choice">✗ d. didn't：</span>意味が不自然</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：I wish I could「できればいいのに」</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">A: I didn't go to my piano lesson yesterday because my bike broke down.<br>
+B: You (　　　) mine. I wasn't using it.</div>
+          <div class="choices">a. borrowed　b. can borrow　c. could borrow　d. could have borrowed</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">過去の「～できたのに」→ <span class="label">could have 過去分詞</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. could have borrowed</span></div>
+              <div class="jp">訳：A「昨日自転車が壊れてピアノのレッスンに行けなかった。」<br>B「私のを借りればよかったのに。使ってなかったから。」</div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. borrowed：</span>過去形では仮定法にならない</div>
+                <div><span class="wrong-choice">✗ b. can borrow：</span>現在の可能性</div>
+                <div><span class="wrong-choice">✗ c. could borrow：</span>仮定法過去</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：could have 過去分詞「～できたのに（しなかった）」</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 発展問題1 -->
+    <section class="section">
+      <div class="section-header"><span>[発展問題1] 各文の（　）に入る最も適当なものをa～dから選びなさい (1)～(3)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">Kim is still upset about the bad score on her math test last week. If I were her, I (　　　) about it by now.【*早稲田大・文】</div>
+          <div class="choices">a. had forgotten　b. have forgotten　c. forget　d. would have forgotten</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">if節：現在（were）、主節：<span class="label">by now</span>（今まで）</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. would have forgotten</span></div>
+              <div class="jp">訳：キムは先週の数学のテストの悪い点数についてまだ動揺している。もし私が彼女なら、今頃は忘れているだろうに。</div>
+              <div class="muted">混合仮定法。if節は現在（were）、主節は「今までに」という過去から現在までの完了を表す。<br><br>
+              <b>この問題が難しい理由：</b><br>
+              • <b>If I were her</b>（もし私が彼女なら）← 現在の仮定<br>
+              • なのに、主節が <b>would have forgotten</b>（忘れているだろう）← 完了形<br>
+              • <b>by now</b>（今頃は・今までに）が超重要キーワード！<br>
+              • 普通の仮定法過去なら <b>would forget</b>（忘れるだろう）だけど、<br>
+              　<b>by now</b> があるから「今までの間に忘れ終わっているだろう」という完了のニュアンスが必要<br>
+              • つまり：「もし私が彼女の立場なら（現在）、もう忘れ終わっているだろう（現在までの完了）」<br><br>
+              <b>時を表す表現と仮定法：</b><br>
+              • <b>by now</b>（今頃は）→ would have 過去分詞<br>
+              • <b>now</b>（今）→ would + 動詞の原形<br>
+              • <b>then</b>（その時）→ would have 過去分詞<br><br>
+              <b>間違いやすい選択肢：</b><br>
+              • <b>forget</b>（忘れる）：単純現在形では仮定法にならない<br>
+              • <b>have forgotten</b>（忘れている）：助動詞がないので仮定法にならない<br>
+              • <b>had forgotten</b>（忘れていた）：if節の時制（were）と合わない</div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. had forgotten：</span>if節の時制と合わない</div>
+                <div><span class="wrong-choice">✗ b. have forgotten：</span>仮定法では助動詞が必要</div>
+                <div><span class="wrong-choice">✗ c. forget：</span>現在形は仮定法にならない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：混合仮定法 If S were（現在）, S would have 過去分詞 by now（現在までの完了）<br>📖 by now「今頃は・今までに」→ 完了形を使う重要表現</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">I recommended that (　　　) smoking.</div>
+          <div class="choices">a. he quit　b. he quits　c. he would quit　d. he had quit</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">提案・要求の that節 → <span class="label">(should) + 動詞原形</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ a. he quit</span></div>
+              <div class="jp">訳：私は彼に喫煙をやめるよう勧めた。</div>
+              <div class="muted"><b>recommend that S (should) do</b> 提案・要求の that節では原形。<br><br>
+              <b>提案・要求の動詞 + that節：</b><br>
+              • <b>recommend</b>（～を勧める）<br>
+              • <b>suggest</b>（～を提案する）<br>
+              • <b>insist</b>（～を主張する）<br>
+              • <b>demand</b>（～を要求する）<br>
+              • <b>propose</b>（～を提案する）<br>
+              • <b>request</b>（～を依頼する）<br>
+              • これらの動詞の後の that節では、主語が何であっても <b>動詞の原形</b> を使う<br><br>
+              <b>使い分け：</b><br>
+              • アメリカ英語：<b>that he quit</b>（原形のみ）← よく使われる<br>
+              • イギリス英語：<b>that he should quit</b>（should + 原形）<br>
+              • <b>三人称単数でも -s をつけない！</b> これが超重要<br><br>
+              <b>例文で確認：</b><br>
+              • I suggest that she <b>go</b> home.（彼女は家に帰るべきだと提案する）<br>
+              　※ goes ではない！<br>
+              • He insists that we <b>be</b> on time.（彼は私たちが時間通りにいるべきだと主張する）<br>
+              　※ are ではない！<br><br>
+              <b>間違いやすいポイント：</b><br>
+              • he quits（×）：三人称単数の -s は絶対につけない<br>
+              • he would quit（×）：would は使わない<br>
+              • he had quit（×）：過去完了は使わない</div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ b. he quits：</span>三人称単数現在形は不可</div>
+                <div><span class="wrong-choice">✗ c. he would quit：</span>would は使わない</div>
+                <div><span class="wrong-choice">✗ d. he had quit：</span>過去完了は不可</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：recommend/suggest/insist/demand that S (should) + 動詞の原形<br>📖 主語が三人称単数でも -s をつけない！</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">Mary talks about the car accident as if she (　　　) it.【*明治大・文】</div>
+          <div class="choices">a. witnesses　b. would witness　c. has witnessed　d. had witnessed</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">主節 talks（現在）より前 → <span class="label">had witnessed</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. had witnessed</span></div>
+              <div class="jp">訳：メアリーはまるで自分がその自動車事故を目撃したかのように話す。</div>
+              <div class="muted">talks（現在）より前の時点 → <b>as if S had 過去分詞</b></div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. witnesses：</span>現在形では仮定法にならない</div>
+                <div><span class="wrong-choice">✗ b. would witness：</span>形が不適切</div>
+                <div><span class="wrong-choice">✗ c. has witnessed：</span>仮定法では過去完了</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：as if S + had 過去分詞</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 発展問題2 -->
+    <section class="section">
+      <div class="section-header"><span>[発展問題2] 日本文の意味に合うように［　］内の語句を並べなさい (1)～(3)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">もし転ばなかったら、レースに勝てたのに。【*実践女子大・文】</div>
+          <div class="scramble">I [ could, fallen, had, have, I, if, not, race, the, won ].</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">仮定法過去完了 <span class="label">If I had not fallen</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>I could have won the race if I had not fallen.</div>
+              <div class="jp">訳：もし転ばなかったら、レースに勝てたのに。</div>
+              <div class="muted">仮定法過去完了の語順に注意。</div>
+              <div class="box ref-box">📖 Grammar：If S had not 過去分詞, S could have 過去分詞</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">彼が韓国語を話すのを聞いたら韓国人だと思うだろう。【*近畿大】</div>
+          <div class="scramble">If one [ hear, him, Korean, speak, to, were ], one would take him for a Korean.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">If one were to hear him speak</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>If one were to hear him speak Korean, one would take him for a Korean.</div>
+              <div class="jp">訳：もし彼が韓国語を話すのを聞いたら、韓国人だと思うだろう。</div>
+              <div class="muted"><b>take A for B</b> 「AをBと思う」/ <b>hear O do</b> 「Oが～するのを聞く」</div>
+              <div class="box ref-box">📖 Grammar：If S were to do / take A for B</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">気分が悪いと知っていたら、来るように頼まなかったのに。【*青山学院大学】</div>
+          <div class="scramble">[ I, he, not, had, was, known ] feeling well, I would never have asked him to come.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">If I had known (that) he was not</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>If I had known (that) he was not feeling well, I would never have asked him to come.</div>
+              <div class="jp">訳：もし彼が気分が悪いと知っていたら、来るように頼まなかっただろう。</div>
+              <div class="muted">仮定法過去完了。that節内は過去形 was を使う。</div>
+              <div class="box ref-box">📖 Grammar：If I had known that S + 過去形</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 発展問題3 -->
+    <section class="section">
+      <div class="section-header"><span>[発展問題3] 各下線部の誤りを1か所指摘し、正しい語句を答えなさい (1)～(2)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">If you <u>a. did</u> the job <u>b. properly</u>, there would have been no need <u>c. for</u> all these <u>d. costly</u> repairs.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">主節が <span class="label">would have been</span> → if節も過去完了</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>a. did → <b>had done</b></div>
+              <div class="jp">訳：もしあなたが仕事をきちんとしていたら、これらの高額な修理は不要だっただろう。</div>
+              <div class="muted">主節が仮定法過去完了なので、if節も <b>had done</b> にする。</div>
+              <div class="box ref-box">📖 Grammar：時制の一致（仮定法過去完了）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext"><u>a. Each time</u> I go on a business trip <u>b. abroad</u>, I can't help wishing I <u>c. can</u> speak <u>d. better English</u>.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">I wish S 過去形</span> 仮定法</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>c. can → <b>could</b></div>
+              <div class="jp">訳：出張で海外に行くたびに、もっと上手に英語が話せたらいいのにと思わずにいられない。</div>
+              <div class="muted"><b>I wish S + 過去形</b> の形。can → could にする。</div>
+              <div class="box ref-box">📖 Grammar：I wish S + 過去形</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 4 日本文を英文に直しなさい -->
+    <section class="section">
+      <div class="section-header"><span>[4] 日本文を英文に直しなさい (1)～(2)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">私が君だったら、そうしない。<br>Were　　　　, I　　　　.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">If省略の倒置 <span class="label">Were I you</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>Were I you, I would not do so / that.</div>
+              <div class="jp">訳：もし私が君なら、そうしないだろう。</div>
+              <div class="muted"><b>If I were you</b> の if を省略すると <b>Were I you</b> になる。</div>
+              <div class="box ref-box">📖 Grammar：Were S ～ = If S were ～</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">明日晴れたら、散歩に行きます。</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">単純条件文（仮定法ではない）→ <span class="label">If it is fine</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>If it is fine tomorrow, I will go for a walk.</div>
+              <div class="jp">訳：もし明日晴れたら、散歩に行きます。</div>
+              <div class="muted">実現可能な条件なので、仮定法ではなく単純条件文（直説法）を使う。</div>
+              <div class="box ref-box">📖 Grammar：単純条件文 If S + 現在形, S + will do</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>© Tetsuya's Grammar Gym｜Teal & Orange edition</footer>
+
+<script>
+(function(){
+  function open(el){ el.classList.add('open'); }
+  function close(el){ el.classList.remove('open'); }
+
+  document.addEventListener('click', function(e){
+    // Hint/Answer buttons
+    var btn = e.target.closest('[data-toggle]');
+    if(btn){
+      var card = btn.closest('.qcard');
+      var key = btn.getAttribute('data-toggle');
+      var block = card.querySelector('.collapsible[data-block="'+key+'"]');
+      if(block){
+        if(block.classList.contains('open')) close(block);
+        else open(block);
+      }
+      return;
+    }
+
+    // Section headers
+    var header = e.target.closest('.section-header');
+    if(header){
+      var body = header.nextElementSibling;
+      if(header.classList.contains('open')){
+        header.classList.remove('open');
+        close(body);
+      } else {
+        header.classList.add('open');
+        open(body);
+        var blocks = body.querySelectorAll('.collapsible');
+        for(var i=0; i<blocks.length; i++) close(blocks[i]);
+      }
+      return;
+    }
+
+    // Toolbar buttons
+    var action = e.target.closest('[data-action]');
+    if(action){
+      var act = action.getAttribute('data-action');
+      var headers = document.querySelectorAll('.section-header');
+      if(act === 'open-all'){
+        for(var i=0; i<headers.length; i++){
+          headers[i].classList.add('open');
+          var body = headers[i].nextElementSibling;
+          open(body);
+          var blocks = body.querySelectorAll('.collapsible');
+          for(var j=0; j<blocks.length; j++) close(blocks[j]);
+        }
+      }
+      if(act === 'close-all'){
+        for(var i=0; i<headers.length; i++){
+          headers[i].classList.remove('open');
+          close(headers[i].nextElementSibling);
+        }
+      }
+      if(act === 'download'){
+        var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        var blob = new Blob([html], {type:'text/html'});
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'grammar_breakdown_12_仮定法_COMPLETE.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
