@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>実戦問題3｜Grammar Breakdown</title>
+  <style>
+    :root{
+      --bg1:#f97316; --bg2:#ea580c;
+      --teal:#115e59; --tealLight:#134e4a;
+      --ink:#1f2937; --muted:#6b7280;
+      --card:#ffffff; --soft:#fff7ed;
+      --hint:#fef3c7; --hintBorder:#f59e0b;
+      --ans:#ccfbf1; --ansBorder:#0d9488;
+      --wrong:#fef2f2; --wrongBorder:#ef4444;
+      --blue:#0891b2; --blueSoft:#ecfeff;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:"Segoe UI","Hiragino Kaku Gothic ProN","Meiryo",system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--ink);
+      line-height:1.8;
+      padding:16px;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:0 16px 50px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff;
+      padding:28px 24px;
+      position:sticky; top:0; z-index:10;
+    }
+    header h1{font-size:24px;margin-bottom:6px}
+    header p{opacity:.95;font-size:14px}
+    .toolbar{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border:0; cursor:pointer; font-weight:700;
+      padding:8px 14px; border-radius:999px;
+      transition:.15s transform,.15s opacity,.15s box-shadow;
+      box-shadow:0 3px 10px rgba(0,0,0,.16);
+      font-size:13px;
+    }
+    .btn:hover{transform:translateY(-1px); opacity:.96}
+    .btn-ghost{background:#fff;color:#111827}
+    .btn-dark{background:#0c4a4a;color:#fff}
+    .content{padding:18px}
+    .section{
+      border:2px solid #99f6e4; border-radius:var(--radius);
+      overflow:hidden; margin:14px 0; background:var(--soft);
+    }
+    .section-header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff; padding:14px 16px; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      font-weight:800; user-select:none;
+    }
+    .section-header .arrow{transition:.2s transform}
+    .section-header.open .arrow{transform:rotate(180deg)}
+    .section-body{
+      display:none;
+      padding:14px;
+    }
+    .section-body.open{display:block;}
+    .qcard{
+      background:#fff; border-radius:12px; padding:14px 14px 10px;
+      margin:10px 0 14px; border-left:5px solid var(--teal);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
+    }
+    .qnum{font-weight:900;color:var(--teal)}
+    .qtext{margin-top:6px}
+    .choices{margin-top:6px;padding-left:8px;color:#111827;font-size:14px}
+    .scramble{
+      margin-top:6px;padding:8px 10px;background:#f0fdfa;
+      border-radius:8px;font-family:monospace;font-size:14px;
+      border:1px solid #99f6e4;
+      word-wrap:break-word;
+    }
+    .button-row{
+      display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;
+    }
+    .hint-btn{
+      background:linear-gradient(135deg,#fcd34d,#f59e0b);color:#78350f;
+    }
+    .ans-btn{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));color:#fff;
+    }
+    .collapsible{display:none;margin-top:6px;}
+    .collapsible.open{display:block;}
+    .box{
+      border-radius:10px; padding:10px 12px; font-size:14px;
+      border-left:4px solid; background:#fff;
+    }
+    .hint-box{background:var(--hint);border-left-color:var(--hintBorder)}
+    .ans-box{background:var(--ans);border-left-color:var(--ansBorder)}
+    .wrong-box{background:var(--wrong);border-left-color:var(--wrongBorder);margin-top:8px}
+    .ref-box{background:var(--blueSoft);border-left-color:var(--blue);margin-top:8px}
+    .label{font-weight:800}
+    .muted{color:var(--muted);font-size:13px}
+    .jp{margin-top:6px;font-style:italic}
+    footer{
+      padding:18px; text-align:center; color:#fff;
+      font-size:13px; opacity:.95;
+    }
+    /* 下線＋a〜d ラベル（誤り訂正用） */
+    .err-under{
+      border-bottom:2px solid #fb923c;
+      padding:0 1px 1px;
+      position:relative;
+    }
+    .err-under::after{
+      content: attr(data-label);
+      position:absolute;
+      top:-1.2em;
+      left:0;
+      font-size:11px;
+      font-weight:700;
+      color:#b45309;
+    }
+    .wrong-box ul{margin-left:1.1em;padding-left:0}
+    .wrong-box li{margin-bottom:2px}
+    @media (max-width:768px){
+      header h1{font-size:20px}
+      .content{padding:12px}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📚 実戦問題3｜Grammar Breakdown</h1>
+    <p>比較・関係詞・特殊構文｜DUALSCOPE 実戦問題３ベース</p>
+    <div class="toolbar">
+      <button class="btn btn-ghost" data-action="open-all">全部ひらく</button>
+      <button class="btn btn-ghost" data-action="close-all">全部とじる</button>
+      <button class="btn btn-dark" data-action="download">⬇️ このページをダウンロード</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Section A -->
+    <section class="section">
+      <div class="section-header">
+        <span>[A] １ 語句選択 (1)〜(10)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 1-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            The new concert hall will be (　　　) as the old one.  
+            <div class="choices">
+              a. as three times large　／　b. three times larger　／　c. three times as large　／　d. as large three times
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「AはBのX倍の大きさ」は  
+              <span class="label">A is X times as 形容詞 as B</span> の形。  
+              ➜ X の位置と as ～ as に注目。
+            </div>
+          </div>
+
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>c. three times as large</div>
+              <div class="jp">訳：新しいコンサートホールは古いものの3倍の大きさになるだろう。</div>
+              <div class="muted">
+                <b>three times as large as</b> で「～の3倍の大きさ」。  
+                形：<b>A is three times as large as B.</b>
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. as three times large</b>：語順が逆。<b>as large as</b> の間に three times を入れる。</li>
+                  <li><b>b. three times larger</b>：日常英語ではOKなこともあるが，教科書文型では as ～ as 型を狙っているので ✗。</li>
+                  <li><b>c. three times as large</b>：◎ three times as large as the old one で定型表現。</li>
+                  <li><b>d. as large three times</b>：as large as になっていない＆three times の位置が不自然。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：X times as 形容詞 as ～「～のX倍…」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            (　　　) we need now is some good advice from experts.  
+            <div class="choices">
+              a. Which　／　b. Whether　／　c. That　／　d. What
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              先行詞なしで「～するもの／こと」を一語で言うなら  
+              <span class="label">関係代名詞 what</span>。  
+              what = the thing(s) which
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>d. What</div>
+              <div class="jp">訳：今私たちに必要なのは，専門家からのよい助言だ。</div>
+              <div class="muted">
+                <b>What we need now</b> ＝ the thing(s) which we need now。  
+                文全体で主語のかたまりになっている。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. Which</b>：which は「どちら」や「どの～」で，先行詞が必要。文頭で主語には使えない。</li>
+                  <li><b>b. Whether</b>：「～かどうか」。後ろに S V が必要で，this pattern には合わない。</li>
+                  <li><b>c. That</b>：接続詞 that は後ろに文が来るが，ここは「もの／こと」が必要なのでミスマッチ。</li>
+                  <li><b>d. What</b>：◎ 「～するもの／こと」を自分で含んでいるので先行詞いらず。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：what S V ＝ the thing(s) which S V
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            I will provide you with such things (　　　) you may need.  
+            <div class="choices">
+              a. and　／　b. which　／　c. what　／　d. as
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「such ～ as …」＝「…するような～」  
+              <span class="label">such + 名詞 + as S V</span> をまるごと暗記。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>d. as</div>
+              <div class="jp">訳：あなたが必要とするかもしれないような物を，私が用意しましょう。</div>
+              <div class="muted">
+                <b>such things as you may need</b> で「あなたが必要とするようなもの」。  
+                as が関係代名詞として things を受けているイメージ。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. and</b>：接続詞「そして」。such things and you may need ～ は文法的に崩壊。</li>
+                  <li><b>b. which</b>：such things which you may need は不自然。慣用的に as を使う。</li>
+                  <li><b>c. what</b>：what は先行詞を含むので，<b>such things</b> と二重になりNG。</li>
+                  <li><b>d. as</b>：◎ 慣用表現 such ... as S V の as。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：such 名詞 as S V「SがVするような名詞」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            It is said that nothing is more important than health, but some people think that wealth is (　　　) important of the two.  
+            <div class="choices">
+              a. the more　／　b. the less　／　c. more　／　d. most
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「2つのうちで～なほう」は  
+              <span class="label">the + 比較級 + of the two</span>。  
+              the most は「3つ以上」のとき。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>a. the more</div>
+              <div class="jp">訳：健康ほど大切なものはないと言われるが，2つのうちで富のほうがより大切だと考える人もいる。</div>
+              <div class="muted">
+                wealth is <b>the more important of the two</b>「2つのうちで，より重要なほう」。  
+                of the two が見えたら the 比較級 をセットで思い出す。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. the more</b>：◎ the more important of the two で正解。</li>
+                  <li><b>b. the less</b>：意味が逆「より大切でないほう」。文意と合わない。</li>
+                  <li><b>c. more</b>：the がないので「2つのうちで」の形にならない。</li>
+                  <li><b>d. most</b>：the most important of the two は基本避ける（3つ以上のとき）。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：the 比較級 of the two「2つのうち，より～なほう」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(5) -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">
+            She can speak as (　　　) as six languages very well.  
+            <div class="choices">
+              a. much　／　b. many　／　c. far　／　d. good
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「～も（数が多くてびっくり）」  
+              数えられる名詞 → <span class="label">as many as ＋数詞</span>。  
+              数えられない名詞 → as much as。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>b. many</div>
+              <div class="jp">訳：彼女は6か国語もとても上手に話すことができる。</div>
+              <div class="muted">
+                <b>as many as six languages</b>「6か国語も」。  
+                languages は「数えられる」から many を選ぶ。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. much</b>：不可算名詞用。much water など。</li>
+                  <li><b>b. many</b>：◎ as many as six languages で「6か国語も」。</li>
+                  <li><b>c. far</b>：far は比較級を強める（far better など）。ここでは不適。</li>
+                  <li><b>d. good</b>：形容詞 good は動詞 speak と一緒に使うなら well にする必要あり。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：as many as ～「～も（数）」／as much as ～「～も（量）」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(6) -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            Last night Cindy told me about her new job in Tokyo, (  　　) she appears to be enjoying very much.  
+            <div class="choices">
+              a. which　／　b. where　／　c. what　／　d. when
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              コンマ＋関係詞 → <span class="label">非制限用法</span>。  
+              先行詞は「もの」(her new job) だから which を考える。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>a. which</div>
+              <div class="jp">訳：昨夜シンディは東京での新しい仕事について話してくれたが，彼女はその仕事をとても楽しんでいるようだ。</div>
+              <div class="muted">
+                <b>, which she appears to be enjoying very much</b> で「彼女がとても楽しんでいるようなその仕事で」。  
+                追加情報の非制限用法。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. which</b>：◎ 先行詞 job（物）を受ける非制限用法。</li>
+                  <li><b>b. where</b>：場所を表す関係副詞。「東京で」のような場所を説明するときに使うが，ここは job を説明している。</li>
+                  <li><b>c. what</b>：先行詞を含むので，前の job と二重になってNG。</li>
+                  <li><b>d. when</b>：時を表す関係副詞。意味が合わない。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：非制限用法の , which ～（コンマ＋which）
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(7) -->
+        <div class="qcard">
+          <div class="qnum">(7)</div>
+          <div class="qtext">
+            The Shinano River is longer than (　　　) in Japan.  
+            <div class="choices">
+              a. all of the rivers　／　b. another river　／　c. every river　／　d. any other river
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「Aは他のどのBよりも～だ」→  
+              <span class="label">A 比較級 than any other B</span>。  
+              A 自身は「other」に含めない点に注意。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>d. any other river</div>
+              <div class="jp">訳：信濃川は，日本のほかのどの川よりも長い。</div>
+              <div class="muted">
+                <b>longer than any other river in Japan</b> で「日本の他のどの川よりも長い」。  
+                Shinano River は「other」には含めない。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. all of the rivers</b>：longer than all of the rivers in Japan だと「信濃川も含めた全部より長い」＝自己比較でNG。</li>
+                  <li><b>b. another river</b>：than another river in Japan だと「ほかの1本の川より長い」だけになり意味が弱すぎる。</li>
+                  <li><b>c. every river</b>：a と同じで「全ての川（自分も含む）」になり，やはり自己比較になる。</li>
+                  <li><b>d. any other river</b>：◎ 「他のどの川よりも」で高校英語の鉄板表現。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：比較級 than any other 単数名詞
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(8) -->
+        <div class="qcard">
+          <div class="qnum">(8)</div>
+          <div class="qtext">
+            Light is to plants (　　　) food is to animals.  
+            <div class="choices">
+              a. if　／　b. what　／　c. whether　／　d. while
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              慣用表現：<br>
+              <span class="label">A is to B what C is to D</span>  
+              ＝「AとBの関係は，CとDの関係と同じだ」。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>b. what</div>
+              <div class="jp">訳：光の植物に対する関係は，食物の動物に対する関係と同じである。</div>
+              <div class="muted">
+                <b>Light is to plants what food is to animals.</b>  
+                「植物にとっての光 = 動物にとっての食物」のような対応関係を表す。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. if</b>：「もし～なら」。条件を表す接続詞で，ここでは不自然。</li>
+                  <li><b>b. what</b>：◎ A is to B what C is to D の定型。</li>
+                  <li><b>c. whether</b>：「～かどうか」。疑問のニュアンスでここには合わない。</li>
+                  <li><b>d. while</b>：「～する一方で」。対比はあるが，文型が合わない。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：A is to B what C is to D
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(9) -->
+        <div class="qcard">
+          <div class="qnum">(9)</div>
+          <div class="qtext">
+            She would not accept more money (　　　) she really needed.  
+            <div class="choices">
+              a. than　／　b. that　／　c. what　／　d. whom
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              比較の than が，関係詞っぽく「～する以上の…」をつなげるイメージ。  
+              more ＋名詞＋than S V ～。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>a. than</div>
+              <div class="jp">訳：彼女は本当に必要とする以上のお金は受け取ろうとしなかった。</div>
+              <div class="muted">
+                <b>more money than she really needed</b>  
+                =「彼女が本当に必要としていた以上のお金」。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. than</b>：◎ 比較の基本パターン more ... than S V。</li>
+                  <li><b>b. that</b>：接続詞／関係代名詞。そのままでは構造が不自然。</li>
+                  <li><b>c. what</b>：先行詞を含むので more money what she needed とは言えない。</li>
+                  <li><b>d. whom</b>：人を受ける目的格の関係代名詞。money と合わない。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：比較級＋than S V ～「SがVする以上に／よりも」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(10) -->
+        <div class="qcard">
+          <div class="qnum">(10)</div>
+          <div class="qtext">
+            This is (　　　) I learn new words when I study for a test.  
+            <div class="choices">
+              a. how　／　b. way　／　c. what　／　d. which
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「こうやってSはVする」＝  
+              <span class="label">This is how S V ～.</span>  
+              the way I V もOKだが，受験では how が頻出。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>a. how</div>
+              <div class="jp">訳：こうやって私はテスト勉強のときに新しい単語を覚える。</div>
+              <div class="muted">
+                <b>This is how I learn new words.</b> をチャンクで暗記。  
+                how は「やり方」を表している。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">選択肢分析：</div>
+                <ul>
+                  <li><b>a. how</b>：◎ This is how S V「こうやってSはVする」。</li>
+                  <li><b>b. way</b>：This is way I learn ～ は ✗。the way I learn ～ ならOKだが the が必要。</li>
+                  <li><b>c. what</b>：what I learn ～ だと「何を学ぶか」になって意味が変わる。</li>
+                  <li><b>d. which</b>：which I learn ～ も先行詞との関係が合わず不自然。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：This is how S V ～「こうやってSはVする」
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section B -->
+    <section class="section">
+      <div class="section-header">
+        <span>[B] ２ 書きかえ (1)〜(4)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 2-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            Susan’s intelligence is superior to her sister’s.  
+            Susan’s sister is (　　　　　) (　　　　　) than she is.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋解説</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              be superior to A「Aより優れている」  
+              → 比較の向きをひっくり返すと <span class="label">be less 形容詞 than ～</span>。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>less intelligent</div>
+              <div class="jp">訳：スーザンの姉（妹）は，スーザンほど頭がよくない。</div>
+              <div class="muted">
+                Susan is superior to her sister in intelligence.  
+                → Her sister is <b>less intelligent than</b> Susan.  
+                「～に優れている」⇔「～ほど優れていない」をセットで覚える。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">書きかえステップ：</div>
+                <ul>
+                  <li>① intelligence（名詞）→ intelligent（形容詞）に変える。</li>
+                  <li>② superior to A「Aより優れている」→ less ～ than A「Aほど～でない」に反転。</li>
+                  <li>③ 主語を「妹（姉）」側に変えて意味が崩れていないか確認。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：superior to A ⇔ less 形容詞 than A
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            He is not so much a politician as businessman.  
+            He is a businessman (　　　　　) (　　　　　) a politician.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋解説</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              not so much A as B「AというよりむしろB」  
+              → <span class="label">B rather than A</span> に書き換えできる。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>rather than</div>
+              <div class="jp">訳：彼は政治家というよりむしろ実業家だ。</div>
+              <div class="muted">
+                He is not so much a politician as a businessman.  
+                = He is a businessman <b>rather than</b> a politician.  
+                AよりもBというニュアンスで「どちら寄りか」を表す表現。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">書きかえステップ：</div>
+                <ul>
+                  <li>① not so much A as B を「B rather than A」にひっくり返す。</li>
+                  <li>② B 側（businessman）を前に，A 側（politician）を後ろに置く。</li>
+                  <li>③ a をどちらにも付けるかどうかは文脈次第だが，意味は同じ。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：not so much A as B ⇔ B rather than A
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            However long it takes, I will be waiting for you.  
+            No (　　　　　) (　　　　　) (　　　　　) it takes, I will be waiting for you.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋解説</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              however ＋形容詞[副詞] ～ ＝  
+              <span class="label">no matter how ＋形容詞[副詞] ～</span> に書き換え可能。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>matter how long</div>
+              <div class="jp">訳：どれだけ時間がかかっても，私はあなたを待っています。</div>
+              <div class="muted">
+                however long it takes  
+                ⇔ <b>no matter how long</b> it takes  
+                「どれだけ長く時間がかかろうとも」という譲歩の意味。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">書きかえステップ：</div>
+                <ul>
+                  <li>① however long → no matter how long に変える。</li>
+                  <li>② no と matter は必ずセットで，「問題にしない」というイメージ。</li>
+                  <li>③ 文頭でも文中でも意味は同じ（ただしカンマの位置に注意）。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：however ＋形容詞 ⇔ no matter how ＋形容詞
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            She attended the party for that reason.  
+            (　　　　　) is (　　　　　) she attended the party.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋解説</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「そのような理由でSはVした」→  
+              <span class="label">That is why S V ～.</span> に書き換え可能。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>That / why</div>
+              <div class="jp">訳：そういう理由で彼女はそのパーティーに出席したのだ。</div>
+              <div class="muted">
+                for that reason she attended the party.  
+                = <b>That is why</b> she attended the party.  
+                「そういうわけでSはVする」を言うときの定番表現。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">書きかえステップ：</div>
+                <ul>
+                  <li>① that reason → That にして文頭へ。</li>
+                  <li>② 「理由」を表す why を用いて That is why S V の形にする。</li>
+                  <li>③ That is the reason why ～ と言うこともあるが，ここではシンプルな型が狙い。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：That is why S V ～「そういう理由でSはVする」
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section C -->
+    <section class="section">
+      <div class="section-header">
+        <span>[C] ３ 並べかえ (1)〜(6)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 3-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            スコットはプレゼンをする必要があるときはいつも緊張する。<br>
+            Scott always gets (　　　) (　　　) (　　　) (　　　) (　　　) (　　　).
+          </div>
+          <div class="scramble">
+            [ a. give　　b. has to　　c. nervous　　d. whenever　　e. a presentation　　f. he ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋手順</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「～するときはいつも」→ 複合関係副詞 <span class="label">whenever</span>。  
+              get nervous「緊張する」もセットで覚える。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>Scott always gets <b>nervous whenever he has to give a presentation</b>.</div>
+              <div class="jp">訳：スコットはプレゼンをしなければならないときはいつも緊張する。</div>
+              <div class="muted">
+                get nervous「緊張する」＋ whenever S V「SがVするときはいつでも」。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">並べかえの手順：</div>
+                <ul>
+                  <li>① 意味のカタマリを作る：get nervous／whenever he has to give a presentation。</li>
+                  <li>② whenever のあとに「S＋V」＝ he has to を置く。</li>
+                  <li>③ give a presentation はひとかたまりで後ろへ。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：whenever S V ～「～するときはいつでも」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            彼女は黙っていたので，かえって私たちの注意をひいた。<br>
+            She attracted (　　　) (　　　) (　　　) (　　　) (　　　) she was silent.
+          </div>
+          <div class="scramble">
+            [ a. more　　b. all　　c. because　　d. our attention　　e. the ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋手順</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「～なのでいっそう…」→  
+              <span class="label">(all) the 比較級 because ～</span> の形。  
+              all the more ～ because ... を覚える。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>She attracted <b>all the more our attention because</b> she was silent.</div>
+              <div class="jp">訳：彼女は黙っていたので，かえって私たちの注意をいっそう引いた。</div>
+              <div class="muted">
+                all the more ～ because ...「…だからいっそう～」。  
+                「黙っていたからこそ，逆に目立つ」というニュアンス。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">並べかえの手順：</div>
+                <ul>
+                  <li>① all ＋ the ＋ more をセットで置く。</li>
+                  <li>② attracted our attention「私たちの注意を引いた」→ our attention は動詞の直後へ。</li>
+                  <li>③ because 以下に「理由」の文 she was silent を入れる。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：(all) the 比較級 because ～「～だからいっそう…」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            2人は知り合ってからたったの3か月で結婚した。<br>
+            They got married (　　　) (　　　) (　　　) (　　　) (　　　) (　　　) they met each other.
+          </div>
+          <div class="scramble">
+            [ a. after　　b. months　　c. more　　d. no　　e. than　　f. three ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋手順</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「わずか～」→ <span class="label">no more than ＋数詞</span>。  
+              「～してから…後に」→ after S V ～。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>They got married <b>no more than three months after</b> they met each other.</div>
+              <div class="jp">訳：2人は知り合ってからわずか3か月で結婚した。</div>
+              <div class="muted">
+                <b>no more than three months</b>「たった3か月」。  
+                after they met each other「出会ってから」。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">並べかえの手順：</div>
+                <ul>
+                  <li>① no more than で「わずか～」のかたまりを作る。</li>
+                  <li>② three months のあとに after をつなげる。</li>
+                  <li>③ after のあとに「2人が出会った」という文を置く。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：no more than 数詞「わずか～」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            宇宙旅行を楽しめる時代がすぐにやってくるでしょう。<br>
+            The time will (　　　) (　　　) (　　　) (　　　) (　　　) (　　　) (　　　).
+          </div>
+          <div class="scramble">
+            [ a. space　　b. enjoy　　c. travel　　d. come soon　　e. can　　f. when　　g. you ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋手順</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「SがVする時が来る」→  
+              <span class="label">The time will come when S V ～.</span> の型をそのまま使う。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>The time will <b>come soon when you can enjoy space travel</b>.</div>
+              <div class="jp">訳：宇宙旅行を楽しめる時代がすぐにやってくるでしょう。</div>
+              <div class="muted">
+                The time will come when ...「…する時が来る」。  
+                you can enjoy space travel「宇宙旅行を楽しむことができる」。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">並べかえの手順：</div>
+                <ul>
+                  <li>① The time will come を先に決める。</li>
+                  <li>② soon を come のすぐあとに置く（come soon）。</li>
+                  <li>③ when 以下に you can enjoy space travel を入れる。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：the time will come when S V ～「SがVする時がやって来る」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(5) -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">
+            私たちが有罪だと思った人は，実は無罪かもしれない。<br>
+            The (　　　) (　　　) (　　　) (　　　) (　　　) (　　　) might actually be innocent.
+          </div>
+          <div class="scramble">
+            [ a. guilty　　b. man　　c. thought　　d. was　　e. we　　f. who ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋手順</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              主語は「有罪だと思った人」。  
+              The man who ～ was guilty が主語のかたまりになる。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>The <b>man who we thought was guilty</b> might actually be innocent.</div>
+              <div class="jp">訳：私たちが有罪だと思ったその男は，実は無罪かもしれない。</div>
+              <div class="muted">
+                who we thought was guilty  
+                「私たちが有罪だと思った（男）」で man を修飾する関係節。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">並べかえの手順：</div>
+                <ul>
+                  <li>① The man を作って，主語の中心にする。</li>
+                  <li>② man を説明する関係節 who we thought was guilty を後ろにつける。</li>
+                  <li>③ might actually be innocent の位置はそのまま主語のあと。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：関係代名詞節で主語を長くするパターンに慣れる
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(6) -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            悪天候で旅行が取りやめになるほど失望することはない。<br>
+            Nothing (　　　) (　　　) (　　　) (　　　) (　　　) (　　　) due to bad weather.
+          </div>
+          <div class="scramble">
+            [ a. as　　b. a trip　　c. disappointing　　d. is　　e. to cancel　　f. so ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋手順</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「Aほど…なものはない」→  
+              <span class="label">Nothing is so[as] 形容詞 as A</span>。  
+              ここでは A = to cancel a trip due to bad weather。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span>Nothing <b>is so disappointing as to cancel a trip</b> due to bad weather.</div>
+              <div class="jp">訳：悪天候で旅行を取りやめるほど失望することはない。</div>
+              <div class="muted">
+                Nothing is so disappointing as A.  
+                → どんなこともAほどがっかりさせない。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">並べかえの手順：</div>
+                <ul>
+                  <li>① is so disappointing as を先に作る。</li>
+                  <li>② to cancel a trip をまとめ，後ろに due to bad weather を付ける。</li>
+                  <li>③ Nothing が主語，全体で「Aほど失望させるものはない」という構造になる。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：Nothing is so[as] 形容詞 as A
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section D -->
+    <section class="section">
+      <div class="section-header">
+        <span>[D] ４ 誤り訂正 (1)〜(6)</span><span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 4-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            At the meeting, Mr. Parker
+            <span class="err-under" data-label="a">told me about his new project</span>,
+            <span class="err-under" data-label="b">that</span>
+            <span class="err-under" data-label="c">he</span>
+            started with his friends two years
+            <span class="err-under" data-label="d">ago</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              コンマのあとで「彼の新しい企画」を説明しているので  
+              <span class="label">非制限用法の関係代名詞</span>。  
+              非制限用法では <b>that</b> は使えない。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">誤り：</span>b <b>that</b> → <b>which</b></div>
+              <div class="jp">訳：会議でパーカー氏は，友人たちと2年前に始めた新しい企画について私に話してくれた。</div>
+              <div class="muted">
+                , which he started ... が正しい形。  
+                非制限用法（コンマ付き）では <b>which / who</b> はOKだが <b>that</b> はNG。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">a〜d それぞれのポイント：</div>
+                <ul>
+                  <li><b>a (told me about his new project)</b>：動詞 told の目的語として自然。「新しい企画について話した」。</li>
+                  <li><b>b (that)</b>：非制限用法では使えないので誤り。<b>which</b> にする。</li>
+                  <li><b>c (he)</b>：関係代名詞節の主語としてOK。「彼が始めた企画」。</li>
+                  <li><b>d (ago)</b>：two years ago「2年前に」で正しい表現。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：非制限用法では that は使わない（which / who を使う）
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            <span class="err-under" data-label="a">The older you</span>
+            <span class="err-under" data-label="b">get</span>,
+            the
+            <span class="err-under" data-label="c">more it becomes difficult</span>
+            to get
+            <span class="err-under" data-label="d">enough sleep</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「～すればするほど…」→  
+              <span class="label">The 比較級 S V, the 比較級 S' V'</span>。  
+              more と difficult はセットで <b>more difficult</b> にする。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">誤り：</span>
+                c <b>more it becomes difficult</b> → <b>more difficult it becomes</b>
+              </div>
+              <div class="jp">訳：年をとればとるほど，十分な睡眠をとるのがますます難しくなる。</div>
+              <div class="muted">
+                比較級のかたまりは <b>more ＋形容詞</b>。  
+                more と difficult を離さずに，<b>more difficult it becomes</b> と並べる。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">a〜d それぞれのポイント：</div>
+                <ul>
+                  <li><b>a (The older you)</b>：The＋比較級で「年をとればとるほど」。語順はOK。</li>
+                  <li><b>b (get)</b>：get old「年をとる」の動詞で問題なし。</li>
+                  <li><b>c (more it becomes difficult)</b>：more と difficult が離れて不自然。<b>more difficult it becomes</b> に修正。</li>
+                  <li><b>d (enough sleep)</b>：enough sleep「十分な睡眠」。名詞句として正しい。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：The 比較級 S V, the 比較級 S' V'
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            The company
+            <span class="err-under" data-label="a">which</span>
+            <span class="err-under" data-label="b">products have just been</span>
+            released
+            <span class="err-under" data-label="c">expects more profit</span>
+            than
+            <span class="err-under" data-label="d">last year</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              「その会社の製品」→ 会社と製品の「所有」の関係。  
+              所有格の関係代名詞 <span class="label">whose</span> が必要。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">誤り：</span>
+                a <b>which</b> → <b>whose</b>
+              </div>
+              <div class="jp">訳：製品がちょうど発売されたその会社は，昨年以上の利益を見込んでいる。</div>
+              <div class="muted">
+                <b>whose products have just been released</b>  
+                「（その）製品がちょうど発売された」「～の製品」という所有の関係。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">a〜d それぞれのポイント：</div>
+                <ul>
+                  <li><b>a (which)</b>：先行詞 company と products は「所有」の関係なので <b>whose</b> を使う。</li>
+                  <li><b>b (products have just been)</b>：have just been released で「ちょうど発売された」。受動態としてOK。</li>
+                  <li><b>c (expects more profit)</b>：expects more profit「より多くの利益を見込んでいる」。文法的に正しい。</li>
+                  <li><b>d (last year)</b>：than last year「昨年よりも」で比較の基準を示している。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：whose ＋名詞 ～「～の名詞…」（所有格の関係代名詞）
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            <span class="err-under" data-label="a">The digital camera</span> was
+            <span class="err-under" data-label="b">very more expensive</span>
+            than
+            <span class="err-under" data-label="c">I</span>
+            <span class="err-under" data-label="d">had expected</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              比較級を強めるのは very じゃなくて  
+              <span class="label">much / far / even / still</span> など。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">誤り：</span>
+                b <b>very more expensive</b> → <b>much more expensive</b>（など）
+              </div>
+              <div class="jp">訳：そのデジタルカメラは，思っていたよりずっと高かった。</div>
+              <div class="muted">
+                very expensive（原級）はOK。  
+                more expensive（比較級）を強めるなら <b>much / far / a lot</b> などを使う。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">a〜d それぞれのポイント：</div>
+                <ul>
+                  <li><b>a (The digital camera)</b>：主語として自然。</li>
+                  <li><b>b (very more expensive)</b>：very は比較級と一緒には基本使わない。<b>much more expensive</b> にする。</li>
+                  <li><b>c (I)</b>：than I had expected「私が予想していたより」。代名詞 I でOK。</li>
+                  <li><b>d (had expected)</b>：過去完了で「それまでに予想していた」。比較の基準として自然な時制。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：much / far + 比較級「ずっと～だ」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(5) -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">
+            We found
+            <span class="err-under" data-label="a">a location</span>
+            <span class="err-under" data-label="b">where</span>
+            <span class="err-under" data-label="c">has a very good transportation system</span>
+            <span class="err-under" data-label="d">near by</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              where のあとは「S V」が来る。  
+              ここは「場所＋動詞 has」なので主格の関係代名詞 <span class="label">which/that</span> が必要。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">誤り：</span>
+                b <b>where</b> → <b>which</b> / that
+              </div>
+              <div class="jp">訳：私たちは，すぐ近くにとてもよい交通網のある場所を見つけた。</div>
+              <div class="muted">
+                a location <b>which has</b> a very good transportation system  
+                「とても良い交通網を持つ場所」。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">a〜d それぞれのポイント：</div>
+                <ul>
+                  <li><b>a (a location)</b>：名詞句としてOK。「ある場所」。</li>
+                  <li><b>b (where)</b>：where has ～ とは言えない。主語として働く <b>which / that</b> が必要なのでここが誤り。</li>
+                  <li><b>c (has a very good transportation system)</b>：完全な文（S+V+O）で問題なし。</li>
+                  <li><b>d (near by)</b>：nearby（1語）のほうが自然だが，多くの問題では b を誤りとさせるのがメインターゲット。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：先行詞が場所でも，後ろが「S V」なら関係代名詞（which/that）
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(6) -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            Can you tell me
+            <span class="err-under" data-label="a">anyone you know</span>
+            <span class="err-under" data-label="b">which</span>
+            <span class="err-under" data-label="c">is as familiar with computers</span>
+            <span class="err-under" data-label="d">as Mary</span>?
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer＋選択肢分析</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              先行詞 anyone は「人」。  
+              関係詞も「人用」の <span class="label">who / that</span> が必要。
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">誤り：</span>
+                b <b>which</b> → <b>who</b> / that
+              </div>
+              <div class="jp">訳：あなたの知っている人で，メアリーと同じくらいコンピュータに詳しい人を教えてくれませんか。</div>
+              <div class="muted">
+                anyone you know <b>who</b> is as familiar with computers as Mary  
+                → 先行詞 anyone（人）なので who / that を使う。
+              </div>
+              <div class="box wrong-box">
+                <div class="label">a〜d それぞれのポイント：</div>
+                <ul>
+                  <li><b>a (anyone you know)</b>：anyone you know「あなたが知っているだれか」。先行詞として自然。</li>
+                  <li><b>b (which)</b>：もの用の関係代名詞。先行詞 anyone が「人」なので誤り。</li>
+                  <li><b>c (is as familiar with computers)</b>：be familiar with ～「～に詳しい」。表現として正しい。</li>
+                  <li><b>d (as Mary)</b>：as Mary「メアリーと同じくらい」。比較の相手を示している。</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                📖 Grammar：先行詞が人 → 関係代名詞は who / that
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>© Tetsuya's Grammar Gym｜実戦問題３ Edition</footer>
+
+<script>
+(function(){
+  function openBlock(el){ el.classList.add('open'); }
+  function closeBlock(el){ el.classList.remove('open'); }
+
+  document.addEventListener('click', function(e){
+    // Hint / Answer buttons
+    var btn = e.target.closest('[data-toggle]');
+    if(btn){
+      var card = btn.closest('.qcard');
+      var key = btn.getAttribute('data-toggle');
+      var block = card.querySelector('.collapsible[data-block="'+key+'"]');
+      if(block){
+        if(block.classList.contains('open')) closeBlock(block);
+        else openBlock(block);
+      }
+      return;
+    }
+
+    // Section headers
+    var header = e.target.closest('.section-header');
+    if(header){
+      var body = header.nextElementSibling;
+      if(header.classList.contains('open')){
+        header.classList.remove('open');
+        closeBlock(body);
+      }else{
+        header.classList.add('open');
+        openBlock(body);
+        // 開くときは中の Hint/Answer は一度リセット
+        var blocks = body.querySelectorAll('.collapsible');
+        for(var i=0;i<blocks.length;i++) closeBlock(blocks[i]);
+      }
+      return;
+    }
+
+    // Toolbar buttons
+    var action = e.target.closest('[data-action]');
+    if(action){
+      var act = action.getAttribute('data-action');
+      var headers = document.querySelectorAll('.section-header');
+      if(act === 'open-all'){
+        headers.forEach(function(h){
+          h.classList.add('open');
+          var body = h.nextElementSibling;
+          openBlock(body);
+          var blocks = body.querySelectorAll('.collapsible');
+          blocks.forEach(closeBlock);
+        });
+      }
+      if(act === 'close-all'){
+        headers.forEach(function(h){
+          h.classList.remove('open');
+          closeBlock(h.nextElementSibling);
+        });
+      }
+      if(act === 'download'){
+        var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        var blob = new Blob([html], {type:'text/html'});
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'grammar_breakdown_jissen3.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
