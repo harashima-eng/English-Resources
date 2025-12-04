@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>動詞の語法｜ランダムテスト BREAKDOWN EDITION</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg1: #667eea;
+            --bg2: #764ba2;
+            --bg-body: radial-gradient(circle at top left, #667eea 0%, #764ba2 45%, #1f2544 100%);
+            --card-bg: #ffffff;
+            --card-bg-soft: #f8f9ff;
+            --text-main: #212529;
+            --text-sub: #555;
+            --accent: #f5576c;
+            --accent-soft: #ffe0ea;
+            --border-soft: #e0e0f0;
+            --shadow-main: 0 20px 60px rgba(0,0,0,0.35);
+            --shadow-soft: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        body.dark-mode {
+            --bg1: #151827;
+            --bg2: #1f2544;
+            --bg-body: radial-gradient(circle at top left, #151827 0%, #1f2544 40%, #050608 100%);
+            --card-bg: #151823;
+            --card-bg-soft: #202433;
+            --text-main: #f5f5ff;
+            --text-sub: #c5c6dd;
+            --accent: #ff7aa2;
+            --accent-soft: #3b2133;
+            --border-soft: #343a4f;
+            --shadow-main: 0 20px 60px rgba(0,0,0,0.8);
+            --shadow-soft: 0 8px 26px rgba(0,0,0,0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 16px;
+            color: var(--text-main);
+            line-height: 1.8;
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 22px;
+            box-shadow: var(--shadow-main);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========== HERO ========== */
+
+        .hero {
+            position: relative;
+            padding: 26px 24px 20px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.22), transparent 60%);
+            top: -80px;
+            right: -60px;
+            opacity: 0;
+            transform: scale(0.7);
+            animation: heroGlow 2.3s ease-out forwards;
+        }
+
+        .hero-main {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .hero-title-block {
+            max-width: 70%;
+            animation: heroSlideIn 0.7s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.28);
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+            animation: heroFadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .mode-toggle,
+        .download-btn {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .mode-toggle {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .download-btn {
+            background: #ffe082;
+            color: #3e2723;
+            border: 1px solid rgba(255,255,255,0.35);
+        }
+
+        .mode-toggle:hover,
+        .download-btn:hover {
+            transform: translateY(-1.5px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+        }
+
+        .hero-bottom {
+            margin-top: 16px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255,255,255,0.35);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 11px;
+            opacity: 0;
+            transform: translateY(8px);
+            animation: heroFadeUp 1s 0.6s ease-out forwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.9;
+        }
+
+        .hero-note {
+            opacity: 0.85;
+            text-align: right;
+        }
+
+        /* ========== TOOLBAR ========== */
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 14px 18px;
+            background: var(--card-bg-soft);
+            border-bottom: 1px solid var(--border-soft);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 1 1 220px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border-radius: 999px;
+            padding: 5px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-soft);
+        }
+
+        body.dark-mode .search-box {
+            background: #141726;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+            background: transparent;
+            color: var(--text-main);
+        }
+
+        .search-icon {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .mini-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+
+        .mini-nav button {
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: var(--card-bg);
+            font-size: 11px;
+            padding: 4px 9px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .mini-nav button:hover {
+            background: #eef2ff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        body.dark-mode .mini-nav button:hover {
+            background: #262b3b;
+        }
+
+        /* ========== CONTENT ========== */
+
+        .content {
+            padding: 20px 20px 26px;
+        }
+
+        .notice {
+            font-size: 13px;
+            margin-bottom: 16px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: var(--accent-soft);
+            border-left: 4px solid var(--accent);
+        }
+
+        .notice strong {
+            color: var(--accent);
+        }
+
+        .section {
+            margin-bottom: 22px;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            overflow: hidden;
+            background: var(--card-bg-soft);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(0,0,0,0.21);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+            color: #fff;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .section-header span.section-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-header small {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .toggle-icon {
+            font-size: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .section-content.active {
+            max-height: 6000px;
+        }
+
+        .section-inner {
+            padding: 16px 18px 14px;
+        }
+
+        .question-card {
+            background: #fff;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            padding: 14px 16px 12px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        body.dark-mode .question-card {
+            background: #181b2b;
+        }
+
+        .question-card.filtered-out {
+            display: none;
+        }
+
+        .question-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #667eea;
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .q-type {
+            font-size: 10px;
+            opacity: 0.85;
+        }
+
+        .question-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .question-text .jp {
+            display: block;
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .choices {
+            margin: 6px 0 8px;
+            padding-left: 16px;
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .choices div {
+            margin: 2px 0;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .hint-btn,
+        .show-answer-btn {
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, #ffe082 0%, #ffb74d 100%);
+            color: #3e2723;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+        }
+
+        .hint-btn:hover,
+        .show-answer-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        /* ヒント・解答：最初は非表示、active で表示 */
+        .hint-section,
+        .answer-section {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .hint-section.active,
+        .answer-section.active {
+            display: block;
+        }
+
+        .hint-box {
+            background: #fff8e1;
+            border-left: 3px solid #ffb300;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+            color: #5d4037;
+        }
+
+        .correct-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .correct-answer strong {
+            color: #1b5e20;
+        }
+
+        .explanation {
+            background: #f3f6ff;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+            margin-bottom: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            color: #3f51b5;
+            margin-bottom: 2px;
+        }
+
+        .grammar-point {
+            background: #fff3cd;
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 12px;
+            border-left: 3px solid #ffb300;
+            margin-bottom: 4px;
+        }
+
+        .example {
+            background: #e7f3ff;
+            border-radius: 7px;
+            padding: 6px 9px;
+            font-size: 12px;
+            border-left: 3px solid #2196f3;
+            margin-top: 4px;
+        }
+
+        .translation {
+            font-size: 12px;
+            font-style: italic;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .source-note {
+            font-size: 11px;
+            text-align: right;
+            margin-top: 6px;
+            color: var(--text-sub);
+        }
+
+        .footer-note {
+            font-size: 11px;
+            padding-top: 8px;
+            margin-top: 10px;
+            border-top: 1px dashed var(--border-soft);
+            text-align: center;
+            color: var(--text-sub);
+        }
+
+        @keyframes heroSlideIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heroFadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heroGlow {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            .hero-title-block {
+                max-width: 100%;
+            }
+            .hero-actions {
+                align-items: flex-start;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .mini-nav {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-main">
+            <div class="hero-title-block">
+                <div class="hero-title">動詞の語法｜ランダムテスト BREAKDOWN EDITION</div>
+                <div class="hero-subtitle">
+                    全演習 発展 英文法・語法問題1100 P4～P89｜ヒント＋解答＋解説つきブレイクダウン
+                </div>
+                <div class="hero-tags">
+                    <span class="tag">ヒント & 解説クリック表示</span>
+                    <span class="tag">動詞・イディオム・比較</span>
+                    <span class="tag">A2〜B1 レベル想定</span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <button class="mode-toggle" id="modeToggle">
+                    🌗 ダーク / ライト
+                </button>
+                <button class="download-btn" id="downloadBtn">
+                    ⬇ このページをダウンロード
+                </button>
+            </div>
+        </div>
+        <div class="hero-bottom">
+            <div class="hero-stats">
+                <div class="hero-stat"><span>📌</span><span>設問数：20問（A〜F）</span></div>
+                <div class="hero-stat"><span>🧠</span><span>モード：ヒント・解答はクリックで表示</span></div>
+            </div>
+            <div class="hero-note">
+                授業ではこのページで解説しながら、<br>
+                テスト用は別ファイル or プリントで出す運用を想定。
+            </div>
+        </div>
+    </header>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="search" id="searchInput" placeholder="問題番号・英文・日本語で検索（例: 3, heavy, 比較 など）">
+        </div>
+
+        <div class="mini-nav">
+            <button data-target="sectionA">[A] 同意表現 (1)</button>
+            <button data-target="sectionB">[B] 空所補充 (2〜5)</button>
+            <button data-target="sectionC">[C] 書き換え (6〜8)</button>
+            <button data-target="sectionD">[D] 共通語補充 (9〜10)</button>
+            <button data-target="sectionE">[E] 誤り指摘 (11〜15)</button>
+            <button data-target="sectionF">[F] 並べかえ (16〜20)</button>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <main class="content">
+        <div class="notice">
+            <strong>使い方：</strong><br>
+            🔹 解くとき：まず問題だけ見せて、生徒にはノートやプリントで解かせる。<br>
+            🔹 解説タイム：このページで「💡ヒント → 解答を見る → 解説」を順に開きながら進める。
+        </div>
+
+        <!-- ===== SECTION A ===== -->
+        <section class="section" id="sectionA">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[A] 下線部と最も近い意味 (1) <small>副詞・イディオム</small></span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q1 -->
+                    <article class="question-card" data-q="1">
+                        <div class="question-number">問題 (1) <span class="q-type">意味が近い語句</span></div>
+                        <div class="question-text">
+                            He used to phone me <u>once in a while</u>, but not any more.
+                            <span class="jp">「以前は時々電話をくれたが、今はもうない。」の once in a while に最も近い語を選ぶ。</span>
+                        </div>
+                        <div class="choices">
+                            <div>① usually　② always　③ often　④ sometimes</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                once in a while は「いつも」ではなく「ときどき」。<br>
+                                「たまに〜する」ニュアンスに一番近い選択肢はどれ？
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：④ sometimes</strong>（たまに、ときどき）
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】once in a while = sometimes</div>
+                                <p>
+                                    <strong>once in a while</strong> は「たまに」「ときどき」という意味のイディオム。  
+                                    <strong>sometimes</strong> がほぼ同じニュアンスなので④が正解。
+                                </p>
+                                <p>
+                                    ① usually「たいてい」② always「いつも」は頻度が高すぎ。  
+                                    ③ often「しばしば」も「かなり頻繁」で、once in a while より多いイメージ。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】副詞の頻度</strong><br>
+                                always ＞ usually ＞ often ＞ sometimes ＞ hardly ever / seldom ＞ never  
+                                once in a while ≒ sometimes「ときどき」
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                I go to that café once in a while.  
+                                <span class="translation">ときどきあのカフェに行く。</span>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳：</strong>彼は以前はときどき私に電話してくれたが、今はもうしない。
+                            </div>
+                            <div class="source-note">[→ 13. 形容詞・副詞を含むイディオム]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION B ===== -->
+        <section class="section" id="sectionB">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[B] 空所補充 (2〜5) <small>前置詞・動詞の語法・時制</small></span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q2 -->
+                    <article class="question-card" data-q="2">
+                        <div class="question-number">問題 (2) <span class="q-type">前置詞</span></div>
+                        <div class="question-text">
+                            Are you (　　) or against that proposal?
+                            <span class="jp">「あなたはその提案に賛成ですか，それとも反対ですか。」</span>
+                        </div>
+                        <div class="choices">
+                            <div>① at　② with　③ for　④ on</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「賛成か反対か」は英語で be (　) or against ~。  
+                                決まり文句として覚えるやつ。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：③ for</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】be for or against ~</div>
+                                <p>
+                                    「〜に賛成だ」は <strong>be for ~</strong>、「〜に反対だ」は <strong>be against ~</strong>。  
+                                    セットで <strong>for or against</strong> と覚える。
+                                </p>
+                                <p>
+                                    ① at, ② with, ④ on はこの意味では使わない。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】前置詞と意見表現</strong><br>
+                                be for A「Aに賛成である」 / be against A「Aに反対である」
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                Are you for or against the new rule?  
+                                <span class="translation">あなたはその新しいルールに賛成ですか，それとも反対ですか。</span>
+                            </div>
+                            <div class="source-note">[→ 19. 前置詞と群前置詞の用法]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q3 -->
+                    <article class="question-card" data-q="3">
+                        <div class="question-number">問題 (3) <span class="q-type">動詞の語法（SVOC）</span></div>
+                        <div class="question-text">
+                            His failure in business (　　) him to sell his house.
+                            <span class="jp">「彼は事業の失敗で家を売らざるを得なかった。」</span>
+                        </div>
+                        <div class="choices">
+                            <div>① had　② engaged　③ compelled　④ made</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「〜に…することを強いる・無理やりさせる」という意味を表す動詞。  
+                                compel A to do「Aに〜することを強いる」を思い出してみよう。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：③ compelled</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】compel A to do「Aに〜することを強いる」</div>
+                                <p>
+                                    主語は「His failure in business（事業の失敗）」という無生物。  
+                                    <strong>compel A to do</strong> で「Aに〜することを強いる」。  
+                                    ここでは「事業の失敗が彼に家を売らせた」という意味になる。
+                                </p>
+                                <p>
+                                    ④ made も make A do で似た意味だが、ここでは「強制」のニュアンスが強い
+                                    <strong>compelled</strong> を選ぶ問題。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】無生物主語 + compel / force など</strong><br>
+                                His failure <strong>compelled</strong> him to sell his house.  
+                                「失敗が彼に家を売ることを強いた」→ 日本語では「〜せざるを得なかった」と訳される。
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                The heavy rain compelled us to cancel the game.  
+                                <span class="translation">激しい雨のため、私たちは試合を中止せざるを得なかった。</span>
+                            </div>
+                            <div class="source-note">[→ 1. 動詞の語法]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q4 -->
+                    <article class="question-card" data-q="4">
+                        <div class="question-number">問題 (4) <span class="q-type">主語と動詞の一致</span></div>
+                        <div class="question-text">
+                            A large number of cars (　　) parked outside the stadium.
+                            <span class="jp">「たくさんの車がスタジアムの外に駐車していた。」</span>
+                        </div>
+                        <div class="choices">
+                            <div>① has　② were　③ have　④ was</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                a large number of + 複数名詞 → 動詞は複数形。  
+                                be 動詞で「〜が駐車されていた」を表すとき、複数に合うのはどれ？
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：② were</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】a large number of + 複数名詞 → 動詞は複数形</div>
+                                <p>
+                                    <strong>a large number of cars</strong> は「たくさんの車」で、意味上は複数。  
+                                    したがって、be 動詞も <strong>were</strong>（複数形）になる。
+                                </p>
+                                <p>
+                                    ① has, ④ was は単数扱いのとき。③ have は一般動詞だが、ここは受動態「駐車されていた」なので不適。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】数量表現 + 主語と動詞の一致</strong><br>
+                                a large number of + 複数名詞 → 動詞は複数形  
+                                a number of students <strong>are</strong> ...  
+                                the number of students <strong>is</strong> ...（こちらは単数扱い）
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                A large number of people were waiting in line.  
+                                <span class="translation">多くの人々が列に並んで待っていた。</span>
+                            </div>
+                            <div class="source-note">[→ 20. 主語と動詞の一致]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q5 -->
+                    <article class="question-card" data-q="5">
+                        <div class="question-number">問題 (5) <span class="q-type">副詞の語法・時の副詞</span></div>
+                        <div class="question-text">
+                            I've not been feeling very well (　　).
+                            <span class="jp">「最近あまり体調がよくない。」</span>
+                        </div>
+                        <div class="choices">
+                            <div>① lately　② later　③ late　④ latter</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「最近」は recently / lately。  
+                                late, later, latter の意味の違いも意識しよう。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：① lately</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】lately = recently「最近」</div>
+                                <p>
+                                    <strong>lately</strong> と <strong>recently</strong> はどちらも「最近」。  
+                                    現在完了形（have/has + 過去分詞）と一緒に使われることが多い。
+                                </p>
+                                <p>
+                                    ② later「あとで」③ late「遅く」④ latter「後者の」なので文意に合わない。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】最近を表す副詞</strong><br>
+                                recently / lately：最近（現在完了形と相性がよい）<br>
+                                these days：近頃（進行形とよくセット）
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                I've been very busy lately.  
+                                <span class="translation">最近とても忙しい。</span>
+                            </div>
+                            <div class="source-note">[→ 11. 副詞の語法]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION C ===== -->
+        <section class="section" id="sectionC">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[C] 書き換え (6〜8) <small>too〜to, 使役, 動名詞</small></span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q6 -->
+                    <article class="question-card" data-q="6">
+                        <div class="question-number">問題 (6) <span class="q-type">so〜that ⇔ too〜to</span></div>
+                        <div class="question-text">
+                            (a) This box is so heavy that I cannot lift it.<br>
+                            (b) This is (　　) (　　) a box for me to lift.
+                            <span class="jp">意味がほぼ同じになるように空所に語を入れる。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                so 〜 that S cannot ... ⇔ too 〜 to ...  
+                                「〜すぎて…できない」の形に書き換える。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：too heavy</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】so heavy that... ⇔ too heavy to...</div>
+                                <p>
+                                    (a)「この箱はとても重いので，私はそれを持ち上げられない。」  
+                                    → (b)「これは私が持ち上げるには<strong>重すぎる</strong>箱だ。」
+                                </p>
+                                <p>
+                                    「〜すぎて…できない」は <strong>too + 形容詞 + to 動詞</strong> の形。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】so 〜 that... / too 〜 to...</strong><br>
+                                so + 形容詞/副詞 + that S cannot ...  
+                                ⇔ too + 形容詞/副詞 + to 動詞
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                He is so tired that he can't walk.  
+                                = He is too tired to walk.  
+                                <span class="translation">彼はとても疲れていて歩けない。</span>
+                            </div>
+                            <div class="source-note">[→ 6. 不定詞]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q7 -->
+                    <article class="question-card" data-q="7">
+                        <div class="question-number">問題 (7) <span class="q-type">命令文 ⇔ 使役 let</span></div>
+                        <div class="question-text">
+                            (a) Open the door at once.<br>
+                            (b) (　　) the door (　　) opened at once.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「〜させよ」という命令は <strong>Let + 目的語 + 過去分詞</strong> でも言える。  
+                                まず命令文「〜しなさい」の代表は Let ... から始まる形。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：Let, be</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】Let + O + be + 過去分詞</div>
+                                <p>
+                                    (a)「すぐにドアを開けなさい。」  
+                                    (b) は「ドアがすぐに開けられるようにしなさい」＝Let the door be opened at once.
+                                </p>
+                                <p>
+                                    Let + 目的語 + be + 過去分詞 で、受け身の命令文を作れる。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】Let を使った命令文</strong><br>
+                                Let us begin.「さあ始めましょう。」  
+                                Let the work be done at once.「その仕事をすぐにやらせなさい。」
+                            </div>
+                            <div class="source-note">[→ 3. 態]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q8 -->
+                    <article class="question-card" data-q="8">
+                        <div class="question-number">問題 (8) <span class="q-type">動名詞 / difficulty ~ing</span></div>
+                        <div class="question-text">
+                            (a) It was quite easy for him to solve the problems.<br>
+                            (b) He had no (　　) in (　　) the problems.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「〜するのは簡単だった」⇔「〜するのに何の苦労もなかった」。  
+                                have difficulty (in) doing「〜するのに苦労する」を思い出そう。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：difficulty / trouble，solving</strong>（difficulty or trouble + solving）</div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】have no difficulty in doing</div>
+                                <p>
+                                    have difficulty (in) doing「〜するのに苦労する」  
+                                    → have <strong>no</strong> difficulty (in) doing「〜するのに何の苦労もない」
+                                </p>
+                                <p>
+                                    ここでは difficulty / trouble どちらでもよいが、後ろは動名詞 <strong>solving</strong> が入る。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】動名詞をとる慣用表現</strong><br>
+                                have difficulty (in) doing：〜するのに苦労する  
+                                have trouble (in) doing：〜するのに苦労する
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                She had no difficulty (in) answering the question.  
+                                <span class="translation">彼女はその質問に答えるのに何の苦労もなかった。</span>
+                            </div>
+                            <div class="source-note">[→ 8. 動名詞]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION D ===== -->
+        <section class="section" id="sectionD">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[D] 共通語補充 (9〜10) <small>good / do のイディオム</small></span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q9 -->
+                    <article class="question-card" data-q="9">
+                        <div class="question-number">問題 (9) <span class="q-type">共通語補充：good</span></div>
+                        <div class="question-text">
+                            (a) Yesterday John bought a used car that was as (　　) as new from his neighbor.<br>
+                            (b) After being hospitalized with a heart problem, Bob decided to quit smoking for (　　).
+                            <span class="jp">(a)(b) の両方に入る1語を答える。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                (a) as (　) as new「新品同様の」  
+                                (b) quit smoking for (　)「きっぱりやめる」  
+                                両方とも形容詞 good から発想できる表現。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：good</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】as good as new / for good</div>
+                                <p>
+                                    (a) as <strong>good</strong> as new「新品同様の」  
+                                    (b) quit smoking for <strong>good</strong>「タバコをきっぱりやめる（＝永遠に）」
+                                </p>
+                                <p>
+                                    for good は「永遠に」「二度と〜しないように」の意味でよく出る。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】good を含むイディオム</strong><br>
+                                as good as new「新品同様」  
+                                for good「永久に，きっぱりと」
+                            </div>
+                            <div class="example">
+                                <strong>例文：</strong><br>
+                                I stopped playing that game for good.  
+                                <span class="translation">そのゲームを二度としないようにやめた。</span>
+                            </div>
+                            <div class="source-note">[→ 25. 共通語補充]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q10 -->
+                    <article class="question-card" data-q="10">
+                        <div class="question-number">問題 (10) <span class="q-type">共通語補充：do</span></div>
+                        <div class="question-text">
+                            (a) Bad books (　　) more harm than bad companions.<br>
+                            (b) This log will (　　) for a seat.<br>
+                            (c) I have nothing to (　　) with the matter.
+                            <span class="jp">(a)(b)(c) に共通して入る1語を答える。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                どれも「する」「間に合わせる」「関係がある」という意味で使える，超基本動詞。  
+                                do のいろんな使い方をイメージしてみよう。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：do</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】do を含 む色々な表現</div>
+                                <p>
+                                    (a) Bad books <strong>do</strong> more harm ...  
+                                    「悪書は悪い友人よりも多くの害を与える」  
+                                    → do harm「害を与える」
+                                </p>
+                                <p>
+                                    (b) This log will <strong>do</strong> for a seat.  
+                                    「この丸太は腰かけとして間に合う」  
+                                    → will do「間に合う，役に立つ」
+                                </p>
+                                <p>
+                                    (c) I have nothing to <strong>do</strong> with the matter.  
+                                    「その件とは一切関係がない」  
+                                    → have nothing to do with ~「〜と関係がない」
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】do を使ったイディオム</strong><br>
+                                do harm / do good, will do, have nothing to do with ~
+                            </div>
+                            <div class="source-note">[→ 25. 共通語補充]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION E ===== -->
+        <section class="section" id="sectionE">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[E] 誤り指摘・訂正 (11〜15) <small>副詞・前置詞・比較 など</small></span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q11 -->
+                    <article class="question-card" data-q="11">
+                        <div class="question-number">問題 (11) <span class="q-type">副詞の語法</span></div>
+                        <div class="question-text">
+                            As we ①have seen, most of the money spent in the United States is ②in the form of checks.  
+                            Not everyone, ③although, can write out ④a check.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                文中で浮いている副詞を探そう。  
+                                although は接続詞。「しかしながら」は however で表すことが多い。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り：③ although → 正：though / however</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】「しかしながら」の位置と品詞</div>
+                                <p>
+                                    Not everyone, <strong>although</strong>, can write out a check. は不自然。  
+                                    although は接続詞なので、通常は節を導く（Although S V, ...）。
+                                </p>
+                                <p>
+                                    ここでは文中に挿入する副詞「しかしながら」がほしいので  
+                                    <strong>though</strong>（副詞用法）か <strong>however</strong> を置くのが自然。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】though / although / however</strong><br>
+                                although / though：接続詞「〜だけれども」  
+                                though：文末で副詞的に「だけどね」の意味でも使える  
+                                however：副詞「しかしながら」
+                            </div>
+                            <div class="source-note">[→ 11. 副詞の語法]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q12 -->
+                    <article class="question-card" data-q="12">
+                        <div class="question-number">問題 (12) <span class="q-type">前置詞 beside / besides</span></div>
+                        <div class="question-text">
+                            We have a number of ①other suggestions ②beside these ③for the improvement ④of the system.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                beside と besides の違いを思い出そう。  
+                                「〜のそばに」なのか「〜に加えて／〜以外に」なのか。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り：② beside → 正：besides</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】beside「そばに」vs besides「〜に加えて」</div>
+                                <p>
+                                    文意は「これらに加えて、他の提案もある」。  
+                                    よって「〜に加えて」の <strong>besides</strong> を使う。
+                                </p>
+                                <p>
+                                    <strong>beside</strong> は「〜のそばに」。全く意味が違うので注意。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】前置詞 beside / besides</strong><br>
+                                beside A「Aのそばに」  
+                                besides A「Aに加えて，Aのほかに」
+                            </div>
+                            <div class="source-note">[→ 19. 前置詞と群前置詞の用法]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q13 -->
+                    <article class="question-card" data-q="13">
+                        <div class="question-number">問題 (13) <span class="q-type">形容詞 almost / most</span></div>
+                        <div class="question-text">
+                            ①In the early days when the West ②was being settled, horses were the ③main mode of 
+                            transportation, so ④almost pioneers rode well.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「ほとんどの開拓者」は almost pioneers か most pioneers か？  
+                                almost は「ほとんど〜ない」と一緒に出ることが多い。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り：④ almost → 正：most</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】most + 名詞「ほとんどの〜」</div>
+                                <p>
+                                    「ほとんどの開拓者」は <strong>most pioneers</strong>。  
+                                    <strong>almost</strong> は副詞で、almost all / almost no などで使うことが多い。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】most と almost</strong><br>
+                                most + 名詞「ほとんどの〜」  
+                                almost all ... / almost no ...「ほとんどすべて / ほとんど〜ない」
+                            </div>
+                            <div class="source-note">[→ 10. 形容詞の語法]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q14 -->
+                    <article class="question-card" data-q="14">
+                        <div class="question-number">問題 (14) <span class="q-type">比較構文</span></div>
+                        <div class="question-text">
+                            ①I have never seen ②the economy as ③worse as ④it is now.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                as 〜 as の中身は原級（形容詞の基本形）。  
+                                worse は比較級。どんな形に直す？
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り：③ worse → 正：bad</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】as + 原級 + as</div>
+                                <p>
+                                    as 〜 as の中は <strong>原級</strong> が入るので、worse（比較級）ではなく <strong>bad</strong>。
+                                </p>
+                                <p>
+                                    I have never seen the economy as bad as it is now.  
+                                    「今ほどひどい景気を見たことがない。」
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】原級比較 as 〜 as</strong><br>
+                                as + 形容詞・副詞（原級） + as  
+                                This bag is as big as that one.
+                            </div>
+                            <div class="source-note">[→ 12. 比較]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q15 -->
+                    <article class="question-card" data-q="15">
+                        <div class="question-number">問題 (15) <span class="q-type">主語と動詞の一致</span></div>
+                        <div class="question-text">
+                            ①Just as you and I can stand in front of a mirror and see our images, ②so also ③do the 
+                            federal government budget ④reflect America.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                主語はどれ？ budget は単数扱いか複数扱いか？  
+                                「〜もまた…だ」という形で、助動詞や do の形に注意。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り：③ do → 正：does / can</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】単数主語 + does / can</div>
+                                <p>
+                                    主語は the federal government budget（単数）。  
+                                    したがって、三人称単数現在の <strong>does</strong> か、もともとの文に合わせて <strong>can</strong> を使う。
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】主語と動詞の一致</strong><br>
+                                単数主語 → does / is / has  
+                                複数主語 → do / are / have
+                            </div>
+                            <div class="source-note">[→ 20. 主語と動詞の一致]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION F ===== -->
+        <section class="section" id="sectionF">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[F] 並べかえ (16〜20) <small>イディオム・語順</small></span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q16 -->
+                    <article class="question-card" data-q="16">
+                        <div class="question-number">問題 (16) <span class="q-type">be afraid of ~ing</span></div>
+                        <div class="question-text">
+                            少しぐらいの間違いは気にしないで英語を話しなさい。（1語不要）<br>
+                            Don't ( of / mind / in / mistakes / afraid / a few / be / making ) speaking English.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「〜を恐れる」は be afraid of ~。  
+                                「少しの〜」は a few mistakes。  
+                                mind は今回は不要になる。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：</strong>Don't <strong>be afraid of making a few mistakes in</strong> speaking English.（mind 不要）
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】be afraid of ~ing「〜することを恐れる」</div>
+                                <p>
+                                    「少しぐらい間違えても気にせず」＝「間違うことを恐れずに」。  
+                                    → Don't be afraid of making a few mistakes in speaking English.
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>【文法ポイント】be afraid of ~ing</strong><br>
+                                be afraid of making mistakes「間違うのを恐れる」
+                            </div>
+                            <div class="source-note">[→ 13. 形容詞・副詞を含むイディオム]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q17 -->
+                    <article class="question-card" data-q="17">
+                        <div class="question-number">問題 (17) <span class="q-type">比較構文 with better for it</span></div>
+                        <div class="question-text">
+                            良書を読めば，必ずそれだけ賢くなる。<br>
+                            You ( a / being / better / book / good / never / read / the / without ) for it.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                never ... without ~ing で「〜すれば必ず…する」。  
+                                be the better for ~「〜のおかげでよりよくなる」。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：</strong>You <strong>never read a good book without being the better</strong> for it.
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】never ... without ~ing / be the better for ~</div>
+                                <p>
+                                    never ... without ~ing「〜すれば必ず…する」  
+                                    be the better for ~「〜のおかげでよりよくなる」
+                                </p>
+                                <p>
+                                    良書を読めば、その分かならず賢くなっている、という意味。
+                                </p>
+                            </div>
+                            <div class="source-note">[→ 12. 比較]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q18 -->
+                    <article class="question-card" data-q="18">
+                        <div class="question-number">問題 (18) <span class="q-type">feel at home</span></div>
+                        <div class="question-text">
+                            あの人の前だと気がねがない。（1語不要）<br>
+                            He ( him / makes / me / home / is / with / at / feel ).
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                feel at home「くつろぐ，気がねがない」。  
+                                make O feel ...「Oに…と感じさせる」。  
+                                is は不要。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：</strong>He <strong>makes me feel at home with him</strong>.（is 不要）
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】make 人 feel at home</div>
+                                <p>
+                                    feel at home「くつろぐ」  
+                                    He makes me feel at home with him.  
+                                    「彼の前だと気がねがない（＝くつろげる）」。
+                                </p>
+                            </div>
+                            <div class="source-note">[→ 16. 名詞を含むイディオム]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q19 -->
+                    <article class="question-card" data-q="19">
+                        <div class="question-number">問題 (19) <span class="q-type">時制・語順</span></div>
+                        <div class="question-text">
+                            彼はあと3分のところで終電車に間に合わなかった。<br>
+                            The last train ( left / arrived / before / three / station / the / minutes / had / he ).
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「〜したときには…はすでに〜していた」→ 過去完了。  
+                                the last train had left ... before he arrived.
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：</strong>The last train <strong>had left the station three minutes before he arrived</strong>.
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】過去完了 + before</div>
+                                <p>
+                                    「彼が着いたときには終電は3分前に出ていた。」  
+                                    → had left ... before he arrived.
+                                </p>
+                            </div>
+                            <div class="source-note">[→ 21. 疑問文と語順]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q20 -->
+                    <article class="question-card" data-q="20">
+                        <div class="question-number">問題 (20) <span class="q-type">関係詞 / 語順</span></div>
+                        <div class="question-text">
+                            言語を初めて習得する過程は，様々な方法で研究されてきた。<br>
+                            There are ( a variety / has been / in which / language acquisition / of first / the process / 
+                            investigated / of ways ).
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                There are a variety of ways ... からスタート。  
+                                in which the process of first language acquisition has been investigated  
+                                という関係詞のかたまりを作る。
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解：</strong>There are <strong>a variety of ways in which the process of first language acquisition has been investigated</strong>.
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】a variety of ways in which ...</div>
+                                <p>
+                                    There are a variety of ways in which S V.  
+                                    「SがVしてきた様々な方法がある。」
+                                </p>
+                                <p>
+                                    in which の部分を that / where などに書き換えるパターンもよく出る。
+                                </p>
+                            </div>
+                            <div class="source-note">[→ 17. 関係詞の用法]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-note">
+            💬 授業中：ヒント ⇒ 解答 ⇒ 解説の順に開きながら進行。  
+            復習用としてもそのまま配れる「クリック表示型ブレイクダウン」版。
+        </div>
+    </main>
+</div>
+
+<script>
+    // ===== Dark / Light Toggle =====
+    const themeToggle = document.getElementById('modeToggle');
+    function updateThemeLabel() {
+        if (document.body.classList.contains('dark-mode')) {
+            themeToggle.textContent = '🌞 ライトモードにする';
+        } else {
+            themeToggle.textContent = '🌗 ダークモードにする';
+        }
+    }
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        updateThemeLabel();
+    });
+    updateThemeLabel();
+
+    // ===== Section Toggle =====
+    function toggleSection(headerEl) {
+        const content = headerEl.nextElementSibling;
+        headerEl.classList.toggle('active');
+        content.classList.toggle('active');
+    }
+
+    // ===== Hint & Answer Toggle + Auto-scroll Next =====
+    function toggleHint(btn) {
+        const card = btn.closest('.question-card');
+        const hint = card.querySelector('.hint-section');
+        hint.classList.toggle('active');
+    }
+
+    function toggleAnswer(btn) {
+        const card = btn.closest('.question-card');
+        const answer = card.querySelector('.answer-section');
+        const isOpening = !answer.classList.contains('active');
+        answer.classList.toggle('active');
+
+        if (isOpening) {
+            const allCards = Array.from(card.parentElement.querySelectorAll('.question-card'));
+            const idx = allCards.indexOf(card);
+            const nextCard = allCards[idx + 1];
+            if (nextCard) {
+                setTimeout(() => {
+                    nextCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 450);
+            }
+        }
+    }
+
+    // ===== Mini-Nav Scroll =====
+    document.querySelectorAll('.mini-nav button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const section = document.getElementById(targetId);
+            if (!section) return;
+            const header = section.querySelector('.section-header');
+            const content = section.querySelector('.section-content');
+            if (!content.classList.contains('active')) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // ===== Search Filter =====
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        const keyword = searchInput.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.question-card');
+        if (!keyword) {
+            cards.forEach(c => c.classList.remove('filtered-out'));
+            return;
+        }
+
+        cards.forEach(card => {
+            const qNum = card.getAttribute('data-q') || '';
+            const text = card.textContent.toLowerCase();
+            const match = text.includes(keyword) || qNum === keyword;
+            card.classList.toggle('filtered-out', !match);
+        });
+    });
+
+    // ===== Download HTML Button =====
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'grammar_breakdown_9.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    // ===== Initial: Open first section =====
+    window.addEventListener('DOMContentLoaded', () => {
+        const firstSectionHeader = document.querySelector('.section-header');
+        if (firstSectionHeader) {
+            const content = firstSectionHeader.nextElementSibling;
+            firstSectionHeader.classList.add('active');
+            content.classList.add('active');
+        }
+    });
+</script>
+</body>
+</html>
