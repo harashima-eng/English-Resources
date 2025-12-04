@@ -1,1 +1,260 @@
-
+{
+  "version": "5.0",
+  "settings": {
+    "siteName": "English Resources",
+    "siteIcon": "ð",
+    "siteColor": "#3c5277"
+  },
+  "folders": [
+    {
+      "id": "104f491e-6aa2-4931-a2e5-3f8e1bdb027b",
+      "parentId": null,
+      "name": "高３",
+      "icon": "📁",
+      "color": "#0b8e4a",
+      "order": 0,
+      "iconImage": null
+    },
+    {
+      "id": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "parentId": "104f491e-6aa2-4931-a2e5-3f8e1bdb027b",
+      "name": "論理・表現III",
+      "icon": "📁",
+      "color": "#1e8044",
+      "order": 0,
+      "iconImage": null
+    },
+    {
+      "id": "aac20107-d8fb-4522-be26-96e73758d7b1",
+      "parentId": null,
+      "name": "高２",
+      "icon": "📁",
+      "color": "#112f69",
+      "order": 1,
+      "iconImage": null
+    },
+    {
+      "id": "be163e55-6b32-44d0-8a7c-13ec2f861c4e",
+      "parentId": null,
+      "name": "高１",
+      "icon": "📁",
+      "color": "#932546",
+      "order": 2,
+      "iconImage": null
+    },
+    {
+      "id": "d157d289-5646-4c09-80f1-62f697e08b83",
+      "parentId": "104f491e-6aa2-4931-a2e5-3f8e1bdb027b",
+      "name": "英語コミュニケーションIII",
+      "icon": "📁",
+      "color": "#e5c93e",
+      "order": 3,
+      "iconImage": null
+    }
+  ],
+  "items": [
+    {
+      "id": "05949858-9fad-4704-aee3-22ceb40680fb",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_2",
+      "fileName": "grammar_breakdown_2.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_2.html",
+      "fileSize": 54849,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 1
+    },
+    {
+      "id": "09e78723-e199-4a32-980f-9c0eed25c8cc",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_3",
+      "fileName": "grammar_breakdown_3.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_3.html",
+      "fileSize": 25967,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 2
+    },
+    {
+      "id": "bf28facb-8c8b-43d7-a46c-733ee1beffa0",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_4",
+      "fileName": "grammar_breakdown_4.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_4.html",
+      "fileSize": 52654,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 3
+    },
+    {
+      "id": "bf7ecdc5-22a4-47b2-afe1-18c71a6f3e90",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_8",
+      "fileName": "grammar_breakdown_8.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_8.html",
+      "fileSize": 62216,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 7
+    },
+    {
+      "id": "50efb1ee-bb56-45da-8bea-7e6d9d7e2b60",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_5",
+      "fileName": "grammar_breakdown_5.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_5.html",
+      "fileSize": 48752,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 4
+    },
+    {
+      "id": "030c8f0a-a16d-4bf1-a967-9810d6ec4365",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_10",
+      "fileName": "grammar_breakdown_10.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_10.html",
+      "fileSize": 37850,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 9
+    },
+    {
+      "id": "63eeca2f-3384-4d99-a8b4-09fef7621ddc",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_1",
+      "fileName": "grammar_breakdown_1.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_1.html",
+      "fileSize": 71872,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 0
+    },
+    {
+      "id": "a8c55619-9940-4cb0-8acb-6793d2e6a48c",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_7",
+      "fileName": "grammar_breakdown_7.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_7.html",
+      "fileSize": 118220,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 6
+    },
+    {
+      "id": "faeb568e-c369-42d2-a346-e4981e7d097c",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_9",
+      "fileName": "grammar_breakdown_9.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_9.html",
+      "fileSize": 81791,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 8
+    },
+    {
+      "id": "d3567532-848c-415b-9675-6e1553cc97cb",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "grammar_breakdown_6",
+      "fileName": "grammar_breakdown_6.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/grammar_breakdown_6.html",
+      "fileSize": 73853,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 5
+    },
+    {
+      "id": "b7da5110-a68a-4d9e-880a-5d65cca41648",
+      "folderId": "18109fdd-40a2-4ee4-84d5-050dcedf571a",
+      "title": "polysemy_test_breakdown",
+      "fileName": "polysemy_test_breakdown.html",
+      "filePath": "files/18109fdd-40a2-4ee4-84d5-050dcedf571a/polysemy_test_breakdown.html",
+      "fileSize": 97151,
+      "mimeType": "text/html",
+      "date": "2025-12-03",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 10
+    },
+    {
+      "id": "c771898e-52c5-4750-a8e3-1de01986f0d9",
+      "folderId": "aac20107-d8fb-4522-be26-96e73758d7b1",
+      "title": "grammar_breakdown_否定・特殊構文",
+      "fileName": "grammar_breakdown_否定・特殊構文.html",
+      "filePath": "files/aac20107-d8fb-4522-be26-96e73758d7b1/grammar_breakdown_否定・特殊構文.html",
+      "date": "2025-12-04",
+      "order": 3
+    },
+    {
+      "id": "7f581045-1a8b-4fdf-8776-e2580a74b293",
+      "folderId": "aac20107-d8fb-4522-be26-96e73758d7b1",
+      "title": "grammar_breakdown_実戦問題3",
+      "fileName": "grammar_breakdown_実戦問題3.html",
+      "filePath": "files/aac20107-d8fb-4522-be26-96e73758d7b1/grammar_breakdown_実戦問題3.html",
+      "date": "2025-12-04",
+      "order": 4
+    },
+    {
+      "id": "9f94d276-3677-4c66-ac0c-d4dfe956251c",
+      "folderId": "aac20107-d8fb-4522-be26-96e73758d7b1",
+      "title": "Grammar_Breakdown_比較",
+      "fileName": "Grammar_Breakdown_比較.html",
+      "filePath": "files/aac20107-d8fb-4522-be26-96e73758d7b1/Grammar_Breakdown_比較.html",
+      "date": "2025-12-04",
+      "order": 0
+    },
+    {
+      "id": "db804e14-8b97-430d-a764-329cd1478a13",
+      "folderId": "aac20107-d8fb-4522-be26-96e73758d7b1",
+      "title": "Grammar_Breakdown_仮定法",
+      "fileName": "Grammar_Breakdown_仮定法.html",
+      "filePath": "files/aac20107-d8fb-4522-be26-96e73758d7b1/Grammar_Breakdown_仮定法.html",
+      "date": "2025-12-04",
+      "order": 1
+    },
+    {
+      "id": "76d1d919-4552-46fd-a20c-abf987e2b361",
+      "folderId": "aac20107-d8fb-4522-be26-96e73758d7b1",
+      "title": "grammar_breakdown_実戦問題4",
+      "fileName": "grammar_breakdown_実戦問題4.html",
+      "filePath": "files/aac20107-d8fb-4522-be26-96e73758d7b1/grammar_breakdown_実戦問題4.html",
+      "date": "2025-12-04",
+      "order": 2,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    }
+  ],
+  "lastUpdated": "2025-12-04T03:42:22.019Z"
+}
