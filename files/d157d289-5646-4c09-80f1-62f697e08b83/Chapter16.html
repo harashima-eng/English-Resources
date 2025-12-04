@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 16: Self-Driving Cars - Reading Breakdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 30px 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .passage-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .passage-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .passage-text {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 2;
+            font-size: 1.05em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+        }
+
+        .para-label {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .question-header:hover {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .question-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .question-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+        }
+
+        .question-content.active {
+            max-height: 8000px;
+        }
+
+        .question-inner {
+            padding: 25px;
+        }
+
+        .question-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+            font-size: 1.1em;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .answer-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .correct-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 5px solid #28a745;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-left: 5px solid #007bff;
+        }
+
+        .context-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #ff9800;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            border-left: 5px solid #e83e8c;
+        }
+
+        .passage-ref-box {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-left: 5px solid #6c757d;
+            font-style: italic;
+        }
+
+        .incorrect-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 5px solid #dc3545;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-left: 5px solid #17a2b8;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-left: 5px solid #9b59b6;
+        }
+
+        .box-title {
+            font-weight: bold;
+            font-size: 1.15em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .box-title::before {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .correct-box .box-title::before { content: "✓"; }
+        .strategy-box .box-title::before { content: "🎯"; }
+        .context-box .box-title::before { content: "💡"; }
+        .flow-box .box-title::before { content: "📊"; }
+        .passage-ref-box .box-title::before { content: "📝"; }
+        .incorrect-box .box-title::before { content: "✗"; }
+        .tip-box .box-title::before { content: "✏️"; }
+        .hint-box .box-title::before { content: "💭"; }
+
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .underline-ref {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #2196f3;
+        }
+
+        .choices {
+            margin: 15px 0;
+        }
+
+        .choice {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+            
+            .passage-section {
+                padding: 20px;
+            }
+        }
+    
+        /* Layout Toggle Button */
+        .layout-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .layout-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Two Column Layout Styles */
+        .two-column-layout .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: flex-start;
+            padding: 20px 2%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .two-column-layout .passage-section {
+            position: sticky;
+            top: 20px;
+            order: 1;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .two-column-layout .questions-container {
+            order: 2;
+        }
+
+        /* Scrollbar styling for passage in two-column mode */
+        .two-column-layout .passage-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Mobile responsiveness for two-column */
+        @media (max-width: 1024px) {
+            .two-column-layout .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+
+            .two-column-layout .passage-section {
+                position: relative;
+                order: 1;
+                max-height: none;
+            }
+
+            .two-column-layout .questions-container {
+                order: 2;
+            }
+
+            .layout-toggle-btn {
+                display: none;
+            }
+        }
+
+.two-column-layout .questions-container {
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+/* Scrollbar styling for questions */
+.two-column-layout .questions-container::-webkit-scrollbar {
+    width: 8px;
+}
+.two-column-layout .questions-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.two-column-layout .questions-container::-webkit-scrollbar-thumb {
+    background: #f5576c;
+    border-radius: 10px;
+}
+.two-column-layout .questions-container::-webkit-scrollbar-thumb:hover {
+    background: #f093fb;
+}
+
+
+        .header-collapse-btn {
+            margin-top: 16px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: none;
+            background: rgba(15,23,42,0.2);
+            color: #f9fafb;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.25);
+            backdrop-filter: blur(4px);
+            transition: all 0.25s ease;
+        }
+        .header-collapse-btn:hover {
+            background: rgba(15,23,42,0.4);
+            transform: translateY(-1px);
+        }
+
+        body.header-collapsed .header {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        body.header-collapsed .container {
+            padding-top: 10px;
+        }
+
+        /* Scroll hints */
+        .scroll-hint {
+            position: fixed;
+            top: 80px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: rgba(15,23,42,0.85);
+            color: #f9fafb;
+            box-shadow: 0 8px 20px rgba(15,23,42,0.35);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 900;
+        }
+        .scroll-hint.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-hint-passage {
+            left: 18px;
+        }
+        .scroll-hint-questions {
+            right: 18px;
+        }
+
+        /* Dual-pane highlight linking */
+        .paragraph.linked-highlight {
+            outline: 3px solid rgba(249,115,22,0.9);
+            background: rgba(255,237,213,0.9);
+            border-radius: 10px;
+            transition: background 0.2s ease, outline 0.2s ease;
+        }
+        .question-section.linked-highlight {
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.7);
+            transform: translateY(-1px);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+
+.layout-toggle-btn {
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+.layout-toggle-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Chapter 16</h1>
+            <p>Self-Driving Cars and the Trolley Problem<br>自動運転車とトロッコ問題</p>
+            <button class="header-collapse-btn" onclick="toggleHeader()">▲ ヘッダーを隠す</button>
+        </div>
+
+        <div class="scroll-hint scroll-hint-passage">📖 Passage side scrolling</div>
+        <div class="scroll-hint scroll-hint-questions">❓ Question side scrolling</div>
+
+        <!-- Layout Toggle Button -->
+        <button class="layout-toggle-btn" onclick="toggleLayout()">
+            📱 Switch Layout
+        </button>
+
+        <div class="content">
+            <!-- FULL PASSAGE SECTION -->
+            <div class="passage-section">
+                <h2>📖 Full Passage (本文全体)</h2>
+                <div class="passage-text">
+                    <div class="paragraph" id="para1" data-paragraph="1">
+                        <div class="para-label">Paragraph 1:</div>
+                        The number of road deaths in Japan in 2018 was a record low of 3,532. The National Police Agency reported that this reduction since the peak in 1970 of over 16,000 was due to more traffic safety education. The introduction of seat belts, air bags and other safety equipment into cars since 1970 is also likely to be a factor. Three thousand five hundred is still a high number, averaging roughly ten per day. Many people dream that self-driving cars (SDC) will greatly increase road safety. To date, the accidents involving SDCs have been caused by humans. The hope is that when all cars are SDCs, human error will be <span style="text-decoration: underline;">(A) eradicated</span>, and road deaths become a thing of the past.
+                    </div>
+
+                    <div class="paragraph" id="para2" data-paragraph="2">
+                        <div class="para-label">Paragraph 2:</div>
+                        However pleasant this idea may be, it remains a dream. SDCs need to be programmed to predict as many situations as possible to reduce danger. Certainly, unexpected situations will still occur, such as people breaking the law at red lights and walking into the oncoming traffic. A major question arises; when danger cannot be circumvented, how should SDCs be programmed to respond?
+                    </div>
+
+                    <div class="paragraph" id="para3" data-paragraph="3">
+                        <div class="para-label">Paragraph 3:</div>
+                        The English philosopher Phillipa Foot introduced a thought experiment called the Trolley Problem. A driverless train is going along a track which divides into two branches. On one branch, five people are tied up on the track. On the other branch, one person is tied up. The train cannot be stopped, and it will hit the five people. A switch controls which branch the train travels. You have <span style="text-decoration: underline;">(1) two options</span>: 1) to press the switch to move the train onto the other track. This means that one person will be hit, but that you will have initiated this; 2) to do nothing. In this case, five people will be hit, but you will not be involved in the accident. In tests, most people say that they will press the switch and save five lives.
+                    </div>
+
+                    <div class="paragraph" id="para4" data-paragraph="4">
+                        <div class="para-label">Paragraph 4:</div>
+                        The Trolley Problem is useful for future SDC technology because it gets people to think about issues that are important in road safety. Should SDCs be programmed to, for example, save more or fewer lives? The options can be changed to other choices. Should young people's lives be saved instead of old people's? Females or males? Doctors or homeless people? Healthy or unhealthy? The list goes on. A team of scientists from the Massachusetts Institute of Technology (MIT) created a website to ask these questions. By 2018, the MIT team had collected over 40 million responses from all over the world. The results were <span style="text-decoration: underline;">(B) intriguing</span>: females are more important than males; younger people more valuable than older people; high-status citizens more meaningful than low-status individuals. Differences between cultures were also observed. For example, Eastern countries, including Japan, preferred to <span style="text-decoration: underline;">(2-1) save</span> the <span style="text-decoration: underline;">(2-2) lives</span> of lawful people, but Southern countries, such as Brazil, did not.
+                    </div>
+
+                    <div class="paragraph" id="para5" data-paragraph="5">
+                        <div class="para-label">Paragraph 5:</div>
+                        So far, however, these tests are only thought experiments. <span style="text-decoration: underline;">(3) What people say they will do and what they actually do may be very different.</span> What we say is based on how we think. But are we really the people we think we are? In 2018, an American TV show Mind Field tested this question with real people. Making this show was very dangerous in terms of morals because it can cause severe psychological damage to the people in the study. The information learned from the show, however, indicated that many people would be paralyzed; they could do nothing. The message for SDCs is highly complex. From now on, there needs to be a serious discussion between governments, car manufacturers and consumer groups about how SDCs should respond to unusual situations. <span style="text-decoration: underline;">(4) This</span> is likely to be an intriguing and extremely valuable discussion.
+                    </div>
+                </div>
+            </div>
+
+            <div class="questions-container">
+            <!-- QUESTION 1 -->
+            <div class="question-section" data-target-paragraphs="1,4">
+                <div class="question-header" onclick="toggleQuestion('q1')">
+                    <h3>問題 1</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="q1" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Which is the closest in meaning to each of the underlined words (A) and (B)?<br>
+                            (A) eradicated  ①destroyed  ②removed  ③defeated  ④damaged<br>
+                            (B) intriguing  ①disappointing  ②frightening  ③interesting  ④encouraging
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>(A) Underlined text:</strong> human error will be <span class="highlight">eradicated</span><br>
+                            <strong>(B) Underlined text:</strong> The results were <span class="highlight">intriguing</span>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint1')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                        <div id="hint1" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>(A) eradicatedについて:</strong><br>
+                                ✅ "human error will be eradicated" → 人的ミスはどうなる?<br>
+                                ✅ その後に "road deaths become a thing of the past" (交通事故死は過去のものになる)<br>
+                                ✅ ミスが<strong>完全になくなる</strong>イメージはどれ?<br>
+                                ✅ "destroyed" vs "removed" → どちらがより「完全に根絶」っぽい?<br><br>
+                                
+                                <strong>(B) intriguingについて:</strong><br>
+                                ✅ "The results were intriguing" → 結果は<strong>どんな感じ</strong>だった?<br>
+                                ✅ Paragraph 4の最後を読むと「予想外の結果」が出てる<br>
+                                ✅ ポジティブ? ネガティブ? どっちでもない?<br>
+                                ✅ 「興味深い」「面白い」という意味の選択肢は?
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer1')">Show Answer / 解答を見る</button>
+
+                        <div id="answer1" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">正解</div>
+                                (A) ② removed<br>
+                                (B) ③ interesting
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>(A) eradicated の意味推測:</strong><br>
+                                1. 前後の文脈を見る:<br>
+                                   - 前: SDCが安全性を大きく向上させる<br>
+                                   - <span class="highlight">"human error will be eradicated"</span><br>
+                                   - 後: "road deaths become a thing of the past" (交通事故死は過去のものに)<br><br>
+                                
+                                2. 論理的な流れ:<br>
+                                   人的ミス → <strong>完全になくなる</strong> → 交通事故死が過去のものに<br><br>
+                                
+                                3. 選択肢の検討:<br>
+                                   "eradicate" = 完全に根絶する、なくす<br>
+                                   "removed" = 取り除かれる → 最も近い意味!<br><br>
+                                
+                                <strong>(B) intriguing の意味推測:</strong><br>
+                                1. 結果の内容を確認:<br>
+                                   - 女性の方が男性より重要<br>
+                                   - 若者が老人より価値がある<br>
+                                   - 地位の高い人が低い人より意味がある<br><br>
+                                
+                                2. これらは<strong>予想外で考えさせられる</strong>結果<br>
+                                3. "intriguing" = 興味深い、面白い<br>
+                                4. "interesting" が最も近い!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>(A) eradicated:</strong><br>
+                                Paragraph 1: "The hope is that when all cars are SDCs, human error will be <span class="highlight">eradicated</span>, and road deaths become <span class="highlight">a thing of the past</span>."<br><br>
+                                
+                                "a thing of the past" = 過去のものになる<br>
+                                → 人的ミスが<strong>完全になくなる</strong>から交通事故死もなくなる<br>
+                                → "removed" (取り除かれる)が最適!<br><br>
+                                
+                                <strong>(B) intriguing:</strong><br>
+                                Paragraph 4: "The results were <span class="highlight">intriguing</span>: females are more important than males..."<br><br>
+                                
+                                結果の内容: 性別、年齢、地位によって命の価値が違う<br>
+                                → 倫理的に<strong>考えさせられる</strong>、<strong>興味深い</strong>結果<br>
+                                → "interesting" が最適!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ 語彙問題は<strong>前後の文脈</strong>で意味を推測!<br>
+                                ✅ "eradicate" は「根絶する」という強い意味 → "removed" が近い<br>
+                                ✅ "intriguing" は「興味をそそる」 → "interesting" と同義<br>
+                                ✅ 単語の雰囲気(ポジティブ/ネガティブ/中立)も大事!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 2 -->
+            <div class="question-section" data-target-paragraphs="3">
+                <div class="question-header" onclick="toggleQuestion('q2')">
+                    <h3>問題 2</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="q2" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Regarding the underlined part (1), explain in Japanese what the result will be if you choose the option 2).
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Underlined text:</strong> You have <span class="highlight">two options</span>:<br>
+                            1) to press the switch to move the train onto the other track. This means that one person will be hit, but that you will have initiated this;<br>
+                            2) to do nothing. In this case, five people will be hit, but you will not be involved in the accident.
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint2')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                        <div id="hint2" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>考え方のヒント:</strong><br>
+                                ✅ Option 2) = "to do nothing" (何もしない)<br>
+                                ✅ その結果は "In this case..." の後に書いてある!<br>
+                                ✅ <strong>2つの情報</strong>を答えに含める:<br>
+                                   - 何人がはねられる?<br>
+                                   - あなたの関与は?<br><br>
+                                
+                                <strong>キーワード:</strong><br>
+                                "five people will be hit" → 5人がはねられる<br>
+                                "you will not be involved" → あなたは関与していない
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer2')">Show Answer / 解答を見る</button>
+
+                        <div id="answer2" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">正解</div>
+                                5人が電車にはねられることになるが、あなた[自分]はその事故には関わっていない。
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>選択肢の結果を説明する問題:</strong><br>
+                                1. Option 2) = <span class="highlight">"to do nothing"</span> (何もしない)<br><br>
+                                
+                                2. その直後を読む:<br>
+                                   "In this case, <span class="highlight">five people will be hit</span>, but <span class="highlight">you will not be involved in the accident</span>."<br><br>
+                                
+                                3. <strong>2つの要素を含める:</strong><br>
+                                   ① 結果: 5人がはねられる<br>
+                                   ② あなたの立場: 事故に関与していない<br><br>
+                                
+                                4. 対比も重要:<br>
+                                   Option 1) → 1人死ぬが、<strong>あなたが起こした</strong><br>
+                                   Option 2) → 5人死ぬが、<strong>あなたは関与していない</strong>
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>トロッコ問題の設定:</strong><br>
+                                - 電車は止められない<br>
+                                - 2つの線路: 片方に5人、片方に1人<br>
+                                - スイッチで線路を切り替えられる<br><br>
+                                
+                                <strong>Option 2) の詳細:</strong><br>
+                                Action: <span class="highlight">"to do nothing"</span> (何もしない)<br>
+                                ↓<br>
+                                Result 1: <span class="highlight">"five people will be hit"</span> (5人がはねられる)<br>
+                                Result 2: <span class="highlight">"you will not be involved"</span> (あなたは関与していない)<br><br>
+                                
+                                → どちらの要素も答えに必要!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ "In this case..." = 「この場合」 → その直後が答え!<br>
+                                ✅ "but" で対比される2つの情報を両方書く<br>
+                                ✅ Option 1 と Option 2 の違いを理解しておこう:<br>
+                                   - Option 1: 1人を犠牲にして5人を救う(自分が決断)<br>
+                                   - Option 2: 5人が犠牲になる(自分は関与しない)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 3 -->
+            <div class="question-section" data-target-paragraphs="4">
+                <div class="question-header" onclick="toggleQuestion('q3')">
+                    <h3>問題 3</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="q3" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Write the most appropriate word to fill in each of the blank spaces (2-1) and (2-2). Choose the words from the passage.
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Context:</strong> For example, Eastern countries, including Japan, preferred to <span class="highlight">(2-1) _____</span> the <span class="highlight">(2-2) _____</span> of lawful people, but Southern countries, such as Brazil, did not.
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint3')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                        <div id="hint3" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>考え方のヒント:</strong><br>
+                                ✅ この文の<strong>前の部分</strong>を読もう!<br>
+                                ✅ Paragraph 4の前半で「SDCは何をするようプログラムすべきか?」と聞いてる<br>
+                                ✅ "Should SDCs be programmed to, for example, _____ more or fewer _____?"<br>
+                                ✅ 空欄に入る動詞と名詞の組み合わせは?<br>
+                                ✅ ヒント: "_____ lives" っていうフレーズがある!<br><br>
+                                
+                                <strong>どこを読む?</strong><br>
+                                → Paragraph 4の2文目をチェック!
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer3')">Show Answer / 解答を見る</button>
+
+                        <div id="answer3" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">正解</div>
+                                (2-1) save<br>
+                                (2-2) lives
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>空所補充問題の解き方:</strong><br>
+                                1. 空所がある文の<strong>前後</strong>を読む<br><br>
+                                
+                                2. Paragraph 4の流れ:<br>
+                                   - 1文目: トロッコ問題はSDC技術に役立つ<br>
+                                   - 2文目: <span class="highlight">"Should SDCs be programmed to, for example, save more or fewer lives?"</span><br>
+                                   - その後: いろんな選択肢が続く<br>
+                                   - 最後: "Eastern countries preferred to (2-1) the (2-2) of lawful people"<br><br>
+                                
+                                3. 論理的な流れ:<br>
+                                   SDCは「命を救う」ことについてプログラムされる<br>
+                                   → "save" + "lives" の組み合わせ!<br><br>
+                                
+                                4. 確認:<br>
+                                   "save the lives of lawful people" = 法を守る人々の命を救う<br>
+                                   → 文法的にも意味的にも完璧!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>Paragraph 4の展開:</strong><br>
+                                1. "Should SDCs be programmed to, for example, <span class="highlight">save more or fewer lives</span>?"<br>
+                                   (例えば、より多くの命を、あるいはより少ない命を<strong>救う</strong>ようにプログラムすべきか?)<br><br>
+                                
+                                2. "Should young people's <span class="highlight">lives</span> be saved instead of old people's?"<br>
+                                   (若者の<strong>命</strong>を救うべきか、老人の代わりに?)<br><br>
+                                
+                                3. → 全体のテーマ: <strong>"save lives"</strong> (命を救う)<br><br>
+                                
+                                4. 最後の文:<br>
+                                   "Eastern countries preferred to <span class="highlight">save the lives</span> of lawful people"<br>
+                                   (東洋の国々は法を守る人々の命を救う方を選んだ)
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ 空所補充は<strong>同じ段落内</strong>に答えがあることが多い<br>
+                                ✅ "save lives" は頻出の熟語 → 覚えておこう!<br>
+                                ✅ 動詞+名詞の組み合わせ(コロケーション)を意識<br>
+                                ✅ 段落全体のテーマを把握すれば答えは見つかる!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 4 -->
+            <div class="question-section" data-target-paragraphs="5">
+                <div class="question-header" onclick="toggleQuestion('q4')">
+                    <h3>問題 4</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="q4" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Translate the underlined part (3) into Japanese.
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Underlined text:</strong><br>
+                            <span class="highlight">What people say they will do and what they actually do may be very different.</span>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint4')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                        <div id="hint4" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>和訳のステップ:</strong><br>
+                                ✅ この文は2つの "what" 節が並んでる!<br>
+                                ✅ "What people say" = 人々が言うこと<br>
+                                ✅ "what they actually do" = 彼らが実際に行うこと<br>
+                                ✅ "and" で2つが並列 → 「AとB」<br>
+                                ✅ "may be very different" = 大きく違うかもしれない<br><br>
+                                
+                                <strong>注目ポイント:</strong><br>
+                                - "say they will do" → 「やると言う」<br>
+                                - "actually do" → 「実際に行う」<br>
+                                - この<strong>対比</strong>がポイント!
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer4')">Show Answer / 解答を見る</button>
+
+                        <div id="answer4" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">正解</div>
+                                人々がそうすると「言う」ことと、「実際に」行うこととは、大きく違うかもしれない。
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>和訳のステップ:</strong><br>
+                                1. <strong>文の構造を把握:</strong><br>
+                                   [What people say they will do] and [what they actually do] / may be very different.<br>
+                                   [A] and [B] / may be very different.<br><br>
+                                
+                                2. <strong>各部分を訳す:</strong><br>
+                                   - What people say they will do<br>
+                                     = 人々がやると「言う」こと<br>
+                                   - what they actually do<br>
+                                     = 彼らが「実際に」行うこと<br>
+                                   - may be very different<br>
+                                     = 大きく違うかもしれない<br><br>
+                                
+                                3. <strong>自然な日本語に:</strong><br>
+                                   「言うこと」と「実際に行うこと」は大きく違うかもしれない<br><br>
+                                
+                                4. <strong>強調のカギカッコ:</strong><br>
+                                   「言う」と「実際に」を強調すると、対比がクリアになる!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>この文が言いたいこと:</strong><br>
+                                - 前の文: "these tests are only thought experiments" (これらは思考実験にすぎない)<br>
+                                - この文: <span class="highlight">言うこと ≠ 実際にやること</span><br>
+                                - 次の文: "What we say is based on how we think" (言うことは考えに基づいている)<br><br>
+                                
+                                <strong>具体例:</strong><br>
+                                Paragraph 3: テストでは、ほとんどの人が「スイッチを押す」と<strong>言う</strong><br>
+                                ↓<br>
+                                Paragraph 5: でも実際にやらせると、多くの人は麻痺して何もできなかった<br><br>
+                                
+                                → <strong>言葉と行動の違い</strong>がテーマ!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ "What people say" と "what they actually do" の対比を明確に!<br>
+                                ✅ 「言う」と「実際に」にカギカッコをつけると対比が際立つ<br>
+                                ✅ "may be" = 「~かもしれない」(可能性)<br>
+                                ✅ 文脈を考えて、この対比が本文の重要なメッセージだと理解しよう
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 5 -->
+            <div class="question-section" data-target-paragraphs="5">
+                <div class="question-header" onclick="toggleQuestion('q5')">
+                    <h3>問題 5</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="q5" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Regarding the underlined word (4), explain in Japanese what "This" refers to.
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Underlined text:</strong><br>
+                            From now on, there needs to be a serious discussion between governments, car manufacturers and consumer groups about how SDCs should respond to unusual situations. <span class="highlight">This</span> is likely to be an intriguing and extremely valuable discussion.
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint5')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                        <div id="hint5" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>考え方のヒント:</strong><br>
+                                ✅ "This" は指示語 → <strong>前の文</strong>を見る!<br>
+                                ✅ 前の文: "there needs to be a serious discussion..."<br>
+                                ✅ "This" = この "discussion" (議論)のこと!<br>
+                                ✅ でも「議論」だけじゃ不足! <strong>詳細情報</strong>も入れよう:<br>
+                                   - 誰と誰の議論?<br>
+                                   - 何についての議論?<br><br>
+                                
+                                <strong>答えに含めるべき要素:</strong><br>
+                                ① 議論する人たち(governments, car manufacturers, consumer groups)<br>
+                                ② 議論のテーマ(how SDCs should respond to unusual situations)
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer5')">Show Answer / 解答を見る</button>
+
+                        <div id="answer5" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">正解</div>
+                                政府、自動車メーカー、消費者グループの間でなされる、SDC(自動運転車)が異常事態にどのように対応すべきかについての真剣な議論。
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>指示語問題の解き方:</strong><br>
+                                1. <strong>指示語の前を読む:</strong><br>
+                                   "This" は基本的に<strong>直前の文</strong>を指す<br><br>
+                                
+                                2. <strong>前の文を分析:</strong><br>
+                                   "From now on, there needs to be <span class="highlight">a serious discussion</span> between <span class="highlight">governments, car manufacturers and consumer groups</span> about <span class="highlight">how SDCs should respond to unusual situations</span>."<br><br>
+                                
+                                3. <strong>重要な要素を抽出:</strong><br>
+                                   ① Who: governments, car manufacturers, consumer groups<br>
+                                   ② What: a serious discussion<br>
+                                   ③ About what: how SDCs should respond to unusual situations<br><br>
+                                
+                                4. <strong>答えの構成:</strong><br>
+                                   "This" = この議論<br>
+                                   → 誰の?何についての?を詳しく説明する!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>前の文の詳細分析:</strong><br>
+                                "From now on, there needs to be a serious discussion<br>
+                                <span class="highlight">between governments, car manufacturers and consumer groups</span><br>
+                                <span class="highlight">about how SDCs should respond to unusual situations</span>."<br><br>
+                                
+                                <strong>構造:</strong><br>
+                                - 主語: a serious discussion (真剣な議論)<br>
+                                - 誰の間で: between A, B and C (A、B、Cの間で)<br>
+                                - 何について: about X (Xについて)<br><br>
+                                
+                                → これら<strong>全ての要素</strong>を答えに含める!<br><br>
+                                
+                                <strong>次の文:</strong><br>
+                                "<span class="highlight">This</span> is likely to be an intriguing and extremely valuable discussion."<br>
+                                (これは興味深く、非常に価値のある議論となるだろう)
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ "This" などの指示語は<strong>直前の文</strong>を指すことが多い<br>
+                                ✅ 単に「議論」だけじゃなく、<strong>詳細情報</strong>も答えに含める:<br>
+                                   - 誰と誰の?<br>
+                                   - 何についての?<br>
+                                ✅ 答案作成のコツ: 前の文を<strong>そのまま日本語に直す</strong>感じでOK!<br>
+                                ✅ "serious" (真剣な)という形容詞も忘れずに!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 6 -->
+            <div class="question-section" data-target-paragraphs="1,2,3,4,5">
+                <div class="question-header" onclick="toggleQuestion('q6')">
+                    <h3>問題 6</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="q6" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Choose one statement that is true according to the passage.
+                        </div>
+
+                        <div class="choices">
+                            <div class="choice">① The reason for accidents with SDCs so far is because of faulty programming.</div>
+                            <div class="choice">② In the Trolley Problem a train can be made to avoid hitting people.</div>
+                            <div class="choice">③ According to the MIT study, many people think that doctors are more important than homeless people.</div>
+                            <div class="choice">④ In the TV show Mind Field, most people chose to save the lives of more people than a few people.</div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint6')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                        <div id="hint6" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>内容一致問題の解き方:</strong><br>
+                                ✅ 各選択肢を<strong>一つずつ</strong>本文とチェック!<br><br>
+                                
+                                <strong>①について:</strong> SDCの事故原因は? → Paragraph 1をチェック<br>
+                                <strong>②について:</strong> トロッコ問題で電車は止められる? → Paragraph 3をチェック<br>
+                                <strong>③について:</strong> MITの調査結果は? → Paragraph 4をチェック<br>
+                                <strong>④について:</strong> Mind Fieldの番組で何が起きた? → Paragraph 5をチェック<br><br>
+                                
+                                <strong>ヒント:</strong><br>
+                                - "Doctors or homeless people?" というフレーズがParagraph 4にある!<br>
+                                - その答えも同じ段落に!
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer6')">Show Answer / 解答を見る</button>
+
+                        <div id="answer6" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">正解: ③</div>
+                                According to the MIT study, many people think that doctors are more important than homeless people.
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>内容一致問題の解き方:</strong><br>
+                                1. 各選択肢を本文と<strong>一つずつ</strong>照らし合わせる<br>
+                                2. キーワードを探して、該当箇所を見つける<br>
+                                3. <strong>100%一致</strong>するものを選ぶ<br><br>
+                                
+                                <strong>③が正解の理由:</strong><br>
+                                Paragraph 4: "Doctors or homeless people?" という質問がある<br>
+                                ↓<br>
+                                その後の結果: "high-status citizens more meaningful than low-status individuals"<br>
+                                ↓<br>
+                                医者(high-status) > ホームレス(low-status)<br>
+                                → ③と完全一致!
+                            </div>
+
+                            <div class="box passage-ref-box">
+                                <div class="box-title">③の根拠(Paragraph 4)</div>
+                                "Should young people's lives be saved instead of old people's? Females or males? <span class="highlight">Doctors or homeless people?</span> Healthy or unhealthy? The list goes on."<br><br>
+                                
+                                "The results were intriguing: females are more important than males; younger people more valuable than older people; <span class="highlight">high-status citizens more meaningful than low-status individuals</span>."<br><br>
+                                
+                                → Doctors(医者) = high-status citizens(地位の高い市民)<br>
+                                → Homeless people(ホームレス) = low-status individuals(地位の低い人々)<br>
+                                → ③と完全一致!
+                            </div>
+
+                            <div class="box incorrect-box">
+                                <div class="box-title">なぜ①が不正解か</div>
+                                Paragraph 1: "To date, <span class="highlight">the accidents involving SDCs have been caused by humans</span>."<br><br>
+                                
+                                本文: 事故の原因は<strong>人間</strong><br>
+                                ①: 事故の原因は<strong>欠陥のあるプログラミング</strong><br>
+                                → 完全に逆! 不正解
+                            </div>
+
+                            <div class="box incorrect-box">
+                                <div class="box-title">なぜ②が不正解か</div>
+                                Paragraph 3: "<span class="highlight">The train cannot be stopped</span>, and it will hit the five people."<br><br>
+                                
+                                本文: 電車は<strong>止められない</strong><br>
+                                ②: 電車は人をひくのを<strong>避けることができる</strong><br>
+                                → 本文と矛盾! 不正解
+                            </div>
+
+                            <div class="box incorrect-box">
+                                <div class="box-title">なぜ④が不正解か</div>
+                                Paragraph 5: "The information learned from the show, however, indicated that <span class="highlight">many people would be paralyzed; they could do nothing</span>."<br><br>
+                                
+                                本文: 多くの人は<strong>麻痺して何もできなかった</strong><br>
+                                ④: ほとんどの人が<strong>より多くの人の命を救う選択をした</strong><br>
+                                → 本文と正反対! 不正解<br><br>
+                                
+                                <strong>重要な対比:</strong><br>
+                                - Paragraph 3のテスト: 「スイッチを押す」と<strong>言った</strong><br>
+                                - Paragraph 5のTV番組: 実際は<strong>何もできなかった</strong><br>
+                                → 言葉と行動の違いがポイント!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ 内容一致は<strong>消去法</strong>も有効<br>
+                                ✅ キーワードを見つけて、該当箇所を精読<br>
+                                ✅ "high-status" と "doctors" のような<strong>言い換え</strong>に注意<br>
+                                ✅ 本文に書いていないことを「推測」しない!<br>
+                                ✅ この問題のように、対比(言う vs 実際にやる)が重要なテーマの場合は特に注意
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+            </div>
+
+<script>
+
+        function toggleLayout() {
+            document.body.classList.toggle('two-column-layout');
+            const btn = document.querySelector('.layout-toggle-btn');
+            if (document.body.classList.contains('two-column-layout')) {
+                btn.textContent = '📚 Single Column';
+            } else {
+                btn.textContent = '📱 Two Columns';
+            }
+        }
+
+
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function showHint(id) {
+            const hint = document.getElementById(id);
+            const button = event.target;
+            
+            // Toggle visibility
+            if (hint.classList.contains('visible')) {
+                hint.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                hint.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+
+        function toggleHeader() {
+            document.body.classList.toggle('header-collapsed');
+            const btn = document.querySelector('.header-collapse-btn');
+            if (btn) {
+                if (document.body.classList.contains('header-collapsed')) {
+                    btn.textContent = '▼ ヘッダーを表示';
+                } else {
+                    btn.textContent = '▲ ヘッダーを隠す';
+                }
+            }
+        }
+
+        // Scroll hints and dual-pane linking setup
+        document.addEventListener('DOMContentLoaded', function () {
+            const passage = document.querySelector('.two-column-layout .passage-section') || document.querySelector('.passage-section');
+            const questions = document.querySelector('.two-column-layout .questions-container') || document.querySelector('.questions-container');
+            const passageHint = document.querySelector('.scroll-hint-passage');
+            const questionsHint = document.querySelector('.scroll-hint-questions');
+            let passageTimer = null;
+            let questionsTimer = null;
+
+            if (passage && passageHint) {
+                passage.addEventListener('scroll', function () {
+                    passageHint.classList.add('show');
+                    clearTimeout(passageTimer);
+                    passageTimer = setTimeout(() => passageHint.classList.remove('show'), 800);
+                });
+            }
+
+            if (questions && questionsHint) {
+                questions.addEventListener('scroll', function () {
+                    questionsHint.classList.add('show');
+                    clearTimeout(questionsTimer);
+                    questionsTimer = setTimeout(() => questionsHint.classList.remove('show'), 800);
+                });
+            }
+
+            // Dual-pane highlight linking
+            const paragraphs = document.querySelectorAll('.paragraph[data-paragraph]');
+            const qSections = document.querySelectorAll('.question-section');
+
+            function clearLinkedHighlight() {
+                paragraphs.forEach(p => p.classList.remove('linked-highlight'));
+                qSections.forEach(q => q.classList.remove('linked-highlight'));
+            }
+
+            qSections.forEach(sec => {
+                const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim()).filter(Boolean);
+
+                sec.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    sec.classList.add('linked-highlight');
+                    targets.forEach(num => {
+                        const p = document.querySelector('#para' + num);
+                        if (p) p.classList.add('linked-highlight');
+                    });
+                });
+
+                sec.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            paragraphs.forEach(p => {
+                const num = p.getAttribute('data-paragraph');
+                p.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    p.classList.add('linked-highlight');
+                    qSections.forEach(sec => {
+                        const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim());
+                        if (targets.includes(num)) {
+                            sec.classList.add('linked-highlight');
+                        }
+                    });
+                });
+                p.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+        });
+
+        function showAnswer(id) {
+            const answer = document.getElementById(id);
+            const button = event.target;
+            
+            // Toggle visibility
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                answer.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+    
+// Auto-hide + reveal for layout toggle button
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.querySelector(".layout-toggle-btn");
+    let hideTimer = null;
+
+    function hideButton() {
+        btn.classList.add("hidden");
+    }
+    function showButton() {
+        btn.classList.remove("hidden");
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(hideButton, 2000);
+    }
+
+    hideTimer = setTimeout(hideButton, 2000);
+
+    window.addEventListener("mousemove", showButton);
+    window.addEventListener("scroll", showButton);
+});
+
+</script>
+</body>
+</html>
