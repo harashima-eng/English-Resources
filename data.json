@@ -30,7 +30,7 @@
       "name": "高２",
       "icon": "📁",
       "color": "#112f69",
-      "order": 1,
+      "order": 2,
       "iconImage": null
     },
     {
@@ -39,7 +39,7 @@
       "name": "高１",
       "icon": "📁",
       "color": "#932546",
-      "order": 2,
+      "order": 3,
       "iconImage": null
     },
     {
@@ -49,6 +49,15 @@
       "icon": "📁",
       "color": "#e5c93e",
       "order": 3,
+      "iconImage": null
+    },
+    {
+      "id": "500eb0ac-19c7-4966-8b0e-f1d9027afa77",
+      "parentId": "aac20107-d8fb-4522-be26-96e73758d7b1",
+      "name": "論理・表現II",
+      "icon": "📁",
+      "color": "#9a20bc",
+      "order": 0,
       "iconImage": null
     }
   ],
@@ -206,7 +215,77 @@
       "keywords": "",
       "minutes": "",
       "order": 10
+    },
+    {
+      "id": "e2081ebf-71e7-4af6-8f13-929933d6a835",
+      "folderId": "500eb0ac-19c7-4966-8b0e-f1d9027afa77",
+      "title": "grammar_breakdown_否定・特殊構文",
+      "fileName": "grammar_breakdown_否定・特殊構文.html",
+      "filePath": "files/500eb0ac-19c7-4966-8b0e-f1d9027afa77/grammar_breakdown_否定・特殊構文.html",
+      "fileSize": 51812,
+      "mimeType": "text/html",
+      "date": "2025-12-04",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 0
+    },
+    {
+      "id": "81dc6fcd-92ac-4267-93ea-6f33f09fafb1",
+      "folderId": "500eb0ac-19c7-4966-8b0e-f1d9027afa77",
+      "title": "Grammar_Breakdown_仮定法",
+      "fileName": "Grammar_Breakdown_仮定法.html",
+      "filePath": "files/500eb0ac-19c7-4966-8b0e-f1d9027afa77/Grammar_Breakdown_仮定法.html",
+      "fileSize": 67022,
+      "mimeType": "text/html",
+      "date": "2025-12-04",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 1
+    },
+    {
+      "id": "af452f84-2449-4881-b933-2034e3801b28",
+      "folderId": "500eb0ac-19c7-4966-8b0e-f1d9027afa77",
+      "title": "grammar_breakdown_実戦問題3",
+      "fileName": "grammar_breakdown_実戦問題3.html",
+      "filePath": "files/500eb0ac-19c7-4966-8b0e-f1d9027afa77/grammar_breakdown_実戦問題3.html",
+      "fileSize": 67816,
+      "mimeType": "text/html",
+      "date": "2025-12-04",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 2
+    },
+    {
+      "id": "dcc3cff5-937a-47c5-93db-1aef48ed94fd",
+      "folderId": "500eb0ac-19c7-4966-8b0e-f1d9027afa77",
+      "title": "Grammar_Breakdown_比較",
+      "fileName": "Grammar_Breakdown_比較.html",
+      "filePath": "files/500eb0ac-19c7-4966-8b0e-f1d9027afa77/Grammar_Breakdown_比較.html",
+      "fileSize": 80766,
+      "mimeType": "text/html",
+      "date": "2025-12-04",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 3
+    },
+    {
+      "id": "18f0a773-ee19-46d0-a812-9b18635242ef",
+      "folderId": "500eb0ac-19c7-4966-8b0e-f1d9027afa77",
+      "title": "grammar_breakdown_実戦問題4",
+      "fileName": "grammar_breakdown_実戦問題4.html",
+      "filePath": "files/500eb0ac-19c7-4966-8b0e-f1d9027afa77/grammar_breakdown_実戦問題4.html",
+      "fileSize": 68549,
+      "mimeType": "text/html",
+      "date": "2025-12-04",
+      "tags": [],
+      "keywords": "",
+      "minutes": "",
+      "order": 4
     }
   ],
-  "lastUpdated": "2025-12-04T01:46:52.856Z"
+  "lastUpdated": "2025-12-04T01:50:05.196Z"
 }
