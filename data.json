@@ -50,6 +50,24 @@
       "color": "#e5c93e",
       "order": 3,
       "iconImage": null
+    },
+    {
+      "id": "b52645af-831f-466a-9359-2a19cb13812a",
+      "parentId": null,
+      "name": "英検対策",
+      "icon": "📁",
+      "color": "#b23b2e",
+      "order": 4,
+      "iconImage": null
+    },
+    {
+      "id": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "parentId": "b52645af-831f-466a-9359-2a19cb13812a",
+      "name": "準１級",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "iconImage": null
     }
   ],
   "items": [
@@ -259,7 +277,82 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "71b5fb67-612e-4bbd-a588-15806004d06f",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_part3_mixed_topics",
+      "fileName": "eiken_pre1_part3_mixed_topics.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_part3_mixed_topics.html",
+      "date": "2025-12-05",
+      "order": 0
+    },
+    {
+      "id": "75596d14-8eb2-4a26-9b4b-3322fe21f175",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_part2_technology_society_economy",
+      "fileName": "eiken_pre1_part2_technology_society_economy.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_part2_technology_society_economy.html",
+      "date": "2025-12-05",
+      "order": 1
+    },
+    {
+      "id": "6d651397-2af6-4c2b-a4ac-23234044f3c1",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_part1_environment_work_education",
+      "fileName": "eiken_pre1_part1_environment_work_education.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_part1_environment_work_education.html",
+      "date": "2025-12-05",
+      "order": 2
+    },
+    {
+      "id": "85c72c58-03a8-4f11-a3f3-6500e734a513",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_part7_FINAL",
+      "fileName": "eiken_pre1_part7_FINAL.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_part7_FINAL.html",
+      "date": "2025-12-05",
+      "order": 3
+    },
+    {
+      "id": "9257eb3d-ec38-4263-b730-2b8190f31725",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_part4_politics_media_health",
+      "fileName": "eiken_pre1_part4_politics_media_health.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_part4_politics_media_health.html",
+      "date": "2025-12-05",
+      "order": 4
+    },
+    {
+      "id": "64778f47-dc2b-4e5a-85a6-e866d129bfaf",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_part5_family_education_global",
+      "fileName": "eiken_pre1_part5_family_education_global.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_part5_family_education_global.html",
+      "date": "2025-12-05",
+      "order": 5
+    },
+    {
+      "id": "986a81fa-022a-4438-b33f-b9beaf8e1627",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_speaking_phrase_bank_simple",
+      "fileName": "eiken_pre1_speaking_phrase_bank_simple.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_speaking_phrase_bank_simple.html",
+      "date": "2025-12-05",
+      "order": 6
+    },
+    {
+      "id": "723e7fdb-cbfc-4367-8fff-53480931295c",
+      "folderId": "93c8d7e5-599c-4781-97bc-da9af768aa10",
+      "title": "eiken_pre1_universal_phrases",
+      "fileName": "eiken_pre1_universal_phrases.html",
+      "filePath": "files/93c8d7e5-599c-4781-97bc-da9af768aa10/eiken_pre1_universal_phrases.html",
+      "date": "2025-12-05",
+      "order": 7,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
-  "lastUpdated": "2025-12-05T04:57:25.495Z"
+  "lastUpdated": "2025-12-05T05:01:42.440Z"
 }
