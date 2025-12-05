@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英検準1級 スピーキング対策ガイド - PART 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f5576c;
+            --success: #20c997;
+            --warning: #ffd93d;
+            --bg-light: #f8f9fa;
+            --text-dark: #495057;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .container {
+            background: #0f3460;
+            color: #e8e8e8;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, var(--accent) 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .header.minimized {
+            padding: 15px 40px;
+        }
+
+        .header.minimized h1,
+        .header.minimized p,
+        .header.minimized .progress-container {
+            display: none;
+        }
+
+        .header-toggle-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+            z-index: 101;
+        }
+
+        .header-toggle-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .header.minimized .header-toggle-btn {
+            transform: rotate(180deg);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: white;
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            font-size: 0.9em;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1.1em;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background: rgba(0,0,0,0.8);
+            color: white;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 40px;
+        }
+
+        body.dark-mode .toc {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+        }
+
+        .toc h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        body.dark-mode .toc h3 {
+            color: #64b5f6;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .toc-link {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        body.dark-mode .toc-link {
+            background: rgba(255,255,255,0.1);
+            color: #e8e8e8;
+        }
+
+        .toc-link:hover {
+            transform: translateX(5px);
+            background: var(--primary);
+            color: white;
+        }
+
+        .toc-check {
+            opacity: 0;
+            transition: var(--transition);
+            font-size: 1.2em;
+        }
+
+        .toc-link.completed .toc-check {
+            opacity: 1;
+            color: var(--success);
+        }
+
+        /* Content Area */
+        .content {
+            padding: 40px;
+        }
+
+        /* Feature Box */
+        .feature-box {
+            background: linear-gradient(135deg, #ffd93d 0%, #ff6b6b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .feature-box h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .feature-box p {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+
+        /* Collapsible Sections */
+        .collapsible-section {
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .section-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #4a1942 100%);
+        }
+
+        .section-header:hover {
+            opacity: 0.9;
+        }
+
+        .section-header h2 {
+            color: #087f5b;
+            font-size: 1.5em;
+        }
+
+        body.dark-mode .section-header h2 {
+            color: #20c997;
+        }
+
+        .section-toggle {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .section-toggle {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+        }
+
+        body.dark-mode .section-content {
+            background: #1a2332;
+        }
+
+        .section-content.active {
+            max-height: 10000px;
+            padding: 25px;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 6px solid #ff6b6b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .formula-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        body.dark-mode .formula-step {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Filler Section */
+        .filler-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-left: 6px solid #20c997;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filler-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filler-card {
+            background: var(--bg-light);
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        body.dark-mode .filler-card {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .filler-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-left-color: var(--success);
+        }
+
+        .filler-card strong {
+            color: #0ca678;
+            font-size: 1.05em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        body.dark-mode .filler-card strong {
+            color: #20c997;
+        }
+
+        .filler-card .jp {
+            color: #868e96;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        body.dark-mode .filler-card .jp {
+            color: #b0b0b0;
+        }
+
+        /* Category Header */
+        .category {
+            margin-bottom: 40px;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 40px 0 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-header h2 {
+            font-size: 1.8em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Question Collapsible */
+        .question-collapsible {
+            margin: 25px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        body.dark-mode .question-collapsible {
+            border-left-color: #64b5f6;
+        }
+
+        .question-header {
+            background: var(--bg-light);
+            padding: 20px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .question-header {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .question-header:hover {
+            background: #e9ecef;
+        }
+
+        body.dark-mode .question-header:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .question-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin: 0;
+            flex: 1;
+        }
+
+        body.dark-mode .question-title {
+            color: #e8e8e8;
+        }
+
+        .question-toggle {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 20px;
+        }
+
+        .question-header.active .question-toggle {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .question-content.active {
+            max-height: 5000px;
+            padding: 30px;
+        }
+
+        .question-block {
+            background: white;
+        }
+
+        body.dark-mode .question-block {
+            background: transparent;
+        }
+
+        /* Difficulty Badges */
+        .difficulty {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .basic {
+            background: #c3fae8;
+            color: #087f5b;
+        }
+
+        .intermediate {
+            background: #ffe066;
+            color: #7a5c00;
+        }
+
+        .advanced {
+            background: #ffc9c9;
+            color: #c92a2a;
+        }
+
+        /* Buttons */
+        .show-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 10px 8px 10px 0;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .show-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .show-btn.active {
+            background: linear-gradient(135deg, #20c997 0%, #087f5b 100%);
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, #ffd93d 0%, #ff6b6b 100%);
+        }
+
+        .hint-btn:hover {
+            box-shadow: 0 6px 15px rgba(255, 217, 61, 0.4);
+        }
+
+        /* Answer Sections */
+        .answer-section {
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .answer-section {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .answer-section.hidden {
+            display: none;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #fff3bf 0%, #ffe082 100%);
+            border-left: 5px solid #ffd93d;
+        }
+
+        body.dark-mode .hint-box {
+            background: linear-gradient(135deg, #4a4a00 0%, #6a6a00 100%);
+        }
+
+        .hint-box h4 {
+            color: #d68910;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .hint-box h4 {
+            color: #ffd93d;
+        }
+
+        .hint-content {
+            color: #495057;
+        }
+
+        body.dark-mode .hint-content {
+            color: #e8e8e8;
+        }
+
+        .hint-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+
+        /* Side-by-side answer layout */
+        .answer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .answer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .model-answer {
+            background: linear-gradient(135deg, #d3f9d8 0%, #b2f2bb 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .model-answer {
+            background: linear-gradient(135deg, #0a3a0a 0%, #0d4d0d 100%);
+        }
+
+        .jp-translation {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #1565c0;
+        }
+
+        body.dark-mode .jp-translation {
+            background: rgba(21, 101, 192, 0.1);
+        }
+
+        .tips {
+            background: #f3e5f5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #6a1b9a;
+        }
+
+        body.dark-mode .tips {
+            background: rgba(106, 27, 154, 0.1);
+        }
+
+        .tips h4 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .tips h4 {
+            color: #ba68c8;
+        }
+
+        .tips ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .tips li {
+            margin: 8px 0;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.5em;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 150;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .toc { margin: 20px; padding: 20px; }
+            .question-title { font-size: 1.2em; }
+            .show-btn { padding: 12px 24px; font-size: 0.95em; margin: 8px 4px; }
+            .filler-grid { grid-template-columns: 1fr; }
+            .toc-grid { grid-template-columns: 1fr; }
+            .dark-mode-toggle { top: 10px; right: 10px; padding: 10px 15px; font-size: 1em; }
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .back-to-top, .show-btn { display: none; }
+            .answer-section { display: block !important; }
+            .section-content { max-height: none !important; padding: 20px !important; }
+            .question-content { max-height: none !important; padding: 20px !important; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+<button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <button class="header-toggle-btn" onclick="toggleHeader()" title="Hide/Show Header">▲</button>
+        <h1>🎬 英検準1級 スピーキング対策ガイド - PART 2</h1>
+        <p>Technology, Society & Economy Topics</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Progress: 0/7 questions completed</div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h3>📚 Quick Navigation</h3>
+        <div class="toc-grid">
+            <a class="toc-link" onclick="scrollToSection('formula')">
+                <span>🎯 Winning Formula</span>
+                <span class="toc-check">✓</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('fillers')">
+                <span>🗣️ Filler Phrases</span>
+                <span class="toc-check">✓</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('technology')">
+                <span>📱 Technology (3Q)</span>
+                <span class="toc-check">✓</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('society')">
+                <span>👥 Society (2Q)</span>
+                <span class="toc-check">✓</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('economy')">
+                <span>💰 Economy (2Q)</span>
+                <span class="toc-check">✓</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Feature Box -->
+        <div class="feature-box">
+            <h2>💡 NEW FEATURE: HINT SYSTEM!</h2>
+            <p>
+                各質問に<strong>「Show Hint」ボタン</strong>を追加！<br>
+                まずヒントを見て自分で答えを考える → その後モデルアンサーで確認!<br>
+                これで本番と同じ練習ができる! 🔥
+            </p>
+        </div>
+
+        <!-- Formula Section -->
+        <div id="formula" class="collapsible-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🎯 THE WINNING FORMULA (40-45秒)</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content active">
+                <div class="formula-box">
+                    <div class="formula-step">1️⃣ OPINION (5秒) - はっきりした立場</div>
+                    <div class="formula-step">2️⃣ REASON 1 + EXAMPLE (15-20秒) - 理由と具体例</div>
+                    <div class="formula-step">3️⃣ REASON 2 + EXAMPLE (15-20秒) - もう一つの理由と例</div>
+                    <div class="formula-step">4️⃣ CONCLUSION (5秒) - まとめ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filler Phrases Section -->
+        <div id="fillers" class="collapsible-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🗣️ FILLER PHRASES - 考える時間を稼ぐ!</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content active">
+                <div class="filler-section">
+                    <p style="color: #087f5b; font-weight: 600; margin-bottom: 15px;">⚡ 沈黙は減点!これらのフレーズで自然に考える時間を作れ!</p>
+                    <div class="filler-grid">
+                        <div class="filler-card">
+                            <strong>That's a good point...</strong>
+                            <span class="jp">「それは良い指摘ですね…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>I need a moment to think...</strong>
+                            <span class="jp">「ちょっと考える時間が必要です…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>From my perspective...</strong>
+                            <span class="jp">「私の視点からは…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>If you ask me...</strong>
+                            <span class="jp">「私に聞くなら…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>The way I see it...</strong>
+                            <span class="jp">「私の見方では…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>Let me put it this way...</strong>
+                            <span class="jp">「こう言わせてください…」</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TECHNOLOGY SECTION -->
+        <div id="technology" class="category">
+            <div class="category-header">
+                <h2>📱 TECHNOLOGY QUESTIONS (3 Questions)</h2>
+            </div>
+
+            <!-- Tech Q1: Smartphones and social interaction -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q1: Do smartphones make people less social?
+                        <span class="difficulty intermediate">⭐ Intermediate</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="1">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-tech1')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('tech1-yes')">YES</button>
+                        <button class="show-btn" onclick="toggle('tech1-no')">NO</button>
+
+                        <div id="hint-tech1" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - スマホの社交性への影響を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YES側 (社交性を下げる):</strong>
+                                <ul>
+                                    <li>📌 What happens during face-to-face conversations? (people check phones)</li>
+                                    <li>📌 How does it affect real relationships? (less meaningful interaction)</li>
+                                    <li>📌 結論: What's being lost?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NO側 (社交性を下げない):</strong>
+                                <ul>
+                                    <li>📌 How do smartphones connect people? (social media, messaging)</li>
+                                    <li>📌 What opportunities do they create? (stay in touch with distant friends)</li>
+                                    <li>📌 結論: How do they enhance social life?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "distracted", "meaningful interaction" / "stay connected", "social media", "enhance"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="tech1-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES:</strong><br>
+                                    "Yes, I believe smartphones make people less social. People are constantly distracted by their phones during face-to-face conversations. Moreover, online communication lacks the depth of real interaction. So smartphones are reducing our ability to connect meaningfully with others."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、スマートフォンは人々をより非社交的にすると思います。人々は対面での会話中に常に携帯電話に気を取られています。さらに、オンラインコミュニケーションは本当のやり取りの深さに欠けています。だからスマートフォンは他者と有意義につながる能力を減らしています。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"constantly distracted"</strong> - 「常に気を取られる」。注意散漫の問題</li>
+                                    <li><strong>"face-to-face conversations"</strong> - 「対面での会話」。直接的なコミュニケーション</li>
+                                    <li><strong>"lacks the depth"</strong> - 「深さに欠ける」。質の問題を指摘</li>
+                                    <li><strong>"connect meaningfully"</strong> - 「有意義につながる」。深い関係性</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="tech1-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO:</strong><br>
+                                    "I don't think smartphones make people less social. They help us stay connected with friends and family who live far away. Additionally, social media allows us to join communities with similar interests. So smartphones actually enhance our social lives."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「スマートフォンが人々を非社交的にするとは思いません。遠くに住む友人や家族とつながり続けるのに役立ちます。さらに、ソーシャルメディアは同じ興味を持つコミュニティに参加することを可能にします。だからスマートフォンは実際に私たちの社会生活を向上させます。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"stay connected"</strong> - 「つながり続ける」。継続的な関係維持</li>
+                                    <li><strong>"who live far away"</strong> - 「遠くに住む」。距離の問題を解決</li>
+                                    <li><strong>"join communities"</strong> - 「コミュニティに参加する」。新しいつながり</li>
+                                    <li><strong>"enhance our social lives"</strong> - 「社会生活を向上させる」。プラス効果</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Q2: AI replacing workers -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q2: Should AI replace human workers?
+                        <span class="difficulty advanced">⭐⭐ Advanced</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="2">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-tech2')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('tech2')">Show Model Answer</button>
+
+                        <div id="hint-tech2" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - AI労働者の是非を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>構造のヒント:</strong>
+                                <ul>
+                                    <li>📌 Opinion: Should AI replace workers? (Balanced view)</li>
+                                    <li>📌 Point 1: What jobs can AI do better? (repetitive, dangerous)</li>
+                                    <li>📌 Point 2: What jobs need humans? (creativity, empathy)</li>
+                                    <li>📌 Conclusion: What's the best approach?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "repetitive tasks", "dangerous jobs", "human judgment", "creativity", "balance"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="tech2" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    "I think AI should replace workers in some areas but not all. AI is better at repetitive and dangerous tasks, which makes work safer. However, jobs requiring creativity and human judgment cannot be replaced. So we need a balanced approach where AI assists humans rather than replacing them completely."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「AIは一部の分野で労働者に取って代わるべきですが、すべてではありません。AIは反復的で危険な作業が得意で、仕事をより安全にします。しかし、創造性や人間の判断を必要とする仕事は置き換えられません。だから、AIが完全に人間に取って代わるのではなく、人間を支援するバランスの取れたアプローチが必要です。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"in some areas but not all"</strong> - 「一部の分野では...」。バランス型の答え</li>
+                                    <li><strong>"repetitive and dangerous tasks"</strong> - 「反復的で危険な作業」。AIの適性</li>
+                                    <li><strong>"human judgment"</strong> - 「人間の判断」。人間固有の能力</li>
+                                    <li><strong>"assists humans rather than replacing"</strong> - 「置き換えるのではなく支援する」。協働の提案</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Q3: Social media impact -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q3: Is social media good for society?
+                        <span class="difficulty intermediate">⭐ Intermediate</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="3">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-tech3')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('tech3-yes')">YES</button>
+                        <button class="show-btn" onclick="toggle('tech3-no')">NO</button>
+
+                        <div id="hint-tech3" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - ソーシャルメディアの影響を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YES側 (良い影響):</strong>
+                                <ul>
+                                    <li>📌 How does it help communication? (connect globally)</li>
+                                    <li>📌 What benefits for information? (news, awareness)</li>
+                                    <li>📌 結論: Overall positive impact?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NO側 (悪い影響):</strong>
+                                <ul>
+                                    <li>📌 What problems does it create? (misinformation, addiction)</li>
+                                    <li>📌 How does it affect mental health? (comparison, anxiety)</li>
+                                    <li>📌 結論: More harm than good?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "connect globally", "raise awareness" / "misinformation", "mental health", "addiction"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="tech3-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES:</strong><br>
+                                    "Yes, I believe social media is good for society. It connects people globally and helps spread important information quickly. Furthermore, it raises awareness about social issues. So social media has become a powerful tool for positive change."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、ソーシャルメディアは社会に良いと思います。世界中の人々をつなぎ、重要な情報を素早く広めるのに役立ちます。さらに、社会問題についての意識を高めます。だからソーシャルメディアはポジティブな変化のための強力なツールになっています。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"connects people globally"</strong> - 「世界中の人々をつなぐ」。グローバルな影響</li>
+                                    <li><strong>"spread important information"</strong> - 「重要な情報を広める」。情報拡散力</li>
+                                    <li><strong>"raises awareness"</strong> - 「意識を高める」。社会的影響</li>
+                                    <li><strong>"powerful tool for positive change"</strong> - 「ポジティブな変化のための強力なツール」</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="tech3-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO:</strong><br>
+                                    "I don't think social media is good for society. It spreads misinformation and fake news too easily. Additionally, it harms mental health by encouraging constant comparison. So the negative effects outweigh the benefits."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「ソーシャルメディアは社会に良くないと思います。誤った情報やフェイクニュースがあまりにも簡単に広がります。さらに、常に比較することを促すことで精神衛生を害します。だから悪影響が利点を上回ります。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"spreads misinformation"</strong> - 「誤った情報を広める」。情報の質の問題</li>
+                                    <li><strong>"fake news"</strong> - 「フェイクニュース」。現代の大きな問題</li>
+                                    <li><strong>"harms mental health"</strong> - 「精神衛生を害する」。健康への悪影響</li>
+                                    <li><strong>"constant comparison"</strong> - 「常に比較すること」。ストレスの原因</li>
+                                    <li><strong>"outweigh the benefits"</strong> - 「利点を上回る」。総合評価</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SOCIETY SECTION -->
+        <div id="society" class="category">
+            <div class="category-header">
+                <h2>👥 SOCIETY QUESTIONS (2 Questions)</h2>
+            </div>
+
+            <!-- Society Q1: Mandatory voting -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q1: Should voting be mandatory?
+                        <span class="difficulty advanced">⭐⭐ Advanced</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="4">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-soc1')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('soc1-yes')">YES</button>
+                        <button class="show-btn" onclick="toggle('soc1-no')">NO</button>
+
+                        <div id="hint-soc1" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - 投票義務化の是非を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YES側 (義務化すべき):</strong>
+                                <ul>
+                                    <li>📌 Why is voting important? (civic duty)</li>
+                                    <li>📌 What happens with low turnout? (unrepresentative)</li>
+                                    <li>📌 結論: Why force participation?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NO側 (義務化すべきでない):</strong>
+                                <ul>
+                                    <li>📌 What about freedom of choice? (personal right)</li>
+                                    <li>📌 What about uninformed voters? (quality vs quantity)</li>
+                                    <li>📌 結論: Why voluntary is better?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "civic duty", "representative democracy" / "freedom of choice", "uninformed voters"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="soc1-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES:</strong><br>
+                                    "Yes, I think voting should be mandatory. It's a civic duty in a democracy. Moreover, mandatory voting ensures that election results truly represent the entire population. So requiring everyone to vote strengthens our democratic system."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、投票は義務化すべきだと思います。それは民主主義における市民の義務です。さらに、義務投票は選挙結果が本当に全人口を代表することを保証します。だからすべての人に投票を求めることは民主主義システムを強化します。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"civic duty"</strong> - 「市民の義務」。民主主義の基本原則</li>
+                                    <li><strong>"ensures that"</strong> - 「〜を保証する」。確実性を示す</li>
+                                    <li><strong>"truly represent"</strong> - 「本当に代表する」。正確な反映</li>
+                                    <li><strong>"strengthens our democratic system"</strong> - 「民主主義システムを強化する」</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="soc1-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO:</strong><br>
+                                    "I don't think voting should be mandatory. People should have the freedom to choose whether to participate. Furthermore, forcing uninformed people to vote doesn't improve democracy. So voluntary voting with better civic education is more effective."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「投票を義務化すべきではないと思います。人々は参加するかどうかを選択する自由を持つべきです。さらに、情報のない人々に投票を強制しても民主主義は改善されません。だからより良い市民教育を伴う任意投票の方が効果的です。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"freedom to choose"</strong> - 「選択する自由」。個人の権利</li>
+                                    <li><strong>"uninformed people"</strong> - 「情報のない人々」。質の問題</li>
+                                    <li><strong>"doesn't improve democracy"</strong> - 「民主主義を改善しない」。効果への疑問</li>
+                                    <li><strong>"civic education"</strong> - 「市民教育」。代替案の提示</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Society Q2: Preserving traditional culture -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q2: Is it important to preserve traditional culture?
+                        <span class="difficulty basic">⭐ Basic</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="5">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-soc2')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('soc2')">Show Model Answer</button>
+
+                        <div id="hint-soc2" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - 伝統文化保存の重要性を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>構造のヒント:</strong>
+                                <ul>
+                                    <li>📌 Opinion: Is preservation important? (YES)</li>
+                                    <li>📌 Reason 1: What do we learn from tradition? (history, identity)</li>
+                                    <li>📌 Reason 2: What happens if we lose it? (cultural diversity)</li>
+                                    <li>📌 Conclusion: Why protect tradition?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "cultural identity", "history", "diversity", "future generations"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="soc2" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    "Yes, it's very important to preserve traditional culture. It helps us understand our history and maintains our cultural identity. Moreover, preserving traditions protects cultural diversity for future generations. So we have a responsibility to keep our cultural heritage alive."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、伝統文化を保存することは非常に重要です。それは私たちが歴史を理解し、文化的アイデンティティを維持するのに役立ちます。さらに、伝統を保存することは将来の世代のために文化的多様性を守ります。だから私たちは文化遺産を生かし続ける責任があります。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"understand our history"</strong> - 「歴史を理解する」。過去とのつながり</li>
+                                    <li><strong>"cultural identity"</strong> - 「文化的アイデンティティ」。自己認識</li>
+                                    <li><strong>"cultural diversity"</strong> - 「文化的多様性」。世界の豊かさ</li>
+                                    <li><strong>"future generations"</strong> - 「将来の世代」。長期的視点</li>
+                                    <li><strong>"cultural heritage"</strong> - 「文化遺産」。受け継ぐべきもの</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ECONOMY SECTION -->
+        <div id="economy" class="category">
+            <div class="category-header">
+                <h2>💰 ECONOMY QUESTIONS (2 Questions)</h2>
+            </div>
+
+            <!-- Economy Q1: Rich people taxes -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q1: Should rich people pay higher taxes?
+                        <span class="difficulty intermediate">⭐ Intermediate</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="6">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-econ1')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('econ1-yes')">YES</button>
+                        <button class="show-btn" onclick="toggle('econ1-no')">NO</button>
+
+                        <div id="hint-econ1" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - 富裕層への課税を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YES側 (高い税金):</strong>
+                                <ul>
+                                    <li>📌 Why is it fair? (progressive taxation)</li>
+                                    <li>📌 How does it help society? (fund public services)</li>
+                                    <li>📌 結論: Social responsibility?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NO側 (税金を上げない):</strong>
+                                <ul>
+                                    <li>📌 What's the risk? (discourage success)</li>
+                                    <li>📌 What about economic growth? (investment, jobs)</li>
+                                    <li>📌 結論: Better alternatives?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "progressive taxation", "fund public services" / "discourage success", "economic growth"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="econ1-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES:</strong><br>
+                                    "Yes, I believe rich people should pay higher taxes. Progressive taxation is fair because those who earn more can afford to contribute more. Furthermore, higher taxes on the wealthy fund important public services. So this approach reduces inequality and benefits society."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、富裕層はより高い税金を払うべきだと思います。累進課税は公平です。なぜなら、より多く稼ぐ人はより多く貢献する余裕があるからです。さらに、富裕層への高い税金は重要な公共サービスに資金を提供します。だからこのアプローチは不平等を減らし、社会に利益をもたらします。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"progressive taxation"</strong> - 「累進課税」。所得に応じた課税</li>
+                                    <li><strong>"can afford to"</strong> - 「〜する余裕がある」。能力に基づく</li>
+                                    <li><strong>"fund public services"</strong> - 「公共サービスに資金を提供する」</li>
+                                    <li><strong>"reduces inequality"</strong> - 「不平等を減らす」。社会的公正</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="econ1-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO:</strong><br>
+                                    "I don't think rich people should pay much higher taxes. This might discourage people from working hard and achieving success. Additionally, wealthy individuals create jobs and drive economic growth. So moderate taxation is better for the economy."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「富裕層がはるかに高い税金を払うべきだとは思いません。これは人々が一生懸命働き成功を収めることを思いとどまらせるかもしれません。さらに、裕福な個人は雇用を創出し経済成長を推進します。だから適度な課税の方が経済にとって良いです。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"discourage...from"</strong> - 「〜することを思いとどまらせる」</li>
+                                    <li><strong>"achieving success"</strong> - 「成功を収める」。成功への動機</li>
+                                    <li><strong>"create jobs"</strong> - 「雇用を創出する」。経済的貢献</li>
+                                    <li><strong>"drive economic growth"</strong> - 「経済成長を推進する」</li>
+                                    <li><strong>"moderate taxation"</strong> - 「適度な課税」。バランスの取れた提案</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Economy Q2: Globalization -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q2: Is globalization good for developing countries?
+                        <span class="difficulty advanced">⭐⭐ Advanced</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="7">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-econ2')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('econ2-yes')">YES</button>
+                        <button class="show-btn" onclick="toggle('econ2-no')">NO</button>
+
+                        <div id="hint-econ2" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - グローバリゼーションの影響を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YES側 (良い影響):</strong>
+                                <ul>
+                                    <li>📌 What economic opportunities? (foreign investment, jobs)</li>
+                                    <li>📌 What access do they gain? (technology, markets)</li>
+                                    <li>📌 結論: Overall benefit?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NO側 (悪い影響):</strong>
+                                <ul>
+                                    <li>📌 What gets exploited? (resources, labor)</li>
+                                    <li>📌 What's lost? (local businesses, culture)</li>
+                                    <li>📌 結論: Who really benefits?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "foreign investment", "access to markets" / "exploitation", "local businesses", "inequality"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="econ2-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES:</strong><br>
+                                    "Yes, I think globalization benefits developing countries. It attracts foreign investment and creates job opportunities. Moreover, it gives these countries access to advanced technology and global markets. So globalization helps developing nations grow economically."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、グローバリゼーションは発展途上国に利益をもたらすと思います。外国投資を引き付け、雇用機会を創出します。さらに、これらの国に先進技術とグローバル市場へのアクセスを与えます。だからグローバリゼーションは発展途上国が経済的に成長するのを助けます。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"attracts foreign investment"</strong> - 「外国投資を引き付ける」。資本の流入</li>
+                                    <li><strong>"job opportunities"</strong> - 「雇用機会」。雇用創出</li>
+                                    <li><strong>"access to advanced technology"</strong> - 「先進技術へのアクセス」</li>
+                                    <li><strong>"global markets"</strong> - 「グローバル市場」。輸出機会</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="econ2-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO:</strong><br>
+                                    "I don't think globalization truly benefits developing countries. Large corporations often exploit cheap labor and natural resources. Furthermore, local businesses cannot compete with international companies. So globalization increases inequality rather than reducing it."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「グローバリゼーションは本当に発展途上国に利益をもたらすとは思いません。大企業はしばしば安い労働力と天然資源を搾取します。さらに、地元企業は国際企業と競争できません。だからグローバリゼーションは不平等を減らすのではなく増やします。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"exploit"</strong> - 「搾取する」。不公平な利用</li>
+                                    <li><strong>"cheap labor"</strong> - 「安い労働力」。低賃金問題</li>
+                                    <li><strong>"natural resources"</strong> - 「天然資源」。資源の搾取</li>
+                                    <li><strong>"cannot compete"</strong> - 「競争できない」。不平等な競争</li>
+                                    <li><strong>"increases inequality"</strong> - 「不平等を増やす」。格差拡大</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// Global Variables
+const partName = 'part2';
+let answeredQuestions = new Set();
+const totalQuestions = 7;
+
+// Toggle Section
+function toggleSection(header) {
+    const content = header.nextElementSibling;
+    header.classList.toggle('active');
+    content.classList.toggle('active');
+}
+
+// Toggle Question
+function toggleQuestion(header) {
+    const content = header.nextElementSibling;
+    header.classList.toggle('active');
+    content.classList.toggle('active');
+}
+
+// Toggle Answer/Hint
+function toggle(id) {
+    const element = document.getElementById(id);
+    const btn = event.target;
+    
+    if (element.classList.contains('hidden')) {
+        element.classList.remove('hidden');
+        btn.classList.add('active');
+        
+        // Update button text
+        if (id.startsWith('hint-')) {
+            btn.textContent = '💡 Hide Hint';
+        } else {
+            btn.textContent = btn.textContent.replace('Show', 'Hide');
+        }
+        
+        // Mark question as answered
+        const questionBlock = element.closest('.question-block');
+        if (questionBlock) {
+            const questionNum = questionBlock.dataset.question;
+            markQuestionAnswered(questionNum);
+        }
+        
+    } else {
+        element.classList.add('hidden');
+        btn.classList.remove('active');
+        
+        // Reset button text
+        if (id.startsWith('hint-')) {
+            btn.textContent = '💡 Show Hint';
+        } else {
+            btn.textContent = btn.textContent.replace('Hide', 'Show');
+        }
+    }
+}
+
+// Mark Question as Answered
+function markQuestionAnswered(questionNum) {
+    answeredQuestions.add(questionNum);
+    updateProgress();
+    saveProgress();
+}
+
+// Update Progress Bar
+function updateProgress() {
+    const progress = (answeredQuestions.size / totalQuestions) * 100;
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    
+    if (progressBar) progressBar.style.width = progress + '%';
+    if (progressText) progressText.textContent = 
+        `Progress: ${answeredQuestions.size}/${totalQuestions} questions completed`;
+}
+
+// Save Progress to LocalStorage
+function saveProgress() {
+    const data = {
+        answeredQuestions: Array.from(answeredQuestions),
+        timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('eiken-' + partName + '-progress', JSON.stringify(data));
+}
+
+// Load Progress from LocalStorage
+function loadProgress() {
+    const saved = localStorage.getItem('eiken-' + partName + '-progress');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            answeredQuestions = new Set(data.answeredQuestions);
+            updateProgress();
+        } catch (e) {
+            console.error('Error loading progress:', e);
+        }
+    }
+}
+
+// Dark Mode Toggle
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const btn = document.querySelector('.dark-mode-toggle');
+    btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    localStorage.setItem('eiken-' + partName + '-darkMode', 
+        document.body.classList.contains('dark-mode'));
+}
+
+// Load Dark Mode Preference
+function loadDarkMode() {
+    if (localStorage.getItem('eiken-' + partName + '-darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        const btn = document.querySelector('.dark-mode-toggle');
+        if (btn) btn.textContent = '☀️';
+    }
+}
+
+// Scroll to Section
+function scrollToSection(targetId) {
+    const target = document.getElementById(targetId);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// Scroll to Top
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Show/Hide Back to Top Button
+window.addEventListener('scroll', function() {
+    const backToTop = document.querySelector('.back-to-top');
+    if (backToTop) {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    }
+});
+
+// Toggle Header Minimize
+function toggleHeader() {
+    const header = document.querySelector('.header');
+    header.classList.toggle('minimized');
+}
+
+// Keyboard Shortcuts
+document.addEventListener('keydown', function(e) {
+    if ((e.key === 'd' || e.key === 'D') && !e.target.matches('input, textarea')) {
+        toggleDarkMode();
+    }
+    if ((e.key === 't' || e.key === 'T') && !e.target.matches('input, textarea')) {
+        scrollToTop();
+    }
+});
+
+// Initialize on Page Load
+window.addEventListener('DOMContentLoaded', function() {
+    loadDarkMode();
+    loadProgress();
+});
+</script>
+
+</body>
+</html>
