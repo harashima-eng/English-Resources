@@ -98,7 +98,7 @@
       "fileName": "英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
       "date": "2025-12-04",
-      "order": 5
+      "order": 6
     },
     {
       "id": "efa4660e-f30e-4802-8802-c34dd1129d13",
@@ -107,7 +107,7 @@
       "fileName": "Chapter15.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter15.html",
       "date": "2025-12-04",
-      "order": 1
+      "order": 2
     },
     {
       "id": "acb88058-514c-46c0-9929-521ecf1e509c",
@@ -116,7 +116,7 @@
       "fileName": "Chapter14.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter14.html",
       "date": "2025-12-04",
-      "order": 0
+      "order": 1
     },
     {
       "id": "ec09ad5a-6945-4b76-813e-1e6d7f7a4528",
@@ -125,7 +125,7 @@
       "fileName": "Chapter16.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter16.html",
       "date": "2025-12-04",
-      "order": 3
+      "order": 4
     },
     {
       "id": "11c361b8-17ab-4f07-b7ed-5eb6a574a8f7",
@@ -134,7 +134,7 @@
       "fileName": "Chapter17.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter17.html",
       "date": "2025-12-04",
-      "order": 2
+      "order": 3
     },
     {
       "id": "3deb9a4d-abde-474d-a834-d2e8658a96d0",
@@ -143,7 +143,7 @@
       "fileName": "Chapter18.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter18.html",
       "date": "2025-12-04",
-      "order": 4,
+      "order": 5,
       "minutes": "",
       "tags": [],
       "keywords": ""
@@ -372,7 +372,19 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "8e10574e-a118-4554-8413-8bc7bba44c21",
+      "folderId": "d157d289-5646-4c09-80f1-62f697e08b83",
+      "title": "chapter9",
+      "fileName": "chapter9_living_wage_breakdown_dual_v2.html",
+      "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/chapter9_living_wage_breakdown_dual_v2.html",
+      "date": "2025-12-06",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
-  "lastUpdated": "2025-12-06T10:09:41.358Z"
+  "lastUpdated": "2025-12-06T10:10:51.988Z"
 }
