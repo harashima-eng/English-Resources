@@ -107,7 +107,7 @@
       "fileName": "Chapter15.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter15.html",
       "date": "2025-12-04",
-      "order": 2
+      "order": 1
     },
     {
       "id": "acb88058-514c-46c0-9929-521ecf1e509c",
@@ -125,7 +125,7 @@
       "fileName": "Chapter16.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter16.html",
       "date": "2025-12-04",
-      "order": 1
+      "order": 3
     },
     {
       "id": "11c361b8-17ab-4f07-b7ed-5eb6a574a8f7",
@@ -134,7 +134,7 @@
       "fileName": "Chapter17.html",
       "filePath": "files/d157d289-5646-4c09-80f1-62f697e08b83/Chapter17.html",
       "date": "2025-12-04",
-      "order": 3
+      "order": 2
     },
     {
       "id": "3deb9a4d-abde-474d-a834-d2e8658a96d0",
@@ -374,5 +374,5 @@
       "keywords": ""
     }
   ],
-  "lastUpdated": "2025-12-06T08:38:10.620Z"
+  "lastUpdated": "2025-12-06T09:22:57.378Z"
 }
