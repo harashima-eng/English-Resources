@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 15: Rewards for Kids - Reading Breakdown (Epic Layout)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 30px 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .passage-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .passage-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .passage-text {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 2;
+            font-size: 1.05em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+        }
+
+        .para-label {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .question-header:hover {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .question-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .question-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+        }
+
+        .question-content.active {
+            max-height: 8000px;
+        }
+
+        .question-inner {
+            padding: 25px;
+        }
+
+        .question-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+            font-size: 1.1em;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .answer-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .correct-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 5px solid #28a745;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-left: 5px solid #007bff;
+        }
+
+        .context-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #ff9800;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            border-left: 5px solid #e83e8c;
+        }
+
+        .passage-ref-box {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-left: 5px solid #6c757d;
+            font-style: italic;
+        }
+
+        .incorrect-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 5px solid #dc3545;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-left: 5px solid #17a2b8;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-left: 5px solid #9b59b6;
+        }
+
+        .box-title {
+            font-weight: bold;
+            font-size: 1.15em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .box-title::before {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .correct-box .box-title::before { content: "â"; }
+        .strategy-box .box-title::before { content: "ð¯"; }
+        .context-box .box-title::before { content: "ð¡"; }
+        .flow-box .box-title::before { content: "ð"; }
+        .passage-ref-box .box-title::before { content: "ð"; }
+        .incorrect-box .box-title::before { content: "â"; }
+        .tip-box .box-title::before { content: "âï¸"; }
+        .hint-box .box-title::before { content: "ð­"; }
+
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .underline-ref {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #2196f3;
+        }
+
+        .choices {
+            margin: 15px 0;
+        }
+
+        .choice {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+
+            .passage-section {
+                padding: 20px;
+            }
+        }
+
+        /* Layout Toggle Button */
+        .layout-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .layout-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Two Column Layout Styles */
+        .two-column-layout .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: flex-start;
+            padding: 20px 2%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .two-column-layout .passage-section {
+            position: sticky;
+            top: 20px;
+            order: 1;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .two-column-layout .questions-container {
+            order: 2;
+        }
+
+        /* Scrollbar styling for passage in two-column mode */
+        .two-column-layout .passage-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Mobile responsiveness for two-column */
+        @media (max-width: 1024px) {
+            .two-column-layout .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+
+            .two-column-layout .passage-section {
+                position: relative;
+                order: 1;
+                max-height: none;
+            }
+
+            .two-column-layout .questions-container {
+                order: 2;
+            }
+
+            .layout-toggle-btn {
+                display: none;
+            }
+        }
+
+        .two-column-layout .questions-container {
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        /* Scrollbar styling for questions */
+        .two-column-layout .questions-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-thumb {
+            background: #f5576c;
+            border-radius: 10px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-thumb:hover {
+            background: #f093fb;
+        }
+
+        .header-collapse-btn {
+            margin-top: 16px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: none;
+            background: rgba(15,23,42,0.2);
+            color: #f9fafb;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.25);
+            backdrop-filter: blur(4px);
+            transition: all 0.25s ease;
+        }
+        .header-collapse-btn:hover {
+            background: rgba(15,23,42,0.4);
+            transform: translateY(-1px);
+        }
+
+        body.header-collapsed .header {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        body.header-collapsed .container {
+            padding-top: 10px;
+        }
+
+        /* Scroll hints */
+        .scroll-hint {
+            position: fixed;
+            top: 80px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: rgba(15,23,42,0.85);
+            color: #f9fafb;
+            box-shadow: 0 8px 20px rgba(15,23,42,0.35);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 900;
+        }
+        .scroll-hint.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-hint-passage {
+            left: 18px;
+        }
+        .scroll-hint-questions {
+            right: 18px;
+        }
+
+        /* Dual-pane highlight linking */
+        .paragraph.linked-highlight {
+            outline: 3px solid rgba(249,115,22,0.9);
+            background: rgba(255,237,213,0.9);
+            border-radius: 10px;
+            transition: background 0.2s ease, outline 0.2s ease;
+        }
+        .question-section.linked-highlight {
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.7);
+            transform: translateY(-1px);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .layout-toggle-btn {
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+        .layout-toggle-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ð Chapter 15</h1>
+            <p>Should Kids Be Given Money to Do Well in School?<br>å­ã©ãã«å ±é¬ãä¸ããã¹ãã?</p>
+            <button class="header-collapse-btn" onclick="toggleHeader()">â² ãããã¼ãé ã</button>
+        </div>
+
+        <div class="scroll-hint scroll-hint-passage">ð Passage side scrolling</div>
+        <div class="scroll-hint scroll-hint-questions">â Question side scrolling</div>
+
+        <!-- Layout Toggle Button -->
+        <button class="layout-toggle-btn" onclick="toggleLayout()">
+            ð± Switch Layout
+        </button>
+
+        <div class="content">
+            <!-- FULL PASSAGE SECTION -->
+            <div class="passage-section">
+                <h2>ð Full Passage (æ¬æå¨ä½)</h2>
+                <div class="passage-text">
+                    <div class="paragraph" id="para1" data-paragraph="1">
+                        <div class="para-label">Paragraph 1:</div>
+                        In junior high school, one of my classmates had a TV addiction â back before it was normal. This boy â we'll call him Ethan â watched TV all day long and knew almost everything about TV comic shows.
+                    </div>
+
+                    <div class="paragraph" id="para2" data-paragraph="2">
+                        <div class="para-label">Paragraph 2:</div>
+                        Then one day, Ethan's mother made him <span style="text-decoration: underline;">(1) a bold offer</span>. If he could go a full month without watching any TV, she would give him $200. None of us thought he could do it. But Ethan quit TV quite easily. His friends offered to let him <span style="text-decoration: underline;">(2) cheat</span> at their houses on Friday nights. Ethan said no. One month later, Ethan's mom paid him $200. He went out and bought a TV, the biggest one he could find.
+                    </div>
+
+                    <div class="paragraph" id="para3" data-paragraph="3">
+                        <div class="para-label">Paragraph 3:</div>
+                        Since there have been children, there have been adults trying to get them to obey their parents. The Bible repeatedly commands children to listen to their parents and proposes that disobedient children be killed by throwing stones at them, or at least have their eyes picked out by cruel birds. Over the centuries, <span style="text-decoration: underline;">(3) the stick has lost favor to the carrot</span> in most cases. Today adults start rewarding kids with cheap gifts, such as a candy for using the toilet or a cookie for sitting still in church, before kids can speak in full sentences.
+                    </div>
+
+                    <div class="paragraph" id="para4" data-paragraph="4">
+                        <div class="para-label">Paragraph 4:</div>
+                        In recent years, hundreds of schools in the USA have made these transactions more businesslike, experimenting with paying kids with real money for showing up in class, getting good grades or going another day without fighting.
+                    </div>
+
+                    <div class="paragraph" id="para5" data-paragraph="5">
+                        <div class="para-label">Paragraph 5:</div>
+                        I have not met a child who does not admire this trend. But <span style="text-decoration: underline;">(4) it</span> makes adults terribly uncomfortable. Teachers complain that we are rewarding kids for doing what they should be doing of their own will. Psychologists warn that money can actually make kids perform worse, because it makes them lose respect for the act of learning. Parents predict that kids will be lazy after the incentives go away. <span style="text-decoration: underline;">(5) The debate has become a big battle that caused the larger dispute over why our kids are not learning at the rate they should be despite decades of reforms and budget increases.</span>
+                    </div>
+
+                    <div class="paragraph" id="para6" data-paragraph="6">
+                        <div class="para-label">Paragraph 6:</div>
+                        But all this time, there has been only one real question, particularly in America's lowest-performing schools: Does it work?
+                    </div>
+                </div>
+            </div>
+
+            <div class="questions-container">
+                <!-- QUESTION 1 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q1')">
+                        <h3>åé¡ 1</h3>
+                        <span class="toggle-icon">â¼</span>
+                    </div>
+                    <div id="q1" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> ä¸ç·é¨(1)ã®å·ä½çãªåå®¹ãæ¥æ¬èªã§ç­ããªããã
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> Ethan's mother made him <span class="highlight">a bold offer</span>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint1')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                            <div id="hint1" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ãã³ã(Hint)</div>
+                                    <strong>èãæ¹ã®ãã³ã:</strong><br>
+                                    â ãå·ä½çãªåå®¹ãã£ã¦èããããã<strong>ä¸ç·é¨ã®å¾ã</strong>ããã§ãã¯!<br>
+                                    â "a bold offer" ã¯<strong>æ½è±¡ç</strong>ãªè¡¨ç¾ã ãã­<br>
+                                    â æ¬¡ã®æã« "If he could..." ã£ã¦æ¡ä»¶ãæ¸ãã¦ãªã?<br>
+                                    â ãã®æ¡ä»¶ã¨çµæãä¸¡æ¹ç­ãã«å¥ããã!<br><br>
+
+                                    <strong>ã©ããèª­ã?</strong> â Paragraph 2ã®2æç®ãè¦ã¦!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer1')">Show Answer / è§£ç­ãè¦ã</button>
+
+                            <div id="answer1" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">æ­£è§£</div>
+                                    1ãæéãã¬ããè¦ãªãã§ãããããã200ãã«ãããã(ã¨ããç³ãåº)ã
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                    <strong>ãå·ä½çãªåå®¹ããèãããã:</strong><br>
+                                    1. ã¾ãä¸ç·é¨ã®<strong>ããå¾ã</strong>ãèª­ã!<br>
+                                    2. "a bold offer" ã®åå®¹ã¯æ¬¡ã®æã§èª¬æããããã¿ã¼ã³ãå¤ã<br>
+                                    3. æ¬¡ã®æ "If he could go a full month without watching any TV, she would give him $200" ãã¾ãã«ãå¤§èãªç³ãåºãã®ä¸­èº«<br><br>
+
+                                    <strong>ãã¤ã³ã:</strong> "a bold offer" (å¤§èãªç³ãåº)ã¨ãã<strong>æ½è±¡çãªè¡¨ç¾</strong>ã¯ããã®ç´å¾ã«<strong>å·ä½ä¾</strong>ãæ¥ã!
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                    ä¸ç·é¨ã®æ¬¡ã®æãè¦ãã:<br>
+                                    <span class="highlight">"If he could go a full month without watching any TV, she would give him $200."</span><br><br>
+
+                                    ããã "a bold offer" ã®ä¸­èº«ãã®ãã®!<br>
+                                    æ¡ä»¶: <strong>1ãæéãã¬ããè¦ãªã</strong><br>
+                                    å ±é¬: <strong>$200ãããã</strong>
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(ã³ã)</div>
+                                    â ãå·ä½çãªåå®¹ãåé¡ã¯ã<strong>ä¸ç·é¨ã®åå¾</strong>ã«ç­ãããã<br>
+                                    â æ½è±¡âå·ä½ã®æµããæè­ããã<br>
+                                    â ãã®åé¡ã§ã¯ãæ¡ä»¶+å ±é¬ãã®ä¸¡æ¹ãæ¸ããã¨ãå¤§äº
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 2 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q2')">
+                        <h3>åé¡ 2</h3>
+                        <span class="toggle-icon">â¼</span>
+                    </div>
+                    <div id="q2" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> ä¸ç·é¨(2)ã¯å·ä½çã«ä½ããããã¨ãè¡¨ãã¦ããããæ¥æ¬èªã§ç­ããªããã
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> His friends offered to let him <span class="highlight">cheat</span> at their houses on Friday nights.
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint2')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                            <div id="hint2" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ãã³ã(Hint)</div>
+                                    <strong>èãæ¹ã®ãã³ã:</strong><br>
+                                    â Ethanã¯ä»<strong>ä½ã®ãã£ã¬ã³ã¸ä¸­?</strong> â Paragraph 2ã®æåã®æ¹ãè¦ã¦<br>
+                                    â "cheat" = ä¸æ­£ããããºã«ãã â ãã®ç¶æ³ã§ä½ããºã«?<br>
+                                    â åéã®å®¶ã§ = ãªãåéã®å®¶ãªã®? èª°ã«é ãå¿è¦ããã?<br>
+                                    â éæã®å¤ = ãã¤ã®ãã¨?<br><br>
+
+                                    <strong>ã­ã¼ã¯ã¼ã:</strong> "without watching any TV" â ããããã³ã!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer2')">Show Answer / è§£ç­ãè¦ã</button>
+
+                            <div id="answer2" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">æ­£è§£</div>
+                                    æ¯è¦ªã«åç·ã§ãåéã®å®¶ã§ãã£ãããã¬ããè¦ããã¨ã
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                    <strong>"cheat" ã®æå³ãæèããæ¨æ¸¬ãã:</strong><br>
+                                    1. Ethanã¯ä½ã«ãã£ã¬ã³ã¸ä¸­? â <span class="highlight">1ãæéãã¬ããè¦ãªã</span><br>
+                                    2. "cheat" = ã«ã¼ã«ãç ´ããä¸æ­£ããã<br>
+                                    3. ãã®ç¶æ³ã§ã®cheat = <span class="highlight">ç´æãç ´ã£ã¦ãã¬ããè¦ã</span><br>
+                                    4. ã©ãã§? â <span class="highlight">åéã®å®¶ã§</span>(æ¯è¦ªã«ãã¬ãªãããã«)<br>
+                                    5. ãã¤? â <span class="highlight">éæã®å¤</span>
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                    <strong>åå¾é¢ä¿ãæ´ç:</strong><br>
+                                    - Ethan's challenge: <span class="highlight">1ãæéTVãè¦ãªã</span><br>
+                                    - Friends' offer: <span class="highlight">"cheat at their houses"</span><br>
+                                    - Ethan's response: <span class="highlight">"said no"</span> (æ­ã£ã)<br><br>
+
+                                    â ã¤ã¾ãåéã¯ããã¡ã§ãã£ãããã¬ãè¦ã¦ããããã¨èªã£ãããEthanã¯æ­ã£ã!
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">æ¬æããã®è¨¼æ </div>
+                                    "If he could go a full month <span class="highlight">without watching any TV</span>, she would give him $200."<br><br>
+
+                                    ãããç´æãã ãã "cheat" = ãã®ç´æãç ´ããã¨ = <strong>ãã£ãããã¬ããè¦ããã¨</strong>
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(ã³ã)</div>
+                                    â "cheat" ã¨ããè¨èã ãè¨³ããª! <strong>æèã§æå³ãèãã</strong><br>
+                                    â ãä½ã®ç´æãç ´ãã®ã?ããå¸¸ã«æè­<br>
+                                    â å ´æ(åéã®å®¶)ã¨çç±(æ¯è¦ªã«åç·)ãç­ãã«å«ããã
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 3 -->
+                <div class="question-section" data-target-paragraphs="3">
+                    <div class="question-header" onclick="toggleQuestion('q3')">
+                        <h3>åé¡ 3</h3>
+                        <span class="toggle-icon">â¼</span>
+                    </div>
+                    <div id="q3" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> ä¸ç·é¨(3)ã®æå³ã¨ãã¦æãé©åãªãã®ã1ã¤é¸ã³ãªããã
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> Over the centuries, <span class="highlight">the stick has lost favor to the carrot</span> in most cases.
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">â  ç½°ãããå ±é¬ãä¸ããã»ããå¥½ã¾ããããã«ãªã£ãã</div>
+                                <div class="choice">â¡ æèã¯ã»ãã³ã§ã¯ãªãç½°ãä¸ããããã</div>
+                                <div class="choice">â¢ ã»ãã³ã®ã¢ã¡ããªããã¨å³ããªããªãããã ã®æ£ã«ãªã£ãã</div>
+                                <div class="choice">â£ å­ã©ãã«ç³ãæãã¤ããã¨ãç¾ä»£ç¤¾ä¼ã§ã¯ç½°ããããã</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint3')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                            <div id="hint3" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ãã³ã(Hint)</div>
+                                    <strong>èãæ¹ã®ãã³ã:</strong><br>
+                                    â "the stick" ã¨ "the carrot" = ããã¯<strong>æ¯å©è¡¨ç¾</strong>!<br>
+                                    â æå­éãã®ãæ£ãã¨ããã³ã¸ã³ããããªãã<br>
+                                    â "lost favor to" = ã~ã«äººæ°ã§è² ããã<br>
+                                    â Paragraph 3ã®åå¾ãèª­ãã§ã<strong>æä»£ã®å¤å</strong>ãè¿½ã!<br><br>
+
+                                    <strong>åã®æ:</strong> èæ¸ã®è©±(ç³ã§æ®ºã)â ããã¯ä½?<br>
+                                    <strong>æ¬¡ã®æ:</strong> "Today adults start rewarding kids" â ããã¯ä½?
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer3')">Show Answer / è§£ç­ãè¦ã</button>
+
+                            <div id="answer3" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">æ­£è§£: â </div>
+                                    ç½°ãããå ±é¬ãä¸ããã»ããå¥½ã¾ããããã«ãªã£ãã
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                    <strong>æ¯å©è¡¨ç¾(metaphor)ãçè§£ãã:</strong><br>
+                                    1. "the stick" = <span class="highlight">ã ããç½°</span><br>
+                                    2. "the carrot" = <span class="highlight">ãã³ã¸ã³ãå ±é¬</span><br>
+                                    3. "lost favor to ~" = <span class="highlight">~ã«äººæ°ã§è² ãã</span><br><br>
+
+                                    <strong>åå¾ã®æèãè¦ã:</strong><br>
+                                    - åã®æ: èæ¸ã¯å­ã©ããç³ã§æ®ºãã¨è¨ã£ã¦ãã(å³ããç½°)<br>
+                                    - æ¬¡ã®æ: "Today adults start rewarding kids" (ä»ã¯å ±é¬ãä¸ãã)<br><br>
+
+                                    â æä»£ã®å¤å: <strong>ç½° â å ±é¬</strong>
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                    <strong>Paragraph 3ã®æµã:</strong><br>
+                                    1. æ: èæ¸ã¯ <span class="highlight">"killed by throwing stones"</span> (ç³ã§æ®ºã = ç½°)<br>
+                                    2. å¤å: <span class="highlight">"Over the centuries"</span> (ä½ä¸ç´ãããã¦)<br>
+                                    3. ä»: <span class="highlight">"rewarding kids with cheap gifts"</span> (å ±é¬ãä¸ãã)<br><br>
+
+                                    ãã®æµãããããç½° â å ±é¬ãã¸ã®å¤åãèª­ã¿åãã!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ¡ ãä¸æ­£è§£ã</div>
+                                    æ¬æã¯ãæèãã®è©±ããã¦ããªããå­è²ã¦ã®æ¹æ³ã®å¤åã«ã¤ãã¦è¿°ã¹ã¦ãããæä»£ã®æµãã¨éã®ãã¨ãè¨ã£ã¦ããã
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ¢ ãä¸æ­£è§£ã</div>
+                                    ããã¯ "stick" ã¨ "carrot" ãæå­éã(literal)ã«è§£éãã¦ãããã§ãããã¯æ¯å©è¡¨ç¾! "æ£" ã¨ "ã¢ã¡" ã®è©±ã§ã¯ãªãããç½°ãã¨ãå ±é¬ãã®ãã¨ã
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ£ ãä¸æ­£è§£ã</div>
+                                    ãç³ãæãããã¯æ¬æã«ããããããã¯èæ¸ã®æã®è©±ãç¾ä»£ç¤¾ä¼ã§ã®ç½°ã®è©±ã§ã¯ãªããæèã¨æä»£ãéãã
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(ã³ã)</div>
+                                    â æ¯å©è¡¨ç¾ã¯<strong>æå­éã</strong>ã«è¨³ããª!<br>
+                                    â "the stick" ã¨ "the carrot" ã¯æåãªè±èªã®æ£ç¨å¥<br>
+                                    â åå¾ã®æèã§ãä½ããä½ã¸ã®å¤åãããç¢ºèªããã
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 4 -->
+                <div class="question-section" data-target-paragraphs="5">
+                    <div class="question-header" onclick="toggleQuestion('q4')">
+                        <h3>åé¡ 4</h3>
+                        <span class="toggle-icon">â¼</span>
+                    </div>
+                    <div id="q4" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> ä¸ç·é¨(4)ã«ã¤ãã¦ãæå¸«ãã¡ã¯ã©ã®ããã«èãã¦ããã®ããæ¥æ¬èªã§ç­ããªããã
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> But <span class="highlight">it</span> makes adults terribly uncomfortable.
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint4')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                            <div id="hint4" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ãã³ã(Hint)</div>
+                                    <strong>èãæ¹ã®ãã³ã:</strong><br>
+                                    â "it" ãæããã® = åã®æã® "this trend"<br>
+                                    â åé¡ã¯ã<strong>æå¸«</strong>ãã¡ã¯ã©ãèãã¦ãã?ã<br>
+                                    â æ¬¡ã®æã§3ã¤ã®ã°ã«ã¼ãã®æè¦ãåºã¦ããã<br>
+                                    â Teachers / Psychologists / Parents â ã©ã?<br><br>
+
+                                    <strong>æ¢ãã¹ãåè©:</strong> "Teachers _____" â ãã®åè©ãéè¦!<br>
+                                    <strong>ãã®å¾ã:</strong> "that" ä»¥éãæå¸«ã®èã!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer4')">Show Answer / è§£ç­ãè¦ã</button>
+
+                            <div id="answer4" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">æ­£è§£</div>
+                                    å­ã©ããèªåã®æå¿ã§ããã¹ããã¨ã«å¯¾ãã¦å ±é¬ãä¸ãã¦ããã¨ä¸æºã«æã£ã¦ããã
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                    <strong>æç¤ºèª "it" ãæããã®ãç¢ºèª:</strong><br>
+                                    1. "it" = åã®æã® "this trend" (å­ã©ãã«ãéãä¸ããé¢¨æ½®)<br><br>
+
+                                    <strong>ãæå¸«ãã¡ã®èãããæ¢ã:</strong><br>
+                                    2. æ¬¡ã®æãèª­ã! â <span class="highlight">"Teachers complain that..."</span><br>
+                                    3. "complain" = ä¸æºãè¨ã â ãããæå¸«ã®èã!<br>
+                                    4. ä½ã«ä¸æº? â <span class="highlight">"we are rewarding kids for doing what they should be doing of their own will"</span>
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                    <strong>Paragraph 5ã®æ§é :</strong><br>
+                                    - "it makes adults terribly uncomfortable" (å¤§äººã¯ä¸å¿«ã«æãã)<br>
+                                    - æ¬¡ã«3ã¤ã®ã°ã«ã¼ãã®æè¦:<br>
+                                      1. <span class="highlight">Teachers</span> complain that...(æå¸«ã¯ä¸æº)<br>
+                                      2. Psychologists warn that...(å¿çå­¦èã¯è­¦å)<br>
+                                      3. Parents predict that...(è¦ªã¯äºæ¸¬)<br><br>
+
+                                    åé¡ã¯ãæå¸«ãã«ã¤ãã¦èãã¦ããã®ã§ãTeachers ã®é¨åãè¦ã!
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">æ¬æããã®è¨¼æ </div>
+                                    "Teachers complain that we are rewarding kids for doing <span class="highlight">what they should be doing of their own will</span>."<br><br>
+
+                                    è¨³: ãå­ã©ãã<strong>èªåã®æå¿ã§ããã¹ããã¨</strong>ã«å¯¾ãã¦å ±é¬ãä¸ãã¦ãããã¨æå¸«ã¯ä¸æºãè¿°ã¹ã¦ãã
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(ã³ã)</div>
+                                    â "it" ãªã©ã®æç¤ºèªã¯åã®æèãç¢ºèª<br>
+                                    â ãèª°ãã©ãèãã¦ãããããèãåé¡ã¯ããã®äººã®çºè¨ã<strong>ç´æ¥å¼ç¨</strong>ãã¦ããé¨åãæ¢ã<br>
+                                    â "complain that..." = ãã®å¾ããä¸æºã®åå®¹
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 5 -->
+                <div class="question-section" data-target-paragraphs="5">
+                    <div class="question-header" onclick="toggleQuestion('q5')">
+                        <h3>åé¡ 5</h3>
+                        <span class="toggle-icon">â¼</span>
+                    </div>
+                    <div id="q5" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> ä¸ç·é¨(5)ãåè¨³ããªããã
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> <span class="highlight">The debate has become a big battle that caused the larger dispute over why our kids are not learning at the rate they should be despite decades of reforms and budget increases.</span>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint5')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                            <div id="hint5" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ãã³ã(Hint)</div>
+                                    <strong>åè¨³ã®ã¹ããã:</strong><br>
+                                    â ã¾ã<strong>ä¸»èª+åè©</strong>ãè¦ã¤ãã! â The debate has become...<br>
+                                    â "that" ã¯é¢ä¿ä»£åè© â åã®åè©ãä¿®é£¾<br>
+                                    â "over why..." = ã~ã«ã¤ãã¦ã®ã<br>
+                                    â "despite" = ã~ã«ãããããããâ éæ¥!<br><br>
+
+                                    <strong>æã®éª¨æ ¼:</strong><br>
+                                    è­°è«ã¯___ã«ãªã£ã â ä½ã«ãªã£ã?<br>
+                                    ããã___ãå¼ãèµ·ããã â ä½ã?<br>
+                                    ___ã«ã¤ãã¦ã® â ä½ã«ã¤ãã¦?
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer5')">Show Answer / è§£ç­ãè¦ã</button>
+
+                            <div id="answer5" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">æ­£è§£</div>
+                                    ãã®è­°è«ã¯ãæ°åå¹´ã«ãããæ¹é©ãäºç®ã®å¢é¡ã«ãé¢ããããå­ã©ããã¡ãæ¬æ¥ã®ããã¹ãé²åº¦ã§å­¦ã¹ã¦ããªãã®ã¯ãªããªã®ããã«é¢ããããå¤§ããªè­°è«ãå¼ãèµ·ãããå¤§è«äºã«ãªã£ã¦ããã
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                    <strong>é·æåè¨³ã®æé :</strong><br>
+                                    1. <strong>ä¸»èªã¨åè©</strong>ãè¦ã¤ãã:<br>
+                                       ä¸»èª: The debate<br>
+                                       åè©: has become<br><br>
+
+                                    2. <strong>æã®éª¨æ ¼</strong>ãä½ã:<br>
+                                       The debate has become a big battle<br>
+                                       â ãã®è­°è«ã¯å¤§è«äºã«ãªã£ã¦ãã<br><br>
+
+                                    3. <strong>é¢ä¿ä»£åè© "that"</strong> ä»¥éãå¦ç:<br>
+                                       "that caused the larger dispute"<br>
+                                       â ããå¤§ããªè­°è«ãå¼ãèµ·ããã<br><br>
+
+                                    4. <strong>"over why..."</strong> = ã~ã«ã¤ãã¦ã®ã:<br>
+                                       ä½ã«ã¤ãã¦ã®è­°è«? â å­ã©ããå­¦ã¹ã¦ããªãçç±ã«ã¤ãã¦<br><br>
+
+                                    5. <strong>"despite"</strong> = ã~ã«ãé¢ãããã:<br>
+                                       ä½ã«ãé¢ããã? â æ¹é©ã¨äºç®å¢é¡ã«ãé¢ããã
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">ææ§é ã®åè§£(Sentence Structure)</div>
+                                    <strong>Step 1: ä¸»è¦é¨å</strong><br>
+                                    The debate has become <span class="highlight">a big battle</span><br>
+                                    (è­°è«ã¯å¤§è«äºã«ãªã£ã)<br><br>
+
+                                    <strong>Step 2: é¢ä¿ä»£åè©ç¯</strong><br>
+                                    [that caused <span class="highlight">the larger dispute</span>]<br>
+                                    (ããå¤§ããªè­°è«ãå¼ãèµ·ããã)<br><br>
+
+                                    <strong>Step 3: dispute ã®åå®¹</strong><br>
+                                    [over <span class="highlight">why our kids are not learning at the rate they should be</span>]<br>
+                                    (ãªãå­ã©ããã¡ãæ¬æ¥ã®é²åº¦ã§å­¦ã¹ã¦ããªãã®ãã«ã¤ãã¦ã®)<br><br>
+
+                                    <strong>Step 4: despiteç¯</strong><br>
+                                    [despite <span class="highlight">decades of reforms and budget increases</span>]<br>
+                                    (æ°åå¹´ã®æ¹é©ã¨äºç®å¢é¡ã«ãé¢ããã)
+                                </div>
+
+                                <div class="box flow-box">
+                                    <div class="box-title">è«çå±é(Logical Flow)</div>
+                                    <strong>æã®æµã:</strong><br>
+                                    è­°è«(debate) <br>
+                                    â<br>
+                                    å¤§è«äº(big battle)ã«ãªã£ã<br>
+                                    â<br>
+                                    ããã«å¤§ããªè­°è«(larger dispute)ãå¼ãèµ·ããã<br>
+                                    â<br>
+                                    ãã®åå®¹ã¯? â ããªãå­ã©ããå­¦ã¹ã¦ããªãã®ãã<br>
+                                    â<br>
+                                    çç¾: æ¹é©ã¨äºç®ã¯å¢ãããã®ã«!
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(ã³ã)</div>
+                                    â é·ãæã¯<strong>ä¸»èª+åè©</strong>ããå§ããã<br>
+                                    â "that" ã¯é¢ä¿ä»£åè© â åã®åè©ãä¿®é£¾<br>
+                                    â "despite" = ã~ã«ãé¢ããããã¯éè¦ãªéæ¥è¡¨ç¾<br>
+                                    â "at the rate they should be" = ãæ¬æ¥ããã¹ãéåº¦ã§ãã¨ããæå³
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 6 -->
+                <div class="question-section" data-target-paragraphs="4">
+                    <div class="question-header" onclick="toggleQuestion('q6')">
+                        <h3>åé¡ 6</h3>
+                        <span class="toggle-icon">â¼</span>
+                    </div>
+                    <div id="q6" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> æ¬æã®åå®¹ã«ä¸è´ãããã®ãæ¬¡ã®ä¸­ãã1ã¤é¸ã³ãªããã
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">â  Kids may respond better to rewards for specific actions because there is less risk of failure.</div>
+                                <div class="choice">â¡ Most of the kids work hard for the love of learning, not for short-term rewards.</div>
+                                <div class="choice">â¢ A combination of school reforms and the interaction among those reforms will matter more than any single change in isolation.</div>
+                                <div class="choice">â£ Some schools in the USA give kids money when they get good grades.</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint6')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                            <div id="hint6" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ãã³ã(Hint)</div>
+                                    <strong>åå®¹ä¸è´åé¡ã®è§£ãæ¹:</strong><br>
+                                    â åé¸æè¢ã<strong>ä¸ã¤ãã¤</strong>æ¬æã¨ç§ããåããã<br>
+                                    â ã­ã¼ã¯ã¼ããæ¢ã: "schools", "USA", "money", "good grades"<br>
+                                    â ã©ã®æ®µè½ã«ãã®æå ±ããã?<br>
+                                    â é¨åçã«åã£ã¦ãã ããããã¡!<strong>100%ä¸è´</strong>ãæ¢ã<br><br>
+
+                                    <strong>ãã³ã:</strong> Paragraph 4ãè¦ã¦ã¿ãã<br>
+                                    "experimenting with paying kids..." â ãã®é¨åãéè¦!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer6')">Show Answer / è§£ç­ãè¦ã</button>
+
+                            <div id="answer6" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">æ­£è§£: â£</div>
+                                    Some schools in the USA give kids money when they get good grades.
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                    <strong>åå®¹ä¸è´åé¡ã®è§£ãæ¹:</strong><br>
+                                    1. åé¸æè¢ãæ¬æã¨<strong>ä¸ã¤ãã¤</strong>ç§ããåããã<br>
+                                    2. ã­ã¼ã¯ã¼ããæ¢ã<br>
+                                    3. <strong>é¨åçã«åã£ã¦ããã ã</strong>ã§ã¯ä¸æ­£è§£!<br>
+                                    4. <strong>100%ä¸è´</strong>ããé¸æè¢ãé¸ã¶
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">â£ã®æ ¹æ (Paragraph 4)</div>
+                                    "In recent years, hundreds of schools in the USA have made these transactions more businesslike, experimenting with <span class="highlight">paying kids with real money</span> for showing up in class, <span class="highlight">getting good grades</span> or going another day without fighting."<br><br>
+
+                                    â ã¢ã¡ãªã«ã®å­¦æ ¡ãå­ã©ãã«<strong>ãéãæã£ã¦ãã</strong>ã<strong>è¯ãæç¸¾</strong>ã®ããã«!<br>
+                                    â â£ã¨å®å¨ä¸è´!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ  ãä¸æ­£è§£ã</div>
+                                    "less risk of failure" (å¤±æã®ãªã¹ã¯ãå°ãªã)ã¨ããçç±ã¯æ¬æã«æ¸ããã¦ããªããæ¬æã¯å­ã©ãããã®é¢¨æ½®ãå¥½ã(admire)ã¨ã¯è¨ã£ã¦ãããããã®çç±ã«ã¤ãã¦ãå¤±æã®ãªã¹ã¯ãã¨ã¯è¿°ã¹ã¦ããªãã
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ¡ ãä¸æ­£è§£ã</div>
+                                    æ¬æã¯éã®ãã¨ãè¨ã£ã¦ãã!<br>
+                                    "I have not met a child who does not admire this trend" = <span class="highlight">å­ã©ãã¯ã¿ããªãã®é¢¨æ½®(å ±é¬)ãæ°ã«å¥ã£ã¦ãã</span><br><br>
+
+                                    ã¤ã¾ããå­ã©ãã¯ãå­¦ã¶ãã¨ã¸ã®æãã§ã¯ãªããå ±é¬ãã®ããã«é å¼µã£ã¦ããå¯è½æ§ãé«ããâ¡ã¯æ¬æã¨çç¾!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ¢ ãä¸æ­£è§£ã</div>
+                                    æ¬æã¯ "decades of reforms" ã«ã¤ãã¦è§¦ãã¦ãããããæ¹é©ã®çµã¿åãããåç¬ã®å¤åããéè¦ãã¨ã¯è¨ã£ã¦ããªããæ¬æã¯æ¹é©ããã£ã¦ãå­ã©ããå­¦ã¹ã¦ããªã<strong>åé¡ç¹</strong>ãææãã¦ããã ãã
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(ã³ã)</div>
+                                    â åå®¹ä¸è´åé¡ã¯<strong>æ¶å»æ³</strong>ãæå¹<br>
+                                    â æ¬æã«æ¸ãã¦ããªããã¨ããæ¨æ¸¬ãããªã<br>
+                                    â ã­ã¼ã¯ã¼ããåãã§ããæèãéãã°ä¸æ­£è§£<br>
+                                    â å®å¨ä¸è´ãæ¢ã!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 7 -->
+                <div class="question-section" data-target-paragraphs="1,2,3,4,5,6">
+                    <div class="question-header" onclick="toggleQuestion('q7')">
+                        <h3>åé¡ 7</h3>
+                        <span class="toggle-icon">â¼</span>
+                    </div>
+                    <div id="q7" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> æ¬æã®ã¿ã¤ãã«ã¨ãã¦æãé©å½ãªãã®ã1ã¤é¸ã³ãªããã
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">â  Should Kids Be Given Money to Do Well in School?</div>
+                                <div class="choice">â¡ How Ethan Spends Friday Nights with His Friends</div>
+                                <div class="choice">â¢ Kids Can Learn More than They Should with Friends</div>
+                                <div class="choice">â£ Money Always Makes Kids Perform Worse in School</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint7')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                            <div id="hint7" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ãã³ã(Hint)</div>
+                                    <strong>ã¿ã¤ãã«åé¡ã®è§£ãæ¹:</strong><br>
+                                    â æ¬æã®<strong>å¨ä½ãã¼ã</strong>ã¯ä½? (å°å¥ã ããããªã!)<br>
+                                    â Ethanã¯<strong>ä¾</strong>ã«éããªã â å¨ä½ã®è©±ãããªã<br>
+                                    â æå¾ã®æ®µè½ãè¦ã! â <strong>"Does it work?"</strong><br>
+                                    â çåå½¢ã§çµãã£ã¦ã? â ã¿ã¤ãã«ãçåå½¢ãèªç¶<br>
+                                    â "always" ã¨ãæ¥µç«¯ãªè¡¨ç¾ã«æ³¨æ!<br><br>
+
+                                    <strong>ã­ã¼ã¯ã¼ã:</strong> "paying kids with real money" (Paragraph 4)<br>
+                                    <strong>è­°è«ã®æ ¸å¿:</strong> ããã£ã¦å¹æããã®?
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer7')">Show Answer / è§£ç­ãè¦ã</button>
+
+                            <div id="answer7" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">æ­£è§£: â </div>
+                                    Should Kids Be Given Money to Do Well in School?<br>
+                                    (å­¦æ ¡ã§è¯ãæç¸¾ãåãããã«ãå­ã©ãã«ãéãä¸ããã¹ãã?)
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                    <strong>ã¿ã¤ãã«åé¡ã®è§£ãæ¹:</strong><br>
+                                    1. <strong>å¨ä½ã®ãã¼ã</strong>ã¯ä½? â å­ã©ãã«å ±é¬(ãé)ãä¸ãããã¨<br>
+                                    2. ç­èã®<strong>ã¹ã¿ã³ã¹</strong>ã¯? â è³æ/åå¯¾ã©ã¡ãã§ããªããè­°è«ãæç¤ºã<br>
+                                    3. æå¾ã®æãè¦ã! â <span class="highlight">"Does it work?"</span> = çåå½¢!<br><br>
+
+                                    â ã¿ã¤ãã«ã<strong>çåå½¢</strong>ã§ããã¹ã!
+                                </div>
+
+                                <div class="box flow-box">
+                                    <div class="box-title">æ¬æã®è«çå±é(Structure)</div>
+                                    <strong>Paragraph 1-2:</strong> å°å¥(Ethanã®ä¾)<br>
+                                    â<br>
+                                    <strong>Paragraph 3:</strong> æ­´å²çèæ¯(ç½°âå ±é¬ã®å¤å)<br>
+                                    â<br>
+                                    <strong>Paragraph 4:</strong> ç¾ä»£ã®å­¦æ ¡ã§ã®å®é¨(ãéãä¸ãã)<br>
+                                    â<br>
+                                    <strong>Paragraph 5:</strong> è­°è«(è³ææ´¾ vs åå¯¾æ´¾)<br>
+                                    â<br>
+                                    <strong>Paragraph 6:</strong> çµè« â <span class="highlight">"Does it work?"</span><br><br>
+
+                                    å¨ä½ã®ãã¼ã: å­ã©ãã«<strong>ãé</strong>ãä¸ãããã¨ã®æ¯é
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">æçµæãéè¦!</div>
+                                    "But all this time, there has been only one real question, particularly in America's lowest-performing schools: <span class="highlight">Does it work?</span>"<br><br>
+
+                                    ç­èã¯ããã¾ãããã®ã?ãã¨åãããã¦ãã â â ã® "Should..." ã¨ããçåå½¢ã¨ä¸è´!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ¡ ãä¸æ­£è§£ã</div>
+                                    Ethanã¯<strong>å°å¥é¨ã®ä¾</strong>ã«éããªããæ¬æå¨ä½ã®ãã¼ãã§ã¯ãªããParagraph 1-2ã ãã®åå®¹ã
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ¢ ãä¸æ­£è§£ã</div>
+                                    ãåéã¨å­¦ã¶ãã¨ããåå®¹ã¯æ¬æã«ãªããEthanã¯åéã®èªãã<strong>æ­ã£ã</strong>è©±ãæ¬æã®ãã¼ãã¨ç¡é¢ä¿ã
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">ãªãâ£ ãä¸æ­£è§£ã</div>
+                                    "Always" = ãå¸¸ã«ãã¯è¨ãéã!<br>
+                                    æ¬æã¯ "Psychologists warn that money <span class="highlight">can actually</span> make kids perform worse" ã¨è¨ã£ã¦ããã<br><br>
+
+                                    "can" = å¯è½æ§ããã(ãããªããã¨ããã)<br>
+                                    "always" = å¸¸ã«ãããªã<br><br>
+
+                                    â â£ã¯æ¥µç«¯ãããä¸»å¼µã§ãæ¬æã®åå®¹ã¨åããªãã
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(ã³ã)</div>
+                                    â ã¿ã¤ãã«åé¡ã¯<strong>æåã¨æå¾</strong>ã®ãã©ã°ã©ããéè¦<br>
+                                    â å°å¥é¨ã®ä¾ã¯å¨ä½ã®ãã¼ãã§ã¯ãªã<br>
+                                    â æ¥µç«¯ãªè¡¨ç¾("always", "never")ã«ã¯æ³¨æ<br>
+                                    â æ¬æãçåå½¢ã§çµããã°ãã¿ã¤ãã«ãçåå½¢ãèªç¶
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- end questions-container -->
+        </div> <!-- end content -->
+    </div> <!-- end container -->
+
+    <script>
+        function toggleLayout() {
+            document.body.classList.toggle('two-column-layout');
+            const btn = document.querySelector('.layout-toggle-btn');
+            if (document.body.classList.contains('two-column-layout')) {
+                btn.textContent = 'ð Single Column';
+            } else {
+                btn.textContent = 'ð± Two Columns';
+            }
+        }
+
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function showHint(id) {
+            const hint = document.getElementById(id);
+            const button = event.target;
+
+            // Toggle visibility
+            if (hint.classList.contains('visible')) {
+                hint.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                hint.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        function toggleHeader() {
+            document.body.classList.toggle('header-collapsed');
+            const btn = document.querySelector('.header-collapse-btn');
+            if (btn) {
+                if (document.body.classList.contains('header-collapsed')) {
+                    btn.textContent = 'â¼ ãããã¼ãè¡¨ç¤º';
+                } else {
+                    btn.textContent = 'â² ãããã¼ãé ã';
+                }
+            }
+        }
+
+        // Scroll hints and dual-pane linking setup
+        document.addEventListener('DOMContentLoaded', function () {
+            const passage = document.querySelector('.two-column-layout .passage-section') || document.querySelector('.passage-section');
+            const questions = document.querySelector('.two-column-layout .questions-container') || document.querySelector('.questions-container');
+            const passageHint = document.querySelector('.scroll-hint-passage');
+            const questionsHint = document.querySelector('.scroll-hint-questions');
+            let passageTimer = null;
+            let questionsTimer = null;
+
+            if (passage && passageHint) {
+                passage.addEventListener('scroll', function () {
+                    passageHint.classList.add('show');
+                    clearTimeout(passageTimer);
+                    passageTimer = setTimeout(() => passageHint.classList.remove('show'), 800);
+                });
+            }
+
+            if (questions && questionsHint) {
+                questions.addEventListener('scroll', function () {
+                    questionsHint.classList.add('show');
+                    clearTimeout(questionsTimer);
+                    questionsTimer = setTimeout(() => questionsHint.classList.remove('show'), 800);
+                });
+            }
+
+            // Dual-pane highlight linking
+            const paragraphs = document.querySelectorAll('.paragraph[data-paragraph]');
+            const qSections = document.querySelectorAll('.question-section');
+
+            function clearLinkedHighlight() {
+                paragraphs.forEach(p => p.classList.remove('linked-highlight'));
+                qSections.forEach(q => q.classList.remove('linked-highlight'));
+            }
+
+            qSections.forEach(sec => {
+                const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim()).filter(Boolean);
+
+                sec.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    sec.classList.add('linked-highlight');
+                    targets.forEach(num => {
+                        const p = document.querySelector('#para' + num);
+                        if (p) p.classList.add('linked-highlight');
+                    });
+                });
+
+                sec.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            paragraphs.forEach(p => {
+                const num = p.getAttribute('data-paragraph');
+                p.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    p.classList.add('linked-highlight');
+                    qSections.forEach(sec => {
+                        const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim());
+                        if (targets.includes(num)) {
+                            sec.classList.add('linked-highlight');
+                        }
+                    });
+                });
+                p.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+        });
+
+        function showAnswer(id) {
+            const answer = document.getElementById(id);
+            const button = event.target;
+
+            // Toggle visibility
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                answer.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        // Auto-hide + reveal for layout toggle button
+        document.addEventListener("DOMContentLoaded", () => {
+            const btn = document.querySelector(".layout-toggle-btn");
+            let hideTimer = null;
+
+            function hideButton() {
+                btn.classList.add("hidden");
+            }
+            function showButton() {
+                btn.classList.remove("hidden");
+                clearTimeout(hideTimer);
+                hideTimer = setTimeout(hideButton, 2000);
+            }
+
+            hideTimer = setTimeout(hideButton, 2000);
+
+            window.addEventListener("mousemove", showButton);
+            window.addEventListener("scroll", showButton);
+        });
+    </script>
+</body>
+</html>
