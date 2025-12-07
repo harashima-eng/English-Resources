@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>実戦問題4｜Grammar Breakdown 全26問</title>
+  <style>
+    :root{
+      --bg1:#f97316; --bg2:#ea580c;
+      --teal:#115e59; --tealLight:#134e4a;
+      --ink:#1f2937; --muted:#6b7280;
+      --card:#ffffff; --soft:#fff7ed;
+      --hint:#fef3c7; --hintBorder:#f59e0b;
+      --ans:#ccfbf1; --ansBorder:#0d9488;
+      --wrong:#fef2f2; --wrongBorder:#ef4444;
+      --blue:#0891b2; --blueSoft:#ecfeff;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: "Segoe UI","Hiragino Kaku Gothic ProN","Meiryo",system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--ink);
+      line-height:1.8;
+      padding:16px;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:0 16px 50px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff;
+      padding:28px 24px;
+      position:sticky; top:0; z-index:10;
+    }
+    header h1{font-size:24px;margin-bottom:6px}
+    header p{opacity:.95;font-size:14px}
+    .toolbar{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border:0; cursor:pointer; font-weight:700;
+      padding:8px 14px; border-radius:999px;
+      transition:.15s transform,.15s opacity,.15s box-shadow;
+      box-shadow:0 3px 10px rgba(0,0,0,.16);
+    }
+    .btn:hover{transform:translateY(-1px); opacity:.96}
+    .btn-ghost{background:#fff;color:#111827}
+    .btn-dark{background:#0c4a4a;color:#fff}
+    .content{padding:18px}
+    .section{
+      border:2px solid #99f6e4; border-radius:var(--radius);
+      overflow:hidden; margin:14px 0; background:var(--soft);
+    }
+    .section-header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff; padding:14px 16px; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      font-weight:800;
+      user-select:none;
+    }
+    .section-header .arrow{transition:.2s transform}
+    .section-header.open .arrow{transform:rotate(180deg)}
+    .section-body{
+      display:none;
+      padding:14px;
+    }
+    .section-body.open{
+      display:block;
+    }
+    .qcard{
+      background:#fff; border-radius:12px; padding:14px 14px 10px;
+      margin:10px 0 14px; border-left:5px solid var(--teal);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
+    }
+    .qnum{font-weight:900;color:var(--teal);font-size:16px}
+    .qtext{margin-top:6px;font-size:16px}
+    .choices{margin-top:6px;padding-left:8px;color:#111827;font-size:15px}
+    .scramble{margin-top:6px;padding:8px 10px;background:#f0fdfa;border-radius:8px;font-family:monospace;font-size:14px;border:1px solid #99f6e4}
+    .univ{font-size:13px;color:var(--muted);margin-left:8px}
+    .button-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    .hint-btn{background:linear-gradient(135deg,#fcd34d,#f59e0b);color:#78350f}
+    .ans-btn{background:linear-gradient(135deg,var(--teal),var(--tealLight));color:#fff}
+    .collapsible{
+      display:none;
+      margin-top:6px;
+    }
+    .collapsible.open{
+      display:block;
+    }
+    .box{
+      border-radius:10px; padding:12px 14px;
+      border-left:4px solid;
+      background:#fff;
+    }
+    .hint-box{background:var(--hint); border-left-color:var(--hintBorder);font-size:15px}
+    .ans-box{
+      background:var(--ans); 
+      border-left-color:var(--ansBorder);
+      font-size:16px;
+      line-height:1.9;
+    }
+    .ans-box .label{font-size:17px;font-weight:800}
+    .ans-box .jp{font-size:16px;margin-top:8px;font-style:italic}
+    .ans-box .muted{font-size:15px;margin-top:8px;color:var(--muted)}
+    .wrong-box{background:var(--wrong); border-left-color:var(--wrongBorder); margin-top:8px;font-size:15px}
+    .ref-box{background:var(--blueSoft); border-left-color:var(--blue); margin-top:8px;font-size:14px}
+    .label{font-weight:800}
+    .correct-choice{color:#16a34a;font-weight:800}
+    .wrong-choice{color:#ef4444;font-weight:800}
+    footer{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      padding:18px; text-align:center; color:#fff;
+      font-size:13px; opacity:.95;
+    }
+    @media (max-width:768px){
+      header h1{font-size:20px}
+      .content{padding:12px}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📚 実戦問題4｜Grammar Breakdown 全26問</h1>
+    <p>DUALSCOPE 総合英語（参 pp.311～389）｜✓/✗ 詳細解説付き</p>
+    <div class="toolbar">
+      <button class="btn btn-ghost" data-action="open-all">全部ひらく</button>
+      <button class="btn btn-ghost" data-action="close-all">全部とじる</button>
+      <button class="btn btn-dark" data-action="download">⬇️ このページをダウンロード</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Section 1: 語句選択 -->
+    <section class="section">
+      <div class="section-header"><span>[1] 語句選択問題 (1)～(10)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <!-- Q1 -->
+        <div class="qcard">
+          <div class="qnum">(1)<span class="univ">【上智大】</span></div>
+          <div class="qtext">I cannot believe it. He would be the (　　　) man to take bribes.</div>
+          <div class="choices">a. impossible　　b. least　　c. hardest　　d. last</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">「最も～しそうにない人」→ <span class="label">the last A to do</span> の構文</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. last</span></div>
+              <div class="jp">訳：私はそれが信じられない。彼は最もわいろを受け取るような人ではない。</div>
+              <div class="muted">
+              <b>the last A to do の構文：</b><br>
+              • 直訳：「～する最後のA」<br>
+              • 意味：「決して～しない[最も～しそうでない]A」<br>
+              • ニュアンス：「彼がわいろを取るなら、最後の最後になる」→「彼が取るなんてありえない」<br><br>
+              
+              <b>なぜ last なのか：</b><br>
+              • 「何かをする順番で最後」= 「最もしそうにない」<br>
+              • He would be the <b>last</b> person to lie.（彼は嘘をつくような人ではない）<br>
+              • She is the <b>last</b> person I want to see.（彼女は一番会いたくない人だ）<br><br>
+              
+              <b>例文で確認：</b><br>
+              • He is the last man to betray his friends.<br>
+              　（彼は友人を裏切るような人ではない）<br>
+              • That's the last thing I expected.<br>
+              　（それは全く予想していなかったことだ）<br><br>
+              
+              <b>重要表現：</b><br>
+              • <b>take bribes</b>（わいろを受け取る）bribe = わいろ<br>
+              • <b>the last ... to do</b>（最も～しそうにない）
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. impossible：</span>impossible man という表現は不自然</div>
+                <div><span class="wrong-choice">✗ b. least：</span>the least man to do という形は文法的に不可</div>
+                <div><span class="wrong-choice">✗ c. hardest：</span>the hardest man to do は意味が通らない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：the last A to do「最も～しそうにないA」「決して～しないA」<br>📖 bribe「わいろ」/ take bribes「わいろを受け取る」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="qcard">
+          <div class="qnum">(2)<span class="univ">【亜細亜大】</span></div>
+          <div class="qtext">Yuji lost the map, or he (　　　) here earlier.</div>
+          <div class="choices">a. arrived　　b. would be gone　　c. is coming　　d. would have been</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">or = otherwise「さもなければ」→ <span class="label">仮定法過去完了</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. would have been</span></div>
+              <div class="jp">訳：ユウジは地図をなくした。そうでなかったら、もっと早くここに着いていただろう。</div>
+              <div class="muted">
+              <b>or = otherwise の仮定法：</b><br>
+              • この <b>or</b> は「さもなければ」という意味<br>
+              • 前の文（地図をなくした）に反する仮定を表す<br>
+              • 過去の事実に反することを仮定 → <b>仮定法過去完了</b><br><br>
+              
+              <b>仮定法過去完了の形：</b><br>
+              • <b>would/could/might + have + 過去分詞</b><br>
+              • 「～しただろうに」「～できたのに」<br><br>
+              
+              <b>書き換えで理解：</b><br>
+              • = If he had not lost the map, he would have been here earlier.<br>
+              　（もし地図をなくしていなかったら、もっと早く着いていただろう）<br><br>
+              
+              <b>例文で確認：</b><br>
+              • I was busy, or I would have called you.<br>
+              　（忙しかった。さもなければ電話していただろう）<br>
+              • He ran fast; otherwise he would have missed the train.<br>
+              　（彼は速く走った。さもなければ電車に乗り遅れていただろう）<br><br>
+              
+              <b>重要表現：</b><br>
+              • <b>or / otherwise</b>（さもなければ）→ 仮定法の条件節の代用<br>
+              • <b>would have + 過去分詞</b>（～しただろうに）
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. arrived：</span>単純過去形では仮定法にならない</div>
+                <div><span class="wrong-choice">✗ b. would be gone：</span>gone は「行ってしまった」で意味不明</div>
+                <div><span class="wrong-choice">✗ c. is coming：</span>現在進行形は仮定法にならない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：or / otherwise + 仮定法過去完了「さもなければ～しただろう」<br>📖 would have been「～だっただろう」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="qcard">
+          <div class="qnum">(3)<span class="univ">【名城大】</span></div>
+          <div class="qtext">My grandfather always said that time (　　　) money.</div>
+          <div class="choices">a. was　　b. are　　c. will be　　d. is</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">ことわざ・不変の真理 → <span class="label">時制の一致を受けない</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. is</span></div>
+              <div class="jp">訳：私の祖父は、時は金なり、といつも言っていた。</div>
+              <div class="muted">
+              <b>時制の一致の例外：</b><br>
+              • ことわざや格言、不変の真理は<b>時制の一致を受けない</b><br>
+              • 主節が過去形（said）でも、従属節は<b>現在形のまま</b><br><br>
+              
+              <b>時制の一致を受けないもの：</b><br>
+              • <b>ことわざ・格言</b>：Time is money. / Practice makes perfect.<br>
+              • <b>科学的真理</b>：The earth goes around the sun.<br>
+              • <b>歴史的事実</b>：World War II ended in 1945.<br>
+              • <b>現在も変わらない習慣・状態</b><br><br>
+              
+              <b>例文で確認：</b><br>
+              • He said (that) honesty <b>is</b> the best policy.<br>
+              　（彼は正直が最善の策だと言った）<br>
+              • My teacher told us (that) water <b>boils</b> at 100°C.<br>
+              　（先生は水は100度で沸騰すると教えてくれた）<br><br>
+              
+              <b>Time is money. の意味：</b><br>
+              • 「時は金なり」→ 時間はお金と同じくらい大切だ
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. was：</span>ことわざは時制の一致を受けないので不可</div>
+                <div><span class="wrong-choice">✗ b. are：</span>time は不可算名詞で単数扱い</div>
+                <div><span class="wrong-choice">✗ c. will be：</span>ことわざは現在形で表す</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：ことわざ・不変の真理は時制の一致を受けない<br>📖 Time is money.「時は金なり」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="qcard">
+          <div class="qnum">(4)<span class="univ">【愛知学院大】</span></div>
+          <div class="qtext">It's getting rather late. It's about time you (　　　) to bed.</div>
+          <div class="choices">a. had gone　　b. will go　　c. have gone　　d. went</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">It's (about/high) time + S + 過去形</span>「そろそろ～する時間だ」</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. went</span></div>
+              <div class="jp">訳：ずいぶん遅い時間になっているよ。君はそろそろ寝る時間だ。</div>
+              <div class="muted">
+              <b>It's (about/high) time + 仮定法過去：</b><br>
+              • 形：<b>It's time + S + 過去形</b><br>
+              • 意味：「そろそろ～すべき時間だ」「もう～してもいい頃だ」<br>
+              • ニュアンス：実際にはまだ行動していない → 仮定法を使う<br><br>
+              
+              <b>バリエーション：</b><br>
+              • <b>It's time</b> + S + 過去形（そろそろ～する時間だ）<br>
+              • <b>It's about time</b> + S + 過去形（そろそろ～する頃だ）<br>
+              • <b>It's high time</b> + S + 過去形（とっくに～すべき時だ）← 強い<br><br>
+              
+              <b>なぜ過去形を使うのか：</b><br>
+              • 「まだしていない」という<b>現実との距離感</b>を表す<br>
+              • 現在のことなのに過去形 = 仮定法のサイン<br><br>
+              
+              <b>例文で確認：</b><br>
+              • It's time you <b>started</b> studying.<br>
+              　（そろそろ勉強を始める時間だよ）<br>
+              • It's high time he <b>found</b> a job.<br>
+              　（彼はとっくに仕事を見つけるべき時だ）<br><br>
+              
+              <b>間違いやすいポイント：</b><br>
+              • had gone（×）→ 過去完了は使わない<br>
+              • will go（×）→ 仮定法なので未来形は不可
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. had gone：</span>過去完了形は不可。仮定法過去（過去形）を使う</div>
+                <div><span class="wrong-choice">✗ b. will go：</span>仮定法なので未来形は使えない</div>
+                <div><span class="wrong-choice">✗ c. have gone：</span>現在完了形は不可</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：It's (about/high) time + S + 過去形「そろそろ～すべき時間だ」<br>📖 go to bed「寝る」/ rather late「かなり遅い」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="qcard">
+          <div class="qnum">(5)<span class="univ">【札幌大】</span></div>
+          <div class="qtext">Stacy cannot ride a bicycle. (　　　) can I.</div>
+          <div class="choices">a. Neither　　b. Either　　c. Whether　　d. No</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">否定文に続けて「～もまた…ない」→ <span class="label">Neither + V + S</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ a. Neither</span></div>
+              <div class="jp">訳：ステイシーは自転車に乗れない。私もまた乗れない。</div>
+              <div class="muted">
+              <b>Neither + V + S の構文：</b><br>
+              • 先行する<b>否定文</b>を受けて「～もまた…ない」<br>
+              • 必ず<b>倒置</b>が起こる（V + S の語順）<br>
+              • = Nor + V + S（同じ意味）<br><br>
+              
+              <b>肯定 vs 否定の使い分け：</b><br>
+              • 肯定文に続ける → <b>So + V + S</b>「～もまた…だ」<br>
+              　例：He is happy. <b>So am I.</b>（彼は幸せだ。私もだ）<br>
+              • 否定文に続ける → <b>Neither/Nor + V + S</b>「～もまた…ない」<br>
+              　例：She can't swim. <b>Neither can I.</b>（彼女は泳げない。私もだ）<br><br>
+              
+              <b>例文で確認：</b><br>
+              • I don't like coffee. <b>Neither does she.</b><br>
+              　（私はコーヒーが好きじゃない。彼女もだ）<br>
+              • Tom wasn't there. <b>Nor was Mary.</b><br>
+              　（トムはそこにいなかった。メアリーもだ）<br><br>
+              
+              <b>重要ポイント：</b><br>
+              • neither 自体に否定の意味があるので、can の後に not は不要<br>
+              • Neither <b>can</b> I.（○） / Neither <b>can't</b> I.（×）
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ b. Either：</span>either は not ~ either の形で使う。単独では不可</div>
+                <div><span class="wrong-choice">✗ c. Whether：</span>「～かどうか」の意味で文脈に合わない</div>
+                <div><span class="wrong-choice">✗ d. No：</span>No can I という形は存在しない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：Neither/Nor + V + S「～もまた…ない」（否定文を受ける）<br>📖 So + V + S「～もまた…だ」（肯定文を受ける）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="qcard">
+          <div class="qnum">(6)<span class="univ">【中京学院大】</span></div>
+          <div class="qtext">Jane asked me what time (　　　).</div>
+          <div class="choices">a. is it　　b. it is　　c. was it　　d. it was</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">間接疑問文 → <span class="label">疑問詞 + S + V</span>（平叙文の語順）+ 時制の一致</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. it was</span></div>
+              <div class="jp">訳：ジェーンは私に何時か尋ねた。</div>
+              <div class="muted">
+              <b>間接疑問文のポイント：</b><br>
+              • 疑問文を文中に埋め込む形<br>
+              • 語順：<b>疑問詞 + S + V</b>（平叙文の語順）<br>
+              • 直接疑問文の倒置は<b>解消</b>される<br><br>
+              
+              <b>時制の一致：</b><br>
+              • 主節 asked（過去形）→ 従属節も過去形<br>
+              • is → was に変わる<br><br>
+              
+              <b>変換の流れ：</b><br>
+              • 直接疑問：What time <b>is it</b>?<br>
+              • 間接疑問：what time <b>it is</b>（語順変化）<br>
+              • 時制の一致：what time <b>it was</b>（過去形に）<br><br>
+              
+              <b>例文で確認：</b><br>
+              • I don't know <b>where he lives</b>.<br>
+              　（彼がどこに住んでいるか知らない）<br>
+              • She asked me <b>what I wanted</b>.<br>
+              　（彼女は私が何を望んでいるか尋ねた）<br><br>
+              
+              <b>間違いやすいポイント：</b><br>
+              • 間接疑問文では疑問文の語順（V + S）を使わない！
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. is it：</span>間接疑問文では倒置しない。時制の一致もない</div>
+                <div><span class="wrong-choice">✗ b. it is：</span>語順は正しいが、時制の一致を受けていない</div>
+                <div><span class="wrong-choice">✗ c. was it：</span>間接疑問文では倒置しない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：間接疑問文 = 疑問詞 + S + V（平叙文の語順）<br>📖 時制の一致：主節が過去 → 従属節も過去</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="qcard">
+          <div class="qnum">(7)<span class="univ">【近畿大】</span></div>
+          <div class="qtext">Strange (　　　) it may sound, Roger enjoys doing his homework.</div>
+          <div class="choices">a. although　　b. as　　c. how　　d. if</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">「～だけれども」の譲歩 → <span class="label">形容詞 + as/though + S + V</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ b. as</span></div>
+              <div class="jp">訳：奇妙に思われるかもしれないが、ロジャーは宿題を楽しんでやっているのだ。</div>
+              <div class="muted">
+              <b>譲歩の倒置構文：</b><br>
+              • 形：<b>形容詞/副詞 + as/though + S + V</b><br>
+              • 意味：「Sは～であるけれども」「～ではあるが」<br>
+              • 形容詞を<b>前に出す</b>のがポイント！<br><br>
+              
+              <b>重要ルール：</b><br>
+              • この形では <b>although は使えない！</b><br>
+              • as または though のみ<br><br>
+              
+              <b>語順の比較：</b><br>
+              • 普通：<b>Although it may sound strange</b>, ...<br>
+              • 倒置：<b>Strange as it may sound</b>, ...（より文語的）<br><br>
+              
+              <b>例文で確認：</b><br>
+              • <b>Young as he is</b>, he is very wise.<br>
+              　（彼は若いけれども、とても賢い）<br>
+              • <b>Hard though she tried</b>, she couldn't pass the exam.<br>
+              　（一生懸命やったけれども、試験に受からなかった）<br>
+              • <b>Rich as he is</b>, he is not happy.<br>
+              　（彼は金持ちだけれども、幸せではない）<br><br>
+              
+              <b>重要表現：</b><br>
+              • <b>enjoy doing</b>（～することを楽しむ）
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. although：</span>この倒置構文では although は使えない</div>
+                <div><span class="wrong-choice">✗ c. how：</span>how を使う構文はない</div>
+                <div><span class="wrong-choice">✗ d. if：</span>if は「もし」で譲歩の意味にならない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：形容詞/副詞 + as/though + S + V「～だけれども」（譲歩の倒置）<br>📖 ⚠️ although はこの形では使えない！</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="qcard">
+          <div class="qnum">(8)<span class="univ">【名城大】</span></div>
+          <div class="qtext">Was (　　　) you who sent me the book?</div>
+          <div class="choices">a. what　　b. which　　c. it　　d. not</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">強調構文 <span class="label">It is/was ~ that ...</span> の疑問文</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ c. it</span></div>
+              <div class="jp">訳：私にその本を送ってくれたのはあなただったのですか。</div>
+              <div class="muted">
+              <b>強調構文の疑問文：</b><br>
+              • 基本形：<b>It is/was + 強調部分 + that/who + 残り</b><br>
+              • 疑問文：<b>Is/Was it + 強調部分 + that/who + 残り?</b><br><br>
+              
+              <b>この問題の分析：</b><br>
+              • 元の文：You sent me the book.（あなたが私に本を送った）<br>
+              • 強調文：<b>It was you who</b> sent me the book.（送ったのはあなただった）<br>
+              • 疑問文：<b>Was it you who</b> sent me the book?<br><br>
+              
+              <b>who vs that：</b><br>
+              • 「人」を強調 → <b>who</b> または that<br>
+              • 「物・事」を強調 → <b>that</b><br><br>
+              
+              <b>例文で確認：</b><br>
+              • <b>It was Tom that</b> broke the window.<br>
+              　（窓を割ったのはトムだった）<br>
+              • <b>Was it yesterday that</b> you met her?<br>
+              　（彼女に会ったのは昨日だったのですか）<br><br>
+              
+              <b>強調構文の見分け方：</b><br>
+              • It is/was ~ that ... を取り除いても文が成立する → 強調構文
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. what：</span>what you who という形は文法的に不可</div>
+                <div><span class="wrong-choice">✗ b. which：</span>which you who という形は不可</div>
+                <div><span class="wrong-choice">✗ d. not：</span>not you who では意味が通らない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：強調構文 It is/was ~ that/who ... 「～なのは…だ」<br>📖 疑問文は Was it ~ that/who ...?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="qcard">
+          <div class="qnum">(9)<span class="univ">【立命館大】</span></div>
+          <div class="qtext">Had he followed my advice, he (　　　) in trouble now.</div>
+          <div class="choices">a. has not been　　b. is not　　c. is not having　　d. would not be</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">Had + S + 過去分詞 = If節の倒置 + <span class="label">now</span> → 混合仮定法</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ d. would not be</span></div>
+              <div class="jp">訳：彼が私の忠告に従っていたら、今ごろ苦しい状況にはなっていないのに。</div>
+              <div class="muted">
+              <b>混合仮定法（重要！）：</b><br>
+              • if節：過去の仮定（had + 過去分詞）<br>
+              • 主節：現在の結果（would + 動詞の原形）<br>
+              • <b>now</b> が超重要キーワード！<br><br>
+              
+              <b>Had he followed = If he had followed：</b><br>
+              • if を省略すると<b>倒置</b>が起こる<br>
+              • Had + S + 過去分詞 = If S had + 過去分詞<br><br>
+              
+              <b>なぜ would not be なのか：</b><br>
+              • <b>now</b>（今）があるので、主節は<b>現在の状態</b>を表す<br>
+              • 過去の行動 → 現在の結果 = 混合仮定法<br>
+              • 「あの時従っていたら」→「今苦しんでいないのに」<br><br>
+              
+              <b>例文で確認：</b><br>
+              • If I had studied harder, I <b>would be</b> a doctor <b>now</b>.<br>
+              　（もっと勉強していたら、今医者になっているのに）<br>
+              • Had he saved money, he <b>could buy</b> a car <b>now</b>.<br>
+              　（貯金していたら、今車が買えるのに）<br><br>
+              
+              <b>重要表現：</b><br>
+              • <b>follow one's advice</b>（～の忠告に従う）<br>
+              • <b>be in trouble</b>（困っている・苦しい状況にある）
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. has not been：</span>現在完了形は仮定法では使わない</div>
+                <div><span class="wrong-choice">✗ b. is not：</span>仮定法では助動詞（would等）が必要</div>
+                <div><span class="wrong-choice">✗ c. is not having：</span>進行形は仮定法では使わない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：混合仮定法 If S had + 過去分詞（過去）, S would + 動詞の原形 + now（現在）<br>📖 Had + S + 過去分詞 = If S had + 過去分詞（ifの省略・倒置）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="qcard">
+          <div class="qnum">(10)<span class="univ">【天理大】</span></div>
+          <div class="qtext">(　　　) did I think that she would become the president of a company.</div>
+          <div class="choices">a. Few　　b. Little　　c. More　　d. Most</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">後ろが倒置（did I think）→ <span class="label">否定の副詞</span>が文頭</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><span class="correct-choice">✓ b. Little</span></div>
+              <div class="jp">訳：彼女が会社の社長になるとは思いもよらなかった[考えもしなかった]。</div>
+              <div class="muted">
+              <b>否定の副詞の倒置：</b><br>
+              • 否定の副詞を<b>文頭</b>に置くと<b>倒置</b>が起こる<br>
+              • 語順：否定副詞 + <b>助動詞 + S + V</b>（疑問文の語順）<br><br>
+              
+              <b>Little の意味：</b><br>
+              • 副詞として「少しも～ない」「全く～ない」<br>
+              • = not at all<br><br>
+              
+              <b>Few vs Little：</b><br>
+              • <b>few</b>：数を表す<b>形容詞</b>（few people など）<br>
+              • <b>little</b>：量を表す形容詞 OR 程度を表す<b>副詞</b><br>
+              • この問題では think を修飾する<b>副詞</b>が必要 → <b>little</b><br><br>
+              
+              <b>倒置を起こす否定の副詞：</b><br>
+              • <b>Little</b> did I know ...（知る由もなかった）<br>
+              • <b>Never</b> have I seen ...（一度も見たことがない）<br>
+              • <b>Rarely/Seldom</b> do we ...（めったに～ない）<br>
+              • <b>Hardly/Scarcely</b> had I ...（～するやいなや）<br><br>
+              
+              <b>例文で確認：</b><br>
+              • <b>Little did I dream</b> that I would win.<br>
+              　（自分が勝つとは夢にも思わなかった）<br>
+              • <b>Never have I heard</b> such nonsense.<br>
+              　（そんなナンセンスは一度も聞いたことがない）
+              </div>
+              <div class="box wrong-box">
+                <div><span class="wrong-choice">✗ a. Few：</span>few は形容詞で名詞を修飾する。副詞として使えない</div>
+                <div><span class="wrong-choice">✗ c. More：</span>more では倒置が起こらない</div>
+                <div><span class="wrong-choice">✗ d. Most：</span>most では倒置が起こらない</div>
+              </div>
+              <div class="box ref-box">📖 Grammar：否定の副詞（Little, Never, etc.）+ 倒置（助動詞 + S + V）<br>📖 Little「少しも～ない」（副詞）/ Few「ほとんど～ない」（形容詞）</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 2: 書きかえ -->
+    <section class="section">
+      <div class="section-header"><span>[2] 書きかえ問題 (1)～(4)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <!-- Q2-1 -->
+        <div class="qcard">
+          <div class="qnum">(1)<span class="univ">【中京大】</span></div>
+          <div class="qtext">Mary is a pianist, and her mother is a pianist, too.<br>Mary is a pianist, and (　　　　　) is her mother.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">肯定文に続けて「～もまた…だ」→ <span class="label">so + V + S</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>so</b></div>
+              <div class="jp">訳：メアリーはピアニストで、彼女のお母さんもピアニストです。</div>
+              <div class="muted">
+              <b>so + V + S の構文：</b><br>
+              • 肯定文を受けて「～もまた…だ」<br>
+              • 必ず<b>倒置</b>が起こる<br><br>
+              
+              <b>例文：</b><br>
+              • He is happy. <b>So am I.</b>（彼は幸せだ。私もだ）<br>
+              • She can swim. <b>So can he.</b>（彼女は泳げる。彼もだ）<br><br>
+              
+              <b>注意：So S + V は違う意味！</b><br>
+              • <b>So I am.</b>（確かにそうだ）← 倒置なし = 確認
+              </div>
+              <div class="box ref-box">📖 Grammar：so + V + S「～もまた…だ」（肯定文を受ける・倒置あり）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2-2 -->
+        <div class="qcard">
+          <div class="qnum">(2)<span class="univ">【藤女子大】</span></div>
+          <div class="qtext">I'm sorry that she can't attend the party.<br>I (　　　　　) she (　　　　　) attend the party.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">「～であればよいのに」→ <span class="label">I wish + S + 過去形</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>wish, could</b></div>
+              <div class="jp">訳：彼女がパーティーに出席できなくて残念だ。＝彼女がパーティーに出席できればいいのに。</div>
+              <div class="muted">
+              <b>I wish + 仮定法過去：</b><br>
+              • 現在の事実に反する願望<br>
+              • can → <b>could</b>（過去形に）<br><br>
+              
+              <b>書き換えの考え方：</b><br>
+              • I'm sorry (that) ~ = I wish ~<br>
+              • 「残念だ」→「～であればいいのに」<br><br>
+              
+              <b>例文：</b><br>
+              • I'm sorry I can't help you. = I wish I <b>could</b> help you.<br>
+              　（手伝えなくて残念 = 手伝えればいいのに）
+              </div>
+              <div class="box ref-box">📖 Grammar：I wish + S + 過去形「～であればいいのに」（現在の願望）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2-3 -->
+        <div class="qcard">
+          <div class="qnum">(3)<span class="univ">【*中京大】</span></div>
+          <div class="qtext">If you stay in Tokyo for a year, you'll have to spend a lot of money.<br>A year in Tokyo will (　　　) (　　　) a lot of money.</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">無生物主語 + <span class="label">cost + 人 + 金額</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>cost you</b></div>
+              <div class="jp">訳：東京で1年間暮らすなら、多くのお金を使わなければならないでしょう。</div>
+              <div class="muted">
+              <b>cost の構文：</b><br>
+              • <b>S + cost + 人 + 金額</b><br>
+              • 「Sは（人）に（金額）を必要とさせる」<br>
+              • 無生物主語が条件を表す<br><br>
+              
+              <b>無生物主語の訳し方：</b><br>
+              • A year in Tokyo will cost you a lot of money.<br>
+              • 直訳：「東京での1年はあなたに多くのお金を費やさせる」<br>
+              • 意訳：「東京で1年暮らすと多くのお金がかかる」<br><br>
+              
+              <b>類似表現：</b><br>
+              • The trip <b>cost</b> me 50,000 yen.（その旅行に5万円かかった）<br>
+              • This mistake <b>cost</b> him his job.（この失敗で彼は職を失った）
+              </div>
+              <div class="box ref-box">📖 Grammar：S + cost + 人 + 金額「Sは人に金額がかかる」<br>📖 無生物主語：条件節の内容を主語にする</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2-4 -->
+        <div class="qcard">
+          <div class="qnum">(4)<span class="univ">【*名城大】</span></div>
+          <div class="qtext">I suggested to my parents that we should go home then.<br>I said to my parents, "(　　　　　) go home (　　　　　)."</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">提案・勧誘 → <span class="label">Let's ~</span> / then → <span class="label">now</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>Let's, now</b></div>
+              <div class="jp">訳：私は両親にもう家に帰ろうと提案した。→「もう家に帰りましょう」</div>
+              <div class="muted">
+              <b>話法の転換：</b><br>
+              • suggest that we should ~ → "Let's ~"<br>
+              • 提案・勧誘は <b>Let's</b> で表す<br><br>
+              
+              <b>時を表す副詞の変換：</b><br>
+              • <b>then</b>（その時）→ <b>now</b>（今）<br>
+              • 間接話法 → 直接話法への変換<br><br>
+              
+              <b>その他の変換：</b><br>
+              • today → that day<br>
+              • yesterday → the day before<br>
+              • tomorrow → the next day
+              </div>
+              <div class="box ref-box">📖 Grammar：suggest that ~ → "Let's ~"（話法の転換）<br>📖 then → now（副詞の変換）</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 3: 並べかえ -->
+    <section class="section">
+      <div class="section-header"><span>[3] 並べかえ問題 (1)～(6)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <!-- Q3-1 -->
+        <div class="qcard">
+          <div class="qnum">(1)<span class="univ">【東洋大】</span></div>
+          <div class="qtext">私は話しかけられないと一言も話そうとはしない学生だった。</div>
+          <div class="scramble">I was a student who (　　) (　　) (　　) (　　) (　　) (　　) (　　).<br>[ a. unless　b. to　c. word　d. spoke　e. never　f. spoken　g. a ]</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">never spoke a word unless spoken to</span>（話しかけられない限り一言も話さなかった）</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>e-d-g-c-a-f-b</b></div>
+              <div class="jp">I was a student who <b>never spoke a word unless spoken to</b>.</div>
+              <div class="muted">
+              <b>省略構文：</b><br>
+              • unless spoken to = unless I was spoken to<br>
+              • 接続詞の後で<b>S + be動詞</b>が省略される（主語が同じ場合）<br><br>
+              
+              <b>speak a word：</b><br>
+              • 「一言話す」<br>
+              • not ~ a word「一言も～ない」<br><br>
+              
+              <b>例文：</b><br>
+              • When (I was) young, I lived in Tokyo.<br>
+              　（若い時、東京に住んでいた）
+              </div>
+              <div class="box ref-box">📖 Grammar：接続詞 + 過去分詞 = 接続詞 + S + be動詞 + 過去分詞（省略）<br>📖 speak a word「一言話す」/ unless「～でない限り」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3-2 -->
+        <div class="qcard">
+          <div class="qnum">(2)<span class="univ">【*龍谷大】</span></div>
+          <div class="qtext">彼女の誕生日に何を買うつもりなのか、彼に尋ねた。</div>
+          <div class="scramble">I (　　) (　　) (　　) (　　) (　　) (　　) (　　) buy for her birthday.<br>[ a. what　b. was　c. asked　d. to　e. him　f. he　g. going ]</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">ask + 人 + 疑問詞 + S + V</span>（間接疑問文）</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>c-e-a-f-b-g-d</b></div>
+              <div class="jp">I <b>asked him what he was going to</b> buy for her birthday.</div>
+              <div class="muted">
+              <b>間接疑問文：</b><br>
+              • ask + 人 + 疑問詞 + <b>S + V</b>（平叙文の語順）<br>
+              • What is he going to buy? → what he was going to buy<br><br>
+              
+              <b>時制の一致：</b><br>
+              • 主節 asked（過去）→ 従属節 was going to（過去）<br><br>
+              
+              <b>be going to ～：</b><br>
+              • 「～するつもりだ」（予定・意図）
+              </div>
+              <div class="box ref-box">📖 Grammar：ask + 人 + 疑問詞 + S + V（間接疑問文）<br>📖 be going to do「～するつもりだ」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3-3 -->
+        <div class="qcard">
+          <div class="qnum">(3)<span class="univ">【近畿大】</span></div>
+          <div class="qtext">さらに40分ビーチを歩き続けたので、その夜は食欲がわいた。</div>
+          <div class="scramble">(　　) (　　) (　　) (　　) (　　) (　　) me a good appetite that evening.<br>[ a. along　b. another　c. forty-minute　d. gave　e. the beach　f. walk ]</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">無生物主語構文：<span class="label">S + gave + 人 + ~</span></div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>b-c-f-a-e-d</b></div>
+              <div class="jp"><b>Another forty-minute walk along the beach gave</b> me a good appetite that evening.</div>
+              <div class="muted">
+              <b>無生物主語構文：</b><br>
+              • 「さらに40分の散歩が私に食欲を与えた」<br>
+              • S（物事）+ give + O（人）+ O（物）<br><br>
+              
+              <b>複合形容詞：</b><br>
+              • <b>forty-minute</b>（40分の）← ハイフンでつなぐ<br>
+              • 単位を表す語は単数形！<br>
+              • a <b>five-year-old</b> boy（5歳の少年）<br><br>
+              
+              <b>訳し方：</b><br>
+              • 直訳：「ビーチ沿いのさらなる40分の散歩が私に食欲を与えた」<br>
+              • 意訳：「さらに40分ビーチを歩いたので食欲がわいた」
+              </div>
+              <div class="box ref-box">📖 Grammar：無生物主語 + give + 人 + 物「～のおかげで人は物を得る」<br>📖 another + 数詞「さらに～」/ 複合形容詞はハイフンで単数形</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3-4 -->
+        <div class="qcard">
+          <div class="qnum">(4)<span class="univ">【神戸山手大】</span></div>
+          <div class="qtext">もしオゾン層がなければ、紫外線が大気に進入してくるだろう。</div>
+          <div class="scramble">If (　　) (　　) (　　) (　　) (　　) (　　), ultraviolet rays would penetrate our atmosphere.<br>[ a. were　b. the　c. for　d. not　e. ozone layer　f. it ]</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">If it were not for ~</span>「もし～がなければ」</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>f-a-d-c-b-e</b></div>
+              <div class="jp">If <b>it were not for the ozone layer</b>, ultraviolet rays would penetrate our atmosphere.</div>
+              <div class="muted">
+              <b>If it were not for ～：</b><br>
+              • 「もし～がなければ」（仮定法過去）<br>
+              • 現在の事実に反する仮定<br><br>
+              
+              <b>同義表現：</b><br>
+              • = <b>Were it not for ~</b>（倒置形）<br>
+              • = <b>Without ~</b><br>
+              • = <b>But for ~</b><br><br>
+              
+              <b>過去の仮定なら：</b><br>
+              • If it <b>had not been</b> for ~「もしあの時～がなかったら」<br><br>
+              
+              <b>重要表現：</b><br>
+              • <b>ozone layer</b>（オゾン層）<br>
+              • <b>ultraviolet rays</b>（紫外線）<br>
+              • <b>penetrate</b>（侵入する・貫く）
+              </div>
+              <div class="box ref-box">📖 Grammar：If it were not for ~「もし～がなければ」（仮定法過去）<br>📖 = Without ~ = But for ~</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3-5 -->
+        <div class="qcard">
+          <div class="qnum">(5)<span class="univ">【中京学院大】</span></div>
+          <div class="qtext">京都に来て初めて私は日本文化がわかりました。</div>
+          <div class="scramble">It (　　) (　　) (　　) (　　) (　　) (　　) I understood Japanese culture.<br>[ a. came to　b. was　c. that　d. not until　e. Kyoto　f. I ]</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">It was not until ~ that ...</span>「～して初めて…した」</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>b-d-f-a-e-c</b></div>
+              <div class="jp">It <b>was not until I came to Kyoto that</b> I understood Japanese culture.</div>
+              <div class="muted">
+              <b>It is not until ~ that ...：</b><br>
+              • 「～して初めて…する」<br>
+              • not ~ until を強調構文で使った形<br><br>
+              
+              <b>書き換え：</b><br>
+              • = I didn't understand Japanese culture <b>until</b> I came to Kyoto.<br>
+              • = <b>Not until</b> I came to Kyoto <b>did I</b> understand Japanese culture.（倒置）<br><br>
+              
+              <b>come to ～：</b><br>
+              • 「～に来る」「～に至る」
+              </div>
+              <div class="box ref-box">📖 Grammar：It is/was not until ~ that ...「～して初めて…する」<br>📖 強調構文 + not until の組み合わせ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3-6 -->
+        <div class="qcard">
+          <div class="qnum">(6)<span class="univ">【*明治大】</span></div>
+          <div class="qtext">サービスにご不満な点がございましたら、支配人までご連絡ください。</div>
+          <div class="scramble">(　　) (　　) (　　) (　　) (　　) (　　) our service, please contact the manager.<br>[ a. you　b. complaints　c. have　d. about　e. should　f. any ]</div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">💡 Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box"><span class="label">Should you ~</span>「万が一～したら」（If you should ~ の倒置）</div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>e-a-c-f-b-d</b></div>
+              <div class="jp"><b>Should you have any complaints about</b> our service, please contact the manager.</div>
+              <div class="muted">
+              <b>If S should ～ の倒置：</b><br>
+              • If を省略すると <b>Should + S + ~</b> の語順になる<br>
+              • 「万が一～したら」（可能性は低いが起こりうる）<br><br>
+              
+              <b>書き換え：</b><br>
+              • = <b>If you should have</b> any complaints about our service, ...<br><br>
+              
+              <b>重要表現：</b><br>
+              • <b>have complaints about ~</b>（～に不満がある）<br>
+              • <b>any</b>：疑問文・条件文で「何か」
+              </div>
+              <div class="box ref-box">📖 Grammar：Should S + V ~「万が一～したら」（If S should の倒置）<br>📖 have complaints about ~「～に不満がある」</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 4: 誤り指摘 -->
+    <section class="section">
+      <div class="section-header"><span>[4] 誤り指摘問題 (1)～(6)</span><span class="arrow">▼</span></div>
+      <div class="section-body">
+
+        <!-- Q4-1 -->
+        <div class="qcard">
+          <div class="qnum">(1)<span class="univ">【明海大】</span></div>
+          <div class="qtext">He doesn't like <u>a. to speak</u> <u>b. in public</u>, and <u>c. so</u> <u>d. does</u> his brother.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>c → neither / nor</b></div>
+              <div class="jp">訳：彼は人前で話すのが好きではないし、私の兄[弟]も好きではない。</div>
+              <div class="muted">
+              <b>否定文を受ける場合：</b><br>
+              • <b>so + V + S</b>：肯定文を受ける「～もまた…だ」<br>
+              • <b>neither/nor + V + S</b>：否定文を受ける「～もまた…ない」<br><br>
+              
+              前の文が否定（doesn't like）なので、<b>neither</b> または <b>nor</b> を使う。
+              </div>
+              <div class="box ref-box">📖 Grammar：否定文 + neither/nor + V + S「～もまた…ない」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4-2 -->
+        <div class="qcard">
+          <div class="qnum">(2)<span class="univ">【学習院大】</span></div>
+          <div class="qtext">The doctor recommended that she <u>a. sees</u> a specialist about her condition so that she <u>b. can</u> get <u>c. the</u> best possible <u>d. treatment</u>.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>a → (should) see</b></div>
+              <div class="jp">訳：医者は彼女がそこで考えうる最良の治療を受けることができるように彼女の体調について専門家に診てもらうことを提案した。</div>
+              <div class="muted">
+              <b>recommend that S (should) + 動詞の原形：</b><br>
+              • 提案・要求・命令を表す動詞の後の that 節では<br>
+              • <b>動詞の原形</b>（仮定法現在）または <b>should + 動詞の原形</b><br>
+              • 三人称単数でも <b>-s をつけない！</b><br><br>
+              
+              <b>同様の動詞：</b><br>
+              • suggest, recommend, insist, demand, propose, request など
+              </div>
+              <div class="box ref-box">📖 Grammar：recommend/suggest that S (should) + 動詞の原形<br>📖 ⚠️ 三人称単数でも -s をつけない！</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4-3 -->
+        <div class="qcard">
+          <div class="qnum">(3)<span class="univ">【近畿大】</span></div>
+          <div class="qtext"><u>a. No one</u> expected that <u>b. such a terrible thing</u> <u>c. did happen</u> <u>d. on the night</u> of the party.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>c → would happen</b></div>
+              <div class="jp">訳：そんな恐ろしいことがそのパーティーの夜に起ころうとはだれも思わなかった。</div>
+              <div class="muted">
+              <b>時制の一致：</b><br>
+              • 主節 expected（過去）→ that 節も時制を合わせる<br>
+              • will → <b>would</b><br>
+              • did happen は強調の do で、ここでは不適切<br><br>
+              
+              「予想する」という意味から、未来のことを表す would happen が正解。
+              </div>
+              <div class="box ref-box">📖 Grammar：時制の一致 will → would<br>📖 expect that S will ~ → expected that S would ~</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4-4 -->
+        <div class="qcard">
+          <div class="qnum">(4)<span class="univ">【神奈川大】</span></div>
+          <div class="qtext">If you had arrived <u>a. a little sooner</u>, you would <u>b. be able</u> to get <u>c. some of</u> the free samples we were giving <u>d. away</u>.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>b → have been able</b></div>
+              <div class="jp">訳：もう少し早く着いていたら、私たちが配付していた無料の試供品をいくつか手に入れることができただろうに。</div>
+              <div class="muted">
+              <b>仮定法過去完了：</b><br>
+              • if 節：had + 過去分詞（had arrived）<br>
+              • 主節：would/could/might + <b>have + 過去分詞</b><br><br>
+              
+              if 節が過去完了なので、主節も <b>would have been able</b> にする。
+              </div>
+              <div class="box ref-box">📖 Grammar：仮定法過去完了 would + have + 過去分詞<br>📖 be able to do「～できる」</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4-5 -->
+        <div class="qcard">
+          <div class="qnum">(5)<span class="univ">【福岡工大】</span></div>
+          <div class="qtext">Jane wrote <u>a. to me</u> last week and <u>b. said</u> she <u>c. had come</u> back a week <u>d. ago</u>.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>d → before</b></div>
+              <div class="jp">訳：ジェーンは先週私に手紙をくれて、1週間前に戻ったと書いていた。</div>
+              <div class="muted">
+              <b>ago vs before：</b><br>
+              • <b>ago</b>：「今から～前に」（現在を基準）<br>
+              • <b>before</b>：「その時から～前に」（過去を基準）<br><br>
+              
+              said（過去）の時点から見て「1週間前」なので <b>before</b> を使う。
+              </div>
+              <div class="box ref-box">📖 Grammar：ago「今から～前」vs before「その時から～前」<br>📖 過去完了 + before の組み合わせ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4-6 -->
+        <div class="qcard">
+          <div class="qnum">(6)<span class="univ">【神奈川大】</span></div>
+          <div class="qtext">I heard <u>a. Ernie plays</u> chess very often, and <u>b. so I do</u>. I want to <u>c. play with him</u> <u>d. sometime</u>.</div>
+          <div class="button-row">
+            <button class="btn ans-btn" data-toggle="answer">✅ Answer</button>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">正解：</span><b>b → so do I</b></div>
+              <div class="jp">訳：アーニーはよくチェスをすると聞いたし、私もだ。いつか彼とチェスをしたいと思っている。</div>
+              <div class="muted">
+              <b>so + V + S の語順：</b><br>
+              • 「～もまた…だ」→ <b>倒置</b>が必要<br>
+              • so I do（×）→ <b>so do I</b>（○）<br><br>
+              
+              <b>注意：</b><br>
+              • So I do.（倒置なし）= 「確かにそうだ」（確認・同意）<br>
+              • So do I.（倒置あり）= 「私もだ」（追加情報）
+              </div>
+              <div class="box ref-box">📖 Grammar：so + V + S「～もまた…だ」（倒置が必要）<br>📖 so + S + V「確かにそうだ」（倒置なし = 別の意味）</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>© Tetsuya's Grammar Gym｜Teal & Orange edition v6</footer>
+
+<script>
+(function(){
+  function open(el){ el.classList.add('open'); }
+  function close(el){ el.classList.remove('open'); }
+
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-toggle]');
+    if(btn){
+      var card = btn.closest('.qcard');
+      var key = btn.getAttribute('data-toggle');
+      var block = card.querySelector('.collapsible[data-block="'+key+'"]');
+      if(block){
+        if(block.classList.contains('open')) close(block);
+        else open(block);
+      }
+      return;
+    }
+
+    var header = e.target.closest('.section-header');
+    if(header){
+      var body = header.nextElementSibling;
+      if(header.classList.contains('open')){
+        header.classList.remove('open');
+        close(body);
+      } else {
+        header.classList.add('open');
+        open(body);
+        var blocks = body.querySelectorAll('.collapsible');
+        for(var i=0; i<blocks.length; i++) close(blocks[i]);
+      }
+      return;
+    }
+
+    var action = e.target.closest('[data-action]');
+    if(action){
+      var act = action.getAttribute('data-action');
+      var headers = document.querySelectorAll('.section-header');
+      if(act === 'open-all'){
+        for(var i=0; i<headers.length; i++){
+          headers[i].classList.add('open');
+          var body = headers[i].nextElementSibling;
+          open(body);
+          var blocks = body.querySelectorAll('.collapsible');
+          for(var j=0; j<blocks.length; j++) close(blocks[j]);
+        }
+      }
+      if(act === 'close-all'){
+        for(var i=0; i<headers.length; i++){
+          headers[i].classList.remove('open');
+          close(headers[i].nextElementSibling);
+        }
+      }
+      if(act === 'download'){
+        var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        var blob = new Blob([html], {type:'text/html'});
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'grammar_breakdown_実戦問題4.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
