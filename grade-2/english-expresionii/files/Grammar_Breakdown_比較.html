@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>比較 Grammar Test Breakdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ====== New header + toolbar ====== */
+        .page-header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
+            padding: 18px 22px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .header-main h1 {
+            font-size: 1.9rem;
+            margin-bottom: 4px;
+        }
+
+        .header-sub {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            transition: 0.15s transform, 0.15s opacity, 0.15s box-shadow;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.96;
+        }
+
+        .btn-ghost {
+            background: #ffffff;
+            color: #111827;
+        }
+
+        .btn-dark {
+            background: #111827;
+            color: #ffffff;
+        }
+
+        /* ====== Original styles ====== */
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .test-info h2 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .test-info p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+
+        .section-header h3 {
+            font-size: 1.3em;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f8f9ff;
+        }
+
+        .section-content.active {
+            max-height: 10000px;
+            padding: 20px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        .question-text {
+            color: #333;
+            font-size: 1.1em;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        .choices {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .choice-item {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .reveal-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .answer-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+
+        .answer-box.show {
+            max-height: 2000px;
+        }
+
+        .answer-content {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+            line-height: 1.8;
+        }
+
+        .answer-label {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .grammar-reference {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #ff9800;
+            font-size: 0.95em;
+        }
+
+        .correct {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .summary-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .topic-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .tips-box {
+            background: #fff3e0;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .tips-box h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+
+        .tips-box ul {
+            padding-left: 20px;
+        }
+
+        .tips-box li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header-main h1 {
+                font-size: 1.4rem;
+            }
+
+            .page-header {
+                padding: 14px 16px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section-header h3 {
+                font-size: 1.1em;
+            }
+
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- New header with toolbar -->
+        <header class="page-header">
+            <div class="header-main">
+                <h1>🔥 比較 (Comparative) Grammar Test Breakdown 🔥</h1>
+                <p class="header-sub">DUALSCOPE 英語総合演習 Lesson 9｜比較 全表現・詳しい解説つき</p>
+            </div>
+            <div class="toolbar">
+                <button class="btn btn-ghost" data-action="open-all">全部ひらく</button>
+                <button class="btn btn-ghost" data-action="close-all">全部とじる</button>
+                <button class="btn btn-dark" data-action="download">⬇️ このページをダウンロード</button>
+            </div>
+        </header>
+        
+        <div class="test-info">
+            <h2>📚 DUALSCOPE 英語総合演習 - Lesson 9</h2>
+            <p><strong>テスト範囲:</strong> pp.250~279 (比較の全表現)</p>
+            <p><strong>内容:</strong> 原級・比較級・最上級、慣用表現、応用問題</p>
+            <p><strong>問題数:</strong> 基本問題6題 + FOR COMMUNICATION 2題 + 発展問題3題</p>
+        </div>
+
+        <!-- 基本問題 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>📝 基本問題 1 - 適切な形に直す問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        He won a gold medal and is now ( famous ) than ever.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>more famous</strong><br>
+                            <strong>日本語訳:</strong> 彼は金メダルを獲得し、今まで以上に有名になっている。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ more famous</span> = famousは2音節以上の形容詞なので、比較級はmoreを使って作ります。famousをmore famousにします。<br>
+                            than ever = 「今まで以上に」という意味の慣用表現です。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 比較級の作り方 (Forming Comparatives)<br>
+                            2音節以上の形容詞 → more + 原級
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        Sophie knows chemistry ( well ) than I.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>better</strong><br>
+                            <strong>日本語訳:</strong> ソフィーは私よりも化学をよく知っている。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ better</span> = thanが続くので比較級が必要。wellの不規則変化: well - better - best
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 不規則変化する比較級<br>
+                            well(よく) → better → best
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        Which is (far) from the earth, Mars or Venus?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>farther [または further]</strong><br>
+                            <strong>日本語訳:</strong> 火星と金星、どちらが地球から遠いですか?<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ farther/further</span> = whichで2つのものを比較しているので比較級が必要。farの不規則変化: far - farther[further] - farthest[furthest]<br>
+                            距離を表す場合、fartherが好まれます。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 2つのものを比較するwhich疑問文<br>
+                            Which is 比較級, A or B?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        Helium is the second (light) element in the universe.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>lightest</strong><br>
+                            <strong>日本語訳:</strong> ヘリウムは宇宙で2番目に軽い元素だ。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ lightest</span> = 「何番目に〜」は the + 序数詞 + 最上級 + 名詞 〜 の形で表します。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 序数詞 + 最上級<br>
+                            the second lightest = 2番目に軽い
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q5</span>
+                    <div class="question-text">
+                        Smoking is ( bad ) for your health than drinking.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>worse</strong><br>
+                            <strong>日本語訳:</strong> 喫煙は飲酒よりも健康に悪い。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ worse</span> = thanが続くので比較級が必要。badの不規則変化: bad - worse - worst
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 不規則変化する比較級<br>
+                            bad(悪い) → worse → worst
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q6</span>
+                    <div class="question-text">
+                        She knows (many) English words of us all.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>the most</strong><br>
+                            <strong>日本語訳:</strong> 彼女は私たち全員の中で一番多くの英単語を知っている。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ the most</span> = of us allという範囲があるので最上級にthe + 最上級をつけます。manyの不規則変化: many - more - most
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 最上級の範囲を示す of<br>
+                            of us all = 私たち全員の中で
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 基本問題2 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>📝 基本問題 2 - より適当な語句を選ぶ</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        The theme park is very popular and no (less, more) than 10 million people visit it every year.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>less</strong><br>
+                            <strong>日本語訳:</strong> そのテーマパークはとても人気があり、毎年1000万人もの人々が訪れる。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ less</span> = no less than + 数詞 で「〜も(多くの)」という意味になります。驚きや強調を表します。<br>
+                            <span class="incorrect">✗ more</span> = no more thanだと「〜しか(ない)」という少なさを強調する意味になってしまいます。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: no less than vs no more than<br>
+                            no less than = 〜も(驚きの多さ)<br>
+                            no more than = 〜しか(少なさ)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        This computer is superior (than, to) that one in quality.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>to</strong><br>
+                            <strong>日本語訳:</strong> このコンピュータは品質の点であのコンピュータより優れている。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ to</span> = superiorは比較の意味を含む形容詞なので、thanではなくtoを使います。<br>
+                            <span class="incorrect">✗ than</span> = superior, inferior, senior, juniorなどはtoを取ります。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: thanではなくtoを使う比較表現<br>
+                            superior/inferior/senior/junior + to
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        Which is ( the taller, taller ) of the two buildings?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>the taller</strong><br>
+                            <strong>日本語訳:</strong> 2つの建物のうち、どちらがより高いですか?<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ the taller</span> = of the twoで2つを比較する場合、比較級の前にtheをつけます。<br>
+                            <span class="incorrect">✗ taller</span> = 2つのものを特定して比較する時はtheが必要です。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 2つのものの比較<br>
+                            the + 比較級 + of the two
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        Mario is the fastest runner ( in, of ) our club.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>in</strong><br>
+                            <strong>日本語訳:</strong> マリオは私たちのクラブで一番速いランナーだ。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ in</span> = our clubは場所・組織を表すのでinを使います。<br>
+                            <span class="incorrect">✗ of</span> = ofは複数のものや人を列挙する時に使います。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 最上級の範囲を示す前置詞<br>
+                            in + 場所/組織<br>
+                            of + 複数のもの
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q5</span>
+                    <div class="question-text">
+                        I have ( many, much ) more money than he does.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>much</strong><br>
+                            <strong>日本語訳:</strong> 私は彼よりもずっと多くのお金を持っている。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ much</span> = 比較級を強調する時、muchやfarなどを比較級の前に置きます。<br>
+                            <span class="incorrect">✗ many</span> = manyは比較級を強調できません。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 比較級を強調する語<br>
+                            much/far/even/still + 比較級
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 基本問題3 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>📝 基本問題 3 - 空所補充問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        その力士は私の2倍重い。<br>
+                        The sumo wrestler is (　) (　) heavy (　) I am.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>twice as, as</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ twice as ... as</span> = 「AはBのX倍〜だ」は A ... X times as + 原級 + as B で表します。2倍はtwiceを使います。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 倍数表現<br>
+                            X times as + 原級 + as<br>
+                            2倍 = twice
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        家族はほかのどんなものよりも大切です。<br>
+                        Family is more important (　) (　) (　).
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>than anything else</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ than anything else</span> = 「他のどんなものよりも」は比較級 + than anything else で表します。最上級の内容を比較級で表現しています。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 最上級の内容を比較級で表す<br>
+                            比較級 + than anything else = 他の何よりも
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        ますます多くの観光客が日本を訪れています。<br>
+                        (　) and (　) tourists are visiting Japan.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>More, more</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ More and more</span> = 「ますます〜、だんだん〜」は 比較級 + and + 比較級 で表します。変化が続いていることを示します。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 比較級の反復<br>
+                            比較級 + and + 比較級 = ますます〜
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        あなたは彼に対して劣等感を抱く必要はありません。<br>
+                        You don't need to feel (　) (　) him.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>inferior to</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ inferior to</span> = thanではなくtoを使う比較表現。inferior to 〜 で「〜より劣っている」という意味です。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: toを使う比較表現<br>
+                            inferior to = 〜より劣っている
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 基本問題4 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>📝 基本問題 4 - 同意文完成問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        Susan is four years older than her brother.<br>
+                        Susan is older than her brother (　) four years.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>by</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ by</span> = 年齢差が4歳であることを表します。「〜だけ違う」という数量の差は、比較級の後にby + 数量を置いて表します。byは「〜の差で」という意味です。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 数量の差を表すby<br>
+                            比較級 + by + 数量 = 〜の差で
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        I bought this T-shirt for only one dollar.<br>
+                        I bought this T-shirt for (　) (　) than one dollar.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>no more</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ no more</span> = たったT-シャツを1ドルで買ったことを表します。no more than + 数詞 で「〜しか、わずか〜」という少なさを強調します。onlyと同じ意味になります。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: no more than<br>
+                            no more than + 数詞 = 〜しか(少なさの強調)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        He thinks that money is the most precious of all things.<br>
+                        He thinks that (　) is (　) precious than money.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>nothing, more</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ nothing, more</span> = お金が最も大切だと思っていることを表します。「A以上に〜なものはない」という最上級の内容を、Nothing ... 比較級 + than A で表すことができます。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 最上級の内容を比較級で<br>
+                            Nothing is 比較級 than A = Aが最も〜だ
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        Kevin is a scientist rather than a teacher.<br>
+                        Kevin is not (　) (　) a teacher as a scientist.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>so much</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ so much</span> = ケビンは教師というよりは科学者であることを表します。「BというよりはむしろA」は B rather than A または not so much A as B で表します。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 「AというよりB」の表現<br>
+                            B rather than A = not so much A as B
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 基本問題5 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>📝 基本問題 5 - 語句整序問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        彼らはその子の治療のためにできるだけ多くのお金を集めた。<br>
+                        They raised [ as, as, for, money, much, possible ] the child's treatment.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>as much money as possible for</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ as much money as possible</span> = 「できるだけ多くの〜」は as + 原級 + as possible で表します。お金は不可算名詞なので、much moneyを使います。as ~ as...の間に名詞を挟むことができます。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: as ~ as possible<br>
+                            as + 原級 + as possible = できるだけ〜<br>
+                            = as + 原級 + as one can
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        小包は重ければ重いほど、送るのにお金がかかる。<br>
+                        The heavier the package is, [ it, more, is, expensive, the ] to send.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>the more expensive it is</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ the more expensive it is</span> = 「〜すればするほど…」は the + 比較級 ~, the + 比較級 ... で表します。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: the 比較級, the 比較級<br>
+                            the + 比較級 ~, the + 比較級 ... = 〜すればするほど…
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        いたずらっぽいところはあるが、やはりリンは弟のことが好きだ。<br>
+                        Lin loves her brother [ the, for, less, his naughtiness, none ].
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>none the less for his naughtiness</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ none the less for his naughtiness</span> = 「〜だからといって…」は none the less for[because] ~ で表します。〜の理由があっても(変わらず)やはり...という意味です。forの後に名詞、S+V句の場合はbecauseを使います。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: none the less<br>
+                            none the less for ~ = 〜だからといって変わらず<br>
+                            = all the 比較級 for ~
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        この公園は東京ドーム40個分の広さだ。<br>
+                        This park is [ as, as, forty, large, times ] Tokyo Dome.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>forty times as large as</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ forty times as large as</span> = 「AはBのX倍〜だ」は A ... X times as + 原級 + as B で表します。40倍なので、forty timesを使います。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 倍数表現<br>
+                            X times as + 原級 + as = X倍〜だ
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 基本問題6 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>📝 基本問題 6 - 英文完成問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        彼は真面目なので、いっそう援助してあげたい。<br>
+                        I would like to help him all (　) (　) (　) he is earnest.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>the more because</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ all the more because</span> = 「〜だからなおさら、それだけいっそう」は all the + 比較級 + because S+V ~ で表します。理由を強調する表現です。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: all the 比較級<br>
+                            all the + 比較級 + because/for ~ = 〜だからなおさら
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        その作家は一生のうちに300冊もの本を書いた。<br>
+                        The writer wrote no (　) (　) (　) (　) (　) in his life.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>less than three hundred books</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ no less than three hundred books</span> = 「〜も(の)」は no less than + 数詞 で表します。驚きの多さを強調します。as many as ~と同じ意味です。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: no less than<br>
+                            no less than + 数詞 = 〜も(驚きの多さ)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        その自転車は私が思っていたほど値段が高くなかった。<br>
+                        That bicycle was less (　) (　) (　) (　) (　).
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>expensive than I had expected[thought]</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ less expensive than I had expected</span> = 「〜ほど高くなかった」は less + 原級 + than I had expected で表します。予想より程度が低いことを示します。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: less than expected<br>
+                            less + 原級 + than I had expected = 予想よりも〜でなかった
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FOR COMMUNICATION Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>💬 FOR COMMUNICATION - 会話問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        A: How far is it from here to the bus stop?<br>
+                        B: It is not far away ― it will take (　) than fifteen minutes to get there.<br>
+                        <div class="choices">
+                            a. few<br>
+                            b. little<br>
+                            c. less<br>
+                            d. more
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>c. less</strong><br>
+                            <strong>日本語訳:</strong><br>
+                            A: ここからバス停までどのくらいですか?<br>
+                            B: そんなに遠くないよ。そこに着くのに15分もかからないよ。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ c. less</span> = 「〜未満」という意味で、thanが続くので比較級が必要。littleの比較級lessを使います。less than ~ で「〜未満、〜もかからない」という意味になります。<br>
+                            <span class="incorrect">✗ a. few</span> = 可算名詞用で、比較級ではありません。<br>
+                            <span class="incorrect">✗ b. little</span> = 原級なのでthanと一緒に使えません。<br>
+                            <span class="incorrect">✗ d. more</span> = more than ~だと「〜以上」になり、文脈と合いません。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: less than / more than<br>
+                            less than ~ = 〜未満、〜もかからない<br>
+                            more than ~ = 〜以上、〜もかかる
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        A: I hear that Tom is a great reader.<br>
+                        B: Yes, he has read (　) more books than I have.<br>
+                        <div class="choices">
+                            a. much<br>
+                            b. many<br>
+                            c. a lot of<br>
+                            d. plenty of
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>b. many</strong><br>
+                            <strong>日本語訳:</strong><br>
+                            A: トムは読書家だと聞いています。<br>
+                            B: はい、彼は私よりもずっと多くの本を読んでいます。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ b. many</span> = more + 可算名詞複数を強調する時、many[a lot] more + 可算名詞複数の形を使います。<br>
+                            <span class="incorrect">✗ a. much</span> = muchは不可算名詞の時に使います。<br>
+                            <span class="incorrect">✗ c. a lot of</span> = a lot ofは比較級の前では使えません。<br>
+                            <span class="incorrect">✗ d. plenty of</span> = plenty ofも比較級の前では使えません。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 比較級の強調(可算名詞)<br>
+                            many more + 可算名詞複数 = ずっと多くの〜<br>
+                            much more + 不可算名詞 = ずっと多くの〜
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 発展問題1 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>🚀 発展問題 1 - 選択問題(大学入試レベル)</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        The (　) half of the symphony was more beautiful than the first half.【関西学院大】<br>
+                        <div class="choices">
+                            a. first<br>
+                            b. late<br>
+                            c. latter<br>
+                            d. latest
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>c. latter</strong><br>
+                            <strong>日本語訳:</strong> 交響曲の後半は前半よりも美しかった。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ c. latter</span> = lateの比較級の一つ。late - latter - last という不規則変化があります。latterは「後者の、後半の」という意味です。<br>
+                            <span class="incorrect">✗ a. first</span> = 「最初の」という意味で、文脈に合いません。<br>
+                            <span class="incorrect">✗ b. late</span> = 原級なので、the first halfと対比できません。<br>
+                            <span class="incorrect">✗ d. latest</span> = 「最新の」という意味で、時間的な順序を表すのに適していません。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: late の不規則変化<br>
+                            late - latter - last (順序)<br>
+                            late - later - latest (時間)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        She is (　) than beautiful.<br>
+                        <div class="choices">
+                            a. pretty<br>
+                            b. more pretty<br>
+                            c. prettier<br>
+                            d. rather prettiest
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>b. more pretty</strong><br>
+                            <strong>日本語訳:</strong> 彼女は美しいというよりかわいい。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ b. more pretty</span> = 「more + 形容詞(A) + than + 形容詞(B)」で「BというよりはむしろA」という比較を表します。通常、prettyはprettierになりますが、more+原級でもthanと一緒に使えます。<br>
+                            <span class="incorrect">✗ a. pretty</span> = thanがあるので比較級が必要です。<br>
+                            <span class="incorrect">✗ c. prettier</span> = 通常の比較級ですが、この構文ではmoreを使います。<br>
+                            <span class="incorrect">✗ d. rather prettiest</span> = 最上級なので文法的に誤りです。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: more A than B<br>
+                            more + 形容詞A + than + 形容詞B = BというよりむしろA
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        I don't know his name, (　) his address.【東北学院大】<br>
+                        <div class="choices">
+                            a. even more<br>
+                            b. more than<br>
+                            c. much less<br>
+                            d. much more
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>c. much less</strong><br>
+                            <strong>日本語訳:</strong> 彼の名前も知らない、まして住所など知らない。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ c. much less</span> = 否定文の後で、「〜ましてや...ない」という意味で、much[still] less ~ を使います。前の否定を強調します。<br>
+                            <span class="incorrect">✗ a. even more</span> = 肯定文で使われ、意味が逆になります。<br>
+                            <span class="incorrect">✗ b. more than</span> = 文脈に合いません。<br>
+                            <span class="incorrect">✗ d. much more</span> = much moreは肯定文で使われます。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: much less / much more<br>
+                            否定文 + much less ~ = まして〜ない<br>
+                            肯定文 + much more ~ = ましてや〜
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        This is the (　) best book I have ever read in my life.【近畿大】<br>
+                        <div class="choices">
+                            a. far<br>
+                            b. most<br>
+                            c. much<br>
+                            d. very
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>d. very</strong><br>
+                            <strong>日本語訳:</strong> これは私が人生で読んだ中で最高の本です。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ d. very</span> = veryはtheの後に置いて、the very + 最上級 + 名詞 で「まさに最も〜な」という強調を表します。<br>
+                            <span class="incorrect">✗ a. far</span> = farは比較級を強調する時に使います。<br>
+                            <span class="incorrect">✗ b. most</span> = mostは最上級を作る時に使いますが、bestはすでに最上級です。<br>
+                            <span class="incorrect">✗ c. much</span> = muchは比較級を強調する時に使います。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 最上級の強調<br>
+                            the very + 最上級 = まさに最も〜<br>
+                            much/by far + 最上級 = はるかに最も〜
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q5</span>
+                    <div class="question-text">
+                        Many children prefer watching television (　) books.【京都精華大】<br>
+                        <div class="choices">
+                            a. than reading<br>
+                            b. to reading<br>
+                            c. reading<br>
+                            d. better than reading
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>b. to reading</strong><br>
+                            <strong>日本語訳:</strong> 多くの子供たちは本を読むよりもテレビを見ることを好む。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ b. to reading</span> = thanではなくtoを使う比較表現。「BよりAを好む」は prefer A to B で表します。<br>
+                            <span class="incorrect">✗ a. than reading</span> = preferはthanと一緒に使いません。<br>
+                            <span class="incorrect">✗ c. reading</span> = 前置詞が欠けています。<br>
+                            <span class="incorrect">✗ d. better than reading</span> = prefer betterという形は使いません。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: toを使う比較表現<br>
+                            prefer A to B = BよりAを好む
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q6</span>
+                    <div class="question-text">
+                        (　) 20 flights were cancelled due to the heavy storm.【関西学院大】<br>
+                        <div class="choices">
+                            a. As long as<br>
+                            b. As many as<br>
+                            c. As much as<br>
+                            d. As soon as
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>b. As many as</strong><br>
+                            <strong>日本語訳:</strong> ひどい嵐のため、20便もの飛行機が欠航した。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ b. As many as</span> = 「〜も(の)」という驚きの多さを強調する表現。as many as + 数詞 で使います。no less than ~と同じ意味です。flightsは可算名詞なので、as many asを使います。<br>
+                            <span class="incorrect">✗ a. As long as</span> = 「〜する限り」という意味で、文脈に合いません。<br>
+                            <span class="incorrect">✗ c. As much as</span> = 不可算名詞や金額に使います。<br>
+                            <span class="incorrect">✗ d. As soon as</span> = 「〜するとすぐに」という意味で、文脈に合いません。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: as many as / as much as<br>
+                            as many as + 数詞 = 〜も(可算名詞)<br>
+                            as much as + 金額 = 〜も(不可算名詞)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q7</span>
+                    <div class="question-text">
+                        Fresh air is no (　) necessary to good health than sunlight.<br>
+                        <div class="choices">
+                            a. better<br>
+                            b. less<br>
+                            c. further<br>
+                            d. more
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>b. less</strong><br>
+                            <strong>日本語訳:</strong> 新鮮な空気は日光と同様に健康に必要である。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ b. less</span> = 「AがBであるのはCがDであるのと同様である」は A is no less B than C is D で表します。つまり、sunlightがis necessary to good healthであることを前提に、Fresh airも同様に必要だということです。<br>
+                            <span class="incorrect">✗ a. better</span> = 文脈に合いません。<br>
+                            <span class="incorrect">✗ c. further</span> = 文脈に合いません。<br>
+                            <span class="incorrect">✗ d. more</span> = no more B than Cだと「AがBでないのはCがDでないのと同様」という逆の意味になります。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: no less B than<br>
+                            A is no less B than C is D = AがBであるのはCがDであるのと同様<br>
+                            A is no more B than C is D = AがBでないのはCがDでないのと同様
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 発展問題2 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>🚀 発展問題 2 - 誤り訂正問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        John is one of the <u>a. most experienced</u> <u>b. member</u> <u>c. of</u> the sales department, and everybody depends <u>d. on</u> him.【東北薬科大】
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>b. member → members</strong><br>
+                            <strong>日本語訳:</strong> ジョンは営業部で最も経験豊富なメンバーの1人で、みんなが彼を頼りにしている。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ members</span> = 「最も〜な...の1つ[の1人]」は one of the + 最上級 + 複数名詞 で表します。したがって、b. memberは複数形のmembersに訂正する必要があります。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: one of the 最上級<br>
+                            one of the + 最上級 + 複数名詞 = 最も〜な...の1つ[1人]
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        <u>a. Finishing</u> the project was <u>b. too difficult</u> than I <u>c. had imagined</u>, and I almost couldn't <u>d. get it done</u> by the deadline.【南山大】
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>b. too difficult → more difficult</strong><br>
+                            <strong>日本語訳:</strong> プロジェクトを完成させることは私が想像していたよりも難しく、締め切りまでにほとんど終わらせることができなかった。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ more difficult</span> = thanが続いているので比較級が必要です。b. tooは「あまりに〜」という意味で、thanと一緒には使えません。したがって、b.をmore difficultに訂正します。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: than と比較級<br>
+                            than があれば必ず比較級が必要<br>
+                            too ~ to... = あまりに〜すぎて...できない
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 発展問題3 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>🚀 発展問題 3 - 英作文問題</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        運動をした後に飲む1杯の水ほどおいしいものはない。【*愛知工大】<br>
+                        <strong>原級:</strong> Nothing ( ) ( ) ( ) ( ) ( ) ( ) ( ) ( ) taken after exercise.<br>
+                        <strong>比較級:</strong> Nothing ( ) ( ) ( ) ( ) ( ) ( ) ( ) taken after exercise.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span><br>
+                            <strong>原級:</strong> Nothing <strong>is as[so] good[delicious] as a glass of water</strong> taken after exercise.<br>
+                            <strong>比較級:</strong> Nothing <strong>is better[more delicious] than a glass of water</strong> taken after exercise.<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ 原級パターン</span> = 「A以上に〜なものはない」は Nothing ... as[so] + 原級 + as A で表します。<br>
+                            <span class="correct">✓ 比較級パターン</span> = Nothing ... 比較級 + than A でも同じ意味を表せます。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 最上級の内容を原級・比較級で<br>
+                            Nothing is as ~ as A = Aほど〜なものはない<br>
+                            Nothing is 比較級 than A = Aより〜なものはない
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        私は同じ間違いを繰り返すほど愚かではありません。<br>
+                        I know better (　) (　) (　) (　) (　) (　).
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>than to repeat the same mistake(s)</strong> または <strong>than to make the same mistake(s) again</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ know better than to do</span> = 「〜するほど愚かではない、〜する分別はある」という慣用表現です。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: know better than to do<br>
+                            know better than to do = 〜するほど愚かではない
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        私たちの市の人口はあなたの市の約半分です。
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解:</span> <strong>The population of our city is about half as large as that of yours[your city].</strong><br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct">✓ half as large as</span> = 「AはBのX倍〜だ」は A ... X times as + 原級 + as B で表します。半分(1/2倍)はhalfを使います。人口同士を比較するので、繰り返しを避けるため、the population of your cityをthatで受けます。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 倍数表現(分数)<br>
+                            half as ~ as = 半分の〜だ<br>
+                            that = 前出の名詞の繰り返しを避ける代名詞
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2>📌 Key Grammar Topics Covered</h2>
+            <div class="topic-grid">
+                <div class="topic-card">
+                    <strong>原級表現</strong><br>
+                    as ~ as / not as ~ as<br>
+                    as ~ as possible
+                </div>
+                <div class="topic-card">
+                    <strong>比較級表現</strong><br>
+                    比較級 + than<br>
+                    比較級 and 比較級
+                </div>
+                <div class="topic-card">
+                    <strong>最上級表現</strong><br>
+                    the + 最上級<br>
+                    one of the + 最上級
+                </div>
+                <div class="topic-card">
+                    <strong>倍数表現</strong><br>
+                    X times as ~ as<br>
+                    twice / half
+                </div>
+                <div class="topic-card">
+                    <strong>慣用表現</strong><br>
+                    the 比較級, the 比較級<br>
+                    all the 比較級
+                </div>
+                <div class="topic-card">
+                    <strong>toを使う比較</strong><br>
+                    superior/inferior to<br>
+                    prefer A to B
+                </div>
+                <div class="topic-card">
+                    <strong>no more/less than</strong><br>
+                    no more than = 〜しか<br>
+                    no less than = 〜も
+                </div>
+                <div class="topic-card">
+                    <strong>比較級の強調</strong><br>
+                    much/far + 比較級<br>
+                    many/much more
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-box">
+            <h3>🎓 Common Mistakes to Watch For</h3>
+            <ul>
+                <li><strong>比較級の形:</strong> 2音節以上の形容詞はmore/mostを使う(more famous, not famouser)</li>
+                <li><strong>最上級の範囲:</strong> in + 場所/組織、of + 複数のもの(in our club, of us all)</li>
+                <li><strong>2つの比較:</strong> of the twoの時はthe + 比較級を使う(the taller of the two)</li>
+                <li><strong>thanとto:</strong> superior/inferior/prefer はtoを使う(superior to, not superior than)</li>
+                <li><strong>比較級の強調:</strong> much/far/even/stillを使う(much more, not very more)</li>
+                <li><strong>倍数表現:</strong> X times as ~ asの語順に注意(twice as heavy as)</li>
+                <li><strong>one of the 最上級:</strong> 必ず複数名詞を使う(one of the best students)</li>
+                <li><strong>no more/less than:</strong> 意味の違いに注意(no more = しか、no less = も)</li>
+            </ul>
+        </div>
+
+        <div class="tips-box">
+            <h3>👨‍🏫 Teaching Tips for Tetsuya</h3>
+            <ul>
+                <li><strong>視覚的アプローチ:</strong> 比較を図や絵で表現すると理解しやすい(例: 身長の棒グラフ)</li>
+                <li><strong>実生活の例:</strong> 生徒の身近な話題(NBA選手の比較、人気アニメなど)を使う</li>
+                <li><strong>慣用表現の暗記:</strong> the 比較級, the 比較級などは例文ごと覚えさせる</li>
+                <li><strong>間違いやすいポイント:</strong> thanとtoの使い分けを重点的に</li>
+                <li><strong>段階的学習:</strong> 原級→比較級→最上級の順で基礎を固めてから応用へ</li>
+                <li><strong>反復練習:</strong> 不規則変化(good-better-best, bad-worse-worst)は何度も確認</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            content.classList.toggle('active');
+            if (icon) {
+                icon.classList.toggle('active');
+            }
+        }
+        
+        function toggleAnswer(button) {
+            const answerBox = button.nextElementSibling;
+            if (answerBox.classList.contains('show')) {
+                answerBox.classList.remove('show');
+                button.textContent = 'Show Answer';
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = 'Hide Answer';
+            }
+        }
+
+        // Auto-open first section for convenience
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // Toolbar actions: open-all / close-all / download
+        document.addEventListener('click', function(e) {
+            const actionBtn = e.target.closest('[data-action]');
+            if (!actionBtn) return;
+
+            const action = actionBtn.getAttribute('data-action');
+
+            if (action === 'open-all' || action === 'close-all') {
+                const headers = document.querySelectorAll('.section-header');
+                headers.forEach(function(header) {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('.toggle-icon');
+                    const isOpen = content.classList.contains('active');
+
+                    if (action === 'open-all' && !isOpen) {
+                        content.classList.add('active');
+                        if (icon) icon.classList.add('active');
+                    }
+                    if (action === 'close-all' && isOpen) {
+                        content.classList.remove('active');
+                        if (icon) icon.classList.remove('active');
+                    }
+                });
+            }
+
+            if (action === 'download') {
+                const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+                const blob = new Blob([html], { type: 'text/html' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'grammar_breakdown_comparative.html';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            }
+        });
+    </script>
+</body>
+</html>
