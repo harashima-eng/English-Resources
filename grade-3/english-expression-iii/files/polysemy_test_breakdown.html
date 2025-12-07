@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多義語テスト完全解説</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .test-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .test-info p {
+            margin: 5px 0;
+            opacity: 0.95;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+        }
+
+        .section-header h3 {
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+
+                .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f8f9ff;
+        }
+
+        .section-content.active {
+            max-height: 10000px;
+            padding: 20px;
+        }
+
+        .question-card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        \.question-text {
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        \.choices {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .choices div {
+            margin: 6px 0;
+            font-size: 1.05em;
+        }
+
+        .reveal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .reveal-btn:active {
+            transform: translateY(0);
+        }
+
+        .answer-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 10px;
+        }
+
+        .answer-box.show {
+            max-height: 2000px;
+        }
+
+        \.answer-content {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8eaff 100%);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .answer-label {
+            background: #4CAF50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .correct-answer {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .wrong-answer {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .grammar-reference {
+            background: white;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #FF9800;
+            font-weight: 500;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8eaff 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 2px solid #667eea;
+        }
+
+        .summary-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .topic-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .warning-box ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .warning-box li {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .question-card {
+                padding: 15px;
+            }
+        }
+    
+        .hint-btn {
+            background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 12px rgba(255, 152, 0, 0.4);
+            margin-right: 8px;
+        }
+
+        .hint-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px rgba(255, 152, 0, 0.6);
+        }
+
+        .hint-btn:active {
+            transform: translateY(0);
+        }
+
+        .hint-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+
+        .hint-box.show {
+            max-height: 500px;
+        }
+
+        \.hint-content {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe9cc 100%);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border-left: 4px solid #FF9800;
+            font-size: 0.95em;
+        }
+
+        .hint-label {
+            background: #FF9800;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-right: 8px;
+        }
+
+        </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 多義語テスト完全解説 🔥</h1>
+        <div class="subtitle">3年8組 理系選抜 論理・表現Ⅲ</div>
+
+        <div class="test-info">
+            <h3>📚 テスト情報</h3>
+            <p><strong>出題範囲:</strong> 多義語（Polysemy）</p>
+            <p><strong>問題数:</strong> 21問（753-773）</p>
+            <p><strong>形式:</strong> 多義語選択問題</p>
+            <p><strong>担当:</strong> 齊藤珠子</p>
+        </div>
+
+        <!-- Section 1: Customer/Client Vocabulary -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>💼 Section 1: "Customer" 関連の語彙（Q753-755）</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q753</span>
+                    <div class="question-text">
+                        "I wish the plane ( ) from Nagoya to Portland were a little lower.
+                        <div class="choices">
+                            <div>① fare</div>
+                            <div>② fee</div>
+                            <div>③ price</div>
+                            <div>④ charge</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            ✈️ 飛行機の料金は何と呼ぶ？交通機関の運賃に使う特別な単語があるよ！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① fare</span><br><br>
+                            <strong>日本語訳:</strong> 名古屋からポートランドまでの飛行機の運賃がもう少し安ければいいのに。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct-answer">✓ fare</span> = 交通機関（飛行機、電車、バス、タクシーなど）の運賃を指す。「plane fare（飛行機運賃）」は一般的な表現。<br><br>
+                            <span class="wrong-answer">✗ fee</span> = 専門的なサービスに対する報酬や入場料。例: doctor's fee（診察料）、entrance fee（入場料）、lawyer's fee（弁護士費用）<br>
+                            <span class="wrong-answer">✗ price</span> = 商品の値段、価格。交通機関の運賃には通常使わない。<br>
+                            <span class="wrong-answer">✗ charge</span> = サービスや使用に対する料金。「charge for parking（駐車料金）」など。また、罰金の意味もある。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Fare vs Fee vs Price vs Charge<br>
+                            ・fare = 交通運賃<br>
+                            ・fee = 専門サービスの料金・報酬<br>
+                            ・price = 商品の価格<br>
+                            ・charge = サービス料金・罰金
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q754</span>
+                    <div class="question-text">
+                        "She is a successful lawyer with hundreds of ( ).
+                        <div class="choices">
+                            <div>① clients</div>
+                            <div>② customers</div>
+                            <div>③ guests</div>
+                            <div>④ passengers</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            👨‍⚖️ 弁護士に依頼する人は何と呼ぶ？「顧客」にもいろいろ種類があるよ！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① clients</span><br><br>
+                            <strong>日本語訳:</strong> 彼女は数百人の依頼人を抱える成功した弁護士です。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct-answer">✓ clients</span> = 弁護士、会計士、建築家など専門家に依頼する「依頼人」を指す。lawyerと一緒に使う場合は必ずclient。<br><br>
+                            <span class="wrong-answer">✗ customers</span> = 商品を購入する「顧客」。お店や企業のお客さん。弁護士には使わない。<br>
+                            <span class="wrong-answer">✗ guests</span> = ホテルの宿泊客、パーティーなどに招待された「客」。<br>
+                            <span class="wrong-answer">✗ passengers</span> = 乗り物（飛行機、電車、バス、タクシーなど）の「乗客」。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: 「お客さん」の使い分け<br>
+                            ・映画とか講演会の観客 → <strong>audience</strong><br>
+                            ・スポーツの観客 → <strong>spectator</strong><br>
+                            ・お泊り・招待される客 → <strong>guest</strong><br>
+                            ・乗り物の乗客 → <strong>passenger</strong><br>
+                            ・お買い物客・企業の顧客 → <strong>customer</strong><br>
+                            ・訪問客・むしろ客って訳すか？ → <strong>visitor</strong><br>
+                            ・病院だと客っていうか → <strong>patient</strong><br>
+                            ・弁護士とかに依頼する客（依頼人） → <strong>client</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q755</span>
+                    <div class="question-text">
+                        "Most department stores are crowded with ( ) on Sundays.
+                        <div class="choices">
+                            <div>① guests</div>
+                            <div>② clients</div>
+                            <div>③ customers</div>
+                            <div>④ passengers</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🛍️ デパートで買い物する人は何と呼ぶ？お店の「お客さん」だよ！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ③ customers</span><br><br>
+                            <strong>日本語訳:</strong> ほとんどのデパートは日曜日には買い物客で混雑している。<br><br>
+                            <strong>解説:</strong><br>
+                            <span class="correct-answer">✓ customers</span> = デパート（department stores）は商品を販売する場所なので、買い物をする「顧客」= customersが正解。<br><br>
+                            <span class="wrong-answer">✗ guests</span> = 招待客や宿泊客を指す。デパートには使わない。<br>
+                            <span class="wrong-answer">✗ clients</span> = 専門家（弁護士など）への依頼人。デパートには不適切。<br>
+                            <span class="wrong-answer">✗ passengers</span> = 乗り物の乗客。デパートには関係ない。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Department stores + customers<br>
+                            店舗での買い物客は必ず "customers" を使う。<br>
+                            例: The store was full of customers.（店は客でいっぱいだった）
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Polysemous Verbs Part 1 -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>🔤 Section 2: 多義動詞 Part 1（Q756-760）</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q756</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) Richard had worked all day without a ( ).<br>
+                        (b) Smoking is a difficult habit to ( ).
+                        <div class="choices">
+                            <div>① break</div>
+                            <div>② charge</div>
+                            <div>③ rest</div>
+                            <div>④ ruin</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            💡 (a)は「休憩」、(b)は「習慣をやめる」。同じ単語で両方表せるよ！名詞と動詞で意味が変わる単語を考えて！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① break（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) リチャードは一日中休憩なしで働いた。<br>
+                            (b) 喫煙はやめるのが難しい習慣だ。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"break"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br><span class="correct-answer">✓ (a) break</span> = 名詞で「休憩」の意味。"without a break"で「休憩なしで」という表現。<br><br><span class="correct-answer">✓ (b) break</span> = 動詞で「（習慣を）断ち切る、やめる」の意味。"break a habit"は「習慣をやめる」という決まった表現。<br><br><span class="wrong-answer">✗ rest</span> = (a)では「休憩」という意味で使えるが、(b)の習慣をやめる意味では使わない。<br>
+                            <span class="wrong-answer">✗ charge</span> = 「請求する」「充電する」などの意味。この文脈では不適切。<br>
+                            <span class="wrong-answer">✗ ruin</span> = 「台無しにする」の意味。習慣には使わない。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Rest vs Break<br>
+                            ・rest (名詞) = 休憩、休息 → take a rest / without a rest<br>
+                            ・break (動詞) = 壊す、断ち切る → break a habit（習慣をやめる）<br>
+                            ・break (名詞) = 休憩 → take a break / without a break
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q757</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) There is a very ( ) line between what is right and what is wrong.<br>
+                        (b) They charged me a heavy ( ) of 2000 dollars for breaking the speed limit.
+                        <div class="choices">
+                            <div>① fine</div>
+                            <div>② charge</div>
+                            <div>③ penalty</div>
+                            <div>④ fare</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🔍 (a)は「細い線」、(b)は「罰金」。形容詞と名詞で使える単語は？交通違反の罰金は何と言う？
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① fine（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 正しいことと間違っていることの間には非常に微妙な（細い）境界線がある。<br>
+                            (b) 彼らはスピード違反で私に2000ドルの重い罰金を科した。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"fine"が異なる意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) fine</span> = 形容詞で「細い、微妙な」の意味。"a fine line"は「微妙な境界線」という決まった表現。<br><br>
+                            <span class="correct-answer">✓ (b) fine</span> = 名詞で「罰金」の意味。"charge a fine"で「罰金を科す」、"pay a fine"で「罰金を払う」。交通違反などの罰金に使う。<br><br>
+                            <span class="wrong-answer">✗ charge</span> = 「料金、請求」の意味だが、"charge a charge"とは言わない。<br>
+                            <span class="wrong-answer">✗ penalty</span> = 「罰則、ペナルティ」の意味だが、具体的な金額の罰金にはfineを使うのが一般的。<br>
+                            <span class="wrong-answer">✗ fare</span> = 交通運賃。罰金の意味はない。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Fine の多義性<br>
+                            ・fine (形容詞) = 細い、微妙な、素晴らしい<br>
+                            　例: a fine line（微妙な境界線）/ fine weather（良い天気）<br>
+                            ・fine (名詞) = 罰金<br>
+                            　例: pay a fine（罰金を払う）/ parking fine（駐車違反の罰金）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q758</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) Takashi has a very good ( ) of English.<br>
+                        (b) Our hotel is situated to ( ) a fine view.
+                        <div class="choices">
+                            <div>① estate</div>
+                            <div>② command</div>
+                            <div>③ point</div>
+                            <div>④ sense</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🎯 (a)は「英語の運用力」、(b)は「景色を見渡す」。軍事用語から来た単語だよ！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ② command（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) タカシは英語を非常によく使いこなす（運用力がある）。<br>
+                            (b) 私たちのホテルは素晴らしい景色を見渡せる位置にある。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"command"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) command</span> = 名詞で「運用力、使いこなす能力」の意味。"have a good command of ~"は「～を使いこなす、～の運用力がある」という決まった表現。<br><br>
+                            <span class="correct-answer">✓ (b) command</span> = 動詞で「見渡す、見晴らす」の意味。高い位置から景色を支配するように見渡すイメージ。<br><br>
+                            <span class="wrong-answer">✗ estate</span> = 「不動産、地所」の意味。この文脈では不適切。<br>
+                            <span class="wrong-answer">✗ point</span> = 「点、要点」の意味。"have a point"（一理ある）という表現はあるが、言語の運用力には使わない。<br>
+                            <span class="wrong-answer">✗ sense</span> = 「感覚、感じ」。"have a sense of humor"（ユーモアのセンスがある）のように使うが、言語能力には通常commandを使う。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Command の多義性<br>
+                            ・command (名詞) = 運用力、使いこなす能力<br>
+                            　例: have a good command of English（英語を使いこなす）<br>
+                            ・command (動詞) = 見渡す、支配する、命令する<br>
+                            　例: The castle commands a fine view.（城から素晴らしい景色が見渡せる）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q759</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) You should ( ) in mind that there is no such thing as a secure job.<br>
+                        (b) It will take time, but I'm sure your efforts will finally ( ) fruit.
+                        <div class="choices">
+                            <div>① bear</div>
+                            <div>② bring</div>
+                            <div>③ keep</div>
+                            <div>④ stand</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🐻 (a)は「心に留める」、(b)は「実を結ぶ」。"_____ in mind"と"_____ fruit"に入る動詞は？
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① bear（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 安定した仕事など存在しないということを心に留めておくべきだ。<br>
+                            (b) 時間はかかるだろうが、あなたの努力はきっと最終的に実を結ぶだろう。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"bear"が異なる意味で(a)と(b)の両方に入る多義語問題です。<br><br><span class="correct-answer">✓ (a) bear</span> = "bear in mind"で「心に留めておく、覚えておく」という表現。"keep in mind"と同じ意味だが、ややフォーマル。<br><br><span class="correct-answer">✓ (b) bear</span> = "bear fruit"で「実を結ぶ、成果を出す」という決まった表現。bearは「耐える」「生む」という意味があり、果実を生むイメージ。<br><br><span class="wrong-answer">✗ keep</span> = (a)では"keep in mind"で使えるが、(b)は"bear fruit"が正しく、"keep fruit"とは言わない。<br>
+                            <span class="wrong-answer">✗ (b) bring</span> = "bring fruit"とは言わない。bringは「持ってくる」の意味。<br>
+                            <span class="wrong-answer">✗ stand</span> = 「立つ、耐える」の意味。これらの表現には使わない。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: イディオム表現<br>
+                            ・keep in mind = 心に留めておく、覚えておく<br>
+                            ・bear in mind = 心に留めておく（ややフォーマル）<br>
+                            ・bear fruit = 実を結ぶ、成果を出す<br>
+                            例: His hard work finally bore fruit.（彼の努力がついに実を結んだ）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q760</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) You should ( ) up when an elderly person needs a seat on the train.<br>
+                        (b) I cannot ( ) his behavior. He always talks too much and never listens to others.
+                        <div class="choices">
+                            <div>① give</div>
+                            <div>② make</div>
+                            <div>③ understand</div>
+                            <div>④ look</div>
+                            <div>⑤ stand</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🚇 (a)は「立ち上がる」、(b)は「我慢できない」。"stand up"と"can't stand"で使える動詞だよ！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ⑤ stand（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 電車でお年寄りが席を必要としているときは、立ち上がるべきだ（席を譲るべきだ）。<br>
+                            (b) 私は彼の行動を我慢できない。彼はいつも話しすぎるし、他人の話を聞かない。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"stand"が異なる意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) stand</span> = "stand up"で「立ち上がる」という意味。電車で席を譲る場合に使う。<br><br>
+                            <span class="correct-answer">✓ (b) stand</span> = "stand"は「我慢する、耐える」という意味もある。否定文で"cannot stand ~"は「～を我慢できない」という決まった表現。<br><br>
+                            <span class="wrong-answer">✗ (a) give</span> = "give up"は「あきらめる」の意味。席を譲る文脈では不適切。<br>
+                            <span class="wrong-answer">✗ (b) understand</span> = 「理解する」の意味。文脈的には意味が通るが、"cannot stand"の方が感情的な不満を強く表現する。<br>
+                            <span class="wrong-answer">✗ make / look</span> = これらの動詞はこの文脈では意味をなさない。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Stand の多義性<br>
+                            ・stand up = 立ち上がる<br>
+                            　例: Stand up when the teacher enters.（先生が入ってきたら立ち上がりなさい）<br>
+                            ・stand = 我慢する、耐える<br>
+                            　例: I can't stand this heat.（この暑さは我慢できない）<br>
+                            　　　I can't stand people who are always late.（いつも遅刻する人は我慢できない）
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Polysemous Words Part 2 -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>🎯 Section 3: 多義語 Part 2（Q761-765）</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q761</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) The snow absorbed all ( ) and a dead silence fell over the town.<br>
+                        (b) She has got over her illness and is now perfectly ( ) in mind and body.
+                        <div class="choices">
+                            <div>① sound</div>
+                            <div>② healthy</div>
+                            <div>③ noise</div>
+                            <div>④ silent</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🔊 (a)は「音」、(b)は「健全な」。名詞と形容詞で使える4文字の単語！"_____ in mind and body"
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① sound（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 雪がすべての音を吸収し、町には死んだような静寂が訪れた。<br>
+                            (b) 彼女は病気から回復し、今では心身ともに完全に健全だ。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"sound"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) sound</span> = 名詞で「音」の意味。"absorb all sound"で「すべての音を吸収する」。雪が音を吸収して静かになる様子を表現。<br><br>
+                            <span class="correct-answer">✓ (b) sound</span> = 形容詞で「健全な、しっかりした」の意味。"sound in mind and body"で「心身ともに健全」という決まった表現。<br><br>
+                            <span class="wrong-answer">✗ (a) noise</span> = 「騒音、雑音」の意味。noiseも音だが、soundの方がより一般的な「音」を表す。<br>
+                            <span class="wrong-answer">✗ (b) healthy</span> = 「健康な」の意味。意味は通じるが、"sound in mind and body"が決まった表現。<br>
+                            <span class="wrong-answer">✗ silent</span> = 「静かな」という形容詞。この文脈では不適切。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Sound の多義性<br>
+                            ・sound (名詞) = 音<br>
+                            　例: the sound of music（音楽の音）<br>
+                            ・sound (形容詞) = 健全な、しっかりした、確実な<br>
+                            　例: sound in mind and body（心身ともに健全）<br>
+                            　　　sound advice（確実なアドバイス）<br>
+                            ・sound (動詞) = ～のように聞こえる<br>
+                            　例: That sounds good.（それは良さそうだ）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q762</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) I think my interview went ( ) smoothly.<br>
+                        (b) Mary wore a ( ) blue dress to the dance.
+                        <div class="choices">
+                            <div>① fair</div>
+                            <div>② pretty</div>
+                            <div>③ tiny</div>
+                            <div>④ too</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            😊 (a)は「かなり」、(b)は「かわいい」。副詞と形容詞で使える単語。女の子を褒める時にも使うよ！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ② pretty（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 私の面接はかなりスムーズに進んだと思う。<br>
+                            (b) メアリーはダンスにかわいらしい青いドレスを着ていた。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"pretty"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) pretty</span> = 副詞で「かなり、まあまあ」の意味。程度を表す。"pretty smoothly"で「かなりスムーズに」。<br><br>
+                            <span class="correct-answer">✓ (b) pretty</span> = 形容詞で「かわいらしい、きれいな」の意味。"a pretty blue dress"で「かわいらしい青いドレス」。<br><br>
+                            <span class="wrong-answer">✗ fair</span> = 「公平な、色白の」などの意味。この文脈では不適切。<br>
+                            <span class="wrong-answer">✗ tiny</span> = 「小さな」の意味。(a)では副詞として使えず、(b)でも文脈に合わない。<br>
+                            <span class="wrong-answer">✗ too</span> = 「～すぎる」の意味。(b)では使えるが、(a)では意味が通らない。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Pretty の多義性<br>
+                            ・pretty (形容詞) = かわいらしい、きれいな<br>
+                            　例: a pretty girl（かわいい女の子）<br>
+                            ・pretty (副詞) = かなり、まあまあ、相当<br>
+                            　例: pretty good（かなり良い）/ pretty fast（かなり速い）<br>
+                            注: 副詞のprettyは口語的な表現で、「quite」と似た意味。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q763</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                    <div class="question-text">
+                        (a) Liza has been on good ( ) with Mary since their youth.<br>
+                        (b) I often use this dictionary to look up technical ( ).
+                        <div class="choices">
+                            <div>① addresses</div>
+                            <div>② remarks</div>
+                            <div>③ signs</div>
+                            <div>④ terms</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🤝 (a)は「良好な関係」、(b)は「専門用語」。"on good _____ with"と"technical _____"に入る複数形の単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ④ terms（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) ライザは若い頃からメアリーと良好な関係にある。<br>
+                            (b) 私は専門用語を調べるためにこの辞書をよく使う。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"terms"が異なる意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) terms</span> = "be on good terms with ~"で「～と良好な関係にある、仲が良い」という決まった表現。複数形のtermsで使う。<br><br>
+                            <span class="correct-answer">✓ (b) terms</span> = 「用語、専門用語」の意味。"technical terms"で「専門用語」という一般的な表現。<br><br>
+                            <span class="wrong-answer">✗ addresses</span> = 「住所、演説」の意味。この文脈では不適切。<br>
+                            <span class="wrong-answer">✗ remarks</span> = 「発言、コメント」の意味。関係性や用語には使わない。<br>
+                            <span class="wrong-answer">✗ signs</span> = 「標識、兆候」の意味。この文脈では不適切。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Terms の多義性<br>
+                            ・terms (複数形) = 関係、間柄<br>
+                            　例: be on good terms with ~（～と仲が良い）<br>
+                            　　　be on bad terms with ~（～と仲が悪い）<br>
+                            ・terms (複数形) = 用語、専門用語<br>
+                            　例: technical terms（専門用語）<br>
+                            　　　medical terms（医学用語）<br>
+                            ・terms (複数形) = 条件<br>
+                            　例: terms and conditions（規約と条件）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q764</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) You can't get in unless you have the right ( ) of clothes on.<br>
+                        (b) It is really ( ) of you to let us use your pool since it is so hot today.
+                        <div class="choices">
+                            <div>① forward</div>
+                            <div>② home</div>
+                            <div>③ kind</div>
+                            <div>④ still</div>
+                            <div>⑤ try</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            💗 (a)は「種類」、(b)は「親切な」。"what _____ of"と"It's _____ of you"に入る単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ③ kind（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 適切な種類の服を着ていないと入れない。<br>
+                            (b) 今日はとても暑いのにプールを使わせてくれるなんて、本当に親切ですね。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"kind"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) kind</span> = 名詞で「種類」の意味。"the right kind of clothes"で「適切な種類の服」。<br><br>
+                            <span class="correct-answer">✓ (b) kind</span> = 形容詞で「親切な、優しい」の意味。"It is kind of you to ~"で「～してくれるなんて親切ですね」という決まった表現。<br><br>
+                            <span class="wrong-answer">✗ forward</span> = 「前方へ、厚かましい」などの意味。この文脈では不適切。<br>
+                            <span class="wrong-answer">✗ home</span> = 「家、家庭」の意味。この文脈では不適切。<br>
+                            <span class="wrong-answer">✗ still</span> = 「まだ、静かな」の意味。この文脈では不適切。<br>
+                            <span class="wrong-answer">✗ try</span> = 「試み」という名詞だが、この文脈では不適切。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Kind の多義性<br>
+                            ・kind (名詞) = 種類、タイプ<br>
+                            　例: What kind of music do you like?（どんな種類の音楽が好き？）<br>
+                            　　　all kinds of ~（あらゆる種類の～）<br>
+                            ・kind (形容詞) = 親切な、優しい<br>
+                            　例: It is kind of you to ~（～してくれて親切ですね）<br>
+                            　　　She is very kind.（彼女はとても親切だ）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q765</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) At ( ), the war is over.<br>
+                        (b) He is the ( ) person to come late.
+                        <div class="choices">
+                            <div>① home</div>
+                            <div>② last</div>
+                            <div>③ good</div>
+                            <div>④ cost</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🏁 (a)は「ついに」、(b)は「最も～しそうにない」。"at _____"と"the _____ person to"に入る単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ② last（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) ついに、戦争は終わった。<br>
+                            (b) 彼は遅刻するような人では決してない（最も遅刻しそうにない人だ）。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"last"が異なる意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) last</span> = "at last"で「ついに、やっと、とうとう」という決まった表現。長く待った後に何かが実現するときに使う。<br><br>
+                            <span class="correct-answer">✓ (b) last</span> = "the last person to ~"で「最も～しそうにない人」という意味。否定的なニュアンスを含む表現。彼は遅刻するタイプではないという意味。<br><br>
+                            <span class="wrong-answer">✗ home</span> = "at home"は「家で」の意味。戦争が終わることとは関係ない。<br>
+                            <span class="wrong-answer">✗ good</span> = 文脈に合わない。<br>
+                            <span class="wrong-answer">✗ cost</span> = 「費用」の意味。この文脈では不適切。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Last の多義性と表現<br>
+                            ・at last = ついに、やっと、とうとう<br>
+                            　例: At last, I found my keys!（ついに鍵を見つけた！）<br>
+                            ・the last person to ~ = 最も～しそうにない人<br>
+                            　例: He is the last person to tell a lie.（彼は嘘をつくような人では決してない）<br>
+                            ・last (形容詞) = 最後の<br>
+                            　例: the last train（最終電車）
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Polysemous Words Part 3 -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>🔍 Section 4: 多義語 Part 3（Q766-770）</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q766</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) I saw a tall ( ) approaching in the distance.<br>
+                        (b) It took me several days to ( ) out what was going on.
+                        <div class="choices">
+                            <div>① figure</div>
+                            <div>② person</div>
+                            <div>③ shape</div>
+                            <div>④ understand</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            👤 (a)は「人影」、(b)は「理解する」。遠くに見える姿と、"_____ out"（理解する）に使う単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① figure（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 私は遠くに背の高い人影が近づいてくるのが見えた。<br>
+                            (b) 何が起こっているのか理解するのに数日かかった。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"figure"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) figure</span> = 名詞で「人影、姿」の意味。遠くからぼんやり見える人の姿を表す。<br><br>
+                            <span class="correct-answer">✓ (b) figure</span> = 動詞で"figure out"の形で「理解する、解明する」の意味。考えて答えを見つけ出すニュアンス。<br><br>
+                            <span class="wrong-answer">✗ person</span> = 「人」の意味だが、遠くからぼんやり見える姿にはfigureの方が適切。<br>
+                            <span class="wrong-answer">✗ shape</span> = 「形」の意味だが、人の姿にはfigureが一般的。<br>
+                            <span class="wrong-answer">✗ understand</span> = 「理解する」という意味だが、"understand out"とは言わない。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Figure の多義性<br>
+                            ・figure (名詞) = 人影、姿、図形、数字<br>
+                            　例: a tall figure（背の高い人影）<br>
+                            　　　a political figure（政治家）<br>
+                            ・figure out = 理解する、解明する<br>
+                            　例: I can't figure out this math problem.（この数学の問題が解けない）<br>
+                            　　　Can you figure out what he meant?（彼が何を意味したか分かる？）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q767</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) I don't think the shelf will ( ) if we put anything else on it.<br>
+                        (b) Mr. Smith's telephone is engaged at the moment. Will you ( ) the line?"
+                        <div class="choices">
+                            <div>① hold</div>
+                            <div>② keep</div>
+                            <div>③ stay</div>
+                            <div>④ wait</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            📞 (a)は「持ちこたえる」、(b)は「電話を切らずに待つ」。"_____ the line"は電話の決まり文句！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① hold（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) これ以上何か載せたら、棚は持ちこたえられないと思う。<br>
+                            (b) スミス氏の電話は今話し中です。電話を切らずにお待ちいただけますか？<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"hold"が異なる意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) hold</span> = 動詞で「持ちこたえる、支える」の意味。重さや圧力に耐えるという意味。<br><br>
+                            <span class="correct-answer">✓ (b) hold</span> = "hold the line"で「電話を切らずに待つ」という決まった表現。電話が話し中のときに使う。<br><br>
+                            <span class="wrong-answer">✗ keep</span> = 「保つ」という意味だが、棚が持ちこたえる文脈では不自然。"keep the line"とも言わない。<br>
+                            <span class="wrong-answer">✗ stay</span> = 「留まる」の意味。物が持ちこたえる意味では使わない。<br>
+                            <span class="wrong-answer">✗ wait</span> = 「待つ」の意味。"wait the line"とは言わない（wait on the lineなら可能）。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Hold の多義性<br>
+                            ・hold = 持つ、保持する<br>
+                            　例: Hold my bag, please.（私のバッグを持っていて）<br>
+                            ・hold = 持ちこたえる、支える<br>
+                            　例: The bridge can hold heavy trucks.（その橋は重いトラックを支えられる）<br>
+                            ・hold the line = 電話を切らずに待つ<br>
+                            　例: Please hold the line.（お電話をお切りにならずにお待ちください）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q768</span>
+                    <div class="question-text">
+                        <strong>【多義語】同じ1つの語が(a)と(b)の両方に入ります</strong><br><br>
+                        (a) Night will ( ) soon and lamps will be lit all over.<br>
+                        (b) I want to show you how leaves turn red in the ( ) in Michigan.
+                        <div class="choices">
+                            <div>① break</div>
+                            <div>② dawn</div>
+                            <div>③ fall</div>
+                            <div>④ land</div>
+                        </div>
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🍂 (a)は「夜が訪れる」、(b)は「秋」。アメリカ英語で秋を表す単語。葉が落ちるイメージ！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ③ fall（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) すぐに夜が訪れ、あちこちでランプが灯されるだろう。<br>
+                            (b) ミシガン州の秋に葉がどのように赤くなるか見せたい。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"fall"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) fall</span> = 動詞で「（夜が）訪れる、降りる」の意味。"night falls"で「夜が訪れる」という詩的な表現。<br><br>
+                            <span class="correct-answer">✓ (b) fall</span> = 名詞で「秋」の意味（アメリカ英語）。"in the fall"で「秋に」。イギリス英語では"autumn"。<br><br>
+                            <span class="wrong-answer">✗ break</span> = "day breaks"（夜が明ける）という表現はあるが、"night breaks"とは言わない。<br>
+                            <span class="wrong-answer">✗ dawn</span> = 「夜明け」の意味。夜の訪れには使わない。<br>
+                            <span class="wrong-answer">✗ land</span> = 「土地、着陸する」の意味。この文脈では不適切。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Fall の多義性<br>
+                            ・fall (動詞) = 落ちる、降る<br>
+                            　例: Leaves fall in autumn.（秋に葉が落ちる）<br>
+                            ・fall (動詞) = （夜が）訪れる<br>
+                            　例: Night falls quickly in winter.（冬は夜が早く訪れる）<br>
+                            ・fall (名詞) = 秋（アメリカ英語）<br>
+                            　例: in the fall（秋に）= in autumn（イギリス英語）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q769</span>
+                    <div class="question-text">
+                        <strong>【記述問題】同じ1つの語を書いて(a)と(b)の両方を完成させなさい</strong><br><br>
+                        (a) He sat at one ( ) of the table and I sat at the other.<br>
+                        (b) Beth decided it was time to ( ) the relationship with Tom.
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            🔚 (a)は「端」、(b)は「終わらせる」。名詞と動詞で使える3文字の単語！「終わり」を意味する基本単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① end（両方の空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 彼はテーブルの一方の端に座り、私はもう一方の端に座った。<br>
+                            (b) ベスはトムとの関係を終わらせる時だと決めた。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"end"が異なる品詞・意味で(a)と(b)の両方に入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) end</span> = 名詞で「端、終わり」の意味。"at one end of ~"で「～の一方の端に」という表現。<br><br>
+                            <span class="correct-answer">✓ (b) end</span> = 動詞で「終わらせる」の意味。"end the relationship"で「関係を終わらせる」という一般的な表現。<br><br>
+                            <span class="wrong-answer">✗ side</span> = 「側」の意味。"at one side of the table"も可能だが、endの方が「端」を強調する。<br>
+                            <span class="wrong-answer">✗ finish</span> = 「終える」の意味だが、関係を終わらせる文脈ではendの方が一般的。<br>
+                            <span class="wrong-answer">✗ terminate</span> = 「終了させる」というフォーマルな表現。契約などには使うが、個人的な関係には堅苦しすぎる。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: End の多義性<br>
+                            ・end (名詞) = 端、終わり、末<br>
+                            　例: at the end of the street（通りの端に）<br>
+                            　　　the end of the story（物語の終わり）<br>
+                            ・end (動詞) = 終わる、終わらせる<br>
+                            　例: The movie ended at 10 PM.（映画は午後10時に終わった）<br>
+                            　　　end a relationship（関係を終わらせる）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q770</span>
+                    <div class="question-text">
+                        <strong>【記述問題】同じ1つの語を書いて(a)、(b)、(c)の全てを完成させなさい</strong><br><br>
+                        (a) Have a good night's ( ).<br>
+                        (b) The success of the play will ( ) largely on the performances of the main actors.<br>
+                        (c) The first question was difficult, but the ( ) were quite easy.
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            😴 (a)は「休息」、(b)は「依存する」、(c)は「残り」。"have a _____"、"_____ on"、"the _____"全てに入る4文字の単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① rest（全ての空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) おやすみなさい（良い夜の休息を）。<br>
+                            (b) その劇の成功は主演俳優の演技に大きく依存するだろう。<br>
+                            (c) 最初の問題は難しかったが、残りはかなり簡単だった。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"rest"が異なる品詞・意味で(a)、(b)、(c)の全てに入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) rest</span> = 名詞で「休息、睡眠」の意味。"Have a good night's rest"は「よく休んでください」という挨拶表現。<br><br>
+                            <span class="correct-answer">✓ (b) rest</span> = 動詞で"rest on/upon"の形で「～に依存する、～次第である」の意味。"depend on"と同じ意味。<br><br>
+                            <span class="correct-answer">✓ (c) rest</span> = 名詞で「残り」の意味。"the rest"で「残りのもの」という意味。<br><br>
+                            <span class="wrong-answer">✗ sleep</span> = 「睡眠」の意味だが、"good night's rest"の方が一般的な表現。<br>
+                            <span class="wrong-answer">✗ depend</span> = (b)では"depend on"で正しいが、(a)(c)では使えない。<br>
+                            <span class="wrong-answer">✗ others</span> = (c)で「他のもの」という意味だが、"the rest"の方が適切。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Rest の多義性<br>
+                            ・rest (名詞) = 休息、睡眠<br>
+                            　例: take a rest（休憩する）/ get some rest（休む）<br>
+                            ・rest (動詞) = 休む、依存する<br>
+                            　例: Rest for a while.（しばらく休みなさい）<br>
+                            　　　Success rests on hard work.（成功は努力次第だ）<br>
+                            ・the rest = 残り<br>
+                            　例: the rest of the day（残りの一日）
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Final Polysemous Words -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>🎪 Section 5: 最終問題 - 複雑な多義語（Q771-773）</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q771</span>
+                    <div class="question-text">
+                        <strong>【記述問題】同じ1つの語を書いて(a)、(b)、(c)の全てを完成させなさい</strong><br><br>
+                        (a) He put the document in a special ( ) in order to protect it.<br>
+                        (b) In this ( ), the word means something different.<br>
+                        (c) The ( ) will go to trial at the district court next week.
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            📦 (a)は「ケース」、(b)は「場合」、(c)は「訴訟」。"in this _____"（この場合）という表現を考えて！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① case（全ての空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 彼はその書類を保護するために特別なケースに入れた。<br>
+                            (b) この場合、その単語は別の意味になる。<br>
+                            (c) その訴訟は来週地方裁判所で審理される。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"case"が異なる意味で(a)、(b)、(c)の全てに入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) case</span> = 名詞で「ケース、容器」の意味。物を保護するための入れ物。<br><br>
+                            <span class="correct-answer">✓ (b) case</span> = 名詞で「場合、事例」の意味。"in this case"で「この場合には」という決まった表現。<br><br>
+                            <span class="correct-answer">✓ (c) case</span> = 名詞で「訴訟、事件」の意味。法律用語として使われる。"go to trial"（裁判にかけられる）と一緒に使う。<br><br>
+                            <span class="wrong-answer">✗ box</span> = (a)で「箱」という意味で使えるが、caseの方がより専門的な容器を指す。<br>
+                            <span class="wrong-answer">✗ context</span> = (b)で「文脈」という意味だが、"in this case"の方が一般的。<br>
+                            <span class="wrong-answer">✗ lawsuit</span> = (c)で「訴訟」という意味だが、単に"case"と言うのが一般的。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Case の多義性<br>
+                            ・case (名詞) = ケース、容器<br>
+                            　例: a pencil case（筆箱）/ a suitcase（スーツケース）<br>
+                            ・case (名詞) = 場合、事例<br>
+                            　例: in this case（この場合）/ in any case（いずれにせよ）<br>
+                            ・case (名詞) = 訴訟、事件<br>
+                            　例: a murder case（殺人事件）/ win the case（裁判に勝つ）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q772</span>
+                    <div class="question-text">
+                        <strong>【記述問題】同じ1つの語を書いて(a)、(b)、(c)、(d)の全てを完成させなさい</strong><br><br>
+                        (a) Both paintings are of my favorite type. It is ( ) for me to say which is better.<br>
+                        (b) These nuts have ( ) shells. Nobody can crack them by hand.<br>
+                        (c) The old gentleman is ( ) of hearing.<br>
+                        (d) He worked ( ) from morning till night every day to support his family of seven.
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            💪 (a)は「難しい」、(b)は「硬い」、(c)は「耳が遠い」、(d)は「懸命に」。"work _____"（懸命に働く）に入る単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① hard（全ての空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) どちらの絵も私の好きなタイプだ。どちらが良いか言うのは難しい。<br>
+                            (b) これらのナッツは硬い殻を持っている。誰も手で割れない。<br>
+                            (c) その老紳士は耳が遠い。<br>
+                            (d) 彼は7人家族を養うために毎日朝から晩まで懸命に働いた。<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"hard"が異なる品詞・意味で(a)、(b)、(c)、(d)の全てに入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) hard</span> = 形容詞で「難しい」の意味。"It is hard to ~"で「～するのは難しい」。<br><br>
+                            <span class="correct-answer">✓ (b) hard</span> = 形容詞で「硬い」の意味。物理的に硬いものを表す。<br><br>
+                            <span class="correct-answer">✓ (c) hard</span> = "hard of hearing"で「耳が遠い」という決まった表現。deafより婉曲的な表現。<br><br>
+                            <span class="correct-answer">✓ (d) hard</span> = 副詞で「懸命に、一生懸命に」の意味。"work hard"で「懸命に働く」。<br><br>
+                            <span class="wrong-answer">✗ difficult</span> = (a)で「難しい」という意味で使えるが、hardの方が口語的。<br>
+                            <span class="wrong-answer">✗ tough</span> = (b)で「硬い、丈夫な」という意味で使えるが、hardの方が一般的。<br>
+                            <span class="wrong-answer">✗ deaf</span> = (c)で「耳が聞こえない」という意味だが、"hard of hearing"の方が婉曲的。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Hard の多義性<br>
+                            ・hard (形容詞) = 難しい<br>
+                            　例: This test is hard.（このテストは難しい）<br>
+                            ・hard (形容詞) = 硬い<br>
+                            　例: hard rock（硬い岩）<br>
+                            ・hard of hearing = 耳が遠い（婉曲表現）<br>
+                            ・hard (副詞) = 懸命に、一生懸命に<br>
+                            　例: study hard（一生懸命勉強する）<br>
+                            注: "hardly"は「ほとんど～ない」という意味で、hardとは全く違う！
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q773</span>
+                    <div class="question-text">
+                        <strong>【記述問題】同じ1つの語を書いて(a)、(b)、(c)、(d)の全てを完成させなさい</strong><br><br>
+                        (a) I was very sick this morning, but now I feel all ( ).<br>
+                        (b) Go straight this way. The post office is on the ( ) side.<br>
+                        (c) In order to acquire the ( ) to vote, women made a great effort in the past.<br>
+                        (d) So, your point is how to expand your vocabulary. Am I ( )?
+                    </div>
+                    <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る 💡</button>
+                    <div class="hint-box">
+                        <div class="hint-content">
+                            <span class="hint-label">💡 ヒント</span>
+                            ✅ (a)は「元気」、(b)は「右」、(c)は「権利」、(d)は「正しい」。"feel all _____"、"_____ side"、"the _____ to vote"、"Am I _____?"全てに入る5文字の単語！
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">正解: ① right（全ての空欄に同じ語が入る）</span><br><br>
+                            <strong>日本語訳:</strong><br>
+                            (a) 今朝はとても具合が悪かったが、今はすっかり元気だ。<br>
+                            (b) この道をまっすぐ行きなさい。郵便局は右側にあります。<br>
+                            (c) 選挙権を獲得するために、女性たちは過去に大変な努力をした。<br>
+                            (d) つまり、あなたの要点は語彙を増やす方法ということですね。私の理解は正しいですか？<br><br>
+                            <strong>解説:</strong><br>
+                            この問題は、同じ語"right"が異なる品詞・意味で(a)、(b)、(c)、(d)の全てに入る多義語問題です。<br><br>
+                            <span class="correct-answer">✓ (a) right</span> = 形容詞で"feel all right"は「元気だ、大丈夫だ」という決まった表現。<br><br>
+                            <span class="correct-answer">✓ (b) right</span> = 形容詞で「右の」の意味。"on the right side"で「右側に」。<br><br>
+                            <span class="correct-answer">✓ (c) right</span> = 名詞で「権利」の意味。"the right to vote"で「選挙権、投票する権利」という決まった表現。<br><br>
+                            <span class="correct-answer">✓ (d) right</span> = 形容詞で「正しい」の意味。"Am I right?"で「私の理解は正しいですか？」という確認の表現。<br><br>
+                            <span class="wrong-answer">✗ well</span> = (a)で"feel well"も使えるが、"feel all right"の方が一般的。<br>
+                            <span class="wrong-answer">✗ correct</span> = (d)で「正しい」という意味で使えるが、rightの方が口語的。<br>
+                            <span class="wrong-answer">✗ privilege</span> = (c)で「特権」という意味だが、投票権は基本的人権なので"right"が適切。
+                        </div>
+                        <div class="grammar-reference">
+                            📖 Grammar Point: Right の多義性<br>
+                            ・right (形容詞) = 元気な、大丈夫な<br>
+                            　例: I feel all right now.（今は元気だ）<br>
+                            ・right (形容詞) = 右の<br>
+                            　例: Turn right at the corner.（角を右に曲がる）<br>
+                            ・right (名詞) = 権利<br>
+                            　例: human rights（人権）/ the right to education（教育を受ける権利）<br>
+                            ・right (形容詞) = 正しい<br>
+                            　例: That's right!（その通り！）/ Am I right?（正しいですか？）
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2>📊 重要文法ポイントまとめ</h2>
+            <div class="topic-grid">
+                <div class="topic-card">
+                    <h4>💰 料金・運賃の使い分け</h4>
+                    <p>fare（交通運賃）/ fee（専門サービス料）/ price（商品価格）/ charge（サービス料・罰金）/ fine（罰金）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>👥 「お客さん」の種類</h4>
+                    <p>client（依頼人）/ customer（買い物客）/ guest（宿泊客・招待客）/ passenger（乗客）/ patient（患者）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🔤 Break の多義性</h4>
+                    <p>break（壊す・休憩）/ break a habit（習慣をやめる）/ take a break（休憩する）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>💎 Fine の使い方</h4>
+                    <p>fine line（微妙な境界線）/ pay a fine（罰金を払う）/ fine weather（良い天気）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🎯 Command の意味</h4>
+                    <p>command of English（英語運用力）/ command a view（景色を見渡す）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🌟 Stand の使い方</h4>
+                    <p>stand up（立ち上がる）/ can't stand ~（～を我慢できない）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🔊 Sound の多義性</h4>
+                    <p>sound（音）/ sound in mind and body（心身ともに健全）/ sound advice（確実な助言）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>✨ Pretty の使い分け</h4>
+                    <p>pretty girl（かわいい女の子）/ pretty good（かなり良い）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🤝 Terms の意味</h4>
+                    <p>on good terms with（～と仲が良い）/ technical terms（専門用語）/ terms and conditions（規約）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>💚 Kind の使い方</h4>
+                    <p>kind of（種類）/ kind person（親切な人）/ It's kind of you（親切ですね）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🏁 Last の表現</h4>
+                    <p>at last（ついに）/ the last person to ~（最も～しそうにない人）/ last train（最終電車）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🔍 Figure の多義性</h4>
+                    <p>figure（人影・姿）/ figure out（理解する）/ political figure（政治家）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🤲 Hold の使い方</h4>
+                    <p>hold（持ちこたえる）/ hold the line（電話を切らずに待つ）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🍂 Fall の意味</h4>
+                    <p>fall（落ちる）/ night falls（夜が訪れる）/ in the fall（秋に）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>🔚 End の使い分け</h4>
+                    <p>end（端）/ end a relationship（関係を終わらせる）/ at the end（最後に）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>😴 Rest の多義性</h4>
+                    <p>rest（休息）/ rest on（～に依存する）/ the rest（残り）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>📦 Case の意味</h4>
+                    <p>case（ケース・容器）/ in this case（この場合）/ legal case（訴訟）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>💪 Hard の使い方</h4>
+                    <p>hard（難しい・硬い）/ hard of hearing（耳が遠い）/ work hard（懸命に働く）</p>
+                </div>
+                <div class="topic-card">
+                    <h4>✅ Right の多義性</h4>
+                    <p>feel all right（元気だ）/ right side（右側）/ right to vote（選挙権）/ Am I right?（正しい？）</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning Box -->
+        <div class="warning-box">
+            <h3>⚠️ よくある間違い</h3>
+            <ul>
+                <li><strong>Hard vs Hardly:</strong> hardは「懸命に」、hardlyは「ほとんど～ない」で全く違う意味！</li>
+                <li><strong>客の種類:</strong> lawyerにはclient、department storeにはcustomerを必ず使う。</li>
+                <li><strong>Break a habit:</strong> 習慣をやめる時は必ず"break"を使う。"stop a habit"とは言わない。</li>
+                <li><strong>At last vs At least:</strong> at lastは「ついに」、at leastは「少なくとも」。混同注意！</li>
+                <li><strong>Figure out:</strong> 「理解する」の意味で、"figure"だけでは不十分。必ず"figure out"とセットで。</li>
+                <li><strong>On good terms with:</strong> 必ず複数形の"terms"を使う。"on good term"とは言わない。</li>
+                <li><strong>Command of language:</strong> 言語の運用力には"command"を使う。"control"や"power"ではない。</li>
+                <li><strong>Hold the line:</strong> 電話で待つ時の決まり文句。"keep the line"や"wait the line"とは言わない。</li>
+            </ul>
+        </div>
+
+        <!-- Teaching Tips -->
+        <div class="summary-section" style="margin-top: 20px;">
+            <h2>👨‍🏫 先生へのアドバイス</h2>
+            <p><strong>指導のポイント:</strong></p>
+            <ul style="margin-left: 20px; line-height: 2;">
+                <li>多義語は文脈によって意味が変わることを強調し、例文を多く見せることが重要。</li>
+                <li>"客"や"料金"など、日本語では同じでも英語では使い分けが必要な語彙は、図解やマッチング問題で整理させる。</li>
+                <li>イディオム表現（keep in mind、bear fruit、at lastなど）は丸暗記ではなく、イメージで理解させる。</li>
+                <li>hard/hardly、at last/at leastなど、似ているが全く意味が違うペアは特に注意喚起が必要。</li>
+                <li>生徒に実際の会話やニュース記事から多義語を見つけさせる活動も効果的。</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        
+        function toggleHint(button) {
+            const hintBox = button.nextElementSibling;
+            if (hintBox.classList.contains('show')) {
+                hintBox.classList.remove('show');
+                button.textContent = 'ヒントを見る 💡';
+            } else {
+                hintBox.classList.add('show');
+                button.textContent = 'ヒントを隠す';
+            }
+        }
+
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        function toggleAnswer(button) {
+            const answerBox = button.nextElementSibling;
+            if (answerBox.classList.contains('show')) {
+                answerBox.classList.remove('show');
+                button.textContent = '解答を見る';
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = '解答を隠す';
+            }
+        }
+
+        // Auto-expand first section on load
+        window.addEventListener('load', function() {
+            const firstSection = document.querySelector('.section-content');
+            const firstIcon = document.querySelector('.toggle-icon');
+            if (firstSection && firstIcon) {
+                firstSection.classList.add('active');
+                firstIcon.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
