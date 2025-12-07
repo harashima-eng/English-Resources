@@ -68,108 +68,6 @@
   ],
   "items": [
     {
-      "id": "c25c1cd8-f545-4cfe-bd58-2a15973613b3",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_3",
-      "fileName": "grammar_breakdown_3.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_3.html",
-      "date": "2025-12-07",
-      "order": 2
-    },
-    {
-      "id": "bb217eb4-8b15-4b9e-b13a-48efc6332d7d",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_2",
-      "fileName": "grammar_breakdown_2.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_2.html",
-      "date": "2025-12-07",
-      "order": 1
-    },
-    {
-      "id": "2bac9f1d-af4e-422e-8f77-5c6fb9714ec9",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_5",
-      "fileName": "grammar_breakdown_5.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_5.html",
-      "date": "2025-12-07",
-      "order": 4
-    },
-    {
-      "id": "63637746-7af2-4a22-822d-58dab0c315b3",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_4",
-      "fileName": "grammar_breakdown_4.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_4.html",
-      "date": "2025-12-07",
-      "order": 3
-    },
-    {
-      "id": "0f540bc4-1734-448f-aafa-2e2de7bdedae",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_10",
-      "fileName": "grammar_breakdown_10.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_10.html",
-      "date": "2025-12-07",
-      "order": 9
-    },
-    {
-      "id": "d417404f-9f97-4720-b6d1-80e570593e79",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_6",
-      "fileName": "grammar_breakdown_6.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_6.html",
-      "date": "2025-12-07",
-      "order": 5
-    },
-    {
-      "id": "5020b59e-8d03-4daf-b3ca-8dffe62abdb0",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_1",
-      "fileName": "grammar_breakdown_1.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_1.html",
-      "date": "2025-12-07",
-      "order": 0
-    },
-    {
-      "id": "90940610-8ed2-41e7-9f8f-68d5d6697407",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_8",
-      "fileName": "grammar_breakdown_8.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_8.html",
-      "date": "2025-12-07",
-      "order": 7
-    },
-    {
-      "id": "a7b288bb-8513-4a57-bccc-75ec4e9c05ee",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_9",
-      "fileName": "grammar_breakdown_9.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_9.html",
-      "date": "2025-12-07",
-      "order": 8
-    },
-    {
-      "id": "86cb1967-43ad-421a-8acb-da995bfe0734",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "polysemy_test_breakdown",
-      "fileName": "polysemy_test_breakdown.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/polysemy_test_breakdown.html",
-      "date": "2025-12-07",
-      "order": 10
-    },
-    {
-      "id": "2cc76081-feaa-46f5-8ec6-cebb7e05c1e5",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_7",
-      "fileName": "grammar_breakdown_7.html",
-      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_7.html",
-      "date": "2025-12-07",
-      "order": 6,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
       "id": "940b8696-af9e-470c-94ce-08ea8840e339",
       "folderId": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
       "title": "grammar_breakdown_否定・特殊構文",
@@ -291,6 +189,108 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "999927f0-6c40-4c84-b91f-1cfbe236866e",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_3",
+      "fileName": "grammar_breakdown_3.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_3.html",
+      "date": "2025-12-07",
+      "order": 1
+    },
+    {
+      "id": "63f41020-2413-467c-8f0c-3588cc5e6a65",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_2",
+      "fileName": "grammar_breakdown_2.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_2.html",
+      "date": "2025-12-07",
+      "order": 2
+    },
+    {
+      "id": "da93a359-1d08-47f2-bc31-15687a6b8191",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_5",
+      "fileName": "grammar_breakdown_5.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_5.html",
+      "date": "2025-12-07",
+      "order": 4
+    },
+    {
+      "id": "3f38cad1-3f3f-42b4-bfa4-77d26e3d884c",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_4",
+      "fileName": "grammar_breakdown_4.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_4.html",
+      "date": "2025-12-07",
+      "order": 3
+    },
+    {
+      "id": "2aab8c58-2908-43d4-942e-8946755095cc",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_10",
+      "fileName": "grammar_breakdown_10.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_10.html",
+      "date": "2025-12-07",
+      "order": 9
+    },
+    {
+      "id": "1b82ca17-ea75-4897-aa10-fb221b13f04e",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_6",
+      "fileName": "grammar_breakdown_6.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_6.html",
+      "date": "2025-12-07",
+      "order": 5
+    },
+    {
+      "id": "281cd973-2472-4820-b6bb-df8edf45e3bb",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_8",
+      "fileName": "grammar_breakdown_8.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_8.html",
+      "date": "2025-12-07",
+      "order": 7
+    },
+    {
+      "id": "6d40a104-73cb-4126-b414-806d45e25306",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_1",
+      "fileName": "grammar_breakdown_1.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_1.html",
+      "date": "2025-12-07",
+      "order": 0
+    },
+    {
+      "id": "c60b079c-3fe4-4c8b-95db-a2024b8bfbe1",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "polysemy_test_breakdown",
+      "fileName": "polysemy_test_breakdown.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/polysemy_test_breakdown.html",
+      "date": "2025-12-07",
+      "order": 10
+    },
+    {
+      "id": "3d089d5e-4eaa-43c5-a020-6eb111f775de",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_9",
+      "fileName": "grammar_breakdown_9.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_9.html",
+      "date": "2025-12-07",
+      "order": 8
+    },
+    {
+      "id": "04b7247c-0e7b-4540-bb18-26124f7911d5",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_7",
+      "fileName": "grammar_breakdown_7.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_7.html",
+      "date": "2025-12-07",
+      "order": 6,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -299,5 +299,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-07T07:52:53.881Z"
+  "lastUpdated": "2025-12-07T07:54:22.156Z"
 }
