@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html>
+<head>
+            <style>.lw { font-size: 60px; }</style>
+        </head>
+        <body>
+            
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 11: Coral Reefs - Reading Breakdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont,
+                         'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.35s ease;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 30px 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .passage-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .passage-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .passage-text {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 2;
+            font-size: 1.05em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+        }
+
+        .para-label {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .question-header:hover {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .question-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .question-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+        }
+
+        .question-content.active {
+            max-height: 8000px;
+        }
+
+        .question-inner {
+            padding: 25px;
+        }
+
+        .question-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+            font-size: 1.1em;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .answer-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .correct-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 5px solid #28a745;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-left: 5px solid #007bff;
+        }
+
+        .context-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #ff9800;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            border-left: 5px solid #e83e8c;
+        }
+
+        .passage-ref-box {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-left: 5px solid #6c757d;
+            font-style: italic;
+        }
+
+        .incorrect-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 5px solid #dc3545;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-left: 5px solid #17a2b8;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-left: 5px solid #9b59b6;
+        }
+
+        .box-title {
+            font-weight: bold;
+            font-size: 1.15em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .box-title::before {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .correct-box .box-title::before { content: "✓"; }
+        .strategy-box .box-title::before { content: "🎯"; }
+        .context-box .box-title::before { content: "💡"; }
+        .flow-box .box-title::before { content: "📊"; }
+        .passage-ref-box .box-title::before { content: "📄"; }
+        .incorrect-box .box-title::before { content: "✗"; }
+        .tip-box .box-title::before { content: "✍️"; }
+        .hint-box .box-title::before { content: "💭"; }
+
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .underline-ref {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #2196f3;
+        }
+
+        .choices {
+            margin: 15px 0;
+        }
+
+        .choice {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+            .passage-section { padding: 20px; }
+        }
+
+        /* Hover trigger zones for header/layout buttons */
+        .header-trigger-zone {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 60px;
+            z-index: 1001;
+            pointer-events: auto;
+        }
+
+        .layout-trigger-zone {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 180px;
+            height: 80px;
+            z-index: 1001;
+            pointer-events: auto;
+        }
+
+        .header-collapse-btn {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-60px);
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+            z-index: 1002;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .header-trigger-zone:hover ~ .header-collapse-btn,
+        .header-collapse-btn:hover {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .header-collapse-btn:hover {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.7);
+        }
+
+        .layout-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1002;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            opacity: 0;
+            transform: translateY(-60px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .layout-trigger-zone:hover ~ .layout-toggle-btn,
+        .layout-toggle-btn:hover {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .layout-toggle-btn:hover {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .two-column-layout .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: flex-start;
+            padding: 20px 2%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .two-column-layout .passage-section {
+            position: sticky;
+            top: 20px;
+            order: 1;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .two-column-layout .questions-container {
+            order: 2;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 1024px) {
+            .two-column-layout .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+
+            .two-column-layout .passage-section {
+                position: relative;
+                order: 1;
+                max-height: none;
+            }
+
+            .two-column-layout .questions-container {
+                order: 2;
+            }
+
+            .layout-toggle-btn,
+            .layout-trigger-zone {
+                display: none;
+            }
+        }
+
+        .two-column-layout .questions-container {
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .two-column-layout .questions-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-thumb {
+            background: #f5576c;
+            border-radius: 10px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-thumb:hover {
+            background: #f093fb;
+        }
+
+        body.header-collapsed .header {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        body.header-collapsed .container {
+            padding-top: 10px;
+        }
+
+        /* Dual-pane highlight linking */
+        .paragraph.linked-highlight {
+            outline: 3px solid rgba(249,115,22,0.9);
+            background: rgba(255,237,213,0.9);
+            border-radius: 10px;
+            transition: background 0.2s ease, outline 0.2s ease;
+        }
+        .question-section.linked-highlight {
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.7);
+            transform: translateY(-1px);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+    </style>
+
+
+    <div class="header-trigger-zone"></div>
+    <div class="layout-trigger-zone"></div>
+    
+    <button class="header-collapse-btn" onclick="toggleHeader()">▲ ヘッダーを隠す</button>
+    <button class="layout-toggle-btn" onclick="toggleLayout()">📱 Switch Layout</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>🌊 Chapter 11</h1>
+            <p>Coral Reefs<br>サンゴ礁</p>
+        </div>
+
+        <div class="content">
+            <!-- PASSAGE -->
+            <div class="passage-section">
+                <h2>📖 Full Passage (本文全体)</h2>
+                <div class="passage-text">
+                    <div class="paragraph" id="para1" data-paragraph="1">
+                        <div class="para-label">Paragraph 1:</div>
+                        A coral reef* is made up of many coral colonies all living together. The reef may stretch hundreds of miles across, but it is constructed by coral polyps* only a quarter of an inch or less in size. The reef itself is a living, growing organism — colonies of tiny animals all working together to create the largest structures on Earth. This is one of the most complex and mysterious ecosystems* known to mankind, and it all works because of the tiny animals that produce the huge reef structure.
+                    </div>
+
+                    <div class="paragraph" id="para2" data-paragraph="2">
+                        <div class="para-label">Paragraph 2:</div>
+                        Over half a billion years ago, before there was any life on land, the seas contained primitive coral reefs, consisting of sponges* and primitive corals. <span style="text-decoration: underline;">(1)This</span> means that coral reefs are among the oldest complex natural communities still in existence on Earth. While many changes and extinctions in reefs have occurred throughout their history, reefs have survived. In fact, some coral reef animals known today are almost unchanged from those found in fossils dating from the age of dinosaurs, 100 million years ago. <span style="text-decoration: underline;">(2)Coral reefs are wonderful to see, and rich gardens in the sea, supporting an astonishing amount of marine life in a densely packed, thriving marine metropolis.</span> In fact, coral reefs have the largest abundance and greatest diversity of life living together of any place on Earth, including the tropical rain forests. <span style="text-decoration: underline;">(3)People often refer to coral reefs as “rainforests of the sea.”</span>
+                    </div>
+
+                    <div class="paragraph" id="para3" data-paragraph="3">
+                        <div class="para-label">Paragraph 3:</div>
+                        In an area with this much diversity of life, it is easy to think that the tropical oceans are highly rich in nutrients. <span style="text-decoration: underline;">(4)This</span> is the popular misunderstanding. Compared to the cold, murky waters of the temperate seas, tropical seas limit the number of animal plankton, which makes their water clear, yet with very low food resources. Thus, coral reefs live in nearly sterile* water. A coral reef is a gathering place in the ocean. <span style="text-decoration: underline;">(5)It is an oasis in a desert,</span> a place which gives shelter and food in an ocean where these things are rare. In fact, the entire tropical ocean ecosystem depends on the reef for sustenance.
+                    </div>
+
+                    <div class="paragraph">
+                        * reef「礁」 coral polyps「サンゴ虫」 ecosystem「生態系」 sponges「海綿動物」 sterile「不毛な」
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS -->
+            <div class="questions-container">
+
+                <!-- Q1 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q1')">
+                        <h3>問題 1: 指示語問題 (This)</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q1" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（1）の This が指す内容を日本語で説明しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong><br>
+                                Over half a billion years ago, before there was any life on land, the seas contained primitive coral reefs, consisting of sponges and primitive corals. <span class="highlight">(1)This</span> means that coral reefs are among the oldest complex natural communities still in existence on Earth.
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint1')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                                Show Hint / ヒントを見る 💭
+                            </button>
+
+                            <div id="hint1" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    ✅ 指示語 <strong>This</strong> は、ふつう<strong>直前の文全体</strong>を指す。<br>
+                                    ✅ 直前の内容は「5億年以上前」「陸上に生命がない」「海には原始的なサンゴ礁があった」。<br>
+                                    ✅ その事実が「サンゴ礁はとても古い共同体だ」という意味につながっている。<br><br>
+                                    🔍 「何という事実が、サンゴ礁が『最古級』だと示しているのか？」を日本語でまとめよう。
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer1')">
+                                Show Answer / 解答を見る
+                            </button>
+
+                            <div id="answer1" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解</div>
+                                    （5億年以上前の、）地上に生命が存在する以前から、海には原始的なサンゴ礁があったこと。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    1. 指示語問題では、まず <strong>指示語の直前の文</strong>を読む。<br>
+                                    2. 「どんな事実？」と聞かれているので、<strong>事実の内容を名詞句でまとめる</strong>。<br>
+                                    3. 今回は「5億年以上前」「陸上に生命がない」「海に原始的サンゴ礁があった」というセットを「〜であること」でまとめればOK。
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">本文からの証拠</div>
+                                    Over half a billion years ago, before there was any life on land, the seas contained primitive coral reefs, consisting of sponges and primitive corals.<br>
+                                    → この1文の内容が <span class="highlight">This</span> の中身。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 指示語 = だいたい「直前の1文〜数文」を指す。<br>
+                                    ✅ 日本語では「〜ということ」と名詞化して書くときれいにまとまる。<br>
+                                    ✅ 数字（5億年以上前など）が出てきたら、できるだけ含めると加点されやすい。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q2')">
+                        <h3>問題 2: 和訳問題 (美しさと豊かさ)</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q2" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（2）を和訳しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong><br>
+                                <span class="highlight">(2)Coral reefs are wonderful to see, and rich gardens in the sea, supporting an astonishing amount of marine life in a densely packed, thriving marine metropolis.</span>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint2')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                                Show Hint / ヒントを見る 💭
+                            </button>
+
+                            <div id="hint2" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    ✅ 文構造は「A are B, and C, doing〜」のイメージ。<br>
+                                    ✅ 「rich gardens in the sea」＝「海中の肥沃な庭」くらいにイメージ訳。<br>
+                                    ✅ 「supporting〜」は coral reefs を説明していて「〜を養っている」。<br>
+                                    ✅ 「densely packed, thriving marine metropolis」＝「ぎっしり生物がひしめき、繁栄する海中大都市」。<br><br>
+                                    まずは<strong>意味のかたまり</strong>ごとに日本語を決めてから、1文にまとめよう。
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer2')">
+                                Show Answer / 解答を見る
+                            </button>
+
+                            <div id="answer2" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解</div>
+                                    サンゴ礁は見た目にすばらしく、海中における肥沃な庭であり、ぎっしりと生物がひしめき活気ある海中大都市を成して、驚くほど多数の海洋生物を養っている。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    1. まず「be動詞のあと」の情報をかたまりで分ける。<br>
+                                       ・wonderful to see<br>
+                                       ・rich gardens in the sea<br>
+                                       ・supporting an astonishing amount of marine life ...<br><br>
+                                    2. 比喩表現（gardens / metropolis）は、<strong>直訳＋イメージ訳</strong>で少しふくらませる。<br>
+                                    3. 「supporting〜」などの分詞は「〜している」と訳して、前の名詞（サンゴ礁）にかける。
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">文脈クルー(Context Clues)</div>
+                                    前後の文では、サンゴ礁が「とても古い」「多様性が高い」「熱帯雨林レベル」と説明されている。ここでは<br>
+                                    👉 目で見た美しさ + 生態系としての豊かさ<br>
+                                    の両方をまとめて表現している。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 比喩（metropolis など）は、和訳でもある程度イメージを残すと点が取りやすい。<br>
+                                    ✅ and が連続するときは、「〜であり、〜で、〜している」とリズムよくつなげる。<br>
+                                    ✅ 「supporting〜」のような分詞は、前の名詞を説明していることを意識。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q3')">
+                        <h3>問題 3: 選択問題（理由説明）</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q3" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（3）のように述べられている理由を最もよく表すものを1つ選びなさい。（兵庫県立大）
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong><br>
+                                <span class="highlight">(3)People often refer to coral reefs as “rainforests of the sea.”</span>
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">①　Strange creatures are often found in a tropical ocean.</div>
+                                <div class="choice">②　Numberless creatures make up a living organism.</div>
+                                <div class="choice">③　Beauty of nature can be seen in the sea.</div>
+                                <div class="choice">④　Living things in the sea have something in common with those in forests.</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint3')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                                Show Hint / ヒントを見る 💭
+                            </button>
+
+                            <div id="hint3" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    ✅ 下線部のすぐ前後をチェック。<br>
+                                    ✅ tropical rain forests と coral reefs がどう比較されているかに注目。<br>
+                                    ✅ 「numberless creatures」「largest abundance」「greatest diversity」などの表現に注意。<br><br>
+                                    各選択肢が、本文のどの部分と対応しそうかを考えながら読むと解きやすい。
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer3')">
+                                Show Answer / 解答を見る
+                            </button>
+
+                            <div id="answer3" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解: ②</div>
+                                    Numberless creatures make up a living organism.
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    1. 「海の熱帯雨林」と呼ばれる理由は、<strong>生き物の多さ＆共同体としてのまとまり</strong>に関係している。<br>
+                                    2. 本文では、サンゴ礁が<br>
+                                       ・「most complex and mysterious ecosystems」<br>
+                                       ・「largest abundance and greatest diversity of life」<br>
+                                       ・「colonies of tiny animals all working together」<br>
+                                       と説明されている。<br><br>
+                                    3. ②は「数えきれない生き物が1つの生きた有機体を形作っている」という意味で、<br>
+                                       サンゴ礁全体を1つの「生きた森」のようにとらえている点が本文と合う。
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">本文からの証拠</div>
+                                    ・colonies of tiny animals all working together to create the largest structures on Earth.<br>
+                                    ・coral reefs have the largest abundance and greatest diversity of life living together of any place on Earth, including the tropical rain forests.<br>
+                                    → 多数の生き物が集まり、1つの巨大な生きた構造物を作っているイメージ。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ①が不正解か</div>
+                                    ① Strange creatures are often found in a tropical ocean.<br>
+                                    → 「奇妙な生き物がいる」ことは本文のテーマではないし、熱帯雨林との比較にもなっていない。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ③が不正解か</div>
+                                    ③ Beauty of nature can be seen in the sea.<br>
+                                    → 「きれいだ」というだけなら、森でも山でも当てはまる。<br>
+                                    「熱帯雨林」とわざわざ比較している理由（多様性・共同体としての構造）が表されていない。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ④がひっかけか</div>
+                                    ④ Living things in the sea have something in common with those in forests.<br>
+                                    → 一見まともだが、「具体的に何が共通なのか」がぼやけていて、本文の焦点「数・多様性・1つの有機体」の要素が弱い。<br>
+                                    模範解答では、より<strong>サンゴ礁そのものの構造</strong>に踏み込んだ②が正解。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 似た内容の選択肢があるときは、「本文で一番強調されているキーワード」と一番かみ合うものを選ぶ。<br>
+                                    ✅ 「きれい」「何か共通している」など、ふわっとした表現だけの選択肢は要注意。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-section" data-target-paragraphs="3">
+                    <div class="question-header" onclick="toggleQuestion('q4')">
+                        <h3>問題 4: 内容説明（日本語・空所補充）</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q4" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（4）に関して、次の ①［　　　　］ ②［　　　　］ の空所に適切な日本語を入れなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Original:</strong><br>
+                                In an area with this much diversity of life, it is easy to think that the tropical oceans are highly rich in nutrients. <span class="highlight">(4)This</span> is the popular misunderstanding.<br><br>
+                                実際は、熱帯の海は ①［　　　　　　　　　　　　　　］ のに、一般の人々は ②［　　　　　　　　　　　　　　］ と誤解している。
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint4')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                                Show Hint / ヒントを見る 💭
+                            </button>
+
+                            <div id="hint4" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    ✅ 「実際は〜のに、〜と誤解している」という対比構造に注目。<br>
+                                    ✅ 本文のどこに「実際は〜」が書いてある？<br>
+                                    ✅ 「栄養素」「food resources」「highly rich」などの単語をチェック。<br><br>
+                                    ①＝事実（Real）／②＝誤解（Misunderstanding）になるように本文から表現を拾おう。
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer4')">
+                                Show Answer / 解答を見る
+                            </button>
+
+                            <div id="answer4" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解</div>
+                                    ① 食料資源が非常に少ない<br>
+                                    ② 熱帯の海は栄養素が非常に豊かである
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    1. 「実際は〜のに」＝ 本文の「Thus〜」以降の事実。<br>
+                                       → very low food resources / nearly sterile water など。<br>
+                                    2. 「〜と誤解している」＝ 最初に people が「〜だと思ってしまう」と書いてある部分。<br>
+                                       → highly rich in nutrients. <br>
+                                    3. 英語の表現をそのまま直訳するのでなく、<br>
+                                       テストの模範解答レベルに合わせて自然な日本語に整える。
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">本文からの証拠</div>
+                                    ・it is easy to think that the tropical oceans are <span class="highlight">highly rich in nutrients</span>.<br>
+                                    ・tropical seas limit the number of animal plankton ... yet with <span class="highlight">very low food resources</span>.<br>
+                                    ・Thus, coral reefs live in <span class="highlight">nearly sterile water</span>.<br>
+                                    → 熱帯の海は実は「栄養が少なくほぼ不毛」なのに、「栄養が豊富」と誤解されている。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 対比構造（AなのにBと思われている）が出てきたら、<strong>事実と誤解のセット</strong>で整理しておくと後の設問が楽。<br>
+                                    ✅ 日本語の空所補充は、1語ではなく「短いフレーズ」を入れる問題が多いので、文全体とのつながりを意識。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-section" data-target-paragraphs="3">
+                    <div class="question-header" onclick="toggleQuestion('q5')">
+                        <h3>問題 5: 選択問題（比喩の理由）</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q5" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（5）の理由を最もよく表すものを1つ選びなさい。（兵庫県立大）
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong><br>
+                                A coral reef is a gathering place in the ocean. <span class="highlight">(5)It is an oasis in a desert,</span> a place which gives shelter and food in an ocean where these things are rare.
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">①　Fishes are always searching for food and shelter in the tropical ocean.</div>
+                                <div class="choice">②　Coral polyps produce clearer water for their growth.</div>
+                                <div class="choice">③　There are few living creatures in the tropical ocean except coral polyps.</div>
+                                <div class="choice">④　There are almost no other places to feed and protect sea animals.</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint5')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                                Show Hint / ヒントを見る 💭
+                            </button>
+
+                            <div id="hint5" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    ✅ 「oasis in a desert（砂漠のオアシス）」＝ まわりが「何もない・足りない」中で、そこだけ特別に「ある」場所。<br>
+                                    ✅ 本文では、「何が足りなくて」「サンゴ礁だけ何を与えている」と言っている？<br>
+                                    ✅ 「rare」「shelter」「food」などの単語に注目。
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer5')">
+                                Show Answer / 解答を見る
+                            </button>
+
+                            <div id="answer5" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解: ④</div>
+                                    There are almost no other places to feed and protect sea animals.
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    1. 比喩（oasis in a desert）は、すぐ後ろで説明されていることが多い。<br>
+                                       → 「a place which gives shelter and food in an ocean where these things are rare」<br>
+                                    2. 「shelter &amp; food が rare（まれ）」＝ ほかにはほとんどない。<br>
+                                    3. ④は「餌と保護を与えてくれる場所が、他にはほとんどない」とまとめており、この説明と一致。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ①が不正解か</div>
+                                    ① Fishes are always searching for food and shelter in the tropical ocean.<br>
+                                    → 「魚がいつも探している」ことは本文に書いていない。<br>
+                                    「オアシス」と呼ばれるのは、「周りにほとんどないのに、そこにはある」から。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ②が不正解か</div>
+                                    ② Coral polyps produce clearer water for their growth.<br>
+                                    → 「水が澄んでいる」理由は別の文にあるが、「オアシス」と呼ぶ理由は「澄んでいるから」ではなく、「食料とすみかが得られるから」。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ③が不正解か</div>
+                                    ③ There are few living creatures in the tropical ocean except coral polyps.<br>
+                                    → サンゴ礁のところには「驚くほど多数の海洋生物」がいると書いてあるので矛盾。<br>
+                                    「海全体の食料は少ない」≠「生き物がほとんどいない」。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 比喩表現が出てきたら、その直後の説明を必ず読む。<br>
+                                    ✅ 「理由を表す選択肢」は、本文の説明をそのまま言い換えているものを探す。<br>
+                                    ✅ 「本文と明らかに矛盾する」選択肢は即バツにできる。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-section" data-target-paragraphs="1,2,3">
+                    <div class="question-header" onclick="toggleQuestion('q6')">
+                        <h3>問題 6: タイトル選択問題</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q6" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 本文のタイトルとして最もふさわしいものを1つ選びなさい。（兵庫県立大）
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">①　Coral Reefs ― How to Enjoy Summer in the Ocean</div>
+                                <div class="choice">②　The Wonder of the Sea ― A Number of Colonies</div>
+                                <div class="choice">③　Searching for Beautiful Rainforests of the Sea</div>
+                                <div class="choice">④　Tropical Ocean Ecosystem ― The Life of Coral Reefs</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint6')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                                Show Hint / ヒントを見る 💭
+                            </button>
+
+                            <div id="hint6" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    ✅ タイトル問題は「本文全体のテーマ」を一言で言い直したもの。<br>
+                                    ✅ パラグラフごとの役割を確認：<br>
+                                    ・第1段落：サンゴ礁の構造と特徴<br>
+                                    ・第2段落：歴史の古さと多様性<br>
+                                    ・第3段落：栄養が少ない海での役割（オアシス）<br><br>
+                                    → 「海の楽しみ方」？「サンゴ礁探しの旅」？「生態系としての役割」？どれが一番近い？
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer6')">
+                                Show Answer / 解答を見る
+                            </button>
+
+                            <div id="answer6" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解: ④</div>
+                                    Tropical Ocean Ecosystem ― The Life of Coral Reefs
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    1. 各段落の要旨を一言でメモしておく。<br>
+                                       → サンゴ礁の構造／古さと多様性／熱帯の海の生態系の中での役割。<br>
+                                    2. その3つをまとめると「熱帯の海の生態系におけるサンゴ礁の生命・役割」。<br>
+                                    3. ④は「Tropical Ocean Ecosystem（熱帯の海の生態系）」＋「The Life of Coral Reefs（サンゴ礁の生命・役割）」と、本文全体をバランスよく表している。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ①が不正解か</div>
+                                    ① Coral Reefs ― How to Enjoy Summer in the Ocean<br>
+                                    → 「夏の海の楽しみ方」の話は本文に一切出てこない。完全に方向性が違う。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ②が不正解か</div>
+                                    ② The Wonder of the Sea ― A Number of Colonies<br>
+                                    → colonies（群体）には触れているが、本文のメインは「サンゴ礁の生態系としての役割」。タイトルとしては狭すぎる。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ③が不正解か</div>
+                                    ③ Searching for Beautiful Rainforests of the Sea<br>
+                                    → 「探しに行く」話ではなく、「サンゴ礁とは何か」を説明している解説文。<br>
+                                    「beautiful」も、本文の主眼（生態系・食物連鎖）から少しズレている。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ タイトル問題は「導入＋結論」に共通するキーワードが入っているものを選ぶ。<br>
+                                    ✅ 「旅行・体験ものっぽい」タイトルは、説明文には合わないことが多い。<br>
+                                    ✅ 単語だけでなく、「本文のジャンル」（解説文・エッセイ・物語など）とも合っているかを見る。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /questions-container -->
+        </div><!-- /content -->
+    </div><!-- /container -->
+
+    <script>
+        function toggleLayout() {
+            document.body.classList.toggle('two-column-layout');
+            const btn = document.querySelector('.layout-toggle-btn');
+            if (document.body.classList.contains('two-column-layout')) {
+                btn.textContent = '📚 Single Column';
+            } else {
+                btn.textContent = '📱 Two Columns';
+            }
+        }
+
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function showHint(id) {
+            const hint = document.getElementById(id);
+            const button = event.target;
+            if (hint.classList.contains('visible')) {
+                hint.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                hint.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        function toggleHeader() {
+            document.body.classList.toggle('header-collapsed');
+            const btn = document.querySelector('.header-collapse-btn');
+            if (btn) {
+                if (document.body.classList.contains('header-collapsed')) {
+                    btn.textContent = '▼ ヘッダーを表示';
+                } else {
+                    btn.textContent = '▲ ヘッダーを隠す';
+                }
+            }
+        }
+
+        function showAnswer(id) {
+            const answer = document.getElementById(id);
+            const button = event.target;
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                answer.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        // Dual-pane highlight linking
+        document.addEventListener('DOMContentLoaded', function () {
+            const paragraphs = document.querySelectorAll('.paragraph[data-paragraph]');
+            const qSections = document.querySelectorAll('.question-section');
+
+            function clearLinkedHighlight() {
+                paragraphs.forEach(p => p.classList.remove('linked-highlight'));
+                qSections.forEach(q => q.classList.remove('linked-highlight'));
+            }
+
+            qSections.forEach(sec => {
+                const targets = (sec.getAttribute('data-target-paragraphs') || '')
+                    .split(',')
+                    .map(v => v.trim())
+                    .filter(Boolean);
+
+                sec.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    sec.classList.add('linked-highlight');
+                    targets.forEach(num => {
+                        const p = document.querySelector('#para' + num);
+                        if (p) p.classList.add('linked-highlight');
+                    });
+                });
+
+                sec.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            paragraphs.forEach(p => {
+                const num = p.getAttribute('data-paragraph');
+                p.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    p.classList.add('linked-highlight');
+                    qSections.forEach(sec => {
+                        const targets = (sec.getAttribute('data-target-paragraphs') || '')
+                            .split(',')
+                            .map(v => v.trim());
+                        if (targets.includes(num)) {
+                            sec.classList.add('linked-highlight');
+                        }
+                    });
+                });
+                p.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+        });
+    </script>
+
+
+
+            <script>// Write JavaScript here</script>
+        
+    
+</body>
