@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>åè©ã®èªæ³ï½ç¢ºèªãã¹ã - è§£èª¬</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3561 0%, #1f2544 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #65398b 100%);
+        }
+
+        .toggle-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section-content.active {
+            max-height: 5000px;
+        }
+
+        .question {
+            padding: 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .choices {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .choice {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .answer-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+
+        .answer-section.active {
+            max-height: 3000px;
+        }
+
+        .correct-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .correct-answer strong {
+            color: #28a745;
+            font-size: 18px;
+        }
+
+        .explanation {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .explanation-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .wrong-answer {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .wrong-answer strong {
+            color: #dc3545;
+        }
+
+        .grammar-point {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .grammar-point-title {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .example {
+            background: #e7f3ff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .example-title {
+            color: #1976D2;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .translation {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ð åè©ã®èªæ³ï½ç¢ºèªãã¹ã è§£èª¬</h1>
+            <p>è±ææ³ã»èªæ³åé¡1100 (P4ï½P89) - è©³ç´°è§£èª¬ä»ã</p>
+        </div>
+
+        <div class="content">
+            <!-- Section A -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[A] ç©ºæè£ååé¡ (1)ï½(4)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (1)</div>
+                        <div class="question-text">
+                            The instructor makes everyone (ãã) his or her backhand.
+                        </div>
+                        <div class="choices">
+                            â  change<br>
+                            â¡ changes<br>
+                            â¢ to change<br>
+                            â£ changed
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â  change</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>ä½¿å½¹åè©makeã®èªæ³:</strong> make + O + åè©ã®åå½¢</p>
+                                <p>ãmake + äºº + åè©ã®åå½¢ãã§ãäººã«ï½ããããã¨ããæå³ã«ãªãã¾ããmakeã¯ä½¿å½¹åè©ãªã®ã§ãå¾ãã«ç®çèªãåã£ãå¾ãåè©ã®åå½¢ãç¶ãã¾ãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ changes (èª¤ã):</strong> ä¸äººç§°åæ°ç¾å¨å½¢ã¯ä½¿ãã¾ãããmakeã®å¾ãã¯åå½¢ã§ãã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¢ to change (èª¤ã):</strong> makeã¯ä¸å®è©ã§ã¯ãªãåå½¢ãåãã¾ãã(â»ãã ãååæã§ã¯ toä¸å®è©ã«ãªãã¾ã: be made to do)
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â£ changed (èª¤ã):</strong> éå»å½¢ã»éå»åè©å½¢ã¯ä½¿ãã¾ããã
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããä½¿å½¹åè©</div>
+                                <p><strong>make + O + åå½¢:</strong> Oã«ï¼å¼·å¶çã«ï¼ï½ããã</p>
+                                <p><strong>let + O + åå½¢:</strong> Oã«ï½ããã¦ãããï¼è¨±å¯ï¼</p>
+                                <p><strong>have + O + åå½¢:</strong> Oã«ï½ãã¦ããã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>The teacher made us <strong>study</strong> hard.</p>
+                                <div class="translation">ï¼åçã¯ç§ãã¡ãä¸çæ¸å½åå¼·ãããï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ã¤ã³ã¹ãã©ã¯ã¿ã¼ã¯å¨å¡ã«ããã¯ãã³ããå¤ããããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (2)</div>
+                        <div class="question-text">
+                            There's (ãã) connection between Japanese and Chinese as there is between Latin and English.
+                        </div>
+                        <div class="choices">
+                            â  far more<br>
+                            â¡ so much<br>
+                            â¢ as much<br>
+                            â£ as many
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¢ as much</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>as much ... as ~æ§æ:</strong> ãï½ã¨åãããã...ï¼ã®éï¼ã</p>
+                                <p>å¾ãã«ãas there is between Latin and Englishããããã®ã§ããas much A as Bãã®å½¢ã«ãªãã¾ããconnectionã¯ä¸å¯ç®åè©ãªã®ã§muchãä½¿ãã¾ãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â  far more (èª¤ã):</strong> å¾ãã«asãããã®ã§æ¯è¼ç´ã§ã¯ãªãåç´æ¯è¼ãå¿è¦ã§ãã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ so much (èª¤ã):</strong> ãso ... as ~ãã¯å¦å®æã»çåæã§ä½¿ããã¾ããè¯å®æã§ã¯ãas ... as ~ãã§ãã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â£ as many (èª¤ã):</strong> connectionã¯ä¸å¯ç®åè©ãªã®ã§ãmanyã§ã¯ãªãmuchãä½¿ãã¾ãã
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããas ... asæ§æ</div>
+                                <p><strong>è¯å®æ:</strong> as ... as ~ ãï½ã¨åãããã...ã</p>
+                                <p><strong>å¦å®æ:</strong> not as(so) ... as ~ ãï½ã»ã©...ã§ã¯ãªãã</p>
+                                <p><strong>much:</strong> ä¸å¯ç®åè©ã¨å±ã«ä½¿ã</p>
+                                <p><strong>many:</strong> å¯ç®åè©ã¨å±ã«ä½¿ã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>She has <strong>as much</strong> money <strong>as</strong> I do.</p>
+                                <div class="translation">ï¼å½¼å¥³ã¯ç§ã¨åãããããéãæã£ã¦ããï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> æ¥æ¬èªã¨ä¸­å½èªã®éã«ã¯ãã©ãã³èªã¨è±èªã®éã«ããã®ã¨åããããã®ç¹ãããããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (3)</div>
+                        <div class="question-text">
+                            When I was in Salem, I (ãã) often play tennis with John.
+                        </div>
+                        <div class="choices">
+                            â  ought to<br>
+                            â¡ should<br>
+                            â¢ might<br>
+                            â£ would
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â£ would</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>would + often:</strong> ãããï½ãããã®ã ã£ããï¼éå»ã®ç¿æ£ï¼</p>
+                                <p>ãWhen I was in Salemï¼ã»ã¼ã©ã ã«ããé ï¼ãã¨ããéå»ã®ææã«ã¤ãã¦è¿°ã¹ã¦ããã®ã§ãéå»ã®ç¿æ£ãè¡¨ããwould oftenããé©åã§ãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â  ought to (èª¤ã):</strong> ãï½ãã¹ãã ãã¨ããç¾©åãè¡¨ããéå»ã®ç¿æ£ã¯è¡¨ãã¾ããã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ should (èª¤ã):</strong> ãï½ãã¹ãã ãã¨ããç¾©åã»æ¨å¥¨ãè¡¨ããéå»ã®ç¿æ£ã¯è¡¨ãã¾ããã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¢ might (èª¤ã):</strong> ãï½ãããããªããã¨ããæ¨éãè¡¨ãããoftenï¼ããï¼ãã¨ã¯ç¸æ§ãæªãã§ãã
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããwouldã®ç¨æ³</div>
+                                <p><strong>éå»ã®ç¿æ£:</strong> would often/always/sometimes + åè©ã®åå½¢</p>
+                                <p>ãï¼æã¯ï¼ããï½ãããã®ã ãã¨ããæå³ã§ãnostalgicï¼æãããï¼ãªé°å²æ°ãããã¾ãã</p>
+                                <p><strong>â» used to ã¨ã®éã:</strong></p>
+                                <p>â¢ used to: éå»ã®ç¶æã»ç¿æ£ï¼ä»ã¯ãã¦ããªãï¼</p>
+                                <p>â¢ would: éå»ã®ç¿æ£ã®ã¿ï¼ç¶æåè©ã«ã¯ä½¿ããªãï¼</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>When I was a child, I <strong>would often</strong> visit my grandmother.</p>
+                                <div class="translation">ï¼å­ã©ãã®é ãããç¥æ¯ã®ã¨ããã«è¡ã£ããã®ã ã£ãï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ã»ã¼ã©ã ã«ããé ãç§ã¯ããã¸ã§ã³ã¨ããã¹ããããã®ã ã£ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (4)</div>
+                        <div class="question-text">
+                            I cannot imagine (ãã) about a book.
+                        </div>
+                        <div class="choices">
+                            â  you being so excited<br>
+                            â¡ for you to be so exciting<br>
+                            â¢ you to be so exciting<br>
+                            â£ for you to be so excited
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â  you being so excited</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>imagineã®èªæ³:</strong> imagine + O + doing / imagine + doing</p>
+                                <p>imagineã¯ååè©ãç®çèªã«åãåè©ã§ãããimagine + O + doingãã§ãOãVããã®ãæ³åãããã¨ããæå³ã«ãªãã¾ãã</p>
+                                <p><strong>excited vs exciting:</strong></p>
+                                <p>â¢ excited: ãèå¥®ãã¦ãããï¼äººã®ææï¼</p>
+                                <p>â¢ exciting: ãã¯ã¯ã¯ã¯ããããï¼ç©äºã®æ§è³ªï¼</p>
+                                <p>äººï¼youï¼ãä¸»èªãªã®ã§excitedãæ­£è§£ã§ãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ for you to be so exciting (èª¤ã):</strong> imagineã¯ä¸å®è©ãåãã¾ãããã¾ããexcitingã¯äººã«ã¯ä½¿ãã¾ããã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¢ you to be so exciting (èª¤ã):</strong> imagineã¯ä¸å®è©ãåãã¾ãããã¾ããexcitingã¯äººã«ã¯ä½¿ãã¾ããã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â£ for you to be so excited (èª¤ã):</strong> imagineã¯ä¸å®è©ãåãããååè©ãåãã¾ãã
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããååè©ãåãåè©</div>
+                                <p><strong>MEGAFEPSï¼ã¡ã¬ãã§ããã¹ï¼:</strong></p>
+                                <p>â¢ Mind (æ°ã«ãã)</p>
+                                <p>â¢ Enjoy (æ¥½ãã)</p>
+                                <p>â¢ Give up (è«¦ãã)</p>
+                                <p>â¢ Avoid (é¿ãã)</p>
+                                <p>â¢ Finish (çµãã)</p>
+                                <p>â¢ Escape (éãã)</p>
+                                <p>â¢ Practice (ç·´ç¿ãã)</p>
+                                <p>â¢ Stop (ããã)</p>
+                                <p>â» imagine ãååè©ãåãã¾ãï¼</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>I can't imagine <strong>him winning</strong> the race.</p>
+                                <div class="translation">ï¼å½¼ãã¬ã¼ã¹ã«åã¤ãªãã¦æ³åã§ããªãï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ã¯ããªããæ¬ã«ã¤ãã¦ãããªã«èå¥®ãã¦ããã®ãæ³åã§ããªãã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section B -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[B] åæèªå¥é¸æåé¡ (5)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (5)</div>
+                        <div class="question-text">
+                            As the cold weather <u>affected</u> him, he decided to move to the South.
+                        </div>
+                        <div class="choices">
+                            â  fought off<br>
+                            â¡ told on<br>
+                            â¢ fitted in<br>
+                            â£ dipped into
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¡ told on</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>affected ã®æå³:</strong> ãï¼æªï¼å½±é¿ãä¸ããã</p>
+                                <p><strong>tell on = ãï¼æªå½±é¿ãï¼åã¼ãã:</strong> ãã®æèã§ã¯ãå¯ãå¤©åãå½¼ã®å¥åº·ã«æªå½±é¿ãä¸ããã¨ããæå³ã§ãã</p>
+                                <p>ãå¯ãå¤©åãå½¼ã«å½±é¿ããã®ã§ãåã«å¼ã£è¶ããã¨ã«ãããâå¥åº·ãå®³ããã¨ãããã¨ã§ãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â  fought off (èª¤ã):</strong> ãæéãããè¿½ãæããã¨ããæå³ã§ãææã«åãã¾ããã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¢ fitted in (èª¤ã):</strong> ãé©å¿ãããæº¶ãè¾¼ããã¨ããæå³ã§ãææã«åãã¾ããã
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â£ dipped into (èª¤ã):</strong> ãã¡ãã£ã¨èª¿ã¹ããä½¿ãå§ãããã¨ããæå³ã§ãææã«åãã¾ããã
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããtell on ã®ç¨æ³</div>
+                                <p><strong>æå³â :</strong> ï½ã«æªå½±é¿ãåã¼ããï½ã®ããã«ãªã</p>
+                                <p><strong>æå³â¡:</strong> ï½ãåãå£ãã</p>
+                                <p>ãã®åé¡ã§ã¯â ã®æå³ã§ä½¿ããã¦ãã¾ãã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>The stress is beginning to <strong>tell on</strong> her health.</p>
+                                <div class="translation">ï¼ã¹ãã¬ã¹ãå½¼å¥³ã®å¥åº·ã«å½±é¿ãå§ãã¦ããï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å¯ãå¤©åãå½¼ã«æªå½±é¿ãä¸ããã®ã§ãå½¼ã¯åã«å¼ã£è¶ããã¨ã«ããã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section C -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[C] å±éèªè£ååé¡ (6)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (6)</div>
+                        <div class="question-text">
+                            (a) He tried to (ãã) out the importance of discussion.<br>
+                            (b) There is no (ãã) in doing that.<br>
+                            (c) I have a different (ãã) of view from his.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: point</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>(a) point out:</strong> ãï½ãææããã</p>
+                                <p>He tried to <strong>point</strong> out the importance of discussion.<br>
+                                ï¼å½¼ã¯è­°è«ã®éè¦æ§ãææãããã¨ããï¼</p>
+                                
+                                <p><strong>(b) There is no point in doing:</strong> ãï½ãã¦ãæå³ããªãã</p>
+                                <p>There is no <strong>point</strong> in doing that.<br>
+                                ï¼ããããã¦ãæå³ããªãï¼</p>
+                                
+                                <p><strong>(c) point of view:</strong> ãè¦³ç¹ãè¦è§£ã</p>
+                                <p>I have a different <strong>point</strong> of view from his.<br>
+                                ï¼ç§ã¯å½¼ã¨ã¯ç°ãªãè¦è§£ãæã£ã¦ããï¼</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããpoint ãä½¿ã£ãã¤ãã£ãªã </div>
+                                <p><strong>point out:</strong> ï½ãææãã</p>
+                                <p><strong>There is no point in ~ing:</strong> ï½ãã¦ãç¡é§ã </p>
+                                <p><strong>point of view:</strong> è¦³ç¹ãè¦ç¹</p>
+                                <p><strong>to the point:</strong> è¦ãå¾ããçãå°ã</p>
+                                <p><strong>make a point of ~ing:</strong> å¿ãï½ãã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>She <strong>pointed out</strong> my mistake.</p>
+                                <div class="translation">ï¼å½¼å¥³ã¯ç§ã®ééããææããï¼</div>
+                                <p>There's no <strong>point in</strong> arguing with him.</p>
+                                <div class="translation">ï¼å½¼ã¨è­°è«ãã¦ãç¡é§ã ï¼</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section D -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[D] æ¸ãæãåé¡ (7)ï½(9)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (7)</div>
+                        <div class="question-text">
+                            (a) He is my junior by two years.<br>
+                            (b) He is (ãã) (ãã) (ãã) than I.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: two years younger</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>be one's junior by ï½:</strong> ãï¼äººããï¼ï½æ­³å¹´ä¸ã§ããã</p>
+                                <p>ãããæ¯è¼ç´ã§æ¸ãæããã¨ãï½ younger than ...ãã«ãªãã¾ãã</p>
+                                <p>ãby two yearsï¼2æ­³åï¼ãã¨ããå·®ãè¡¨ãè¡¨ç¾ããæ¯è¼ç´ã®åã«ç½®ãã¾ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããå¹´é½¢å·®ã®è¡¨ç¾</div>
+                                <p><strong>ãã¿ã¼ã³â :</strong> A is one's senior/junior by ï½ years</p>
+                                <p><strong>ãã¿ã¼ã³â¡:</strong> A is ï½ years older/younger than B</p>
+                                <p><strong>æ³¨æ:</strong> seniorã¨juniorã¯æ¯è¼ç´ã§ã¯ãªããthanã§ã¯ãªãtoãä½¿ãã¾ãã</p>
+                                <p>ä¾: He is senior <strong>to</strong> me. (å½¼ã¯ç§ããå¹´ä¸ã )</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>She is my senior by three years. = She is <strong>three years older</strong> than I.</p>
+                                <div class="translation">ï¼å½¼å¥³ã¯ç§ãã3æ­³å¹´ä¸ã ï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼ã¯ç§ãã2æ­³å¹´ä¸ã ã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (8)</div>
+                        <div class="question-text">
+                            (a) Her recent book is higher in quality than the previous one.<br>
+                            (b) Her recent book is (ãã) to the previous one.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: superior</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>superior:</strong> ãï½ããåªãã¦ããã</p>
+                                <p>superiorã¯ã©ãã³èªç±æ¥ã®æ¯è¼ç´ã§ãå½¢ã¯åç´ã§ããæå³ã¯æ¯è¼ç´ã§ãããã®ãããthanã§ã¯ãªã<strong>to</strong>ãä½¿ãã¾ãã</p>
+                                <p>ãhigher in quality thanï¼ï½ããè³ªãé«ãï¼ã= ãsuperior toï¼ï½ããåªãã¦ããï¼ã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããã©ãã³èªç±æ¥ã®æ¯è¼ç´</div>
+                                <p>ä»¥ä¸ã®åèªã¯æ¯è¼ç´ã®æå³ãæã¡ã¾ããã<strong>than ã§ã¯ãªã to</strong> ãä½¿ãã¾ã:</p>
+                                <p><strong>superior to:</strong> ï½ããåªãã¦ãã</p>
+                                <p><strong>inferior to:</strong> ï½ããå£ã£ã¦ãã</p>
+                                <p><strong>senior to:</strong> ï½ããå¹´ä¸ã§ãã</p>
+                                <p><strong>junior to:</strong> ï½ããå¹´ä¸ã§ãã</p>
+                                <p><strong>prior to:</strong> ï½ããåã«</p>
+                                <p><strong>prefer A to B:</strong> BããAãå¥½ã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>This product is <strong>superior to</strong> that one in every way.</p>
+                                <div class="translation">ï¼ãã®è£½åã¯ããããç¹ã§ãã®è£½åããåªãã¦ããï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼å¥³ã®æè¿ã®æ¬ã¯åä½ããè³ªãé«ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (9)</div>
+                        <div class="question-text">
+                            (a) I went all the way to my friend's house, but in vain.<br>
+                            (b) I went all the way to my friend's house, (ãã) to find him out.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: only</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>in vain:</strong> ãç¡é§ã«ãããªããã</p>
+                                <p><strong>only to do:</strong> ãï½ãããçµå±...ã ã£ããï¼æ®å¿µãªçµæï¼</p>
+                                <p>ãåäººã®å®¶ã¾ã§è¡ã£ãããç¡é§ã ã£ãï¼ä¼ããªãã£ãï¼ãã¨ããæå³ãããonly to find him outï¼çµå±å½¼ãä¸å¨ã ã¨ããã£ãï¼ãã¨ããä¸å®è©ã®å¯è©çç¨æ³ï¼çµæï¼ã§è¡¨ãã¾ãã</p>
+                                <p><strong>find äºº out:</strong> ãäººãä¸å¨ã ã¨ããããã¨ããæå³ã§ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããä¸å®è©ã®å¯è©çç¨æ³ï¼çµæï¼</div>
+                                <p><strong>only to do:</strong> ãï½ããããçµå±...ã ãã ã£ããï¼æå¾å¤ãã®çµæï¼</p>
+                                <p><strong>... to do:</strong> ãï½ãã¦ããã®çµæ...ãããï¼èªç¶ãªçµæï¼</p>
+                                <p>onlyãã¤ããã¨ãæ®å¿µãªçµæãã®ãã¥ã¢ã³ã¹ãå¼·ããªãã¾ãã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>He hurried to the station, <strong>only to</strong> miss the train.</p>
+                                <div class="translation">ï¼å½¼ã¯é§ã«æ¥ãã ããçµå±é»è»ã«ä¹ãéããï¼</div>
+                                <p>He studied hard to pass the exam. (èªç¶ãªçµæ)</p>
+                                <div class="translation">ï¼å½¼ã¯è©¦é¨ã«åæ ¼ããããã«ä¸çæ¸å½åå¼·ããï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ã¯åäººã®å®¶ã¾ã§ããããè¡ã£ãããçµå±å½¼ãçå®ã ã¨ããã£ãã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section E -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[E] åæè±è¨³ï¼åèªè£åï¼åé¡ (10)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (10)</div>
+                        <div class="question-text">
+                            ãã¤ã¸ã£ãã¯ã®ç¯äººã¯é£è¡æ©ãçç ´ããã¨è¨ã£ã¦èãããã<br>
+                            The hijacker (ãã) to blow up the airplane.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: threatened</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>threaten to do:</strong> ãï½ããã¨èãã</p>
+                                <p>ãèããããã¨ããéå»ã®åä½ãªã®ã§ãéå»å½¢ <strong>threatened</strong> ãä½¿ãã¾ãã</p>
+                                <p>æ¥æ¬èªã§ã¯ãï½ããã¨è¨ã£ã¦èããããã¨ãªã£ã¦ãã¾ãããè±èªã§ã¯ threaten to do ã§ãï½ããã¨èããã¨ããæå³ãå¨ã¦å«ã¾ãã¦ãã¾ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããthreaten ã®èªæ³</div>
+                                <p><strong>threaten to do:</strong> ï½ããã¨èã</p>
+                                <p><strong>threaten äºº with ~:</strong> äººãï½ã§èã</p>
+                                <p><strong>threat (åè©):</strong> èå¨ãèã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>He <strong>threatened to</strong> call the police.</p>
+                                <div class="translation">ï¼å½¼ã¯è­¦å¯ãå¼ã¶ãã¨èããï¼</div>
+                                <p>They <strong>threatened</strong> us <strong>with</strong> violence.</p>
+                                <div class="translation">ï¼å½¼ãã¯æ´åã§ç§ãã¡ãèããï¼</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section F -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[F] èª¤ãææã»è¨æ­£åé¡ (11)ï½(15)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 11 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (11)</div>
+                        <div class="question-text">
+                            There are still two questions I'm not clear â about. â¡One â¢is the potential market and â£other cost.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â£ other cost â the other cost</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>one ... the other ~:</strong> ãä¸æ¹ã¯...ãããä¸æ¹ã¯ï½ãï¼2ã¤ã®ãã¡ï¼</p>
+                                <p>ãã¾ã 2ã¤ã®çåç¹ããããã¨è¨ã£ã¦ããã®ã§ããä¸æ¹ã¯æ½å¨å¸å ´ã§ã<strong>ããä¸æ¹</strong>ã¯ã³ã¹ãã ãã¨ããæå³ã«ãªãã¾ãã</p>
+                                <p>ç¹å®ã®2ã¤ã®ãã¡ã®ãããä¸æ¹ããæãã®ã§ã<strong>the other</strong> ãå¿è¦ã§ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããone ã¨ other ã®ä½¿ãåã</div>
+                                <p><strong>ã2ã¤ã®ãã¡ã</strong></p>
+                                <p>â¢ one ... the other ~ ãä¸æ¹ã¯...ãããä¸æ¹ã¯ï½ã</p>
+                                
+                                <p><strong>ã3ã¤ä»¥ä¸ã®ãã¡ã</strong></p>
+                                <p>â¢ one ... another ~ ã1ã¤ã¯...ãå¥ã®1ã¤ã¯ï½ã</p>
+                                <p>â¢ one ... the other ~ ... the others ã1ã¤ã¯...ã1ã¤ã¯ï½ãæ®ãã¯...ã</p>
+                                <p>â¢ some ... others ~ ããããã®ã¯...ãä»ã®ãã®ã¯ï½ã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>I have two dogs. <strong>One</strong> is black and <strong>the other</strong> is white.</p>
+                                <div class="translation">ï¼ç§ã¯ç¬ã2å¹é£¼ã£ã¦ããã1å¹ã¯é»ã§ããã1å¹ã¯ç½ã ï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ãã¯ã£ãããã¦ããªãçåç¹ãã¾ã 2ã¤ããã1ã¤ã¯æ½å¨å¸å ´ã§ããã1ã¤ã¯ã³ã¹ãã ã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 12 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (12)</div>
+                        <div class="question-text">
+                            â Expensive â¡as butter â¢is, I still prefer it â£than margarine.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â£ than â to</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>prefer A to B:</strong> ãBããAãå¥½ãã</p>
+                                <p>preferã¯æ¯è¼ç´ã§ã¯ããã¾ããããæ¯è¼ã®æå³ãæã¤åè©ã§ãããã®ãããthanã§ã¯ãªã<strong>to</strong>ãä½¿ãã¾ãã</p>
+                                <p>â» æé ­ã®ãExpensive as butter isãã¯ããã¿ã¼ã¯é«ä¾¡ã ããã©ããã¨ããè­²æ­©ãè¡¨ãåç½®æ§æã§ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããprefer ã®èªæ³</div>
+                                <p><strong>prefer A to B:</strong> BããAãå¥½ãï¼AãBãåè©ï¼</p>
+                                <p><strong>prefer to do rather than do:</strong> ï½ããããããã...ããã</p>
+                                <p><strong>prefer doing to doing:</strong> ï½ããããã...ããã®ãå¥½ã</p>
+                                <p>â» preferã¯æ¯è¼ç´ã§ã¯ããã¾ãããããthanãã§ã¯ãªããtoããä½¿ãã¾ãï¼</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>I <strong>prefer</strong> tea <strong>to</strong> coffee.</p>
+                                <div class="translation">ï¼ç§ã¯ã³ã¼ãã¼ããç´è¶ãå¥½ãã ï¼</div>
+                                <p>She <strong>prefers</strong> reading <strong>to</strong> watching TV.</p>
+                                <div class="translation">ï¼å½¼å¥³ã¯ãã¬ããè¦ãããèª­æ¸ãå¥½ãï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ãã¿ã¼ã¯é«ä¾¡ã ããç§ã¯ããã§ããã¼ã¬ãªã³ãããã¿ã¼ãå¥½ãã ã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 13 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (13)</div>
+                        <div class="question-text">
+                            He â took a taxi to â¡the Tokyo Station and was â¢just in time to â£see his uncle off.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¡ the Tokyo Station â Tokyo Station</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>é§åã«ã¯å è©ãã¤ããªã:</strong> åºæåè©ã®é§åã«ã¯ the ãã¤ãã¾ããã</p>
+                                <p>æ­£ããè¡¨ç¾: Tokyo Station, Shibuya Station, Shinjuku Station</p>
+                                <p>èª¤ã£ãè¡¨ç¾: â the Tokyo Station, â the Shibuya Station</p>
+                                <p>â» ãã ããé§ãä¸è¬åè©ã¨ãã¦ä½¿ãå ´åï¼"the station"ï¼ã¯å è©ãå¿è¦ã§ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããå è©ã¨åºæåè©</div>
+                                <p><strong>å è©ãä¸è¦ãªåºæåè©:</strong></p>
+                                <p>â¢ é§å: Tokyo Station, Grand Central Station</p>
+                                <p>â¢ ç©ºæ¸¯å: Narita Airport, Haneda Airport</p>
+                                <p>â¢ å¤§å­¦å: Harvard University, Tokyo University</p>
+                                <p>â¢ äººåã»å°å: Mt. Fuji, Lake Biwa</p>
+                                
+                                <p><strong>å è©ãå¿è¦ãªåºæåè©:</strong></p>
+                                <p>â¢ å·ã»æµ·ã»å±±è: the Nile, the Pacific Ocean, the Alps</p>
+                                <p>â¢ è¤æ°å½¢ã®å½å: the United States, the Philippines</p>
+                                <p>â¢ ããã«ã»åå ´: the Hilton Hotel, the Globe Theatre</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>I'll meet you at <strong>Tokyo Station</strong>. (â)</p>
+                                <p>I'll meet you at <strong>the station</strong>. (â)</p>
+                                <p>I'll meet you at <strong>the Tokyo Station</strong>. (â)</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼ã¯ã¿ã¯ã·ã¼ã§æ±äº¬é§ã«è¡ããã¡ããã©éã«åã£ã¦åç¶ãè¦éã£ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 14 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (14)</div>
+                        <div class="question-text">
+                            "There's â too much noise in this room. I can't understand â¡what is the teacher saying."<br>
+                            "â¢Neither â£can I."
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¡ what is the teacher saying â what the teacher is saying</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>éæ¥çåæã®èªé :</strong> çåè© + ä¸»èª + åè©</p>
+                                <p>ãwhat is the teacher sayingãã¯ç´æ¥çåæã®èªé ï¼çåè© + beåè© + ä¸»èªï¼ã«ãªã£ã¦ãã¾ãã</p>
+                                <p>ãI can't understandãã®å¾ãã¯éæ¥çåæãªã®ã§ã<strong>what the teacher is saying</strong>ï¼çåè© + ä¸»èª + åè©ï¼ã®èªé ã«ããå¿è¦ãããã¾ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããéæ¥çåæã®èªé </div>
+                                <p><strong>ç´æ¥çåæ:</strong> What is he doing? ï¼çåè© + åè© + ä¸»èªï¼</p>
+                                <p><strong>éæ¥çåæ:</strong> I don't know what he is doing. ï¼çåè© + ä¸»èª + åè©ï¼</p>
+                                
+                                <p><strong>éæ¥çåæãåãåè©:</strong></p>
+                                <p>â¢ know, understand, remember, forget, wonder, guess, etc.</p>
+                                
+                                <p><strong>éè¦:</strong> éæ¥çåæã§ã¯èªé ããå¹³åæã®èªé ãã«ãªãã¾ãï¼</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>â Do you know <strong>where is</strong> the station?</p>
+                                <p>â Do you know <strong>where the station is</strong>?</p>
+                                <div class="translation">ï¼é§ãã©ãã«ãããç¥ã£ã¦ãã¾ããï¼ï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ããã®é¨å±ã¯é¨é³ãå¤ããããåçãä½ãè¨ã£ã¦ããã®ãçè§£ã§ããªãããç§ãã§ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 15 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (15)</div>
+                        <div class="question-text">
+                            My friend has just been â admitted to the university; I â¡hope her to have a wonderful time there, â¢both on campus â£and off.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¡ hope her to have â hope (that) she has / hope (that) she will have</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>hope ã®èªæ³:</strong> hope + thatç¯ ï¼â hope + O + to doï¼</p>
+                                <p>hopeã¯ãhope + that + ä¸»èª + åè©ãã®å½¢ãåãããhope + O + to doãã®å½¢ã¯åãã¾ããã</p>
+                                <p>æ­£ããè¡¨ç¾:</p>
+                                <p>â¢ I hope (that) she has a wonderful time.</p>
+                                <p>â¢ I hope (that) she will have a wonderful time.</p>
+                                <p>èª¤ã£ãè¡¨ç¾:</p>
+                                <p>â¢ â I hope her to have a wonderful time.</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>æ··åããããåè©:</strong>
+                                <p><strong>â want + O + to do:</strong> I want her to go. ï¼å½¼å¥³ã«è¡ã£ã¦ã»ããï¼</p>
+                                <p><strong>â expect + O + to do:</strong> I expect him to come. ï¼å½¼ãæ¥ãã¨æå¾ããï¼</p>
+                                <p><strong>â hope + O + to do:</strong> ãã®å½¢ã¯ä½¿ãã¾ããï¼</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããhope, wish, want ã®éã</div>
+                                <p><strong>hope:</strong> (å®ç¾å¯è½ãªãã¨ã)æã</p>
+                                <p>â¢ hope + thatç¯ / hope + to do</p>
+                                <p>â¢ â hope + O + to doï¼ãã®å½¢ã¯ä¸å¯ï¼</p>
+                                
+                                <p><strong>wish:</strong> (å®ç¾å°é£ãªãã¨ã)é¡ã</p>
+                                <p>â¢ wish + thatç¯ï¼ä»®å®æ³ï¼/ wish + to do</p>
+                                <p>â¢ â wish + O + to doï¼ãã®å½¢ã¯ä¸å¯ï¼</p>
+                                
+                                <p><strong>want:</strong> ï½ãã¦ã»ãã</p>
+                                <p>â¢ want + O + to doï¼ãã®å½¢ãå¯è½ï¼</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>â I <strong>hope</strong> (that) you'll succeed.</p>
+                                <div class="translation">ï¼ããªããæåãããã¨ãé¡ã£ã¦ãã¾ãï¼</div>
+                                <p>â I <strong>hope</strong> you to succeed.</p>
+                                <p>â I <strong>want</strong> you to succeed.</p>
+                                <div class="translation">ï¼ããªãã«æåãã¦ã»ããï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ã®åäººã¯ã¡ããã©å¤§å­¦ã«åæ ¼ãããå½¼å¥³ãããã§ãã­ã£ã³ãã¹åå¤ã¨ãã«ç´ æ´ãããæéãéãããã¨ãé¡ã£ã¦ããã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section G -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[G] èªå¥æ´åºåé¡ (16)ï½(20)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 16 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (16)</div>
+                        <div class="question-text">
+                            ãã®æçãé£ã¹ãã¨ãããµããã®å³ãæãåºãã¾ãã<br>
+                            These ( cooking / dishes / me / mother's / my / of / remind ).
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: These dishes remind me of my mother's cooking.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>remind A of B:</strong> ãAã«Bãæãåºãããã</p>
+                                <p>ãã®æã§ã¯ããããã®æçãç§ã«ããµããã®æçãæãåºããããã¨ããæå³ã«ãªãã¾ãã</p>
+                                <p><strong>èªé ã®ãã¤ã³ã:</strong></p>
+                                <p>1. These dishesï¼ä¸»èªï¼</p>
+                                <p>2. remindï¼åè©ï¼</p>
+                                <p>3. meï¼ç®çèªAï¼</p>
+                                <p>4. of my mother's cookingï¼åç½®è©å¥Bï¼</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããremind ã®èªæ³</div>
+                                <p><strong>remind A of B:</strong> Aã«Bãæãåºããã</p>
+                                <p><strong>remind A to do:</strong> Aã«ï½ããããå¿µãæ¼ã</p>
+                                <p><strong>remind A thatç¯:</strong> Aã«ï½ã¨ãããã¨ãæãåºããã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>This song <strong>reminds me of</strong> my childhood.</p>
+                                <div class="translation">ï¼ãã®æ­ã¯ç§ã«å­ä¾æä»£ãæãåºãããï¼</div>
+                                <p>Please <strong>remind me to</strong> call him.</p>
+                                <div class="translation">ï¼å½¼ã«é»è©±ããããç§ã«æãåºããã¦ãã ããï¼</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 17 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (17)</div>
+                        <div class="question-text">
+                            ç§ã¯ããããããåé¡ãèµ·ãã£ã¦ã»ãããªãã<br>
+                            ( there / any / do / to / trouble / I / want / not / be ).
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: I do not want there to be any trouble.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>want + there + to be:</strong> ãï½ãå­å¨ãã¦ã»ãã/ãã¦ã»ãããªãã</p>
+                                <p>ãã®æã§ã¯ãthere is troubleï¼åé¡ãããï¼ãã®ä¸å®è©å½¢ãthere to be troubleãããwantã®ç®çèªã¨ãã¦ä½¿ã£ã¦ãã¾ãã</p>
+                                <p><strong>èªé ã®ãã¤ã³ã:</strong></p>
+                                <p>1. I do not wantï¼ç§ã¯ï½ãã¦ã»ãããªãï¼</p>
+                                <p>2. there to beï¼ï½ããããã¨ãï¼</p>
+                                <p>3. any troubleï¼ä½ããã©ãã«ãï¼</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããThereæ§æã®ä¸å®è©</div>
+                                <p><strong>There is/are ~:</strong> ï½ããã/ãã</p>
+                                <p><strong>There to be ~:</strong> ï½ããããã¨ï¼ä¸å®è©ï¼</p>
+                                
+                                <p>ä»¥ä¸ã®åè©ã®å¾ãã§ä½¿ãã¾ã:</p>
+                                <p>â¢ want there to be ~</p>
+                                <p>â¢ expect there to be ~</p>
+                                <p>â¢ would like there to be ~</p>
+                                <p>â¢ don't want there to be ~</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>I <strong>want there to be</strong> more parks in this city.</p>
+                                <div class="translation">ï¼ãã®è¡ã«ãã£ã¨å¬åããã£ã¦ã»ããï¼</div>
+                                <p>We <strong>expect there to be</strong> many people at the event.</p>
+                                <div class="translation">ï¼ã¤ãã³ãã«å¤ãã®äººãæ¥ãã¨äºæ³ãã¦ããï¼</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 18 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (18)</div>
+                        <div class="question-text">
+                            ãã©ã¦ã¹ã®ã¤ã³ã¯ã®ãã¿ãæãã«ã¯ä½ãããã§ããããã<br>
+                            What ( recommend / getting / stains / would / out of / you / for / ink ) my blouse?
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: What would you recommend for getting ink stains out of my blouse?</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>recommend A for B:</strong> ãBã®ããã«Aãå§ããã</p>
+                                <p><strong>get A out of B:</strong> ãBããAãåãé¤ãã</p>
+                                <p>ãã®æã§ã¯ãã¤ã³ã¯ã®ã·ãããã©ã¦ã¹ããåãé¤ãããã«ä½ãå§ãã¾ãããã¨ããæå³ã«ãªãã¾ãã</p>
+                                <p><strong>èªé ã®ãã¤ã³ã:</strong></p>
+                                <p>1. What would you recommendï¼ä½ãå§ãã¾ããï¼</p>
+                                <p>2. for getting ink stainsï¼ã¤ã³ã¯ã®ã·ããåãããã«ï¼</p>
+                                <p>3. out of my blouseï¼ç§ã®ãã©ã¦ã¹ããï¼</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããrecommend ã®èªæ³</div>
+                                <p><strong>recommend A:</strong> Aãå§ãã</p>
+                                <p><strong>recommend A for B:</strong> Bã®ããã«Aãå§ãã</p>
+                                <p><strong>recommend doing:</strong> ï½ãããã¨ãå§ãã</p>
+                                <p><strong>recommend that + ä¸»èª + (should) + åè©ã®åå½¢:</strong> ï½ãããã¨ãå§ãã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>What do you <strong>recommend for</strong> a headache?</p>
+                                <div class="translation">ï¼é ­çã«ã¯ä½ãããããã§ããï¼ï¼</div>
+                                <p>I <strong>recommend</strong> taking this medicine.</p>
+                                <div class="translation">ï¼ãã®è¬ãé£²ããã¨ããå§ããã¾ãï¼</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 19 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (19)</div>
+                        <div class="question-text">
+                            ãã¬ã³ã¯ãå¦¹ãããã£ã¨åã«å¤§å­¦ãåæ¥­ãã¾ããã<br>
+                            Helen ( from / sister / long / her / did / graduated / younger / college / before ).
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: Helen graduated from college long before her younger sister did.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>graduate from ~:</strong> ãï½ãåæ¥­ããã</p>
+                                <p><strong>long before ~:</strong> ãï½ã®ãã£ã¨åã«ã</p>
+                                <p><strong>did:</strong> ãgraduated from collegeãã®ä»£åè©</p>
+                                <p>ããã¬ã³ã¯å¤§å­¦ãåæ¥­ãããå¦¹ãããããï¼åæ¥­ããï¼ã®ãããã£ã¨åã«ãã¨ããæ§é ã§ãã</p>
+                                <p><strong>èªé ã®ãã¤ã³ã:</strong></p>
+                                <p>1. Helen graduated from collegeï¼ãã¬ã³ã¯å¤§å­¦ãåæ¥­ããï¼</p>
+                                <p>2. long beforeï¼ï½ã®ãã£ã¨åã«ï¼</p>
+                                <p>3. her younger sister didï¼å¦¹ããããããããï¼</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããä»£åè© do/does/did</div>
+                                <p><strong>ä»£åè©ã®å½¹å²:</strong> åã«åºãåè©ã®ç¹°ãè¿ããé¿ããããã«ä½¿ã</p>
+                                <p>ãã®æã§ã¯ãdid = graduated from collegeãã§ãã</p>
+                                
+                                <p><strong>long before:</strong> ï½ã®ãã£ã¨åã«</p>
+                                <p><strong>shortly before:</strong> ï½ã®å°ãåã«</p>
+                                <p><strong>just before:</strong> ï½ã®ç´åã«</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>He arrived <strong>long before</strong> I <strong>did</strong>.</p>
+                                <div class="translation">ï¼å½¼ã¯ç§ãããã£ã¨åã«å°çããï¼</div>
+                                <p>â» did = arrived</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 20 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (20)</div>
+                        <div class="question-text">
+                            ç§ã¯å½¼å¥³ã»ã©è¦ªåãªå¥³æ§ã«ä¼ã£ããã¨ããªãã<br>
+                            I've ( never / so / kind / seen / a ) lady as she.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: I've never seen so kind a lady as she.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ã</div>
+                                <p><strong>so + å½¢å®¹è© + a + åè©:</strong> ãã¨ã¦ãï½ãª...ã</p>
+                                <p>éå¸¸ã¯ãsuch a kind ladyãã§ãããsoãä½¿ãå ´åã¯ãso kind a ladyãã¨ããèªé ã«ãªãã¾ãã</p>
+                                <p>ãç§ã¯å½¼å¥³ã»ã©è¦ªåãªå¥³æ§ãè¦ããã¨ããªãã= ãå½¼å¥³ãæãè¦ªåã ãã¨ããæä¸ç´ã®æå³ã§ãã</p>
+                                <p><strong>èªé ã®ãã¤ã³ã:</strong></p>
+                                <p>â¢ such a kind lady (â)</p>
+                                <p>â¢ so kind a lady (â)</p>
+                                <p>â¢ so a kind lady (â)</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããso ã¨ such ã®èªé </div>
+                                <p><strong>such + (a) + å½¢å®¹è© + åè©:</strong></p>
+                                <p>â¢ such a beautiful day</p>
+                                <p>â¢ such beautiful weather (ä¸å¯ç®åè©)</p>
+                                
+                                <p><strong>so + å½¢å®¹è© + a + åè©:</strong></p>
+                                <p>â¢ so beautiful a day</p>
+                                <p>â¢ â so beautiful weather (ãã®å½¢ã¯ä¸å¯)</p>
+                                
+                                <p><strong>å¦å®æ + as ~ = æä¸ç´ã®æå³:</strong></p>
+                                <p>ãnever ... as ~ = ï½ã»ã©...ãªããâãï½ãæã...ã ã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>I've never seen <strong>so beautiful a</strong> sunset.</p>
+                                <div class="translation">ï¼ãããªã«ç¾ããå¤æ¥ãè¦ããã¨ããªãï¼</div>
+                                <p>= This is the most beautiful sunset I've ever seen.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        function toggleAnswer(button) {
+            const answerSection = button.nextElementSibling;
+            answerSection.classList.toggle('active');
+            
+            if (answerSection.classList.contains('active')) {
+                button.textContent = 'è§£ç­ãé ã';
+                button.style.background = 'linear-gradient(135deg, #a8e6cf 0%, #56ab91 100%)';
+            } else {
+                button.textContent = 'è§£ç­ãè¦ã';
+                button.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+        }
+
+        // Auto-open first section on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+    </script>
+</body>
+</html>
