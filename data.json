@@ -394,25 +394,29 @@
       "folderId": "d157d289-5646-4c09-80f1-62f697e08b83",
       "title": "chapter9",
       "fileName": "chapter9_living_wage_breakdown_dual_v2.html",
-      "filePath": "grade-3/english-communication-iii/files/chapter9_living_wage_breakdown_dual_v2.html",
+      "filePath": "grade-3/english-communication-iii/files/chapter9.html",
       "date": "2025-12-06",
       "order": 0,
       "minutes": "",
       "tags": [],
-      "keywords": ""
+      "keywords": "",
+      "originalFileName": "chapter9_living_wage_breakdown_dual_v2.html",
+      "fileSlug": "chapter9.html"
     },
     {
       "id": "5afbfa0a-0920-47ee-abba-fdde0ca846f8",
       "folderId": "d157d289-5646-4c09-80f1-62f697e08b83",
       "title": "Chapter10",
       "fileName": "chapter10_global_brands_breakdown_dual_v3.html",
-      "filePath": "grade-3/english-communication-iii/files/chapter10_global_brands_breakdown_dual_v3.html",
+      "filePath": "grade-3/english-communication-iii/files/chapter10.html",
       "date": "2025-12-06",
       "order": 1,
       "minutes": "",
       "tags": [],
-      "keywords": ""
+      "keywords": "",
+      "originalFileName": "chapter10_global_brands_breakdown_dual_v3.html",
+      "fileSlug": "chapter10.html"
     }
   ],
-  "lastUpdated": "2025-12-06T14:50:27.187Z"
+  "lastUpdated": "2025-12-07T01:08:38.634Z"
 }
