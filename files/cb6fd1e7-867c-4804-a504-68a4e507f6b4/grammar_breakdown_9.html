@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>åè©ã®èªæ³ï½ã©ã³ãã ãã¹ã BREAKDOWN EDITION</title>
+    <title>動詞の語法｜ランダムテスト BREAKDOWN EDITION</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
@@ -458,7 +458,7 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.2);
         }
 
-        /* ãã³ãã»è§£ç­ï¼æåã¯éè¡¨ç¤ºãactive ã§è¡¨ç¤º */
+        /* ヒント・解答：最初は非表示、active で表示 */
         .hint-section,
         .answer-section {
             display: none;
@@ -589,33 +589,33 @@
     <header class="hero">
         <div class="hero-main">
             <div class="hero-title-block">
-                <div class="hero-title">åè©ã®èªæ³ï½ã©ã³ãã ãã¹ã BREAKDOWN EDITION</div>
+                <div class="hero-title">動詞の語法｜ランダムテスト BREAKDOWN EDITION</div>
                 <div class="hero-subtitle">
-                    å¨æ¼ç¿ çºå± è±ææ³ã»èªæ³åé¡1100 P4ï½P89ï½ãã³ãï¼è§£ç­ï¼è§£èª¬ã¤ããã¬ã¤ã¯ãã¦ã³
+                    全演習 発展 英文法・語法問題1100 P4～P89｜ヒント＋解答＋解説つきブレイクダウン
                 </div>
                 <div class="hero-tags">
-                    <span class="tag">ãã³ã & è§£èª¬ã¯ãªãã¯è¡¨ç¤º</span>
-                    <span class="tag">åè©ã»ã¤ãã£ãªã ã»æ¯è¼</span>
-                    <span class="tag">A2ãB1 ã¬ãã«æ³å®</span>
+                    <span class="tag">ヒント & 解説クリック表示</span>
+                    <span class="tag">動詞・イディオム・比較</span>
+                    <span class="tag">A2〜B1 レベル想定</span>
                 </div>
             </div>
             <div class="hero-actions">
                 <button class="mode-toggle" id="modeToggle">
-                    ð ãã¼ã¯ / ã©ã¤ã
+                    🌗 ダーク / ライト
                 </button>
                 <button class="download-btn" id="downloadBtn">
-                    â¬ ãã®ãã¼ã¸ããã¦ã³ã­ã¼ã
+                    ⬇ このページをダウンロード
                 </button>
             </div>
         </div>
         <div class="hero-bottom">
             <div class="hero-stats">
-                <div class="hero-stat"><span>ð</span><span>è¨­åæ°ï¼20åï¼AãFï¼</span></div>
-                <div class="hero-stat"><span>ð§ </span><span>ã¢ã¼ãï¼ãã³ãã»è§£ç­ã¯ã¯ãªãã¯ã§è¡¨ç¤º</span></div>
+                <div class="hero-stat"><span>📌</span><span>設問数：20問（A〜F）</span></div>
+                <div class="hero-stat"><span>🧠</span><span>モード：ヒント・解答はクリックで表示</span></div>
             </div>
             <div class="hero-note">
-                ææ¥­ã§ã¯ãã®ãã¼ã¸ã§è§£èª¬ããªããã<br>
-                ãã¹ãç¨ã¯å¥ãã¡ã¤ã« or ããªã³ãã§åºãéç¨ãæ³å®ã
+                授業ではこのページで解説しながら、<br>
+                テスト用は別ファイル or プリントで出す運用を想定。
             </div>
         </div>
     </header>
@@ -623,86 +623,86 @@
     <!-- TOOLBAR -->
     <div class="toolbar">
         <div class="search-box">
-            <span class="search-icon">ð</span>
-            <input type="search" id="searchInput" placeholder="åé¡çªå·ã»è±æã»æ¥æ¬èªã§æ¤ç´¢ï¼ä¾: 3, heavy, æ¯è¼ ãªã©ï¼">
+            <span class="search-icon">🔍</span>
+            <input type="search" id="searchInput" placeholder="問題番号・英文・日本語で検索（例: 3, heavy, 比較 など）">
         </div>
 
         <div class="mini-nav">
-            <button data-target="sectionA">[A] åæè¡¨ç¾ (1)</button>
-            <button data-target="sectionB">[B] ç©ºæè£å (2ã5)</button>
-            <button data-target="sectionC">[C] æ¸ãæã (6ã8)</button>
-            <button data-target="sectionD">[D] å±éèªè£å (9ã10)</button>
-            <button data-target="sectionE">[E] èª¤ãææ (11ã15)</button>
-            <button data-target="sectionF">[F] ä¸¦ã¹ãã (16ã20)</button>
+            <button data-target="sectionA">[A] 同意表現 (1)</button>
+            <button data-target="sectionB">[B] 空所補充 (2〜5)</button>
+            <button data-target="sectionC">[C] 書き換え (6〜8)</button>
+            <button data-target="sectionD">[D] 共通語補充 (9〜10)</button>
+            <button data-target="sectionE">[E] 誤り指摘 (11〜15)</button>
+            <button data-target="sectionF">[F] 並べかえ (16〜20)</button>
         </div>
     </div>
 
     <!-- CONTENT -->
     <main class="content">
         <div class="notice">
-            <strong>ä½¿ãæ¹ï¼</strong><br>
-            ð¹ è§£ãã¨ãï¼ã¾ãåé¡ã ãè¦ãã¦ãçå¾ã«ã¯ãã¼ããããªã³ãã§è§£ãããã<br>
-            ð¹ è§£èª¬ã¿ã¤ã ï¼ãã®ãã¼ã¸ã§ãð¡ãã³ã â è§£ç­ãè¦ã â è§£èª¬ããé ã«éããªããé²ããã
+            <strong>使い方：</strong><br>
+            🔹 解くとき：まず問題だけ見せて、生徒にはノートやプリントで解かせる。<br>
+            🔹 解説タイム：このページで「💡ヒント → 解答を見る → 解説」を順に開きながら進める。
         </div>
 
         <!-- ===== SECTION A ===== -->
         <section class="section" id="sectionA">
             <div class="section-header" onclick="toggleSection(this)">
-                <span class="section-label">[A] ä¸ç·é¨ã¨æãè¿ãæå³ (1) <small>å¯è©ã»ã¤ãã£ãªã </small></span>
-                <span class="toggle-icon">â¼</span>
+                <span class="section-label">[A] 下線部と最も近い意味 (1) <small>副詞・イディオム</small></span>
+                <span class="toggle-icon">▼</span>
             </div>
             <div class="section-content">
                 <div class="section-inner">
 
                     <!-- Q1 -->
                     <article class="question-card" data-q="1">
-                        <div class="question-number">åé¡ (1) <span class="q-type">æå³ãè¿ãèªå¥</span></div>
+                        <div class="question-number">問題 (1) <span class="q-type">意味が近い語句</span></div>
                         <div class="question-text">
                             He used to phone me <u>once in a while</u>, but not any more.
-                            <span class="jp">ãä»¥åã¯æãé»è©±ããããããä»ã¯ãããªãããã® once in a while ã«æãè¿ãèªãé¸ã¶ã</span>
+                            <span class="jp">「以前は時々電話をくれたが、今はもうない。」の once in a while に最も近い語を選ぶ。</span>
                         </div>
                         <div class="choices">
-                            <div>â  usuallyãâ¡ alwaysãâ¢ oftenãâ£ sometimes</div>
+                            <div>① usually　② always　③ often　④ sometimes</div>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                once in a while ã¯ããã¤ããã§ã¯ãªããã¨ãã©ããã<br>
-                                ããã¾ã«ãããããã¥ã¢ã³ã¹ã«ä¸çªè¿ãé¸æè¢ã¯ã©ãï¼
+                                once in a while は「いつも」ではなく「ときどき」。<br>
+                                「たまに〜する」ニュアンスに一番近い選択肢はどれ？
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼â£ sometimes</strong>ï¼ãã¾ã«ãã¨ãã©ãï¼
+                                <strong>✓ 正解：④ sometimes</strong>（たまに、ときどき）
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãonce in a while = sometimes</div>
+                                <div class="explanation-title">【解説】once in a while = sometimes</div>
                                 <p>
-                                    <strong>once in a while</strong> ã¯ããã¾ã«ããã¨ãã©ããã¨ããæå³ã®ã¤ãã£ãªã ã  
-                                    <strong>sometimes</strong> ãã»ã¼åããã¥ã¢ã³ã¹ãªã®ã§â£ãæ­£è§£ã
+                                    <strong>once in a while</strong> は「たまに」「ときどき」という意味のイディオム。  
+                                    <strong>sometimes</strong> がほぼ同じニュアンスなので④が正解。
                                 </p>
                                 <p>
-                                    â  usuallyãããã¦ããâ¡ alwaysããã¤ããã¯é »åº¦ãé«ããã  
-                                    â¢ oftenããã°ãã°ãããããªãé »ç¹ãã§ãonce in a while ããå¤ãã¤ã¡ã¼ã¸ã
+                                    ① usually「たいてい」② always「いつも」は頻度が高すぎ。  
+                                    ③ often「しばしば」も「かなり頻繁」で、once in a while より多いイメージ。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããå¯è©ã®é »åº¦</strong><br>
-                                always ï¼ usually ï¼ often ï¼ sometimes ï¼ hardly ever / seldom ï¼ never  
-                                once in a while â sometimesãã¨ãã©ãã
+                                <strong>【文法ポイント】副詞の頻度</strong><br>
+                                always ＞ usually ＞ often ＞ sometimes ＞ hardly ever / seldom ＞ never  
+                                once in a while ≒ sometimes「ときどき」
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
-                                I go to that cafÃ© once in a while.  
-                                <span class="translation">ã¨ãã©ããã®ã«ãã§ã«è¡ãã</span>
+                                <strong>例文：</strong><br>
+                                I go to that café once in a while.  
+                                <span class="translation">ときどきあのカフェに行く。</span>
                             </div>
                             <div class="translation">
-                                <strong>å¨æè¨³ï¼</strong>å½¼ã¯ä»¥åã¯ã¨ãã©ãç§ã«é»è©±ãã¦ãããããä»ã¯ããããªãã
+                                <strong>全文訳：</strong>彼は以前はときどき私に電話してくれたが、今はもうしない。
                             </div>
-                            <div class="source-note">[â 13. å½¢å®¹è©ã»å¯è©ãå«ãã¤ãã£ãªã ]</div>
+                            <div class="source-note">[→ 13. 形容詞・副詞を含むイディオム]</div>
                         </div>
                     </article>
 
@@ -713,203 +713,203 @@
         <!-- ===== SECTION B ===== -->
         <section class="section" id="sectionB">
             <div class="section-header" onclick="toggleSection(this)">
-                <span class="section-label">[B] ç©ºæè£å (2ã5) <small>åç½®è©ã»åè©ã®èªæ³ã»æå¶</small></span>
-                <span class="toggle-icon">â¼</span>
+                <span class="section-label">[B] 空所補充 (2〜5) <small>前置詞・動詞の語法・時制</small></span>
+                <span class="toggle-icon">▼</span>
             </div>
             <div class="section-content">
                 <div class="section-inner">
 
                     <!-- Q2 -->
                     <article class="question-card" data-q="2">
-                        <div class="question-number">åé¡ (2) <span class="q-type">åç½®è©</span></div>
+                        <div class="question-number">問題 (2) <span class="q-type">前置詞</span></div>
                         <div class="question-text">
-                            Are you (ãã) or against that proposal?
-                            <span class="jp">ãããªãã¯ãã®ææ¡ã«è³æã§ããï¼ããã¨ãåå¯¾ã§ãããã</span>
+                            Are you (　　) or against that proposal?
+                            <span class="jp">「あなたはその提案に賛成ですか，それとも反対ですか。」</span>
                         </div>
                         <div class="choices">
-                            <div>â  atãâ¡ withãâ¢ forãâ£ on</div>
+                            <div>① at　② with　③ for　④ on</div>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ãè³æãåå¯¾ããã¯è±èªã§ be (ã) or against ~ã  
-                                æ±ºã¾ãæå¥ã¨ãã¦è¦ãããã¤ã
+                                「賛成か反対か」は英語で be (　) or against ~。  
+                                決まり文句として覚えるやつ。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼â¢ for</strong>
+                                <strong>✓ 正解：③ for</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãbe for or against ~</div>
+                                <div class="explanation-title">【解説】be for or against ~</div>
                                 <p>
-                                    ããã«è³æã ãã¯ <strong>be for ~</strong>ãããã«åå¯¾ã ãã¯ <strong>be against ~</strong>ã  
-                                    ã»ããã§ <strong>for or against</strong> ã¨è¦ããã
+                                    「〜に賛成だ」は <strong>be for ~</strong>、「〜に反対だ」は <strong>be against ~</strong>。  
+                                    セットで <strong>for or against</strong> と覚える。
                                 </p>
                                 <p>
-                                    â  at, â¡ with, â£ on ã¯ãã®æå³ã§ã¯ä½¿ããªãã
+                                    ① at, ② with, ④ on はこの意味では使わない。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããåç½®è©ã¨æè¦è¡¨ç¾</strong><br>
-                                be for AãAã«è³æã§ããã / be against AãAã«åå¯¾ã§ããã
+                                <strong>【文法ポイント】前置詞と意見表現</strong><br>
+                                be for A「Aに賛成である」 / be against A「Aに反対である」
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
+                                <strong>例文：</strong><br>
                                 Are you for or against the new rule?  
-                                <span class="translation">ããªãã¯ãã®æ°ããã«ã¼ã«ã«è³æã§ããï¼ããã¨ãåå¯¾ã§ããã</span>
+                                <span class="translation">あなたはその新しいルールに賛成ですか，それとも反対ですか。</span>
                             </div>
-                            <div class="source-note">[â 19. åç½®è©ã¨ç¾¤åç½®è©ã®ç¨æ³]</div>
+                            <div class="source-note">[→ 19. 前置詞と群前置詞の用法]</div>
                         </div>
                     </article>
 
                     <!-- Q3 -->
                     <article class="question-card" data-q="3">
-                        <div class="question-number">åé¡ (3) <span class="q-type">åè©ã®èªæ³ï¼SVOCï¼</span></div>
+                        <div class="question-number">問題 (3) <span class="q-type">動詞の語法（SVOC）</span></div>
                         <div class="question-text">
-                            His failure in business (ãã) him to sell his house.
-                            <span class="jp">ãå½¼ã¯äºæ¥­ã®å¤±æã§å®¶ãå£²ããããå¾ãªãã£ããã</span>
+                            His failure in business (　　) him to sell his house.
+                            <span class="jp">「彼は事業の失敗で家を売らざるを得なかった。」</span>
                         </div>
                         <div class="choices">
-                            <div>â  hadãâ¡ engagedãâ¢ compelledãâ£ made</div>
+                            <div>① had　② engaged　③ compelled　④ made</div>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ããã«â¦ãããã¨ãå¼·ããã»ç¡çããããããã¨ããæå³ãè¡¨ãåè©ã  
-                                compel A to doãAã«ããããã¨ãå¼·ããããæãåºãã¦ã¿ããã
+                                「〜に…することを強いる・無理やりさせる」という意味を表す動詞。  
+                                compel A to do「Aに〜することを強いる」を思い出してみよう。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼â¢ compelled</strong>
+                                <strong>✓ 正解：③ compelled</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãcompel A to doãAã«ããããã¨ãå¼·ããã</div>
+                                <div class="explanation-title">【解説】compel A to do「Aに〜することを強いる」</div>
                                 <p>
-                                    ä¸»èªã¯ãHis failure in businessï¼äºæ¥­ã®å¤±æï¼ãã¨ããç¡çç©ã  
-                                    <strong>compel A to do</strong> ã§ãAã«ããããã¨ãå¼·ãããã  
-                                    ããã§ã¯ãäºæ¥­ã®å¤±æãå½¼ã«å®¶ãå£²ããããã¨ããæå³ã«ãªãã
+                                    主語は「His failure in business（事業の失敗）」という無生物。  
+                                    <strong>compel A to do</strong> で「Aに〜することを強いる」。  
+                                    ここでは「事業の失敗が彼に家を売らせた」という意味になる。
                                 </p>
                                 <p>
-                                    â£ made ã make A do ã§ä¼¼ãæå³ã ããããã§ã¯ãå¼·å¶ãã®ãã¥ã¢ã³ã¹ãå¼·ã
-                                    <strong>compelled</strong> ãé¸ã¶åé¡ã
+                                    ④ made も make A do で似た意味だが、ここでは「強制」のニュアンスが強い
+                                    <strong>compelled</strong> を選ぶ問題。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããç¡çç©ä¸»èª + compel / force ãªã©</strong><br>
+                                <strong>【文法ポイント】無生物主語 + compel / force など</strong><br>
                                 His failure <strong>compelled</strong> him to sell his house.  
-                                ãå¤±æãå½¼ã«å®¶ãå£²ããã¨ãå¼·ãããâ æ¥æ¬èªã§ã¯ããããããå¾ãªãã£ããã¨è¨³ãããã
+                                「失敗が彼に家を売ることを強いた」→ 日本語では「〜せざるを得なかった」と訳される。
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
+                                <strong>例文：</strong><br>
                                 The heavy rain compelled us to cancel the game.  
-                                <span class="translation">æ¿ããé¨ã®ãããç§ãã¡ã¯è©¦åãä¸­æ­¢ããããå¾ãªãã£ãã</span>
+                                <span class="translation">激しい雨のため、私たちは試合を中止せざるを得なかった。</span>
                             </div>
-                            <div class="source-note">[â 1. åè©ã®èªæ³]</div>
+                            <div class="source-note">[→ 1. 動詞の語法]</div>
                         </div>
                     </article>
 
                     <!-- Q4 -->
                     <article class="question-card" data-q="4">
-                        <div class="question-number">åé¡ (4) <span class="q-type">ä¸»èªã¨åè©ã®ä¸è´</span></div>
+                        <div class="question-number">問題 (4) <span class="q-type">主語と動詞の一致</span></div>
                         <div class="question-text">
-                            A large number of cars (ãã) parked outside the stadium.
-                            <span class="jp">ãããããã®è»ãã¹ã¿ã¸ã¢ã ã®å¤ã«é§è»ãã¦ãããã</span>
+                            A large number of cars (　　) parked outside the stadium.
+                            <span class="jp">「たくさんの車がスタジアムの外に駐車していた。」</span>
                         </div>
                         <div class="choices">
-                            <div>â  hasãâ¡ wereãâ¢ haveãâ£ was</div>
+                            <div>① has　② were　③ have　④ was</div>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                a large number of + è¤æ°åè© â åè©ã¯è¤æ°å½¢ã  
-                                be åè©ã§ãããé§è»ããã¦ããããè¡¨ãã¨ããè¤æ°ã«åãã®ã¯ã©ãï¼
+                                a large number of + 複数名詞 → 動詞は複数形。  
+                                be 動詞で「〜が駐車されていた」を表すとき、複数に合うのはどれ？
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼â¡ were</strong>
+                                <strong>✓ 正解：② were</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãa large number of + è¤æ°åè© â åè©ã¯è¤æ°å½¢</div>
+                                <div class="explanation-title">【解説】a large number of + 複数名詞 → 動詞は複数形</div>
                                 <p>
-                                    <strong>a large number of cars</strong> ã¯ãããããã®è»ãã§ãæå³ä¸ã¯è¤æ°ã  
-                                    ãããã£ã¦ãbe åè©ã <strong>were</strong>ï¼è¤æ°å½¢ï¼ã«ãªãã
+                                    <strong>a large number of cars</strong> は「たくさんの車」で、意味上は複数。  
+                                    したがって、be 動詞も <strong>were</strong>（複数形）になる。
                                 </p>
                                 <p>
-                                    â  has, â£ was ã¯åæ°æ±ãã®ã¨ããâ¢ have ã¯ä¸è¬åè©ã ããããã¯ååæãé§è»ããã¦ããããªã®ã§ä¸é©ã
+                                    ① has, ④ was は単数扱いのとき。③ have は一般動詞だが、ここは受動態「駐車されていた」なので不適。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããæ°éè¡¨ç¾ + ä¸»èªã¨åè©ã®ä¸è´</strong><br>
-                                a large number of + è¤æ°åè© â åè©ã¯è¤æ°å½¢  
+                                <strong>【文法ポイント】数量表現 + 主語と動詞の一致</strong><br>
+                                a large number of + 複数名詞 → 動詞は複数形  
                                 a number of students <strong>are</strong> ...  
-                                the number of students <strong>is</strong> ...ï¼ãã¡ãã¯åæ°æ±ãï¼
+                                the number of students <strong>is</strong> ...（こちらは単数扱い）
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
+                                <strong>例文：</strong><br>
                                 A large number of people were waiting in line.  
-                                <span class="translation">å¤ãã®äººããåã«ä¸¦ãã§å¾ã£ã¦ããã</span>
+                                <span class="translation">多くの人々が列に並んで待っていた。</span>
                             </div>
-                            <div class="source-note">[â 20. ä¸»èªã¨åè©ã®ä¸è´]</div>
+                            <div class="source-note">[→ 20. 主語と動詞の一致]</div>
                         </div>
                     </article>
 
                     <!-- Q5 -->
                     <article class="question-card" data-q="5">
-                        <div class="question-number">åé¡ (5) <span class="q-type">å¯è©ã®èªæ³ã»æã®å¯è©</span></div>
+                        <div class="question-number">問題 (5) <span class="q-type">副詞の語法・時の副詞</span></div>
                         <div class="question-text">
-                            I've not been feeling very well (ãã).
-                            <span class="jp">ãæè¿ãã¾ãä½èª¿ããããªããã</span>
+                            I've not been feeling very well (　　).
+                            <span class="jp">「最近あまり体調がよくない。」</span>
                         </div>
                         <div class="choices">
-                            <div>â  latelyãâ¡ laterãâ¢ lateãâ£ latter</div>
+                            <div>① lately　② later　③ late　④ latter</div>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ãæè¿ãã¯ recently / latelyã  
-                                late, later, latter ã®æå³ã®éããæè­ãããã
+                                「最近」は recently / lately。  
+                                late, later, latter の意味の違いも意識しよう。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼â  lately</strong>
+                                <strong>✓ 正解：① lately</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãlately = recentlyãæè¿ã</div>
+                                <div class="explanation-title">【解説】lately = recently「最近」</div>
                                 <p>
-                                    <strong>lately</strong> ã¨ <strong>recently</strong> ã¯ã©ã¡ãããæè¿ãã  
-                                    ç¾å¨å®äºå½¢ï¼have/has + éå»åè©ï¼ã¨ä¸ç·ã«ä½¿ããããã¨ãå¤ãã
+                                    <strong>lately</strong> と <strong>recently</strong> はどちらも「最近」。  
+                                    現在完了形（have/has + 過去分詞）と一緒に使われることが多い。
                                 </p>
                                 <p>
-                                    â¡ laterããã¨ã§ãâ¢ lateãéããâ£ latterãå¾èã®ããªã®ã§ææã«åããªãã
+                                    ② later「あとで」③ late「遅く」④ latter「後者の」なので文意に合わない。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããæè¿ãè¡¨ãå¯è©</strong><br>
-                                recently / latelyï¼æè¿ï¼ç¾å¨å®äºå½¢ã¨ç¸æ§ãããï¼<br>
-                                these daysï¼è¿é ï¼é²è¡å½¢ã¨ããã»ããï¼
+                                <strong>【文法ポイント】最近を表す副詞</strong><br>
+                                recently / lately：最近（現在完了形と相性がよい）<br>
+                                these days：近頃（進行形とよくセット）
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
+                                <strong>例文：</strong><br>
                                 I've been very busy lately.  
-                                <span class="translation">æè¿ã¨ã¦ãå¿ããã</span>
+                                <span class="translation">最近とても忙しい。</span>
                             </div>
-                            <div class="source-note">[â 11. å¯è©ã®èªæ³]</div>
+                            <div class="source-note">[→ 11. 副詞の語法]</div>
                         </div>
                     </article>
 
@@ -920,140 +920,140 @@
         <!-- ===== SECTION C ===== -->
         <section class="section" id="sectionC">
             <div class="section-header" onclick="toggleSection(this)">
-                <span class="section-label">[C] æ¸ãæã (6ã8) <small>tooãto, ä½¿å½¹, ååè©</small></span>
-                <span class="toggle-icon">â¼</span>
+                <span class="section-label">[C] 書き換え (6〜8) <small>too〜to, 使役, 動名詞</small></span>
+                <span class="toggle-icon">▼</span>
             </div>
             <div class="section-content">
                 <div class="section-inner">
 
                     <!-- Q6 -->
                     <article class="question-card" data-q="6">
-                        <div class="question-number">åé¡ (6) <span class="q-type">soãthat â tooãto</span></div>
+                        <div class="question-number">問題 (6) <span class="q-type">so〜that ⇔ too〜to</span></div>
                         <div class="question-text">
                             (a) This box is so heavy that I cannot lift it.<br>
-                            (b) This is (ãã) (ãã) a box for me to lift.
-                            <span class="jp">æå³ãã»ã¼åãã«ãªãããã«ç©ºæã«èªãå¥ããã</span>
+                            (b) This is (　　) (　　) a box for me to lift.
+                            <span class="jp">意味がほぼ同じになるように空所に語を入れる。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                so ã that S cannot ... â too ã to ...  
-                                ããããã¦â¦ã§ããªããã®å½¢ã«æ¸ãæããã
+                                so 〜 that S cannot ... ⇔ too 〜 to ...  
+                                「〜すぎて…できない」の形に書き換える。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼too heavy</strong>
+                                <strong>✓ 正解：too heavy</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãso heavy that... â too heavy to...</div>
+                                <div class="explanation-title">【解説】so heavy that... ⇔ too heavy to...</div>
                                 <p>
-                                    (a)ããã®ç®±ã¯ã¨ã¦ãéãã®ã§ï¼ç§ã¯ãããæã¡ä¸ããããªããã  
-                                    â (b)ãããã¯ç§ãæã¡ä¸ããã«ã¯<strong>éããã</strong>ç®±ã ãã
+                                    (a)「この箱はとても重いので，私はそれを持ち上げられない。」  
+                                    → (b)「これは私が持ち上げるには<strong>重すぎる</strong>箱だ。」
                                 </p>
                                 <p>
-                                    ããããã¦â¦ã§ããªããã¯ <strong>too + å½¢å®¹è© + to åè©</strong> ã®å½¢ã
+                                    「〜すぎて…できない」は <strong>too + 形容詞 + to 動詞</strong> の形。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããso ã that... / too ã to...</strong><br>
-                                so + å½¢å®¹è©/å¯è© + that S cannot ...  
-                                â too + å½¢å®¹è©/å¯è© + to åè©
+                                <strong>【文法ポイント】so 〜 that... / too 〜 to...</strong><br>
+                                so + 形容詞/副詞 + that S cannot ...  
+                                ⇔ too + 形容詞/副詞 + to 動詞
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
+                                <strong>例文：</strong><br>
                                 He is so tired that he can't walk.  
                                 = He is too tired to walk.  
-                                <span class="translation">å½¼ã¯ã¨ã¦ãç²ãã¦ãã¦æ­©ããªãã</span>
+                                <span class="translation">彼はとても疲れていて歩けない。</span>
                             </div>
-                            <div class="source-note">[â 6. ä¸å®è©]</div>
+                            <div class="source-note">[→ 6. 不定詞]</div>
                         </div>
                     </article>
 
                     <!-- Q7 -->
                     <article class="question-card" data-q="7">
-                        <div class="question-number">åé¡ (7) <span class="q-type">å½ä»¤æ â ä½¿å½¹ let</span></div>
+                        <div class="question-number">問題 (7) <span class="q-type">命令文 ⇔ 使役 let</span></div>
                         <div class="question-text">
                             (a) Open the door at once.<br>
-                            (b) (ãã) the door (ãã) opened at once.
+                            (b) (　　) the door (　　) opened at once.
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ããããããã¨ããå½ä»¤ã¯ <strong>Let + ç®çèª + éå»åè©</strong> ã§ãè¨ããã  
-                                ã¾ãå½ä»¤æããããªãããã®ä»£è¡¨ã¯ Let ... ããå§ã¾ãå½¢ã
+                                「〜させよ」という命令は <strong>Let + 目的語 + 過去分詞</strong> でも言える。  
+                                まず命令文「〜しなさい」の代表は Let ... から始まる形。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼Let, be</strong>
+                                <strong>✓ 正解：Let, be</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãLet + O + be + éå»åè©</div>
+                                <div class="explanation-title">【解説】Let + O + be + 過去分詞</div>
                                 <p>
-                                    (a)ãããã«ãã¢ãéããªãããã  
-                                    (b) ã¯ããã¢ãããã«éããããããã«ããªãããï¼Let the door be opened at once.
+                                    (a)「すぐにドアを開けなさい。」  
+                                    (b) は「ドアがすぐに開けられるようにしなさい」＝Let the door be opened at once.
                                 </p>
                                 <p>
-                                    Let + ç®çèª + be + éå»åè© ã§ãåãèº«ã®å½ä»¤æãä½ããã
+                                    Let + 目的語 + be + 過去分詞 で、受け身の命令文を作れる。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããLet ãä½¿ã£ãå½ä»¤æ</strong><br>
-                                Let us begin.ãããå§ãã¾ããããã  
-                                Let the work be done at once.ããã®ä»äºãããã«ããããªãããã
+                                <strong>【文法ポイント】Let を使った命令文</strong><br>
+                                Let us begin.「さあ始めましょう。」  
+                                Let the work be done at once.「その仕事をすぐにやらせなさい。」
                             </div>
-                            <div class="source-note">[â 3. æ]</div>
+                            <div class="source-note">[→ 3. 態]</div>
                         </div>
                     </article>
 
                     <!-- Q8 -->
                     <article class="question-card" data-q="8">
-                        <div class="question-number">åé¡ (8) <span class="q-type">ååè© / difficulty ~ing</span></div>
+                        <div class="question-number">問題 (8) <span class="q-type">動名詞 / difficulty ~ing</span></div>
                         <div class="question-text">
                             (a) It was quite easy for him to solve the problems.<br>
-                            (b) He had no (ãã) in (ãã) the problems.
+                            (b) He had no (　　) in (　　) the problems.
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ããããã®ã¯ç°¡åã ã£ããâããããã®ã«ä½ã®è¦å´ããªãã£ããã  
-                                have difficulty (in) doingããããã®ã«è¦å´ããããæãåºããã
+                                「〜するのは簡単だった」⇔「〜するのに何の苦労もなかった」。  
+                                have difficulty (in) doing「〜するのに苦労する」を思い出そう。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼difficulty / troubleï¼solving</strong>ï¼difficulty or trouble + solvingï¼</div>
+                                <strong>✓ 正解：difficulty / trouble，solving</strong>（difficulty or trouble + solving）</div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãhave no difficulty in doing</div>
+                                <div class="explanation-title">【解説】have no difficulty in doing</div>
                                 <p>
-                                    have difficulty (in) doingããããã®ã«è¦å´ããã  
-                                    â have <strong>no</strong> difficulty (in) doingããããã®ã«ä½ã®è¦å´ããªãã
+                                    have difficulty (in) doing「〜するのに苦労する」  
+                                    → have <strong>no</strong> difficulty (in) doing「〜するのに何の苦労もない」
                                 </p>
                                 <p>
-                                    ããã§ã¯ difficulty / trouble ã©ã¡ãã§ãããããå¾ãã¯ååè© <strong>solving</strong> ãå¥ãã
+                                    ここでは difficulty / trouble どちらでもよいが、後ろは動名詞 <strong>solving</strong> が入る。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããååè©ãã¨ãæ£ç¨è¡¨ç¾</strong><br>
-                                have difficulty (in) doingï¼ãããã®ã«è¦å´ãã  
-                                have trouble (in) doingï¼ãããã®ã«è¦å´ãã
+                                <strong>【文法ポイント】動名詞をとる慣用表現</strong><br>
+                                have difficulty (in) doing：〜するのに苦労する  
+                                have trouble (in) doing：〜するのに苦労する
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
+                                <strong>例文：</strong><br>
                                 She had no difficulty (in) answering the question.  
-                                <span class="translation">å½¼å¥³ã¯ãã®è³ªåã«ç­ããã®ã«ä½ã®è¦å´ããªãã£ãã</span>
+                                <span class="translation">彼女はその質問に答えるのに何の苦労もなかった。</span>
                             </div>
-                            <div class="source-note">[â 8. ååè©]</div>
+                            <div class="source-note">[→ 8. 動名詞]</div>
                         </div>
                     </article>
 
@@ -1064,105 +1064,105 @@
         <!-- ===== SECTION D ===== -->
         <section class="section" id="sectionD">
             <div class="section-header" onclick="toggleSection(this)">
-                <span class="section-label">[D] å±éèªè£å (9ã10) <small>good / do ã®ã¤ãã£ãªã </small></span>
-                <span class="toggle-icon">â¼</span>
+                <span class="section-label">[D] 共通語補充 (9〜10) <small>good / do のイディオム</small></span>
+                <span class="toggle-icon">▼</span>
             </div>
             <div class="section-content">
                 <div class="section-inner">
 
                     <!-- Q9 -->
                     <article class="question-card" data-q="9">
-                        <div class="question-number">åé¡ (9) <span class="q-type">å±éèªè£åï¼good</span></div>
+                        <div class="question-number">問題 (9) <span class="q-type">共通語補充：good</span></div>
                         <div class="question-text">
-                            (a) Yesterday John bought a used car that was as (ãã) as new from his neighbor.<br>
-                            (b) After being hospitalized with a heart problem, Bob decided to quit smoking for (ãã).
-                            <span class="jp">(a)(b) ã®ä¸¡æ¹ã«å¥ã1èªãç­ããã</span>
+                            (a) Yesterday John bought a used car that was as (　　) as new from his neighbor.<br>
+                            (b) After being hospitalized with a heart problem, Bob decided to quit smoking for (　　).
+                            <span class="jp">(a)(b) の両方に入る1語を答える。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                (a) as (ã) as newãæ°ååæ§ã®ã  
-                                (b) quit smoking for (ã)ããã£ã±ããããã  
-                                ä¸¡æ¹ã¨ãå½¢å®¹è© good ããçºæ³ã§ããè¡¨ç¾ã
+                                (a) as (　) as new「新品同様の」  
+                                (b) quit smoking for (　)「きっぱりやめる」  
+                                両方とも形容詞 good から発想できる表現。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼good</strong>
+                                <strong>✓ 正解：good</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãas good as new / for good</div>
+                                <div class="explanation-title">【解説】as good as new / for good</div>
                                 <p>
-                                    (a) as <strong>good</strong> as newãæ°ååæ§ã®ã  
-                                    (b) quit smoking for <strong>good</strong>ãã¿ãã³ããã£ã±ããããï¼ï¼æ°¸é ã«ï¼ã
+                                    (a) as <strong>good</strong> as new「新品同様の」  
+                                    (b) quit smoking for <strong>good</strong>「タバコをきっぱりやめる（＝永遠に）」
                                 </p>
                                 <p>
-                                    for good ã¯ãæ°¸é ã«ããäºåº¦ã¨ãããªãããã«ãã®æå³ã§ããåºãã
+                                    for good は「永遠に」「二度と〜しないように」の意味でよく出る。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããgood ãå«ãã¤ãã£ãªã </strong><br>
-                                as good as newãæ°ååæ§ã  
-                                for goodãæ°¸ä¹ã«ï¼ãã£ã±ãã¨ã
+                                <strong>【文法ポイント】good を含むイディオム</strong><br>
+                                as good as new「新品同様」  
+                                for good「永久に，きっぱりと」
                             </div>
                             <div class="example">
-                                <strong>ä¾æï¼</strong><br>
+                                <strong>例文：</strong><br>
                                 I stopped playing that game for good.  
-                                <span class="translation">ãã®ã²ã¼ã ãäºåº¦ã¨ããªãããã«ãããã</span>
+                                <span class="translation">そのゲームを二度としないようにやめた。</span>
                             </div>
-                            <div class="source-note">[â 25. å±éèªè£å]</div>
+                            <div class="source-note">[→ 25. 共通語補充]</div>
                         </div>
                     </article>
 
                     <!-- Q10 -->
                     <article class="question-card" data-q="10">
-                        <div class="question-number">åé¡ (10) <span class="q-type">å±éèªè£åï¼do</span></div>
+                        <div class="question-number">問題 (10) <span class="q-type">共通語補充：do</span></div>
                         <div class="question-text">
-                            (a) Bad books (ãã) more harm than bad companions.<br>
-                            (b) This log will (ãã) for a seat.<br>
-                            (c) I have nothing to (ãã) with the matter.
-                            <span class="jp">(a)(b)(c) ã«å±éãã¦å¥ã1èªãç­ããã</span>
+                            (a) Bad books (　　) more harm than bad companions.<br>
+                            (b) This log will (　　) for a seat.<br>
+                            (c) I have nothing to (　　) with the matter.
+                            <span class="jp">(a)(b)(c) に共通して入る1語を答える。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ã©ãããããããéã«åãããããé¢ä¿ããããã¨ããæå³ã§ä½¿ããï¼è¶åºæ¬åè©ã  
-                                do ã®ããããªä½¿ãæ¹ãã¤ã¡ã¼ã¸ãã¦ã¿ããã
+                                どれも「する」「間に合わせる」「関係がある」という意味で使える，超基本動詞。  
+                                do のいろんな使い方をイメージしてみよう。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼do</strong>
+                                <strong>✓ 正解：do</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãdo ãå« ãè²ããªè¡¨ç¾</div>
+                                <div class="explanation-title">【解説】do を含 む色々な表現</div>
                                 <p>
                                     (a) Bad books <strong>do</strong> more harm ...  
-                                    ãæªæ¸ã¯æªãåäººãããå¤ãã®å®³ãä¸ããã  
-                                    â do harmãå®³ãä¸ããã
+                                    「悪書は悪い友人よりも多くの害を与える」  
+                                    → do harm「害を与える」
                                 </p>
                                 <p>
                                     (b) This log will <strong>do</strong> for a seat.  
-                                    ããã®ä¸¸å¤ªã¯è°ããã¨ãã¦éã«åãã  
-                                    â will doãéã«åãï¼å½¹ã«ç«ã¤ã
+                                    「この丸太は腰かけとして間に合う」  
+                                    → will do「間に合う，役に立つ」
                                 </p>
                                 <p>
                                     (c) I have nothing to <strong>do</strong> with the matter.  
-                                    ããã®ä»¶ã¨ã¯ä¸åé¢ä¿ããªãã  
-                                    â have nothing to do with ~ããã¨é¢ä¿ããªãã
+                                    「その件とは一切関係がない」  
+                                    → have nothing to do with ~「〜と関係がない」
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããdo ãä½¿ã£ãã¤ãã£ãªã </strong><br>
+                                <strong>【文法ポイント】do を使ったイディオム</strong><br>
                                 do harm / do good, will do, have nothing to do with ~
                             </div>
-                            <div class="source-note">[â 25. å±éèªè£å]</div>
+                            <div class="source-note">[→ 25. 共通語補充]</div>
                         </div>
                     </article>
 
@@ -1173,208 +1173,208 @@
         <!-- ===== SECTION E ===== -->
         <section class="section" id="sectionE">
             <div class="section-header" onclick="toggleSection(this)">
-                <span class="section-label">[E] èª¤ãææã»è¨æ­£ (11ã15) <small>å¯è©ã»åç½®è©ã»æ¯è¼ ãªã©</small></span>
-                <span class="toggle-icon">â¼</span>
+                <span class="section-label">[E] 誤り指摘・訂正 (11〜15) <small>副詞・前置詞・比較 など</small></span>
+                <span class="toggle-icon">▼</span>
             </div>
             <div class="section-content">
                 <div class="section-inner">
 
                     <!-- Q11 -->
                     <article class="question-card" data-q="11">
-                        <div class="question-number">åé¡ (11) <span class="q-type">å¯è©ã®èªæ³</span></div>
+                        <div class="question-number">問題 (11) <span class="q-type">副詞の語法</span></div>
                         <div class="question-text">
-                            As we â have seen, most of the money spent in the United States is â¡in the form of checks.  
-                            Not everyone, â¢although, can write out â£a check.
-                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                            As we ①have seen, most of the money spent in the United States is ②in the form of checks.  
+                            Not everyone, ③although, can write out ④a check.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                æä¸­ã§æµ®ãã¦ããå¯è©ãæ¢ããã  
-                                although ã¯æ¥ç¶è©ããããããªãããã¯ however ã§è¡¨ããã¨ãå¤ãã
+                                文中で浮いている副詞を探そう。  
+                                although は接続詞。「しかしながら」は however で表すことが多い。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â èª¤ãï¼â¢ although â æ­£ï¼though / however</strong>
+                                <strong>✓ 誤り：③ although → 正：though / however</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ããããããªãããã®ä½ç½®ã¨åè©</div>
+                                <div class="explanation-title">【解説】「しかしながら」の位置と品詞</div>
                                 <p>
-                                    Not everyone, <strong>although</strong>, can write out a check. ã¯ä¸èªç¶ã  
-                                    although ã¯æ¥ç¶è©ãªã®ã§ãéå¸¸ã¯ç¯ãå°ãï¼Although S V, ...ï¼ã
+                                    Not everyone, <strong>although</strong>, can write out a check. は不自然。  
+                                    although は接続詞なので、通常は節を導く（Although S V, ...）。
                                 </p>
                                 <p>
-                                    ããã§ã¯æä¸­ã«æ¿å¥ããå¯è©ãããããªããããã»ããã®ã§  
-                                    <strong>though</strong>ï¼å¯è©ç¨æ³ï¼ã <strong>however</strong> ãç½®ãã®ãèªç¶ã
+                                    ここでは文中に挿入する副詞「しかしながら」がほしいので  
+                                    <strong>though</strong>（副詞用法）か <strong>however</strong> を置くのが自然。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããthough / although / however</strong><br>
-                                although / thoughï¼æ¥ç¶è©ããã ããã©ãã  
-                                thoughï¼ææ«ã§å¯è©çã«ãã ãã©ã­ãã®æå³ã§ãä½¿ãã  
-                                howeverï¼å¯è©ãããããªããã
+                                <strong>【文法ポイント】though / although / however</strong><br>
+                                although / though：接続詞「〜だけれども」  
+                                though：文末で副詞的に「だけどね」の意味でも使える  
+                                however：副詞「しかしながら」
                             </div>
-                            <div class="source-note">[â 11. å¯è©ã®èªæ³]</div>
+                            <div class="source-note">[→ 11. 副詞の語法]</div>
                         </div>
                     </article>
 
                     <!-- Q12 -->
                     <article class="question-card" data-q="12">
-                        <div class="question-number">åé¡ (12) <span class="q-type">åç½®è© beside / besides</span></div>
+                        <div class="question-number">問題 (12) <span class="q-type">前置詞 beside / besides</span></div>
                         <div class="question-text">
-                            We have a number of â other suggestions â¡beside these â¢for the improvement â£of the system.
-                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                            We have a number of ①other suggestions ②beside these ③for the improvement ④of the system.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                beside ã¨ besides ã®éããæãåºããã  
-                                ããã®ãã°ã«ããªã®ãããã«å ãã¦ï¼ãä»¥å¤ã«ããªã®ãã
+                                beside と besides の違いを思い出そう。  
+                                「〜のそばに」なのか「〜に加えて／〜以外に」なのか。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â èª¤ãï¼â¡ beside â æ­£ï¼besides</strong>
+                                <strong>✓ 誤り：② beside → 正：besides</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãbesideããã°ã«ãvs besidesããã«å ãã¦ã</div>
+                                <div class="explanation-title">【解説】beside「そばに」vs besides「〜に加えて」</div>
                                 <p>
-                                    ææã¯ããããã«å ãã¦ãä»ã®ææ¡ããããã  
-                                    ãã£ã¦ããã«å ãã¦ãã® <strong>besides</strong> ãä½¿ãã
+                                    文意は「これらに加えて、他の提案もある」。  
+                                    よって「〜に加えて」の <strong>besides</strong> を使う。
                                 </p>
                                 <p>
-                                    <strong>beside</strong> ã¯ããã®ãã°ã«ããå¨ãæå³ãéãã®ã§æ³¨æã
+                                    <strong>beside</strong> は「〜のそばに」。全く意味が違うので注意。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããåç½®è© beside / besides</strong><br>
-                                beside AãAã®ãã°ã«ã  
-                                besides AãAã«å ãã¦ï¼Aã®ã»ãã«ã
+                                <strong>【文法ポイント】前置詞 beside / besides</strong><br>
+                                beside A「Aのそばに」  
+                                besides A「Aに加えて，Aのほかに」
                             </div>
-                            <div class="source-note">[â 19. åç½®è©ã¨ç¾¤åç½®è©ã®ç¨æ³]</div>
+                            <div class="source-note">[→ 19. 前置詞と群前置詞の用法]</div>
                         </div>
                     </article>
 
                     <!-- Q13 -->
                     <article class="question-card" data-q="13">
-                        <div class="question-number">åé¡ (13) <span class="q-type">å½¢å®¹è© almost / most</span></div>
+                        <div class="question-number">問題 (13) <span class="q-type">形容詞 almost / most</span></div>
                         <div class="question-text">
-                            â In the early days when the West â¡was being settled, horses were the â¢main mode of 
-                            transportation, so â£almost pioneers rode well.
-                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                            ①In the early days when the West ②was being settled, horses were the ③main mode of 
+                            transportation, so ④almost pioneers rode well.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ãã»ã¨ãã©ã®éæèãã¯ almost pioneers ã most pioneers ãï¼  
-                                almost ã¯ãã»ã¨ãã©ããªããã¨ä¸ç·ã«åºããã¨ãå¤ãã
+                                「ほとんどの開拓者」は almost pioneers か most pioneers か？  
+                                almost は「ほとんど〜ない」と一緒に出ることが多い。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â èª¤ãï¼â£ almost â æ­£ï¼most</strong>
+                                <strong>✓ 誤り：④ almost → 正：most</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãmost + åè©ãã»ã¨ãã©ã®ãã</div>
+                                <div class="explanation-title">【解説】most + 名詞「ほとんどの〜」</div>
                                 <p>
-                                    ãã»ã¨ãã©ã®éæèãã¯ <strong>most pioneers</strong>ã  
-                                    <strong>almost</strong> ã¯å¯è©ã§ãalmost all / almost no ãªã©ã§ä½¿ããã¨ãå¤ãã
+                                    「ほとんどの開拓者」は <strong>most pioneers</strong>。  
+                                    <strong>almost</strong> は副詞で、almost all / almost no などで使うことが多い。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããmost ã¨ almost</strong><br>
-                                most + åè©ãã»ã¨ãã©ã®ãã  
-                                almost all ... / almost no ...ãã»ã¨ãã©ãã¹ã¦ / ã»ã¨ãã©ããªãã
+                                <strong>【文法ポイント】most と almost</strong><br>
+                                most + 名詞「ほとんどの〜」  
+                                almost all ... / almost no ...「ほとんどすべて / ほとんど〜ない」
                             </div>
-                            <div class="source-note">[â 10. å½¢å®¹è©ã®èªæ³]</div>
+                            <div class="source-note">[→ 10. 形容詞の語法]</div>
                         </div>
                     </article>
 
                     <!-- Q14 -->
                     <article class="question-card" data-q="14">
-                        <div class="question-number">åé¡ (14) <span class="q-type">æ¯è¼æ§æ</span></div>
+                        <div class="question-number">問題 (14) <span class="q-type">比較構文</span></div>
                         <div class="question-text">
-                            â I have never seen â¡the economy as â¢worse as â£it is now.
-                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                            ①I have never seen ②the economy as ③worse as ④it is now.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                as ã as ã®ä¸­èº«ã¯åç´ï¼å½¢å®¹è©ã®åºæ¬å½¢ï¼ã  
-                                worse ã¯æ¯è¼ç´ãã©ããªå½¢ã«ç´ãï¼
+                                as 〜 as の中身は原級（形容詞の基本形）。  
+                                worse は比較級。どんな形に直す？
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â èª¤ãï¼â¢ worse â æ­£ï¼bad</strong>
+                                <strong>✓ 誤り：③ worse → 正：bad</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãas + åç´ + as</div>
+                                <div class="explanation-title">【解説】as + 原級 + as</div>
                                 <p>
-                                    as ã as ã®ä¸­ã¯ <strong>åç´</strong> ãå¥ãã®ã§ãworseï¼æ¯è¼ç´ï¼ã§ã¯ãªã <strong>bad</strong>ã
+                                    as 〜 as の中は <strong>原級</strong> が入るので、worse（比較級）ではなく <strong>bad</strong>。
                                 </p>
                                 <p>
                                     I have never seen the economy as bad as it is now.  
-                                    ãä»ã»ã©ã²ã©ãæ¯æ°ãè¦ããã¨ããªããã
+                                    「今ほどひどい景気を見たことがない。」
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããåç´æ¯è¼ as ã as</strong><br>
-                                as + å½¢å®¹è©ã»å¯è©ï¼åç´ï¼ + as  
+                                <strong>【文法ポイント】原級比較 as 〜 as</strong><br>
+                                as + 形容詞・副詞（原級） + as  
                                 This bag is as big as that one.
                             </div>
-                            <div class="source-note">[â 12. æ¯è¼]</div>
+                            <div class="source-note">[→ 12. 比較]</div>
                         </div>
                     </article>
 
                     <!-- Q15 -->
                     <article class="question-card" data-q="15">
-                        <div class="question-number">åé¡ (15) <span class="q-type">ä¸»èªã¨åè©ã®ä¸è´</span></div>
+                        <div class="question-number">問題 (15) <span class="q-type">主語と動詞の一致</span></div>
                         <div class="question-text">
-                            â Just as you and I can stand in front of a mirror and see our images, â¡so also â¢do the 
-                            federal government budget â£reflect America.
-                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                            ①Just as you and I can stand in front of a mirror and see our images, ②so also ③do the 
+                            federal government budget ④reflect America.
+                            <span class="jp">誤っている番号と正しい形を書きなさい。</span>
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ä¸»èªã¯ã©ãï¼ budget ã¯åæ°æ±ããè¤æ°æ±ããï¼  
-                                ãããã¾ãâ¦ã ãã¨ããå½¢ã§ãå©åè©ã do ã®å½¢ã«æ³¨æã
+                                主語はどれ？ budget は単数扱いか複数扱いか？  
+                                「〜もまた…だ」という形で、助動詞や do の形に注意。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â èª¤ãï¼â¢ do â æ­£ï¼does / can</strong>
+                                <strong>✓ 誤り：③ do → 正：does / can</strong>
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãåæ°ä¸»èª + does / can</div>
+                                <div class="explanation-title">【解説】単数主語 + does / can</div>
                                 <p>
-                                    ä¸»èªã¯ the federal government budgetï¼åæ°ï¼ã  
-                                    ãããã£ã¦ãä¸äººç§°åæ°ç¾å¨ã® <strong>does</strong> ãããã¨ãã¨ã®æã«åããã¦ <strong>can</strong> ãä½¿ãã
+                                    主語は the federal government budget（単数）。  
+                                    したがって、三人称単数現在の <strong>does</strong> か、もともとの文に合わせて <strong>can</strong> を使う。
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããä¸»èªã¨åè©ã®ä¸è´</strong><br>
-                                åæ°ä¸»èª â does / is / has  
-                                è¤æ°ä¸»èª â do / are / have
+                                <strong>【文法ポイント】主語と動詞の一致</strong><br>
+                                単数主語 → does / is / has  
+                                複数主語 → do / are / have
                             </div>
-                            <div class="source-note">[â 20. ä¸»èªã¨åè©ã®ä¸è´]</div>
+                            <div class="source-note">[→ 20. 主語と動詞の一致]</div>
                         </div>
                     </article>
 
@@ -1385,184 +1385,184 @@
         <!-- ===== SECTION F ===== -->
         <section class="section" id="sectionF">
             <div class="section-header" onclick="toggleSection(this)">
-                <span class="section-label">[F] ä¸¦ã¹ãã (16ã20) <small>ã¤ãã£ãªã ã»èªé </small></span>
-                <span class="toggle-icon">â¼</span>
+                <span class="section-label">[F] 並べかえ (16〜20) <small>イディオム・語順</small></span>
+                <span class="toggle-icon">▼</span>
             </div>
             <div class="section-content">
                 <div class="section-inner">
 
                     <!-- Q16 -->
                     <article class="question-card" data-q="16">
-                        <div class="question-number">åé¡ (16) <span class="q-type">be afraid of ~ing</span></div>
+                        <div class="question-number">問題 (16) <span class="q-type">be afraid of ~ing</span></div>
                         <div class="question-text">
-                            å°ããããã®ééãã¯æ°ã«ããªãã§è±èªãè©±ããªãããï¼1èªä¸è¦ï¼<br>
+                            少しぐらいの間違いは気にしないで英語を話しなさい。（1語不要）<br>
                             Don't ( of / mind / in / mistakes / afraid / a few / be / making ) speaking English.
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ãããæãããã¯ be afraid of ~ã  
-                                ãå°ãã®ããã¯ a few mistakesã  
-                                mind ã¯ä»åã¯ä¸è¦ã«ãªãã
+                                「〜を恐れる」は be afraid of ~。  
+                                「少しの〜」は a few mistakes。  
+                                mind は今回は不要になる。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼</strong>Don't <strong>be afraid of making a few mistakes in</strong> speaking English.ï¼mind ä¸è¦ï¼
+                                <strong>✓ 正解：</strong>Don't <strong>be afraid of making a few mistakes in</strong> speaking English.（mind 不要）
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãbe afraid of ~ingãããããã¨ãæããã</div>
+                                <div class="explanation-title">【解説】be afraid of ~ing「〜することを恐れる」</div>
                                 <p>
-                                    ãå°ããããééãã¦ãæ°ã«ãããï¼ãééããã¨ãæããã«ãã  
-                                    â Don't be afraid of making a few mistakes in speaking English.
+                                    「少しぐらい間違えても気にせず」＝「間違うことを恐れずに」。  
+                                    → Don't be afraid of making a few mistakes in speaking English.
                                 </p>
                             </div>
                             <div class="grammar-point">
-                                <strong>ãææ³ãã¤ã³ããbe afraid of ~ing</strong><br>
-                                be afraid of making mistakesãééãã®ãæããã
+                                <strong>【文法ポイント】be afraid of ~ing</strong><br>
+                                be afraid of making mistakes「間違うのを恐れる」
                             </div>
-                            <div class="source-note">[â 13. å½¢å®¹è©ã»å¯è©ãå«ãã¤ãã£ãªã ]</div>
+                            <div class="source-note">[→ 13. 形容詞・副詞を含むイディオム]</div>
                         </div>
                     </article>
 
                     <!-- Q17 -->
                     <article class="question-card" data-q="17">
-                        <div class="question-number">åé¡ (17) <span class="q-type">æ¯è¼æ§æ with better for it</span></div>
+                        <div class="question-number">問題 (17) <span class="q-type">比較構文 with better for it</span></div>
                         <div class="question-text">
-                            è¯æ¸ãèª­ãã°ï¼å¿ãããã ãè³¢ããªãã<br>
+                            良書を読めば，必ずそれだけ賢くなる。<br>
                             You ( a / being / better / book / good / never / read / the / without ) for it.
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                never ... without ~ing ã§ããããã°å¿ãâ¦ãããã  
-                                be the better for ~ããã®ãããã§ãããããªããã
+                                never ... without ~ing で「〜すれば必ず…する」。  
+                                be the better for ~「〜のおかげでよりよくなる」。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼</strong>You <strong>never read a good book without being the better</strong> for it.
+                                <strong>✓ 正解：</strong>You <strong>never read a good book without being the better</strong> for it.
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãnever ... without ~ing / be the better for ~</div>
+                                <div class="explanation-title">【解説】never ... without ~ing / be the better for ~</div>
                                 <p>
-                                    never ... without ~ingããããã°å¿ãâ¦ããã  
-                                    be the better for ~ããã®ãããã§ãããããªãã
+                                    never ... without ~ing「〜すれば必ず…する」  
+                                    be the better for ~「〜のおかげでよりよくなる」
                                 </p>
                                 <p>
-                                    è¯æ¸ãèª­ãã°ããã®åããªããè³¢ããªã£ã¦ãããã¨ããæå³ã
+                                    良書を読めば、その分かならず賢くなっている、という意味。
                                 </p>
                             </div>
-                            <div class="source-note">[â 12. æ¯è¼]</div>
+                            <div class="source-note">[→ 12. 比較]</div>
                         </div>
                     </article>
 
                     <!-- Q18 -->
                     <article class="question-card" data-q="18">
-                        <div class="question-number">åé¡ (18) <span class="q-type">feel at home</span></div>
+                        <div class="question-number">問題 (18) <span class="q-type">feel at home</span></div>
                         <div class="question-text">
-                            ãã®äººã®åã ã¨æ°ãã­ããªããï¼1èªä¸è¦ï¼<br>
+                            あの人の前だと気がねがない。（1語不要）<br>
                             He ( him / makes / me / home / is / with / at / feel ).
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                feel at homeããã¤ããï¼æ°ãã­ããªããã  
-                                make O feel ...ãOã«â¦ã¨æãããããã  
-                                is ã¯ä¸è¦ã
+                                feel at home「くつろぐ，気がねがない」。  
+                                make O feel ...「Oに…と感じさせる」。  
+                                is は不要。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼</strong>He <strong>makes me feel at home with him</strong>.ï¼is ä¸è¦ï¼
+                                <strong>✓ 正解：</strong>He <strong>makes me feel at home with him</strong>.（is 不要）
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãmake äºº feel at home</div>
+                                <div class="explanation-title">【解説】make 人 feel at home</div>
                                 <p>
-                                    feel at homeããã¤ããã  
+                                    feel at home「くつろぐ」  
                                     He makes me feel at home with him.  
-                                    ãå½¼ã®åã ã¨æ°ãã­ããªãï¼ï¼ãã¤ãããï¼ãã
+                                    「彼の前だと気がねがない（＝くつろげる）」。
                                 </p>
                             </div>
-                            <div class="source-note">[â 16. åè©ãå«ãã¤ãã£ãªã ]</div>
+                            <div class="source-note">[→ 16. 名詞を含むイディオム]</div>
                         </div>
                     </article>
 
                     <!-- Q19 -->
                     <article class="question-card" data-q="19">
-                        <div class="question-number">åé¡ (19) <span class="q-type">æå¶ã»èªé </span></div>
+                        <div class="question-number">問題 (19) <span class="q-type">時制・語順</span></div>
                         <div class="question-text">
-                            å½¼ã¯ãã¨3åã®ã¨ããã§çµé»è»ã«éã«åããªãã£ãã<br>
+                            彼はあと3分のところで終電車に間に合わなかった。<br>
                             The last train ( left / arrived / before / three / station / the / minutes / had / he ).
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                ããããã¨ãã«ã¯â¦ã¯ãã§ã«ããã¦ãããâ éå»å®äºã  
+                                「〜したときには…はすでに〜していた」→ 過去完了。  
                                 the last train had left ... before he arrived.
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼</strong>The last train <strong>had left the station three minutes before he arrived</strong>.
+                                <strong>✓ 正解：</strong>The last train <strong>had left the station three minutes before he arrived</strong>.
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãéå»å®äº + before</div>
+                                <div class="explanation-title">【解説】過去完了 + before</div>
                                 <p>
-                                    ãå½¼ãçããã¨ãã«ã¯çµé»ã¯3ååã«åºã¦ãããã  
-                                    â had left ... before he arrived.
+                                    「彼が着いたときには終電は3分前に出ていた。」  
+                                    → had left ... before he arrived.
                                 </p>
                             </div>
-                            <div class="source-note">[â 21. çåæã¨èªé ]</div>
+                            <div class="source-note">[→ 21. 疑問文と語順]</div>
                         </div>
                     </article>
 
                     <!-- Q20 -->
                     <article class="question-card" data-q="20">
-                        <div class="question-number">åé¡ (20) <span class="q-type">é¢ä¿è© / èªé </span></div>
+                        <div class="question-number">問題 (20) <span class="q-type">関係詞 / 語順</span></div>
                         <div class="question-text">
-                            è¨èªãåãã¦ç¿å¾ããéç¨ã¯ï¼æ§ããªæ¹æ³ã§ç ç©¶ããã¦ããã<br>
+                            言語を初めて習得する過程は，様々な方法で研究されてきた。<br>
                             There are ( a variety / has been / in which / language acquisition / of first / the process / 
                             investigated / of ways ).
                         </div>
                         <div class="btn-row">
-                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 ヒント</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
                         </div>
                         <div class="hint-section">
                             <div class="hint-box">
-                                There are a variety of ways ... ããã¹ã¿ã¼ãã  
+                                There are a variety of ways ... からスタート。  
                                 in which the process of first language acquisition has been investigated  
-                                ã¨ããé¢ä¿è©ã®ããã¾ããä½ãã
+                                という関係詞のかたまりを作る。
                             </div>
                         </div>
                         <div class="answer-section">
                             <div class="correct-answer">
-                                <strong>â æ­£è§£ï¼</strong>There are <strong>a variety of ways in which the process of first language acquisition has been investigated</strong>.
+                                <strong>✓ 正解：</strong>There are <strong>a variety of ways in which the process of first language acquisition has been investigated</strong>.
                             </div>
                             <div class="explanation">
-                                <div class="explanation-title">ãè§£èª¬ãa variety of ways in which ...</div>
+                                <div class="explanation-title">【解説】a variety of ways in which ...</div>
                                 <p>
                                     There are a variety of ways in which S V.  
-                                    ãSãVãã¦ããæ§ããªæ¹æ³ããããã
+                                    「SがVしてきた様々な方法がある。」
                                 </p>
                                 <p>
-                                    in which ã®é¨åã that / where ãªã©ã«æ¸ãæãããã¿ã¼ã³ãããåºãã
+                                    in which の部分を that / where などに書き換えるパターンもよく出る。
                                 </p>
                             </div>
-                            <div class="source-note">[â 17. é¢ä¿è©ã®ç¨æ³]</div>
+                            <div class="source-note">[→ 17. 関係詞の用法]</div>
                         </div>
                     </article>
 
@@ -1571,8 +1571,8 @@
         </section>
 
         <div class="footer-note">
-            ð¬ ææ¥­ä¸­ï¼ãã³ã â è§£ç­ â è§£èª¬ã®é ã«éããªããé²è¡ã  
-            å¾©ç¿ç¨ã¨ãã¦ããã®ã¾ã¾éãããã¯ãªãã¯è¡¨ç¤ºåãã¬ã¤ã¯ãã¦ã³ãçã
+            💬 授業中：ヒント ⇒ 解答 ⇒ 解説の順に開きながら進行。  
+            復習用としてもそのまま配れる「クリック表示型ブレイクダウン」版。
         </div>
     </main>
 </div>
@@ -1582,9 +1582,9 @@
     const themeToggle = document.getElementById('modeToggle');
     function updateThemeLabel() {
         if (document.body.classList.contains('dark-mode')) {
-            themeToggle.textContent = 'ð ã©ã¤ãã¢ã¼ãã«ãã';
+            themeToggle.textContent = '🌞 ライトモードにする';
         } else {
-            themeToggle.textContent = 'ð ãã¼ã¯ã¢ã¼ãã«ãã';
+            themeToggle.textContent = '🌗 ダークモードにする';
         }
     }
     themeToggle.addEventListener('click', () => {
