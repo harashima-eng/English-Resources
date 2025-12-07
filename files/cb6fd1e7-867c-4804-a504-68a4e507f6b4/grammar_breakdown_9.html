@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>åè©ã®èªæ³ï½ã©ã³ãã ãã¹ã BREAKDOWN EDITION</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg1: #667eea;
+            --bg2: #764ba2;
+            --bg-body: radial-gradient(circle at top left, #667eea 0%, #764ba2 45%, #1f2544 100%);
+            --card-bg: #ffffff;
+            --card-bg-soft: #f8f9ff;
+            --text-main: #212529;
+            --text-sub: #555;
+            --accent: #f5576c;
+            --accent-soft: #ffe0ea;
+            --border-soft: #e0e0f0;
+            --shadow-main: 0 20px 60px rgba(0,0,0,0.35);
+            --shadow-soft: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        body.dark-mode {
+            --bg1: #151827;
+            --bg2: #1f2544;
+            --bg-body: radial-gradient(circle at top left, #151827 0%, #1f2544 40%, #050608 100%);
+            --card-bg: #151823;
+            --card-bg-soft: #202433;
+            --text-main: #f5f5ff;
+            --text-sub: #c5c6dd;
+            --accent: #ff7aa2;
+            --accent-soft: #3b2133;
+            --border-soft: #343a4f;
+            --shadow-main: 0 20px 60px rgba(0,0,0,0.8);
+            --shadow-soft: 0 8px 26px rgba(0,0,0,0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 16px;
+            color: var(--text-main);
+            line-height: 1.8;
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 22px;
+            box-shadow: var(--shadow-main);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========== HERO ========== */
+
+        .hero {
+            position: relative;
+            padding: 26px 24px 20px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.22), transparent 60%);
+            top: -80px;
+            right: -60px;
+            opacity: 0;
+            transform: scale(0.7);
+            animation: heroGlow 2.3s ease-out forwards;
+        }
+
+        .hero-main {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .hero-title-block {
+            max-width: 70%;
+            animation: heroSlideIn 0.7s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.28);
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+            animation: heroFadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .mode-toggle,
+        .download-btn {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .mode-toggle {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .download-btn {
+            background: #ffe082;
+            color: #3e2723;
+            border: 1px solid rgba(255,255,255,0.35);
+        }
+
+        .mode-toggle:hover,
+        .download-btn:hover {
+            transform: translateY(-1.5px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+        }
+
+        .hero-bottom {
+            margin-top: 16px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255,255,255,0.35);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 11px;
+            opacity: 0;
+            transform: translateY(8px);
+            animation: heroFadeUp 1s 0.6s ease-out forwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.9;
+        }
+
+        .hero-note {
+            opacity: 0.85;
+            text-align: right;
+        }
+
+        /* ========== TOOLBAR ========== */
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 14px 18px;
+            background: var(--card-bg-soft);
+            border-bottom: 1px solid var(--border-soft);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 1 1 220px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border-radius: 999px;
+            padding: 5px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-soft);
+        }
+
+        body.dark-mode .search-box {
+            background: #141726;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+            background: transparent;
+            color: var(--text-main);
+        }
+
+        .search-icon {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .mini-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+
+        .mini-nav button {
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: var(--card-bg);
+            font-size: 11px;
+            padding: 4px 9px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .mini-nav button:hover {
+            background: #eef2ff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        body.dark-mode .mini-nav button:hover {
+            background: #262b3b;
+        }
+
+        /* ========== CONTENT ========== */
+
+        .content {
+            padding: 20px 20px 26px;
+        }
+
+        .notice {
+            font-size: 13px;
+            margin-bottom: 16px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: var(--accent-soft);
+            border-left: 4px solid var(--accent);
+        }
+
+        .notice strong {
+            color: var(--accent);
+        }
+
+        .section {
+            margin-bottom: 22px;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            overflow: hidden;
+            background: var(--card-bg-soft);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(0,0,0,0.21);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+            color: #fff;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .section-header span.section-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-header small {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .toggle-icon {
+            font-size: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .section-content.active {
+            max-height: 6000px;
+        }
+
+        .section-inner {
+            padding: 16px 18px 14px;
+        }
+
+        .question-card {
+            background: #fff;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            padding: 14px 16px 12px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        body.dark-mode .question-card {
+            background: #181b2b;
+        }
+
+        .question-card.filtered-out {
+            display: none;
+        }
+
+        .question-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #667eea;
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .q-type {
+            font-size: 10px;
+            opacity: 0.85;
+        }
+
+        .question-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .question-text .jp {
+            display: block;
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .choices {
+            margin: 6px 0 8px;
+            padding-left: 16px;
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .choices div {
+            margin: 2px 0;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .hint-btn,
+        .show-answer-btn {
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, #ffe082 0%, #ffb74d 100%);
+            color: #3e2723;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+        }
+
+        .hint-btn:hover,
+        .show-answer-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        /* ãã³ãã»è§£ç­ï¼æåã¯éè¡¨ç¤ºãactive ã§è¡¨ç¤º */
+        .hint-section,
+        .answer-section {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .hint-section.active,
+        .answer-section.active {
+            display: block;
+        }
+
+        .hint-box {
+            background: #fff8e1;
+            border-left: 3px solid #ffb300;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+            color: #5d4037;
+        }
+
+        .correct-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .correct-answer strong {
+            color: #1b5e20;
+        }
+
+        .explanation {
+            background: #f3f6ff;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+            margin-bottom: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            color: #3f51b5;
+            margin-bottom: 2px;
+        }
+
+        .grammar-point {
+            background: #fff3cd;
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 12px;
+            border-left: 3px solid #ffb300;
+            margin-bottom: 4px;
+        }
+
+        .example {
+            background: #e7f3ff;
+            border-radius: 7px;
+            padding: 6px 9px;
+            font-size: 12px;
+            border-left: 3px solid #2196f3;
+            margin-top: 4px;
+        }
+
+        .translation {
+            font-size: 12px;
+            font-style: italic;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .source-note {
+            font-size: 11px;
+            text-align: right;
+            margin-top: 6px;
+            color: var(--text-sub);
+        }
+
+        .footer-note {
+            font-size: 11px;
+            padding-top: 8px;
+            margin-top: 10px;
+            border-top: 1px dashed var(--border-soft);
+            text-align: center;
+            color: var(--text-sub);
+        }
+
+        @keyframes heroSlideIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heroFadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heroGlow {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            .hero-title-block {
+                max-width: 100%;
+            }
+            .hero-actions {
+                align-items: flex-start;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .mini-nav {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-main">
+            <div class="hero-title-block">
+                <div class="hero-title">åè©ã®èªæ³ï½ã©ã³ãã ãã¹ã BREAKDOWN EDITION</div>
+                <div class="hero-subtitle">
+                    å¨æ¼ç¿ çºå± è±ææ³ã»èªæ³åé¡1100 P4ï½P89ï½ãã³ãï¼è§£ç­ï¼è§£èª¬ã¤ããã¬ã¤ã¯ãã¦ã³
+                </div>
+                <div class="hero-tags">
+                    <span class="tag">ãã³ã & è§£èª¬ã¯ãªãã¯è¡¨ç¤º</span>
+                    <span class="tag">åè©ã»ã¤ãã£ãªã ã»æ¯è¼</span>
+                    <span class="tag">A2ãB1 ã¬ãã«æ³å®</span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <button class="mode-toggle" id="modeToggle">
+                    ð ãã¼ã¯ / ã©ã¤ã
+                </button>
+                <button class="download-btn" id="downloadBtn">
+                    â¬ ãã®ãã¼ã¸ããã¦ã³ã­ã¼ã
+                </button>
+            </div>
+        </div>
+        <div class="hero-bottom">
+            <div class="hero-stats">
+                <div class="hero-stat"><span>ð</span><span>è¨­åæ°ï¼20åï¼AãFï¼</span></div>
+                <div class="hero-stat"><span>ð§ </span><span>ã¢ã¼ãï¼ãã³ãã»è§£ç­ã¯ã¯ãªãã¯ã§è¡¨ç¤º</span></div>
+            </div>
+            <div class="hero-note">
+                ææ¥­ã§ã¯ãã®ãã¼ã¸ã§è§£èª¬ããªããã<br>
+                ãã¹ãç¨ã¯å¥ãã¡ã¤ã« or ããªã³ãã§åºãéç¨ãæ³å®ã
+            </div>
+        </div>
+    </header>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+        <div class="search-box">
+            <span class="search-icon">ð</span>
+            <input type="search" id="searchInput" placeholder="åé¡çªå·ã»è±æã»æ¥æ¬èªã§æ¤ç´¢ï¼ä¾: 3, heavy, æ¯è¼ ãªã©ï¼">
+        </div>
+
+        <div class="mini-nav">
+            <button data-target="sectionA">[A] åæè¡¨ç¾ (1)</button>
+            <button data-target="sectionB">[B] ç©ºæè£å (2ã5)</button>
+            <button data-target="sectionC">[C] æ¸ãæã (6ã8)</button>
+            <button data-target="sectionD">[D] å±éèªè£å (9ã10)</button>
+            <button data-target="sectionE">[E] èª¤ãææ (11ã15)</button>
+            <button data-target="sectionF">[F] ä¸¦ã¹ãã (16ã20)</button>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <main class="content">
+        <div class="notice">
+            <strong>ä½¿ãæ¹ï¼</strong><br>
+            ð¹ è§£ãã¨ãï¼ã¾ãåé¡ã ãè¦ãã¦ãçå¾ã«ã¯ãã¼ããããªã³ãã§è§£ãããã<br>
+            ð¹ è§£èª¬ã¿ã¤ã ï¼ãã®ãã¼ã¸ã§ãð¡ãã³ã â è§£ç­ãè¦ã â è§£èª¬ããé ã«éããªããé²ããã
+        </div>
+
+        <!-- ===== SECTION A ===== -->
+        <section class="section" id="sectionA">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[A] ä¸ç·é¨ã¨æãè¿ãæå³ (1) <small>å¯è©ã»ã¤ãã£ãªã </small></span>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q1 -->
+                    <article class="question-card" data-q="1">
+                        <div class="question-number">åé¡ (1) <span class="q-type">æå³ãè¿ãèªå¥</span></div>
+                        <div class="question-text">
+                            He used to phone me <u>once in a while</u>, but not any more.
+                            <span class="jp">ãä»¥åã¯æãé»è©±ããããããä»ã¯ãããªãããã® once in a while ã«æãè¿ãèªãé¸ã¶ã</span>
+                        </div>
+                        <div class="choices">
+                            <div>â  usuallyãâ¡ alwaysãâ¢ oftenãâ£ sometimes</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                once in a while ã¯ããã¤ããã§ã¯ãªããã¨ãã©ããã<br>
+                                ããã¾ã«ãããããã¥ã¢ã³ã¹ã«ä¸çªè¿ãé¸æè¢ã¯ã©ãï¼
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼â£ sometimes</strong>ï¼ãã¾ã«ãã¨ãã©ãï¼
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãonce in a while = sometimes</div>
+                                <p>
+                                    <strong>once in a while</strong> ã¯ããã¾ã«ããã¨ãã©ããã¨ããæå³ã®ã¤ãã£ãªã ã  
+                                    <strong>sometimes</strong> ãã»ã¼åããã¥ã¢ã³ã¹ãªã®ã§â£ãæ­£è§£ã
+                                </p>
+                                <p>
+                                    â  usuallyãããã¦ããâ¡ alwaysããã¤ããã¯é »åº¦ãé«ããã  
+                                    â¢ oftenããã°ãã°ãããããªãé »ç¹ãã§ãonce in a while ããå¤ãã¤ã¡ã¼ã¸ã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããå¯è©ã®é »åº¦</strong><br>
+                                always ï¼ usually ï¼ often ï¼ sometimes ï¼ hardly ever / seldom ï¼ never  
+                                once in a while â sometimesãã¨ãã©ãã
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                I go to that cafÃ© once in a while.  
+                                <span class="translation">ã¨ãã©ããã®ã«ãã§ã«è¡ãã</span>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³ï¼</strong>å½¼ã¯ä»¥åã¯ã¨ãã©ãç§ã«é»è©±ãã¦ãããããä»ã¯ããããªãã
+                            </div>
+                            <div class="source-note">[â 13. å½¢å®¹è©ã»å¯è©ãå«ãã¤ãã£ãªã ]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION B ===== -->
+        <section class="section" id="sectionB">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[B] ç©ºæè£å (2ã5) <small>åç½®è©ã»åè©ã®èªæ³ã»æå¶</small></span>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q2 -->
+                    <article class="question-card" data-q="2">
+                        <div class="question-number">åé¡ (2) <span class="q-type">åç½®è©</span></div>
+                        <div class="question-text">
+                            Are you (ãã) or against that proposal?
+                            <span class="jp">ãããªãã¯ãã®ææ¡ã«è³æã§ããï¼ããã¨ãåå¯¾ã§ãããã</span>
+                        </div>
+                        <div class="choices">
+                            <div>â  atãâ¡ withãâ¢ forãâ£ on</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãè³æãåå¯¾ããã¯è±èªã§ be (ã) or against ~ã  
+                                æ±ºã¾ãæå¥ã¨ãã¦è¦ãããã¤ã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼â¢ for</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãbe for or against ~</div>
+                                <p>
+                                    ããã«è³æã ãã¯ <strong>be for ~</strong>ãããã«åå¯¾ã ãã¯ <strong>be against ~</strong>ã  
+                                    ã»ããã§ <strong>for or against</strong> ã¨è¦ããã
+                                </p>
+                                <p>
+                                    â  at, â¡ with, â£ on ã¯ãã®æå³ã§ã¯ä½¿ããªãã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããåç½®è©ã¨æè¦è¡¨ç¾</strong><br>
+                                be for AãAã«è³æã§ããã / be against AãAã«åå¯¾ã§ããã
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                Are you for or against the new rule?  
+                                <span class="translation">ããªãã¯ãã®æ°ããã«ã¼ã«ã«è³æã§ããï¼ããã¨ãåå¯¾ã§ããã</span>
+                            </div>
+                            <div class="source-note">[â 19. åç½®è©ã¨ç¾¤åç½®è©ã®ç¨æ³]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q3 -->
+                    <article class="question-card" data-q="3">
+                        <div class="question-number">åé¡ (3) <span class="q-type">åè©ã®èªæ³ï¼SVOCï¼</span></div>
+                        <div class="question-text">
+                            His failure in business (ãã) him to sell his house.
+                            <span class="jp">ãå½¼ã¯äºæ¥­ã®å¤±æã§å®¶ãå£²ããããå¾ãªãã£ããã</span>
+                        </div>
+                        <div class="choices">
+                            <div>â  hadãâ¡ engagedãâ¢ compelledãâ£ made</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ããã«â¦ãããã¨ãå¼·ããã»ç¡çããããããã¨ããæå³ãè¡¨ãåè©ã  
+                                compel A to doãAã«ããããã¨ãå¼·ããããæãåºãã¦ã¿ããã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼â¢ compelled</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãcompel A to doãAã«ããããã¨ãå¼·ããã</div>
+                                <p>
+                                    ä¸»èªã¯ãHis failure in businessï¼äºæ¥­ã®å¤±æï¼ãã¨ããç¡çç©ã  
+                                    <strong>compel A to do</strong> ã§ãAã«ããããã¨ãå¼·ãããã  
+                                    ããã§ã¯ãäºæ¥­ã®å¤±æãå½¼ã«å®¶ãå£²ããããã¨ããæå³ã«ãªãã
+                                </p>
+                                <p>
+                                    â£ made ã make A do ã§ä¼¼ãæå³ã ããããã§ã¯ãå¼·å¶ãã®ãã¥ã¢ã³ã¹ãå¼·ã
+                                    <strong>compelled</strong> ãé¸ã¶åé¡ã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããç¡çç©ä¸»èª + compel / force ãªã©</strong><br>
+                                His failure <strong>compelled</strong> him to sell his house.  
+                                ãå¤±æãå½¼ã«å®¶ãå£²ããã¨ãå¼·ãããâ æ¥æ¬èªã§ã¯ããããããå¾ãªãã£ããã¨è¨³ãããã
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                The heavy rain compelled us to cancel the game.  
+                                <span class="translation">æ¿ããé¨ã®ãããç§ãã¡ã¯è©¦åãä¸­æ­¢ããããå¾ãªãã£ãã</span>
+                            </div>
+                            <div class="source-note">[â 1. åè©ã®èªæ³]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q4 -->
+                    <article class="question-card" data-q="4">
+                        <div class="question-number">åé¡ (4) <span class="q-type">ä¸»èªã¨åè©ã®ä¸è´</span></div>
+                        <div class="question-text">
+                            A large number of cars (ãã) parked outside the stadium.
+                            <span class="jp">ãããããã®è»ãã¹ã¿ã¸ã¢ã ã®å¤ã«é§è»ãã¦ãããã</span>
+                        </div>
+                        <div class="choices">
+                            <div>â  hasãâ¡ wereãâ¢ haveãâ£ was</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                a large number of + è¤æ°åè© â åè©ã¯è¤æ°å½¢ã  
+                                be åè©ã§ãããé§è»ããã¦ããããè¡¨ãã¨ããè¤æ°ã«åãã®ã¯ã©ãï¼
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼â¡ were</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãa large number of + è¤æ°åè© â åè©ã¯è¤æ°å½¢</div>
+                                <p>
+                                    <strong>a large number of cars</strong> ã¯ãããããã®è»ãã§ãæå³ä¸ã¯è¤æ°ã  
+                                    ãããã£ã¦ãbe åè©ã <strong>were</strong>ï¼è¤æ°å½¢ï¼ã«ãªãã
+                                </p>
+                                <p>
+                                    â  has, â£ was ã¯åæ°æ±ãã®ã¨ããâ¢ have ã¯ä¸è¬åè©ã ããããã¯ååæãé§è»ããã¦ããããªã®ã§ä¸é©ã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããæ°éè¡¨ç¾ + ä¸»èªã¨åè©ã®ä¸è´</strong><br>
+                                a large number of + è¤æ°åè© â åè©ã¯è¤æ°å½¢  
+                                a number of students <strong>are</strong> ...  
+                                the number of students <strong>is</strong> ...ï¼ãã¡ãã¯åæ°æ±ãï¼
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                A large number of people were waiting in line.  
+                                <span class="translation">å¤ãã®äººããåã«ä¸¦ãã§å¾ã£ã¦ããã</span>
+                            </div>
+                            <div class="source-note">[â 20. ä¸»èªã¨åè©ã®ä¸è´]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q5 -->
+                    <article class="question-card" data-q="5">
+                        <div class="question-number">åé¡ (5) <span class="q-type">å¯è©ã®èªæ³ã»æã®å¯è©</span></div>
+                        <div class="question-text">
+                            I've not been feeling very well (ãã).
+                            <span class="jp">ãæè¿ãã¾ãä½èª¿ããããªããã</span>
+                        </div>
+                        <div class="choices">
+                            <div>â  latelyãâ¡ laterãâ¢ lateãâ£ latter</div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãæè¿ãã¯ recently / latelyã  
+                                late, later, latter ã®æå³ã®éããæè­ãããã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼â  lately</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãlately = recentlyãæè¿ã</div>
+                                <p>
+                                    <strong>lately</strong> ã¨ <strong>recently</strong> ã¯ã©ã¡ãããæè¿ãã  
+                                    ç¾å¨å®äºå½¢ï¼have/has + éå»åè©ï¼ã¨ä¸ç·ã«ä½¿ããããã¨ãå¤ãã
+                                </p>
+                                <p>
+                                    â¡ laterããã¨ã§ãâ¢ lateãéããâ£ latterãå¾èã®ããªã®ã§ææã«åããªãã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããæè¿ãè¡¨ãå¯è©</strong><br>
+                                recently / latelyï¼æè¿ï¼ç¾å¨å®äºå½¢ã¨ç¸æ§ãããï¼<br>
+                                these daysï¼è¿é ï¼é²è¡å½¢ã¨ããã»ããï¼
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                I've been very busy lately.  
+                                <span class="translation">æè¿ã¨ã¦ãå¿ããã</span>
+                            </div>
+                            <div class="source-note">[â 11. å¯è©ã®èªæ³]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION C ===== -->
+        <section class="section" id="sectionC">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[C] æ¸ãæã (6ã8) <small>tooãto, ä½¿å½¹, ååè©</small></span>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q6 -->
+                    <article class="question-card" data-q="6">
+                        <div class="question-number">åé¡ (6) <span class="q-type">soãthat â tooãto</span></div>
+                        <div class="question-text">
+                            (a) This box is so heavy that I cannot lift it.<br>
+                            (b) This is (ãã) (ãã) a box for me to lift.
+                            <span class="jp">æå³ãã»ã¼åãã«ãªãããã«ç©ºæã«èªãå¥ããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                so ã that S cannot ... â too ã to ...  
+                                ããããã¦â¦ã§ããªããã®å½¢ã«æ¸ãæããã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼too heavy</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãso heavy that... â too heavy to...</div>
+                                <p>
+                                    (a)ããã®ç®±ã¯ã¨ã¦ãéãã®ã§ï¼ç§ã¯ãããæã¡ä¸ããããªããã  
+                                    â (b)ãããã¯ç§ãæã¡ä¸ããã«ã¯<strong>éããã</strong>ç®±ã ãã
+                                </p>
+                                <p>
+                                    ããããã¦â¦ã§ããªããã¯ <strong>too + å½¢å®¹è© + to åè©</strong> ã®å½¢ã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããso ã that... / too ã to...</strong><br>
+                                so + å½¢å®¹è©/å¯è© + that S cannot ...  
+                                â too + å½¢å®¹è©/å¯è© + to åè©
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                He is so tired that he can't walk.  
+                                = He is too tired to walk.  
+                                <span class="translation">å½¼ã¯ã¨ã¦ãç²ãã¦ãã¦æ­©ããªãã</span>
+                            </div>
+                            <div class="source-note">[â 6. ä¸å®è©]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q7 -->
+                    <article class="question-card" data-q="7">
+                        <div class="question-number">åé¡ (7) <span class="q-type">å½ä»¤æ â ä½¿å½¹ let</span></div>
+                        <div class="question-text">
+                            (a) Open the door at once.<br>
+                            (b) (ãã) the door (ãã) opened at once.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ããããããã¨ããå½ä»¤ã¯ <strong>Let + ç®çèª + éå»åè©</strong> ã§ãè¨ããã  
+                                ã¾ãå½ä»¤æããããªãããã®ä»£è¡¨ã¯ Let ... ããå§ã¾ãå½¢ã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼Let, be</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãLet + O + be + éå»åè©</div>
+                                <p>
+                                    (a)ãããã«ãã¢ãéããªãããã  
+                                    (b) ã¯ããã¢ãããã«éããããããã«ããªãããï¼Let the door be opened at once.
+                                </p>
+                                <p>
+                                    Let + ç®çèª + be + éå»åè© ã§ãåãèº«ã®å½ä»¤æãä½ããã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããLet ãä½¿ã£ãå½ä»¤æ</strong><br>
+                                Let us begin.ãããå§ãã¾ããããã  
+                                Let the work be done at once.ããã®ä»äºãããã«ããããªãããã
+                            </div>
+                            <div class="source-note">[â 3. æ]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q8 -->
+                    <article class="question-card" data-q="8">
+                        <div class="question-number">åé¡ (8) <span class="q-type">ååè© / difficulty ~ing</span></div>
+                        <div class="question-text">
+                            (a) It was quite easy for him to solve the problems.<br>
+                            (b) He had no (ãã) in (ãã) the problems.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ããããã®ã¯ç°¡åã ã£ããâããããã®ã«ä½ã®è¦å´ããªãã£ããã  
+                                have difficulty (in) doingããããã®ã«è¦å´ããããæãåºããã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼difficulty / troubleï¼solving</strong>ï¼difficulty or trouble + solvingï¼</div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãhave no difficulty in doing</div>
+                                <p>
+                                    have difficulty (in) doingããããã®ã«è¦å´ããã  
+                                    â have <strong>no</strong> difficulty (in) doingããããã®ã«ä½ã®è¦å´ããªãã
+                                </p>
+                                <p>
+                                    ããã§ã¯ difficulty / trouble ã©ã¡ãã§ãããããå¾ãã¯ååè© <strong>solving</strong> ãå¥ãã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããååè©ãã¨ãæ£ç¨è¡¨ç¾</strong><br>
+                                have difficulty (in) doingï¼ãããã®ã«è¦å´ãã  
+                                have trouble (in) doingï¼ãããã®ã«è¦å´ãã
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                She had no difficulty (in) answering the question.  
+                                <span class="translation">å½¼å¥³ã¯ãã®è³ªåã«ç­ããã®ã«ä½ã®è¦å´ããªãã£ãã</span>
+                            </div>
+                            <div class="source-note">[â 8. ååè©]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION D ===== -->
+        <section class="section" id="sectionD">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[D] å±éèªè£å (9ã10) <small>good / do ã®ã¤ãã£ãªã </small></span>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q9 -->
+                    <article class="question-card" data-q="9">
+                        <div class="question-number">åé¡ (9) <span class="q-type">å±éèªè£åï¼good</span></div>
+                        <div class="question-text">
+                            (a) Yesterday John bought a used car that was as (ãã) as new from his neighbor.<br>
+                            (b) After being hospitalized with a heart problem, Bob decided to quit smoking for (ãã).
+                            <span class="jp">(a)(b) ã®ä¸¡æ¹ã«å¥ã1èªãç­ããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                (a) as (ã) as newãæ°ååæ§ã®ã  
+                                (b) quit smoking for (ã)ããã£ã±ããããã  
+                                ä¸¡æ¹ã¨ãå½¢å®¹è© good ããçºæ³ã§ããè¡¨ç¾ã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼good</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãas good as new / for good</div>
+                                <p>
+                                    (a) as <strong>good</strong> as newãæ°ååæ§ã®ã  
+                                    (b) quit smoking for <strong>good</strong>ãã¿ãã³ããã£ã±ããããï¼ï¼æ°¸é ã«ï¼ã
+                                </p>
+                                <p>
+                                    for good ã¯ãæ°¸é ã«ããäºåº¦ã¨ãããªãããã«ãã®æå³ã§ããåºãã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããgood ãå«ãã¤ãã£ãªã </strong><br>
+                                as good as newãæ°ååæ§ã  
+                                for goodãæ°¸ä¹ã«ï¼ãã£ã±ãã¨ã
+                            </div>
+                            <div class="example">
+                                <strong>ä¾æï¼</strong><br>
+                                I stopped playing that game for good.  
+                                <span class="translation">ãã®ã²ã¼ã ãäºåº¦ã¨ããªãããã«ãããã</span>
+                            </div>
+                            <div class="source-note">[â 25. å±éèªè£å]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q10 -->
+                    <article class="question-card" data-q="10">
+                        <div class="question-number">åé¡ (10) <span class="q-type">å±éèªè£åï¼do</span></div>
+                        <div class="question-text">
+                            (a) Bad books (ãã) more harm than bad companions.<br>
+                            (b) This log will (ãã) for a seat.<br>
+                            (c) I have nothing to (ãã) with the matter.
+                            <span class="jp">(a)(b)(c) ã«å±éãã¦å¥ã1èªãç­ããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ã©ãããããããéã«åãããããé¢ä¿ããããã¨ããæå³ã§ä½¿ããï¼è¶åºæ¬åè©ã  
+                                do ã®ããããªä½¿ãæ¹ãã¤ã¡ã¼ã¸ãã¦ã¿ããã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼do</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãdo ãå« ãè²ããªè¡¨ç¾</div>
+                                <p>
+                                    (a) Bad books <strong>do</strong> more harm ...  
+                                    ãæªæ¸ã¯æªãåäººãããå¤ãã®å®³ãä¸ããã  
+                                    â do harmãå®³ãä¸ããã
+                                </p>
+                                <p>
+                                    (b) This log will <strong>do</strong> for a seat.  
+                                    ããã®ä¸¸å¤ªã¯è°ããã¨ãã¦éã«åãã  
+                                    â will doãéã«åãï¼å½¹ã«ç«ã¤ã
+                                </p>
+                                <p>
+                                    (c) I have nothing to <strong>do</strong> with the matter.  
+                                    ããã®ä»¶ã¨ã¯ä¸åé¢ä¿ããªãã  
+                                    â have nothing to do with ~ããã¨é¢ä¿ããªãã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããdo ãä½¿ã£ãã¤ãã£ãªã </strong><br>
+                                do harm / do good, will do, have nothing to do with ~
+                            </div>
+                            <div class="source-note">[â 25. å±éèªè£å]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION E ===== -->
+        <section class="section" id="sectionE">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[E] èª¤ãææã»è¨æ­£ (11ã15) <small>å¯è©ã»åç½®è©ã»æ¯è¼ ãªã©</small></span>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q11 -->
+                    <article class="question-card" data-q="11">
+                        <div class="question-number">åé¡ (11) <span class="q-type">å¯è©ã®èªæ³</span></div>
+                        <div class="question-text">
+                            As we â have seen, most of the money spent in the United States is â¡in the form of checks.  
+                            Not everyone, â¢although, can write out â£a check.
+                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                æä¸­ã§æµ®ãã¦ããå¯è©ãæ¢ããã  
+                                although ã¯æ¥ç¶è©ããããããªãããã¯ however ã§è¡¨ããã¨ãå¤ãã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ãï¼â¢ although â æ­£ï¼though / however</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ããããããªãããã®ä½ç½®ã¨åè©</div>
+                                <p>
+                                    Not everyone, <strong>although</strong>, can write out a check. ã¯ä¸èªç¶ã  
+                                    although ã¯æ¥ç¶è©ãªã®ã§ãéå¸¸ã¯ç¯ãå°ãï¼Although S V, ...ï¼ã
+                                </p>
+                                <p>
+                                    ããã§ã¯æä¸­ã«æ¿å¥ããå¯è©ãããããªããããã»ããã®ã§  
+                                    <strong>though</strong>ï¼å¯è©ç¨æ³ï¼ã <strong>however</strong> ãç½®ãã®ãèªç¶ã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããthough / although / however</strong><br>
+                                although / thoughï¼æ¥ç¶è©ããã ããã©ãã  
+                                thoughï¼ææ«ã§å¯è©çã«ãã ãã©ã­ãã®æå³ã§ãä½¿ãã  
+                                howeverï¼å¯è©ãããããªããã
+                            </div>
+                            <div class="source-note">[â 11. å¯è©ã®èªæ³]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q12 -->
+                    <article class="question-card" data-q="12">
+                        <div class="question-number">åé¡ (12) <span class="q-type">åç½®è© beside / besides</span></div>
+                        <div class="question-text">
+                            We have a number of â other suggestions â¡beside these â¢for the improvement â£of the system.
+                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                beside ã¨ besides ã®éããæãåºããã  
+                                ããã®ãã°ã«ããªã®ãããã«å ãã¦ï¼ãä»¥å¤ã«ããªã®ãã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ãï¼â¡ beside â æ­£ï¼besides</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãbesideããã°ã«ãvs besidesããã«å ãã¦ã</div>
+                                <p>
+                                    ææã¯ããããã«å ãã¦ãä»ã®ææ¡ããããã  
+                                    ãã£ã¦ããã«å ãã¦ãã® <strong>besides</strong> ãä½¿ãã
+                                </p>
+                                <p>
+                                    <strong>beside</strong> ã¯ããã®ãã°ã«ããå¨ãæå³ãéãã®ã§æ³¨æã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããåç½®è© beside / besides</strong><br>
+                                beside AãAã®ãã°ã«ã  
+                                besides AãAã«å ãã¦ï¼Aã®ã»ãã«ã
+                            </div>
+                            <div class="source-note">[â 19. åç½®è©ã¨ç¾¤åç½®è©ã®ç¨æ³]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q13 -->
+                    <article class="question-card" data-q="13">
+                        <div class="question-number">åé¡ (13) <span class="q-type">å½¢å®¹è© almost / most</span></div>
+                        <div class="question-text">
+                            â In the early days when the West â¡was being settled, horses were the â¢main mode of 
+                            transportation, so â£almost pioneers rode well.
+                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãã»ã¨ãã©ã®éæèãã¯ almost pioneers ã most pioneers ãï¼  
+                                almost ã¯ãã»ã¨ãã©ããªããã¨ä¸ç·ã«åºããã¨ãå¤ãã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ãï¼â£ almost â æ­£ï¼most</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãmost + åè©ãã»ã¨ãã©ã®ãã</div>
+                                <p>
+                                    ãã»ã¨ãã©ã®éæèãã¯ <strong>most pioneers</strong>ã  
+                                    <strong>almost</strong> ã¯å¯è©ã§ãalmost all / almost no ãªã©ã§ä½¿ããã¨ãå¤ãã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããmost ã¨ almost</strong><br>
+                                most + åè©ãã»ã¨ãã©ã®ãã  
+                                almost all ... / almost no ...ãã»ã¨ãã©ãã¹ã¦ / ã»ã¨ãã©ããªãã
+                            </div>
+                            <div class="source-note">[â 10. å½¢å®¹è©ã®èªæ³]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q14 -->
+                    <article class="question-card" data-q="14">
+                        <div class="question-number">åé¡ (14) <span class="q-type">æ¯è¼æ§æ</span></div>
+                        <div class="question-text">
+                            â I have never seen â¡the economy as â¢worse as â£it is now.
+                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                as ã as ã®ä¸­èº«ã¯åç´ï¼å½¢å®¹è©ã®åºæ¬å½¢ï¼ã  
+                                worse ã¯æ¯è¼ç´ãã©ããªå½¢ã«ç´ãï¼
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ãï¼â¢ worse â æ­£ï¼bad</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãas + åç´ + as</div>
+                                <p>
+                                    as ã as ã®ä¸­ã¯ <strong>åç´</strong> ãå¥ãã®ã§ãworseï¼æ¯è¼ç´ï¼ã§ã¯ãªã <strong>bad</strong>ã
+                                </p>
+                                <p>
+                                    I have never seen the economy as bad as it is now.  
+                                    ãä»ã»ã©ã²ã©ãæ¯æ°ãè¦ããã¨ããªããã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããåç´æ¯è¼ as ã as</strong><br>
+                                as + å½¢å®¹è©ã»å¯è©ï¼åç´ï¼ + as  
+                                This bag is as big as that one.
+                            </div>
+                            <div class="source-note">[â 12. æ¯è¼]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q15 -->
+                    <article class="question-card" data-q="15">
+                        <div class="question-number">åé¡ (15) <span class="q-type">ä¸»èªã¨åè©ã®ä¸è´</span></div>
+                        <div class="question-text">
+                            â Just as you and I can stand in front of a mirror and see our images, â¡so also â¢do the 
+                            federal government budget â£reflect America.
+                            <span class="jp">èª¤ã£ã¦ããçªå·ã¨æ­£ããå½¢ãæ¸ããªããã</span>
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ä¸»èªã¯ã©ãï¼ budget ã¯åæ°æ±ããè¤æ°æ±ããï¼  
+                                ãããã¾ãâ¦ã ãã¨ããå½¢ã§ãå©åè©ã do ã®å½¢ã«æ³¨æã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ãï¼â¢ do â æ­£ï¼does / can</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãåæ°ä¸»èª + does / can</div>
+                                <p>
+                                    ä¸»èªã¯ the federal government budgetï¼åæ°ï¼ã  
+                                    ãããã£ã¦ãä¸äººç§°åæ°ç¾å¨ã® <strong>does</strong> ãããã¨ãã¨ã®æã«åããã¦ <strong>can</strong> ãä½¿ãã
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããä¸»èªã¨åè©ã®ä¸è´</strong><br>
+                                åæ°ä¸»èª â does / is / has  
+                                è¤æ°ä¸»èª â do / are / have
+                            </div>
+                            <div class="source-note">[â 20. ä¸»èªã¨åè©ã®ä¸è´]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION F ===== -->
+        <section class="section" id="sectionF">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="section-label">[F] ä¸¦ã¹ãã (16ã20) <small>ã¤ãã£ãªã ã»èªé </small></span>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="section-inner">
+
+                    <!-- Q16 -->
+                    <article class="question-card" data-q="16">
+                        <div class="question-number">åé¡ (16) <span class="q-type">be afraid of ~ing</span></div>
+                        <div class="question-text">
+                            å°ããããã®ééãã¯æ°ã«ããªãã§è±èªãè©±ããªãããï¼1èªä¸è¦ï¼<br>
+                            Don't ( of / mind / in / mistakes / afraid / a few / be / making ) speaking English.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãããæãããã¯ be afraid of ~ã  
+                                ãå°ãã®ããã¯ a few mistakesã  
+                                mind ã¯ä»åã¯ä¸è¦ã«ãªãã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼</strong>Don't <strong>be afraid of making a few mistakes in</strong> speaking English.ï¼mind ä¸è¦ï¼
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãbe afraid of ~ingãããããã¨ãæããã</div>
+                                <p>
+                                    ãå°ããããééãã¦ãæ°ã«ãããï¼ãééããã¨ãæããã«ãã  
+                                    â Don't be afraid of making a few mistakes in speaking English.
+                                </p>
+                            </div>
+                            <div class="grammar-point">
+                                <strong>ãææ³ãã¤ã³ããbe afraid of ~ing</strong><br>
+                                be afraid of making mistakesãééãã®ãæããã
+                            </div>
+                            <div class="source-note">[â 13. å½¢å®¹è©ã»å¯è©ãå«ãã¤ãã£ãªã ]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q17 -->
+                    <article class="question-card" data-q="17">
+                        <div class="question-number">åé¡ (17) <span class="q-type">æ¯è¼æ§æ with better for it</span></div>
+                        <div class="question-text">
+                            è¯æ¸ãèª­ãã°ï¼å¿ãããã ãè³¢ããªãã<br>
+                            You ( a / being / better / book / good / never / read / the / without ) for it.
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                never ... without ~ing ã§ããããã°å¿ãâ¦ãããã  
+                                be the better for ~ããã®ãããã§ãããããªããã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼</strong>You <strong>never read a good book without being the better</strong> for it.
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãnever ... without ~ing / be the better for ~</div>
+                                <p>
+                                    never ... without ~ingããããã°å¿ãâ¦ããã  
+                                    be the better for ~ããã®ãããã§ãããããªãã
+                                </p>
+                                <p>
+                                    è¯æ¸ãèª­ãã°ããã®åããªããè³¢ããªã£ã¦ãããã¨ããæå³ã
+                                </p>
+                            </div>
+                            <div class="source-note">[â 12. æ¯è¼]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q18 -->
+                    <article class="question-card" data-q="18">
+                        <div class="question-number">åé¡ (18) <span class="q-type">feel at home</span></div>
+                        <div class="question-text">
+                            ãã®äººã®åã ã¨æ°ãã­ããªããï¼1èªä¸è¦ï¼<br>
+                            He ( him / makes / me / home / is / with / at / feel ).
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                feel at homeããã¤ããï¼æ°ãã­ããªããã  
+                                make O feel ...ãOã«â¦ã¨æãããããã  
+                                is ã¯ä¸è¦ã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼</strong>He <strong>makes me feel at home with him</strong>.ï¼is ä¸è¦ï¼
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãmake äºº feel at home</div>
+                                <p>
+                                    feel at homeããã¤ããã  
+                                    He makes me feel at home with him.  
+                                    ãå½¼ã®åã ã¨æ°ãã­ããªãï¼ï¼ãã¤ãããï¼ãã
+                                </p>
+                            </div>
+                            <div class="source-note">[â 16. åè©ãå«ãã¤ãã£ãªã ]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q19 -->
+                    <article class="question-card" data-q="19">
+                        <div class="question-number">åé¡ (19) <span class="q-type">æå¶ã»èªé </span></div>
+                        <div class="question-text">
+                            å½¼ã¯ãã¨3åã®ã¨ããã§çµé»è»ã«éã«åããªãã£ãã<br>
+                            The last train ( left / arrived / before / three / station / the / minutes / had / he ).
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ããããã¨ãã«ã¯â¦ã¯ãã§ã«ããã¦ãããâ éå»å®äºã  
+                                the last train had left ... before he arrived.
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼</strong>The last train <strong>had left the station three minutes before he arrived</strong>.
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãéå»å®äº + before</div>
+                                <p>
+                                    ãå½¼ãçããã¨ãã«ã¯çµé»ã¯3ååã«åºã¦ãããã  
+                                    â had left ... before he arrived.
+                                </p>
+                            </div>
+                            <div class="source-note">[â 21. çåæã¨èªé ]</div>
+                        </div>
+                    </article>
+
+                    <!-- Q20 -->
+                    <article class="question-card" data-q="20">
+                        <div class="question-number">åé¡ (20) <span class="q-type">é¢ä¿è© / èªé </span></div>
+                        <div class="question-text">
+                            è¨èªãåãã¦ç¿å¾ããéç¨ã¯ï¼æ§ããªæ¹æ³ã§ç ç©¶ããã¦ããã<br>
+                            There are ( a variety / has been / in which / language acquisition / of first / the process / 
+                            investigated / of ways ).
+                        </div>
+                        <div class="btn-row">
+                            <button class="hint-btn" onclick="toggleHint(this)">ð¡ ãã³ã</button>
+                            <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        </div>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                There are a variety of ways ... ããã¹ã¿ã¼ãã  
+                                in which the process of first language acquisition has been investigated  
+                                ã¨ããé¢ä¿è©ã®ããã¾ããä½ãã
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£ï¼</strong>There are <strong>a variety of ways in which the process of first language acquisition has been investigated</strong>.
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãa variety of ways in which ...</div>
+                                <p>
+                                    There are a variety of ways in which S V.  
+                                    ãSãVãã¦ããæ§ããªæ¹æ³ããããã
+                                </p>
+                                <p>
+                                    in which ã®é¨åã that / where ãªã©ã«æ¸ãæãããã¿ã¼ã³ãããåºãã
+                                </p>
+                            </div>
+                            <div class="source-note">[â 17. é¢ä¿è©ã®ç¨æ³]</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-note">
+            ð¬ ææ¥­ä¸­ï¼ãã³ã â è§£ç­ â è§£èª¬ã®é ã«éããªããé²è¡ã  
+            å¾©ç¿ç¨ã¨ãã¦ããã®ã¾ã¾éãããã¯ãªãã¯è¡¨ç¤ºåãã¬ã¤ã¯ãã¦ã³ãçã
+        </div>
+    </main>
+</div>
+
+<script>
+    // ===== Dark / Light Toggle =====
+    const themeToggle = document.getElementById('modeToggle');
+    function updateThemeLabel() {
+        if (document.body.classList.contains('dark-mode')) {
+            themeToggle.textContent = 'ð ã©ã¤ãã¢ã¼ãã«ãã';
+        } else {
+            themeToggle.textContent = 'ð ãã¼ã¯ã¢ã¼ãã«ãã';
+        }
+    }
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        updateThemeLabel();
+    });
+    updateThemeLabel();
+
+    // ===== Section Toggle =====
+    function toggleSection(headerEl) {
+        const content = headerEl.nextElementSibling;
+        headerEl.classList.toggle('active');
+        content.classList.toggle('active');
+    }
+
+    // ===== Hint & Answer Toggle + Auto-scroll Next =====
+    function toggleHint(btn) {
+        const card = btn.closest('.question-card');
+        const hint = card.querySelector('.hint-section');
+        hint.classList.toggle('active');
+    }
+
+    function toggleAnswer(btn) {
+        const card = btn.closest('.question-card');
+        const answer = card.querySelector('.answer-section');
+        const isOpening = !answer.classList.contains('active');
+        answer.classList.toggle('active');
+
+        if (isOpening) {
+            const allCards = Array.from(card.parentElement.querySelectorAll('.question-card'));
+            const idx = allCards.indexOf(card);
+            const nextCard = allCards[idx + 1];
+            if (nextCard) {
+                setTimeout(() => {
+                    nextCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 450);
+            }
+        }
+    }
+
+    // ===== Mini-Nav Scroll =====
+    document.querySelectorAll('.mini-nav button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const section = document.getElementById(targetId);
+            if (!section) return;
+            const header = section.querySelector('.section-header');
+            const content = section.querySelector('.section-content');
+            if (!content.classList.contains('active')) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // ===== Search Filter =====
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        const keyword = searchInput.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.question-card');
+        if (!keyword) {
+            cards.forEach(c => c.classList.remove('filtered-out'));
+            return;
+        }
+
+        cards.forEach(card => {
+            const qNum = card.getAttribute('data-q') || '';
+            const text = card.textContent.toLowerCase();
+            const match = text.includes(keyword) || qNum === keyword;
+            card.classList.toggle('filtered-out', !match);
+        });
+    });
+
+    // ===== Download HTML Button =====
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'grammar_breakdown_9.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    // ===== Initial: Open first section =====
+    window.addEventListener('DOMContentLoaded', () => {
+        const firstSectionHeader = document.querySelector('.section-header');
+        if (firstSectionHeader) {
+            const content = firstSectionHeader.nextElementSibling;
+            firstSectionHeader.classList.add('active');
+            content.classList.add('active');
+        }
+    });
+</script>
+</body>
+</html>
