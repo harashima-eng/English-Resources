@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>動詞の語法｜確認テスト（発展）- 解説＋ヒント付き</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3561 0%, #1f2544 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #65398b 100%);
+        }
+
+        .toggle-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section-content.active {
+            max-height: 6000px;
+        }
+
+        .question {
+            padding: 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .choices {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .choice {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .answer-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+
+        .answer-section.active {
+            max-height: 3000px;
+        }
+
+        .correct-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .correct-answer strong {
+            color: #28a745;
+            font-size: 18px;
+        }
+
+        .explanation {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .explanation-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .wrong-answer {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .wrong-answer strong {
+            color: #dc3545;
+        }
+
+        .grammar-point {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .grammar-point-title {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .example {
+            background: #e7f3ff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .example-title {
+            color: #1976D2;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .translation {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* ヒントボタン＆エリア */
+        .hint-btn {
+            background: linear-gradient(135deg, #ffe082 0%, #ffb74d 100%);
+            color: #3e2723;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 8px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .hint-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 183, 77, 0.5);
+        }
+
+        .hint-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            margin-top: 10px;
+        }
+
+        .hint-section.active {
+            max-height: 300px;
+        }
+
+        .hint-box {
+            background: #fff8e1;
+            border-left: 4px solid #ffb300;
+            padding: 10px 14px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #5d4037;
+        }
+
+        /* ヘッダー表示/非表示用クラス */
+        .header-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ヘッダー表示/非表示ボタン */
+        .header-toggle-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            padding: 10px 18px;
+            border-radius: 20px;
+            border: none;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            z-index: 1100;
+            transition: transform 0.2s ease;
+        }
+
+        .header-toggle-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 動詞の語法｜確認テスト（発展） 解説＋ヒント付き</h1>
+            <p>英文法・語法問題1100 (P4～P89) - ランダムテスト 全20問｜ヒント → 解説 の二段階学習モード</p>
+        </div>
+
+        <!-- ヘッダー表示/非表示ボタン -->
+        <button class="header-toggle-btn" onclick="toggleHeader()">
+            ▲ ヘッダーを隠す
+        </button>
+
+        <div class="content">
+            <!-- Section A -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[A] 空所補充問題 (1)～(4)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <div class="question-number">問題 (1)</div>
+                        <div class="question-text">
+                            He wasn't (　　) of a tennis player, so he lost every game.
+                        </div>
+                        <div class="choices">
+                            ① good<br>
+                            ② seeing<br>
+                            ③ much<br>
+                            ④ playing
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「たいした～ではない」を英語で？<br>
+                                not (　　) of a ＋名詞 の形を思い出して。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ③ much</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】not much of a 〜 の形</div>
+                                <p><strong>not much of a + 名詞</strong> で「大した〜ではない」「あまり〜らしくない」という意味になります。</p>
+                                <p>He wasn't much of a tennis player.<br>
+                                ＝「彼はあまりテニス選手らしくなかった → テニスが得意ではなかった」</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ① good:</strong> <br>
+                                <p>good of a tennis player とは言いません。good は「good at tennis」のように at と一緒に使うのが基本。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② seeing / ④ playing:</strong>
+                                <p>ここは名詞を修飾する表現なので、seeing / playing では不自然になります。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】not much of a ～</div>
+                                <p>● not much of a singer「たいした歌手ではない」</p>
+                                <p>● not much of a cook「料理はあまりうまくない」</p>
+                                <p>→ 人の能力・腕前を少し否定的に言うときによく使う表現。</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>I'm not <strong>much of a</strong> dancer.</p>
+                                <div class="translation">（私はダンスはあまり得意じゃない）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼はあまりテニス選手らしくなかったので、すべての試合に負けた。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <div class="question-number">問題 (2)</div>
+                        <div class="question-text">
+                            She came pretty near (　　) at the sight of her mother.
+                        </div>
+                        <div class="choices">
+                            ① crying<br>
+                            ② cry<br>
+                            ③ cried<br>
+                            ④ being cried
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                come near のあとは to 不定詞？動名詞？<br>
+                                「危うく～しそうになる」を表す形を思い出そう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ① crying</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】come near ～ing「危うく〜しそうになる」</div>
+                                <p><strong>come near doing</strong> で「もう少しで〜しそうになる」という意味になります。</p>
+                                <p>came pretty near crying = 「今にも泣き出しそうになった」</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② cry:</strong>
+                                <p>come near の後ろは動名詞（～ing）をとるので cry は不可。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ③ cried / ④ being cried:</strong>
+                                <p>時制も受け身もここでは不自然。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】動名詞をとる表現</div>
+                                <p>● <strong>come near doing</strong>：危うく〜しそうになる</p>
+                                <p>● <strong>be on the point of doing</strong>：まさに〜しようとしている</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>He came near <strong>losing</strong> his wallet.</p>
+                                <div class="translation">（彼は危うく財布をなくしそうになった）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼女は母親の姿を見て、今にも泣き出しそうになった。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <div class="question-number">問題 (3)</div>
+                        <div class="question-text">
+                            One of my cousins is married (　　) a novelist.
+                        </div>
+                        <div class="choices">
+                            ① with<br>
+                            ② over<br>
+                            ③ to<br>
+                            ④ by
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「～と結婚している」は be married (　　) ～。<br>
+                                with じゃなくて…？
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ③ to</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】be married to ～「～と結婚している」</div>
+                                <p><strong>be married to 人</strong> で「〜と結婚している」という決まり文句。</p>
+                                <p>married with 〜 は「子どもが何人いる」と言いたいときに使う別パターン。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ① with:</strong>
+                                <p>married with two children のような形はあるが、「誰と結婚している」には使わない。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② over / ④ by:</strong>
+                                <p>結婚相手は to で表す。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】marry の語法</div>
+                                <p>● marry A：Aと結婚する（他動詞）</p>
+                                <p>● be married to A：Aと結婚している（状態）</p>
+                                <p>● married with two kids：子どもが2人いる既婚者</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>She is married <strong>to</strong> a doctor.</p>
+                                <div class="translation">（彼女は医者と結婚している）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私のいとこの一人は小説家と結婚している。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <div class="question-number">問題 (4)</div>
+                        <div class="question-text">
+                            Hello! Are there any seats (　　) for the concert tonight?
+                        </div>
+                        <div class="choices">
+                            ① unemployed<br>
+                            ② available<br>
+                            ③ remained<br>
+                            ④ left behind
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「空いている席」「利用できる席」を表す形容詞はどれ？<br>
+                                hotel, room, ticket などにもよくつく単語。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ② available</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】seats available「空いている席」</div>
+                                <p><strong>available</strong> は「利用可能な」「手に入る」という意味。</p>
+                                <p>any seats available? = 「空いている席はありますか？」</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ① unemployed:</strong>
+                                <p>「失業している」という意味で、人にしか使わない。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ③ remained / ④ left behind:</strong>
+                                <p>どちらもこの位置で seats を修飾する形としては不自然。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】available の使い方</div>
+                                <p>● seats available：空いている座席</p>
+                                <p>● rooms available：空室</p>
+                                <p>● be available for 人 / to 人：〜に利用可能である</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>There are no tickets <strong>available</strong> now.</p>
+                                <div class="translation">（現在、チケットはもう残っていない）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> もしもし。今夜のコンサートの席はまだ空いていますか。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section B -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[B] 同意表現選択問題 (5)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <div class="question-number">問題 (5)</div>
+                        <div class="question-text">
+                            She did it entirely <u>of her own accord</u>.
+                        </div>
+                        <div class="choices">
+                            ① reluctantly<br>
+                            ② desperately<br>
+                            ③ voluntarily<br>
+                            ④ harmoniously
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                of her own accord = 「自分から進んで」。<br>
+                                いちばん意味が近い副詞を選ぼう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ③ voluntarily</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】of one's own accord = voluntarily</div>
+                                <p><strong>of one's own accord</strong> は「自分から進んで」「自発的に」という意味。</p>
+                                <p>したがって同じ意味の <strong>voluntarily</strong>（自発的に）が正解。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ① reluctantly:</strong>
+                                <p>「いやいやながら」「しぶしぶ」なので真逆の意味。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② desperately / ④ harmoniously:</strong>
+                                <p>どちらも「自発的に」とは意味が一致しない。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】イディオム of one's own accord</div>
+                                <p>● of my own accord：自分から進んで</p>
+                                <p>● of his own accord：彼自ら進んで</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>He apologized <strong>of his own accord</strong>.</p>
+                                <div class="translation">（彼は自分から進んで謝った）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼女はそれを完全に自分から進んで行った。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section C -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[C] 書き換え問題 (6)～(9)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <div class="question-number">問題 (6)</div>
+                        <div class="question-text">
+                            (a) It is not likely that Sue forgot to lock the door.<br>
+                            (b) Sue is not likely (　　) (　　) (　　) to lock the door.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                It is likely that S V ⇔ S is likely to V の書き換え。<br>
+                                「忘れた」という過去の内容なので、不定詞の形に注意。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: to have forgotten</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】likely の書き換え</div>
+                                <p>(a)「スーがドアのカギをかけ忘れたとは考えにくい」</p>
+                                <p>(b) Sue is not likely <strong>to have forgotten</strong> to lock the door.</p>
+                                <p>＝「スーがカギをかけ忘れたとは考えにくい」</p>
+                                <p><strong>to have + 過去分詞</strong> で「〜した（かもしれない）」という過去の内容を表す。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】It is likely that ～ ⇔ S is likely to ～</div>
+                                <p>● It is likely that S V<br>
+                                ● S is likely to V</p>
+                                <p>not likely の形も同じように書き換えできる。</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>It is likely that he will win.<br>
+                                = He is likely to win.</p>
+                                <div class="translation">（彼が勝ちそうだ）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> スーがドアに鍵をかけ忘れたとは考えにくい。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <div class="question-number">問題 (7)</div>
+                        <div class="question-text">
+                            (a) She had been taught how to read by her mother.<br>
+                            (b) Her mother had (　　) (　　) how to read.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                受動態 → 能動態への書き換え。<br>
+                                teach 人 〜 の文型を思い出して。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: taught her</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】受動態⇔能動態の書き換え</div>
+                                <p>(a) 受動態：She had been taught ... by her mother.</p>
+                                <p>(b) 能動態：Her mother had <strong>taught her</strong> how to read.</p>
+                                <p>目的語は her（彼女）を入れてあげる。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】teach の文型</div>
+                                <p>● teach 人 物：人に物を教える</p>
+                                <p>Her mother taught her how to read.</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼女は母親から読み方を教えられた。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <div class="question-number">問題 (8)</div>
+                        <div class="question-text">
+                            (a) The poet was no richer than a beggar.<br>
+                            (b) The poet was (　　) poor (　　) a beggar.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                no 比較級 than A = as 原級 as A の書き換えパターン。<br>
+                                原級比較 as ～ as を入れればOK。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: as, as</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】no 比較級 than = as 原級 as</div>
+                                <p>no richer than a beggar = 「乞食と同じくらい貧しい」</p>
+                                <p>したがって (b) は The poet was <strong>as</strong> poor <strong>as</strong> a beggar.</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】比較の言い換え</div>
+                                <p>● no 比較級 than A = as 原級 as A</p>
+                                <p>例：no taller than I = as short as I</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> その詩人は乞食と同じくらい貧しかった。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <div class="question-number">問題 (9)</div>
+                        <div class="question-text">
+                            (a) Needless to say, honesty is the best policy.<br>
+                            (b) It goes (　　) (　　) that honesty is the best policy.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「言うまでもないが」は It goes (   ) (   ) that ～ の形で言い換え。<br>
+                                「言わずに進む」という直訳をイメージして。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: without saying</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】needless to say = It goes without saying</div>
+                                <p>「言うまでもなく」は <strong>Needless to say</strong> や<br>
+                                <strong>It goes without saying that ～</strong> で表現できる。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】It goes without saying that ～</div>
+                                <p>定型表現として丸暗記でOK。that 以下には「当然そうだろう」という内容が続く。</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 言うまでもないが、正直が最良の策である。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section D -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[D] 共通語補充問題 (10)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <div class="question-number">問題 (10)</div>
+                        <div class="question-text">
+                            (a) Will you (　　) after the children while I'm out?<br>
+                            (b) (　　) in the mirror before you drive off.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                どちらも「見る」に関係する句動詞。<br>
+                                子どもの世話をする：look (   ) / 鏡を見る：look (   ) the mirror。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: look</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】look after / look in</div>
+                                <p>(a) <strong>look after</strong> the children：子どもの世話をする</p>
+                                <p>(b) <strong>look in</strong> the mirror：鏡を見る</p>
+                                <p>どちらも動詞は look で共通する。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】look を使ったイディオム</div>
+                                <p>● look after A：Aの世話をする</p>
+                                <p>● look for A：Aを探す</p>
+                                <p>● look at A：Aを見る</p>
+                                <p>● look into A：Aを調べる</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong><br>
+                                (a) 私が外出している間、子どもたちの世話をしてくれますか。<br>
+                                (b) 出発する前に鏡を見なさい。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section E -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[E] 誤り指摘・訂正問題 (11)～(15)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 11 -->
+                    <div class="question">
+                        <div class="question-number">問題 (11)</div>
+                        <div class="question-text">
+                            ①As a good Christian, he never fails ②in going ③to church ④on Sundays.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                never fail のあと、前置詞 in は本当に必要？<br>
+                                「必ず～する」という決まり文句を思い出そう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り: ② in going → 正: to go</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】never fail to do「必ず〜する」</div>
+                                <p><strong>never fail to do</strong> で「必ず〜する」という決まり表現。</p>
+                                <p>fail の後ろは <strong>to + 動詞の原形</strong> をとるので in going は誤り。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】fail to do</div>
+                                <p>● fail to do：〜し損なう、〜しない</p>
+                                <p>● never fail to do：必ず〜する</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 熱心なキリスト教徒として、彼は日曜には必ず教会に行く。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 12 -->
+                    <div class="question">
+                        <div class="question-number">問題 (12)</div>
+                        <div class="question-text">
+                            The manager never knew ①which of ②the two sales programs ③were likely to be ④the more successful.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                which of the two ～ は単数扱い？複数扱い？<br>
+                                動詞 were / was のどちらが合うか考えてみよう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り: ③ were → 正: was</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】which of the two ～ が単数扱い</div>
+                                <p><strong>which of the two ～</strong> は「2つのうちどちらか1つ」なので単数扱い。</p>
+                                <p>よって動詞は <strong>was</strong> が正しい。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】主語と動詞の一致</div>
+                                <p>● which of the two plans <strong>is</strong> better?</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 部長はその2つの販売計画のうち、どちらがより成功しそうか、最後まで分からなかった。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 13 -->
+                    <div class="question">
+                        <div class="question-number">問題 (13)</div>
+                        <div class="question-text">
+                            John's hat ①was ②blow ③off ④in the wind.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                受動態は be ＋「どんな形」？<br>
+                                blow の過去分詞を思い出そう（blow-blew-？）。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り: ② blow → 正: blown</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】受動態は be + 過去分詞</div>
+                                <p><strong>was blown off</strong> で「吹き飛ばされた」という受動態になる。</p>
+                                <p>blow - blew - blown の過去分詞にする必要がある。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】受動態</div>
+                                <p>● be + 過去分詞：〜される</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> ジョンの帽子は風で吹き飛ばされた。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 14 -->
+                    <div class="question">
+                        <div class="question-number">問題 (14)</div>
+                        <div class="question-text">
+                            Do you know a restaurant ①which we can ②have a really ③good ④meal?
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                「～で食事ができるレストラン」＝「レストランという場所 where ～」。<br>
+                                which と where の使い分けを意識してみて。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り: ① which → 正: where</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】場所＋where の関係副詞</div>
+                                <p>「レストラン（場所）で食事ができる」なので、<br>
+                                関係代名詞 which ではなく <strong>関係副詞 where</strong> を使う。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】関係副詞 where</div>
+                                <p>● the place where I was born</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私たちが本当においしい食事ができるレストランを知っていますか。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 15 -->
+                    <div class="question">
+                        <div class="question-number">問題 (15)</div>
+                        <div class="question-text">
+                            I ①should have been going back ②to home ③by then but was delayed ④by a phone call.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                go / come / get のあとに home を使うとき、前置詞は？<br>
+                                to home と言うかどうか考えてみよう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 誤り: ② to home → 正: home</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】home の前には通常前置詞をつけない</div>
+                                <p>動詞 go / come / get などと一緒のとき、<strong>to home</strong> とは言わずに <strong>home</strong> だけで使う。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】副詞的な home</div>
+                                <p>● I went home.</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> そのときまでには家に帰っているはずだったが、電話で遅れてしまった。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section F -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[F] 語句整序・並べかえ問題 (16)～(20)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 16 -->
+                    <div class="question">
+                        <div class="question-number">問題 (16)</div>
+                        <div class="question-text">
+                            彼が約束を破ったのは，なぜだと思いますか？<br>
+                            ( him / what / his promise / do you / break / think / made )?
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                文頭は疑問詞 What。そのあとに do you think をはさんで、<br>
+                                made him break his promise を後ろに置くイメージ。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: What do you think made him break his promise?</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】What do you think + S + V ～？</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼が約束を破ったのは、なぜだと思いますか。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 17 -->
+                    <div class="question">
+                        <div class="question-number">問題 (17)</div>
+                        <div class="question-text">
+                            私たちはときどき文明がどのような変化を受ける運命にあるのか考えてみたい気になる。<br>
+                            We sometimes feel ( destined / to / civilization / tempted / guess / transformations / what / is ) to undergo.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                feel tempted to do：「～したい気になる」<br>
+                                be destined to do：「～する運命にある」<br>
+                                この2つをうまく文の中に入れてみよう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: We sometimes feel tempted to guess what transformations civilization is destined to undergo.</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私たちは、ときどき文明がどのような変化を受ける運命にあるのかを推測してみたい気になる。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 18 -->
+                    <div class="question">
+                        <div class="question-number">問題 (18)</div>
+                        <div class="question-text">
+                            彼女が英語をしゃべるのを，めったに聞いたことがありません。<br>
+                            Rarely ( her / English / I / speak / heard / have ).
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                Rarely が文頭に出るときは倒置（助動詞＋主語）。<br>
+                                have I heard ～ の形を意識しよう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: Rarely have I heard her speak English.</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私は彼女が英語を話すのをめったに聞いたことがない。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 19 -->
+                    <div class="question">
+                        <div class="question-number">問題 (19)</div>
+                        <div class="question-text">
+                            あなたがその仕事に適任だと思う人を推薦してください。（1語不要）<br>
+                            Please recommend the person ( right / for / think / is / whom / you / who ) the job.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                the person who you think is right for the job<br>
+                                関係代名詞は who だけで足りる？whom もいる？
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: Please recommend the person who you think is right for the job.（whom 不要）</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> あなたがその仕事に適任だと思う人を推薦してください。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 20 -->
+                    <div class="question">
+                        <div class="question-number">問題 (20)</div>
+                        <div class="question-text">
+                            私は彼が笑っているのを見て，やっと自分がどんなに愚かであったかに気がついた。<br>
+                            ( laughing / what a fool / it was / I had been / that I realized / until I saw / him / not ).
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ヒントを見る</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                It was not until ～ that … 構文。<br>
+                                「～して初めて…した」という形になるように並べ替えよう。
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: It was not until I saw him laughing that I realized what a fool I had been.</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼が笑っているのを見て初めて、私は自分がどれほど愚かだったかに気づいた。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- /content -->
+    </div> <!-- /container -->
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        function toggleAnswer(button) {
+            const answerSection = button.nextElementSibling;
+            answerSection.classList.toggle('active');
+
+            if (answerSection.classList.contains('active')) {
+                button.textContent = '解答を隠す';
+                button.style.background = 'linear-gradient(135deg, #a8e6cf 0%, #56ab91 100%)';
+            } else {
+                button.textContent = '解答を見る';
+                button.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+        }
+
+        function toggleHint(button) {
+            const hintSection = button.nextElementSibling;
+            hintSection.classList.toggle('active');
+
+            if (hintSection.classList.contains('active')) {
+                button.textContent = 'ヒントを隠す';
+            } else {
+                button.textContent = 'ヒントを見る';
+            }
+        }
+
+        let headerHidden = false;
+        function toggleHeader() {
+            const header = document.querySelector('.header');
+            const btn = document.querySelector('.header-toggle-btn');
+
+            headerHidden = !headerHidden;
+
+            if (headerHidden) {
+                header.classList.add('header-hidden');
+                btn.textContent = '▼ ヘッダーを表示';
+            } else {
+                header.classList.remove('header-hidden');
+                btn.textContent = '▲ ヘッダーを隠す';
+            }
+        }
+
+        // Auto-open first section on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+    </script>
+</body>
+</html>
