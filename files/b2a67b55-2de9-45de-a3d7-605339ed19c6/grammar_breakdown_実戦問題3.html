@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>å®æ¦åé¡3ï½Grammar Breakdown</title>
+  <style>
+    :root{
+      --bg1:#f97316; --bg2:#ea580c;
+      --teal:#115e59; --tealLight:#134e4a;
+      --ink:#1f2937; --muted:#6b7280;
+      --card:#ffffff; --soft:#fff7ed;
+      --hint:#fef3c7; --hintBorder:#f59e0b;
+      --ans:#ccfbf1; --ansBorder:#0d9488;
+      --wrong:#fef2f2; --wrongBorder:#ef4444;
+      --blue:#0891b2; --blueSoft:#ecfeff;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:"Segoe UI","Hiragino Kaku Gothic ProN","Meiryo",system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--ink);
+      line-height:1.8;
+      padding:16px;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:0 16px 50px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff;
+      padding:28px 24px;
+      position:sticky; top:0; z-index:10;
+    }
+    header h1{font-size:24px;margin-bottom:6px}
+    header p{opacity:.95;font-size:14px}
+    .toolbar{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border:0; cursor:pointer; font-weight:700;
+      padding:8px 14px; border-radius:999px;
+      transition:.15s transform,.15s opacity,.15s box-shadow;
+      box-shadow:0 3px 10px rgba(0,0,0,.16);
+      font-size:13px;
+    }
+    .btn:hover{transform:translateY(-1px); opacity:.96}
+    .btn-ghost{background:#fff;color:#111827}
+    .btn-dark{background:#0c4a4a;color:#fff}
+    .content{padding:18px}
+    .section{
+      border:2px solid #99f6e4; border-radius:var(--radius);
+      overflow:hidden; margin:14px 0; background:var(--soft);
+    }
+    .section-header{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));
+      color:#fff; padding:14px 16px; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      font-weight:800; user-select:none;
+    }
+    .section-header .arrow{transition:.2s transform}
+    .section-header.open .arrow{transform:rotate(180deg)}
+    .section-body{
+      display:none;
+      padding:14px;
+    }
+    .section-body.open{display:block;}
+    .qcard{
+      background:#fff; border-radius:12px; padding:14px 14px 10px;
+      margin:10px 0 14px; border-left:5px solid var(--teal);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
+    }
+    .qnum{font-weight:900;color:var(--teal)}
+    .qtext{margin-top:6px}
+    .choices{margin-top:6px;padding-left:8px;color:#111827;font-size:14px}
+    .scramble{
+      margin-top:6px;padding:8px 10px;background:#f0fdfa;
+      border-radius:8px;font-family:monospace;font-size:14px;
+      border:1px solid #99f6e4;
+      word-wrap:break-word;
+    }
+    .button-row{
+      display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;
+    }
+    .hint-btn{
+      background:linear-gradient(135deg,#fcd34d,#f59e0b);color:#78350f;
+    }
+    .ans-btn{
+      background:linear-gradient(135deg,var(--teal),var(--tealLight));color:#fff;
+    }
+    .collapsible{display:none;margin-top:6px;}
+    .collapsible.open{display:block;}
+    .box{
+      border-radius:10px; padding:10px 12px; font-size:14px;
+      border-left:4px solid; background:#fff;
+    }
+    .hint-box{background:var(--hint);border-left-color:var(--hintBorder)}
+    .ans-box{background:var(--ans);border-left-color:var(--ansBorder)}
+    .wrong-box{background:var(--wrong);border-left-color:var(--wrongBorder);margin-top:8px}
+    .ref-box{background:var(--blueSoft);border-left-color:var(--blue);margin-top:8px}
+    .label{font-weight:800}
+    .muted{color:var(--muted);font-size:13px}
+    .jp{margin-top:6px;font-style:italic}
+    footer{
+      padding:18px; text-align:center; color:#fff;
+      font-size:13px; opacity:.95;
+    }
+    /* ä¸ç·ï¼aãd ã©ãã«ï¼èª¤ãè¨æ­£ç¨ï¼ */
+    .err-under{
+      border-bottom:2px solid #fb923c;
+      padding:0 1px 1px;
+      position:relative;
+    }
+    .err-under::after{
+      content: attr(data-label);
+      position:absolute;
+      top:-1.2em;
+      left:0;
+      font-size:11px;
+      font-weight:700;
+      color:#b45309;
+    }
+    .wrong-box ul{margin-left:1.1em;padding-left:0}
+    .wrong-box li{margin-bottom:2px}
+    @media (max-width:768px){
+      header h1{font-size:20px}
+      .content{padding:12px}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>ð å®æ¦åé¡3ï½Grammar Breakdown</h1>
+    <p>æ¯è¼ã»é¢ä¿è©ã»ç¹æ®æ§æï½DUALSCOPE å®æ¦åé¡ï¼ãã¼ã¹</p>
+    <div class="toolbar">
+      <button class="btn btn-ghost" data-action="open-all">å¨é¨ã²ãã</button>
+      <button class="btn btn-ghost" data-action="close-all">å¨é¨ã¨ãã</button>
+      <button class="btn btn-dark" data-action="download">â¬ï¸ ãã®ãã¼ã¸ããã¦ã³ã­ã¼ã</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Section A -->
+    <section class="section">
+      <div class="section-header">
+        <span>[A] ï¼ èªå¥é¸æ (1)ã(10)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 1-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            The new concert hall will be (ããã) as the old one.  
+            <div class="choices">
+              a. as three times largeãï¼ãb. three times largerãï¼ãc. three times as largeãï¼ãd. as large three times
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãAã¯Bã®Xåã®å¤§ãããã¯  
+              <span class="label">A is X times as å½¢å®¹è© as B</span> ã®å½¢ã  
+              â X ã®ä½ç½®ã¨ as ï½ as ã«æ³¨ç®ã
+            </div>
+          </div>
+
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>c. three times as large</div>
+              <div class="jp">è¨³ï¼æ°ããã³ã³ãµã¼ããã¼ã«ã¯å¤ããã®ã®3åã®å¤§ããã«ãªãã ããã</div>
+              <div class="muted">
+                <b>three times as large as</b> ã§ãï½ã®3åã®å¤§ãããã  
+                å½¢ï¼<b>A is three times as large as B.</b>
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. as three times large</b>ï¼èªé ãéã<b>as large as</b> ã®éã« three times ãå¥ããã</li>
+                  <li><b>b. three times larger</b>ï¼æ¥å¸¸è±èªã§ã¯OKãªãã¨ããããï¼æç§æ¸æåã§ã¯ as ï½ as åãçã£ã¦ããã®ã§ âã</li>
+                  <li><b>c. three times as large</b>ï¼â three times as large as the old one ã§å®åè¡¨ç¾ã</li>
+                  <li><b>d. as large three times</b>ï¼as large as ã«ãªã£ã¦ããªãï¼three times ã®ä½ç½®ãä¸èªç¶ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼X times as å½¢å®¹è© as ï½ãï½ã®Xåâ¦ã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            (ããã) we need now is some good advice from experts.  
+            <div class="choices">
+              a. Whichãï¼ãb. Whetherãï¼ãc. Thatãï¼ãd. What
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              åè¡è©ãªãã§ãï½ãããã®ï¼ãã¨ããä¸èªã§è¨ããªã  
+              <span class="label">é¢ä¿ä»£åè© what</span>ã  
+              what = the thing(s) which
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>d. What</div>
+              <div class="jp">è¨³ï¼ä»ç§ãã¡ã«å¿è¦ãªã®ã¯ï¼å°éå®¶ããã®ããå©è¨ã ã</div>
+              <div class="muted">
+                <b>What we need now</b> ï¼ the thing(s) which we need nowã  
+                æå¨ä½ã§ä¸»èªã®ããã¾ãã«ãªã£ã¦ããã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. Which</b>ï¼which ã¯ãã©ã¡ããããã©ã®ï½ãã§ï¼åè¡è©ãå¿è¦ãæé ­ã§ä¸»èªã«ã¯ä½¿ããªãã</li>
+                  <li><b>b. Whether</b>ï¼ãï½ãã©ããããå¾ãã« S V ãå¿è¦ã§ï¼this pattern ã«ã¯åããªãã</li>
+                  <li><b>c. That</b>ï¼æ¥ç¶è© that ã¯å¾ãã«æãæ¥ããï¼ããã¯ããã®ï¼ãã¨ããå¿è¦ãªã®ã§ãã¹ãããã</li>
+                  <li><b>d. What</b>ï¼â ãï½ãããã®ï¼ãã¨ããèªåã§å«ãã§ããã®ã§åè¡è©ãããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼what S V ï¼ the thing(s) which S V
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            I will provide you with such things (ããã) you may need.  
+            <div class="choices">
+              a. andãï¼ãb. whichãï¼ãc. whatãï¼ãd. as
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãsuch ï½ as â¦ãï¼ãâ¦ãããããªï½ã  
+              <span class="label">such + åè© + as S V</span> ãã¾ããã¨æè¨ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>d. as</div>
+              <div class="jp">è¨³ï¼ããªããå¿è¦ã¨ãããããããªããããªç©ãï¼ç§ãç¨æãã¾ãããã</div>
+              <div class="muted">
+                <b>such things as you may need</b> ã§ãããªããå¿è¦ã¨ãããããªãã®ãã  
+                as ãé¢ä¿ä»£åè©ã¨ãã¦ things ãåãã¦ããã¤ã¡ã¼ã¸ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. and</b>ï¼æ¥ç¶è©ãããã¦ããsuch things and you may need ï½ ã¯ææ³çã«å´©å£ã</li>
+                  <li><b>b. which</b>ï¼such things which you may need ã¯ä¸èªç¶ãæ£ç¨çã« as ãä½¿ãã</li>
+                  <li><b>c. what</b>ï¼what ã¯åè¡è©ãå«ãã®ã§ï¼<b>such things</b> ã¨äºéã«ãªãNGã</li>
+                  <li><b>d. as</b>ï¼â æ£ç¨è¡¨ç¾ such ... as S V ã® asã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼such åè© as S VãSãVãããããªåè©ã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            It is said that nothing is more important than health, but some people think that wealth is (ããã) important of the two.  
+            <div class="choices">
+              a. the moreãï¼ãb. the lessãï¼ãc. moreãï¼ãd. most
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ã2ã¤ã®ãã¡ã§ï½ãªã»ããã¯  
+              <span class="label">the + æ¯è¼ç´ + of the two</span>ã  
+              the most ã¯ã3ã¤ä»¥ä¸ãã®ã¨ãã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>a. the more</div>
+              <div class="jp">è¨³ï¼å¥åº·ã»ã©å¤§åãªãã®ã¯ãªãã¨è¨ããããï¼2ã¤ã®ãã¡ã§å¯ã®ã»ããããå¤§åã ã¨èããäººãããã</div>
+              <div class="muted">
+                wealth is <b>the more important of the two</b>ã2ã¤ã®ãã¡ã§ï¼ããéè¦ãªã»ããã  
+                of the two ãè¦ããã the æ¯è¼ç´ ãã»ããã§æãåºãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. the more</b>ï¼â the more important of the two ã§æ­£è§£ã</li>
+                  <li><b>b. the less</b>ï¼æå³ãéãããå¤§åã§ãªãã»ãããææã¨åããªãã</li>
+                  <li><b>c. more</b>ï¼the ããªãã®ã§ã2ã¤ã®ãã¡ã§ãã®å½¢ã«ãªããªãã</li>
+                  <li><b>d. most</b>ï¼the most important of the two ã¯åºæ¬é¿ããï¼3ã¤ä»¥ä¸ã®ã¨ãï¼ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼the æ¯è¼ç´ of the twoã2ã¤ã®ãã¡ï¼ããï½ãªã»ãã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(5) -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">
+            She can speak as (ããã) as six languages very well.  
+            <div class="choices">
+              a. muchãï¼ãb. manyãï¼ãc. farãï¼ãd. good
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãï½ãï¼æ°ãå¤ãã¦ã³ã£ããï¼ã  
+              æ°ããããåè© â <span class="label">as many as ï¼æ°è©</span>ã  
+              æ°ããããªãåè© â as much asã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>b. many</div>
+              <div class="jp">è¨³ï¼å½¼å¥³ã¯6ãå½èªãã¨ã¦ãä¸æã«è©±ããã¨ãã§ããã</div>
+              <div class="muted">
+                <b>as many as six languages</b>ã6ãå½èªããã  
+                languages ã¯ãæ°ããããããã many ãé¸ã¶ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. much</b>ï¼ä¸å¯ç®åè©ç¨ãmuch water ãªã©ã</li>
+                  <li><b>b. many</b>ï¼â as many as six languages ã§ã6ãå½èªããã</li>
+                  <li><b>c. far</b>ï¼far ã¯æ¯è¼ç´ãå¼·ããï¼far better ãªã©ï¼ãããã§ã¯ä¸é©ã</li>
+                  <li><b>d. good</b>ï¼å½¢å®¹è© good ã¯åè© speak ã¨ä¸ç·ã«ä½¿ããªã well ã«ããå¿è¦ããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼as many as ï½ãï½ãï¼æ°ï¼ãï¼as much as ï½ãï½ãï¼éï¼ã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(6) -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            Last night Cindy told me about her new job in Tokyo, (  ãã) she appears to be enjoying very much.  
+            <div class="choices">
+              a. whichãï¼ãb. whereãï¼ãc. whatãï¼ãd. when
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ã³ã³ãï¼é¢ä¿è© â <span class="label">éå¶éç¨æ³</span>ã  
+              åè¡è©ã¯ããã®ã(her new job) ã ãã which ãèããã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>a. which</div>
+              <div class="jp">è¨³ï¼æ¨å¤ã·ã³ãã£ã¯æ±äº¬ã§ã®æ°ããä»äºã«ã¤ãã¦è©±ãã¦ããããï¼å½¼å¥³ã¯ãã®ä»äºãã¨ã¦ãæ¥½ããã§ããããã ã</div>
+              <div class="muted">
+                <b>, which she appears to be enjoying very much</b> ã§ãå½¼å¥³ãã¨ã¦ãæ¥½ããã§ãããããªãã®ä»äºã§ãã  
+                è¿½å æå ±ã®éå¶éç¨æ³ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. which</b>ï¼â åè¡è© jobï¼ç©ï¼ãåããéå¶éç¨æ³ã</li>
+                  <li><b>b. where</b>ï¼å ´æãè¡¨ãé¢ä¿å¯è©ããæ±äº¬ã§ãã®ãããªå ´æãèª¬æããã¨ãã«ä½¿ããï¼ããã¯ job ãèª¬æãã¦ããã</li>
+                  <li><b>c. what</b>ï¼åè¡è©ãå«ãã®ã§ï¼åã® job ã¨äºéã«ãªã£ã¦NGã</li>
+                  <li><b>d. when</b>ï¼æãè¡¨ãé¢ä¿å¯è©ãæå³ãåããªãã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼éå¶éç¨æ³ã® , which ï½ï¼ã³ã³ãï¼whichï¼
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(7) -->
+        <div class="qcard">
+          <div class="qnum">(7)</div>
+          <div class="qtext">
+            The Shinano River is longer than (ããã) in Japan.  
+            <div class="choices">
+              a. all of the riversãï¼ãb. another riverãï¼ãc. every riverãï¼ãd. any other river
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãAã¯ä»ã®ã©ã®Bãããï½ã ãâ  
+              <span class="label">A æ¯è¼ç´ than any other B</span>ã  
+              A èªèº«ã¯ãotherãã«å«ããªãç¹ã«æ³¨æã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>d. any other river</div>
+              <div class="jp">è¨³ï¼ä¿¡æ¿å·ã¯ï¼æ¥æ¬ã®ã»ãã®ã©ã®å·ãããé·ãã</div>
+              <div class="muted">
+                <b>longer than any other river in Japan</b> ã§ãæ¥æ¬ã®ä»ã®ã©ã®å·ãããé·ããã  
+                Shinano River ã¯ãotherãã«ã¯å«ããªãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. all of the rivers</b>ï¼longer than all of the rivers in Japan ã ã¨ãä¿¡æ¿å·ãå«ããå¨é¨ããé·ããï¼èªå·±æ¯è¼ã§NGã</li>
+                  <li><b>b. another river</b>ï¼than another river in Japan ã ã¨ãã»ãã®1æ¬ã®å·ããé·ããã ãã«ãªãæå³ãå¼±ãããã</li>
+                  <li><b>c. every river</b>ï¼a ã¨åãã§ãå¨ã¦ã®å·ï¼èªåãå«ãï¼ãã«ãªãï¼ãã¯ãèªå·±æ¯è¼ã«ãªãã</li>
+                  <li><b>d. any other river</b>ï¼â ãä»ã®ã©ã®å·ããããã§é«æ ¡è±èªã®éæ¿è¡¨ç¾ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼æ¯è¼ç´ than any other åæ°åè©
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(8) -->
+        <div class="qcard">
+          <div class="qnum">(8)</div>
+          <div class="qtext">
+            Light is to plants (ããã) food is to animals.  
+            <div class="choices">
+              a. ifãï¼ãb. whatãï¼ãc. whetherãï¼ãd. while
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              æ£ç¨è¡¨ç¾ï¼<br>
+              <span class="label">A is to B what C is to D</span>  
+              ï¼ãAã¨Bã®é¢ä¿ã¯ï¼Cã¨Dã®é¢ä¿ã¨åãã ãã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>b. what</div>
+              <div class="jp">è¨³ï¼åã®æ¤ç©ã«å¯¾ããé¢ä¿ã¯ï¼é£ç©ã®åç©ã«å¯¾ããé¢ä¿ã¨åãã§ããã</div>
+              <div class="muted">
+                <b>Light is to plants what food is to animals.</b>  
+                ãæ¤ç©ã«ã¨ã£ã¦ã®å = åç©ã«ã¨ã£ã¦ã®é£ç©ãã®ãããªå¯¾å¿é¢ä¿ãè¡¨ãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. if</b>ï¼ãããï½ãªãããæ¡ä»¶ãè¡¨ãæ¥ç¶è©ã§ï¼ããã§ã¯ä¸èªç¶ã</li>
+                  <li><b>b. what</b>ï¼â A is to B what C is to D ã®å®åã</li>
+                  <li><b>c. whether</b>ï¼ãï½ãã©ããããçåã®ãã¥ã¢ã³ã¹ã§ããã«ã¯åããªãã</li>
+                  <li><b>d. while</b>ï¼ãï½ããä¸æ¹ã§ããå¯¾æ¯ã¯ãããï¼æåãåããªãã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼A is to B what C is to D
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(9) -->
+        <div class="qcard">
+          <div class="qnum">(9)</div>
+          <div class="qtext">
+            She would not accept more money (ããã) she really needed.  
+            <div class="choices">
+              a. thanãï¼ãb. thatãï¼ãc. whatãï¼ãd. whom
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              æ¯è¼ã® than ãï¼é¢ä¿è©ã£ã½ããï½ããä»¥ä¸ã®â¦ããã¤ãªããã¤ã¡ã¼ã¸ã  
+              more ï¼åè©ï¼than S V ï½ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>a. than</div>
+              <div class="jp">è¨³ï¼å½¼å¥³ã¯æ¬å½ã«å¿è¦ã¨ããä»¥ä¸ã®ãéã¯åãåããã¨ããªãã£ãã</div>
+              <div class="muted">
+                <b>more money than she really needed</b>  
+                =ãå½¼å¥³ãæ¬å½ã«å¿è¦ã¨ãã¦ããä»¥ä¸ã®ãéãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. than</b>ï¼â æ¯è¼ã®åºæ¬ãã¿ã¼ã³ more ... than S Vã</li>
+                  <li><b>b. that</b>ï¼æ¥ç¶è©ï¼é¢ä¿ä»£åè©ããã®ã¾ã¾ã§ã¯æ§é ãä¸èªç¶ã</li>
+                  <li><b>c. what</b>ï¼åè¡è©ãå«ãã®ã§ more money what she needed ã¨ã¯è¨ããªãã</li>
+                  <li><b>d. whom</b>ï¼äººãåããç®çæ ¼ã®é¢ä¿ä»£åè©ãmoney ã¨åããªãã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼æ¯è¼ç´ï¼than S V ï½ãSãVããä»¥ä¸ã«ï¼ãããã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-(10) -->
+        <div class="qcard">
+          <div class="qnum">(10)</div>
+          <div class="qtext">
+            This is (ããã) I learn new words when I study for a test.  
+            <div class="choices">
+              a. howãï¼ãb. wayãï¼ãc. whatãï¼ãd. which
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ããããã£ã¦Sã¯Vãããï¼  
+              <span class="label">This is how S V ï½.</span>  
+              the way I V ãOKã ãï¼åé¨ã§ã¯ how ãé »åºã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>a. how</div>
+              <div class="jp">è¨³ï¼ãããã£ã¦ç§ã¯ãã¹ãåå¼·ã®ã¨ãã«æ°ããåèªãè¦ããã</div>
+              <div class="muted">
+                <b>This is how I learn new words.</b> ããã£ã³ã¯ã§æè¨ã  
+                how ã¯ãããæ¹ããè¡¨ãã¦ããã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">é¸æè¢åæï¼</div>
+                <ul>
+                  <li><b>a. how</b>ï¼â This is how S Vããããã£ã¦Sã¯Vãããã</li>
+                  <li><b>b. way</b>ï¼This is way I learn ï½ ã¯ âãthe way I learn ï½ ãªãOKã ã the ãå¿è¦ã</li>
+                  <li><b>c. what</b>ï¼what I learn ï½ ã ã¨ãä½ãå­¦ã¶ããã«ãªã£ã¦æå³ãå¤ããã</li>
+                  <li><b>d. which</b>ï¼which I learn ï½ ãåè¡è©ã¨ã®é¢ä¿ãåããä¸èªç¶ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼This is how S V ï½ããããã£ã¦Sã¯Vããã
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section B -->
+    <section class="section">
+      <div class="section-header">
+        <span>[B] ï¼ æ¸ããã (1)ã(4)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 2-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            Susanâs intelligence is superior to her sisterâs.  
+            Susanâs sister is (ããããã) (ããããã) than she is.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼è§£èª¬</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              be superior to AãAããåªãã¦ããã  
+              â æ¯è¼ã®åããã²ã£ããè¿ãã¨ <span class="label">be less å½¢å®¹è© than ï½</span>ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>less intelligent</div>
+              <div class="jp">è¨³ï¼ã¹ã¼ã¶ã³ã®å§ï¼å¦¹ï¼ã¯ï¼ã¹ã¼ã¶ã³ã»ã©é ­ããããªãã</div>
+              <div class="muted">
+                Susan is superior to her sister in intelligence.  
+                â Her sister is <b>less intelligent than</b> Susan.  
+                ãï½ã«åªãã¦ãããâãï½ã»ã©åªãã¦ããªãããã»ããã§è¦ããã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">æ¸ãããã¹ãããï¼</div>
+                <ul>
+                  <li>â  intelligenceï¼åè©ï¼â intelligentï¼å½¢å®¹è©ï¼ã«å¤ããã</li>
+                  <li>â¡ superior to AãAããåªãã¦ãããâ less ï½ than AãAã»ã©ï½ã§ãªããã«åè»¢ã</li>
+                  <li>â¢ ä¸»èªããå¦¹ï¼å§ï¼ãå´ã«å¤ãã¦æå³ãå´©ãã¦ããªããç¢ºèªã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼superior to A â less å½¢å®¹è© than A
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            He is not so much a politician as businessman.  
+            He is a businessman (ããããã) (ããããã) a politician.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼è§£èª¬</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              not so much A as BãAã¨ãããããããBã  
+              â <span class="label">B rather than A</span> ã«æ¸ãæãã§ããã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>rather than</div>
+              <div class="jp">è¨³ï¼å½¼ã¯æ¿æ²»å®¶ã¨ãããããããå®æ¥­å®¶ã ã</div>
+              <div class="muted">
+                He is not so much a politician as a businessman.  
+                = He is a businessman <b>rather than</b> a politician.  
+                AãããBã¨ãããã¥ã¢ã³ã¹ã§ãã©ã¡ãå¯ããããè¡¨ãè¡¨ç¾ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">æ¸ãããã¹ãããï¼</div>
+                <ul>
+                  <li>â  not so much A as B ããB rather than Aãã«ã²ã£ããè¿ãã</li>
+                  <li>â¡ B å´ï¼businessmanï¼ãåã«ï¼A å´ï¼politicianï¼ãå¾ãã«ç½®ãã</li>
+                  <li>â¢ a ãã©ã¡ãã«ãä»ãããã©ããã¯æèæ¬¡ç¬¬ã ãï¼æå³ã¯åãã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼not so much A as B â B rather than A
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            However long it takes, I will be waiting for you.  
+            No (ããããã) (ããããã) (ããããã) it takes, I will be waiting for you.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼è§£èª¬</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              however ï¼å½¢å®¹è©[å¯è©] ï½ ï¼  
+              <span class="label">no matter how ï¼å½¢å®¹è©[å¯è©] ï½</span> ã«æ¸ãæãå¯è½ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>matter how long</div>
+              <div class="jp">è¨³ï¼ã©ãã ãæéãããã£ã¦ãï¼ç§ã¯ããªããå¾ã£ã¦ãã¾ãã</div>
+              <div class="muted">
+                however long it takes  
+                â <b>no matter how long</b> it takes  
+                ãã©ãã ãé·ãæéãããããã¨ããã¨ããè­²æ­©ã®æå³ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">æ¸ãããã¹ãããï¼</div>
+                <ul>
+                  <li>â  however long â no matter how long ã«å¤ããã</li>
+                  <li>â¡ no ã¨ matter ã¯å¿ãã»ããã§ï¼ãåé¡ã«ããªããã¨ããã¤ã¡ã¼ã¸ã</li>
+                  <li>â¢ æé ­ã§ãæä¸­ã§ãæå³ã¯åãï¼ãã ãã«ã³ãã®ä½ç½®ã«æ³¨æï¼ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼however ï¼å½¢å®¹è© â no matter how ï¼å½¢å®¹è©
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            She attended the party for that reason.  
+            (ããããã) is (ããããã) she attended the party.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼è§£èª¬</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ããã®ãããªçç±ã§Sã¯Vãããâ  
+              <span class="label">That is why S V ï½.</span> ã«æ¸ãæãå¯è½ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>That / why</div>
+              <div class="jp">è¨³ï¼ããããçç±ã§å½¼å¥³ã¯ãã®ãã¼ãã£ã¼ã«åºå¸­ããã®ã ã</div>
+              <div class="muted">
+                for that reason she attended the party.  
+                = <b>That is why</b> she attended the party.  
+                ãããããããã§Sã¯Vããããè¨ãã¨ãã®å®çªè¡¨ç¾ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">æ¸ãããã¹ãããï¼</div>
+                <ul>
+                  <li>â  that reason â That ã«ãã¦æé ­ã¸ã</li>
+                  <li>â¡ ãçç±ããè¡¨ã why ãç¨ãã¦ That is why S V ã®å½¢ã«ããã</li>
+                  <li>â¢ That is the reason why ï½ ã¨è¨ããã¨ããããï¼ããã§ã¯ã·ã³ãã«ãªåãçãã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼That is why S V ï½ãããããçç±ã§Sã¯Vããã
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section C -->
+    <section class="section">
+      <div class="section-header">
+        <span>[C] ï¼ ä¸¦ã¹ãã (1)ã(6)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 3-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            ã¹ã³ããã¯ãã¬ã¼ã³ãããå¿è¦ãããã¨ãã¯ãã¤ãç·å¼µããã<br>
+            Scott always gets (ããã) (ããã) (ããã) (ããã) (ããã) (ããã).
+          </div>
+          <div class="scramble">
+            [ a. giveããb. has toããc. nervousããd. wheneverããe. a presentationããf. he ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼æé </button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãï½ããã¨ãã¯ãã¤ããâ è¤åé¢ä¿å¯è© <span class="label">whenever</span>ã  
+              get nervousãç·å¼µããããã»ããã§è¦ããã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>Scott always gets <b>nervous whenever he has to give a presentation</b>.</div>
+              <div class="jp">è¨³ï¼ã¹ã³ããã¯ãã¬ã¼ã³ãããªããã°ãªããªãã¨ãã¯ãã¤ãç·å¼µããã</div>
+              <div class="muted">
+                get nervousãç·å¼µãããï¼ whenever S VãSãVããã¨ãã¯ãã¤ã§ããã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">ä¸¦ã¹ããã®æé ï¼</div>
+                <ul>
+                  <li>â  æå³ã®ã«ã¿ããªãä½ãï¼get nervousï¼whenever he has to give a presentationã</li>
+                  <li>â¡ whenever ã®ãã¨ã«ãSï¼Vãï¼ he has to ãç½®ãã</li>
+                  <li>â¢ give a presentation ã¯ã²ã¨ããã¾ãã§å¾ãã¸ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼whenever S V ï½ãï½ããã¨ãã¯ãã¤ã§ãã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            å½¼å¥³ã¯é»ã£ã¦ããã®ã§ï¼ããã£ã¦ç§ãã¡ã®æ³¨æãã²ããã<br>
+            She attracted (ããã) (ããã) (ããã) (ããã) (ããã) she was silent.
+          </div>
+          <div class="scramble">
+            [ a. moreããb. allããc. becauseããd. our attentionããe. the ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼æé </button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãï½ãªã®ã§ãã£ããâ¦ãâ  
+              <span class="label">(all) the æ¯è¼ç´ because ï½</span> ã®å½¢ã  
+              all the more ï½ because ... ãè¦ããã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>She attracted <b>all the more our attention because</b> she was silent.</div>
+              <div class="jp">è¨³ï¼å½¼å¥³ã¯é»ã£ã¦ããã®ã§ï¼ããã£ã¦ç§ãã¡ã®æ³¨æããã£ããå¼ããã</div>
+              <div class="muted">
+                all the more ï½ because ...ãâ¦ã ãããã£ããï½ãã  
+                ãé»ã£ã¦ããããããï¼éã«ç®ç«ã¤ãã¨ãããã¥ã¢ã³ã¹ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">ä¸¦ã¹ããã®æé ï¼</div>
+                <ul>
+                  <li>â  all ï¼ the ï¼ more ãã»ããã§ç½®ãã</li>
+                  <li>â¡ attracted our attentionãç§ãã¡ã®æ³¨æãå¼ãããâ our attention ã¯åè©ã®ç´å¾ã¸ã</li>
+                  <li>â¢ because ä»¥ä¸ã«ãçç±ãã®æ she was silent ãå¥ããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼(all) the æ¯è¼ç´ because ï½ãï½ã ãããã£ããâ¦ã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            2äººã¯ç¥ãåã£ã¦ãããã£ãã®3ãæã§çµå©ããã<br>
+            They got married (ããã) (ããã) (ããã) (ããã) (ããã) (ããã) they met each other.
+          </div>
+          <div class="scramble">
+            [ a. afterããb. monthsããc. moreããd. noããe. thanããf. three ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼æé </button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ããããï½ãâ <span class="label">no more than ï¼æ°è©</span>ã  
+              ãï½ãã¦ããâ¦å¾ã«ãâ after S V ï½ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>They got married <b>no more than three months after</b> they met each other.</div>
+              <div class="jp">è¨³ï¼2äººã¯ç¥ãåã£ã¦ããããã3ãæã§çµå©ããã</div>
+              <div class="muted">
+                <b>no more than three months</b>ããã£ã3ãæãã  
+                after they met each otherãåºä¼ã£ã¦ãããã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">ä¸¦ã¹ããã®æé ï¼</div>
+                <ul>
+                  <li>â  no more than ã§ããããï½ãã®ããã¾ããä½ãã</li>
+                  <li>â¡ three months ã®ãã¨ã« after ãã¤ãªããã</li>
+                  <li>â¢ after ã®ãã¨ã«ã2äººãåºä¼ã£ããã¨ããæãç½®ãã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼no more than æ°è©ããããï½ã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            å®å®æè¡ãæ¥½ãããæä»£ãããã«ãã£ã¦ããã§ãããã<br>
+            The time will (ããã) (ããã) (ããã) (ããã) (ããã) (ããã) (ããã).
+          </div>
+          <div class="scramble">
+            [ a. spaceããb. enjoyããc. travelããd. come soonããe. canããf. whenããg. you ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼æé </button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãSãVããæãæ¥ããâ  
+              <span class="label">The time will come when S V ï½.</span> ã®åããã®ã¾ã¾ä½¿ãã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>The time will <b>come soon when you can enjoy space travel</b>.</div>
+              <div class="jp">è¨³ï¼å®å®æè¡ãæ¥½ãããæä»£ãããã«ãã£ã¦ããã§ãããã</div>
+              <div class="muted">
+                The time will come when ...ãâ¦ããæãæ¥ããã  
+                you can enjoy space travelãå®å®æè¡ãæ¥½ãããã¨ãã§ãããã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">ä¸¦ã¹ããã®æé ï¼</div>
+                <ul>
+                  <li>â  The time will come ãåã«æ±ºããã</li>
+                  <li>â¡ soon ã come ã®ãããã¨ã«ç½®ãï¼come soonï¼ã</li>
+                  <li>â¢ when ä»¥ä¸ã« you can enjoy space travel ãå¥ããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼the time will come when S V ï½ãSãVããæããã£ã¦æ¥ãã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(5) -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">
+            ç§ãã¡ãæç½ªã ã¨æã£ãäººã¯ï¼å®ã¯ç¡ç½ªãããããªãã<br>
+            The (ããã) (ããã) (ããã) (ããã) (ããã) (ããã) might actually be innocent.
+          </div>
+          <div class="scramble">
+            [ a. guiltyããb. manããc. thoughtããd. wasããe. weããf. who ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼æé </button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ä¸»èªã¯ãæç½ªã ã¨æã£ãäººãã  
+              The man who ï½ was guilty ãä¸»èªã®ããã¾ãã«ãªãã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>The <b>man who we thought was guilty</b> might actually be innocent.</div>
+              <div class="jp">è¨³ï¼ç§ãã¡ãæç½ªã ã¨æã£ããã®ç·ã¯ï¼å®ã¯ç¡ç½ªãããããªãã</div>
+              <div class="muted">
+                who we thought was guilty  
+                ãç§ãã¡ãæç½ªã ã¨æã£ãï¼ç·ï¼ãã§ man ãä¿®é£¾ããé¢ä¿ç¯ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">ä¸¦ã¹ããã®æé ï¼</div>
+                <ul>
+                  <li>â  The man ãä½ã£ã¦ï¼ä¸»èªã®ä¸­å¿ã«ããã</li>
+                  <li>â¡ man ãèª¬æããé¢ä¿ç¯ who we thought was guilty ãå¾ãã«ã¤ããã</li>
+                  <li>â¢ might actually be innocent ã®ä½ç½®ã¯ãã®ã¾ã¾ä¸»èªã®ãã¨ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼é¢ä¿ä»£åè©ç¯ã§ä¸»èªãé·ããããã¿ã¼ã³ã«æ£ãã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-(6) -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            æªå¤©åã§æè¡ãåãããã«ãªãã»ã©å¤±æãããã¨ã¯ãªãã<br>
+            Nothing (ããã) (ããã) (ããã) (ããã) (ããã) (ããã) due to bad weather.
+          </div>
+          <div class="scramble">
+            [ a. asããb. a tripããc. disappointingããd. isããe. to cancelããf. so ]
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼æé </button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãAã»ã©â¦ãªãã®ã¯ãªããâ  
+              <span class="label">Nothing is so[as] å½¢å®¹è© as A</span>ã  
+              ããã§ã¯ A = to cancel a trip due to bad weatherã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>Nothing <b>is so disappointing as to cancel a trip</b> due to bad weather.</div>
+              <div class="jp">è¨³ï¼æªå¤©åã§æè¡ãåããããã»ã©å¤±æãããã¨ã¯ãªãã</div>
+              <div class="muted">
+                Nothing is so disappointing as A.  
+                â ã©ããªãã¨ãAã»ã©ãã£ãããããªãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">ä¸¦ã¹ããã®æé ï¼</div>
+                <ul>
+                  <li>â  is so disappointing as ãåã«ä½ãã</li>
+                  <li>â¡ to cancel a trip ãã¾ã¨ãï¼å¾ãã« due to bad weather ãä»ããã</li>
+                  <li>â¢ Nothing ãä¸»èªï¼å¨ä½ã§ãAã»ã©å¤±æããããã®ã¯ãªããã¨ããæ§é ã«ãªãã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼Nothing is so[as] å½¢å®¹è© as A
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section D -->
+    <section class="section">
+      <div class="section-header">
+        <span>[D] ï¼ èª¤ãè¨æ­£ (1)ã(6)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 4-(1) -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">
+            At the meeting, Mr. Parker
+            <span class="err-under" data-label="a">told me about his new project</span>,
+            <span class="err-under" data-label="b">that</span>
+            <span class="err-under" data-label="c">he</span>
+            started with his friends two years
+            <span class="err-under" data-label="d">ago</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ã³ã³ãã®ãã¨ã§ãå½¼ã®æ°ããä¼ç»ããèª¬æãã¦ããã®ã§  
+              <span class="label">éå¶éç¨æ³ã®é¢ä¿ä»£åè©</span>ã  
+              éå¶éç¨æ³ã§ã¯ <b>that</b> ã¯ä½¿ããªãã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">èª¤ãï¼</span>b <b>that</b> â <b>which</b></div>
+              <div class="jp">è¨³ï¼ä¼è­°ã§ãã¼ã«ã¼æ°ã¯ï¼åäººãã¡ã¨2å¹´åã«å§ããæ°ããä¼ç»ã«ã¤ãã¦ç§ã«è©±ãã¦ãããã</div>
+              <div class="muted">
+                , which he started ... ãæ­£ããå½¢ã  
+                éå¶éç¨æ³ï¼ã³ã³ãä»ãï¼ã§ã¯ <b>which / who</b> ã¯OKã ã <b>that</b> ã¯NGã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">aãd ããããã®ãã¤ã³ãï¼</div>
+                <ul>
+                  <li><b>a (told me about his new project)</b>ï¼åè© told ã®ç®çèªã¨ãã¦èªç¶ããæ°ããä¼ç»ã«ã¤ãã¦è©±ãããã</li>
+                  <li><b>b (that)</b>ï¼éå¶éç¨æ³ã§ã¯ä½¿ããªãã®ã§èª¤ãã<b>which</b> ã«ããã</li>
+                  <li><b>c (he)</b>ï¼é¢ä¿ä»£åè©ç¯ã®ä¸»èªã¨ãã¦OKããå½¼ãå§ããä¼ç»ãã</li>
+                  <li><b>d (ago)</b>ï¼two years agoã2å¹´åã«ãã§æ­£ããè¡¨ç¾ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼éå¶éç¨æ³ã§ã¯ that ã¯ä½¿ããªãï¼which / who ãä½¿ãï¼
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(2) -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">
+            <span class="err-under" data-label="a">The older you</span>
+            <span class="err-under" data-label="b">get</span>,
+            the
+            <span class="err-under" data-label="c">more it becomes difficult</span>
+            to get
+            <span class="err-under" data-label="d">enough sleep</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãï½ããã°ããã»ã©â¦ãâ  
+              <span class="label">The æ¯è¼ç´ S V, the æ¯è¼ç´ S' V'</span>ã  
+              more ã¨ difficult ã¯ã»ããã§ <b>more difficult</b> ã«ããã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">èª¤ãï¼</span>
+                c <b>more it becomes difficult</b> â <b>more difficult it becomes</b>
+              </div>
+              <div class="jp">è¨³ï¼å¹´ãã¨ãã°ã¨ãã»ã©ï¼ååãªç¡ç ãã¨ãã®ãã¾ãã¾ãé£ãããªãã</div>
+              <div class="muted">
+                æ¯è¼ç´ã®ããã¾ãã¯ <b>more ï¼å½¢å®¹è©</b>ã  
+                more ã¨ difficult ãé¢ããã«ï¼<b>more difficult it becomes</b> ã¨ä¸¦ã¹ãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">aãd ããããã®ãã¤ã³ãï¼</div>
+                <ul>
+                  <li><b>a (The older you)</b>ï¼Theï¼æ¯è¼ç´ã§ãå¹´ãã¨ãã°ã¨ãã»ã©ããèªé ã¯OKã</li>
+                  <li><b>b (get)</b>ï¼get oldãå¹´ãã¨ããã®åè©ã§åé¡ãªãã</li>
+                  <li><b>c (more it becomes difficult)</b>ï¼more ã¨ difficult ãé¢ãã¦ä¸èªç¶ã<b>more difficult it becomes</b> ã«ä¿®æ­£ã</li>
+                  <li><b>d (enough sleep)</b>ï¼enough sleepãååãªç¡ç ããåè©å¥ã¨ãã¦æ­£ããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼The æ¯è¼ç´ S V, the æ¯è¼ç´ S' V'
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(3) -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">
+            The company
+            <span class="err-under" data-label="a">which</span>
+            <span class="err-under" data-label="b">products have just been</span>
+            released
+            <span class="err-under" data-label="c">expects more profit</span>
+            than
+            <span class="err-under" data-label="d">last year</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ããã®ä¼ç¤¾ã®è£½åãâ ä¼ç¤¾ã¨è£½åã®ãææãã®é¢ä¿ã  
+              æææ ¼ã®é¢ä¿ä»£åè© <span class="label">whose</span> ãå¿è¦ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">èª¤ãï¼</span>
+                a <b>which</b> â <b>whose</b>
+              </div>
+              <div class="jp">è¨³ï¼è£½åãã¡ããã©çºå£²ããããã®ä¼ç¤¾ã¯ï¼æ¨å¹´ä»¥ä¸ã®å©çãè¦è¾¼ãã§ããã</div>
+              <div class="muted">
+                <b>whose products have just been released</b>  
+                ãï¼ãã®ï¼è£½åãã¡ããã©çºå£²ãããããï½ã®è£½åãã¨ããææã®é¢ä¿ã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">aãd ããããã®ãã¤ã³ãï¼</div>
+                <ul>
+                  <li><b>a (which)</b>ï¼åè¡è© company ã¨ products ã¯ãææãã®é¢ä¿ãªã®ã§ <b>whose</b> ãä½¿ãã</li>
+                  <li><b>b (products have just been)</b>ï¼have just been released ã§ãã¡ããã©çºå£²ãããããååæã¨ãã¦OKã</li>
+                  <li><b>c (expects more profit)</b>ï¼expects more profitãããå¤ãã®å©çãè¦è¾¼ãã§ããããææ³çã«æ­£ããã</li>
+                  <li><b>d (last year)</b>ï¼than last yearãæ¨å¹´ããããã§æ¯è¼ã®åºæºãç¤ºãã¦ããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼whose ï¼åè© ï½ãï½ã®åè©â¦ãï¼æææ ¼ã®é¢ä¿ä»£åè©ï¼
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(4) -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">
+            <span class="err-under" data-label="a">The digital camera</span> was
+            <span class="err-under" data-label="b">very more expensive</span>
+            than
+            <span class="err-under" data-label="c">I</span>
+            <span class="err-under" data-label="d">had expected</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              æ¯è¼ç´ãå¼·ããã®ã¯ very ãããªãã¦  
+              <span class="label">much / far / even / still</span> ãªã©ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">èª¤ãï¼</span>
+                b <b>very more expensive</b> â <b>much more expensive</b>ï¼ãªã©ï¼
+              </div>
+              <div class="jp">è¨³ï¼ãã®ãã¸ã¿ã«ã«ã¡ã©ã¯ï¼æã£ã¦ãããããã£ã¨é«ãã£ãã</div>
+              <div class="muted">
+                very expensiveï¼åç´ï¼ã¯OKã  
+                more expensiveï¼æ¯è¼ç´ï¼ãå¼·ãããªã <b>much / far / a lot</b> ãªã©ãä½¿ãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">aãd ããããã®ãã¤ã³ãï¼</div>
+                <ul>
+                  <li><b>a (The digital camera)</b>ï¼ä¸»èªã¨ãã¦èªç¶ã</li>
+                  <li><b>b (very more expensive)</b>ï¼very ã¯æ¯è¼ç´ã¨ä¸ç·ã«ã¯åºæ¬ä½¿ããªãã<b>much more expensive</b> ã«ããã</li>
+                  <li><b>c (I)</b>ï¼than I had expectedãç§ãäºæ³ãã¦ããããããä»£åè© I ã§OKã</li>
+                  <li><b>d (had expected)</b>ï¼éå»å®äºã§ãããã¾ã§ã«äºæ³ãã¦ããããæ¯è¼ã®åºæºã¨ãã¦èªç¶ãªæå¶ã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼much / far + æ¯è¼ç´ããã£ã¨ï½ã ã
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(5) -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">
+            We found
+            <span class="err-under" data-label="a">a location</span>
+            <span class="err-under" data-label="b">where</span>
+            <span class="err-under" data-label="c">has a very good transportation system</span>
+            <span class="err-under" data-label="d">near by</span>.
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              where ã®ãã¨ã¯ãS Vããæ¥ãã  
+              ããã¯ãå ´æï¼åè© hasããªã®ã§ä¸»æ ¼ã®é¢ä¿ä»£åè© <span class="label">which/that</span> ãå¿è¦ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">èª¤ãï¼</span>
+                b <b>where</b> â <b>which</b> / that
+              </div>
+              <div class="jp">è¨³ï¼ç§ãã¡ã¯ï¼ããè¿ãã«ã¨ã¦ãããäº¤éç¶²ã®ããå ´æãè¦ã¤ããã</div>
+              <div class="muted">
+                a location <b>which has</b> a very good transportation system  
+                ãã¨ã¦ãè¯ãäº¤éç¶²ãæã¤å ´æãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">aãd ããããã®ãã¤ã³ãï¼</div>
+                <ul>
+                  <li><b>a (a location)</b>ï¼åè©å¥ã¨ãã¦OKããããå ´æãã</li>
+                  <li><b>b (where)</b>ï¼where has ï½ ã¨ã¯è¨ããªããä¸»èªã¨ãã¦åã <b>which / that</b> ãå¿è¦ãªã®ã§ãããèª¤ãã</li>
+                  <li><b>c (has a very good transportation system)</b>ï¼å®å¨ãªæï¼S+V+Oï¼ã§åé¡ãªãã</li>
+                  <li><b>d (near by)</b>ï¼nearbyï¼1èªï¼ã®ã»ããèªç¶ã ãï¼å¤ãã®åé¡ã§ã¯ b ãèª¤ãã¨ãããã®ãã¡ã¤ã³ã¿ã¼ã²ããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼åè¡è©ãå ´æã§ãï¼å¾ãããS Vããªãé¢ä¿ä»£åè©ï¼which/thatï¼
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-(6) -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            Can you tell me
+            <span class="err-under" data-label="a">anyone you know</span>
+            <span class="err-under" data-label="b">which</span>
+            <span class="err-under" data-label="c">is as familiar with computers</span>
+            <span class="err-under" data-label="d">as Mary</span>?
+          </div>
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answerï¼é¸æè¢åæ</button>
+          </div>
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              åè¡è© anyone ã¯ãäººãã  
+              é¢ä¿è©ããäººç¨ãã® <span class="label">who / that</span> ãå¿è¦ã
+            </div>
+          </div>
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div>
+                <span class="label">èª¤ãï¼</span>
+                b <b>which</b> â <b>who</b> / that
+              </div>
+              <div class="jp">è¨³ï¼ããªãã®ç¥ã£ã¦ããäººã§ï¼ã¡ã¢ãªã¼ã¨åããããã³ã³ãã¥ã¼ã¿ã«è©³ããäººãæãã¦ããã¾ãããã</div>
+              <div class="muted">
+                anyone you know <b>who</b> is as familiar with computers as Mary  
+                â åè¡è© anyoneï¼äººï¼ãªã®ã§ who / that ãä½¿ãã
+              </div>
+              <div class="box wrong-box">
+                <div class="label">aãd ããããã®ãã¤ã³ãï¼</div>
+                <ul>
+                  <li><b>a (anyone you know)</b>ï¼anyone you knowãããªããç¥ã£ã¦ããã ããããåè¡è©ã¨ãã¦èªç¶ã</li>
+                  <li><b>b (which)</b>ï¼ãã®ç¨ã®é¢ä¿ä»£åè©ãåè¡è© anyone ããäººããªã®ã§èª¤ãã</li>
+                  <li><b>c (is as familiar with computers)</b>ï¼be familiar with ï½ãï½ã«è©³ããããè¡¨ç¾ã¨ãã¦æ­£ããã</li>
+                  <li><b>d (as Mary)</b>ï¼as Maryãã¡ã¢ãªã¼ã¨åããããããæ¯è¼ã®ç¸æãç¤ºãã¦ããã</li>
+                </ul>
+              </div>
+              <div class="box ref-box">
+                ð Grammarï¼åè¡è©ãäºº â é¢ä¿ä»£åè©ã¯ who / that
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>Â© Tetsuya's Grammar Gymï½å®æ¦åé¡ï¼ Edition</footer>
+
+<script>
+(function(){
+  function openBlock(el){ el.classList.add('open'); }
+  function closeBlock(el){ el.classList.remove('open'); }
+
+  document.addEventListener('click', function(e){
+    // Hint / Answer buttons
+    var btn = e.target.closest('[data-toggle]');
+    if(btn){
+      var card = btn.closest('.qcard');
+      var key = btn.getAttribute('data-toggle');
+      var block = card.querySelector('.collapsible[data-block="'+key+'"]');
+      if(block){
+        if(block.classList.contains('open')) closeBlock(block);
+        else openBlock(block);
+      }
+      return;
+    }
+
+    // Section headers
+    var header = e.target.closest('.section-header');
+    if(header){
+      var body = header.nextElementSibling;
+      if(header.classList.contains('open')){
+        header.classList.remove('open');
+        closeBlock(body);
+      }else{
+        header.classList.add('open');
+        openBlock(body);
+        // éãã¨ãã¯ä¸­ã® Hint/Answer ã¯ä¸åº¦ãªã»ãã
+        var blocks = body.querySelectorAll('.collapsible');
+        for(var i=0;i<blocks.length;i++) closeBlock(blocks[i]);
+      }
+      return;
+    }
+
+    // Toolbar buttons
+    var action = e.target.closest('[data-action]');
+    if(action){
+      var act = action.getAttribute('data-action');
+      var headers = document.querySelectorAll('.section-header');
+      if(act === 'open-all'){
+        headers.forEach(function(h){
+          h.classList.add('open');
+          var body = h.nextElementSibling;
+          openBlock(body);
+          var blocks = body.querySelectorAll('.collapsible');
+          blocks.forEach(closeBlock);
+        });
+      }
+      if(act === 'close-all'){
+        headers.forEach(function(h){
+          h.classList.remove('open');
+          closeBlock(h.nextElementSibling);
+        });
+      }
+      if(act === 'download'){
+        var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        var blob = new Blob([html], {type:'text/html'});
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'grammar_breakdown_jissen3.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
