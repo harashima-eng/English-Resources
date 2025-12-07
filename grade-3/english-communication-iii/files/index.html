@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>English Communication III｜Index</title>
+  <meta name="description" content="Breakdown of Reading Comprehension Questions – English Communication III index with search, tags, and progress tracking.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Ctext y='200' x='10' font-size='200'%3E📘%3C/text%3E%3C/svg%3E">
+  <!-- Tailwind (standalone, good for GH Pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { 
+            sans: [
+              'Inter', 'system-ui', 'Segoe UI', 
+              'Hiragino Kaku Gothic ProN', 'Meiryo',
+              'Apple Color Emoji', 'Noto Color Emoji', 
+              'sans-serif'
+            ] 
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(0,0,0,0.08)',
+            softDark: '0 10px 30px rgba(0,0,0,0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth scroll & focus ring */
+    html { scroll-behavior: smooth; }
+    .focus-ring:focus { outline: 3px solid rgba(59,130,246,.6); outline-offset: 2px; }
+    /* Card hover lift */
+    .lift { transition: transform .15s ease, box-shadow .15s ease; }
+    .lift:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 selection:bg-indigo-300/60 dark:selection:bg-indigo-400/40">
+  <!-- Shell -->
+  <header class="sticky top-0 z-30 backdrop-blur bg-white/80 dark:bg-slate-900/70 border-b border-slate-200/70 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">📘</span>
+        <div>
+          <h1 class="text-lg sm:text-xl font-semibold">English Communication III</h1>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Breakdown of Reading Comprehension Questions</p>
+        </div>
+      </div>
+      <div class="ml-auto flex items-center gap-2">
+        <button id="themeBtn" class="focus-ring rounded-xl px-3 py-2 text-sm border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle theme (T)">
+          🌗 <span class="hidden sm:inline">Theme</span> <kbd class="ml-1 hidden md:inline px-1 rounded border text-[10px]">T</kbd>
+        </button>
+        <a href="https://github.com/harashima-eng/English-Communication-III" target="_blank" rel="noopener" class="focus-ring rounded-xl px-3 py-2 text-sm border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <!-- Utility bar -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
+      <label class="col-span-1 md:col-span-2 relative block">
+        <input id="searchInput" type="search" inputmode="search" placeholder="Search title, keywords…（検索）" class="w-full focus-ring rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 pl-11 text-sm" aria-label="Search lessons">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">🔎</span>
+      </label>
+      <div class="flex gap-2 justify-start md:justify-end">
+        <select id="sortSelect" class="focus-ring rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm">
+          <option value="latest">Sort: Latest</option>
+          <option value="oldest">Sort: Oldest</option>
+          <option value="title">Sort: A→Z</option>
+          <option value="progress">Sort: In-progress</option>
+        </select>
+        <button id="clearBtn" class="focus-ring rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm">
+          Clear
+        </button>
+      </div>
+    </section>
+
+    <!-- Tag chips -->
+    <section id="tagRow" class="mt-4 flex flex-wrap gap-2"></section>
+
+    <!-- Continue bar -->
+    <section id="continueWrap" class="hidden mt-5">
+      <a id="continueLink" class="group block rounded-2xl p-4 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900/40 dark:to-blue-900/30 border border-indigo-200/70 dark:border-indigo-800 lift shadow-soft dark:shadow-softDark" href="#">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">⏯️</span>
+          <div>
+            <p class="text-sm font-medium">Continue where you left off</p>
+            <p id="continueMeta" class="text-xs text-slate-600 dark:text-slate-400"></p>
+          </div>
+          <span class="ml-auto text-slate-600 dark:text-slate-400 group-hover:translate-x-0.5 transition">→</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- Cards -->
+    <section id="cards" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></section>
+
+    <!-- Teacher Support / How to Add New HTML -->
+    <section id="supportSection" class="mt-10">
+      <details class="w-full rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/70 p-4 shadow-soft dark:shadow-softDark">
+        <summary class="cursor-pointer list-none flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-100">
+          <span>🛠 教員用サポート｜新しい Reading HTML の追加方法</span>
+        </summary>
+        <div class="mt-3 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-2">
+          <p class="font-semibold">1. HTML ファイルをリポジトリに追加</p>
+          <ul class="list-disc list-inside pl-2">
+            <li>例：<code>Chapter16.html</code> のようにルートにアップロード</li>
+            <li>GitHub に push したあと、この index は自動で読み込める状態になります</li>
+          </ul>
+
+          <p class="font-semibold mt-3">2. 下の <code>lessons</code> 配列にカード情報を追加</p>
+          <p>このページの一番下付近のスクリプト内にある <code>const lessons = [...]</code> に、新しいオブジェクトを 1 個足すだけで OK。</p>
+
+          <p class="font-semibold mt-3">📌 テンプレ（コピペして数字だけ変える）</p>
+          <pre class="mt-1 whitespace-pre-wrap text-[11px] sm:text-xs bg-slate-900 text-slate-100 rounded-xl p-3 overflow-x-auto">
+{
+  id: 'chXX',                      // ユニークID（ch17, ch18 など）
+  title: 'Chapter XX — YOUR TITLE',
+  href: 'YourFileName.html',       // 実際のファイル名
+  date: '2025-11-19',              // 公開日（YYYY-MM-DD, JSTベースでOK）
+  tags: ['Reading', 'Comprehension', 'Exam Skills', 'Analysis'],
+  keywords: 'chapter XX reading comprehension breakdown questions test exam analysis',
+  minutes: 15                      // 目安時間（分）
+}
+          </pre>
+
+          <p class="font-semibold mt-3">3. 反映確認</p>
+          <ul class="list-disc list-inside pl-2">
+            <li>GitHub Pages でページを開き直して、新しい Chapter カードが増えていれば成功</li>
+            <li>タイトル・タグ・minutes は後からいくらでも編集OK</li>
+          </ul>
+
+          <p class="mt-3 text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
+            🔍 検索バーは <code>title</code> と <code>keywords</code> を見ているので、ここに「Titanic」「reward」など入れておくと検索しやすくなります。
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-10 pb-10 text-center text-xs text-slate-500 dark:text-slate-400">
+      <p>© <span id="year"></span> English Communication III • Built for fast class navigation • <span class="whitespace-nowrap">JST</span></p>
+      <p class="mt-1">Keyboard: <kbd class="px-1 rounded border">/</kbd> search • <kbd class="px-1 rounded border">T</kbd> theme</p>
+    </footer>
+  </main>
+
+  <script>
+    // ------------------------
+    // Content registry (edit here)
+    // ------------------------
+    const lessons = [
+      {
+        id: 'ch14',
+        title: 'Chapter 14 — Titanic Reading Breakdown',
+        href: 'chapter_14.html',
+        date: '2025-11-15',
+        tags: ['Reading', 'Comprehension', 'Exam Skills', 'Analysis'],
+        keywords: 'Chapter 14 Titanic reading comprehension breakdown questions test exam analysis',
+        minutes: 20
+      },
+      {
+        id: 'ch15',
+        title: 'Chapter 15 — Rewards for Kids Reading Breakdown',
+        href: 'Chapter_15_Reading_Breakdown.html',
+        date: '2025-11-17',
+        tags: ['Reading', 'Education', 'Motivation', 'Analysis'],
+        keywords: 'Chapter 15 rewards kids money education study motivation reading breakdown analysis',
+        minutes: 20
+      },
+      {
+        id: 'ch16',
+        title: 'Chapter 16 — Reading Breakdown',
+        href: 'Chapter16.html',
+        date: '2025-11-19',
+        tags: ['Reading', 'Comprehension', 'Exam Skills', 'Analysis'],
+        keywords: 'Chapter 16 reading comprehension breakdown questions test exam analysis',
+        minutes: 20
+      },
+        {
+        id: 'ch17',
+        title: 'Chapter 17 — Reading Breakdown',
+        href: 'Chapter17.html',
+        date: '2025-11-26',
+        tags: ['Reading', 'Comprehension', 'Exam Skills', 'Analysis'],
+        keywords: 'Chapter 17 reading comprehension breakdown questions test exam analysis',
+        minutes: 20
+      },
+        {
+        id: 'ch18',
+        title: 'Chapter 18 — Reading Breakdown',
+        href: 'Chapter18.html',
+        date: '2025-12-2',
+        tags: ['Reading', 'Comprehension', 'Exam Skills', 'Analysis'],
+        keywords: 'Chapter 18 reading comprehension breakdown questions test exam analysis',
+        minutes: 20
+      },
+                 {
+        id: 'exam-range',
+        title: '英語コミュニケーションIII｜2学期｜期末試験範囲表',
+        href: '英語コミュニケーションIII｜2学期｜期末試験範囲表.html',
+        tags: ['Exam Info', 'Notice'],
+        date: '2025-12-02',
+        keywords: '',
+        minutes: 3
+      },
+    ];
+
+    const allTags = [...new Set(lessons.flatMap(l => l.tags))].sort();
+
+    // ------------------------
+    // Utilities
+    // ------------------------
+    const $ = (s, el=document) => el.querySelector(s);
+    const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+    const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('ja-JP', { 
+      year:'numeric', month:'short', day:'numeric', timeZone:'Asia/Tokyo' 
+    });
+    const storage = {
+      get(k, v=null){ 
+        try { return JSON.parse(localStorage.getItem(k)) ?? v } catch { return v } 
+      },
+      set(k, v){ localStorage.setItem(k, JSON.stringify(v)) }
+    };
+
+    // Theme
+    const THEME_KEY = 'eci3.theme';
+    function applyTheme(mode){
+      const root = document.documentElement;
+      if(mode === 'dark' || (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+    }
+    function toggleTheme(){
+      const cur = storage.get(THEME_KEY, 'auto');
+      const next = cur === 'dark' ? 'light' : cur === 'light' ? 'auto' : 'dark';
+      storage.set(THEME_KEY, next);
+      applyTheme(next);
+      const label = next[0].toUpperCase() + next.slice(1);
+      $('#themeBtn').innerHTML = `🌗 <span class="hidden sm:inline">Theme: ${label}</span> <kbd class="ml-1 hidden md:inline px-1 rounded border text-[10px]">T</kbd>`;
+    }
+    $('#themeBtn').addEventListener('click', toggleTheme);
+    window.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase()==='t' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){ 
+        e.preventDefault(); 
+        toggleTheme(); 
+      }
+      if(e.key==='/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){ 
+        e.preventDefault(); 
+        $('#searchInput').focus(); 
+      }
+    });
+    applyTheme(storage.get(THEME_KEY, 'auto'));
+
+    // Progress tracking
+    const PROG_KEY = 'eci3.progress'; // { id: 'done'|'in'|'todo' }
+    const LAST_KEY = 'eci3.last';     // { id, title, href, at }
+
+    function getProgress(){ return storage.get(PROG_KEY, {}) }
+    function setProgress(id, val){
+      const prog = getProgress();
+      prog[id] = val;
+      storage.set(PROG_KEY, prog);
+    }
+
+    function setLast(item){
+      storage.set(LAST_KEY, { id:item.id, title:item.title, href:item.href, at: Date.now() });
+      renderContinue();
+    }
+
+    function renderContinue(){
+      const last = storage.get(LAST_KEY, null);
+      const wrap = $('#continueWrap');
+      if(!last){ 
+        wrap.classList.add('hidden'); 
+        return; 
+      }
+      wrap.classList.remove('hidden');
+      $('#continueLink').href = last.href;
+      const when = new Date(last.at).toLocaleString('ja-JP', { timeZone:'Asia/Tokyo' });
+      $('#continueMeta').textContent = `${last.title} ・ 最終アクセス: ${when}`;
+    }
+
+    // Tags
+    function renderTags(){
+      const row = $('#tagRow');
+      row.innerHTML = '';
+      const makeChip = (text) => {
+        const b = document.createElement('button');
+        b.className = 'focus-ring text-sm border border-slate-300 dark:border-slate-700 rounded-full px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800';
+        b.textContent = text;
+        b.dataset.tag = text;
+        return b;
+      };
+      row.appendChild(makeChip('All'));
+      allTags.forEach(t => row.appendChild(makeChip(t)));
+      row.addEventListener('click', (e)=>{
+        const tag = e.target?.dataset?.tag;
+        if(tag){ 
+          state.tag = tag === 'All' ? null : tag; 
+          renderCards(); 
+        }
+      });
+    }
+
+    // State
+    const state = { q:'', tag:null, sort:'latest' };
+    $('#searchInput').addEventListener('input', (e)=>{ 
+      state.q = e.target.value.trim().toLowerCase(); 
+      renderCards(); 
+    });
+    $('#sortSelect').addEventListener('change', (e)=>{ 
+      state.sort = e.target.value; 
+      renderCards(); 
+    });
+    $('#clearBtn').addEventListener('click', ()=>{
+      state.q=''; 
+      state.tag=null; 
+      state.sort='latest';
+      $('#searchInput').value=''; 
+      $('#sortSelect').value='latest';
+      renderCards();
+    });
+
+    // Cards
+    function renderCards(){
+      let items = lessons.slice();
+      if(state.q){
+        items = items.filter(i => (i.title + ' ' + i.keywords).toLowerCase().includes(state.q));
+      }
+      if(state.tag){
+        items = items.filter(i => i.tags.includes(state.tag));
+      }
+      items.sort((a,b)=>{
+        if(state.sort==='title') return a.title.localeCompare(b.title, 'en');
+        if(state.sort==='oldest') return new Date(a.date) - new Date(b.date);
+        if(state.sort==='progress'){
+          const pa = getProgress()[a.id] ?? 'todo';
+          const pb = getProgress()[b.id] ?? 'todo';
+          const order = { 'in':0, 'todo':1, 'done':2 };
+          const diff = order[pa]-order[pb];
+          if(diff!==0) return diff;
+          return b.date.localeCompare(a.date);
+        }
+        // latest
+        return new Date(b.date) - new Date(a.date);
+      });
+
+      const wrap = $('#cards');
+      wrap.innerHTML = '';
+      if(!items.length){
+        wrap.innerHTML = `<div class="col-span-full text-center text-slate-500 dark:text-slate-400">No results（該当なし）</div>`;
+        return;
+      }
+
+      for(const item of items){
+        const card = document.createElement('article');
+        card.className = 'lift rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 flex flex-col shadow-soft dark:shadow-softDark';
+        const prog = getProgress()[item.id] ?? 'todo';
+        const badgeColor =
+          prog === 'done' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' :
+          prog === 'in'   ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300' :
+                            'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300';
+
+        card.innerHTML = `
+          <div class="flex items-start gap-2">
+            <div class="flex-1">
+              <h2 class="font-semibold text-sm sm:text-base mb-1">${item.title}</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">${fmtDate(item.date)} ・ 約${item.minutes}分</p>
+            </div>
+            <span class="text-[10px] px-2 py-1 rounded-full ${badgeColor}">
+              ${prog === 'done' ? '完了' : prog === 'in' ? '学習中' : '未着手'}
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-1 mt-1 mb-3">
+            ${item.tags.map(t => `<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${t}</span>`).join('')}
+          </div>
+          <div class="mt-auto flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <a href="${item.href}" class="focus-ring inline-flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-500">
+              開く
+              <span class="text-[10px]">→</span>
+            </a>
+            <div class="ml-auto flex gap-1">
+              <button data-prog="todo" data-id="${item.id}" class="prog-btn text-[10px] px-2 py-1 rounded-full border border-slate-200 dark:border-slate-700 ${prog==='todo'?'bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900':''}">未</button>
+              <button data-prog="in" data-id="${item.id}" class="prog-btn text-[10px] px-2 py-1 rounded-full border border-slate-200 dark:border-slate-700 ${prog==='in'?'bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900':''}">中</button>
+              <button data-prog="done" data-id="${item.id}" class="prog-btn text-[10px] px-2 py-1 rounded-full border border-slate-200 dark:border-slate-700 ${prog==='done'?'bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900':''}">完</button>
+            </div>
+          </div>
+        `;
+        card.addEventListener('click', (e)=>{
+          if(e.target.closest('.prog-btn')) return;
+          setLast(item);
+        });
+        wrap.appendChild(card);
+      }
+
+      // bind progress buttons
+      $$('.prog-btn', wrap).forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          e.stopPropagation();
+          const id = btn.dataset.id;
+          const val = btn.dataset.prog;
+          setProgress(id, val);
+          renderCards();
+        });
+      });
+    }
+
+    // Init
+    renderTags();
+    renderCards();
+    renderContinue();
+    $('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
