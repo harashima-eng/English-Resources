@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 13: Population and History - Reading Breakdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.35s ease;
+        }
+
+        body.header-collapsed .header {
+            padding: 10px 40px;
+        }
+
+        body.header-collapsed .header h1 {
+            font-size: 1.5em;
+            margin-bottom: 0;
+        }
+
+        body.header-collapsed .header p {
+            display: none;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        /* Header collapse button - appears on hover at top center */
+        .header-trigger-zone {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 60px;
+            z-index: 999;
+        }
+
+        .header-collapse-btn {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .header-trigger-zone:hover + .header-collapse-btn,
+        .header-collapse-btn:hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .header-collapse-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Layout toggle button - appears on hover at top right */
+        .layout-trigger-zone {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 60px;
+            z-index: 999;
+        }
+
+        .layout-toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .layout-trigger-zone:hover + .layout-toggle-btn,
+        .layout-toggle-btn:hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .layout-toggle-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Translation section - hidden by default */
+        .translation-section {
+            display: none;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #28a745;
+        }
+
+        .translation-section h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .translation-text {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 2.2;
+            font-size: 1.05em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .translation-paragraph {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.2s ease, outline 0.2s ease;
+        }
+
+        .trans-label {
+            font-weight: bold;
+            color: #28a745;
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        /* Translation layout mode */
+        body.translation-layout .content {
+            display: flex;
+            max-width: 100%;
+            padding: 20px;
+            gap: 0;
+            height: calc(100vh - 120px);
+            overflow: hidden;
+        }
+
+        body.translation-layout .passage-section {
+            flex: 0 0 auto;
+            width: var(--passage-width, 50%);
+            min-width: 300px;
+            max-width: 70%;
+            margin-bottom: 0;
+            overflow-y: auto;
+            height: 100%;
+            position: relative;
+        }
+
+        body.translation-layout .translation-section {
+            display: block;
+            flex: 1;
+            overflow-y: auto;
+            height: 100%;
+            margin-bottom: 0;
+            margin-left: 20px;
+        }
+
+        body.translation-layout .questions-container {
+            display: none;
+        }
+
+        body.translation-layout .column-resizer {
+            display: block;
+        }
+
+        /* Sync scroll highlight for translation */
+        .translation-paragraph.linked-highlight {
+            outline: 3px solid rgba(249,115,22,0.9);
+            background: rgba(255,237,213,0.9);
+            border-radius: 10px;
+        }
+
+        /* Clickable paragraphs in translation view */
+        body.translation-layout .paragraph,
+        body.translation-layout .translation-paragraph {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.translation-layout .paragraph:hover,
+        body.translation-layout .translation-paragraph:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        body.translation-layout .paragraph:active,
+        body.translation-layout .translation-paragraph:active {
+            transform: scale(0.99);
+        }
+
+        .content {
+            padding: 30px 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Two-column layout */
+        body.two-column-layout .content {
+            display: flex;
+            max-width: 100%;
+            padding: 20px;
+            gap: 0;
+            height: calc(100vh - 120px);
+            overflow: hidden;
+        }
+
+        body.two-column-layout .passage-section {
+            flex: 0 0 auto;
+            width: var(--passage-width, 45%);
+            min-width: 300px;
+            max-width: 70%;
+            margin-bottom: 0;
+            overflow-y: auto;
+            height: 100%;
+            position: relative;
+        }
+
+        body.two-column-layout .questions-container {
+            flex: 1;
+            overflow-y: auto;
+            height: 100%;
+            padding-left: 20px;
+        }
+
+        /* Resizer */
+        .column-resizer {
+            display: none;
+            width: 6px;
+            background: transparent;
+            cursor: col-resize;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        body.two-column-layout .column-resizer {
+            display: block;
+        }
+
+        .column-resizer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: #ddd;
+            transition: background 0.2s ease;
+        }
+
+        .column-resizer:hover::after,
+        .column-resizer.dragging::after {
+            background: #667eea;
+            width: 4px;
+        }
+
+        /* Resize handle in bottom-right corner */
+        .resize-handle-corner {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        body.two-column-layout .resize-handle-corner {
+            display: flex;
+        }
+
+        .resize-handle-corner::before {
+            content: '⇔';
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .resize-handle-corner:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Show resize handle only when hovering near bottom-right corner */
+        .corner-trigger-zone {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            z-index: 999;
+        }
+
+        body.two-column-layout .corner-trigger-zone {
+            display: block;
+        }
+
+        .corner-trigger-zone:hover + .resize-handle-corner,
+        .resize-handle-corner:hover {
+            opacity: 1;
+        }
+
+        .passage-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .passage-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .passage-text {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 2;
+            font-size: 1.05em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+            transition: background 0.2s ease, outline 0.2s ease;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .para-label {
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .underline {
+            text-decoration: underline;
+            text-decoration-color: #f5576c;
+            text-underline-offset: 3px;
+        }
+
+        /* Dual-pane highlight linking */
+        .paragraph.linked-highlight {
+            outline: 3px solid rgba(249,115,22,0.9);
+            background: rgba(255,237,213,0.9);
+            border-radius: 10px;
+        }
+
+        .question-section.linked-highlight {
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.7);
+            transform: translateY(-1px);
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .question-header:hover {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .question-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .question-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+        }
+
+        .question-content.active {
+            max-height: 12000px;
+        }
+
+        .question-inner {
+            padding: 25px;
+        }
+
+        .question-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+            font-size: 1.1em;
+        }
+
+        .underline-ref {
+            background: #fff3cd;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .choices {
+            margin: 20px 0;
+        }
+
+        .choice {
+            padding: 12px 20px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #6c757d;
+            transition: all 0.2s ease;
+        }
+
+        .choice:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .show-hint-btn {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            color: #333;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(142, 197, 252, 0.4);
+            margin: 20px 10px 20px 0;
+            display: inline-block;
+        }
+
+        .show-hint-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(142, 197, 252, 0.6);
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .hint-section, .answer-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .hint-section.visible, .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .correct-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 5px solid #28a745;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-left: 5px solid #007bff;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-left: 5px solid #9b59b6;
+        }
+
+        .context-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #ff9800;
+        }
+
+        .passage-ref-box {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-left: 5px solid #6c757d;
+        }
+
+        .incorrect-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 5px solid #dc3545;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-left: 5px solid #17a2b8;
+        }
+
+        .box-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+
+        .highlight {
+            background: linear-gradient(to bottom, transparent 60%, #ffd700 60%);
+            padding: 0 3px;
+        }
+
+        @media (max-width: 768px) {
+            body.two-column-layout .content,
+            body.translation-layout .content {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            body.two-column-layout .passage-section,
+            body.two-column-layout .questions-container,
+            body.translation-layout .passage-section,
+            body.translation-layout .translation-section {
+                width: 100% !important;
+                min-width: auto;
+                max-width: none;
+                height: auto;
+            }
+
+            body.two-column-layout .column-resizer,
+            body.translation-layout .column-resizer {
+                display: none;
+            }
+
+            .layout-trigger-zone,
+            .header-trigger-zone {
+                display: none;
+            }
+
+            .layout-toggle-btn,
+            .header-collapse-btn {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .layout-toggle-btn {
+                right: 10px;
+                top: 10px;
+            }
+
+            .header-collapse-btn {
+                left: auto;
+                right: 120px;
+                transform: none;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Chapter 13</h1>
+            <p>Population and History<br>人口と歴史</p>
+        </div>
+
+        <div class="header-trigger-zone"></div>
+        <button class="header-collapse-btn" onclick="toggleHeader()">▲ ヘッダーを隠す</button>
+        <div class="layout-trigger-zone"></div>
+        <button class="layout-toggle-btn" onclick="toggleLayout()">📱 Two Columns</button>
+
+        <div class="content">
+            <div class="passage-section">
+                <h2>📖 本文 (Passage)</h2>
+                <div class="passage-text">
+                    <div class="paragraph" id="para1" data-paragraph="1">
+                        <div class="para-label">Paragraph 1:</div>
+                        Since ancient times, historians have noticed that the rise and fall of civilizations is closely connected to population changes. These shifts in population have had <span class="underline">(1)a significant effect</span> on the destiny of societies. Shrinking populations have often given way militarily, economically, and culturally to expanding populations. Growing populations, particularly when geographically bound, have been the cause of many historical events. Among the historical changes brought about by population growth are political revolutions and national expansion.
+                    </div>
+
+                    <div class="paragraph" id="para2" data-paragraph="2">
+                        <div class="para-label">Paragraph 2:</div>
+                        Britain's expansion into the New World and the Industrial Revolution were both in many ways the result of Great Britain's large population growth rates in the 17th century. <span class="underline">(2)Britain's population growth resulted in a widely held belief in the 18th and 19th centuries that it faced an unemployment crisis.</span> To resolve the crisis, the government encouraged people to move abroad to its colonies in America and Australia. It also encouraged businesses to invest in new ideas as a way of creating jobs. Some of the new ideas eventually led to the technological breakthroughs of the Industrial Revolution.
+                    </div>
+
+                    <div class="paragraph" id="para3" data-paragraph="3">
+                        <div class="para-label">Paragraph 3:</div>
+                        Population growth in 18th-century France played a role in the French Revolution. France's population grew from 24.6 million in 1740 to 28.1 million in 1790. This helped increase the demand for food at a time of short supply, thereby driving up food prices throughout France. Price rises spread further as a result of urbanization and the increased circulation of money. Consequently, <span class="underline">(3)the purchasing power of the average French wage earner was reduced, which caused a business downturn.</span> The downturn hurt the growing and increasingly powerful French craftsman and merchant classes. This situation led to social unrest made worse by an unfair tax system, which failed to provide enough revenue to support public spending. This in turn led to financial ruin in 1787 and finally revolution in 1789.
+                    </div>
+
+                    <div class="paragraph" id="para4" data-paragraph="4">
+                        <div class="para-label">Paragraph 4:</div>
+                        Japanese expansion from the 1870s to 1945 was caused in part by Japan's rise in population. In the mid-19th century, the Japanese population grew rapidly. This came after a period of 150 years in which Japanese deliberately reduced their birth rates to slow growth. Growth led to fears about declining living standards and the need for more land. Japanese rulers took advantage of <span class="underline">(4)these fears</span> and gathered support for an expansionist policy. This included settling the northern islands of the archipelago and taking control of Okinawa, Taiwan and Korea.
+                    </div>
+                </div>
+            </div>
+
+            <div class="column-resizer" id="columnResizer"></div>
+
+            <div class="translation-section">
+                <h2>📝 全訳 (Full Translation)</h2>
+                <div class="translation-text">
+                    <div class="translation-paragraph" id="trans1" data-paragraph="1">
+                        <div class="trans-label">第1段落:</div>
+                        古代以来、歴史家たちは、文明の盛衰は人口の変化と密接に関係があることに気づいていた。これらの人口の推移は社会の運命に大きな影響を与えてきた。減少する人口は、軍事的に、経済的に、文化的に、増大する人口に道を譲ることが多かった。増加する人口は、特に地理的に縛られている場合、多くの歴史的な出来事の原因になった。人口の増加によって引き起こされた歴史的な変化の中には、政治的革命や国家の拡張がある。
+                    </div>
+
+                    <div class="translation-paragraph" id="trans2" data-paragraph="2">
+                        <div class="trans-label">第2段落:</div>
+                        イギリスの新世界への拡大と産業革命は、いろいろな意味で、どちらも17世紀のイギリスの大きな人口増加率の結果だった。イギリスの人口増加によって、18、19世紀には、イギリスは失業の危機に直面すると広く信じられるようになった。危機を解決するために、政府は人々がアメリカやオーストラリアにあるイギリス植民地へ海外移住することを奨励した。政府はまた企業に対し、雇用創出の手段として新しいアイディアに投資することも奨励した。新しいアイディアのいくつかは、最終的には産業革命の技術的な躍進につながったのである。
+                    </div>
+
+                    <div class="translation-paragraph" id="trans3" data-paragraph="3">
+                        <div class="trans-label">第3段落:</div>
+                        18世紀のフランスにおける人口増加は、フランス革命の一因となった。フランスの人口は1740年の2460万人から1790年の2810万人に増えた。このことによって、供給が不足している折に食料需要の増加を促進し、そのために、食料価格はフランス中で上昇した。価格の上昇は都市化と増大した貨幣の流通を受けて、さらに広まった。そのため、平均的なフランスの賃金労働者の購買力は低下し、それが景気後退を引き起こした。その景気後退は、成長し影響力を強めていたフランスの職人や商人階級に痛手を与えた。この状況は、不公平な税体系――それは公共支出を支えるだけの十分な税収をもたらさなかった――によってさらに悪化した社会不安へとつながっていった。これが1787年の財政破綻、最後に1789年の革命へと次々につながっていったのである。
+                    </div>
+
+                    <div class="translation-paragraph" id="trans4" data-paragraph="4">
+                        <div class="trans-label">第4段落:</div>
+                        1870年代から1945年までの日本の拡大は、一部には日本の人口の増大によって引き起こされた。19世紀中頃に、日本の人口は急増した。これは、（人口の）増加を遅らせるために日本人が意図的に出生率を減らしていた150年間の後に発生した。人口の増加は、生活水準の低下や、より広い土地への必要性についての恐れにつながった。日本の指導者たちは、これらの恐怖心を利用し、拡張政策に対する支持を集めた。この政策には列島北部の島々への移住や、沖縄や台湾、朝鮮の支配が含まれていたのである。
+                    </div>
+                </div>
+            </div>
+
+            <div class="questions-container">
+                <!-- Question 1 -->
+                <div class="question-section" data-target-paragraphs="1">
+                    <div class="question-header" onclick="toggleQuestion('q1')">
+                        <h3>問題 1: 指示語・内容説明問題</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q1" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（1）が指すものを、第1段落の内容を踏まえて、日本語で説明しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>下線部:</strong> These shifts in population have had <span class="highlight">(1)a significant effect</span> on the destiny of societies.
+                            </div>
+
+                            <button class="show-hint-btn" onclick="showHint('hint1')">Show Hint / ヒントを見る</button>
+                            <button class="show-answer-btn" onclick="showAnswer('answer1')">Show Answer / 解答を見る</button>
+
+                            <div id="hint1" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ "a significant effect" = 「大きな影響」→ どんな影響？<br>
+                                    ✅ 下線部(1)の<strong>直後</strong>の文を読もう！<br>
+                                    ✅ 第3文: "Shrinking populations have often given way..."<br>
+                                    ✅ 第4文: "Growing populations... have been the cause..."<br>
+                                    ✅ <strong>2種類の人口変化</strong>（減少と増加）の影響を両方書く！<br><br>
+                                    
+                                    <strong>キーワード:</strong><br>
+                                    • shrinking = 減少する<br>
+                                    • expanding/growing = 増大する、増加する<br>
+                                    • give way to ~ = ～に道を譲る
+                                </div>
+                            </div>
+
+                            <div id="answer1" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    <strong>減少する人口は、軍事的に、経済的に、文化的に、増大する人口に道を譲ることになり、増加する人口は、革命や国家の拡張などの歴史的な出来事の原因になった。</strong>
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー(Reading Strategy)</div>
+                                    <strong>内容説明問題の解き方:</strong><br>
+                                    1. 下線部の<strong>直後</strong>を確認（具体的説明が続くことが多い）<br>
+                                    2. 抽象的な表現 → 具体的な説明を探す<br>
+                                    3. "a significant effect" のような一般的表現は、<strong>後続の文</strong>で具体化される<br>
+                                    4. 複数の要素がある場合は<strong>すべて</strong>含める
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠 (Paragraph 1)</div>
+                                    <strong>第3文 (減少する人口の影響):</strong><br>
+                                    "<span class="highlight">Shrinking populations</span> have often <span class="highlight">given way militarily, economically, and culturally</span> to <span class="highlight">expanding populations</span>."<br>
+                                    = 減少する人口は、軍事的に、経済的に、文化的に、増大する人口に道を譲ることが多かった<br><br>
+                                    
+                                    <strong>第4-5文 (増加する人口の影響):</strong><br>
+                                    "<span class="highlight">Growing populations</span>... have been the <span class="highlight">cause of many historical events</span>."<br>
+                                    "Among the historical changes... are <span class="highlight">political revolutions and national expansion</span>."<br>
+                                    = 増加する人口は多くの歴史的出来事（革命、国家拡張）の原因になった
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">✏️ Tips(コツ)</div>
+                                    ✅ "effect"（影響）を説明するときは<strong>具体例</strong>を含める<br>
+                                    ✅ 対比構造（減少 vs 増加）がある場合は<strong>両方</strong>答える<br>
+                                    ✅ 「〜になり、〜になった」のように因果関係を明確に
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q2')">
+                        <h3>問題 2: 和訳問題 (Translation)</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q2" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（2）を和訳しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>下線部:</strong><br>
+                                <span class="highlight">(2) Britain's population growth resulted in a widely held belief in the 18th and 19th centuries that it faced an unemployment crisis.</span>
+                            </div>
+
+                            <button class="show-hint-btn" onclick="showHint('hint2')">Show Hint / ヒントを見る</button>
+                            <button class="show-answer-btn" onclick="showAnswer('answer2')">Show Answer / 解答を見る</button>
+
+                            <div id="hint2" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント(Hint)</div>
+                                    <strong>構文分析のヒント:</strong><br>
+                                    ✅ <strong>S + resulted in + O</strong> = SはOという結果を招いた<br>
+                                    ✅ <strong>a widely held belief</strong> = 広く抱かれた確信<br>
+                                    ✅ <strong>that節</strong> = beliefの内容を説明する同格節<br>
+                                    ✅ <strong>it</strong> = Britain（イギリス）<br><br>
+                                    
+                                    <strong>語句:</strong><br>
+                                    • result in ~ = ～という結果になる<br>
+                                    • widely held = 広く信じられている<br>
+                                    • face ~ = ～に直面する<br>
+                                    • unemployment crisis = 失業の危機
+                                </div>
+                            </div>
+
+                            <div id="answer2" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    <strong>イギリスの人口増加によって、18、19世紀には、イギリスは失業の危機に直面すると広く信じられるようになった。</strong>
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 和訳のステップ</div>
+                                    <strong>1. 文の構造を把握:</strong><br>
+                                    [S: Britain's population growth] + [V: resulted in] + [O: a widely held belief... that節]<br><br>
+                                    
+                                    <strong>2. 主語:</strong><br>
+                                    "Britain's population growth" = イギリスの人口増加<br><br>
+                                    
+                                    <strong>3. 述語:</strong><br>
+                                    "resulted in" = ～という結果を招いた → 「〜によって〜になった」<br><br>
+                                    
+                                    <strong>4. 目的語（同格のthat節付き）:</strong><br>
+                                    "a widely held belief... that it faced an unemployment crisis"<br>
+                                    = イギリスは失業の危機に直面するという、広く抱かれた確信<br>
+                                    → 「〜と広く信じられるようになった」
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">💡 文法ポイント: 同格のthat節</div>
+                                    <strong>belief/idea/fact/news + that節</strong><br>
+                                    = 「〜という確信/考え/事実/知らせ」<br><br>
+                                    
+                                    that節は名詞の<strong>内容</strong>を説明する（同格関係）<br><br>
+                                    
+                                    <strong>例:</strong><br>
+                                    • the fact <strong>that</strong> he was late = 彼が遅刻したという事実<br>
+                                    • the belief <strong>that</strong> it faced a crisis = 危機に直面するという確信
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">✏️ Tips(コツ)</div>
+                                    ✅ <strong>result in</strong> は「〜によって」「〜の結果」と訳すと自然<br>
+                                    ✅ <strong>widely held belief</strong> は「広く信じられる」で受身的に訳す<br>
+                                    ✅ 代名詞 <strong>it</strong> が何を指すか確認する（ここではBritain）
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-section" data-target-paragraphs="3">
+                    <div class="question-header" onclick="toggleQuestion('q3')">
+                        <h3>問題 3: 和訳問題 (Translation)</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q3" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（3）を和訳しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>下線部:</strong><br>
+                                <span class="highlight">(3) the purchasing power of the average French wage earner was reduced, which caused a business downturn.</span>
+                            </div>
+
+                            <button class="show-hint-btn" onclick="showHint('hint3')">Show Hint / ヒントを見る</button>
+                            <button class="show-answer-btn" onclick="showAnswer('answer3')">Show Answer / 解答を見る</button>
+
+                            <div id="hint3" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント(Hint)</div>
+                                    <strong>構文分析のヒント:</strong><br>
+                                    ✅ <strong>主節:</strong> the purchasing power... was reduced<br>
+                                    ✅ <strong>, which</strong> = 非制限用法の関係代名詞（前の文全体を受ける）<br>
+                                    ✅ which = 「そしてそのことが」「それが」<br><br>
+                                    
+                                    <strong>語句:</strong><br>
+                                    • purchasing power = 購買力<br>
+                                    • wage earner = 賃金労働者<br>
+                                    • reduce = 減らす、低下させる<br>
+                                    • downturn = 低迷、後退
+                                </div>
+                            </div>
+
+                            <div id="answer3" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    <strong>平均的なフランスの賃金労働者の購買力は低下し、それが景気後退を引き起こした。</strong>
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 和訳のステップ</div>
+                                    <strong>1. 文の構造を把握:</strong><br>
+                                    [主節] + [, which + 動詞 (継続用法)]<br><br>
+                                    
+                                    <strong>2. 主節:</strong><br>
+                                    "the purchasing power of the average French wage earner was reduced"<br>
+                                    = 平均的なフランスの賃金労働者の購買力は低下した<br><br>
+                                    
+                                    <strong>3. 関係詞節 (継続用法):</strong><br>
+                                    ", which caused a business downturn"<br>
+                                    = そしてそれが景気後退を引き起こした<br>
+                                    → 「それが〜を引き起こした」
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">💡 文法ポイント: 非制限用法の which</div>
+                                    <strong>, which</strong> は前の<strong>文全体</strong>を受けることができる<br><br>
+                                    
+                                    この場合、which = 「購買力が低下したこと」<br><br>
+                                    
+                                    訳し方のパターン:<br>
+                                    • 「〜し、それが...」<br>
+                                    • 「〜し、そのことが...」<br>
+                                    • 「〜したが、それは...」
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">✏️ Tips(コツ)</div>
+                                    ✅ <strong>, which</strong> は「それが」「そのことが」で訳す<br>
+                                    ✅ <strong>was reduced</strong> は「低下した」「減少した」<br>
+                                    ✅ <strong>business downturn</strong> は「景気後退」「不景気」
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-section" data-target-paragraphs="4">
+                    <div class="question-header" onclick="toggleQuestion('q4')">
+                        <h3>問題 4: 指示語問題 (Reference)</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q4" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部（4）の内容を、日本語で答えなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>下線部:</strong> Japanese rulers took advantage of <span class="highlight">(4)these fears</span> and gathered support for an expansionist policy.
+                            </div>
+
+                            <button class="show-hint-btn" onclick="showHint('hint4')">Show Hint / ヒントを見る</button>
+                            <button class="show-answer-btn" onclick="showAnswer('answer4')">Show Answer / 解答を見る</button>
+
+                            <div id="hint4" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ "these fears" = 「これらの恐れ」→ <strong>直前</strong>を見る！<br>
+                                    ✅ 1つ前の文を確認: "Growth led to fears about..."<br>
+                                    ✅ "fears about ~" = 「〜についての恐れ」<br>
+                                    ✅ 恐れの内容は<strong>2つ</strong>ある！<br><br>
+                                    
+                                    <strong>キーワード:</strong><br>
+                                    • declining living standards = 生活水準の低下<br>
+                                    • the need for more land = より多くの土地が必要
+                                </div>
+                            </div>
+
+                            <div id="answer4" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    <strong>生活水準が低下し、もっと多くの土地が必要であるという恐れ。</strong>
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー(Reading Strategy)</div>
+                                    <strong>指示語問題の解き方:</strong><br>
+                                    1. "this/these/that/those" は<strong>直前</strong>を見る！<br>
+                                    2. 複数形 "these" なら<strong>複数の要素</strong>を探す<br>
+                                    3. 指示語の<strong>品詞</strong>に注目（fears = 名詞）<br>
+                                    4. 同じ単語や関連語を直前の文で探す（fears ← fears about）
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠 (Paragraph 4)</div>
+                                    "Growth led to <span class="highlight">fears</span> about <span class="highlight">declining living standards</span> and <span class="highlight">the need for more land</span>."<br><br>
+                                    
+                                    訳: 人口の増加は、<span class="highlight">生活水準の低下</span>や、<span class="highlight">より広い土地への必要性</span>についての<span class="highlight">恐れ</span>につながった。<br><br>
+                                    
+                                    → these fears = これら2つの恐れ<br>
+                                    　① 生活水準が低下する恐れ<br>
+                                    　② もっと土地が必要になる恐れ
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">✏️ Tips(コツ)</div>
+                                    ✅ <strong>these + 名詞</strong>は直前の文に<strong>同じ名詞</strong>がある<br>
+                                    ✅ 「〜という恐れ」の形で答えると明確<br>
+                                    ✅ 複数形なら<strong>複数の要素</strong>を全部含める
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-section" data-target-paragraphs="2,3,4">
+                    <div class="question-header" onclick="toggleQuestion('q5')">
+                        <h3>問題 5: 選択問題 (Multiple Choice) - 東邦大</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q5" class="question-content">
+                        <div class="question-inner">
+                            <!-- Question 5-1 -->
+                            <div class="question-text">
+                                <strong>(1) Who was encouraged to relocate (move to another place) in the 19th century?</strong>
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">① The British government.</div>
+                                <div class="choice">② Americans and Australians.</div>
+                                <div class="choice">③ The British population.</div>
+                                <div class="choice">④ British businesses.</div>
+                            </div>
+
+                            <button class="show-hint-btn" onclick="showHint('hint5-1')">Show Hint / ヒントを見る</button>
+                            <button class="show-answer-btn" onclick="showAnswer('answer5-1')">Show Answer / 解答を見る</button>
+
+                            <div id="hint5-1" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ "relocate" = 移住する → 誰が移住した？<br>
+                                    ✅ <strong>Paragraph 2</strong>を確認！<br>
+                                    ✅ "the government encouraged people to move abroad..."<br>
+                                    ✅ "people" = 誰のこと？ → イギリスの人々！<br><br>
+                                    
+                                    <strong>各選択肢の意味:</strong><br>
+                                    ① イギリス政府<br>
+                                    ② アメリカ人とオーストラリア人<br>
+                                    ③ イギリスの人口（国民）<br>
+                                    ④ イギリスの企業
+                                </div>
+                            </div>
+
+                            <div id="answer5-1" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解: ③</div>
+                                    <strong>③ The British population.</strong><br>
+                                    （イギリス国民）
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠 (Paragraph 2)</div>
+                                    "the government <span class="highlight">encouraged people to move abroad</span> to its colonies in <span class="highlight">America and Australia</span>."<br><br>
+                                    
+                                    訳: 政府は<span class="highlight">人々が海外移住すること</span>を奨励した / <span class="highlight">アメリカやオーストラリアにある</span>イギリス植民地へ<br><br>
+                                    
+                                    → "people" = イギリスの人々 = The British population
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">✗ なぜ他の選択肢が不正解か</div>
+                                    <strong>①:</strong> The British government（イギリス政府）<br>
+                                    → 政府は移住を<strong>奨励した側</strong>であり、移住した側ではない。<br><br>
+                                    
+                                    <strong>②:</strong> Americans and Australians（アメリカ人とオーストラリア人）<br>
+                                    → アメリカとオーストラリアは<strong>移住先</strong>であり、移住した人々ではない。<br><br>
+                                    
+                                    <strong>④:</strong> British businesses（イギリスの企業）<br>
+                                    → 企業は「新しいアイディアに<strong>投資する</strong>」ことを奨励されたのであり、「移住する」ことではない。
+                                </div>
+                            </div>
+
+                            <hr style="margin: 40px 0; border: 1px dashed #ddd;">
+
+                            <!-- Question 5-2 -->
+                            <div class="question-text">
+                                <strong>(2) How did population growth lead to the French Revolution?</strong>
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">① It made the craftsman and merchant classes more powerful.</div>
+                                <div class="choice">② It increased the demand for food, which caused inflation.</div>
+                                <div class="choice">③ It led to more public spending and eventual economic failure.</div>
+                                <div class="choice">④ It caused urban areas to grow, which led to social unrest.</div>
+                            </div>
+
+                            <button class="show-hint-btn" onclick="showHint('hint5-2')">Show Hint / ヒントを見る</button>
+                            <button class="show-answer-btn" onclick="showAnswer('answer5-2')">Show Answer / 解答を見る</button>
+
+                            <div id="hint5-2" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ "How" = どのようにして？ → <strong>因果関係</strong>を追う！<br>
+                                    ✅ <strong>Paragraph 3</strong>を確認！<br>
+                                    ✅ 人口増加 → ??? → フランス革命<br>
+                                    ✅ キーワード: "demand for food", "food prices", "inflation"<br><br>
+                                    
+                                    <strong>各選択肢の意味:</strong><br>
+                                    ① 職人や商人階級をより強力にした<br>
+                                    ② 食料需要を増加させ、それがインフレを引き起こした<br>
+                                    ③ より多くの公共支出と最終的な経済破綻につながった<br>
+                                    ④ 都市部を成長させ、それが社会不安につながった
+                                </div>
+                            </div>
+
+                            <div id="answer5-2" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解: ②</div>
+                                    <strong>② It increased the demand for food, which caused inflation.</strong><br>
+                                    （食料需要を増加させ、それがインフレを引き起こした）
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠 (Paragraph 3)</div>
+                                    "This helped <span class="highlight">increase the demand for food</span> at a time of short supply, thereby <span class="highlight">driving up food prices</span> throughout France."<br><br>
+                                    
+                                    訳: このことによって、供給が不足している折に<span class="highlight">食料需要の増加</span>を促進し、そのために、<span class="highlight">食料価格は</span>フランス中で<span class="highlight">上昇した</span>。<br><br>
+                                    
+                                    → 人口増加 → 食料需要増加 → 価格上昇（インフレ）
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">✗ なぜ他の選択肢が不正解か</div>
+                                    <strong>①:</strong> "It made the craftsman and merchant classes more powerful"<br>
+                                    本文: 職人や商人階級は景気後退で<strong>痛手を受けた</strong>（hurt）<br>
+                                    → 「より強力になった」のは人口増加の<strong>前</strong>からであり、人口増加の<strong>直接的な結果</strong>ではない。<br><br>
+                                    
+                                    <strong>③:</strong> "It led to more public spending and eventual economic failure"<br>
+                                    本文: 税収不足で公共支出を支えられなかった<br>
+                                    → 人口増加が「公共支出を増やした」とは書かれていない。<strong>因果関係が逆</strong>。<br><br>
+                                    
+                                    <strong>④:</strong> "It caused urban areas to grow, which led to social unrest"<br>
+                                    本文: 都市化は「価格上昇がさらに広まった」原因として言及<br>
+                                    → 人口増加が<strong>直接</strong>都市化を引き起こしたとは書かれていない。
+                                </div>
+                            </div>
+
+                            <hr style="margin: 40px 0; border: 1px dashed #ddd;">
+
+                            <!-- Question 5-3 -->
+                            <div class="question-text">
+                                <strong>(3) When did Japanese intentionally reduce their birth rates?</strong>
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">① From the 18th to the mid-19th century.</div>
+                                <div class="choice">② From the mid-19th century until 1945.</div>
+                                <div class="choice">③ From the 19th to the mid-20th century.</div>
+                                <div class="choice">④ From the 1870s for a period of 150 years.</div>
+                            </div>
+
+                            <button class="show-hint-btn" onclick="showHint('hint5-3')">Show Hint / ヒントを見る</button>
+                            <button class="show-answer-btn" onclick="showAnswer('answer5-3')">Show Answer / 解答を見る</button>
+
+                            <div id="hint5-3" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ "When" = いつ？ → <strong>時期</strong>を探す！<br>
+                                    ✅ <strong>Paragraph 4</strong>を確認！<br>
+                                    ✅ "deliberately reduced their birth rates"<br>
+                                    ✅ 時系列を整理しよう:<br>
+                                    　• 150年間出生率を減らした → その後 → 19世紀中頃に急増<br><br>
+                                    
+                                    <strong>計算のヒント:</strong><br>
+                                    19世紀中頃 = 1850年頃<br>
+                                    1850年 - 150年 = 1700年頃<br>
+                                    → 1700年頃〜1850年頃 = 18世紀〜19世紀中頃
+                                </div>
+                            </div>
+
+                            <div id="answer5-3" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解: ①</div>
+                                    <strong>① From the 18th to the mid-19th century.</strong><br>
+                                    （18世紀から19世紀中頃まで）
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠 (Paragraph 4)</div>
+                                    "In the <span class="highlight">mid-19th century</span>, the Japanese population grew rapidly. This came <span class="highlight">after a period of 150 years</span> in which Japanese <span class="highlight">deliberately reduced their birth rates</span> to slow growth."<br><br>
+                                    
+                                    訳: <span class="highlight">19世紀中頃</span>に、日本の人口は急増した。これは、日本人が<span class="highlight">意図的に出生率を減らしていた150年間の後</span>に発生した。<br><br>
+                                    
+                                    <strong>時系列の整理:</strong><br>
+                                    • 19世紀中頃（≒1850年）の<strong>前</strong>に150年間<br>
+                                    • 1850年 - 150年 = 1700年<br>
+                                    • つまり <strong>1700年頃〜1850年頃</strong> = 18世紀〜19世紀中頃
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">✗ なぜ他の選択肢が不正解か</div>
+                                    <strong>②:</strong> "From the mid-19th century until 1945"<br>
+                                    → 19世紀中頃<strong>から</strong>は人口が<strong>急増</strong>した時期であり、出生率を減らした時期では<strong>ない</strong>。<strong>時系列が逆!</strong><br><br>
+                                    
+                                    <strong>③:</strong> "From the 19th to the mid-20th century"<br>
+                                    → 19世紀〜20世紀中頃は日本の<strong>拡大期</strong>（1870s〜1945）に当たる。出生率低下の時期とは異なる。<br><br>
+                                    
+                                    <strong>④:</strong> "From the 1870s for a period of 150 years"<br>
+                                    → 1870年代は<strong>拡大が始まった</strong>時期。150年間は1870年代の<strong>前</strong>であり、1870年代<strong>から</strong>ではない。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">✏️ Tips(コツ)</div>
+                                    ✅ 時系列問題は<strong>計算</strong>が必要なことがある<br>
+                                    ✅ "after a period of 150 years" = 150年間<strong>の後</strong> → 逆算する<br>
+                                    ✅ 選択肢と本文の時期が<strong>完全一致</strong>するか確認
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- end questions-container -->
+        </div> <!-- end content -->
+    </div> <!-- end container -->
+
+    <div class="corner-trigger-zone"></div>
+    <div class="resize-handle-corner" onclick="resetColumnWidth()"></div>
+
+    <script>
+        // Layout modes: 0 = single, 1 = two-column (questions), 2 = two-column (translation)
+        let layoutMode = 0;
+
+        function toggleLayout() {
+            const btn = document.querySelector('.layout-toggle-btn');
+            
+            // Remove all layout classes
+            document.body.classList.remove('two-column-layout', 'translation-layout');
+            
+            // Cycle through modes
+            layoutMode = (layoutMode + 1) % 3;
+            
+            switch(layoutMode) {
+                case 0:
+                    // Single column
+                    btn.textContent = '📱 Two Columns';
+                    break;
+                case 1:
+                    // Two column with questions
+                    document.body.classList.add('two-column-layout');
+                    btn.textContent = '🔄 Translation View';
+                    break;
+                case 2:
+                    // Two column with translation
+                    document.body.classList.add('translation-layout');
+                    btn.textContent = '📚 Single Column';
+                    break;
+            }
+        }
+
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function showHint(id) {
+            const hint = document.getElementById(id);
+            const button = event.target;
+            
+            if (hint.classList.contains('visible')) {
+                hint.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                hint.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        function toggleHeader() {
+            document.body.classList.toggle('header-collapsed');
+            const btn = document.querySelector('.header-collapse-btn');
+            if (btn) {
+                if (document.body.classList.contains('header-collapsed')) {
+                    btn.textContent = '▼ ヘッダーを表示';
+                } else {
+                    btn.textContent = '▲ ヘッダーを隠す';
+                }
+            }
+        }
+
+        function showAnswer(id) {
+            const answer = document.getElementById(id);
+            const button = event.target;
+            
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                answer.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        function resetColumnWidth() {
+            document.documentElement.style.setProperty('--passage-width', '45%');
+        }
+
+        // Column resizer functionality
+        const resizer = document.getElementById('columnResizer');
+        let isResizing = false;
+
+        resizer.addEventListener('mousedown', function(e) {
+            isResizing = true;
+            resizer.classList.add('dragging');
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isResizing) return;
+            
+            const container = document.querySelector('.content');
+            const containerRect = container.getBoundingClientRect();
+            const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+            
+            if (newWidth >= 25 && newWidth <= 70) {
+                document.documentElement.style.setProperty('--passage-width', newWidth + '%');
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (isResizing) {
+                isResizing = false;
+                resizer.classList.remove('dragging');
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
+
+        // Dual-pane highlight linking setup
+        document.addEventListener('DOMContentLoaded', function () {
+            const paragraphs = document.querySelectorAll('.paragraph[data-paragraph]');
+            const transParagraphs = document.querySelectorAll('.translation-paragraph[data-paragraph]');
+            const qSections = document.querySelectorAll('.question-section');
+
+            function clearLinkedHighlight() {
+                paragraphs.forEach(p => p.classList.remove('linked-highlight'));
+                transParagraphs.forEach(t => t.classList.remove('linked-highlight'));
+                qSections.forEach(q => q.classList.remove('linked-highlight'));
+            }
+
+            // Question sections hover
+            qSections.forEach(sec => {
+                const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim()).filter(Boolean);
+
+                sec.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    sec.classList.add('linked-highlight');
+                    targets.forEach(num => {
+                        const p = document.querySelector('#para' + num);
+                        if (p) p.classList.add('linked-highlight');
+                    });
+                });
+
+                sec.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            // Passage paragraphs hover
+            paragraphs.forEach(p => {
+                const num = p.getAttribute('data-paragraph');
+                p.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    p.classList.add('linked-highlight');
+                    // Highlight corresponding translation
+                    const trans = document.querySelector('#trans' + num);
+                    if (trans) trans.classList.add('linked-highlight');
+                    // Highlight related questions
+                    qSections.forEach(sec => {
+                        const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim());
+                        if (targets.includes(num)) {
+                            sec.classList.add('linked-highlight');
+                        }
+                    });
+                });
+                p.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            // Translation paragraphs hover
+            transParagraphs.forEach(t => {
+                const num = t.getAttribute('data-paragraph');
+                t.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    t.classList.add('linked-highlight');
+                    // Highlight corresponding passage
+                    const p = document.querySelector('#para' + num);
+                    if (p) p.classList.add('linked-highlight');
+                });
+                t.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            // Click to sync scroll in translation view
+            paragraphs.forEach(p => {
+                p.addEventListener('click', function () {
+                    if (!document.body.classList.contains('translation-layout')) return;
+                    const num = p.getAttribute('data-paragraph');
+                    const trans = document.querySelector('#trans' + num);
+                    if (trans) {
+                        trans.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+                p.style.cursor = 'pointer';
+            });
+
+            transParagraphs.forEach(t => {
+                t.addEventListener('click', function () {
+                    if (!document.body.classList.contains('translation-layout')) return;
+                    const num = t.getAttribute('data-paragraph');
+                    const p = document.querySelector('#para' + num);
+                    if (p) {
+                        p.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+                t.style.cursor = 'pointer';
+            });
+
+            // Sync scroll between passage and translation columns
+            const passageSection = document.querySelector('.passage-section');
+            const translationSection = document.querySelector('.translation-section');
+            let isSyncingScroll = false;
+
+            function syncScroll(source, target) {
+                if (isSyncingScroll) return;
+                if (!document.body.classList.contains('translation-layout')) return;
+                
+                isSyncingScroll = true;
+                
+                const sourceScrollRatio = source.scrollTop / (source.scrollHeight - source.clientHeight);
+                const targetScrollTop = sourceScrollRatio * (target.scrollHeight - target.clientHeight);
+                
+                target.scrollTop = targetScrollTop;
+                
+                setTimeout(() => {
+                    isSyncingScroll = false;
+                }, 50);
+            }
+
+            passageSection.addEventListener('scroll', function() {
+                syncScroll(passageSection, translationSection);
+            });
+
+            translationSection.addEventListener('scroll', function() {
+                syncScroll(translationSection, passageSection);
+            });
+        });
+    </script>
+</body>
+</html>
