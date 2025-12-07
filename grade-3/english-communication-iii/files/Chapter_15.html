@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 15: Rewards for Kids - Reading Breakdown (Epic Layout)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 30px 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .passage-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .passage-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .passage-text {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 2;
+            font-size: 1.05em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+        }
+
+        .para-label {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .question-header:hover {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .question-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .question-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+        }
+
+        .question-content.active {
+            max-height: 8000px;
+        }
+
+        .question-inner {
+            padding: 25px;
+        }
+
+        .question-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+            font-size: 1.1em;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .answer-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .correct-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 5px solid #28a745;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-left: 5px solid #007bff;
+        }
+
+        .context-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #ff9800;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            border-left: 5px solid #e83e8c;
+        }
+
+        .passage-ref-box {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-left: 5px solid #6c757d;
+            font-style: italic;
+        }
+
+        .incorrect-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 5px solid #dc3545;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-left: 5px solid #17a2b8;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-left: 5px solid #9b59b6;
+        }
+
+        .box-title {
+            font-weight: bold;
+            font-size: 1.15em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .box-title::before {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .correct-box .box-title::before { content: "✓"; }
+        .strategy-box .box-title::before { content: "🎯"; }
+        .context-box .box-title::before { content: "💡"; }
+        .flow-box .box-title::before { content: "📊"; }
+        .passage-ref-box .box-title::before { content: "📝"; }
+        .incorrect-box .box-title::before { content: "✗"; }
+        .tip-box .box-title::before { content: "✏️"; }
+        .hint-box .box-title::before { content: "💭"; }
+
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .underline-ref {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #2196f3;
+        }
+
+        .choices {
+            margin: 15px 0;
+        }
+
+        .choice {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+
+            .passage-section {
+                padding: 20px;
+            }
+        }
+
+        /* Layout Toggle Button */
+        .layout-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .layout-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Two Column Layout Styles */
+        .two-column-layout .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: flex-start;
+            padding: 20px 2%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .two-column-layout .passage-section {
+            position: sticky;
+            top: 20px;
+            order: 1;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .two-column-layout .questions-container {
+            order: 2;
+        }
+
+        /* Scrollbar styling for passage in two-column mode */
+        .two-column-layout .passage-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Mobile responsiveness for two-column */
+        @media (max-width: 1024px) {
+            .two-column-layout .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+
+            .two-column-layout .passage-section {
+                position: relative;
+                order: 1;
+                max-height: none;
+            }
+
+            .two-column-layout .questions-container {
+                order: 2;
+            }
+
+            .layout-toggle-btn {
+                display: none;
+            }
+        }
+
+        .two-column-layout .questions-container {
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        /* Scrollbar styling for questions */
+        .two-column-layout .questions-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-thumb {
+            background: #f5576c;
+            border-radius: 10px;
+        }
+        .two-column-layout .questions-container::-webkit-scrollbar-thumb:hover {
+            background: #f093fb;
+        }
+
+        .header-collapse-btn {
+            margin-top: 16px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: none;
+            background: rgba(15,23,42,0.2);
+            color: #f9fafb;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.25);
+            backdrop-filter: blur(4px);
+            transition: all 0.25s ease;
+        }
+        .header-collapse-btn:hover {
+            background: rgba(15,23,42,0.4);
+            transform: translateY(-1px);
+        }
+
+        body.header-collapsed .header {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        body.header-collapsed .container {
+            padding-top: 10px;
+        }
+
+        /* Scroll hints */
+        .scroll-hint {
+            position: fixed;
+            top: 80px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: rgba(15,23,42,0.85);
+            color: #f9fafb;
+            box-shadow: 0 8px 20px rgba(15,23,42,0.35);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 900;
+        }
+        .scroll-hint.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-hint-passage {
+            left: 18px;
+        }
+        .scroll-hint-questions {
+            right: 18px;
+        }
+
+        /* Dual-pane highlight linking */
+        .paragraph.linked-highlight {
+            outline: 3px solid rgba(249,115,22,0.9);
+            background: rgba(255,237,213,0.9);
+            border-radius: 10px;
+            transition: background 0.2s ease, outline 0.2s ease;
+        }
+        .question-section.linked-highlight {
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.7);
+            transform: translateY(-1px);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .layout-toggle-btn {
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+        .layout-toggle-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Chapter 15</h1>
+            <p>Should Kids Be Given Money to Do Well in School?<br>子どもに報酬を与えるべきか?</p>
+            <button class="header-collapse-btn" onclick="toggleHeader()">▲ ヘッダーを隠す</button>
+        </div>
+
+        <div class="scroll-hint scroll-hint-passage">📖 Passage side scrolling</div>
+        <div class="scroll-hint scroll-hint-questions">❓ Question side scrolling</div>
+
+        <!-- Layout Toggle Button -->
+        <button class="layout-toggle-btn" onclick="toggleLayout()">
+            📱 Switch Layout
+        </button>
+
+        <div class="content">
+            <!-- FULL PASSAGE SECTION -->
+            <div class="passage-section">
+                <h2>📖 Full Passage (本文全体)</h2>
+                <div class="passage-text">
+                    <div class="paragraph" id="para1" data-paragraph="1">
+                        <div class="para-label">Paragraph 1:</div>
+                        In junior high school, one of my classmates had a TV addiction – back before it was normal. This boy – we'll call him Ethan – watched TV all day long and knew almost everything about TV comic shows.
+                    </div>
+
+                    <div class="paragraph" id="para2" data-paragraph="2">
+                        <div class="para-label">Paragraph 2:</div>
+                        Then one day, Ethan's mother made him <span style="text-decoration: underline;">(1) a bold offer</span>. If he could go a full month without watching any TV, she would give him $200. None of us thought he could do it. But Ethan quit TV quite easily. His friends offered to let him <span style="text-decoration: underline;">(2) cheat</span> at their houses on Friday nights. Ethan said no. One month later, Ethan's mom paid him $200. He went out and bought a TV, the biggest one he could find.
+                    </div>
+
+                    <div class="paragraph" id="para3" data-paragraph="3">
+                        <div class="para-label">Paragraph 3:</div>
+                        Since there have been children, there have been adults trying to get them to obey their parents. The Bible repeatedly commands children to listen to their parents and proposes that disobedient children be killed by throwing stones at them, or at least have their eyes picked out by cruel birds. Over the centuries, <span style="text-decoration: underline;">(3) the stick has lost favor to the carrot</span> in most cases. Today adults start rewarding kids with cheap gifts, such as a candy for using the toilet or a cookie for sitting still in church, before kids can speak in full sentences.
+                    </div>
+
+                    <div class="paragraph" id="para4" data-paragraph="4">
+                        <div class="para-label">Paragraph 4:</div>
+                        In recent years, hundreds of schools in the USA have made these transactions more businesslike, experimenting with paying kids with real money for showing up in class, getting good grades or going another day without fighting.
+                    </div>
+
+                    <div class="paragraph" id="para5" data-paragraph="5">
+                        <div class="para-label">Paragraph 5:</div>
+                        I have not met a child who does not admire this trend. But <span style="text-decoration: underline;">(4) it</span> makes adults terribly uncomfortable. Teachers complain that we are rewarding kids for doing what they should be doing of their own will. Psychologists warn that money can actually make kids perform worse, because it makes them lose respect for the act of learning. Parents predict that kids will be lazy after the incentives go away. <span style="text-decoration: underline;">(5) The debate has become a big battle that caused the larger dispute over why our kids are not learning at the rate they should be despite decades of reforms and budget increases.</span>
+                    </div>
+
+                    <div class="paragraph" id="para6" data-paragraph="6">
+                        <div class="para-label">Paragraph 6:</div>
+                        But all this time, there has been only one real question, particularly in America's lowest-performing schools: Does it work?
+                    </div>
+                </div>
+            </div>
+
+            <div class="questions-container">
+                <!-- QUESTION 1 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q1')">
+                        <h3>問題 1</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q1" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部(1)の具体的な内容を日本語で答えなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> Ethan's mother made him <span class="highlight">a bold offer</span>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint1')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                            <div id="hint1" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ 「具体的な内容」って聞かれたら、<strong>下線部の後ろ</strong>をチェック!<br>
+                                    ✅ "a bold offer" は<strong>抽象的</strong>な表現だよね<br>
+                                    ✅ 次の文に "If he could..." って条件が書いてない?<br>
+                                    ✅ その条件と結果を両方答えに入れよう!<br><br>
+
+                                    <strong>どこを読む?</strong> → Paragraph 2の2文目を見て!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer1')">Show Answer / 解答を見る</button>
+
+                            <div id="answer1" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解</div>
+                                    1か月間テレビを見ないでいられたら、200ドルをあげる(という申し出)。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    <strong>「具体的な内容」を聞かれたら:</strong><br>
+                                    1. まず下線部の<strong>すぐ後ろ</strong>を読め!<br>
+                                    2. "a bold offer" の内容は次の文で説明されるパターンが多い<br>
+                                    3. 次の文 "If he could go a full month without watching any TV, she would give him $200" がまさに「大胆な申し出」の中身<br><br>
+
+                                    <strong>ポイント:</strong> "a bold offer" (大胆な申し出)という<strong>抽象的な表現</strong>は、その直後に<strong>具体例</strong>が来る!
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">文脈クルー(Context Clues)</div>
+                                    下線部の次の文を見よう:<br>
+                                    <span class="highlight">"If he could go a full month without watching any TV, she would give him $200."</span><br><br>
+
+                                    これが "a bold offer" の中身そのもの!<br>
+                                    条件: <strong>1か月間テレビを見ない</strong><br>
+                                    報酬: <strong>$200をあげる</strong>
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 「具体的な内容」問題は、<strong>下線部の前後</strong>に答えがある<br>
+                                    ✅ 抽象→具体の流れを意識しよう<br>
+                                    ✅ この問題では「条件+報酬」の両方を書くことが大事
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 2 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q2')">
+                        <h3>問題 2</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q2" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部(2)は具体的に何をすることを表しているか、日本語で答えなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> His friends offered to let him <span class="highlight">cheat</span> at their houses on Friday nights.
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint2')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                            <div id="hint2" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ Ethanは今<strong>何のチャレンジ中?</strong> → Paragraph 2の最初の方を見て<br>
+                                    ✅ "cheat" = 不正する、ズルする → この状況で何がズル?<br>
+                                    ✅ 友達の家で = なぜ友達の家なの? 誰に隠す必要がある?<br>
+                                    ✅ 金曜の夜 = いつのこと?<br><br>
+
+                                    <strong>キーワード:</strong> "without watching any TV" ← これがヒント!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer2')">Show Answer / 解答を見る</button>
+
+                            <div id="answer2" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解</div>
+                                    母親に内緒で、友達の家でこっそりテレビを見ること。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    <strong>"cheat" の意味を文脈から推測する:</strong><br>
+                                    1. Ethanは何にチャレンジ中? → <span class="highlight">1か月間テレビを見ない</span><br>
+                                    2. "cheat" = ルールを破る、不正をする<br>
+                                    3. この状況でのcheat = <span class="highlight">約束を破ってテレビを見る</span><br>
+                                    4. どこで? → <span class="highlight">友達の家で</span>(母親にバレないように)<br>
+                                    5. いつ? → <span class="highlight">金曜の夜</span>
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">文脈クルー(Context Clues)</div>
+                                    <strong>前後関係を整理:</strong><br>
+                                    - Ethan's challenge: <span class="highlight">1か月間TVを見ない</span><br>
+                                    - Friends' offer: <span class="highlight">"cheat at their houses"</span><br>
+                                    - Ethan's response: <span class="highlight">"said no"</span> (断った)<br><br>
+
+                                    → つまり友達は「うちでこっそりテレビ見ていいよ」と誘ったが、Ethanは断った!
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">本文からの証拠</div>
+                                    "If he could go a full month <span class="highlight">without watching any TV</span>, she would give him $200."<br><br>
+
+                                    これが約束。だから "cheat" = この約束を破ること = <strong>こっそりテレビを見ること</strong>
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ "cheat" という言葉だけ訳すな! <strong>文脈で意味を考える</strong><br>
+                                    ✅ 「何の約束を破るのか?」を常に意識<br>
+                                    ✅ 場所(友達の家)と理由(母親に内緒)も答えに含めよう
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 3 -->
+                <div class="question-section" data-target-paragraphs="3">
+                    <div class="question-header" onclick="toggleQuestion('q3')">
+                        <h3>問題 3</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q3" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部(3)の意味として最も適切なものを1つ選びなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> Over the centuries, <span class="highlight">the stick has lost favor to the carrot</span> in most cases.
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">① 罰よりも報酬を与えるほうが好まれるようになった。</div>
+                                <div class="choice">② 敗者はほうびではなく罰を与えられた。</div>
+                                <div class="choice">③ ほうびのアメもなめると味がなくなり、ただの棒になった。</div>
+                                <div class="choice">④ 子どもに石を投げつけると、現代社会では罰せられる。</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint3')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                            <div id="hint3" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ "the stick" と "the carrot" = これは<strong>比喩表現</strong>!<br>
+                                    ✅ 文字通りの「棒」と「ニンジン」じゃないよ<br>
+                                    ✅ "lost favor to" = 「~に人気で負けた」<br>
+                                    ✅ Paragraph 3の前後を読んで、<strong>時代の変化</strong>を追え!<br><br>
+
+                                    <strong>前の文:</strong> 聖書の話(石で殺す)← これは何?<br>
+                                    <strong>次の文:</strong> "Today adults start rewarding kids" ← これは何?
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer3')">Show Answer / 解答を見る</button>
+
+                            <div id="answer3" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解: ①</div>
+                                    罰よりも報酬を与えるほうが好まれるようになった。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    <strong>比喩表現(metaphor)を理解する:</strong><br>
+                                    1. "the stick" = <span class="highlight">ムチ、罰</span><br>
+                                    2. "the carrot" = <span class="highlight">ニンジン、報酬</span><br>
+                                    3. "lost favor to ~" = <span class="highlight">~に人気で負けた</span><br><br>
+
+                                    <strong>前後の文脈を見る:</strong><br>
+                                    - 前の文: 聖書は子どもを石で殺せと言っている(厳しい罰)<br>
+                                    - 次の文: "Today adults start rewarding kids" (今は報酬を与える)<br><br>
+
+                                    → 時代の変化: <strong>罰 → 報酬</strong>
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">文脈クルー(Context Clues)</div>
+                                    <strong>Paragraph 3の流れ:</strong><br>
+                                    1. 昔: 聖書は <span class="highlight">"killed by throwing stones"</span> (石で殺す = 罰)<br>
+                                    2. 変化: <span class="highlight">"Over the centuries"</span> (何世紀もかけて)<br>
+                                    3. 今: <span class="highlight">"rewarding kids with cheap gifts"</span> (報酬を与える)<br><br>
+
+                                    この流れから、「罰 → 報酬」への変化が読み取れる!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ② が不正解か</div>
+                                    本文は「敗者」の話をしていない。子育ての方法の変化について述べている。時代の流れと逆のことを言っている。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ③ が不正解か</div>
+                                    これは "stick" と "carrot" を文字通り(literal)に解釈している。でもこれは比喩表現! "棒" と "アメ" の話ではなく、「罰」と「報酬」のこと。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ④ が不正解か</div>
+                                    「石を投げる」は本文にあるが、それは聖書の昔の話。現代社会での罰の話ではない。文脈と時代が違う。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 比喩表現は<strong>文字通り</strong>に訳すな!<br>
+                                    ✅ "the stick" と "the carrot" は有名な英語の慣用句<br>
+                                    ✅ 前後の文脈で「何から何への変化か」を確認しよう
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 4 -->
+                <div class="question-section" data-target-paragraphs="5">
+                    <div class="question-header" onclick="toggleQuestion('q4')">
+                        <h3>問題 4</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q4" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部(4)について、教師たちはどのように考えているのか、日本語で答えなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> But <span class="highlight">it</span> makes adults terribly uncomfortable.
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint4')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                            <div id="hint4" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    <strong>考え方のヒント:</strong><br>
+                                    ✅ "it" が指すもの = 前の文の "this trend"<br>
+                                    ✅ 問題は「<strong>教師</strong>たちはどう考えている?」<br>
+                                    ✅ 次の文で3つのグループの意見が出てくるよ<br>
+                                    ✅ Teachers / Psychologists / Parents ← どれ?<br><br>
+
+                                    <strong>探すべき動詞:</strong> "Teachers _____" ← この動詞が重要!<br>
+                                    <strong>その後ろ:</strong> "that" 以降が教師の考え!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer4')">Show Answer / 解答を見る</button>
+
+                            <div id="answer4" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解</div>
+                                    子どもが自分の意志でやるべきことに対して報酬を与えていると不満に思っている。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    <strong>指示語 "it" が指すものを確認:</strong><br>
+                                    1. "it" = 前の文の "this trend" (子どもにお金を与える風潮)<br><br>
+
+                                    <strong>「教師たちの考え」を探す:</strong><br>
+                                    2. 次の文を読め! → <span class="highlight">"Teachers complain that..."</span><br>
+                                    3. "complain" = 不満を言う → これが教師の考え!<br>
+                                    4. 何に不満? → <span class="highlight">"we are rewarding kids for doing what they should be doing of their own will"</span>
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">文脈クルー(Context Clues)</div>
+                                    <strong>Paragraph 5の構造:</strong><br>
+                                    - "it makes adults terribly uncomfortable" (大人は不快に感じる)<br>
+                                    - 次に3つのグループの意見:<br>
+                                      1. <span class="highlight">Teachers</span> complain that...(教師は不満)<br>
+                                      2. Psychologists warn that...(心理学者は警告)<br>
+                                      3. Parents predict that...(親は予測)<br><br>
+
+                                    問題は「教師」について聞いているので、Teachers の部分を見る!
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">本文からの証拠</div>
+                                    "Teachers complain that we are rewarding kids for doing <span class="highlight">what they should be doing of their own will</span>."<br><br>
+
+                                    訳: 「子どもが<strong>自分の意志でやるべきこと</strong>に対して報酬を与えている」と教師は不満を述べている
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ "it" などの指示語は前の文脈を確認<br>
+                                    ✅ 「誰がどう考えているか」を聞く問題は、その人の発言を<strong>直接引用</strong>している部分を探せ<br>
+                                    ✅ "complain that..." = その後ろが不満の内容
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 5 -->
+                <div class="question-section" data-target-paragraphs="5">
+                    <div class="question-header" onclick="toggleQuestion('q5')">
+                        <h3>問題 5</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q5" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 下線部(5)を和訳しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Underlined text:</strong> <span class="highlight">The debate has become a big battle that caused the larger dispute over why our kids are not learning at the rate they should be despite decades of reforms and budget increases.</span>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint5')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                            <div id="hint5" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    <strong>和訳のステップ:</strong><br>
+                                    ✅ まず<strong>主語+動詞</strong>を見つけろ! → The debate has become...<br>
+                                    ✅ "that" は関係代名詞 → 前の名詞を修飾<br>
+                                    ✅ "over why..." = 「~についての」<br>
+                                    ✅ "despite" = 「~にもかかわらず」← 逆接!<br><br>
+
+                                    <strong>文の骨格:</strong><br>
+                                    議論は___になった → 何になった?<br>
+                                    それが___を引き起こした → 何を?<br>
+                                    ___についての → 何について?
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer5')">Show Answer / 解答を見る</button>
+
+                            <div id="answer5" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解</div>
+                                    その議論は、数十年にわたる改革や予算の増額にも関わらず、子どもたちが本来のあるべき進度で学べていないのはなぜなのか、に関するより大きな議論を引き起こした大論争になっている。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    <strong>長文和訳の手順:</strong><br>
+                                    1. <strong>主語と動詞</strong>を見つける:<br>
+                                       主語: The debate<br>
+                                       動詞: has become<br><br>
+
+                                    2. <strong>文の骨格</strong>を作る:<br>
+                                       The debate has become a big battle<br>
+                                       → その議論は大論争になっている<br><br>
+
+                                    3. <strong>関係代名詞 "that"</strong> 以降を処理:<br>
+                                       "that caused the larger dispute"<br>
+                                       → より大きな議論を引き起こした<br><br>
+
+                                    4. <strong>"over why..."</strong> = 「~についての」:<br>
+                                       何についての議論? → 子どもが学べていない理由について<br><br>
+
+                                    5. <strong>"despite"</strong> = 「~にも関わらず」:<br>
+                                       何にも関わらず? → 改革と予算増額にも関わらず
+                                </div>
+
+                                <div class="box context-box">
+                                    <div class="box-title">文構造の分解(Sentence Structure)</div>
+                                    <strong>Step 1: 主要部分</strong><br>
+                                    The debate has become <span class="highlight">a big battle</span><br>
+                                    (議論は大論争になった)<br><br>
+
+                                    <strong>Step 2: 関係代名詞節</strong><br>
+                                    [that caused <span class="highlight">the larger dispute</span>]<br>
+                                    (より大きな議論を引き起こした)<br><br>
+
+                                    <strong>Step 3: dispute の内容</strong><br>
+                                    [over <span class="highlight">why our kids are not learning at the rate they should be</span>]<br>
+                                    (なぜ子どもたちが本来の進度で学べていないのかについての)<br><br>
+
+                                    <strong>Step 4: despite節</strong><br>
+                                    [despite <span class="highlight">decades of reforms and budget increases</span>]<br>
+                                    (数十年の改革と予算増額にも関わらず)
+                                </div>
+
+                                <div class="box flow-box">
+                                    <div class="box-title">論理展開(Logical Flow)</div>
+                                    <strong>文の流れ:</strong><br>
+                                    議論(debate) <br>
+                                    ↓<br>
+                                    大論争(big battle)になった<br>
+                                    ↓<br>
+                                    さらに大きな議論(larger dispute)を引き起こした<br>
+                                    ↓<br>
+                                    その内容は? → 「なぜ子どもが学べていないのか」<br>
+                                    ↓<br>
+                                    矛盾: 改革と予算は増やしたのに!
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 長い文は<strong>主語+動詞</strong>から始めよう<br>
+                                    ✅ "that" は関係代名詞 → 前の名詞を修飾<br>
+                                    ✅ "despite" = 「~にも関わらず」は重要な逆接表現<br>
+                                    ✅ "at the rate they should be" = 「本来あるべき速度で」という意味
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 6 -->
+                <div class="question-section" data-target-paragraphs="4">
+                    <div class="question-header" onclick="toggleQuestion('q6')">
+                        <h3>問題 6</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q6" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 本文の内容に一致するものを次の中から1つ選びなさい。
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">① Kids may respond better to rewards for specific actions because there is less risk of failure.</div>
+                                <div class="choice">② Most of the kids work hard for the love of learning, not for short-term rewards.</div>
+                                <div class="choice">③ A combination of school reforms and the interaction among those reforms will matter more than any single change in isolation.</div>
+                                <div class="choice">④ Some schools in the USA give kids money when they get good grades.</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint6')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                            <div id="hint6" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    <strong>内容一致問題の解き方:</strong><br>
+                                    ✅ 各選択肢を<strong>一つずつ</strong>本文と照らし合わせる<br>
+                                    ✅ キーワードを探せ: "schools", "USA", "money", "good grades"<br>
+                                    ✅ どの段落にこの情報がある?<br>
+                                    ✅ 部分的に合ってるだけじゃダメ!<strong>100%一致</strong>を探せ<br><br>
+
+                                    <strong>ヒント:</strong> Paragraph 4を見てみよう<br>
+                                    "experimenting with paying kids..." ← この部分が重要!
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer6')">Show Answer / 解答を見る</button>
+
+                            <div id="answer6" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解: ④</div>
+                                    Some schools in the USA give kids money when they get good grades.
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    <strong>内容一致問題の解き方:</strong><br>
+                                    1. 各選択肢を本文と<strong>一つずつ</strong>照らし合わせる<br>
+                                    2. キーワードを探す<br>
+                                    3. <strong>部分的に合っているだけ</strong>では不正解!<br>
+                                    4. <strong>100%一致</strong>する選択肢を選ぶ
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">④の根拠(Paragraph 4)</div>
+                                    "In recent years, hundreds of schools in the USA have made these transactions more businesslike, experimenting with <span class="highlight">paying kids with real money</span> for showing up in class, <span class="highlight">getting good grades</span> or going another day without fighting."<br><br>
+
+                                    → アメリカの学校が子どもに<strong>お金を払っている</strong>、<strong>良い成績</strong>のために!<br>
+                                    → ④と完全一致!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ① が不正解か</div>
+                                    "less risk of failure" (失敗のリスクが少ない)という理由は本文に書かれていない。本文は子どもがこの風潮を好む(admire)とは言っているが、その理由について「失敗のリスク」とは述べていない。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ② が不正解か</div>
+                                    本文は逆のことを言っている!<br>
+                                    "I have not met a child who does not admire this trend" = <span class="highlight">子どもはみんなこの風潮(報酬)を気に入っている</span><br><br>
+
+                                    つまり、子どもは「学ぶことへの愛」ではなく「報酬」のために頑張っている可能性が高い。②は本文と矛盾!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ③ が不正解か</div>
+                                    本文は "decades of reforms" について触れているが、「改革の組み合わせが単独の変化より重要」とは言っていない。本文は改革があっても子どもが学べていない<strong>問題点</strong>を指摘しているだけ。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ 内容一致問題は<strong>消去法</strong>も有効<br>
+                                    ✅ 本文に書いていないことを「推測」しない<br>
+                                    ✅ キーワードが同じでも、文脈が違えば不正解<br>
+                                    ✅ 完全一致を探せ!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUESTION 7 -->
+                <div class="question-section" data-target-paragraphs="1,2,3,4,5,6">
+                    <div class="question-header" onclick="toggleQuestion('q7')">
+                        <h3>問題 7</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q7" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong> 本文のタイトルとして最も適当なものを1つ選びなさい。
+                            </div>
+
+                            <div class="choices">
+                                <div class="choice">① Should Kids Be Given Money to Do Well in School?</div>
+                                <div class="choice">② How Ethan Spends Friday Nights with His Friends</div>
+                                <div class="choice">③ Kids Can Learn More than They Should with Friends</div>
+                                <div class="choice">④ Money Always Makes Kids Perform Worse in School</div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showHint('hint7')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
+
+                            <div id="hint7" class="answer-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">ヒント(Hint)</div>
+                                    <strong>タイトル問題の解き方:</strong><br>
+                                    ✅ 本文の<strong>全体テーマ</strong>は何? (導入だけじゃない!)<br>
+                                    ✅ Ethanは<strong>例</strong>に過ぎない → 全体の話じゃない<br>
+                                    ✅ 最後の段落を見よ! → <strong>"Does it work?"</strong><br>
+                                    ✅ 疑問形で終わってる? → タイトルも疑問形が自然<br>
+                                    ✅ "always" とか極端な表現に注意!<br><br>
+
+                                    <strong>キーワード:</strong> "paying kids with real money" (Paragraph 4)<br>
+                                    <strong>議論の核心:</strong> それって効果あるの?
+                                </div>
+                            </div>
+
+                            <button class="show-answer-btn" onclick="showAnswer('answer7')">Show Answer / 解答を見る</button>
+
+                            <div id="answer7" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">正解: ①</div>
+                                    Should Kids Be Given Money to Do Well in School?<br>
+                                    (学校で良い成績を取るために、子どもにお金を与えるべきか?)
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                    <strong>タイトル問題の解き方:</strong><br>
+                                    1. <strong>全体のテーマ</strong>は何? → 子どもに報酬(お金)を与えること<br>
+                                    2. 筆者の<strong>スタンス</strong>は? → 賛成/反対どちらでもなく「議論を提示」<br>
+                                    3. 最後の文を見る! → <span class="highlight">"Does it work?"</span> = 疑問形!<br><br>
+
+                                    → タイトルも<strong>疑問形</strong>であるべき!
+                                </div>
+
+                                <div class="box flow-box">
+                                    <div class="box-title">本文の論理展開(Structure)</div>
+                                    <strong>Paragraph 1-2:</strong> 導入(Ethanの例)<br>
+                                    ↓<br>
+                                    <strong>Paragraph 3:</strong> 歴史的背景(罰→報酬の変化)<br>
+                                    ↓<br>
+                                    <strong>Paragraph 4:</strong> 現代の学校での実験(お金を与える)<br>
+                                    ↓<br>
+                                    <strong>Paragraph 5:</strong> 議論(賛成派 vs 反対派)<br>
+                                    ↓<br>
+                                    <strong>Paragraph 6:</strong> 結論 → <span class="highlight">"Does it work?"</span><br><br>
+
+                                    全体のテーマ: 子どもに<strong>お金</strong>を与えることの是非
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">最終文が重要!</div>
+                                    "But all this time, there has been only one real question, particularly in America's lowest-performing schools: <span class="highlight">Does it work?</span>"<br><br>
+
+                                    筆者は「うまくいくのか?」と問いかけている → ①の "Should..." という疑問形と一致!
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ② が不正解か</div>
+                                    Ethanは<strong>導入部の例</strong>に過ぎない。本文全体のテーマではない。Paragraph 1-2だけの内容。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ③ が不正解か</div>
+                                    「友達と学ぶ」という内容は本文にない。Ethanは友達の誘いを<strong>断った</strong>話。本文のテーマと無関係。
+                                </div>
+
+                                <div class="box incorrect-box">
+                                    <div class="box-title">なぜ④ が不正解か</div>
+                                    "Always" = 「常に」は言い過ぎ!<br>
+                                    本文は "Psychologists warn that money <span class="highlight">can actually</span> make kids perform worse" と言っている。<br><br>
+
+                                    "can" = 可能性がある(そうなることもある)<br>
+                                    "always" = 常にそうなる<br><br>
+
+                                    → ④は極端すぎる主張で、本文の内容と合わない。
+                                </div>
+
+                                <div class="box tip-box">
+                                    <div class="box-title">Tips(コツ)</div>
+                                    ✅ タイトル問題は<strong>最初と最後</strong>のパラグラフを重視<br>
+                                    ✅ 導入部の例は全体のテーマではない<br>
+                                    ✅ 極端な表現("always", "never")には注意<br>
+                                    ✅ 本文が疑問形で終われば、タイトルも疑問形が自然
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- end questions-container -->
+        </div> <!-- end content -->
+    </div> <!-- end container -->
+
+    <script>
+        function toggleLayout() {
+            document.body.classList.toggle('two-column-layout');
+            const btn = document.querySelector('.layout-toggle-btn');
+            if (document.body.classList.contains('two-column-layout')) {
+                btn.textContent = '📚 Single Column';
+            } else {
+                btn.textContent = '📱 Two Columns';
+            }
+        }
+
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function showHint(id) {
+            const hint = document.getElementById(id);
+            const button = event.target;
+
+            // Toggle visibility
+            if (hint.classList.contains('visible')) {
+                hint.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                hint.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        function toggleHeader() {
+            document.body.classList.toggle('header-collapsed');
+            const btn = document.querySelector('.header-collapse-btn');
+            if (btn) {
+                if (document.body.classList.contains('header-collapsed')) {
+                    btn.textContent = '▼ ヘッダーを表示';
+                } else {
+                    btn.textContent = '▲ ヘッダーを隠す';
+                }
+            }
+        }
+
+        // Scroll hints and dual-pane linking setup
+        document.addEventListener('DOMContentLoaded', function () {
+            const passage = document.querySelector('.two-column-layout .passage-section') || document.querySelector('.passage-section');
+            const questions = document.querySelector('.two-column-layout .questions-container') || document.querySelector('.questions-container');
+            const passageHint = document.querySelector('.scroll-hint-passage');
+            const questionsHint = document.querySelector('.scroll-hint-questions');
+            let passageTimer = null;
+            let questionsTimer = null;
+
+            if (passage && passageHint) {
+                passage.addEventListener('scroll', function () {
+                    passageHint.classList.add('show');
+                    clearTimeout(passageTimer);
+                    passageTimer = setTimeout(() => passageHint.classList.remove('show'), 800);
+                });
+            }
+
+            if (questions && questionsHint) {
+                questions.addEventListener('scroll', function () {
+                    questionsHint.classList.add('show');
+                    clearTimeout(questionsTimer);
+                    questionsTimer = setTimeout(() => questionsHint.classList.remove('show'), 800);
+                });
+            }
+
+            // Dual-pane highlight linking
+            const paragraphs = document.querySelectorAll('.paragraph[data-paragraph]');
+            const qSections = document.querySelectorAll('.question-section');
+
+            function clearLinkedHighlight() {
+                paragraphs.forEach(p => p.classList.remove('linked-highlight'));
+                qSections.forEach(q => q.classList.remove('linked-highlight'));
+            }
+
+            qSections.forEach(sec => {
+                const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim()).filter(Boolean);
+
+                sec.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    sec.classList.add('linked-highlight');
+                    targets.forEach(num => {
+                        const p = document.querySelector('#para' + num);
+                        if (p) p.classList.add('linked-highlight');
+                    });
+                });
+
+                sec.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            paragraphs.forEach(p => {
+                const num = p.getAttribute('data-paragraph');
+                p.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    p.classList.add('linked-highlight');
+                    qSections.forEach(sec => {
+                        const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim());
+                        if (targets.includes(num)) {
+                            sec.classList.add('linked-highlight');
+                        }
+                    });
+                });
+                p.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+        });
+
+        function showAnswer(id) {
+            const answer = document.getElementById(id);
+            const button = event.target;
+
+            // Toggle visibility
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                answer.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        // Auto-hide + reveal for layout toggle button
+        document.addEventListener("DOMContentLoaded", () => {
+            const btn = document.querySelector(".layout-toggle-btn");
+            let hideTimer = null;
+
+            function hideButton() {
+                btn.classList.add("hidden");
+            }
+            function showButton() {
+                btn.classList.remove("hidden");
+                clearTimeout(hideTimer);
+                hideTimer = setTimeout(hideButton, 2000);
+            }
+
+            hideTimer = setTimeout(hideButton, 2000);
+
+            window.addEventListener("mousemove", showButton);
+            window.addEventListener("scroll", showButton);
+        });
+    </script>
+</body>
+</html>
