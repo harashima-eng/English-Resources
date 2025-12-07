@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 16: Self-Driving Cars - Reading Breakdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 30px 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .passage-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .passage-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .passage-text {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 2;
+            font-size: 1.05em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+        }
+
+        .para-label {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .question-header:hover {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .question-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .question-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+        }
+
+        .question-content.active {
+            max-height: 8000px;
+        }
+
+        .question-inner {
+            padding: 25px;
+        }
+
+        .question-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+            font-size: 1.1em;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .answer-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .correct-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 5px solid #28a745;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-left: 5px solid #007bff;
+        }
+
+        .context-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #ff9800;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            border-left: 5px solid #e83e8c;
+        }
+
+        .passage-ref-box {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-left: 5px solid #6c757d;
+            font-style: italic;
+        }
+
+        .incorrect-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 5px solid #dc3545;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-left: 5px solid #17a2b8;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-left: 5px solid #9b59b6;
+        }
+
+        .box-title {
+            font-weight: bold;
+            font-size: 1.15em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .box-title::before {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .correct-box .box-title::before { content: "â"; }
+        .strategy-box .box-title::before { content: "ð¯"; }
+        .context-box .box-title::before { content: "ð¡"; }
+        .flow-box .box-title::before { content: "ð"; }
+        .passage-ref-box .box-title::before { content: "ð"; }
+        .incorrect-box .box-title::before { content: "â"; }
+        .tip-box .box-title::before { content: "âï¸"; }
+        .hint-box .box-title::before { content: "ð­"; }
+
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .underline-ref {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #2196f3;
+        }
+
+        .choices {
+            margin: 15px 0;
+        }
+
+        .choice {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+            
+            .passage-section {
+                padding: 20px;
+            }
+        }
+    
+        /* Layout Toggle Button */
+        .layout-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .layout-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Two Column Layout Styles */
+        .two-column-layout .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: flex-start;
+            padding: 20px 2%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .two-column-layout .passage-section {
+            position: sticky;
+            top: 20px;
+            order: 1;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .two-column-layout .questions-container {
+            order: 2;
+        }
+
+        /* Scrollbar styling for passage in two-column mode */
+        .two-column-layout .passage-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .two-column-layout .passage-section::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Mobile responsiveness for two-column */
+        @media (max-width: 1024px) {
+            .two-column-layout .content { padding: 0 10px; max-width: 100%; margin: 0 auto; }
+
+            .two-column-layout .passage-section {
+                position: relative;
+                order: 1;
+                max-height: none;
+            }
+
+            .two-column-layout .questions-container {
+                order: 2;
+            }
+
+            .layout-toggle-btn {
+                display: none;
+            }
+        }
+
+.two-column-layout .questions-container {
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+/* Scrollbar styling for questions */
+.two-column-layout .questions-container::-webkit-scrollbar {
+    width: 8px;
+}
+.two-column-layout .questions-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.two-column-layout .questions-container::-webkit-scrollbar-thumb {
+    background: #f5576c;
+    border-radius: 10px;
+}
+.two-column-layout .questions-container::-webkit-scrollbar-thumb:hover {
+    background: #f093fb;
+}
+
+
+        .header-collapse-btn {
+            margin-top: 16px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: none;
+            background: rgba(15,23,42,0.2);
+            color: #f9fafb;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.25);
+            backdrop-filter: blur(4px);
+            transition: all 0.25s ease;
+        }
+        .header-collapse-btn:hover {
+            background: rgba(15,23,42,0.4);
+            transform: translateY(-1px);
+        }
+
+        body.header-collapsed .header {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        body.header-collapsed .container {
+            padding-top: 10px;
+        }
+
+        /* Scroll hints */
+        .scroll-hint {
+            position: fixed;
+            top: 80px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: rgba(15,23,42,0.85);
+            color: #f9fafb;
+            box-shadow: 0 8px 20px rgba(15,23,42,0.35);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 900;
+        }
+        .scroll-hint.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-hint-passage {
+            left: 18px;
+        }
+        .scroll-hint-questions {
+            right: 18px;
+        }
+
+        /* Dual-pane highlight linking */
+        .paragraph.linked-highlight {
+            outline: 3px solid rgba(249,115,22,0.9);
+            background: rgba(255,237,213,0.9);
+            border-radius: 10px;
+            transition: background 0.2s ease, outline 0.2s ease;
+        }
+        .question-section.linked-highlight {
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.7);
+            transform: translateY(-1px);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+
+.layout-toggle-btn {
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+.layout-toggle-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ð Chapter 16</h1>
+            <p>Self-Driving Cars and the Trolley Problem<br>èªåéè»¢è»ã¨ãã­ãã³åé¡</p>
+            <button class="header-collapse-btn" onclick="toggleHeader()">â² ãããã¼ãé ã</button>
+        </div>
+
+        <div class="scroll-hint scroll-hint-passage">ð Passage side scrolling</div>
+        <div class="scroll-hint scroll-hint-questions">â Question side scrolling</div>
+
+        <!-- Layout Toggle Button -->
+        <button class="layout-toggle-btn" onclick="toggleLayout()">
+            ð± Switch Layout
+        </button>
+
+        <div class="content">
+            <!-- FULL PASSAGE SECTION -->
+            <div class="passage-section">
+                <h2>ð Full Passage (æ¬æå¨ä½)</h2>
+                <div class="passage-text">
+                    <div class="paragraph" id="para1" data-paragraph="1">
+                        <div class="para-label">Paragraph 1:</div>
+                        The number of road deaths in Japan in 2018 was a record low of 3,532. The National Police Agency reported that this reduction since the peak in 1970 of over 16,000 was due to more traffic safety education. The introduction of seat belts, air bags and other safety equipment into cars since 1970 is also likely to be a factor. Three thousand five hundred is still a high number, averaging roughly ten per day. Many people dream that self-driving cars (SDC) will greatly increase road safety. To date, the accidents involving SDCs have been caused by humans. The hope is that when all cars are SDCs, human error will be <span style="text-decoration: underline;">(A) eradicated</span>, and road deaths become a thing of the past.
+                    </div>
+
+                    <div class="paragraph" id="para2" data-paragraph="2">
+                        <div class="para-label">Paragraph 2:</div>
+                        However pleasant this idea may be, it remains a dream. SDCs need to be programmed to predict as many situations as possible to reduce danger. Certainly, unexpected situations will still occur, such as people breaking the law at red lights and walking into the oncoming traffic. A major question arises; when danger cannot be circumvented, how should SDCs be programmed to respond?
+                    </div>
+
+                    <div class="paragraph" id="para3" data-paragraph="3">
+                        <div class="para-label">Paragraph 3:</div>
+                        The English philosopher Phillipa Foot introduced a thought experiment called the Trolley Problem. A driverless train is going along a track which divides into two branches. On one branch, five people are tied up on the track. On the other branch, one person is tied up. The train cannot be stopped, and it will hit the five people. A switch controls which branch the train travels. You have <span style="text-decoration: underline;">(1) two options</span>: 1) to press the switch to move the train onto the other track. This means that one person will be hit, but that you will have initiated this; 2) to do nothing. In this case, five people will be hit, but you will not be involved in the accident. In tests, most people say that they will press the switch and save five lives.
+                    </div>
+
+                    <div class="paragraph" id="para4" data-paragraph="4">
+                        <div class="para-label">Paragraph 4:</div>
+                        The Trolley Problem is useful for future SDC technology because it gets people to think about issues that are important in road safety. Should SDCs be programmed to, for example, save more or fewer lives? The options can be changed to other choices. Should young people's lives be saved instead of old people's? Females or males? Doctors or homeless people? Healthy or unhealthy? The list goes on. A team of scientists from the Massachusetts Institute of Technology (MIT) created a website to ask these questions. By 2018, the MIT team had collected over 40 million responses from all over the world. The results were <span style="text-decoration: underline;">(B) intriguing</span>: females are more important than males; younger people more valuable than older people; high-status citizens more meaningful than low-status individuals. Differences between cultures were also observed. For example, Eastern countries, including Japan, preferred to <span style="text-decoration: underline;">(2-1) save</span> the <span style="text-decoration: underline;">(2-2) lives</span> of lawful people, but Southern countries, such as Brazil, did not.
+                    </div>
+
+                    <div class="paragraph" id="para5" data-paragraph="5">
+                        <div class="para-label">Paragraph 5:</div>
+                        So far, however, these tests are only thought experiments. <span style="text-decoration: underline;">(3) What people say they will do and what they actually do may be very different.</span> What we say is based on how we think. But are we really the people we think we are? In 2018, an American TV show Mind Field tested this question with real people. Making this show was very dangerous in terms of morals because it can cause severe psychological damage to the people in the study. The information learned from the show, however, indicated that many people would be paralyzed; they could do nothing. The message for SDCs is highly complex. From now on, there needs to be a serious discussion between governments, car manufacturers and consumer groups about how SDCs should respond to unusual situations. <span style="text-decoration: underline;">(4) This</span> is likely to be an intriguing and extremely valuable discussion.
+                    </div>
+                </div>
+            </div>
+
+            <div class="questions-container">
+            <!-- QUESTION 1 -->
+            <div class="question-section" data-target-paragraphs="1,4">
+                <div class="question-header" onclick="toggleQuestion('q1')">
+                    <h3>åé¡ 1</h3>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div id="q1" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Which is the closest in meaning to each of the underlined words (A) and (B)?<br>
+                            (A) eradicated  â destroyed  â¡removed  â¢defeated  â£damaged<br>
+                            (B) intriguing  â disappointing  â¡frightening  â¢interesting  â£encouraging
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>(A) Underlined text:</strong> human error will be <span class="highlight">eradicated</span><br>
+                            <strong>(B) Underlined text:</strong> The results were <span class="highlight">intriguing</span>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint1')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                        <div id="hint1" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ãã³ã(Hint)</div>
+                                <strong>(A) eradicatedã«ã¤ãã¦:</strong><br>
+                                â "human error will be eradicated" â äººçãã¹ã¯ã©ããªã?<br>
+                                â ãã®å¾ã« "road deaths become a thing of the past" (äº¤éäºææ­»ã¯éå»ã®ãã®ã«ãªã)<br>
+                                â ãã¹ã<strong>å®å¨ã«ãªããªã</strong>ã¤ã¡ã¼ã¸ã¯ã©ã?<br>
+                                â "destroyed" vs "removed" â ã©ã¡ãããããå®å¨ã«æ ¹çµ¶ãã£ã½ã?<br><br>
+                                
+                                <strong>(B) intriguingã«ã¤ãã¦:</strong><br>
+                                â "The results were intriguing" â çµæã¯<strong>ã©ããªæã</strong>ã ã£ã?<br>
+                                â Paragraph 4ã®æå¾ãèª­ãã¨ãäºæ³å¤ã®çµæããåºã¦ã<br>
+                                â ãã¸ãã£ã? ãã¬ãã£ã? ã©ã£ã¡ã§ããªã?<br>
+                                â ãèå³æ·±ãããé¢ç½ããã¨ããæå³ã®é¸æè¢ã¯?
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer1')">Show Answer / è§£ç­ãè¦ã</button>
+
+                        <div id="answer1" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">æ­£è§£</div>
+                                (A) â¡ removed<br>
+                                (B) â¢ interesting
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                <strong>(A) eradicated ã®æå³æ¨æ¸¬:</strong><br>
+                                1. åå¾ã®æèãè¦ã:<br>
+                                   - å: SDCãå®å¨æ§ãå¤§ããåä¸ããã<br>
+                                   - <span class="highlight">"human error will be eradicated"</span><br>
+                                   - å¾: "road deaths become a thing of the past" (äº¤éäºææ­»ã¯éå»ã®ãã®ã«)<br><br>
+                                
+                                2. è«ççãªæµã:<br>
+                                   äººçãã¹ â <strong>å®å¨ã«ãªããªã</strong> â äº¤éäºææ­»ãéå»ã®ãã®ã«<br><br>
+                                
+                                3. é¸æè¢ã®æ¤è¨:<br>
+                                   "eradicate" = å®å¨ã«æ ¹çµ¶ããããªãã<br>
+                                   "removed" = åãé¤ããã â æãè¿ãæå³!<br><br>
+                                
+                                <strong>(B) intriguing ã®æå³æ¨æ¸¬:</strong><br>
+                                1. çµæã®åå®¹ãç¢ºèª:<br>
+                                   - å¥³æ§ã®æ¹ãç·æ§ããéè¦<br>
+                                   - è¥èãèäººããä¾¡å¤ããã<br>
+                                   - å°ä½ã®é«ãäººãä½ãäººããæå³ããã<br><br>
+                                
+                                2. ãããã¯<strong>äºæ³å¤ã§èãããããã</strong>çµæ<br>
+                                3. "intriguing" = èå³æ·±ããé¢ç½ã<br>
+                                4. "interesting" ãæãè¿ã!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                <strong>(A) eradicated:</strong><br>
+                                Paragraph 1: "The hope is that when all cars are SDCs, human error will be <span class="highlight">eradicated</span>, and road deaths become <span class="highlight">a thing of the past</span>."<br><br>
+                                
+                                "a thing of the past" = éå»ã®ãã®ã«ãªã<br>
+                                â äººçãã¹ã<strong>å®å¨ã«ãªããªã</strong>ããäº¤éäºææ­»ããªããªã<br>
+                                â "removed" (åãé¤ããã)ãæé©!<br><br>
+                                
+                                <strong>(B) intriguing:</strong><br>
+                                Paragraph 4: "The results were <span class="highlight">intriguing</span>: females are more important than males..."<br><br>
+                                
+                                çµæã®åå®¹: æ§å¥ãå¹´é½¢ãå°ä½ã«ãã£ã¦å½ã®ä¾¡å¤ãéã<br>
+                                â å«ççã«<strong>èãããããã</strong>ã<strong>èå³æ·±ã</strong>çµæ<br>
+                                â "interesting" ãæé©!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(ã³ã)</div>
+                                â èªå½åé¡ã¯<strong>åå¾ã®æè</strong>ã§æå³ãæ¨æ¸¬!<br>
+                                â "eradicate" ã¯ãæ ¹çµ¶ãããã¨ããå¼·ãæå³ â "removed" ãè¿ã<br>
+                                â "intriguing" ã¯ãèå³ããããã â "interesting" ã¨åç¾©<br>
+                                â åèªã®é°å²æ°(ãã¸ãã£ã/ãã¬ãã£ã/ä¸­ç«)ãå¤§äº!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 2 -->
+            <div class="question-section" data-target-paragraphs="3">
+                <div class="question-header" onclick="toggleQuestion('q2')">
+                    <h3>åé¡ 2</h3>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div id="q2" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Regarding the underlined part (1), explain in Japanese what the result will be if you choose the option 2).
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Underlined text:</strong> You have <span class="highlight">two options</span>:<br>
+                            1) to press the switch to move the train onto the other track. This means that one person will be hit, but that you will have initiated this;<br>
+                            2) to do nothing. In this case, five people will be hit, but you will not be involved in the accident.
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint2')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                        <div id="hint2" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ãã³ã(Hint)</div>
+                                <strong>èãæ¹ã®ãã³ã:</strong><br>
+                                â Option 2) = "to do nothing" (ä½ãããªã)<br>
+                                â ãã®çµæã¯ "In this case..." ã®å¾ã«æ¸ãã¦ãã!<br>
+                                â <strong>2ã¤ã®æå ±</strong>ãç­ãã«å«ãã:<br>
+                                   - ä½äººãã¯ã­ããã?<br>
+                                   - ããªãã®é¢ä¸ã¯?<br><br>
+                                
+                                <strong>ã­ã¼ã¯ã¼ã:</strong><br>
+                                "five people will be hit" â 5äººãã¯ã­ããã<br>
+                                "you will not be involved" â ããªãã¯é¢ä¸ãã¦ããªã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer2')">Show Answer / è§£ç­ãè¦ã</button>
+
+                        <div id="answer2" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">æ­£è§£</div>
+                                5äººãé»è»ã«ã¯ã­ããããã¨ã«ãªãããããªã[èªå]ã¯ãã®äºæã«ã¯é¢ãã£ã¦ããªãã
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                <strong>é¸æè¢ã®çµæãèª¬æããåé¡:</strong><br>
+                                1. Option 2) = <span class="highlight">"to do nothing"</span> (ä½ãããªã)<br><br>
+                                
+                                2. ãã®ç´å¾ãèª­ã:<br>
+                                   "In this case, <span class="highlight">five people will be hit</span>, but <span class="highlight">you will not be involved in the accident</span>."<br><br>
+                                
+                                3. <strong>2ã¤ã®è¦ç´ ãå«ãã:</strong><br>
+                                   â  çµæ: 5äººãã¯ã­ããã<br>
+                                   â¡ ããªãã®ç«å ´: äºæã«é¢ä¸ãã¦ããªã<br><br>
+                                
+                                4. å¯¾æ¯ãéè¦:<br>
+                                   Option 1) â 1äººæ­»ã¬ãã<strong>ããªããèµ·ããã</strong><br>
+                                   Option 2) â 5äººæ­»ã¬ãã<strong>ããªãã¯é¢ä¸ãã¦ããªã</strong>
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                <strong>ãã­ãã³åé¡ã®è¨­å®:</strong><br>
+                                - é»è»ã¯æ­¢ããããªã<br>
+                                - 2ã¤ã®ç·è·¯: çæ¹ã«5äººãçæ¹ã«1äºº<br>
+                                - ã¹ã¤ããã§ç·è·¯ãåãæ¿ãããã<br><br>
+                                
+                                <strong>Option 2) ã®è©³ç´°:</strong><br>
+                                Action: <span class="highlight">"to do nothing"</span> (ä½ãããªã)<br>
+                                â<br>
+                                Result 1: <span class="highlight">"five people will be hit"</span> (5äººãã¯ã­ããã)<br>
+                                Result 2: <span class="highlight">"you will not be involved"</span> (ããªãã¯é¢ä¸ãã¦ããªã)<br><br>
+                                
+                                â ã©ã¡ãã®è¦ç´ ãç­ãã«å¿è¦!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(ã³ã)</div>
+                                â "In this case..." = ããã®å ´åã â ãã®ç´å¾ãç­ã!<br>
+                                â "but" ã§å¯¾æ¯ããã2ã¤ã®æå ±ãä¸¡æ¹æ¸ã<br>
+                                â Option 1 ã¨ Option 2 ã®éããçè§£ãã¦ããã:<br>
+                                   - Option 1: 1äººãç ç²ã«ãã¦5äººãæã(èªåãæ±ºæ­)<br>
+                                   - Option 2: 5äººãç ç²ã«ãªã(èªåã¯é¢ä¸ããªã)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 3 -->
+            <div class="question-section" data-target-paragraphs="4">
+                <div class="question-header" onclick="toggleQuestion('q3')">
+                    <h3>åé¡ 3</h3>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div id="q3" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Write the most appropriate word to fill in each of the blank spaces (2-1) and (2-2). Choose the words from the passage.
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Context:</strong> For example, Eastern countries, including Japan, preferred to <span class="highlight">(2-1) _____</span> the <span class="highlight">(2-2) _____</span> of lawful people, but Southern countries, such as Brazil, did not.
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint3')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                        <div id="hint3" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ãã³ã(Hint)</div>
+                                <strong>èãæ¹ã®ãã³ã:</strong><br>
+                                â ãã®æã®<strong>åã®é¨å</strong>ãèª­ãã!<br>
+                                â Paragraph 4ã®ååã§ãSDCã¯ä½ããããããã­ã°ã©ã ãã¹ãã?ãã¨èãã¦ã<br>
+                                â "Should SDCs be programmed to, for example, _____ more or fewer _____?"<br>
+                                â ç©ºæ¬ã«å¥ãåè©ã¨åè©ã®çµã¿åããã¯?<br>
+                                â ãã³ã: "_____ lives" ã£ã¦ãããã¬ã¼ãºããã!<br><br>
+                                
+                                <strong>ã©ããèª­ã?</strong><br>
+                                â Paragraph 4ã®2æç®ããã§ãã¯!
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer3')">Show Answer / è§£ç­ãè¦ã</button>
+
+                        <div id="answer3" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">æ­£è§£</div>
+                                (2-1) save<br>
+                                (2-2) lives
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                <strong>ç©ºæè£ååé¡ã®è§£ãæ¹:</strong><br>
+                                1. ç©ºæãããæã®<strong>åå¾</strong>ãèª­ã<br><br>
+                                
+                                2. Paragraph 4ã®æµã:<br>
+                                   - 1æç®: ãã­ãã³åé¡ã¯SDCæè¡ã«å½¹ç«ã¤<br>
+                                   - 2æç®: <span class="highlight">"Should SDCs be programmed to, for example, save more or fewer lives?"</span><br>
+                                   - ãã®å¾: ããããªé¸æè¢ãç¶ã<br>
+                                   - æå¾: "Eastern countries preferred to (2-1) the (2-2) of lawful people"<br><br>
+                                
+                                3. è«ççãªæµã:<br>
+                                   SDCã¯ãå½ãæãããã¨ã«ã¤ãã¦ãã­ã°ã©ã ããã<br>
+                                   â "save" + "lives" ã®çµã¿åãã!<br><br>
+                                
+                                4. ç¢ºèª:<br>
+                                   "save the lives of lawful people" = æ³ãå®ãäººãã®å½ãæã<br>
+                                   â ææ³çã«ãæå³çã«ãå®ç§!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                <strong>Paragraph 4ã®å±é:</strong><br>
+                                1. "Should SDCs be programmed to, for example, <span class="highlight">save more or fewer lives</span>?"<br>
+                                   (ä¾ãã°ãããå¤ãã®å½ãããããã¯ããå°ãªãå½ã<strong>æã</strong>ããã«ãã­ã°ã©ã ãã¹ãã?)<br><br>
+                                
+                                2. "Should young people's <span class="highlight">lives</span> be saved instead of old people's?"<br>
+                                   (è¥èã®<strong>å½</strong>ãæãã¹ãããèäººã®ä»£ããã«?)<br><br>
+                                
+                                3. â å¨ä½ã®ãã¼ã: <strong>"save lives"</strong> (å½ãæã)<br><br>
+                                
+                                4. æå¾ã®æ:<br>
+                                   "Eastern countries preferred to <span class="highlight">save the lives</span> of lawful people"<br>
+                                   (æ±æ´ã®å½ãã¯æ³ãå®ãäººãã®å½ãæãæ¹ãé¸ãã )
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(ã³ã)</div>
+                                â ç©ºæè£åã¯<strong>åãæ®µè½å</strong>ã«ç­ãããããã¨ãå¤ã<br>
+                                â "save lives" ã¯é »åºã®çèª â è¦ãã¦ããã!<br>
+                                â åè©+åè©ã®çµã¿åãã(ã³ã­ã±ã¼ã·ã§ã³)ãæè­<br>
+                                â æ®µè½å¨ä½ã®ãã¼ããææ¡ããã°ç­ãã¯è¦ã¤ãã!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 4 -->
+            <div class="question-section" data-target-paragraphs="5">
+                <div class="question-header" onclick="toggleQuestion('q4')">
+                    <h3>åé¡ 4</h3>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div id="q4" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Translate the underlined part (3) into Japanese.
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Underlined text:</strong><br>
+                            <span class="highlight">What people say they will do and what they actually do may be very different.</span>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint4')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                        <div id="hint4" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ãã³ã(Hint)</div>
+                                <strong>åè¨³ã®ã¹ããã:</strong><br>
+                                â ãã®æã¯2ã¤ã® "what" ç¯ãä¸¦ãã§ã!<br>
+                                â "What people say" = äººããè¨ããã¨<br>
+                                â "what they actually do" = å½¼ããå®éã«è¡ããã¨<br>
+                                â "and" ã§2ã¤ãä¸¦å â ãAã¨Bã<br>
+                                â "may be very different" = å¤§ããéããããããªã<br><br>
+                                
+                                <strong>æ³¨ç®ãã¤ã³ã:</strong><br>
+                                - "say they will do" â ãããã¨è¨ãã<br>
+                                - "actually do" â ãå®éã«è¡ãã<br>
+                                - ãã®<strong>å¯¾æ¯</strong>ããã¤ã³ã!
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer4')">Show Answer / è§£ç­ãè¦ã</button>
+
+                        <div id="answer4" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">æ­£è§£</div>
+                                äººããããããã¨ãè¨ãããã¨ã¨ããå®éã«ãè¡ããã¨ã¨ã¯ãå¤§ããéããããããªãã
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                <strong>åè¨³ã®ã¹ããã:</strong><br>
+                                1. <strong>æã®æ§é ãææ¡:</strong><br>
+                                   [What people say they will do] and [what they actually do] / may be very different.<br>
+                                   [A] and [B] / may be very different.<br><br>
+                                
+                                2. <strong>åé¨åãè¨³ã:</strong><br>
+                                   - What people say they will do<br>
+                                     = äººããããã¨ãè¨ãããã¨<br>
+                                   - what they actually do<br>
+                                     = å½¼ãããå®éã«ãè¡ããã¨<br>
+                                   - may be very different<br>
+                                     = å¤§ããéããããããªã<br><br>
+                                
+                                3. <strong>èªç¶ãªæ¥æ¬èªã«:</strong><br>
+                                   ãè¨ããã¨ãã¨ãå®éã«è¡ããã¨ãã¯å¤§ããéããããããªã<br><br>
+                                
+                                4. <strong>å¼·èª¿ã®ã«ã®ã«ãã³:</strong><br>
+                                   ãè¨ããã¨ãå®éã«ããå¼·èª¿ããã¨ãå¯¾æ¯ãã¯ãªã¢ã«ãªã!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                <strong>ãã®æãè¨ããããã¨:</strong><br>
+                                - åã®æ: "these tests are only thought experiments" (ãããã¯æèå®é¨ã«ãããªã)<br>
+                                - ãã®æ: <span class="highlight">è¨ããã¨ â  å®éã«ãããã¨</span><br>
+                                - æ¬¡ã®æ: "What we say is based on how we think" (è¨ããã¨ã¯èãã«åºã¥ãã¦ãã)<br><br>
+                                
+                                <strong>å·ä½ä¾:</strong><br>
+                                Paragraph 3: ãã¹ãã§ã¯ãã»ã¨ãã©ã®äººããã¹ã¤ãããæ¼ããã¨<strong>è¨ã</strong><br>
+                                â<br>
+                                Paragraph 5: ã§ãå®éã«ããããã¨ãå¤ãã®äººã¯éº»çºãã¦ä½ãã§ããªãã£ã<br><br>
+                                
+                                â <strong>è¨èã¨è¡åã®éã</strong>ããã¼ã!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(ã³ã)</div>
+                                â "What people say" ã¨ "what they actually do" ã®å¯¾æ¯ãæç¢ºã«!<br>
+                                â ãè¨ããã¨ãå®éã«ãã«ã«ã®ã«ãã³ãã¤ããã¨å¯¾æ¯ãéç«ã¤<br>
+                                â "may be" = ã~ãããããªãã(å¯è½æ§)<br>
+                                â æèãèãã¦ããã®å¯¾æ¯ãæ¬æã®éè¦ãªã¡ãã»ã¼ã¸ã ã¨çè§£ããã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 5 -->
+            <div class="question-section" data-target-paragraphs="5">
+                <div class="question-header" onclick="toggleQuestion('q5')">
+                    <h3>åé¡ 5</h3>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div id="q5" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Regarding the underlined word (4), explain in Japanese what "This" refers to.
+                        </div>
+                        
+                        <div class="underline-ref">
+                            <strong>Underlined text:</strong><br>
+                            From now on, there needs to be a serious discussion between governments, car manufacturers and consumer groups about how SDCs should respond to unusual situations. <span class="highlight">This</span> is likely to be an intriguing and extremely valuable discussion.
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint5')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                        <div id="hint5" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ãã³ã(Hint)</div>
+                                <strong>èãæ¹ã®ãã³ã:</strong><br>
+                                â "This" ã¯æç¤ºèª â <strong>åã®æ</strong>ãè¦ã!<br>
+                                â åã®æ: "there needs to be a serious discussion..."<br>
+                                â "This" = ãã® "discussion" (è­°è«)ã®ãã¨!<br>
+                                â ã§ããè­°è«ãã ãããä¸è¶³! <strong>è©³ç´°æå ±</strong>ãå¥ããã:<br>
+                                   - èª°ã¨èª°ã®è­°è«?<br>
+                                   - ä½ã«ã¤ãã¦ã®è­°è«?<br><br>
+                                
+                                <strong>ç­ãã«å«ããã¹ãè¦ç´ :</strong><br>
+                                â  è­°è«ããäººãã¡(governments, car manufacturers, consumer groups)<br>
+                                â¡ è­°è«ã®ãã¼ã(how SDCs should respond to unusual situations)
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer5')">Show Answer / è§£ç­ãè¦ã</button>
+
+                        <div id="answer5" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">æ­£è§£</div>
+                                æ¿åºãèªåè»ã¡ã¼ã«ã¼ãæ¶è²»èã°ã«ã¼ãã®éã§ãªããããSDC(èªåéè»¢è»)ãç°å¸¸äºæã«ã©ã®ããã«å¯¾å¿ãã¹ããã«ã¤ãã¦ã®çå£ãªè­°è«ã
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                <strong>æç¤ºèªåé¡ã®è§£ãæ¹:</strong><br>
+                                1. <strong>æç¤ºèªã®åãèª­ã:</strong><br>
+                                   "This" ã¯åºæ¬çã«<strong>ç´åã®æ</strong>ãæã<br><br>
+                                
+                                2. <strong>åã®æãåæ:</strong><br>
+                                   "From now on, there needs to be <span class="highlight">a serious discussion</span> between <span class="highlight">governments, car manufacturers and consumer groups</span> about <span class="highlight">how SDCs should respond to unusual situations</span>."<br><br>
+                                
+                                3. <strong>éè¦ãªè¦ç´ ãæ½åº:</strong><br>
+                                   â  Who: governments, car manufacturers, consumer groups<br>
+                                   â¡ What: a serious discussion<br>
+                                   â¢ About what: how SDCs should respond to unusual situations<br><br>
+                                
+                                4. <strong>ç­ãã®æ§æ:</strong><br>
+                                   "This" = ãã®è­°è«<br>
+                                   â èª°ã®?ä½ã«ã¤ãã¦ã®?ãè©³ããèª¬æãã!
+                            </div>
+
+                            <div class="box context-box">
+                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                <strong>åã®æã®è©³ç´°åæ:</strong><br>
+                                "From now on, there needs to be a serious discussion<br>
+                                <span class="highlight">between governments, car manufacturers and consumer groups</span><br>
+                                <span class="highlight">about how SDCs should respond to unusual situations</span>."<br><br>
+                                
+                                <strong>æ§é :</strong><br>
+                                - ä¸»èª: a serious discussion (çå£ãªè­°è«)<br>
+                                - èª°ã®éã§: between A, B and C (AãBãCã®éã§)<br>
+                                - ä½ã«ã¤ãã¦: about X (Xã«ã¤ãã¦)<br><br>
+                                
+                                â ããã<strong>å¨ã¦ã®è¦ç´ </strong>ãç­ãã«å«ãã!<br><br>
+                                
+                                <strong>æ¬¡ã®æ:</strong><br>
+                                "<span class="highlight">This</span> is likely to be an intriguing and extremely valuable discussion."<br>
+                                (ããã¯èå³æ·±ããéå¸¸ã«ä¾¡å¤ã®ããè­°è«ã¨ãªãã ãã)
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(ã³ã)</div>
+                                â "This" ãªã©ã®æç¤ºèªã¯<strong>ç´åã®æ</strong>ãæããã¨ãå¤ã<br>
+                                â åã«ãè­°è«ãã ããããªãã<strong>è©³ç´°æå ±</strong>ãç­ãã«å«ãã:<br>
+                                   - èª°ã¨èª°ã®?<br>
+                                   - ä½ã«ã¤ãã¦ã®?<br>
+                                â ç­æ¡ä½æã®ã³ã: åã®æã<strong>ãã®ã¾ã¾æ¥æ¬èªã«ç´ã</strong>æãã§OK!<br>
+                                â "serious" (çå£ãª)ã¨ããå½¢å®¹è©ãå¿ããã«!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 6 -->
+            <div class="question-section" data-target-paragraphs="1,2,3,4,5">
+                <div class="question-header" onclick="toggleQuestion('q6')">
+                    <h3>åé¡ 6</h3>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div id="q6" class="question-content">
+                    <div class="question-inner">
+                        <div class="question-text">
+                            <strong>Question:</strong> Choose one statement that is true according to the passage.
+                        </div>
+
+                        <div class="choices">
+                            <div class="choice">â  The reason for accidents with SDCs so far is because of faulty programming.</div>
+                            <div class="choice">â¡ In the Trolley Problem a train can be made to avoid hitting people.</div>
+                            <div class="choice">â¢ According to the MIT study, many people think that doctors are more important than homeless people.</div>
+                            <div class="choice">â£ In the TV show Mind Field, most people chose to save the lives of more people than a few people.</div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showHint('hint6')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+
+                        <div id="hint6" class="answer-section">
+                            <div class="box hint-box">
+                                <div class="box-title">ãã³ã(Hint)</div>
+                                <strong>åå®¹ä¸è´åé¡ã®è§£ãæ¹:</strong><br>
+                                â åé¸æè¢ã<strong>ä¸ã¤ãã¤</strong>æ¬æã¨ãã§ãã¯!<br><br>
+                                
+                                <strong>â ã«ã¤ãã¦:</strong> SDCã®äºæåå ã¯? â Paragraph 1ããã§ãã¯<br>
+                                <strong>â¡ã«ã¤ãã¦:</strong> ãã­ãã³åé¡ã§é»è»ã¯æ­¢ãããã? â Paragraph 3ããã§ãã¯<br>
+                                <strong>â¢ã«ã¤ãã¦:</strong> MITã®èª¿æ»çµæã¯? â Paragraph 4ããã§ãã¯<br>
+                                <strong>â£ã«ã¤ãã¦:</strong> Mind Fieldã®çªçµã§ä½ãèµ·ãã? â Paragraph 5ããã§ãã¯<br><br>
+                                
+                                <strong>ãã³ã:</strong><br>
+                                - "Doctors or homeless people?" ã¨ãããã¬ã¼ãºãParagraph 4ã«ãã!<br>
+                                - ãã®ç­ããåãæ®µè½ã«!
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="showAnswer('answer6')">Show Answer / è§£ç­ãè¦ã</button>
+
+                        <div id="answer6" class="answer-section">
+                            <div class="box correct-box">
+                                <div class="box-title">æ­£è§£: â¢</div>
+                                According to the MIT study, many people think that doctors are more important than homeless people.
+                            </div>
+
+                            <div class="box strategy-box">
+                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
+                                <strong>åå®¹ä¸è´åé¡ã®è§£ãæ¹:</strong><br>
+                                1. åé¸æè¢ãæ¬æã¨<strong>ä¸ã¤ãã¤</strong>ç§ããåããã<br>
+                                2. ã­ã¼ã¯ã¼ããæ¢ãã¦ãè©²å½ç®æãè¦ã¤ãã<br>
+                                3. <strong>100%ä¸è´</strong>ãããã®ãé¸ã¶<br><br>
+                                
+                                <strong>â¢ãæ­£è§£ã®çç±:</strong><br>
+                                Paragraph 4: "Doctors or homeless people?" ã¨ããè³ªåããã<br>
+                                â<br>
+                                ãã®å¾ã®çµæ: "high-status citizens more meaningful than low-status individuals"<br>
+                                â<br>
+                                å»è(high-status) > ãã¼ã ã¬ã¹(low-status)<br>
+                                â â¢ã¨å®å¨ä¸è´!
+                            </div>
+
+                            <div class="box passage-ref-box">
+                                <div class="box-title">â¢ã®æ ¹æ (Paragraph 4)</div>
+                                "Should young people's lives be saved instead of old people's? Females or males? <span class="highlight">Doctors or homeless people?</span> Healthy or unhealthy? The list goes on."<br><br>
+                                
+                                "The results were intriguing: females are more important than males; younger people more valuable than older people; <span class="highlight">high-status citizens more meaningful than low-status individuals</span>."<br><br>
+                                
+                                â Doctors(å»è) = high-status citizens(å°ä½ã®é«ãå¸æ°)<br>
+                                â Homeless people(ãã¼ã ã¬ã¹) = low-status individuals(å°ä½ã®ä½ãäººã)<br>
+                                â â¢ã¨å®å¨ä¸è´!
+                            </div>
+
+                            <div class="box incorrect-box">
+                                <div class="box-title">ãªãâ ãä¸æ­£è§£ã</div>
+                                Paragraph 1: "To date, <span class="highlight">the accidents involving SDCs have been caused by humans</span>."<br><br>
+                                
+                                æ¬æ: äºæã®åå ã¯<strong>äººé</strong><br>
+                                â : äºæã®åå ã¯<strong>æ¬ é¥ã®ãããã­ã°ã©ãã³ã°</strong><br>
+                                â å®å¨ã«é! ä¸æ­£è§£
+                            </div>
+
+                            <div class="box incorrect-box">
+                                <div class="box-title">ãªãâ¡ãä¸æ­£è§£ã</div>
+                                Paragraph 3: "<span class="highlight">The train cannot be stopped</span>, and it will hit the five people."<br><br>
+                                
+                                æ¬æ: é»è»ã¯<strong>æ­¢ããããªã</strong><br>
+                                â¡: é»è»ã¯äººãã²ãã®ã<strong>é¿ãããã¨ãã§ãã</strong><br>
+                                â æ¬æã¨çç¾! ä¸æ­£è§£
+                            </div>
+
+                            <div class="box incorrect-box">
+                                <div class="box-title">ãªãâ£ãä¸æ­£è§£ã</div>
+                                Paragraph 5: "The information learned from the show, however, indicated that <span class="highlight">many people would be paralyzed; they could do nothing</span>."<br><br>
+                                
+                                æ¬æ: å¤ãã®äººã¯<strong>éº»çºãã¦ä½ãã§ããªãã£ã</strong><br>
+                                â£: ã»ã¨ãã©ã®äººã<strong>ããå¤ãã®äººã®å½ãæãé¸æããã</strong><br>
+                                â æ¬æã¨æ­£åå¯¾! ä¸æ­£è§£<br><br>
+                                
+                                <strong>éè¦ãªå¯¾æ¯:</strong><br>
+                                - Paragraph 3ã®ãã¹ã: ãã¹ã¤ãããæ¼ããã¨<strong>è¨ã£ã</strong><br>
+                                - Paragraph 5ã®TVçªçµ: å®éã¯<strong>ä½ãã§ããªãã£ã</strong><br>
+                                â è¨èã¨è¡åã®éãããã¤ã³ã!
+                            </div>
+
+                            <div class="box tip-box">
+                                <div class="box-title">Tips(ã³ã)</div>
+                                â åå®¹ä¸è´ã¯<strong>æ¶å»æ³</strong>ãæå¹<br>
+                                â ã­ã¼ã¯ã¼ããè¦ã¤ãã¦ãè©²å½ç®æãç²¾èª­<br>
+                                â "high-status" ã¨ "doctors" ã®ãããª<strong>è¨ãæã</strong>ã«æ³¨æ<br>
+                                â æ¬æã«æ¸ãã¦ããªããã¨ããæ¨æ¸¬ãããªã!<br>
+                                â ãã®åé¡ã®ããã«ãå¯¾æ¯(è¨ã vs å®éã«ãã)ãéè¦ãªãã¼ãã®å ´åã¯ç¹ã«æ³¨æ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+            </div>
+
+<script>
+
+        function toggleLayout() {
+            document.body.classList.toggle('two-column-layout');
+            const btn = document.querySelector('.layout-toggle-btn');
+            if (document.body.classList.contains('two-column-layout')) {
+                btn.textContent = 'ð Single Column';
+            } else {
+                btn.textContent = 'ð± Two Columns';
+            }
+        }
+
+
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function showHint(id) {
+            const hint = document.getElementById(id);
+            const button = event.target;
+            
+            // Toggle visibility
+            if (hint.classList.contains('visible')) {
+                hint.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                hint.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+
+
+        function toggleHeader() {
+            document.body.classList.toggle('header-collapsed');
+            const btn = document.querySelector('.header-collapse-btn');
+            if (btn) {
+                if (document.body.classList.contains('header-collapsed')) {
+                    btn.textContent = 'â¼ ãããã¼ãè¡¨ç¤º';
+                } else {
+                    btn.textContent = 'â² ãããã¼ãé ã';
+                }
+            }
+        }
+
+        // Scroll hints and dual-pane linking setup
+        document.addEventListener('DOMContentLoaded', function () {
+            const passage = document.querySelector('.two-column-layout .passage-section') || document.querySelector('.passage-section');
+            const questions = document.querySelector('.two-column-layout .questions-container') || document.querySelector('.questions-container');
+            const passageHint = document.querySelector('.scroll-hint-passage');
+            const questionsHint = document.querySelector('.scroll-hint-questions');
+            let passageTimer = null;
+            let questionsTimer = null;
+
+            if (passage && passageHint) {
+                passage.addEventListener('scroll', function () {
+                    passageHint.classList.add('show');
+                    clearTimeout(passageTimer);
+                    passageTimer = setTimeout(() => passageHint.classList.remove('show'), 800);
+                });
+            }
+
+            if (questions && questionsHint) {
+                questions.addEventListener('scroll', function () {
+                    questionsHint.classList.add('show');
+                    clearTimeout(questionsTimer);
+                    questionsTimer = setTimeout(() => questionsHint.classList.remove('show'), 800);
+                });
+            }
+
+            // Dual-pane highlight linking
+            const paragraphs = document.querySelectorAll('.paragraph[data-paragraph]');
+            const qSections = document.querySelectorAll('.question-section');
+
+            function clearLinkedHighlight() {
+                paragraphs.forEach(p => p.classList.remove('linked-highlight'));
+                qSections.forEach(q => q.classList.remove('linked-highlight'));
+            }
+
+            qSections.forEach(sec => {
+                const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim()).filter(Boolean);
+
+                sec.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    sec.classList.add('linked-highlight');
+                    targets.forEach(num => {
+                        const p = document.querySelector('#para' + num);
+                        if (p) p.classList.add('linked-highlight');
+                    });
+                });
+
+                sec.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+
+            paragraphs.forEach(p => {
+                const num = p.getAttribute('data-paragraph');
+                p.addEventListener('mouseenter', function () {
+                    clearLinkedHighlight();
+                    p.classList.add('linked-highlight');
+                    qSections.forEach(sec => {
+                        const targets = (sec.getAttribute('data-target-paragraphs') || '').split(',').map(v => v.trim());
+                        if (targets.includes(num)) {
+                            sec.classList.add('linked-highlight');
+                        }
+                    });
+                });
+                p.addEventListener('mouseleave', function () {
+                    clearLinkedHighlight();
+                });
+            });
+        });
+
+        function showAnswer(id) {
+            const answer = document.getElementById(id);
+            const button = event.target;
+            
+            // Toggle visibility
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            } else {
+                answer.classList.add('visible');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            }
+        }
+    
+// Auto-hide + reveal for layout toggle button
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.querySelector(".layout-toggle-btn");
+    let hideTimer = null;
+
+    function hideButton() {
+        btn.classList.add("hidden");
+    }
+    function showButton() {
+        btn.classList.remove("hidden");
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(hideButton, 2000);
+    }
+
+    hideTimer = setTimeout(hideButton, 2000);
+
+    window.addEventListener("mousemove", showButton);
+    window.addEventListener("scroll", showButton);
+});
+
+</script>
+</body>
+</html>
