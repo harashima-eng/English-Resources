@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動詞の語法｜確認テスト - 解説</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3561 0%, #1f2544 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #65398b 100%);
+        }
+
+        .toggle-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section-content.active {
+            max-height: 5000px;
+        }
+
+        .question {
+            padding: 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .choices {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .choice {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .answer-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+
+        .answer-section.active {
+            max-height: 3000px;
+        }
+
+        .correct-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .correct-answer strong {
+            color: #28a745;
+            font-size: 18px;
+        }
+
+        .explanation {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .explanation-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .wrong-answer {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .wrong-answer strong {
+            color: #dc3545;
+        }
+
+        .grammar-point {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .grammar-point-title {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .example {
+            background: #e7f3ff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .example-title {
+            color: #1976D2;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .translation {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 動詞の語法｜確認テスト 解説</h1>
+            <p>英文法・語法問題1100 (P4～P89) - 詳細解説付き</p>
+        </div>
+
+        <div class="content">
+            <!-- Section A -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[A] 空所補充問題 (1)～(4)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <div class="question-number">問題 (1)</div>
+                        <div class="question-text">
+                            The instructor makes everyone (　　) his or her backhand.
+                        </div>
+                        <div class="choices">
+                            ① change<br>
+                            ② changes<br>
+                            ③ to change<br>
+                            ④ changed
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ① change</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>使役動詞makeの語法:</strong> make + O + 動詞の原形</p>
+                                <p>「make + 人 + 動詞の原形」で「人に～させる」という意味になります。makeは使役動詞なので、後ろに目的語を取った後、動詞の原形が続きます。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② changes (誤り):</strong> 三人称単数現在形は使えません。makeの後ろは原形です。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ③ to change (誤り):</strong> makeは不定詞ではなく原形を取ります。(※ただし受動態では to不定詞になります: be made to do)
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ④ changed (誤り):</strong> 過去形・過去分詞形は使えません。
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】使役動詞</div>
+                                <p><strong>make + O + 原形:</strong> Oに（強制的に）～させる</p>
+                                <p><strong>let + O + 原形:</strong> Oに～させてあげる（許可）</p>
+                                <p><strong>have + O + 原形:</strong> Oに～してもらう</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>The teacher made us <strong>study</strong> hard.</p>
+                                <div class="translation">（先生は私たちを一生懸命勉強させた）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> インストラクターは全員にバックハンドを変えさせる。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <div class="question-number">問題 (2)</div>
+                        <div class="question-text">
+                            There's (　　) connection between Japanese and Chinese as there is between Latin and English.
+                        </div>
+                        <div class="choices">
+                            ① far more<br>
+                            ② so much<br>
+                            ③ as much<br>
+                            ④ as many
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ③ as much</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>as much ... as ~構文:</strong> 「～と同じくらい...（の量）」</p>
+                                <p>後ろに「as there is between Latin and English」があるので、「as much A as B」の形になります。connectionは不可算名詞なのでmuchを使います。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ① far more (誤り):</strong> 後ろにasがあるので比較級ではなく原級比較が必要です。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② so much (誤り):</strong> 「so ... as ~」は否定文・疑問文で使われます。肯定文では「as ... as ~」です。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ④ as many (誤り):</strong> connectionは不可算名詞なので、manyではなくmuchを使います。
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】as ... as構文</div>
+                                <p><strong>肯定文:</strong> as ... as ~ 「～と同じくらい...」</p>
+                                <p><strong>否定文:</strong> not as(so) ... as ~ 「～ほど...ではない」</p>
+                                <p><strong>much:</strong> 不可算名詞と共に使う</p>
+                                <p><strong>many:</strong> 可算名詞と共に使う</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>She has <strong>as much</strong> money <strong>as</strong> I do.</p>
+                                <div class="translation">（彼女は私と同じくらいお金を持っている）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 日本語と中国語の間には、ラテン語と英語の間にあるのと同じくらいの繋がりがある。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <div class="question-number">問題 (3)</div>
+                        <div class="question-text">
+                            When I was in Salem, I (　　) often play tennis with John.
+                        </div>
+                        <div class="choices">
+                            ① ought to<br>
+                            ② should<br>
+                            ③ might<br>
+                            ④ would
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ④ would</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>would + often:</strong> 「よく～したものだった」（過去の習慣）</p>
+                                <p>「When I was in Salem（セーラムにいた頃）」という過去の時期について述べているので、過去の習慣を表す「would often」が適切です。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ① ought to (誤り):</strong> 「～すべきだ」という義務を表し、過去の習慣は表せません。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② should (誤り):</strong> 「～すべきだ」という義務・推奨を表し、過去の習慣は表せません。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ③ might (誤り):</strong> 「～かもしれない」という推量を表し、「often（よく）」とは相性が悪いです。
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】wouldの用法</div>
+                                <p><strong>過去の習慣:</strong> would often/always/sometimes + 動詞の原形</p>
+                                <p>「（昔は）よく～したものだ」という意味で、nostalgic（懐かしい）な雰囲気があります。</p>
+                                <p><strong>※ used to との違い:</strong></p>
+                                <p>• used to: 過去の状態・習慣（今はしていない）</p>
+                                <p>• would: 過去の習慣のみ（状態動詞には使えない）</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>When I was a child, I <strong>would often</strong> visit my grandmother.</p>
+                                <div class="translation">（子どもの頃、よく祖母のところに行ったものだった）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> セーラムにいた頃、私はよくジョンとテニスをしたものだった。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <div class="question-number">問題 (4)</div>
+                        <div class="question-text">
+                            I cannot imagine (　　) about a book.
+                        </div>
+                        <div class="choices">
+                            ① you being so excited<br>
+                            ② for you to be so exciting<br>
+                            ③ you to be so exciting<br>
+                            ④ for you to be so excited
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ① you being so excited</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>imagineの語法:</strong> imagine + O + doing / imagine + doing</p>
+                                <p>imagineは動名詞を目的語に取る動詞です。「imagine + O + doing」で「OがVするのを想像する」という意味になります。</p>
+                                <p><strong>excited vs exciting:</strong></p>
+                                <p>• excited: 「興奮している」（人の感情）</p>
+                                <p>• exciting: 「ワクワクさせる」（物事の性質）</p>
+                                <p>人（you）が主語なのでexcitedが正解です。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ② for you to be so exciting (誤り):</strong> imagineは不定詞を取りません。また、excitingは人には使いません。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ③ you to be so exciting (誤り):</strong> imagineは不定詞を取りません。また、excitingは人には使いません。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ④ for you to be so excited (誤り):</strong> imagineは不定詞を取らず、動名詞を取ります。
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】動名詞を取る動詞</div>
+                                <p><strong>MEGAFEPS（メガフェップス）:</strong></p>
+                                <p>• Mind (気にする)</p>
+                                <p>• Enjoy (楽しむ)</p>
+                                <p>• Give up (諦める)</p>
+                                <p>• Avoid (避ける)</p>
+                                <p>• Finish (終える)</p>
+                                <p>• Escape (逃れる)</p>
+                                <p>• Practice (練習する)</p>
+                                <p>• Stop (やめる)</p>
+                                <p>※ imagine も動名詞を取ります！</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>I can't imagine <strong>him winning</strong> the race.</p>
+                                <div class="translation">（彼がレースに勝つなんて想像できない）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私はあなたが本についてそんなに興奮しているのを想像できない。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section B -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[B] 同意語句選択問題 (5)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <div class="question-number">問題 (5)</div>
+                        <div class="question-text">
+                            As the cold weather <u>affected</u> him, he decided to move to the South.
+                        </div>
+                        <div class="choices">
+                            ① fought off<br>
+                            ② told on<br>
+                            ③ fitted in<br>
+                            ④ dipped into
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ② told on</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>affected の意味:</strong> 「（悪）影響を与えた」</p>
+                                <p><strong>tell on = 「（悪影響を）及ぼす」:</strong> この文脈では、寒い天候が彼の健康に悪影響を与えたという意味です。</p>
+                                <p>「寒い天候が彼に影響したので、南に引っ越すことにした」→健康を害したということです。</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ① fought off (誤り):</strong> 「撃退する、追い払う」という意味で、文意に合いません。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ③ fitted in (誤り):</strong> 「適応する、溶け込む」という意味で、文意に合いません。
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>✗ ④ dipped into (誤り):</strong> 「ちょっと調べる、使い始める」という意味で、文意に合いません。
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】tell on の用法</div>
+                                <p><strong>意味①:</strong> ～に悪影響を及ぼす、～のためになる</p>
+                                <p><strong>意味②:</strong> ～を告げ口する</p>
+                                <p>この問題では①の意味で使われています。</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>The stress is beginning to <strong>tell on</strong> her health.</p>
+                                <div class="translation">（ストレスが彼女の健康に影響し始めている）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 寒い天候が彼に悪影響を与えたので、彼は南に引っ越すことにした。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section C -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[C] 共通語補充問題 (6)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <div class="question-number">問題 (6)</div>
+                        <div class="question-text">
+                            (a) He tried to (　　) out the importance of discussion.<br>
+                            (b) There is no (　　) in doing that.<br>
+                            (c) I have a different (　　) of view from his.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: point</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>(a) point out:</strong> 「～を指摘する」</p>
+                                <p>He tried to <strong>point</strong> out the importance of discussion.<br>
+                                （彼は議論の重要性を指摘しようとした）</p>
+                                
+                                <p><strong>(b) There is no point in doing:</strong> 「～しても意味がない」</p>
+                                <p>There is no <strong>point</strong> in doing that.<br>
+                                （それをしても意味がない）</p>
+                                
+                                <p><strong>(c) point of view:</strong> 「観点、見解」</p>
+                                <p>I have a different <strong>point</strong> of view from his.<br>
+                                （私は彼とは異なる見解を持っている）</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】point を使ったイディオム</div>
+                                <p><strong>point out:</strong> ～を指摘する</p>
+                                <p><strong>There is no point in ~ing:</strong> ～しても無駄だ</p>
+                                <p><strong>point of view:</strong> 観点、視点</p>
+                                <p><strong>to the point:</strong> 要を得た、的を射た</p>
+                                <p><strong>make a point of ~ing:</strong> 必ず～する</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>She <strong>pointed out</strong> my mistake.</p>
+                                <div class="translation">（彼女は私の間違いを指摘した）</div>
+                                <p>There's no <strong>point in</strong> arguing with him.</p>
+                                <div class="translation">（彼と議論しても無駄だ）</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section D -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[D] 書き換え問題 (7)～(9)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <div class="question-number">問題 (7)</div>
+                        <div class="question-text">
+                            (a) He is my junior by two years.<br>
+                            (b) He is (　　) (　　) (　　) than I.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: two years younger</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>be one's junior by ～:</strong> 「（人より）～歳年下である」</p>
+                                <p>これを比較級で書き換えると「～ younger than ...」になります。</p>
+                                <p>「by two years（2歳分）」という差を表す表現を、比較級の前に置きます。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】年齢差の表現</div>
+                                <p><strong>パターン①:</strong> A is one's senior/junior by ～ years</p>
+                                <p><strong>パターン②:</strong> A is ～ years older/younger than B</p>
+                                <p><strong>注意:</strong> seniorとjuniorは比較級ではなく、thanではなくtoを使います。</p>
+                                <p>例: He is senior <strong>to</strong> me. (彼は私より年上だ)</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>She is my senior by three years. = She is <strong>three years older</strong> than I.</p>
+                                <div class="translation">（彼女は私より3歳年上だ）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼は私より2歳年下だ。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <div class="question-number">問題 (8)</div>
+                        <div class="question-text">
+                            (a) Her recent book is higher in quality than the previous one.<br>
+                            (b) Her recent book is (　　) to the previous one.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: superior</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>superior:</strong> 「～より優れている」</p>
+                                <p>superiorはラテン語由来の比較級で、形は原級ですが意味は比較級です。そのため、thanではなく<strong>to</strong>を使います。</p>
+                                <p>「higher in quality than（～より質が高い）」= 「superior to（～より優れている）」</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】ラテン語由来の比較級</div>
+                                <p>以下の単語は比較級の意味を持ちますが、<strong>than ではなく to</strong> を使います:</p>
+                                <p><strong>superior to:</strong> ～より優れている</p>
+                                <p><strong>inferior to:</strong> ～より劣っている</p>
+                                <p><strong>senior to:</strong> ～より年上である</p>
+                                <p><strong>junior to:</strong> ～より年下である</p>
+                                <p><strong>prior to:</strong> ～より前に</p>
+                                <p><strong>prefer A to B:</strong> BよりAを好む</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>This product is <strong>superior to</strong> that one in every way.</p>
+                                <div class="translation">（この製品はあらゆる点であの製品より優れている）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼女の最近の本は前作より質が高い。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <div class="question-number">問題 (9)</div>
+                        <div class="question-text">
+                            (a) I went all the way to my friend's house, but in vain.<br>
+                            (b) I went all the way to my friend's house, (　　) to find him out.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: only</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>in vain:</strong> 「無駄に、むなしく」</p>
+                                <p><strong>only to do:</strong> 「～したが結局...だった」（残念な結果）</p>
+                                <p>「友人の家まで行ったが、無駄だった（会えなかった）」という意味を、「only to find him out（結局彼が不在だとわかった）」という不定詞の副詞的用法（結果）で表します。</p>
+                                <p><strong>find 人 out:</strong> 「人が不在だとわかる」という意味です。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】不定詞の副詞的用法（結果）</div>
+                                <p><strong>only to do:</strong> 「～したが、結局...だけだった」（期待外れの結果）</p>
+                                <p><strong>... to do:</strong> 「～して、その結果...した」（自然な結果）</p>
+                                <p>onlyをつけると「残念な結果」のニュアンスが強くなります。</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>He hurried to the station, <strong>only to</strong> miss the train.</p>
+                                <div class="translation">（彼は駅に急いだが、結局電車に乗り遅れた）</div>
+                                <p>He studied hard to pass the exam. (自然な結果)</p>
+                                <div class="translation">（彼は試験に合格するために一生懸命勉強した）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私は友人の家までわざわざ行ったが、結局彼が留守だとわかった。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section E -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[E] 和文英訳（単語補充）問題 (10)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <div class="question-number">問題 (10)</div>
+                        <div class="question-text">
+                            ハイジャックの犯人は飛行機を爆破すると言って脅かした。<br>
+                            The hijacker (　　) to blow up the airplane.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: threatened</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>threaten to do:</strong> 「～すると脅す」</p>
+                                <p>「脅かした」という過去の動作なので、過去形 <strong>threatened</strong> を使います。</p>
+                                <p>日本語では「～すると言って脅かした」となっていますが、英語では threaten to do で「～すると脅す」という意味が全て含まれています。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】threaten の語法</div>
+                                <p><strong>threaten to do:</strong> ～すると脅す</p>
+                                <p><strong>threaten 人 with ~:</strong> 人を～で脅す</p>
+                                <p><strong>threat (名詞):</strong> 脅威、脅し</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>He <strong>threatened to</strong> call the police.</p>
+                                <div class="translation">（彼は警察を呼ぶぞと脅した）</div>
+                                <p>They <strong>threatened</strong> us <strong>with</strong> violence.</p>
+                                <div class="translation">（彼らは暴力で私たちを脅した）</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section F -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[F] 誤り指摘・訂正問題 (11)～(15)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 11 -->
+                    <div class="question">
+                        <div class="question-number">問題 (11)</div>
+                        <div class="question-text">
+                            There are still two questions I'm not clear ①about. ②One ③is the potential market and ④other cost.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ④ other cost → the other cost</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>one ... the other ~:</strong> 「一方は...、もう一方は～」（2つのうち）</p>
+                                <p>「まだ2つの疑問点がある」と言っているので、「一方は潜在市場で、<strong>もう一方</strong>はコストだ」という意味になります。</p>
+                                <p>特定の2つのうちの「もう一方」を指すので、<strong>the other</strong> が必要です。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】one と other の使い分け</div>
+                                <p><strong>【2つのうち】</strong></p>
+                                <p>• one ... the other ~ 「一方は...、もう一方は～」</p>
+                                
+                                <p><strong>【3つ以上のうち】</strong></p>
+                                <p>• one ... another ~ 「1つは...、別の1つは～」</p>
+                                <p>• one ... the other ~ ... the others 「1つは...、1つは～、残りは...」</p>
+                                <p>• some ... others ~ 「あるものは...、他のものは～」</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>I have two dogs. <strong>One</strong> is black and <strong>the other</strong> is white.</p>
+                                <div class="translation">（私は犬を2匹飼っている。1匹は黒で、もう1匹は白だ）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私がはっきりしていない疑問点がまだ2つある。1つは潜在市場で、もう1つはコストだ。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 12 -->
+                    <div class="question">
+                        <div class="question-number">問題 (12)</div>
+                        <div class="question-text">
+                            ①Expensive ②as butter ③is, I still prefer it ④than margarine.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ④ than → to</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>prefer A to B:</strong> 「BよりAを好む」</p>
+                                <p>preferは比較級ではありませんが、比較の意味を持つ動詞です。そのため、thanではなく<strong>to</strong>を使います。</p>
+                                <p>※ 文頭の「Expensive as butter is」は「バターは高価だけれども」という譲歩を表す倒置構文です。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】prefer の語法</div>
+                                <p><strong>prefer A to B:</strong> BよりAを好む（AもBも名詞）</p>
+                                <p><strong>prefer to do rather than do:</strong> ～するよりむしろ...したい</p>
+                                <p><strong>prefer doing to doing:</strong> ～するよりも...するのを好む</p>
+                                <p>※ preferは比較級ではありませんが、「than」ではなく「to」を使います！</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>I <strong>prefer</strong> tea <strong>to</strong> coffee.</p>
+                                <div class="translation">（私はコーヒーより紅茶が好きだ）</div>
+                                <p>She <strong>prefers</strong> reading <strong>to</strong> watching TV.</p>
+                                <div class="translation">（彼女はテレビを見るより読書を好む）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> バターは高価だが、私はそれでもマーガリンよりバターが好きだ。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 13 -->
+                    <div class="question">
+                        <div class="question-number">問題 (13)</div>
+                        <div class="question-text">
+                            He ①took a taxi to ②the Tokyo Station and was ③just in time to ④see his uncle off.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ② the Tokyo Station → Tokyo Station</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>駅名には冠詞をつけない:</strong> 固有名詞の駅名には the をつけません。</p>
+                                <p>正しい表現: Tokyo Station, Shibuya Station, Shinjuku Station</p>
+                                <p>誤った表現: ✗ the Tokyo Station, ✗ the Shibuya Station</p>
+                                <p>※ ただし、駅を一般名詞として使う場合（"the station"）は冠詞が必要です。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】冠詞と固有名詞</div>
+                                <p><strong>冠詞が不要な固有名詞:</strong></p>
+                                <p>• 駅名: Tokyo Station, Grand Central Station</p>
+                                <p>• 空港名: Narita Airport, Haneda Airport</p>
+                                <p>• 大学名: Harvard University, Tokyo University</p>
+                                <p>• 人名・地名: Mt. Fuji, Lake Biwa</p>
+                                
+                                <p><strong>冠詞が必要な固有名詞:</strong></p>
+                                <p>• 川・海・山脈: the Nile, the Pacific Ocean, the Alps</p>
+                                <p>• 複数形の国名: the United States, the Philippines</p>
+                                <p>• ホテル・劇場: the Hilton Hotel, the Globe Theatre</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>I'll meet you at <strong>Tokyo Station</strong>. (○)</p>
+                                <p>I'll meet you at <strong>the station</strong>. (○)</p>
+                                <p>I'll meet you at <strong>the Tokyo Station</strong>. (✗)</p>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 彼はタクシーで東京駅に行き、ちょうど間に合って叔父を見送った。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 14 -->
+                    <div class="question">
+                        <div class="question-number">問題 (14)</div>
+                        <div class="question-text">
+                            "There's ①too much noise in this room. I can't understand ②what is the teacher saying."<br>
+                            "③Neither ④can I."
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ② what is the teacher saying → what the teacher is saying</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>間接疑問文の語順:</strong> 疑問詞 + 主語 + 動詞</p>
+                                <p>「what is the teacher saying」は直接疑問文の語順（疑問詞 + be動詞 + 主語）になっています。</p>
+                                <p>「I can't understand」の後ろは間接疑問文なので、<strong>what the teacher is saying</strong>（疑問詞 + 主語 + 動詞）の語順にする必要があります。</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】間接疑問文の語順</div>
+                                <p><strong>直接疑問文:</strong> What is he doing? （疑問詞 + 動詞 + 主語）</p>
+                                <p><strong>間接疑問文:</strong> I don't know what he is doing. （疑問詞 + 主語 + 動詞）</p>
+                                
+                                <p><strong>間接疑問文を取る動詞:</strong></p>
+                                <p>• know, understand, remember, forget, wonder, guess, etc.</p>
+                                
+                                <p><strong>重要:</strong> 間接疑問文では語順が「平叙文の語順」になります！</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>✗ Do you know <strong>where is</strong> the station?</p>
+                                <p>○ Do you know <strong>where the station is</strong>?</p>
+                                <div class="translation">（駅がどこにあるか知っていますか？）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 「この部屋は騒音が多すぎる。先生が何を言っているのか理解できない」「私もです」
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 15 -->
+                    <div class="question">
+                        <div class="question-number">問題 (15)</div>
+                        <div class="question-text">
+                            My friend has just been ①admitted to the university; I ②hope her to have a wonderful time there, ③both on campus ④and off.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: ② hope her to have → hope (that) she has / hope (that) she will have</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>hope の語法:</strong> hope + that節 （✗ hope + O + to do）</p>
+                                <p>hopeは「hope + that + 主語 + 動詞」の形を取り、「hope + O + to do」の形は取りません。</p>
+                                <p>正しい表現:</p>
+                                <p>• I hope (that) she has a wonderful time.</p>
+                                <p>• I hope (that) she will have a wonderful time.</p>
+                                <p>誤った表現:</p>
+                                <p>• ✗ I hope her to have a wonderful time.</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>混同しやすい動詞:</strong>
+                                <p><strong>○ want + O + to do:</strong> I want her to go. （彼女に行ってほしい）</p>
+                                <p><strong>○ expect + O + to do:</strong> I expect him to come. （彼が来ると期待する）</p>
+                                <p><strong>✗ hope + O + to do:</strong> この形は使えません！</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】hope, wish, want の違い</div>
+                                <p><strong>hope:</strong> (実現可能なことを)望む</p>
+                                <p>• hope + that節 / hope + to do</p>
+                                <p>• ✗ hope + O + to do（この形は不可）</p>
+                                
+                                <p><strong>wish:</strong> (実現困難なことを)願う</p>
+                                <p>• wish + that節（仮定法）/ wish + to do</p>
+                                <p>• ✗ wish + O + to do（この形は不可）</p>
+                                
+                                <p><strong>want:</strong> ～してほしい</p>
+                                <p>• want + O + to do（この形が可能）</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>○ I <strong>hope</strong> (that) you'll succeed.</p>
+                                <div class="translation">（あなたが成功することを願っています）</div>
+                                <p>✗ I <strong>hope</strong> you to succeed.</p>
+                                <p>○ I <strong>want</strong> you to succeed.</p>
+                                <div class="translation">（あなたに成功してほしい）</div>
+                            </div>
+                            <div class="translation">
+                                <strong>全文訳:</strong> 私の友人はちょうど大学に合格した。彼女がそこで、キャンパス内外ともに素晴らしい時間を過ごすことを願っている。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section G -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[G] 語句整序問題 (16)～(20)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 16 -->
+                    <div class="question">
+                        <div class="question-number">問題 (16)</div>
+                        <div class="question-text">
+                            この料理を食べると、おふくろの味を思い出します。<br>
+                            These ( cooking / dishes / me / mother's / my / of / remind ).
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: These dishes remind me of my mother's cooking.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>remind A of B:</strong> 「AにBを思い出させる」</p>
+                                <p>この文では「これらの料理が私におふくろの料理を思い出させる」という意味になります。</p>
+                                <p><strong>語順のポイント:</strong></p>
+                                <p>1. These dishes（主語）</p>
+                                <p>2. remind（動詞）</p>
+                                <p>3. me（目的語A）</p>
+                                <p>4. of my mother's cooking（前置詞句B）</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】remind の語法</div>
+                                <p><strong>remind A of B:</strong> AにBを思い出させる</p>
+                                <p><strong>remind A to do:</strong> Aに～するよう念を押す</p>
+                                <p><strong>remind A that節:</strong> Aに～ということを思い出させる</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>This song <strong>reminds me of</strong> my childhood.</p>
+                                <div class="translation">（この歌は私に子供時代を思い出させる）</div>
+                                <p>Please <strong>remind me to</strong> call him.</p>
+                                <div class="translation">（彼に電話するよう私に思い出させてください）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 17 -->
+                    <div class="question">
+                        <div class="question-number">問題 (17)</div>
+                        <div class="question-text">
+                            私はごたごたした問題が起こってほしくない。<br>
+                            ( there / any / do / to / trouble / I / want / not / be ).
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: I do not want there to be any trouble.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>want + there + to be:</strong> 「～が存在してほしい/してほしくない」</p>
+                                <p>この文では「there is trouble（問題がある）」の不定詞形「there to be trouble」を、wantの目的語として使っています。</p>
+                                <p><strong>語順のポイント:</strong></p>
+                                <p>1. I do not want（私は～してほしくない）</p>
+                                <p>2. there to be（～があることを）</p>
+                                <p>3. any trouble（何かトラブルが）</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】There構文の不定詞</div>
+                                <p><strong>There is/are ~:</strong> ～がある/いる</p>
+                                <p><strong>There to be ~:</strong> ～があること（不定詞）</p>
+                                
+                                <p>以下の動詞の後ろで使えます:</p>
+                                <p>• want there to be ~</p>
+                                <p>• expect there to be ~</p>
+                                <p>• would like there to be ~</p>
+                                <p>• don't want there to be ~</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>I <strong>want there to be</strong> more parks in this city.</p>
+                                <div class="translation">（この街にもっと公園があってほしい）</div>
+                                <p>We <strong>expect there to be</strong> many people at the event.</p>
+                                <div class="translation">（イベントに多くの人が来ると予想している）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 18 -->
+                    <div class="question">
+                        <div class="question-number">問題 (18)</div>
+                        <div class="question-text">
+                            ブラウスのインクのしみを抜くには何がよいでしょうか。<br>
+                            What ( recommend / getting / stains / would / out of / you / for / ink ) my blouse?
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: What would you recommend for getting ink stains out of my blouse?</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>recommend A for B:</strong> 「BのためにAを勧める」</p>
+                                <p><strong>get A out of B:</strong> 「BからAを取り除く」</p>
+                                <p>この文では「インクのシミをブラウスから取り除くために何を勧めますか」という意味になります。</p>
+                                <p><strong>語順のポイント:</strong></p>
+                                <p>1. What would you recommend（何を勧めますか）</p>
+                                <p>2. for getting ink stains（インクのシミを取るために）</p>
+                                <p>3. out of my blouse（私のブラウスから）</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】recommend の語法</div>
+                                <p><strong>recommend A:</strong> Aを勧める</p>
+                                <p><strong>recommend A for B:</strong> BのためにAを勧める</p>
+                                <p><strong>recommend doing:</strong> ～することを勧める</p>
+                                <p><strong>recommend that + 主語 + (should) + 動詞の原形:</strong> ～することを勧める</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>What do you <strong>recommend for</strong> a headache?</p>
+                                <div class="translation">（頭痛には何がおすすめですか？）</div>
+                                <p>I <strong>recommend</strong> taking this medicine.</p>
+                                <div class="translation">（この薬を飲むことをお勧めします）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 19 -->
+                    <div class="question">
+                        <div class="question-number">問題 (19)</div>
+                        <div class="question-text">
+                            ヘレンは、妹よりずっと前に大学を卒業しました。<br>
+                            Helen ( from / sister / long / her / did / graduated / younger / college / before ).
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: Helen graduated from college long before her younger sister did.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>graduate from ~:</strong> 「～を卒業する」</p>
+                                <p><strong>long before ~:</strong> 「～のずっと前に」</p>
+                                <p><strong>did:</strong> 「graduated from college」の代動詞</p>
+                                <p>「ヘレンは大学を卒業した、妹がそうした（卒業した）のよりずっと前に」という構造です。</p>
+                                <p><strong>語順のポイント:</strong></p>
+                                <p>1. Helen graduated from college（ヘレンは大学を卒業した）</p>
+                                <p>2. long before（～のずっと前に）</p>
+                                <p>3. her younger sister did（妹がそうしたよりも）</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】代動詞 do/does/did</div>
+                                <p><strong>代動詞の役割:</strong> 前に出た動詞の繰り返しを避けるために使う</p>
+                                <p>この文では「did = graduated from college」です。</p>
+                                
+                                <p><strong>long before:</strong> ～のずっと前に</p>
+                                <p><strong>shortly before:</strong> ～の少し前に</p>
+                                <p><strong>just before:</strong> ～の直前に</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>He arrived <strong>long before</strong> I <strong>did</strong>.</p>
+                                <div class="translation">（彼は私よりずっと前に到着した）</div>
+                                <p>※ did = arrived</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 20 -->
+                    <div class="question">
+                        <div class="question-number">問題 (20)</div>
+                        <div class="question-text">
+                            私は彼女ほど親切な女性に会ったことがない。<br>
+                            I've ( never / so / kind / seen / a ) lady as she.
+                        </div>
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">解答を見る</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>✓ 正解: I've never seen so kind a lady as she.</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">【解説】</div>
+                                <p><strong>so + 形容詞 + a + 名詞:</strong> 「とても～な...」</p>
+                                <p>通常は「such a kind lady」ですが、soを使う場合は「so kind a lady」という語順になります。</p>
+                                <p>「私は彼女ほど親切な女性を見たことがない」= 「彼女が最も親切だ」という最上級の意味です。</p>
+                                <p><strong>語順のポイント:</strong></p>
+                                <p>• such a kind lady (○)</p>
+                                <p>• so kind a lady (○)</p>
+                                <p>• so a kind lady (✗)</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">【文法ポイント】so と such の語順</div>
+                                <p><strong>such + (a) + 形容詞 + 名詞:</strong></p>
+                                <p>• such a beautiful day</p>
+                                <p>• such beautiful weather (不可算名詞)</p>
+                                
+                                <p><strong>so + 形容詞 + a + 名詞:</strong></p>
+                                <p>• so beautiful a day</p>
+                                <p>• ✗ so beautiful weather (この形は不可)</p>
+                                
+                                <p><strong>否定文 + as ~ = 最上級の意味:</strong></p>
+                                <p>「never ... as ~ = ～ほど...ない」→「～が最も...だ」</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">例文:</div>
+                                <p>I've never seen <strong>so beautiful a</strong> sunset.</p>
+                                <div class="translation">（こんなに美しい夕日を見たことがない）</div>
+                                <p>= This is the most beautiful sunset I've ever seen.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        function toggleAnswer(button) {
+            const answerSection = button.nextElementSibling;
+            answerSection.classList.toggle('active');
+            
+            if (answerSection.classList.contains('active')) {
+                button.textContent = '解答を隠す';
+                button.style.background = 'linear-gradient(135deg, #a8e6cf 0%, #56ab91 100%)';
+            } else {
+                button.textContent = '解答を見る';
+                button.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+        }
+
+        // Auto-open first section on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+    </script>
+</body>
+</html>
