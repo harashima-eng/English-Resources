@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "id": "5f50a451-9520-4cf8-9528-7029444401fc",
+      "parentId": null,
+      "name": "Folder 1",
+      "slug": "folder-1",
+      "htmlFile": "index.html",
+      "icon": "📗",
+      "color": "#30d158",
+      "order": 0
+    },
+    {
+      "id": "de8bba21-3f80-46f9-a3f7-23f1096cd66c",
+      "parentId": null,
+      "name": "Folder 2",
+      "slug": "folder-2",
+      "htmlFile": "index.html",
+      "icon": "📘",
+      "color": "#2997ff",
+      "order": 1
+    },
+    {
+      "id": "53445b94-1058-42d0-ae76-75b290722d2e",
+      "parentId": null,
+      "name": "Folder 3",
+      "slug": "folder-3",
+      "htmlFile": "index.html",
+      "icon": "📙",
+      "color": "#ff9f0a",
+      "order": 2
+    }
+  ],
+  "items": [],
+  "settings": {
+    "siteName": "My Resources",
+    "siteIcon": "📚",
+    "siteColor": "#2997ff",
+    "mainHtmlFile": "index.html"
+  },
+  "lastUpdated": "2025-12-07T02:09:10.484Z"
+}
