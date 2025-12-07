@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9: Living Wage - Reading Breakdown</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-base: #05060a;
+            --card-bg: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(248,248,252,0.98), rgba(243,244,248,0.98));
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --text-light: #f9fafb;
+
+            --accent-primary: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-green: #22c55e;
+            --accent-warm: #f97316;
+            --accent-red: #ef4444;
+
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-pill: 999px;
+
+            --card-shadow: 0 20px 45px rgba(15,23,42,0.7);
+            --transition: 0.2s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro JP", system-ui,
+            -system-ui, "Helvetica Neue", "Segoe UI", "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(59,130,246,0.35), transparent 55%),
+                radial-gradient(circle at 100% 0%, rgba(139,92,246,0.25), transparent 55%),
+                radial-gradient(circle at 0% 100%, rgba(16,185,129,0.2), transparent 60%),
+                linear-gradient(160deg, #020617 0%, #020617 40%, #020617 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            -webkit-font-smoothing: antialiased;
+            padding: 24px 10px 24px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .header {
+            background: radial-gradient(circle at 0% 0%, rgba(59,130,246,0.4), transparent 55%),
+                        radial-gradient(circle at 100% 0%, rgba(236,72,153,0.4), transparent 55%),
+                        linear-gradient(135deg, #020617, #020617);
+            border-radius: 28px;
+            padding: 22px 18px 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 24px 60px rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 10% 0%, rgba(148,163,253,0.25), transparent 55%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: clamp(2.1rem, 4vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 0.55em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 span.tag {
+            font-size: 0.7em;
+            padding: 4px 11px;
+            border-radius: var(--radius-pill);
+            background: rgba(15,23,42,0.75);
+            border: 1px solid rgba(148,163,184,0.8);
+            color: #e5e7eb;
+        }
+
+        .header p {
+            margin-top: 6px;
+            color: #d1d5db;
+            font-size: 0.98rem;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p span.sub {
+            display: inline-block;
+            margin-left: 0.35em;
+            opacity: 0.9;
+        }
+
+        .header-trigger-zone {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            height: 40px;
+            z-index: 900;
+        }
+
+        .header-collapse-btn {
+            position: fixed;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 901;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148,163,184,0.85);
+            background: rgba(15,23,42,0.9);
+            color: var(--text-light);
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .header-trigger-zone:hover + .header-collapse-btn,
+        .header-collapse-btn:hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        body.header-collapsed .header {
+            max-height: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-width: 0;
+            box-shadow: none;
+        }
+
+        .layout-trigger-zone {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 220px;
+            height: 60px;
+            z-index: 900;
+        }
+
+        .layout-toggle-btn {
+            position: fixed;
+            top: 8px;
+            right: 14px;
+            z-index: 901;
+            border: none;
+            background: radial-gradient(circle at 0% 0%, rgba(59,130,246,0.5), transparent 50%),
+                        linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #f9fafb;
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            font-family: inherit;
+            box-shadow: 0 16px 40px rgba(15,23,42,0.9);
+        }
+
+        .layout-trigger-zone:hover + .layout-toggle-btn,
+        .layout-toggle-btn:hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .layout-toggle-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .content {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* Layout modes */
+        body.two-column-layout .content,
+        body.translation-layout .content {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.08fr);
+            gap: 14px;
+            align-items: stretch;
+        }
+
+        body.translation-layout .questions-container {
+            display: none;
+        }
+
+        body.translation-layout .translation-section {
+            display: block;
+        }
+
+        body.two-column-layout .translation-section {
+            display: none;
+        }
+
+        .passage-section,
+        .translation-section,
+        .questions-container {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--card-shadow);
+            padding: 18px 16px 16px;
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .passage-section::before,
+        .translation-section::before,
+        .questions-container::before {
+            content: "";
+            position: absolute;
+            inset: -60%;
+            background: radial-gradient(circle at 0% 0%, rgba(59,130,246,0.09), transparent 55%);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .passage-section h2,
+        .translation-section h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+        }
+
+        .passage-text,
+        .translation-text {
+            background: rgba(255,255,255,0.78);
+            border-radius: 18px;
+            padding: 12px 12px;
+            border: 1px solid rgba(148,163,184,0.35);
+            max-height: 520px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        body.two-column-layout .passage-text,
+        body.two-column-layout .questions-container {
+            height: calc(100vh - 170px);
+            max-height: none;
+        }
+
+        .paragraph,
+        .translation-paragraph {
+            margin-bottom: 14px;
+            line-height: 1.75;
+            font-size: 0.97rem;
+            position: relative;
+            padding-left: 64px;
+            padding-top: 14px; /* avoid overlap with label */
+        }
+
+        .paragraph:last-child,
+        .translation-paragraph:last-child {
+            margin-bottom: 6px;
+        }
+
+        .para-label,
+        .trans-label {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent-purple);
+        }
+
+        .underline {
+            background: linear-gradient(180deg, transparent 60%, rgba(250,204,21,0.6) 60%);
+            padding: 0 2px;
+            font-weight: 600;
+        }
+
+        .questions-container {
+            max-height: 520px;
+            overflow-y: auto;
+        }
+
+        .questions-container h2 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .question-section {
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.96);
+            margin-bottom: 14px;
+            box-shadow: 0 10px 28px rgba(148,163,184,0.55);
+            border: 1px solid rgba(148,163,184,0.5);
+            transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .question-section:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 34px rgba(15,23,42,0.4);
+        }
+
+        .question-header {
+            padding: 8px 12px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-warm));
+            color: #f9fafb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .question-header h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .question-header .toggle-icon {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .question-content {
+            display: none;
+            padding: 10px 12px 12px;
+            background: rgba(255,255,255,0.98);
+        }
+
+        .question-content.visible {
+            display: block;
+        }
+
+        .question-inner {
+            font-size: 0.93rem;
+            color: #111827;
+            line-height: 1.7;
+        }
+
+        .question-text {
+            margin-bottom: 6px;
+        }
+
+        .underline-ref {
+            font-size: 0.88rem;
+            padding: 6px 9px;
+            border-radius: 10px;
+            background: rgba(239,246,255,0.95);
+            border: 1px solid rgba(191,219,254,0.9);
+            margin-bottom: 8px;
+        }
+
+        .choices {
+            margin: 8px 0 4px;
+            padding-left: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .choices li {
+            margin-bottom: 2px;
+        }
+
+        .choices li.correct {
+            font-weight: 700;
+            color: #166534;
+        }
+
+        .button-row {
+            margin: 6px 0 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .show-hint-btn,
+        .show-answer-btn {
+            border-radius: var(--radius-pill);
+            border: none;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .show-hint-btn {
+            background: rgba(37,99,235,0.06);
+            color: #1d4ed8;
+            border: 1px solid rgba(129,140,248,0.7);
+        }
+
+        .show-answer-btn {
+            background: rgba(22,163,74,0.06);
+            color: #15803d;
+            border: 1px solid rgba(74,222,128,0.9);
+        }
+
+        .show-hint-btn:hover,
+        .show-answer-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(15,23,42,0.18);
+        }
+
+        .hint-section,
+        .answer-section {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .hint-section.visible,
+        .answer-section.visible {
+            display: block;
+        }
+
+        .box {
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-size: 0.88rem;
+            margin-bottom: 6px;
+        }
+
+        .box-title {
+            font-weight: 700;
+            margin-bottom: 3px;
+            font-size: 0.88rem;
+        }
+
+        .hint-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            color: #1e3a8a;
+        }
+
+        .correct-box {
+            background: #ecfdf3;
+            border-left: 4px solid #16a34a;
+            color: #166534;
+        }
+
+        .strategy-box {
+            background: #fefce8;
+            border-left: 4px solid #fbbf24;
+            color: #92400e;
+        }
+
+        .passage-ref-box {
+            background: #f5f3ff;
+            border-left: 4px solid #8b5cf6;
+            color: #4b5563;
+        }
+
+        .wrong-box {
+            background: #fef2f2;
+            border-left: 4px solid var(--accent-red);
+            color: #991b1b;
+        }
+
+        .wrong-box ul {
+            padding-left: 1.1rem;
+            margin-top: 2px;
+        }
+
+        .wrong-box li {
+            margin-bottom: 2px;
+        }
+
+        .linked-highlight {
+            outline: 2px solid rgba(249,115,22,0.85);
+            background: rgba(254,243,199,0.8) !important;
+        }
+
+        .column-resizer {
+            display: none;
+        }
+
+        body.translation-layout .passage-text,
+        body.translation-layout .translation-text {
+            max-height: calc(100vh - 150px);
+        }
+
+        body.translation-layout {
+            overflow: hidden;
+        }
+
+        @media (max-width: 980px) {
+            body.two-column-layout .content,
+            body.translation-layout .content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .layout-toggle-btn {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            body.two-column-layout .passage-text,
+            body.two-column-layout .questions-container {
+                height: auto;
+                max-height: 520px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 16px 6px 22px;
+            }
+
+            .header {
+                padding: 18px 14px 14px;
+            }
+
+            .passage-section,
+            .translation-section,
+            .questions-container {
+                padding: 16px 12px 12px;
+            }
+
+            .paragraph,
+            .translation-paragraph {
+                padding-left: 54px;
+                padding-top: 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Chapter 9 <span class="tag">Living Wage</span></h1>
+            <p>
+                Minimum wage vs. living wage in the U.S.
+                <span class="sub">― アメリカの最低賃金と「生活賃金」をめぐる議論</span>
+            </p>
+        </div>
+
+        <div class="header-trigger-zone"></div>
+        <button class="header-collapse-btn" onclick="toggleHeader()">▲ ヘッダーを隠す</button>
+        <div class="layout-trigger-zone"></div>
+        <button class="layout-toggle-btn" onclick="toggleLayout()">📱 Two Columns</button>
+
+        <div class="content">
+            <!-- Passage -->
+            <section class="passage-section">
+                <h2>📖 本文 (Passage)</h2>
+                <div class="passage-text" id="passagePane">
+                    <div class="paragraph" id="para1" data-paragraph="1">
+                        <div class="para-label">PARAGRAPH 1</div>
+                        The current minimum wage in the United States is $7.25 per hour.
+                        That means that a person working full time (40 hours per week) earns $290 per week,
+                        or $15,080 per year. In most parts of the country, this is not enough to pay for basic
+                        necessities. In Philadelphia, for example, the average rent for a one-bedroom apartment is
+                        more than $1,600 per month. A person working full time at minimum wage in Philadelphia simply
+                        cannot afford to live there. I believe that the minimum wage should be replaced by a
+                        "living wage" which would provide a full-time worker with enough income to live on.
+                    </div>
+
+                    <div class="paragraph" id="para2" data-paragraph="2">
+                        <div class="para-label">PARAGRAPH 2</div>
+                        We haven’t always had <span class="underline">(1)this problem</span>.
+                        In the early 1970s, even the lowest-paid employees earned enough money to provide for
+                        themselves, and <span class="underline">(2)far fewer families required two incomes in order
+                        to live comfortably</span>. Even though workers are more productive today, wages have
+                        remained about the same. In the meantime, the cost of necessities (such as housing, health
+                        care, child care, education, and transportation) has increased greatly. In short, wages have
+                        not kept up with the cost of living.
+                    </div>
+
+                    <div class="paragraph" id="para3" data-paragraph="3">
+                        <div class="para-label">PARAGRAPH 3</div>
+                        Those in favor of a living wage, which would vary depending on the cost of living in a
+                        particular city, believe that earning a living wage should be guaranteed as a human right.
+                        Everyone has the right to be paid fairly for their labor, they say. They also claim two
+                        economic benefits of a living wage. First, a living wage would reduce the number of people
+                        receiving money from the government to buy necessities. This reduces the financial burden on
+                        taxpayers. Second, if people have more money, they are likely to spend it in their local
+                        communities, buying the items they need from local businesses.
+                        <span class="underline">(3)This</span>, supporters suggest, will increase profits, create jobs,
+                        and strengthen local economies.
+                    </div>
+
+                    <div class="paragraph" id="para4" data-paragraph="4">
+                        <div class="para-label">PARAGRAPH 4</div>
+                        Those against a living wage argue that the economic effects on local businesses and local
+                        economies could be very negative. <span class="underline">(4)They point to the burden placed
+                        on small businesses.</span> If a fast food restaurant, for example, is required to raise the
+                        hourly wage of all of its employees by as much as 40%, the owners will be forced to raise
+                        prices to cover their increased costs. Some companies may be forced to cut jobs, while others
+                        may have to close completely because they can no longer remain competitive and make a profit.
+                        Under these conditions, local economies are likely to suffer as prices increase and employment
+                        decreases.
+                    </div>
+
+                    <div class="paragraph" id="para5" data-paragraph="5">
+                        <div class="para-label">PARAGRAPH 5</div>
+                        Some cities have already passed living wage laws, which require local employers to pay
+                        employees at a rate that is much higher than the minimum wage. However, these laws have only
+                        recently been put into action, and it is too soon to judge their effectiveness. More data are
+                        needed in order to determine if these laws improve the lives of working people.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resizer placeholder -->
+            <div class="column-resizer" id="columnResizer"></div>
+
+            <!-- Translation -->
+            <section class="translation-section">
+                <h2>📝 全訳 (Full Translation)</h2>
+                <div class="translation-text" id="translationPane">
+                    <div class="translation-paragraph" id="trans1" data-paragraph="1">
+                        <div class="trans-label">第1段落</div>
+                        アメリカの現在の最低賃金は時給7.25ドルである。これは、フルタイム（週40時間）で働く人が
+                        週に290ドル、年に15,080ドルを得るということになる。しかし、国のほとんどの地域では、これは
+                        生活に必要な基本的な費用を払うには十分ではない。たとえばフィラデルフィアでは、1ベッドルームの
+                        アパートの平均家賃は月1,600ドルを超える。最低賃金でフルタイム働く人は、そこで暮らすことなど
+                        とてもできない。だから私は、最低賃金はやめて、フルタイム労働者が生活できるだけの収入を得られる
+                        「生活賃金」に置き換えるべきだと考えている。
+                    </div>
+
+                    <div class="translation-paragraph" id="trans2" data-paragraph="2">
+                        <div class="trans-label">第2段落</div>
+                        私たちがいつも<span class="underline">この問題</span>を抱えていたわけではない。1970年代
+                        初めには、最も低い賃金で働く人たちでさえ、自分で生活していけるだけの収入を得ていたし、
+                        <span class="underline">快適に暮らすために2つの収入を必要とする家族は今よりずっと少なかった</span>。
+                        今日では労働者の生産性は上がっているのに、賃金はほとんど変わっていない。その一方で、
+                        住居費、医療費、保育費、教育費、交通費など、生活必需品の費用は大きく上昇してきた。
+                        要するに、賃金は生活費の上昇に追いついてこなかったのである。
+                    </div>
+
+                    <div class="translation-paragraph" id="trans3" data-paragraph="3">
+                        <div class="trans-label">第3段落</div>
+                        生活賃金を支持する人たちは、その金額は各都市の生活費によって変わるべきだと考え、
+                        生活できる賃金を得ることは人権として保証されるべきだと主張している。誰もが、自分の労働に対して
+                        公正な賃金を受け取る権利がある、と彼らは言う。また彼らは、生活賃金には2つの経済的な利点があると
+                        主張する。1つ目は、生活賃金によって、生活必需品を買うために政府からお金を受け取る人の数が減ることである。
+                        これは納税者の負担を軽くする。2つ目は、人々の手取りが増えれば、そのお金を地元のコミュニティで使い、
+                        必要な物を地元の店で買うようになる可能性が高いという点である。生活賃金支持者によれば、
+                        <span class="underline">こうした動き</span>が利益を増やし、雇用を生み、地域経済を強くするのだという。
+                    </div>
+
+                    <div class="translation-paragraph" id="trans4" data-paragraph="4">
+                        <div class="trans-label">第4段落</div>
+                        一方、生活賃金に反対する人たちは、地元企業や地域経済への経済的な影響は非常に悪いものになり
+                        得ると主張する。<span class="underline">彼らは、中小企業にかかる負担を指摘する</span>。
+                        たとえば、ファストフード店が全ての従業員の時給を4割も引き上げなければならないとすると、
+                        経営者は増えた人件費をまかなうために価格を上げざるをえない。ある企業は雇用を削減せざるをえず、
+                        別の企業は、もはや競争力を保って利益を上げることができなくなり、閉店に追い込まれるかもしれない。
+                        このような状況では、物価は上がり、雇用は減るため、地域経済は打撃を受ける可能性が高い。
+                    </div>
+
+                    <div class="translation-paragraph" id="trans5" data-paragraph="5">
+                        <div class="trans-label">第5段落</div>
+                        すでに生活賃金条例を可決した都市もある。そうした都市では、雇用主は、従業員に最低賃金よりも
+                        はるかに高い水準で賃金を支払うことを義務づけられている。しかし、これらの条例はごく最近になって
+                        実際に施行され始めたばかりであり、その効果を判断するにはまだ早すぎる。これらの条例が本当に
+                        働く人々の生活を向上させているのかどうかを見極めるには、さらに多くのデータが必要である。
+                    </div>
+                </div>
+            </section>
+
+            <!-- Questions -->
+            <section class="questions-container">
+                <h2>📌 設問 & 解説 (Questions & Breakdown)</h2>
+
+                <!-- Q1 -->
+                <div class="question-section" data-target-paragraphs="1">
+                    <div class="question-header" onclick="toggleQuestion('q1')">
+                        <h3>問題 1: 内容理解 (Philadelphia の例)</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q1" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong>
+                                Why does the author refer to the cost of an apartment in Philadelphia?
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Relevant sentence:</strong><br>
+                                “In Philadelphia, for example, the average rent for a one-bedroom apartment is
+                                more than $1,600 per month. A person working full time at minimum wage in Philadelphia
+                                simply cannot afford to live there.”
+                            </div>
+
+                            <ul class="choices">
+                                <li>① To encourage people to live outside of the city.</li>
+                                <li>② To encourage people to work more if they want to live in Philadelphia.</li>
+                                <li>③ To show that people earning the minimum wage cannot afford to live there.</li>
+                                <li>④ To show that Philadelphia is the most expensive city to live in.</li>
+                            </ul>
+
+                            <div class="button-row">
+                                <button class="show-hint-btn" onclick="showHint(event, 'hint1')">
+                                    💭 Show Hint / ヒント
+                                </button>
+                                <button class="show-answer-btn" onclick="showAnswer(event, 'answer1')">
+                                    ✔ Show Answer / 解答
+                                </button>
+                            </div>
+
+                            <div id="hint1" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント (Hint)</div>
+                                    ・「フィラデルフィアの家賃」は何の<strong>具体例</strong>か？<br>
+                                    ・キーは “cannot afford to live there” 。<br>
+                                    ・著者は「最低賃金」と「生活費」の<strong>ギャップ</strong>を示したい。<br>
+                                    ・①②④は「行動を促している」感じがしたら × を疑う。
+                                </div>
+                            </div>
+
+                            <div id="answer1" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    正解は <strong>③</strong>。<br>
+                                    →「最低賃金でフルタイム働いても、そこで暮らすことができない」ことを示すため。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー</div>
+                                    ・都市名＋数字はたいてい「ショッキングな例」。<br>
+                                    ・例が何の説明になっているかは、<strong>直前の文</strong>とセットで読む。<br>
+                                    ・ここでは「minimum wage でも basic necessities を払えない」を、家賃の話でイメージさせている。
+                                </div>
+
+                                <div class="box wrong-box">
+                                    <div class="box-title">❌ 誤答解説 (Wrong choices)</div>
+                                    <ul>
+                                        <li><strong>①</strong> 「郊外に住めと言いたい」→ そんなアドバイスは本文に一切ない。</li>
+                                        <li><strong>②</strong> 「もっと働けと言っている」→ hours を増やせとは書いていない。</li>
+                                        <li><strong>④</strong> 「一番高い都市」→ 他の都市と比べていないので言いすぎ。</li>
+                                    </ul>
+                                    どれも「作者の主張」ではなく、読み手が勝手に付け足した内容になっているので ×。
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠</div>
+                                    “A person working full time at minimum wage in Philadelphia simply cannot afford
+                                    to live there.” → 選択肢③とぴったり対応。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q2')">
+                        <h3>問題 2: 下線部 (1) this problem の内容</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q2" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong>
+                                下線部 (1) <strong>this problem</strong> が指す内容を日本語で説明しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>ヒントとなる文:</strong><br>
+                                “In short, wages have not kept up with the cost of living.”
+                            </div>
+
+                            <div class="button-row">
+                                <button class="show-hint-btn" onclick="showHint(event, 'hint2')">
+                                    💭 Show Hint / ヒント
+                                </button>
+                                <button class="show-answer-btn" onclick="showAnswer(event, 'answer2')">
+                                    ✔ Show Answer / 解答
+                                </button>
+                            </div>
+
+                            <div id="hint2" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント (Hint)</div>
+                                    ・this problem は、段落2の内容全体を一言でまとめたもの。<br>
+                                    ・最後の “In short, ～” に注目。「要するに」で始まる文は要約。<br>
+                                    ・「何と何のバランス」が崩れたのか？ wages と cost of living に線を引いて確認。
+                                </div>
+                            </div>
+
+                            <div id="answer2" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    <strong>賃金がほとんど上がっていない一方で、生活費だけが大きく上昇し、
+                                    賃金が生活費の上昇に追いついていないという問題。</strong>
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー</div>
+                                    ・指示語 this は、直前の説明を「一言で」まとめていることが多い。<br>
+                                    ・“In short, ～” の文をそのまま日本語にしたものが答えになるケースは超多い。<br>
+                                    ・「何が上がった／上がっていないか」を対比で整理するとスッキリ。
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠</div>
+                                    “In short, wages have not kept up with the cost of living.”<br>
+                                    →「賃金が生活費の上昇に追いついていない」＝ this problem。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-section" data-target-paragraphs="2">
+                    <div class="question-header" onclick="toggleQuestion('q3')">
+                        <h3>問題 3: 下線部 (2) 和訳</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q3" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong>
+                                下線部 (2) を和訳しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>下線部 (2):</strong><br>
+                                “far fewer families required two incomes in order to live comfortably”
+                            </div>
+
+                            <div class="button-row">
+                                <button class="show-hint-btn" onclick="showHint(event, 'hint3')">
+                                    💭 Show Hint / ヒント
+                                </button>
+                                <button class="show-answer-btn" onclick="showAnswer(event, 'answer3')">
+                                    ✔ Show Answer / 解答
+                                </button>
+                            </div>
+
+                            <div id="hint3" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント (Hint)</div>
+                                    ・“far fewer A” = 「A は（今と比べて）ずっと少なかった」。<br>
+                                    ・“two incomes” = 家族2人分の収入（共働きイメージ）。<br>
+                                    ・“in order to ～” = 「～するために」。<br>
+                                    ・分けて読む：far fewer families / required two incomes / in order to live comfortably。
+                                </div>
+                            </div>
+
+                            <div id="answer3" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    <strong>快適に暮らすために 2 つの収入を必要とする家族は、
+                                    （現在と比べて）ずっと少なかった。</strong>
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー</div>
+                                    ・比較表現 “far fewer” を見たら、「今と比べて」を頭に足す。<br>
+                                    ・required two incomes を「2つの収入を必要とした」とそのまま訳し、families を後ろから「〜する家族」とつなげると自然。<br>
+                                    ・live comfortably は「快適に暮らす/楽に暮らす」など高校入試〜共通テストレベルの日本語でOK。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-section" data-target-paragraphs="3">
+                    <div class="question-header" onclick="toggleQuestion('q4')">
+                        <h3>問題 4: 指示語 (3) This の内容</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q4" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong>
+                                下線部 (3) <strong>This</strong> は具体的に何を指しているか。最も適切なものを 1 つ選びなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>Sentence:</strong><br>
+                                “Second, if people have more money, they are likely to spend it in their local
+                                communities, buying the items they need from local businesses.
+                                <span class="underline">(3)This</span>, supporters suggest, will increase profits, create jobs,
+                                and strengthen local economies.”
+                            </div>
+
+                            <ul class="choices">
+                                <li>① Government reducing the financial burden on taxpayers.</li>
+                                <li>② People spending their increased wages in local communities.</li>
+                                <li>③ Fewer people relying on assistance from the government.</li>
+                                <li>④ Viewing a living wage as a guaranteed human right.</li>
+                            </ul>
+
+                            <div class="button-row">
+                                <button class="show-hint-btn" onclick="showHint(event, 'hint4')">
+                                    💭 Show Hint / ヒント
+                                </button>
+                                <button class="show-answer-btn" onclick="showAnswer(event, 'answer4')">
+                                    ✔ Show Answer / 解答
+                                </button>
+                            </div>
+
+                            <div id="hint4" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント (Hint)</div>
+                                    ・指示語 This は、ふつう直前の<strong>具体的な行動</strong>を指す。<br>
+                                    ・“Second, ～” の後ろの文で people は何をしている？<br>
+                                    ・「何が increase profits, create jobs を生むのか？」と考える。
+                                </div>
+                            </div>
+
+                            <div id="answer4" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    正解は <strong>②</strong>。<br>
+                                    →「人々が増えたお金を地元のコミュニティで使うこと」。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー</div>
+                                    ・指示語問題では、「This = 直前の一番具体的な部分」を探す。<br>
+                                    ・ここでは “spend it in their local communities, buying the items they need
+                                    from local businesses” を短く言い換えたもの。<br>
+                                    ・①③④は本文に出てくるけれど、場所が違う or 抽象的すぎるので ×。
+                                </div>
+
+                                <div class="box wrong-box">
+                                    <div class="box-title">❌ 誤答解説</div>
+                                    <ul>
+                                        <li><strong>①</strong> 納税者の負担の話は first の経済的利点（前半の別の文）。Second の説明ではない。</li>
+                                        <li><strong>③</strong> これも first の内容。「政府の支援に頼る人が減る」パート。</li>
+                                        <li><strong>④</strong> 「人権として保証すべき」は段落3の前半の価値観の話で、経済効果の具体例ではない。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-section" data-target-paragraphs="4">
+                    <div class="question-header" onclick="toggleQuestion('q5')">
+                        <h3>問題 5: 下線部 (4) They の内容＋和訳</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q5" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong>
+                                下線部 (4) を、They が指す内容を明らかにして日本語に訳しなさい。
+                            </div>
+
+                            <div class="underline-ref">
+                                <strong>下線部 (4):</strong><br>
+                                “<span class="underline">(4)They</span> point to the burden placed on small businesses.”
+                            </div>
+
+                            <div class="button-row">
+                                <button class="show-hint-btn" onclick="showHint(event, 'hint5')">
+                                    💭 Show Hint / ヒント
+                                </button>
+                                <button class="show-answer-btn" onclick="showAnswer(event, 'answer5')">
+                                    ✔ Show Answer / 解答
+                                </button>
+                            </div>
+
+                            <div id="hint5" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント (Hint)</div>
+                                    ・They は同じ段落の<strong>主語</strong>に戻ることが多い。<br>
+                                    ・Paragraph 4 の最初の文の主語にマーカーを引いてから読む。<br>
+                                    ・和訳では「〜は…を指摘する」と主語を補うと読みやすい。
+                                </div>
+                            </div>
+
+                            <div id="answer5" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    <strong>生活賃金に反対する人々は、中小企業にかかる負担を指摘する。</strong>
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー</div>
+                                    ・代名詞 They は、直前に出てきた複数名詞に戻るのが基本。<br>
+                                    ・“Those against a living wage” ＝ 「生活賃金に反対する人々」。<br>
+                                    ・和訳では、主語をハッキリ書いてから「〜は…を指摘する」とつなげると自然な日本語になる。
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠</div>
+                                    “Those against a living wage argue that … They point to the burden placed on small
+                                    businesses.” → They = Those against a living wage。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-section" data-target-paragraphs="5">
+                    <div class="question-header" onclick="toggleQuestion('q6')">
+                        <h3>問題 6: 内容理解 (Living Wage Laws)</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div id="q6" class="question-content">
+                        <div class="question-inner">
+                            <div class="question-text">
+                                <strong>Question:</strong>
+                                What has been the effect of current living wage laws so far?
+                            </div>
+
+                            <ul class="choices">
+                                <li>① They have had no effect on local economies.</li>
+                                <li>② They have clearly succeeded in improving people’s lives.</li>
+                                <li>③ They have clearly failed to improve people’s lives.</li>
+                                <li>④ They have not yet been clearly evaluated.</li>
+                            </ul>
+
+                            <div class="button-row">
+                                <button class="show-hint-btn" onclick="showHint(event, 'hint6')">
+                                    💭 Show Hint / ヒント
+                                </button>
+                                <button class="show-answer-btn" onclick="showAnswer(event, 'answer6')">
+                                    ✔ Show Answer / 解答
+                                </button>
+                            </div>
+
+                            <div id="hint6" class="hint-section">
+                                <div class="box hint-box">
+                                    <div class="box-title">💭 ヒント (Hint)</div>
+                                    ・Paragraph 5 の最後の 2 文に注目。<br>
+                                    ・“too soon to judge”“More data are needed” のニュアンスをつかむ。<br>
+                                    ・「完全に成功／完全に失敗」と言い切っている選択肢は怪しい。
+                                </div>
+                            </div>
+
+                            <div id="answer6" class="answer-section">
+                                <div class="box correct-box">
+                                    <div class="box-title">✔ 正解</div>
+                                    正解は <strong>④</strong>。<br>
+                                    →「まだはっきり評価されていない」。
+                                </div>
+
+                                <div class="box strategy-box">
+                                    <div class="box-title">🎯 読解ストラテジー</div>
+                                    ・“too soon to judge their effectiveness” = 「効果を判断するには早すぎる」。<br>
+                                    ・“More data are needed” = 「もっとデータが必要」。<br>
+                                    → つまり「良いか悪いかは、まだ分からない」がコア。
+                                </div>
+
+                                <div class="box wrong-box">
+                                    <div class="box-title">❌ 誤答解説</div>
+                                    <ul>
+                                        <li><strong>①</strong> 「全く効果なし」と言い切っているが、本文はそこまで言っていない。</li>
+                                        <li><strong>②</strong> 「はっきり成功」と決めつけ。too soon to judge と矛盾。</li>
+                                        <li><strong>③</strong> 「はっきり失敗」と決めつけ。こちらも本文と真逆。</li>
+                                    </ul>
+                                    「データ不足でまだ判断できない」というニュアンスをつかめれば ④ 一択になる。
+                                </div>
+
+                                <div class="box passage-ref-box">
+                                    <div class="box-title">📜 本文からの証拠</div>
+                                    “these laws have only recently been put into action, and it is too soon to judge
+                                    their effectiveness. More data are needed …” → ④と一致。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Layout modes: 0 = single, 1 = two-column (questions), 2 = two-column (translation)
+        let layoutMode = 0;
+
+        function toggleLayout() {
+            const btn = document.querySelector('.layout-toggle-btn');
+
+            document.body.classList.remove('two-column-layout', 'translation-layout');
+
+            layoutMode = (layoutMode + 1) % 3;
+
+            switch (layoutMode) {
+                case 0:
+                    btn.textContent = '📱 Two Columns';
+                    break;
+                case 1:
+                    document.body.classList.add('two-column-layout');
+                    btn.textContent = '🔄 Translation View';
+                    break;
+                case 2:
+                    document.body.classList.add('translation-layout');
+                    btn.textContent = '📚 Single Column';
+                    break;
+            }
+        }
+
+        function toggleHeader() {
+            document.body.classList.toggle('header-collapsed');
+            const btn = document.querySelector('.header-collapse-btn');
+            if (document.body.classList.contains('header-collapsed')) {
+                btn.textContent = '▼ ヘッダーを表示する';
+            } else {
+                btn.textContent = '▲ ヘッダーを隠す';
+            }
+        }
+
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            if (!content) return;
+            content.classList.toggle('visible');
+        }
+
+        function showHint(event, id) {
+            event.stopPropagation();
+            const hint = document.getElementById(id);
+            if (!hint) return;
+            const btn = event.currentTarget || event.target;
+            const isVisible = hint.classList.toggle('visible');
+            btn.textContent = isVisible
+                ? '💭 Hide Hint / ヒントを隠す'
+                : '💭 Show Hint / ヒント';
+        }
+
+        function showAnswer(event, id) {
+            event.stopPropagation();
+            const ans = document.getElementById(id);
+            if (!ans) return;
+            const btn = event.currentTarget || event.target;
+            const isVisible = ans.classList.toggle('visible');
+            btn.textContent = isVisible
+                ? '✔ Hide Answer / 解答を隠す'
+                : '✔ Show Answer / 解答';
+        }
+
+        // Linked highlight between questions, passage, and translation
+        function setupLinkedHighlight() {
+            const questionSections = document.querySelectorAll('.question-section');
+            const paragraphs = document.querySelectorAll('.paragraph');
+            const translations = document.querySelectorAll('.translation-paragraph');
+
+            function clearLinked() {
+                questionSections.forEach(q => q.classList.remove('linked-highlight'));
+                paragraphs.forEach(p => p.classList.remove('linked-highlight'));
+                translations.forEach(t => t.classList.remove('linked-highlight'));
+            }
+
+            // Question → Passage & Translation
+            questionSections.forEach(sec => {
+                const targets = (sec.getAttribute('data-target-paragraphs') || '')
+                    .split(',')
+                    .map(s => s.trim())
+                    .filter(Boolean);
+
+                sec.addEventListener('mouseenter', () => {
+                    clearLinked();
+                    sec.classList.add('linked-highlight');
+                    targets.forEach(num => {
+                        const p = document.querySelector('#para' + num);
+                        const t = document.querySelector('#trans' + num);
+                        if (p) p.classList.add('linked-highlight');
+                        if (t) t.classList.add('linked-highlight');
+                    });
+                });
+
+                sec.addEventListener('mouseleave', () => {
+                    clearLinked();
+                });
+            });
+
+            // Passage paragraph hover
+            paragraphs.forEach(p => {
+                const num = p.getAttribute('data-paragraph');
+                p.addEventListener('mouseenter', () => {
+                    clearLinked();
+                    p.classList.add('linked-highlight');
+                    const q = document.querySelector('.question-section[data-target-paragraphs*="' + num + '"]');
+                    const t = document.querySelector('#trans' + num);
+                    if (q) q.classList.add('linked-highlight');
+                    if (t) t.classList.add('linked-highlight');
+                });
+
+                p.addEventListener('mouseleave', () => {
+                    clearLinked();
+                });
+            });
+
+            // Translation paragraph hover
+            translations.forEach(t => {
+                const num = t.getAttribute('data-paragraph');
+                t.addEventListener('mouseenter', () => {
+                    clearLinked();
+                    t.classList.add('linked-highlight');
+                    const p = document.querySelector('#para' + num);
+                    const q = document.querySelector('.question-section[data-target-paragraphs*="' + num + '"]');
+                    if (p) p.classList.add('linked-highlight');
+                    if (q) q.classList.add('linked-highlight');
+                });
+
+                t.addEventListener('mouseleave', () => {
+                    clearLinked();
+                });
+            });
+        }
+
+        // Scroll sync between passage and translation in translation-layout
+        function setupScrollSync() {
+            const passage = document.getElementById('passagePane');
+            const translation = document.getElementById('translationPane');
+            if (!passage || !translation) return;
+
+            let isSyncing = false;
+
+            function syncScroll(source, target) {
+                if (isSyncing) return;
+                if (!document.body.classList.contains('translation-layout')) return;
+
+                isSyncing = true;
+                const ratio = source.scrollTop / (source.scrollHeight - source.clientHeight || 1);
+                target.scrollTop = ratio * (target.scrollHeight - target.clientHeight);
+                setTimeout(() => { isSyncing = false; }, 40);
+            }
+
+            passage.addEventListener('scroll', () => syncScroll(passage, translation));
+            translation.addEventListener('scroll', () => syncScroll(translation, passage));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupLinkedHighlight();
+            setupScrollSync();
+        });
+    </script>
+</body>
+</html>
