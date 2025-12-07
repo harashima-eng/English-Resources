@@ -3,40 +3,301 @@
     {
       "id": "5f50a451-9520-4cf8-9528-7029444401fc",
       "parentId": null,
-      "name": "Folder 1",
-      "slug": "folder-1",
+      "name": "高３",
+      "slug": "grade-3",
       "htmlFile": "index.html",
       "icon": "📗",
       "color": "#30d158",
-      "order": 0
+      "order": 0,
+      "oldSlug": "folder-1",
+      "iconImage": null,
+      "lockNavigation": false
     },
     {
       "id": "de8bba21-3f80-46f9-a3f7-23f1096cd66c",
       "parentId": null,
-      "name": "Folder 2",
-      "slug": "folder-2",
+      "name": "高２",
+      "slug": "grade-2",
       "htmlFile": "index.html",
       "icon": "📘",
       "color": "#2997ff",
+      "order": 1,
+      "oldSlug": "folder",
+      "iconImage": null,
+      "lockNavigation": false
+    },
+    {
+      "id": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "parentId": "5f50a451-9520-4cf8-9528-7029444401fc",
+      "name": "英語コミュニケーションIII",
+      "slug": "english-communication-iii",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": true
+    },
+    {
+      "id": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "parentId": "5f50a451-9520-4cf8-9528-7029444401fc",
+      "name": "論理・表現III",
+      "slug": "english-expression-iii",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 2,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": true
+    },
+    {
+      "id": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
+      "parentId": "de8bba21-3f80-46f9-a3f7-23f1096cd66c",
+      "name": "論理・表現II",
+      "slug": "english-expresionii",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": true
+    }
+  ],
+  "items": [
+    {
+      "id": "5d3e43b6-8c84-4e24-8fd4-718430dfb424",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "英語コミュニケーションIII｜2学期｜期末試験範囲表",
+      "fileName": "英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
+      "date": "2025-12-07",
+      "order": 7
+    },
+    {
+      "id": "3d948f13-b9ff-4626-b9ac-a7335a510a85",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter14",
+      "fileName": "Chapter14.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter14.html",
+      "date": "2025-12-07",
+      "order": 2
+    },
+    {
+      "id": "f76614d7-6047-4bfc-8f4f-2d4afb5b4a1e",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "chapter9",
+      "fileName": "chapter9.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/chapter9.html",
+      "date": "2025-12-07",
+      "order": 0
+    },
+    {
+      "id": "af8f9c0c-35a2-403e-acc4-0f4f95152635",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter15",
+      "fileName": "Chapter15.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter15.html",
+      "date": "2025-12-07",
+      "order": 3
+    },
+    {
+      "id": "08232e7a-dae7-424b-8e60-b8dd1e7509b3",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter16",
+      "fileName": "Chapter16.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter16.html",
+      "date": "2025-12-07",
+      "order": 4
+    },
+    {
+      "id": "91acf774-7966-4a32-84a8-0aa4faadf46a",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter17",
+      "fileName": "Chapter17.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter17.html",
+      "date": "2025-12-07",
+      "order": 5
+    },
+    {
+      "id": "e3c4b4e2-20b6-46c6-83a0-ed8e2cb221ce",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "chapter10",
+      "fileName": "chapter10.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/chapter10.html",
+      "date": "2025-12-07",
       "order": 1
     },
     {
-      "id": "53445b94-1058-42d0-ae76-75b290722d2e",
-      "parentId": null,
-      "name": "Folder 3",
-      "slug": "folder-3",
-      "htmlFile": "index.html",
-      "icon": "📙",
-      "color": "#ff9f0a",
+      "id": "e47b9916-e579-49f2-bc07-b1ba8c50b8f3",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter18",
+      "fileName": "Chapter18.html",
+      "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter18.html",
+      "date": "2025-12-07",
+      "order": 6,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    },
+    {
+      "id": "c25c1cd8-f545-4cfe-bd58-2a15973613b3",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_3",
+      "fileName": "grammar_breakdown_3.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_3.html",
+      "date": "2025-12-07",
       "order": 2
+    },
+    {
+      "id": "bb217eb4-8b15-4b9e-b13a-48efc6332d7d",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_2",
+      "fileName": "grammar_breakdown_2.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_2.html",
+      "date": "2025-12-07",
+      "order": 1
+    },
+    {
+      "id": "2bac9f1d-af4e-422e-8f77-5c6fb9714ec9",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_5",
+      "fileName": "grammar_breakdown_5.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_5.html",
+      "date": "2025-12-07",
+      "order": 4
+    },
+    {
+      "id": "63637746-7af2-4a22-822d-58dab0c315b3",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_4",
+      "fileName": "grammar_breakdown_4.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_4.html",
+      "date": "2025-12-07",
+      "order": 3
+    },
+    {
+      "id": "0f540bc4-1734-448f-aafa-2e2de7bdedae",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_10",
+      "fileName": "grammar_breakdown_10.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_10.html",
+      "date": "2025-12-07",
+      "order": 9
+    },
+    {
+      "id": "d417404f-9f97-4720-b6d1-80e570593e79",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_6",
+      "fileName": "grammar_breakdown_6.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_6.html",
+      "date": "2025-12-07",
+      "order": 5
+    },
+    {
+      "id": "5020b59e-8d03-4daf-b3ca-8dffe62abdb0",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_1",
+      "fileName": "grammar_breakdown_1.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_1.html",
+      "date": "2025-12-07",
+      "order": 0
+    },
+    {
+      "id": "90940610-8ed2-41e7-9f8f-68d5d6697407",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_8",
+      "fileName": "grammar_breakdown_8.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_8.html",
+      "date": "2025-12-07",
+      "order": 7
+    },
+    {
+      "id": "a7b288bb-8513-4a57-bccc-75ec4e9c05ee",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_9",
+      "fileName": "grammar_breakdown_9.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_9.html",
+      "date": "2025-12-07",
+      "order": 8
+    },
+    {
+      "id": "86cb1967-43ad-421a-8acb-da995bfe0734",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "polysemy_test_breakdown",
+      "fileName": "polysemy_test_breakdown.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/polysemy_test_breakdown.html",
+      "date": "2025-12-07",
+      "order": 10
+    },
+    {
+      "id": "2cc76081-feaa-46f5-8ec6-cebb7e05c1e5",
+      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
+      "title": "grammar_breakdown_7",
+      "fileName": "grammar_breakdown_7.html",
+      "filePath": "files/cb6fd1e7-867c-4804-a504-68a4e507f6b4/grammar_breakdown_7.html",
+      "date": "2025-12-07",
+      "order": 6,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    },
+    {
+      "id": "940b8696-af9e-470c-94ce-08ea8840e339",
+      "folderId": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
+      "title": "grammar_breakdown_否定・特殊構文",
+      "fileName": "grammar_breakdown_否定・特殊構文.html",
+      "filePath": "files/b2a67b55-2de9-45de-a3d7-605339ed19c6/grammar_breakdown_否定・特殊構文.html",
+      "date": "2025-12-07",
+      "order": 2
+    },
+    {
+      "id": "0dc500a3-9b67-4958-8271-10c1c4027492",
+      "folderId": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
+      "title": "grammar_breakdown_実戦問題3",
+      "fileName": "grammar_breakdown_実戦問題3.html",
+      "filePath": "files/b2a67b55-2de9-45de-a3d7-605339ed19c6/grammar_breakdown_実戦問題3.html",
+      "date": "2025-12-07",
+      "order": 3
+    },
+    {
+      "id": "409a8ff6-6385-4838-88ff-304db4d4d62e",
+      "folderId": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
+      "title": "Grammar_Breakdown_仮定法",
+      "fileName": "Grammar_Breakdown_仮定法.html",
+      "filePath": "files/b2a67b55-2de9-45de-a3d7-605339ed19c6/Grammar_Breakdown_仮定法.html",
+      "date": "2025-12-07",
+      "order": 0
+    },
+    {
+      "id": "28c022a5-aac9-4852-a2c3-20d2977f43ec",
+      "folderId": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
+      "title": "grammar_breakdown_実戦問題4",
+      "fileName": "grammar_breakdown_実戦問題4.html",
+      "filePath": "files/b2a67b55-2de9-45de-a3d7-605339ed19c6/grammar_breakdown_実戦問題4.html",
+      "date": "2025-12-07",
+      "order": 4
+    },
+    {
+      "id": "fed7abb9-ad81-4373-aa46-71fd87262d7e",
+      "folderId": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
+      "title": "Grammar_Breakdown_比較",
+      "fileName": "Grammar_Breakdown_比較.html",
+      "filePath": "files/b2a67b55-2de9-45de-a3d7-605339ed19c6/Grammar_Breakdown_比較.html",
+      "date": "2025-12-07",
+      "order": 1,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
-  "items": [],
   "settings": {
     "siteName": "My Resources",
     "siteIcon": "📚",
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-07T02:09:10.484Z"
+  "lastUpdated": "2025-12-07T02:17:01.728Z"
 }
