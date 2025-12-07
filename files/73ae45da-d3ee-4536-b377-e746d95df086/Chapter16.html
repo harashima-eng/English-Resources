@@ -240,14 +240,14 @@
             font-size: 1.3em;
         }
 
-        .correct-box .box-title::before { content: "â"; }
-        .strategy-box .box-title::before { content: "ð¯"; }
-        .context-box .box-title::before { content: "ð¡"; }
-        .flow-box .box-title::before { content: "ð"; }
-        .passage-ref-box .box-title::before { content: "ð"; }
-        .incorrect-box .box-title::before { content: "â"; }
-        .tip-box .box-title::before { content: "âï¸"; }
-        .hint-box .box-title::before { content: "ð­"; }
+        .correct-box .box-title::before { content: "✓"; }
+        .strategy-box .box-title::before { content: "🎯"; }
+        .context-box .box-title::before { content: "💡"; }
+        .flow-box .box-title::before { content: "📊"; }
+        .passage-ref-box .box-title::before { content: "📝"; }
+        .incorrect-box .box-title::before { content: "✗"; }
+        .tip-box .box-title::before { content: "✏️"; }
+        .hint-box .box-title::before { content: "💭"; }
 
         .highlight {
             background-color: #fff59d;
@@ -483,23 +483,23 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>ð Chapter 16</h1>
-            <p>Self-Driving Cars and the Trolley Problem<br>èªåéè»¢è»ã¨ãã­ãã³åé¡</p>
-            <button class="header-collapse-btn" onclick="toggleHeader()">â² ãããã¼ãé ã</button>
+            <h1>🚗 Chapter 16</h1>
+            <p>Self-Driving Cars and the Trolley Problem<br>自動運転車とトロッコ問題</p>
+            <button class="header-collapse-btn" onclick="toggleHeader()">▲ ヘッダーを隠す</button>
         </div>
 
-        <div class="scroll-hint scroll-hint-passage">ð Passage side scrolling</div>
-        <div class="scroll-hint scroll-hint-questions">â Question side scrolling</div>
+        <div class="scroll-hint scroll-hint-passage">📖 Passage side scrolling</div>
+        <div class="scroll-hint scroll-hint-questions">❓ Question side scrolling</div>
 
         <!-- Layout Toggle Button -->
         <button class="layout-toggle-btn" onclick="toggleLayout()">
-            ð± Switch Layout
+            📱 Switch Layout
         </button>
 
         <div class="content">
             <!-- FULL PASSAGE SECTION -->
             <div class="passage-section">
-                <h2>ð Full Passage (æ¬æå¨ä½)</h2>
+                <h2>📖 Full Passage (本文全体)</h2>
                 <div class="passage-text">
                     <div class="paragraph" id="para1" data-paragraph="1">
                         <div class="para-label">Paragraph 1:</div>
@@ -532,15 +532,15 @@
             <!-- QUESTION 1 -->
             <div class="question-section" data-target-paragraphs="1,4">
                 <div class="question-header" onclick="toggleQuestion('q1')">
-                    <h3>åé¡ 1</h3>
-                    <span class="toggle-icon">â¼</span>
+                    <h3>問題 1</h3>
+                    <span class="toggle-icon">▼</span>
                 </div>
                 <div id="q1" class="question-content">
                     <div class="question-inner">
                         <div class="question-text">
                             <strong>Question:</strong> Which is the closest in meaning to each of the underlined words (A) and (B)?<br>
-                            (A) eradicated  â destroyed  â¡removed  â¢defeated  â£damaged<br>
-                            (B) intriguing  â disappointing  â¡frightening  â¢interesting  â£encouraging
+                            (A) eradicated  ①destroyed  ②removed  ③defeated  ④damaged<br>
+                            (B) intriguing  ①disappointing  ②frightening  ③interesting  ④encouraging
                         </div>
                         
                         <div class="underline-ref">
@@ -548,83 +548,83 @@
                             <strong>(B) Underlined text:</strong> The results were <span class="highlight">intriguing</span>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showHint('hint1')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+                        <button class="show-answer-btn" onclick="showHint('hint1')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
 
                         <div id="hint1" class="answer-section">
                             <div class="box hint-box">
-                                <div class="box-title">ãã³ã(Hint)</div>
-                                <strong>(A) eradicatedã«ã¤ãã¦:</strong><br>
-                                â "human error will be eradicated" â äººçãã¹ã¯ã©ããªã?<br>
-                                â ãã®å¾ã« "road deaths become a thing of the past" (äº¤éäºææ­»ã¯éå»ã®ãã®ã«ãªã)<br>
-                                â ãã¹ã<strong>å®å¨ã«ãªããªã</strong>ã¤ã¡ã¼ã¸ã¯ã©ã?<br>
-                                â "destroyed" vs "removed" â ã©ã¡ãããããå®å¨ã«æ ¹çµ¶ãã£ã½ã?<br><br>
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>(A) eradicatedについて:</strong><br>
+                                ✅ "human error will be eradicated" → 人的ミスはどうなる?<br>
+                                ✅ その後に "road deaths become a thing of the past" (交通事故死は過去のものになる)<br>
+                                ✅ ミスが<strong>完全になくなる</strong>イメージはどれ?<br>
+                                ✅ "destroyed" vs "removed" → どちらがより「完全に根絶」っぽい?<br><br>
                                 
-                                <strong>(B) intriguingã«ã¤ãã¦:</strong><br>
-                                â "The results were intriguing" â çµæã¯<strong>ã©ããªæã</strong>ã ã£ã?<br>
-                                â Paragraph 4ã®æå¾ãèª­ãã¨ãäºæ³å¤ã®çµæããåºã¦ã<br>
-                                â ãã¸ãã£ã? ãã¬ãã£ã? ã©ã£ã¡ã§ããªã?<br>
-                                â ãèå³æ·±ãããé¢ç½ããã¨ããæå³ã®é¸æè¢ã¯?
+                                <strong>(B) intriguingについて:</strong><br>
+                                ✅ "The results were intriguing" → 結果は<strong>どんな感じ</strong>だった?<br>
+                                ✅ Paragraph 4の最後を読むと「予想外の結果」が出てる<br>
+                                ✅ ポジティブ? ネガティブ? どっちでもない?<br>
+                                ✅ 「興味深い」「面白い」という意味の選択肢は?
                             </div>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showAnswer('answer1')">Show Answer / è§£ç­ãè¦ã</button>
+                        <button class="show-answer-btn" onclick="showAnswer('answer1')">Show Answer / 解答を見る</button>
 
                         <div id="answer1" class="answer-section">
                             <div class="box correct-box">
-                                <div class="box-title">æ­£è§£</div>
-                                (A) â¡ removed<br>
-                                (B) â¢ interesting
+                                <div class="box-title">正解</div>
+                                (A) ② removed<br>
+                                (B) ③ interesting
                             </div>
 
                             <div class="box strategy-box">
-                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
-                                <strong>(A) eradicated ã®æå³æ¨æ¸¬:</strong><br>
-                                1. åå¾ã®æèãè¦ã:<br>
-                                   - å: SDCãå®å¨æ§ãå¤§ããåä¸ããã<br>
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>(A) eradicated の意味推測:</strong><br>
+                                1. 前後の文脈を見る:<br>
+                                   - 前: SDCが安全性を大きく向上させる<br>
                                    - <span class="highlight">"human error will be eradicated"</span><br>
-                                   - å¾: "road deaths become a thing of the past" (äº¤éäºææ­»ã¯éå»ã®ãã®ã«)<br><br>
+                                   - 後: "road deaths become a thing of the past" (交通事故死は過去のものに)<br><br>
                                 
-                                2. è«ççãªæµã:<br>
-                                   äººçãã¹ â <strong>å®å¨ã«ãªããªã</strong> â äº¤éäºææ­»ãéå»ã®ãã®ã«<br><br>
+                                2. 論理的な流れ:<br>
+                                   人的ミス → <strong>完全になくなる</strong> → 交通事故死が過去のものに<br><br>
                                 
-                                3. é¸æè¢ã®æ¤è¨:<br>
-                                   "eradicate" = å®å¨ã«æ ¹çµ¶ããããªãã<br>
-                                   "removed" = åãé¤ããã â æãè¿ãæå³!<br><br>
+                                3. 選択肢の検討:<br>
+                                   "eradicate" = 完全に根絶する、なくす<br>
+                                   "removed" = 取り除かれる → 最も近い意味!<br><br>
                                 
-                                <strong>(B) intriguing ã®æå³æ¨æ¸¬:</strong><br>
-                                1. çµæã®åå®¹ãç¢ºèª:<br>
-                                   - å¥³æ§ã®æ¹ãç·æ§ããéè¦<br>
-                                   - è¥èãèäººããä¾¡å¤ããã<br>
-                                   - å°ä½ã®é«ãäººãä½ãäººããæå³ããã<br><br>
+                                <strong>(B) intriguing の意味推測:</strong><br>
+                                1. 結果の内容を確認:<br>
+                                   - 女性の方が男性より重要<br>
+                                   - 若者が老人より価値がある<br>
+                                   - 地位の高い人が低い人より意味がある<br><br>
                                 
-                                2. ãããã¯<strong>äºæ³å¤ã§èãããããã</strong>çµæ<br>
-                                3. "intriguing" = èå³æ·±ããé¢ç½ã<br>
-                                4. "interesting" ãæãè¿ã!
+                                2. これらは<strong>予想外で考えさせられる</strong>結果<br>
+                                3. "intriguing" = 興味深い、面白い<br>
+                                4. "interesting" が最も近い!
                             </div>
 
                             <div class="box context-box">
-                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
+                                <div class="box-title">文脈クルー(Context Clues)</div>
                                 <strong>(A) eradicated:</strong><br>
                                 Paragraph 1: "The hope is that when all cars are SDCs, human error will be <span class="highlight">eradicated</span>, and road deaths become <span class="highlight">a thing of the past</span>."<br><br>
                                 
-                                "a thing of the past" = éå»ã®ãã®ã«ãªã<br>
-                                â äººçãã¹ã<strong>å®å¨ã«ãªããªã</strong>ããäº¤éäºææ­»ããªããªã<br>
-                                â "removed" (åãé¤ããã)ãæé©!<br><br>
+                                "a thing of the past" = 過去のものになる<br>
+                                → 人的ミスが<strong>完全になくなる</strong>から交通事故死もなくなる<br>
+                                → "removed" (取り除かれる)が最適!<br><br>
                                 
                                 <strong>(B) intriguing:</strong><br>
                                 Paragraph 4: "The results were <span class="highlight">intriguing</span>: females are more important than males..."<br><br>
                                 
-                                çµæã®åå®¹: æ§å¥ãå¹´é½¢ãå°ä½ã«ãã£ã¦å½ã®ä¾¡å¤ãéã<br>
-                                â å«ççã«<strong>èãããããã</strong>ã<strong>èå³æ·±ã</strong>çµæ<br>
-                                â "interesting" ãæé©!
+                                結果の内容: 性別、年齢、地位によって命の価値が違う<br>
+                                → 倫理的に<strong>考えさせられる</strong>、<strong>興味深い</strong>結果<br>
+                                → "interesting" が最適!
                             </div>
 
                             <div class="box tip-box">
-                                <div class="box-title">Tips(ã³ã)</div>
-                                â èªå½åé¡ã¯<strong>åå¾ã®æè</strong>ã§æå³ãæ¨æ¸¬!<br>
-                                â "eradicate" ã¯ãæ ¹çµ¶ãããã¨ããå¼·ãæå³ â "removed" ãè¿ã<br>
-                                â "intriguing" ã¯ãèå³ããããã â "interesting" ã¨åç¾©<br>
-                                â åèªã®é°å²æ°(ãã¸ãã£ã/ãã¬ãã£ã/ä¸­ç«)ãå¤§äº!
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ 語彙問題は<strong>前後の文脈</strong>で意味を推測!<br>
+                                ✅ "eradicate" は「根絶する」という強い意味 → "removed" が近い<br>
+                                ✅ "intriguing" は「興味をそそる」 → "interesting" と同義<br>
+                                ✅ 単語の雰囲気(ポジティブ/ネガティブ/中立)も大事!
                             </div>
                         </div>
                     </div>
@@ -634,8 +634,8 @@
             <!-- QUESTION 2 -->
             <div class="question-section" data-target-paragraphs="3">
                 <div class="question-header" onclick="toggleQuestion('q2')">
-                    <h3>åé¡ 2</h3>
-                    <span class="toggle-icon">â¼</span>
+                    <h3>問題 2</h3>
+                    <span class="toggle-icon">▼</span>
                 </div>
                 <div id="q2" class="question-content">
                     <div class="question-inner">
@@ -649,72 +649,72 @@
                             2) to do nothing. In this case, five people will be hit, but you will not be involved in the accident.
                         </div>
 
-                        <button class="show-answer-btn" onclick="showHint('hint2')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+                        <button class="show-answer-btn" onclick="showHint('hint2')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
 
                         <div id="hint2" class="answer-section">
                             <div class="box hint-box">
-                                <div class="box-title">ãã³ã(Hint)</div>
-                                <strong>èãæ¹ã®ãã³ã:</strong><br>
-                                â Option 2) = "to do nothing" (ä½ãããªã)<br>
-                                â ãã®çµæã¯ "In this case..." ã®å¾ã«æ¸ãã¦ãã!<br>
-                                â <strong>2ã¤ã®æå ±</strong>ãç­ãã«å«ãã:<br>
-                                   - ä½äººãã¯ã­ããã?<br>
-                                   - ããªãã®é¢ä¸ã¯?<br><br>
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>考え方のヒント:</strong><br>
+                                ✅ Option 2) = "to do nothing" (何もしない)<br>
+                                ✅ その結果は "In this case..." の後に書いてある!<br>
+                                ✅ <strong>2つの情報</strong>を答えに含める:<br>
+                                   - 何人がはねられる?<br>
+                                   - あなたの関与は?<br><br>
                                 
-                                <strong>ã­ã¼ã¯ã¼ã:</strong><br>
-                                "five people will be hit" â 5äººãã¯ã­ããã<br>
-                                "you will not be involved" â ããªãã¯é¢ä¸ãã¦ããªã
+                                <strong>キーワード:</strong><br>
+                                "five people will be hit" → 5人がはねられる<br>
+                                "you will not be involved" → あなたは関与していない
                             </div>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showAnswer('answer2')">Show Answer / è§£ç­ãè¦ã</button>
+                        <button class="show-answer-btn" onclick="showAnswer('answer2')">Show Answer / 解答を見る</button>
 
                         <div id="answer2" class="answer-section">
                             <div class="box correct-box">
-                                <div class="box-title">æ­£è§£</div>
-                                5äººãé»è»ã«ã¯ã­ããããã¨ã«ãªãããããªã[èªå]ã¯ãã®äºæã«ã¯é¢ãã£ã¦ããªãã
+                                <div class="box-title">正解</div>
+                                5人が電車にはねられることになるが、あなた[自分]はその事故には関わっていない。
                             </div>
 
                             <div class="box strategy-box">
-                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
-                                <strong>é¸æè¢ã®çµæãèª¬æããåé¡:</strong><br>
-                                1. Option 2) = <span class="highlight">"to do nothing"</span> (ä½ãããªã)<br><br>
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>選択肢の結果を説明する問題:</strong><br>
+                                1. Option 2) = <span class="highlight">"to do nothing"</span> (何もしない)<br><br>
                                 
-                                2. ãã®ç´å¾ãèª­ã:<br>
+                                2. その直後を読む:<br>
                                    "In this case, <span class="highlight">five people will be hit</span>, but <span class="highlight">you will not be involved in the accident</span>."<br><br>
                                 
-                                3. <strong>2ã¤ã®è¦ç´ ãå«ãã:</strong><br>
-                                   â  çµæ: 5äººãã¯ã­ããã<br>
-                                   â¡ ããªãã®ç«å ´: äºæã«é¢ä¸ãã¦ããªã<br><br>
+                                3. <strong>2つの要素を含める:</strong><br>
+                                   ① 結果: 5人がはねられる<br>
+                                   ② あなたの立場: 事故に関与していない<br><br>
                                 
-                                4. å¯¾æ¯ãéè¦:<br>
-                                   Option 1) â 1äººæ­»ã¬ãã<strong>ããªããèµ·ããã</strong><br>
-                                   Option 2) â 5äººæ­»ã¬ãã<strong>ããªãã¯é¢ä¸ãã¦ããªã</strong>
+                                4. 対比も重要:<br>
+                                   Option 1) → 1人死ぬが、<strong>あなたが起こした</strong><br>
+                                   Option 2) → 5人死ぬが、<strong>あなたは関与していない</strong>
                             </div>
 
                             <div class="box context-box">
-                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
-                                <strong>ãã­ãã³åé¡ã®è¨­å®:</strong><br>
-                                - é»è»ã¯æ­¢ããããªã<br>
-                                - 2ã¤ã®ç·è·¯: çæ¹ã«5äººãçæ¹ã«1äºº<br>
-                                - ã¹ã¤ããã§ç·è·¯ãåãæ¿ãããã<br><br>
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>トロッコ問題の設定:</strong><br>
+                                - 電車は止められない<br>
+                                - 2つの線路: 片方に5人、片方に1人<br>
+                                - スイッチで線路を切り替えられる<br><br>
                                 
-                                <strong>Option 2) ã®è©³ç´°:</strong><br>
-                                Action: <span class="highlight">"to do nothing"</span> (ä½ãããªã)<br>
-                                â<br>
-                                Result 1: <span class="highlight">"five people will be hit"</span> (5äººãã¯ã­ããã)<br>
-                                Result 2: <span class="highlight">"you will not be involved"</span> (ããªãã¯é¢ä¸ãã¦ããªã)<br><br>
+                                <strong>Option 2) の詳細:</strong><br>
+                                Action: <span class="highlight">"to do nothing"</span> (何もしない)<br>
+                                ↓<br>
+                                Result 1: <span class="highlight">"five people will be hit"</span> (5人がはねられる)<br>
+                                Result 2: <span class="highlight">"you will not be involved"</span> (あなたは関与していない)<br><br>
                                 
-                                â ã©ã¡ãã®è¦ç´ ãç­ãã«å¿è¦!
+                                → どちらの要素も答えに必要!
                             </div>
 
                             <div class="box tip-box">
-                                <div class="box-title">Tips(ã³ã)</div>
-                                â "In this case..." = ããã®å ´åã â ãã®ç´å¾ãç­ã!<br>
-                                â "but" ã§å¯¾æ¯ããã2ã¤ã®æå ±ãä¸¡æ¹æ¸ã<br>
-                                â Option 1 ã¨ Option 2 ã®éããçè§£ãã¦ããã:<br>
-                                   - Option 1: 1äººãç ç²ã«ãã¦5äººãæã(èªåãæ±ºæ­)<br>
-                                   - Option 2: 5äººãç ç²ã«ãªã(èªåã¯é¢ä¸ããªã)
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ "In this case..." = 「この場合」 → その直後が答え!<br>
+                                ✅ "but" で対比される2つの情報を両方書く<br>
+                                ✅ Option 1 と Option 2 の違いを理解しておこう:<br>
+                                   - Option 1: 1人を犠牲にして5人を救う(自分が決断)<br>
+                                   - Option 2: 5人が犠牲になる(自分は関与しない)
                             </div>
                         </div>
                     </div>
@@ -724,8 +724,8 @@
             <!-- QUESTION 3 -->
             <div class="question-section" data-target-paragraphs="4">
                 <div class="question-header" onclick="toggleQuestion('q3')">
-                    <h3>åé¡ 3</h3>
-                    <span class="toggle-icon">â¼</span>
+                    <h3>問題 3</h3>
+                    <span class="toggle-icon">▼</span>
                 </div>
                 <div id="q3" class="question-content">
                     <div class="question-inner">
@@ -737,74 +737,74 @@
                             <strong>Context:</strong> For example, Eastern countries, including Japan, preferred to <span class="highlight">(2-1) _____</span> the <span class="highlight">(2-2) _____</span> of lawful people, but Southern countries, such as Brazil, did not.
                         </div>
 
-                        <button class="show-answer-btn" onclick="showHint('hint3')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+                        <button class="show-answer-btn" onclick="showHint('hint3')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
 
                         <div id="hint3" class="answer-section">
                             <div class="box hint-box">
-                                <div class="box-title">ãã³ã(Hint)</div>
-                                <strong>èãæ¹ã®ãã³ã:</strong><br>
-                                â ãã®æã®<strong>åã®é¨å</strong>ãèª­ãã!<br>
-                                â Paragraph 4ã®ååã§ãSDCã¯ä½ããããããã­ã°ã©ã ãã¹ãã?ãã¨èãã¦ã<br>
-                                â "Should SDCs be programmed to, for example, _____ more or fewer _____?"<br>
-                                â ç©ºæ¬ã«å¥ãåè©ã¨åè©ã®çµã¿åããã¯?<br>
-                                â ãã³ã: "_____ lives" ã£ã¦ãããã¬ã¼ãºããã!<br><br>
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>考え方のヒント:</strong><br>
+                                ✅ この文の<strong>前の部分</strong>を読もう!<br>
+                                ✅ Paragraph 4の前半で「SDCは何をするようプログラムすべきか?」と聞いてる<br>
+                                ✅ "Should SDCs be programmed to, for example, _____ more or fewer _____?"<br>
+                                ✅ 空欄に入る動詞と名詞の組み合わせは?<br>
+                                ✅ ヒント: "_____ lives" っていうフレーズがある!<br><br>
                                 
-                                <strong>ã©ããèª­ã?</strong><br>
-                                â Paragraph 4ã®2æç®ããã§ãã¯!
+                                <strong>どこを読む?</strong><br>
+                                → Paragraph 4の2文目をチェック!
                             </div>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showAnswer('answer3')">Show Answer / è§£ç­ãè¦ã</button>
+                        <button class="show-answer-btn" onclick="showAnswer('answer3')">Show Answer / 解答を見る</button>
 
                         <div id="answer3" class="answer-section">
                             <div class="box correct-box">
-                                <div class="box-title">æ­£è§£</div>
+                                <div class="box-title">正解</div>
                                 (2-1) save<br>
                                 (2-2) lives
                             </div>
 
                             <div class="box strategy-box">
-                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
-                                <strong>ç©ºæè£ååé¡ã®è§£ãæ¹:</strong><br>
-                                1. ç©ºæãããæã®<strong>åå¾</strong>ãèª­ã<br><br>
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>空所補充問題の解き方:</strong><br>
+                                1. 空所がある文の<strong>前後</strong>を読む<br><br>
                                 
-                                2. Paragraph 4ã®æµã:<br>
-                                   - 1æç®: ãã­ãã³åé¡ã¯SDCæè¡ã«å½¹ç«ã¤<br>
-                                   - 2æç®: <span class="highlight">"Should SDCs be programmed to, for example, save more or fewer lives?"</span><br>
-                                   - ãã®å¾: ããããªé¸æè¢ãç¶ã<br>
-                                   - æå¾: "Eastern countries preferred to (2-1) the (2-2) of lawful people"<br><br>
+                                2. Paragraph 4の流れ:<br>
+                                   - 1文目: トロッコ問題はSDC技術に役立つ<br>
+                                   - 2文目: <span class="highlight">"Should SDCs be programmed to, for example, save more or fewer lives?"</span><br>
+                                   - その後: いろんな選択肢が続く<br>
+                                   - 最後: "Eastern countries preferred to (2-1) the (2-2) of lawful people"<br><br>
                                 
-                                3. è«ççãªæµã:<br>
-                                   SDCã¯ãå½ãæãããã¨ã«ã¤ãã¦ãã­ã°ã©ã ããã<br>
-                                   â "save" + "lives" ã®çµã¿åãã!<br><br>
+                                3. 論理的な流れ:<br>
+                                   SDCは「命を救う」ことについてプログラムされる<br>
+                                   → "save" + "lives" の組み合わせ!<br><br>
                                 
-                                4. ç¢ºèª:<br>
-                                   "save the lives of lawful people" = æ³ãå®ãäººãã®å½ãæã<br>
-                                   â ææ³çã«ãæå³çã«ãå®ç§!
+                                4. 確認:<br>
+                                   "save the lives of lawful people" = 法を守る人々の命を救う<br>
+                                   → 文法的にも意味的にも完璧!
                             </div>
 
                             <div class="box context-box">
-                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
-                                <strong>Paragraph 4ã®å±é:</strong><br>
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>Paragraph 4の展開:</strong><br>
                                 1. "Should SDCs be programmed to, for example, <span class="highlight">save more or fewer lives</span>?"<br>
-                                   (ä¾ãã°ãããå¤ãã®å½ãããããã¯ããå°ãªãå½ã<strong>æã</strong>ããã«ãã­ã°ã©ã ãã¹ãã?)<br><br>
+                                   (例えば、より多くの命を、あるいはより少ない命を<strong>救う</strong>ようにプログラムすべきか?)<br><br>
                                 
                                 2. "Should young people's <span class="highlight">lives</span> be saved instead of old people's?"<br>
-                                   (è¥èã®<strong>å½</strong>ãæãã¹ãããèäººã®ä»£ããã«?)<br><br>
+                                   (若者の<strong>命</strong>を救うべきか、老人の代わりに?)<br><br>
                                 
-                                3. â å¨ä½ã®ãã¼ã: <strong>"save lives"</strong> (å½ãæã)<br><br>
+                                3. → 全体のテーマ: <strong>"save lives"</strong> (命を救う)<br><br>
                                 
-                                4. æå¾ã®æ:<br>
+                                4. 最後の文:<br>
                                    "Eastern countries preferred to <span class="highlight">save the lives</span> of lawful people"<br>
-                                   (æ±æ´ã®å½ãã¯æ³ãå®ãäººãã®å½ãæãæ¹ãé¸ãã )
+                                   (東洋の国々は法を守る人々の命を救う方を選んだ)
                             </div>
 
                             <div class="box tip-box">
-                                <div class="box-title">Tips(ã³ã)</div>
-                                â ç©ºæè£åã¯<strong>åãæ®µè½å</strong>ã«ç­ãããããã¨ãå¤ã<br>
-                                â "save lives" ã¯é »åºã®çèª â è¦ãã¦ããã!<br>
-                                â åè©+åè©ã®çµã¿åãã(ã³ã­ã±ã¼ã·ã§ã³)ãæè­<br>
-                                â æ®µè½å¨ä½ã®ãã¼ããææ¡ããã°ç­ãã¯è¦ã¤ãã!
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ 空所補充は<strong>同じ段落内</strong>に答えがあることが多い<br>
+                                ✅ "save lives" は頻出の熟語 → 覚えておこう!<br>
+                                ✅ 動詞+名詞の組み合わせ(コロケーション)を意識<br>
+                                ✅ 段落全体のテーマを把握すれば答えは見つかる!
                             </div>
                         </div>
                     </div>
@@ -814,8 +814,8 @@
             <!-- QUESTION 4 -->
             <div class="question-section" data-target-paragraphs="5">
                 <div class="question-header" onclick="toggleQuestion('q4')">
-                    <h3>åé¡ 4</h3>
-                    <span class="toggle-icon">â¼</span>
+                    <h3>問題 4</h3>
+                    <span class="toggle-icon">▼</span>
                 </div>
                 <div id="q4" class="question-content">
                     <div class="question-inner">
@@ -828,76 +828,76 @@
                             <span class="highlight">What people say they will do and what they actually do may be very different.</span>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showHint('hint4')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+                        <button class="show-answer-btn" onclick="showHint('hint4')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
 
                         <div id="hint4" class="answer-section">
                             <div class="box hint-box">
-                                <div class="box-title">ãã³ã(Hint)</div>
-                                <strong>åè¨³ã®ã¹ããã:</strong><br>
-                                â ãã®æã¯2ã¤ã® "what" ç¯ãä¸¦ãã§ã!<br>
-                                â "What people say" = äººããè¨ããã¨<br>
-                                â "what they actually do" = å½¼ããå®éã«è¡ããã¨<br>
-                                â "and" ã§2ã¤ãä¸¦å â ãAã¨Bã<br>
-                                â "may be very different" = å¤§ããéããããããªã<br><br>
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>和訳のステップ:</strong><br>
+                                ✅ この文は2つの "what" 節が並んでる!<br>
+                                ✅ "What people say" = 人々が言うこと<br>
+                                ✅ "what they actually do" = 彼らが実際に行うこと<br>
+                                ✅ "and" で2つが並列 → 「AとB」<br>
+                                ✅ "may be very different" = 大きく違うかもしれない<br><br>
                                 
-                                <strong>æ³¨ç®ãã¤ã³ã:</strong><br>
-                                - "say they will do" â ãããã¨è¨ãã<br>
-                                - "actually do" â ãå®éã«è¡ãã<br>
-                                - ãã®<strong>å¯¾æ¯</strong>ããã¤ã³ã!
+                                <strong>注目ポイント:</strong><br>
+                                - "say they will do" → 「やると言う」<br>
+                                - "actually do" → 「実際に行う」<br>
+                                - この<strong>対比</strong>がポイント!
                             </div>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showAnswer('answer4')">Show Answer / è§£ç­ãè¦ã</button>
+                        <button class="show-answer-btn" onclick="showAnswer('answer4')">Show Answer / 解答を見る</button>
 
                         <div id="answer4" class="answer-section">
                             <div class="box correct-box">
-                                <div class="box-title">æ­£è§£</div>
-                                äººããããããã¨ãè¨ãããã¨ã¨ããå®éã«ãè¡ããã¨ã¨ã¯ãå¤§ããéããããããªãã
+                                <div class="box-title">正解</div>
+                                人々がそうすると「言う」ことと、「実際に」行うこととは、大きく違うかもしれない。
                             </div>
 
                             <div class="box strategy-box">
-                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
-                                <strong>åè¨³ã®ã¹ããã:</strong><br>
-                                1. <strong>æã®æ§é ãææ¡:</strong><br>
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>和訳のステップ:</strong><br>
+                                1. <strong>文の構造を把握:</strong><br>
                                    [What people say they will do] and [what they actually do] / may be very different.<br>
                                    [A] and [B] / may be very different.<br><br>
                                 
-                                2. <strong>åé¨åãè¨³ã:</strong><br>
+                                2. <strong>各部分を訳す:</strong><br>
                                    - What people say they will do<br>
-                                     = äººããããã¨ãè¨ãããã¨<br>
+                                     = 人々がやると「言う」こと<br>
                                    - what they actually do<br>
-                                     = å½¼ãããå®éã«ãè¡ããã¨<br>
+                                     = 彼らが「実際に」行うこと<br>
                                    - may be very different<br>
-                                     = å¤§ããéããããããªã<br><br>
+                                     = 大きく違うかもしれない<br><br>
                                 
-                                3. <strong>èªç¶ãªæ¥æ¬èªã«:</strong><br>
-                                   ãè¨ããã¨ãã¨ãå®éã«è¡ããã¨ãã¯å¤§ããéããããããªã<br><br>
+                                3. <strong>自然な日本語に:</strong><br>
+                                   「言うこと」と「実際に行うこと」は大きく違うかもしれない<br><br>
                                 
-                                4. <strong>å¼·èª¿ã®ã«ã®ã«ãã³:</strong><br>
-                                   ãè¨ããã¨ãå®éã«ããå¼·èª¿ããã¨ãå¯¾æ¯ãã¯ãªã¢ã«ãªã!
+                                4. <strong>強調のカギカッコ:</strong><br>
+                                   「言う」と「実際に」を強調すると、対比がクリアになる!
                             </div>
 
                             <div class="box context-box">
-                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
-                                <strong>ãã®æãè¨ããããã¨:</strong><br>
-                                - åã®æ: "these tests are only thought experiments" (ãããã¯æèå®é¨ã«ãããªã)<br>
-                                - ãã®æ: <span class="highlight">è¨ããã¨ â  å®éã«ãããã¨</span><br>
-                                - æ¬¡ã®æ: "What we say is based on how we think" (è¨ããã¨ã¯èãã«åºã¥ãã¦ãã)<br><br>
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>この文が言いたいこと:</strong><br>
+                                - 前の文: "these tests are only thought experiments" (これらは思考実験にすぎない)<br>
+                                - この文: <span class="highlight">言うこと ≠ 実際にやること</span><br>
+                                - 次の文: "What we say is based on how we think" (言うことは考えに基づいている)<br><br>
                                 
-                                <strong>å·ä½ä¾:</strong><br>
-                                Paragraph 3: ãã¹ãã§ã¯ãã»ã¨ãã©ã®äººããã¹ã¤ãããæ¼ããã¨<strong>è¨ã</strong><br>
-                                â<br>
-                                Paragraph 5: ã§ãå®éã«ããããã¨ãå¤ãã®äººã¯éº»çºãã¦ä½ãã§ããªãã£ã<br><br>
+                                <strong>具体例:</strong><br>
+                                Paragraph 3: テストでは、ほとんどの人が「スイッチを押す」と<strong>言う</strong><br>
+                                ↓<br>
+                                Paragraph 5: でも実際にやらせると、多くの人は麻痺して何もできなかった<br><br>
                                 
-                                â <strong>è¨èã¨è¡åã®éã</strong>ããã¼ã!
+                                → <strong>言葉と行動の違い</strong>がテーマ!
                             </div>
 
                             <div class="box tip-box">
-                                <div class="box-title">Tips(ã³ã)</div>
-                                â "What people say" ã¨ "what they actually do" ã®å¯¾æ¯ãæç¢ºã«!<br>
-                                â ãè¨ããã¨ãå®éã«ãã«ã«ã®ã«ãã³ãã¤ããã¨å¯¾æ¯ãéç«ã¤<br>
-                                â "may be" = ã~ãããããªãã(å¯è½æ§)<br>
-                                â æèãèãã¦ããã®å¯¾æ¯ãæ¬æã®éè¦ãªã¡ãã»ã¼ã¸ã ã¨çè§£ããã
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ "What people say" と "what they actually do" の対比を明確に!<br>
+                                ✅ 「言う」と「実際に」にカギカッコをつけると対比が際立つ<br>
+                                ✅ "may be" = 「~かもしれない」(可能性)<br>
+                                ✅ 文脈を考えて、この対比が本文の重要なメッセージだと理解しよう
                             </div>
                         </div>
                     </div>
@@ -907,8 +907,8 @@
             <!-- QUESTION 5 -->
             <div class="question-section" data-target-paragraphs="5">
                 <div class="question-header" onclick="toggleQuestion('q5')">
-                    <h3>åé¡ 5</h3>
-                    <span class="toggle-icon">â¼</span>
+                    <h3>問題 5</h3>
+                    <span class="toggle-icon">▼</span>
                 </div>
                 <div id="q5" class="question-content">
                     <div class="question-inner">
@@ -921,79 +921,79 @@
                             From now on, there needs to be a serious discussion between governments, car manufacturers and consumer groups about how SDCs should respond to unusual situations. <span class="highlight">This</span> is likely to be an intriguing and extremely valuable discussion.
                         </div>
 
-                        <button class="show-answer-btn" onclick="showHint('hint5')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+                        <button class="show-answer-btn" onclick="showHint('hint5')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
 
                         <div id="hint5" class="answer-section">
                             <div class="box hint-box">
-                                <div class="box-title">ãã³ã(Hint)</div>
-                                <strong>èãæ¹ã®ãã³ã:</strong><br>
-                                â "This" ã¯æç¤ºèª â <strong>åã®æ</strong>ãè¦ã!<br>
-                                â åã®æ: "there needs to be a serious discussion..."<br>
-                                â "This" = ãã® "discussion" (è­°è«)ã®ãã¨!<br>
-                                â ã§ããè­°è«ãã ãããä¸è¶³! <strong>è©³ç´°æå ±</strong>ãå¥ããã:<br>
-                                   - èª°ã¨èª°ã®è­°è«?<br>
-                                   - ä½ã«ã¤ãã¦ã®è­°è«?<br><br>
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>考え方のヒント:</strong><br>
+                                ✅ "This" は指示語 → <strong>前の文</strong>を見る!<br>
+                                ✅ 前の文: "there needs to be a serious discussion..."<br>
+                                ✅ "This" = この "discussion" (議論)のこと!<br>
+                                ✅ でも「議論」だけじゃ不足! <strong>詳細情報</strong>も入れよう:<br>
+                                   - 誰と誰の議論?<br>
+                                   - 何についての議論?<br><br>
                                 
-                                <strong>ç­ãã«å«ããã¹ãè¦ç´ :</strong><br>
-                                â  è­°è«ããäººãã¡(governments, car manufacturers, consumer groups)<br>
-                                â¡ è­°è«ã®ãã¼ã(how SDCs should respond to unusual situations)
+                                <strong>答えに含めるべき要素:</strong><br>
+                                ① 議論する人たち(governments, car manufacturers, consumer groups)<br>
+                                ② 議論のテーマ(how SDCs should respond to unusual situations)
                             </div>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showAnswer('answer5')">Show Answer / è§£ç­ãè¦ã</button>
+                        <button class="show-answer-btn" onclick="showAnswer('answer5')">Show Answer / 解答を見る</button>
 
                         <div id="answer5" class="answer-section">
                             <div class="box correct-box">
-                                <div class="box-title">æ­£è§£</div>
-                                æ¿åºãèªåè»ã¡ã¼ã«ã¼ãæ¶è²»èã°ã«ã¼ãã®éã§ãªããããSDC(èªåéè»¢è»)ãç°å¸¸äºæã«ã©ã®ããã«å¯¾å¿ãã¹ããã«ã¤ãã¦ã®çå£ãªè­°è«ã
+                                <div class="box-title">正解</div>
+                                政府、自動車メーカー、消費者グループの間でなされる、SDC(自動運転車)が異常事態にどのように対応すべきかについての真剣な議論。
                             </div>
 
                             <div class="box strategy-box">
-                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
-                                <strong>æç¤ºèªåé¡ã®è§£ãæ¹:</strong><br>
-                                1. <strong>æç¤ºèªã®åãèª­ã:</strong><br>
-                                   "This" ã¯åºæ¬çã«<strong>ç´åã®æ</strong>ãæã<br><br>
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>指示語問題の解き方:</strong><br>
+                                1. <strong>指示語の前を読む:</strong><br>
+                                   "This" は基本的に<strong>直前の文</strong>を指す<br><br>
                                 
-                                2. <strong>åã®æãåæ:</strong><br>
+                                2. <strong>前の文を分析:</strong><br>
                                    "From now on, there needs to be <span class="highlight">a serious discussion</span> between <span class="highlight">governments, car manufacturers and consumer groups</span> about <span class="highlight">how SDCs should respond to unusual situations</span>."<br><br>
                                 
-                                3. <strong>éè¦ãªè¦ç´ ãæ½åº:</strong><br>
-                                   â  Who: governments, car manufacturers, consumer groups<br>
-                                   â¡ What: a serious discussion<br>
-                                   â¢ About what: how SDCs should respond to unusual situations<br><br>
+                                3. <strong>重要な要素を抽出:</strong><br>
+                                   ① Who: governments, car manufacturers, consumer groups<br>
+                                   ② What: a serious discussion<br>
+                                   ③ About what: how SDCs should respond to unusual situations<br><br>
                                 
-                                4. <strong>ç­ãã®æ§æ:</strong><br>
-                                   "This" = ãã®è­°è«<br>
-                                   â èª°ã®?ä½ã«ã¤ãã¦ã®?ãè©³ããèª¬æãã!
+                                4. <strong>答えの構成:</strong><br>
+                                   "This" = この議論<br>
+                                   → 誰の?何についての?を詳しく説明する!
                             </div>
 
                             <div class="box context-box">
-                                <div class="box-title">æèã¯ã«ã¼(Context Clues)</div>
-                                <strong>åã®æã®è©³ç´°åæ:</strong><br>
+                                <div class="box-title">文脈クルー(Context Clues)</div>
+                                <strong>前の文の詳細分析:</strong><br>
                                 "From now on, there needs to be a serious discussion<br>
                                 <span class="highlight">between governments, car manufacturers and consumer groups</span><br>
                                 <span class="highlight">about how SDCs should respond to unusual situations</span>."<br><br>
                                 
-                                <strong>æ§é :</strong><br>
-                                - ä¸»èª: a serious discussion (çå£ãªè­°è«)<br>
-                                - èª°ã®éã§: between A, B and C (AãBãCã®éã§)<br>
-                                - ä½ã«ã¤ãã¦: about X (Xã«ã¤ãã¦)<br><br>
+                                <strong>構造:</strong><br>
+                                - 主語: a serious discussion (真剣な議論)<br>
+                                - 誰の間で: between A, B and C (A、B、Cの間で)<br>
+                                - 何について: about X (Xについて)<br><br>
                                 
-                                â ããã<strong>å¨ã¦ã®è¦ç´ </strong>ãç­ãã«å«ãã!<br><br>
+                                → これら<strong>全ての要素</strong>を答えに含める!<br><br>
                                 
-                                <strong>æ¬¡ã®æ:</strong><br>
+                                <strong>次の文:</strong><br>
                                 "<span class="highlight">This</span> is likely to be an intriguing and extremely valuable discussion."<br>
-                                (ããã¯èå³æ·±ããéå¸¸ã«ä¾¡å¤ã®ããè­°è«ã¨ãªãã ãã)
+                                (これは興味深く、非常に価値のある議論となるだろう)
                             </div>
 
                             <div class="box tip-box">
-                                <div class="box-title">Tips(ã³ã)</div>
-                                â "This" ãªã©ã®æç¤ºèªã¯<strong>ç´åã®æ</strong>ãæããã¨ãå¤ã<br>
-                                â åã«ãè­°è«ãã ããããªãã<strong>è©³ç´°æå ±</strong>ãç­ãã«å«ãã:<br>
-                                   - èª°ã¨èª°ã®?<br>
-                                   - ä½ã«ã¤ãã¦ã®?<br>
-                                â ç­æ¡ä½æã®ã³ã: åã®æã<strong>ãã®ã¾ã¾æ¥æ¬èªã«ç´ã</strong>æãã§OK!<br>
-                                â "serious" (çå£ãª)ã¨ããå½¢å®¹è©ãå¿ããã«!
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ "This" などの指示語は<strong>直前の文</strong>を指すことが多い<br>
+                                ✅ 単に「議論」だけじゃなく、<strong>詳細情報</strong>も答えに含める:<br>
+                                   - 誰と誰の?<br>
+                                   - 何についての?<br>
+                                ✅ 答案作成のコツ: 前の文を<strong>そのまま日本語に直す</strong>感じでOK!<br>
+                                ✅ "serious" (真剣な)という形容詞も忘れずに!
                             </div>
                         </div>
                     </div>
@@ -1003,8 +1003,8 @@
             <!-- QUESTION 6 -->
             <div class="question-section" data-target-paragraphs="1,2,3,4,5">
                 <div class="question-header" onclick="toggleQuestion('q6')">
-                    <h3>åé¡ 6</h3>
-                    <span class="toggle-icon">â¼</span>
+                    <h3>問題 6</h3>
+                    <span class="toggle-icon">▼</span>
                 </div>
                 <div id="q6" class="question-content">
                     <div class="question-inner">
@@ -1013,105 +1013,105 @@
                         </div>
 
                         <div class="choices">
-                            <div class="choice">â  The reason for accidents with SDCs so far is because of faulty programming.</div>
-                            <div class="choice">â¡ In the Trolley Problem a train can be made to avoid hitting people.</div>
-                            <div class="choice">â¢ According to the MIT study, many people think that doctors are more important than homeless people.</div>
-                            <div class="choice">â£ In the TV show Mind Field, most people chose to save the lives of more people than a few people.</div>
+                            <div class="choice">① The reason for accidents with SDCs so far is because of faulty programming.</div>
+                            <div class="choice">② In the Trolley Problem a train can be made to avoid hitting people.</div>
+                            <div class="choice">③ According to the MIT study, many people think that doctors are more important than homeless people.</div>
+                            <div class="choice">④ In the TV show Mind Field, most people chose to save the lives of more people than a few people.</div>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showHint('hint6')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ãã³ããè¦ã ð­</button>
+                        <button class="show-answer-btn" onclick="showHint('hint6')" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Show Hint / ヒントを見る 💭</button>
 
                         <div id="hint6" class="answer-section">
                             <div class="box hint-box">
-                                <div class="box-title">ãã³ã(Hint)</div>
-                                <strong>åå®¹ä¸è´åé¡ã®è§£ãæ¹:</strong><br>
-                                â åé¸æè¢ã<strong>ä¸ã¤ãã¤</strong>æ¬æã¨ãã§ãã¯!<br><br>
+                                <div class="box-title">ヒント(Hint)</div>
+                                <strong>内容一致問題の解き方:</strong><br>
+                                ✅ 各選択肢を<strong>一つずつ</strong>本文とチェック!<br><br>
                                 
-                                <strong>â ã«ã¤ãã¦:</strong> SDCã®äºæåå ã¯? â Paragraph 1ããã§ãã¯<br>
-                                <strong>â¡ã«ã¤ãã¦:</strong> ãã­ãã³åé¡ã§é»è»ã¯æ­¢ãããã? â Paragraph 3ããã§ãã¯<br>
-                                <strong>â¢ã«ã¤ãã¦:</strong> MITã®èª¿æ»çµæã¯? â Paragraph 4ããã§ãã¯<br>
-                                <strong>â£ã«ã¤ãã¦:</strong> Mind Fieldã®çªçµã§ä½ãèµ·ãã? â Paragraph 5ããã§ãã¯<br><br>
+                                <strong>①について:</strong> SDCの事故原因は? → Paragraph 1をチェック<br>
+                                <strong>②について:</strong> トロッコ問題で電車は止められる? → Paragraph 3をチェック<br>
+                                <strong>③について:</strong> MITの調査結果は? → Paragraph 4をチェック<br>
+                                <strong>④について:</strong> Mind Fieldの番組で何が起きた? → Paragraph 5をチェック<br><br>
                                 
-                                <strong>ãã³ã:</strong><br>
-                                - "Doctors or homeless people?" ã¨ãããã¬ã¼ãºãParagraph 4ã«ãã!<br>
-                                - ãã®ç­ããåãæ®µè½ã«!
+                                <strong>ヒント:</strong><br>
+                                - "Doctors or homeless people?" というフレーズがParagraph 4にある!<br>
+                                - その答えも同じ段落に!
                             </div>
                         </div>
 
-                        <button class="show-answer-btn" onclick="showAnswer('answer6')">Show Answer / è§£ç­ãè¦ã</button>
+                        <button class="show-answer-btn" onclick="showAnswer('answer6')">Show Answer / 解答を見る</button>
 
                         <div id="answer6" class="answer-section">
                             <div class="box correct-box">
-                                <div class="box-title">æ­£è§£: â¢</div>
+                                <div class="box-title">正解: ③</div>
                                 According to the MIT study, many people think that doctors are more important than homeless people.
                             </div>
 
                             <div class="box strategy-box">
-                                <div class="box-title">èª­è§£ã¹ãã©ãã¸ã¼(Reading Strategy)</div>
-                                <strong>åå®¹ä¸è´åé¡ã®è§£ãæ¹:</strong><br>
-                                1. åé¸æè¢ãæ¬æã¨<strong>ä¸ã¤ãã¤</strong>ç§ããåããã<br>
-                                2. ã­ã¼ã¯ã¼ããæ¢ãã¦ãè©²å½ç®æãè¦ã¤ãã<br>
-                                3. <strong>100%ä¸è´</strong>ãããã®ãé¸ã¶<br><br>
+                                <div class="box-title">読解ストラテジー(Reading Strategy)</div>
+                                <strong>内容一致問題の解き方:</strong><br>
+                                1. 各選択肢を本文と<strong>一つずつ</strong>照らし合わせる<br>
+                                2. キーワードを探して、該当箇所を見つける<br>
+                                3. <strong>100%一致</strong>するものを選ぶ<br><br>
                                 
-                                <strong>â¢ãæ­£è§£ã®çç±:</strong><br>
-                                Paragraph 4: "Doctors or homeless people?" ã¨ããè³ªåããã<br>
-                                â<br>
-                                ãã®å¾ã®çµæ: "high-status citizens more meaningful than low-status individuals"<br>
-                                â<br>
-                                å»è(high-status) > ãã¼ã ã¬ã¹(low-status)<br>
-                                â â¢ã¨å®å¨ä¸è´!
+                                <strong>③が正解の理由:</strong><br>
+                                Paragraph 4: "Doctors or homeless people?" という質問がある<br>
+                                ↓<br>
+                                その後の結果: "high-status citizens more meaningful than low-status individuals"<br>
+                                ↓<br>
+                                医者(high-status) > ホームレス(low-status)<br>
+                                → ③と完全一致!
                             </div>
 
                             <div class="box passage-ref-box">
-                                <div class="box-title">â¢ã®æ ¹æ (Paragraph 4)</div>
+                                <div class="box-title">③の根拠(Paragraph 4)</div>
                                 "Should young people's lives be saved instead of old people's? Females or males? <span class="highlight">Doctors or homeless people?</span> Healthy or unhealthy? The list goes on."<br><br>
                                 
                                 "The results were intriguing: females are more important than males; younger people more valuable than older people; <span class="highlight">high-status citizens more meaningful than low-status individuals</span>."<br><br>
                                 
-                                â Doctors(å»è) = high-status citizens(å°ä½ã®é«ãå¸æ°)<br>
-                                â Homeless people(ãã¼ã ã¬ã¹) = low-status individuals(å°ä½ã®ä½ãäººã)<br>
-                                â â¢ã¨å®å¨ä¸è´!
+                                → Doctors(医者) = high-status citizens(地位の高い市民)<br>
+                                → Homeless people(ホームレス) = low-status individuals(地位の低い人々)<br>
+                                → ③と完全一致!
                             </div>
 
                             <div class="box incorrect-box">
-                                <div class="box-title">ãªãâ ãä¸æ­£è§£ã</div>
+                                <div class="box-title">なぜ①が不正解か</div>
                                 Paragraph 1: "To date, <span class="highlight">the accidents involving SDCs have been caused by humans</span>."<br><br>
                                 
-                                æ¬æ: äºæã®åå ã¯<strong>äººé</strong><br>
-                                â : äºæã®åå ã¯<strong>æ¬ é¥ã®ãããã­ã°ã©ãã³ã°</strong><br>
-                                â å®å¨ã«é! ä¸æ­£è§£
+                                本文: 事故の原因は<strong>人間</strong><br>
+                                ①: 事故の原因は<strong>欠陥のあるプログラミング</strong><br>
+                                → 完全に逆! 不正解
                             </div>
 
                             <div class="box incorrect-box">
-                                <div class="box-title">ãªãâ¡ãä¸æ­£è§£ã</div>
+                                <div class="box-title">なぜ②が不正解か</div>
                                 Paragraph 3: "<span class="highlight">The train cannot be stopped</span>, and it will hit the five people."<br><br>
                                 
-                                æ¬æ: é»è»ã¯<strong>æ­¢ããããªã</strong><br>
-                                â¡: é»è»ã¯äººãã²ãã®ã<strong>é¿ãããã¨ãã§ãã</strong><br>
-                                â æ¬æã¨çç¾! ä¸æ­£è§£
+                                本文: 電車は<strong>止められない</strong><br>
+                                ②: 電車は人をひくのを<strong>避けることができる</strong><br>
+                                → 本文と矛盾! 不正解
                             </div>
 
                             <div class="box incorrect-box">
-                                <div class="box-title">ãªãâ£ãä¸æ­£è§£ã</div>
+                                <div class="box-title">なぜ④が不正解か</div>
                                 Paragraph 5: "The information learned from the show, however, indicated that <span class="highlight">many people would be paralyzed; they could do nothing</span>."<br><br>
                                 
-                                æ¬æ: å¤ãã®äººã¯<strong>éº»çºãã¦ä½ãã§ããªãã£ã</strong><br>
-                                â£: ã»ã¨ãã©ã®äººã<strong>ããå¤ãã®äººã®å½ãæãé¸æããã</strong><br>
-                                â æ¬æã¨æ­£åå¯¾! ä¸æ­£è§£<br><br>
+                                本文: 多くの人は<strong>麻痺して何もできなかった</strong><br>
+                                ④: ほとんどの人が<strong>より多くの人の命を救う選択をした</strong><br>
+                                → 本文と正反対! 不正解<br><br>
                                 
-                                <strong>éè¦ãªå¯¾æ¯:</strong><br>
-                                - Paragraph 3ã®ãã¹ã: ãã¹ã¤ãããæ¼ããã¨<strong>è¨ã£ã</strong><br>
-                                - Paragraph 5ã®TVçªçµ: å®éã¯<strong>ä½ãã§ããªãã£ã</strong><br>
-                                â è¨èã¨è¡åã®éãããã¤ã³ã!
+                                <strong>重要な対比:</strong><br>
+                                - Paragraph 3のテスト: 「スイッチを押す」と<strong>言った</strong><br>
+                                - Paragraph 5のTV番組: 実際は<strong>何もできなかった</strong><br>
+                                → 言葉と行動の違いがポイント!
                             </div>
 
                             <div class="box tip-box">
-                                <div class="box-title">Tips(ã³ã)</div>
-                                â åå®¹ä¸è´ã¯<strong>æ¶å»æ³</strong>ãæå¹<br>
-                                â ã­ã¼ã¯ã¼ããè¦ã¤ãã¦ãè©²å½ç®æãç²¾èª­<br>
-                                â "high-status" ã¨ "doctors" ã®ãããª<strong>è¨ãæã</strong>ã«æ³¨æ<br>
-                                â æ¬æã«æ¸ãã¦ããªããã¨ããæ¨æ¸¬ãããªã!<br>
-                                â ãã®åé¡ã®ããã«ãå¯¾æ¯(è¨ã vs å®éã«ãã)ãéè¦ãªãã¼ãã®å ´åã¯ç¹ã«æ³¨æ
+                                <div class="box-title">Tips(コツ)</div>
+                                ✅ 内容一致は<strong>消去法</strong>も有効<br>
+                                ✅ キーワードを見つけて、該当箇所を精読<br>
+                                ✅ "high-status" と "doctors" のような<strong>言い換え</strong>に注意<br>
+                                ✅ 本文に書いていないことを「推測」しない!<br>
+                                ✅ この問題のように、対比(言う vs 実際にやる)が重要なテーマの場合は特に注意
                             </div>
                         </div>
                     </div>
@@ -1128,9 +1128,9 @@
             document.body.classList.toggle('two-column-layout');
             const btn = document.querySelector('.layout-toggle-btn');
             if (document.body.classList.contains('two-column-layout')) {
-                btn.textContent = 'ð Single Column';
+                btn.textContent = '📚 Single Column';
             } else {
-                btn.textContent = 'ð± Two Columns';
+                btn.textContent = '📱 Two Columns';
             }
         }
 
@@ -1163,9 +1163,9 @@
             const btn = document.querySelector('.header-collapse-btn');
             if (btn) {
                 if (document.body.classList.contains('header-collapsed')) {
-                    btn.textContent = 'â¼ ãããã¼ãè¡¨ç¤º';
+                    btn.textContent = '▼ ヘッダーを表示';
                 } else {
-                    btn.textContent = 'â² ãããã¼ãé ã';
+                    btn.textContent = '▲ ヘッダーを隠す';
                 }
             }
         }
