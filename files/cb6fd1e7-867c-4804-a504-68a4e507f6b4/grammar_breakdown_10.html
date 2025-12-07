@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>åè©ã®èªæ³ï½ã©ã³ãã ãã¹ã å¨20å åã ã¡è§£èª¬ï¼Smooth Preloadï¼</title>
+  <style>
+    :root{
+      --bg1:#667eea; --bg2:#764ba2;
+      --ink:#1f2937; --muted:#6b7280;
+      --card:#ffffff; --soft:#f6f7fb;
+      --hint:#fff8e1; --hintBorder:#ffb300;
+      --ans:#e8f5e9; --ansBorder:#4caf50;
+      --wrong:#f8d7da; --wrongBorder:#dc3545;
+      --blue:#2196f3; --blueSoft:#e3f2fd;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Segoe UI","Hiragino Kaku Gothic ProN","Meiryo",system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--ink);
+      line-height:1.8;
+      padding:16px;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:0 16px 50px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    header{
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:#fff;
+      padding:28px 24px;
+      position:sticky; top:0; z-index:10;
+    }
+    header h1{font-size:24px;margin-bottom:6px}
+    header p{opacity:.95;font-size:14px}
+    .toolbar{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border:0; cursor:pointer; font-weight:700;
+      padding:8px 14px; border-radius:999px;
+      transition:.15s transform,.15s opacity,.15s box-shadow;
+      box-shadow:0 3px 10px rgba(0,0,0,.16);
+    }
+    .btn:hover{transform:translateY(-1px); opacity:.96}
+    .btn-ghost{background:#fff;color:#111827}
+    .btn-dark{background:#111827;color:#fff}
+    .content{padding:18px}
+    .section{
+      border:2px solid #e5e7eb; border-radius:var(--radius);
+      overflow:hidden; margin:14px 0; background:var(--soft);
+      contain: layout paint style; /* helps scrolling smooth */
+    }
+    .section-header{
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:#fff; padding:14px 16px; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      font-weight:800;
+      user-select:none;
+    }
+    .section-header .arrow{transition:.2s transform}
+    .section-header.open .arrow{transform:rotate(180deg)}
+    .section-body{
+      max-height:0; overflow:hidden; transition:max-height .35s ease;
+      padding:0 14px;
+      will-change:max-height;
+      overscroll-behavior:contain;
+    }
+    .section-body.open{
+      padding:14px;
+      overflow:auto;                /* scroll inside section */
+      scrollbar-gutter: stable both-edges;
+    }
+    .qcard{
+      background:#fff; border-radius:12px; padding:14px 14px 10px;
+      margin:10px 0 14px; border-left:5px solid var(--bg1);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
+      contain: content; /* isolates internal layout */
+    }
+    .qnum{font-weight:900;color:#4f46e5}
+    .qtext{margin-top:6px}
+    .choices{margin-top:6px;padding-left:8px;color:#111827}
+    .button-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    .hint-btn{background:linear-gradient(135deg,#ffe082,#ffb74d);color:#3e2723}
+    .ans-btn{background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#fff}
+    .collapsible{
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+      margin-top:6px;
+      will-change:max-height;
+    }
+    .box{
+      border-radius:10px; padding:10px 12px; font-size:14px;
+      border-left:4px solid;
+      background:#fff;
+    }
+    .hint-box{background:var(--hint); border-left-color:var(--hintBorder)}
+    .ans-box{background:var(--ans); border-left-color:var(--ansBorder)}
+    .wrong-box{background:var(--wrong); border-left-color:var(--wrongBorder); margin-top:8px}
+    .ref-box{background:var(--blueSoft); border-left-color:var(--blue); margin-top:8px}
+    .label{font-weight:800}
+    .muted{color:var(--muted)}
+    .jp{margin-top:6px; font-style:italic}
+    footer{
+      padding:18px; text-align:center; color:#fff;
+      font-size:13px; opacity:.95;
+    }
+    @media (max-width:768px){
+      header h1{font-size:20px}
+      .content{padding:12px}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header id="topHeader">
+    <h1>ð åè©ã®èªæ³ï½ã©ã³ãã ãã¹ã å¨20åï¼åã ã¡è§£èª¬ï¼</h1>
+    <p>å¨æ¼ç¿ çºå± è±ææ³ã»èªæ³åé¡1100 P4ãP89ï½åã«å¨é¨é«ããè¨ç®ãã¦ãã«ãã«åãç</p>
+    <div class="toolbar">
+      <button class="btn btn-ghost" data-action="open-all">å¨é¨ã²ãã</button>
+      <button class="btn btn-ghost" data-action="close-all">å¨é¨ã¨ãã</button>
+      <button class="btn btn-dark" data-action="download">â¬ï¸ ãã®ãã¼ã¸ããã¦ã³ã­ã¼ã</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- A -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[A] ç©ºæè£å (1)ã(5)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+        <!-- Q1 -->
+        <div class="qcard">
+          <div class="qnum">(1)</div>
+          <div class="qtext">This is one of the most peaceful places (ãã).</div>
+          <div class="choices">â  imaginableãâ¡ no matterãâ¢ for the worldãâ£ being</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint">
+            <div class="box hint-box">
+              ãæãããªå ´æã®ä¸ã¤ãã¨è¨ãããã<br>
+              <span class="label">one of the most + å½¢å®¹è© + åè©</span> ã®ãã¨ãã©ãããèªãèªç¶ï¼
+            </div>
+          </div>
+
+          <div class="collapsible" data-block="answer">
+            <div class="box ans-box">
+              <div><span class="label">æ­£è§£ï¼</span>â  imaginable</div>
+              <div class="jp">è¨³ï¼ããã¯æ³åã§ããä¸­ã§æãå¹³åãªå ´æã®ä¸ã¤ã ã</div>
+              <div class="muted">imaginable = ãæ³åã§ããããâthe most peaceful places imaginableâã§éæ¿ã³ã­ã±ã</div>
+
+              <div class="box wrong-box">
+                <div><span class="label">â¡ no matterï¼</span>ããã«é¢ä¿ãªããã§ãæã®å½¢ãåããªãã</div>
+                <div><span class="label">â¢ for the worldï¼</span>ãçµ¶å¯¾ã«ãããªããã§å¦å®ã¨ä½¿ãè¡¨ç¾ãããã¯å½¢å®¹è©ã®å¾ãã§ä¸èªç¶ã</div>
+                <div><span class="label">â£ beingï¼</span>ãbeing + å½¢å®¹è©ãã®å½¢ã«ãªãããæãå´©ããã</div>
+              </div>
+              <div class="box ref-box">Grammarï¼å½¢å®¹è©ã®å¾ç½®ä¿®é£¾ âplaces imaginableâ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="qcard">
+          <div class="qnum">(2)</div>
+          <div class="qtext">The quality of school facilities in Japan is at about the same level (ãã) in British schools.</div>
+          <div class="choices">â  as thatãâ¡ so thatãâ¢ as thoseãâ£ as one</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            ãåãã¬ãã«ã ããã£ã¦æ¯è¼ã®æã<br>
+            âthe same level as ___â ã® ___ ã«å¥ãä»£åè©ã¯ï¼
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>â  as that</div>
+            <div class="jp">è¨³ï¼æ¥æ¬ã®å­¦æ ¡è¨­åã®è³ªã¯ãã¤ã®ãªã¹ã®å­¦æ ¡ã¨ã»ã¼åãã¬ãã«ã ã</div>
+            <div class="muted">levelï¼åæ°ï¼ãåããã®ã§ <span class="label">that</span>ï¼=the levelï¼ã§OKã</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">â¡ so thatï¼</span>ç®ç/çµæããããããã«ãã«ãªã£ã¦æå³ããºã¬ãã</div>
+              <div><span class="label">â¢ as thoseï¼</span>thoseã¯è¤æ°ãlevelã¯åæ°ã ããä¸è´ããªãã</div>
+              <div><span class="label">â£ as oneï¼</span>oneã ãã ã¨ä½ãæããå¼±ããæ¯è¼ã®å®çªãããªãã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼æ¯è¼ âthe same + åè© + as that/those â¦â</div>
+          </div></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="qcard">
+          <div class="qnum">(3)</div>
+          <div class="qtext">It (ãã) twelve years to build the castle.</div>
+          <div class="choices">â  spent the king forãâ¡ took the kingãâ¢ took the king forãâ£ spent the king</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            ããããã®ã«12å¹´ããã£ããã£ã¦è¨ãããã<br>
+            ä¸»èªã <span class="label">It</span> ã®ã¨ãã®å®çªåè©ã¯ï¼
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>â¡ took the king</div>
+            <div class="jp">è¨³ï¼ãã®åãå»ºã¦ãã®ã«12å¹´ããã£ãã</div>
+            <div class="muted"><span class="label">It takes (äºº) æé to do</span> ã®å½¢ã</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">â  spent the king forï¼</span>spendã¯ãäººãæéãä½¿ããå´ãItä¸»èªã§ã¯ä½¿ããªãã</div>
+              <div><span class="label">â¢ took the king forï¼</span>take A for BãAãBã ã¨æããã§æå³éãã</div>
+              <div><span class="label">â£ spent the kingï¼</span>spend + äºº ã¯ä¸å¯ãç®çèªã¯æé/ãéã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼å½¢å¼ä¸»èª It / take æ§æ</div>
+          </div></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="qcard">
+          <div class="qnum">(4)</div>
+          <div class="qtext">Your quick response to our request would be (ãã).</div>
+          <div class="choices">â  appreciatedãâ¡ thankfulãâ¢ obligedãâ£ pleased</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            ãããã¦ããããããããããã£ã¦ä¸å¯§ãªåãèº«è¡¨ç¾ã<br>
+            âwould be ___â ã«èªç¶ã«æ¥ãèªã¯ï¼
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>â  appreciated</div>
+            <div class="jp">è¨³ï¼ãä¾é ¼ã«ãããå¯¾å¿ããã ããã¨ãããããã§ãã</div>
+            <div class="muted">âwould be appreciatedâ = ããããããæããã¾ããâä¸å¯§ä¾é ¼ã®åã</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">â¡ thankful / â£ pleasedï¼</span>äººãä¸»èªãªãOKãã§ãä¸»èªã response ãªã®ã§ä¸èªç¶ã</div>
+              <div><span class="label">â¢ obligedï¼</span>be obliged to doããããç¾©åãããããæå³ãéãã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼ä¸å¯§è¡¨ç¾ âIt would be appreciated if â¦â</div>
+          </div></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="qcard">
+          <div class="qnum">(5)</div>
+          <div class="qtext">He is (ãã) clever and friendly.</div>
+          <div class="choices">â  at onceãâ¡ eitherãâ¢ betweenãâ£ both of</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            2ã¤ã®å½¢å®¹è©ããä¸¡æ¹ããã§ã¤ãªãããã<br>
+            â__ clever and friendlyâ ã®å®çªã¯ï¼
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>â  at once</div>
+            <div class="jp">è¨³ï¼å½¼ã¯è³¢ãã¦è¦ªåã§ãããã</div>
+            <div class="muted">at once = ãåæã« / ä½µãæã£ã¦ããâclever and friendly at onceâã§èªç¶ã</div>
+
+            <div class="box wrong-box">
+              <div><span class="label">â¡ eitherï¼</span>either A or Bãã©ã¡ããããand ã¨ä¸ç·ã«ä½¿ããªãã</div>
+              <div><span class="label">â¢ betweenï¼</span>between A and BãAã¨Bã®éããæå³ãéãã</div>
+              <div><span class="label">â£ both ofï¼</span>both of + åè©/ä»£åè©ãå½¢å®¹è©ã®åã§åç¬ã¯ä¸å¯ã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼å¯è© at once ã®èªæ³</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- B -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[B] å±éèªè£å (6)ã(8)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+
+        <!-- Q6 -->
+        <div class="qcard">
+          <div class="qnum">(6)</div>
+          <div class="qtext">
+            (a) I wanted to give you a (ãã) before I came, but I did not have any small change in my purse.<br>
+            (b) As you probably know, Switzerland has no language which she can (ãã) her own.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            (a) âgive you a ___â = åºçºåã«ãé»è©±ããããã¤ã<br>
+            (b) â___ A one's ownâ = âAãèªåã®ãã®ã¨å¼ã¶âã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>call</div>
+            <div class="jp">
+              (a) è¨³ï¼æ¥ãåã«é»è©±ãããã£ããã ãã©ãå°é­ããªãã£ãã<br>
+              (b) è¨³ï¼ã¹ã¤ã¹ã«ã¯ãèªå½èªãã¨å¼ã¹ãè¨èªããªãã
+            </div>
+
+            <div class="box wrong-box">
+              <div>ä»ã®èªã ã¨ (a)(b) ã®ä¸¡æ¹ã«ããããªããï¼give you a call / call A one's own ãã»ããï¼</div>
+            </div>
+            <div class="box ref-box">Grammarï¼å±éèªè£åï¼å¥åè© / æ£ç¨ï¼</div>
+          </div></div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="qcard">
+          <div class="qnum">(7)</div>
+          <div class="qtext">
+            (a) It rained five days on (ãã).<br>
+            (b) The festival will (ãã) up with fireworks.<br>
+            (c) His invention is sure to serve a useful (ãã).
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            on ___ = ãé£ç¶ã§ã / end up = ããã§çµããã / serve a useful ___ = ãå½¹å²ãæãããã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>end</div>
+            <div class="jp">
+              (a) è¨³ï¼é¨ã5æ¥éé£ç¶ã§éã£ãã<br>
+              (b) è¨³ï¼ç¥­ãã¯è±ç«ã§çµããã ããã<br>
+              (c) è¨³ï¼å½¼ã®çºæã¯ãã£ã¨å½¹ã«ç«ã¤ç®çãæããã
+            </div>
+
+            <div class="box wrong-box">
+              <div>ä»èªã ã¨ on __ / __ up / serve a useful __ ã®3ã¤ãåæã«æç«ããªãã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼å±éèªè£åï¼end ã®å¤ç¾©ï¼</div>
+          </div></div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="qcard">
+          <div class="qnum">(8)</div>
+          <div class="qtext">
+            (a) He never breaks his promise; he is always as good as his (ãã).<br>
+            (b) At the end of the party, our president will give us a (ãã) or two.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            as good as one's ___ = ãè¨ã£ãéãã / give a ___ = ãã¹ãã¼ããããã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>word</div>
+            <div class="jp">
+              (a) è¨³ï¼å½¼ã¯ç´æãç ´ããªããè¨ã£ãéãã®äººã ã<br>
+              (b) è¨³ï¼ãã¼ãã£ã¼ã®æå¾ã«ç¤¾é·ãä¸è¨ã¹ãã¼ãããã
+            </div>
+
+            <div class="box wrong-box">
+              <div>âone's wordâ ã¨ âgive a wordâ ã®ã»ããã§æç«ã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼å±éèªè£åï¼word ã®æ£ç¨ï¼</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- C -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[C] åæå³æå®æ (9)ã(10)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+
+        <!-- Q9 -->
+        <div class="qcard">
+          <div class="qnum">(9)</div>
+          <div class="qtext">
+            (a) I did not know that he was a teacher, and spoke ill of teachers in his presence.<br>
+            (b) (ãã) I known that he was a teacher, I should not have (ãã) ill of teachers in his presence.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            (b) ã¯ä»®å®æ³éå»å®äºã®åç½®ã<br>
+            ãããç¥ã£ã¦ããããããªãã£ãã®ã«ãï¼ Had I ..., I would not have ...
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>Had / spoken</div>
+            <div class="jp">
+              (a) è¨³ï¼å½¼ãåçã ã¨ç¥ãããç®ã®åã§åçã®æªå£ãè¨ã£ã¦ãã¾ã£ãã<br>
+              (b) è¨³ï¼ããå½¼ãåçã ã¨ç¥ã£ã¦ããããç®ã®åã§æªå£ã¯è¨ããªãã£ãã ããã
+            </div>
+
+            <div class="box wrong-box">
+              <div>åç½®ãªã®ã§ <span class="label">If I had known</span> â <span class="label">Had I known</span>ã</div>
+              <div>ãæªå£ãè¨ããã¯ <span class="label">speak ill of</span> ã®éå»åè© spokenã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼ä»®å®æ³éå»å®äº / Ifçç¥ã®åç½®</div>
+          </div></div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="qcard">
+          <div class="qnum">(10)</div>
+          <div class="qtext">
+            (a) We cannot predict what may happen.<br>
+            (b) (ãã) is (ãã) predicting what may happen.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            âThere is no ~ingâ ã®å½¢ã«ããã¨åãæå³ã«ãªãã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">æ­£è§£ï¼</span>There / no</div>
+            <div class="jp">
+              (a) è¨³ï¼ä½ãèµ·ãããäºæ¸¬ã§ããªãã<br>
+              (b) è¨³ï¼ä½ãèµ·ãããäºæ¸¬ãããã¨ã¯ã§ããªãã
+            </div>
+
+            <div class="box wrong-box">
+              <div><span class="label">There is no ~ing</span> = ãããããã¨ã¯ã§ããªãã</div>
+            </div>
+            <div class="box ref-box">Grammarï¼There is no ~ing</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- D -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[D] èª¤ãææã»è¨æ­£ (11)ã(15)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+
+        <!-- Q11 -->
+        <div class="qcard">
+          <div class="qnum">(11)</div>
+          <div class="qtext">â The building â¡which â¢is standing on the hill is â£a famous church.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            ãå»ºç©ãããã«âå­å¨ãã¦ããâä¸è¬äºå®ããªãé²è¡å½¢ã¯ä¸èªç¶ã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">èª¤ãï¼</span>â¢ is standing â <span class="label">stands</span></div>
+            <div class="jp">è¨³ï¼ä¸ã®ä¸ã«ç«ã£ã¦ãããã®å»ºç©ã¯æåãªæä¼ã ã</div>
+            <div class="box wrong-box">ä¸è¬äºå®ã¯ç¾å¨å½¢ãé²è¡å½¢ã ã¨ãä»ã ãç«ã£ã¦ããã¿ãããªå¤ãªãã¥ã¢ã³ã¹ã</div>
+            <div class="box ref-box">Grammarï¼æå¶ï¼ä¸è¬äºå®ï¼</div>
+          </div></div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="qcard">
+          <div class="qnum">(12)</div>
+          <div class="qtext">Were â schools increase â¡the number of courses they offered, students â¢would benefit from the wider selection â£and smaller classes.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            âWere S to V, â¦â ã®ä»®å®æ³åç½®ã®å½¢ãæãåºãã¦ã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">èª¤ãï¼</span>â  schools increase â <span class="label">schools to increase</span></div>
+            <div class="jp">è¨³ï¼ããå­¦æ ¡ãæä¾ã³ã¼ã¹ãå¢ããã°ãçå¾ã¯ããå¤ãé¸æè¢ã¨å°äººæ°ææ¥­ã®æ©æµãåããã ããã</div>
+            <div class="box wrong-box">increase ã®ã¾ã¾ã ã¨åç½®ã®ã«ã¼ã«ãå´©ããã</div>
+            <div class="box ref-box">Grammarï¼ä»®å®æ³ï¼Were ã®åç½®ï¼</div>
+          </div></div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="qcard">
+          <div class="qnum">(13)</div>
+          <div class="qtext">I â have been dreaming â¡to climb that mountain to watch the sun â¢rise above â£the horizon.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            dream ã®èªæ³ã¯ <span class="label">dream of ~ing</span> ãå®çªã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">èª¤ãï¼</span>â¡ to climb â <span class="label">of climbing</span></div>
+            <div class="jp">è¨³ï¼ãã®å±±ã«ç»ã£ã¦å°å¹³ç·ã®ä¸ã«æãå¤ªé½ãè¦ããã¨ããã£ã¨å¤¢è¦ã¦ããã</div>
+            <div class="box wrong-box">dream ã¯ to ä¸å®è©ãã âof ~ingâ ã®æ¹ãèªç¶ã§é »åºã</div>
+            <div class="box ref-box">Grammarï¼dream + of ~ing</div>
+          </div></div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="qcard">
+          <div class="qnum">(14)</div>
+          <div class="qtext">He â showed me a book â¡described children's literature â¢which he â£had taken from the library.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            book ã âdescribe ããå´â ãªãç¾å¨åè©ã§å¾ãããä¿®é£¾ã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">èª¤ãï¼</span>â¡ described â <span class="label">describing</span></div>
+            <div class="jp">è¨³ï¼å½¼ã¯å³æ¸é¤¨ããåãã¦ãããåç«¥æå­¦ã«ã¤ãã¦æ¸ãããæ¬ãè¦ãã¦ãããã</div>
+            <div class="box wrong-box">described ã¯åãèº«ã®æå³ã§ãèª¬æãããæ¬ãã«ãªããã¡ãããã¯è½åã</div>
+            <div class="box ref-box">Grammarï¼åè©ã®å¾ç½®ä¿®é£¾</div>
+          </div></div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="qcard">
+          <div class="qnum">(15)</div>
+          <div class="qtext">I've never â believed in telepathy but â¡once I start â¢thinking of him in a certain way, the telephone is sure â£of ringing.</div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            be sure to V = ããã£ã¨ãããï¼åºæ¥äºï¼ãã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            <div><span class="label">èª¤ãï¼</span>â£ of ringing â <span class="label">to ring</span></div>
+            <div class="jp">è¨³ï¼ãã¬ãã·ã¼ãªãã¦ä¿¡ãã¦ãªãã£ããã©ãå½¼ã®ãã¨ãèãå§ããã¨é»è©±ãå¿ãé³´ãã</div>
+            <div class="box wrong-box">sure of ~ing ã¯ãäººãç¢ºä¿¡ããããé»è©±ï¼åºæ¥äºï¼ã¯ sure to Vã</div>
+            <div class="box ref-box">Grammarï¼be sure to do / be sure of doing</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- E -->
+    <section class="section">
+      <div class="section-header" data-role="section-header">
+        <span>[E] èªå¥æ´åº (16)ã(20)</span><span class="arrow">â¼</span>
+      </div>
+      <div class="section-body" data-role="section-body">
+        <!-- Q16 -->
+        <div class="qcard">
+          <div class="qnum">(16)</div>
+          <div class="qtext">
+            ç¬å ã®ãã£ã¨ãå±éºãªç¹ã¯ï¼æ¶è²»èãç«¶äºã®æ©æµãåããããªããã¨ã§ããã<br>
+            The greatest danger of monopoly is ( competition / consumers / denies / it / of / that / the benefit ).
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            âis that S V â¦â ã®å½¢ã«ããã¨ã¹ãã­ãªã deny A B = AããBãå¥ªãã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            The greatest danger of monopoly is that it denies consumers the benefit of competition.
+            <div class="jp">è¨³ï¼ç¬å ã®æå¤§ã®å±éºã¯ãæ¶è²»èããç«¶äºã®å©çãå¥ªããã¨ã ã</div>
+            <div class="box wrong-box">deny ã®èªé ã¯ deny + äºº + ç©ã</div>
+            <div class="box ref-box">Grammarï¼thatç¯ / deny + O1 + O2</div>
+          </div></div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="qcard">
+          <div class="qnum">(17)</div>
+          <div class="qtext">
+            ãã¤ã¾ã§ããããªãã¨ããããããã¦ããã£ã¦ï¼ã¯ãã¾ããªããããªããã<br>
+            It won't do ( about / any / good / it / keep / thinking / to / you ) all the time.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            âIt wonât do you any good to do â¦â ã¯ä¸¸æè¨ã§OKã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            It won't do you any good to keep thinking about it all the time.
+            <div class="jp">è¨³ï¼ãããªãã¨ããã£ã¨èãã¦ã¦ããä½ã®å¾ã«ããªããªããã</div>
+            <div class="box wrong-box">wonât do + äºº + any good + to V ã®åã</div>
+            <div class="box ref-box">Grammarï¼It wonât do you any good to V</div>
+          </div></div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="qcard">
+          <div class="qnum">(18)</div>
+          <div class="qtext">
+            æ··ãã ãã¹ã®ä¸­ã§å½¼å¥³ã¯å°ãªããæã£ã¦ãããéããã¹ã¦å¥ªããããï¼1èªä¸è¦ï¼<br>
+            In the crowded bus she was robbed ( all / of / had / little / money / she / what ).
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            âwhat little money she hadâ ãä¸å¡ãall ã¯ä½è¨ã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            In the crowded bus she was robbed of what little money she had.ï¼all ä¸è¦ï¼
+            <div class="jp">è¨³ï¼æ··ãã ãã¹ã®ä¸­ã§ãå½¼å¥³ã¯æã£ã¦ããããããªéãå¨é¨å¥ªãããã</div>
+            <div class="box wrong-box">all ãå¥ããã¨ âall what little moneyâ ã§å¤ã</div>
+            <div class="box ref-box">Grammarï¼what / rob A of B</div>
+          </div></div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="qcard">
+          <div class="qnum">(19)</div>
+          <div class="qtext">
+            å½¼ã¯åãã¾ãããç§ã«çµå©ãç³ãè¾¼ãã ã<br>
+            He ( propose / the / nerve / to / had / marriage ) to me.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            have the nerve to V / propose marriage to äººã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            He had the nerve to propose marriage to me.
+            <div class="jp">è¨³ï¼å½¼ã¯å³ããããç§ã«çµå©ãç³ãè¾¼ãã ã</div>
+            <div class="box wrong-box">the nerve ã¯å è©è¾¼ã¿ã§æ£ç¨è¡¨ç¾ã</div>
+            <div class="box ref-box">Grammarï¼have the nerve to V</div>
+          </div></div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="qcard">
+          <div class="qnum">(20)</div>
+          <div class="qtext">
+            ãã¼ãã£ã¼ã®åã«é£ã¹ç©ã®ç¨æã¯ãã£ããã§ãã¦ãããï¼2èªä¸è¦ï¼<br>
+            All the food had already ( started / before / was / been / for / prepared / we ) the party.
+          </div>
+
+          <div class="button-row">
+            <button class="btn hint-btn" data-toggle="hint">ð¡ Hint</button>
+            <button class="btn ans-btn" data-toggle="answer">â Answer</button>
+          </div>
+
+          <div class="collapsible" data-block="hint"><div class="box hint-box">
+            éå»å®äºåãèº«ï¼had already been prepared ãæ ¸ãstarted / we ãéªé­ã
+          </div></div>
+
+          <div class="collapsible" data-block="answer"><div class="box ans-box">
+            All the food had already been prepared before the party.ï¼started / we ä¸è¦ï¼
+            <div class="jp">è¨³ï¼ãã¼ãã£ã¼ã®åã«é£ã¹ç©ã¯ãã§ã«å¨é¨ç¨æããã¦ããã</div>
+            <div class="box wrong-box">we ãå¥ããã¨ä¸»èªäºéãstarted ã¯æå³ä¸æã</div>
+            <div class="box ref-box">Grammarï¼éå»å®äºåãèº« / before</div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  Â© Tetsuya's Grammar Gymï½Smooth Preload edition
+</footer>
+
+<script>
+(() => {
+  // --- Preload heights for smooth toggles ---
+  function primeHeights(){
+    const blocks = document.querySelectorAll('.collapsible');
+    blocks.forEach(b=>{
+      // temporarily open to measure
+      b.style.maxHeight = 'none';
+      const h = b.scrollHeight;
+      b.dataset.h = h;
+      b.style.maxHeight = '0px';
+    });
+    const bodies = document.querySelectorAll('[data-role="section-body"]');
+    bodies.forEach(body=>{
+      body.style.maxHeight = 'none';
+      const h = body.scrollHeight;
+      body.dataset.h = h;
+      body.style.maxHeight = '0px';
+    });
+  }
+
+  
+  function openBlock(el){
+    el.classList.add('open');
+    const fullH = Number(el.dataset.h || el.scrollHeight);
+    // Cap section bodies so they get their own scrollbar (prevents layout jams)
+    if(el.dataset.role === 'section-body'){
+      const cap = Math.floor(window.innerHeight * 0.72);
+      el.style.maxHeight = Math.min(fullH, cap) + 'px';
+    }else{
+      el.style.maxHeight = fullH + 'px';
+    }
+  }
+
+  function closeBlock(el){
+    el.classList.remove('open');
+    el.style.maxHeight = '0px';
+  }
+
+  // Event delegation for speed & correctness
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('[data-toggle]');
+    if(btn){
+      const card = btn.closest('.qcard');
+      const key = btn.dataset.toggle;
+      const block = card.querySelector(`.collapsible[data-block="${key}"]`);
+      if(!block) return;
+      if(block.classList.contains('open')) closeBlock(block);
+      else openBlock(block);
+      return;
+    }
+
+    const header = e.target.closest('[data-role="section-header"]');
+    if(header){
+      const body = header.nextElementSibling;
+      header.classList.toggle('open');
+      if(body.classList.contains('open')) closeBlock(body);
+      else openBlock(body);
+      return;
+    }
+
+    const actionBtn = e.target.closest('[data-action]');
+    if(actionBtn){
+      const act = actionBtn.dataset.action;
+      if(act === 'open-all'){
+        document.querySelectorAll('[data-role="section-header"]').forEach(h=>{
+          const body=h.nextElementSibling;
+          h.classList.add('open'); openBlock(body);
+        });
+      }
+      if(act === 'close-all'){
+        document.querySelectorAll('[data-role="section-header"]').forEach(h=>{
+          const body=h.nextElementSibling;
+          h.classList.remove('open'); closeBlock(body);
+        });
+      }
+      if(act === 'download'){
+        downloadHTML();
+      }
+    }
+  });
+
+  // Download button (inâpage)
+  function downloadHTML(){
+    const html = '<!DOCTYPE html>\\n' + document.documentElement.outerHTML;
+    const blob = new Blob([html], {type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'grammar_breakdown_ã©ã³ãã ãã¹ã_åè©ã®èªæ³_FULL_SMOOTH.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  }
+  window.downloadHTML = downloadHTML;
+
+  // Prime heights after full layout
+  window.addEventListener('load', () => { primeHeights(); });
+  window.addEventListener('resize', () => { primeHeights(); });
+})();
+</script>
+</body>
+</html>
