@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>åè©ã®èªæ³ï½ç¢ºèªãã¹ã - è§£ç­è§£èª¬</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .question-block {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .question-block:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .question-num {
+            background: #667eea;
+            color: white;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .choices {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .choice {
+            padding: 8px 0;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+        
+        .answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .answer-label {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .explanation-label {
+            color: #856404;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        
+        .japanese {
+            color: #764ba2;
+            font-style: italic;
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #667eea;
+        }
+        
+        .idiom {
+            background: #f0e6ff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .correct {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .section-header {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ð åè©ã®èªæ³ï½ç¢ºèªãã¹ã</h1>
+        <div class="subtitle">è§£ç­ã»è§£èª¬ç·¨</div>
+
+        <!-- SECTION A -->
+        <div class="section">
+            <div class="section-header">[A] ç©ºæã«å¥ããã®ã«æãé©åãªèªå¥ãé¸ã³ãªãã</div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 1</div>
+                <div class="question-text">
+                    The management seemed to be missing the (____) the union was trying to make.
+                </div>
+                <div class="japanese">çµå¶é£ã¯ãçµåãä¼ãããã¨ãã¦ãã(____)ãçè§£ãã¦ããªãããã ã£ãã</div>
+                <div class="choices">
+                    <div class="choice">â  bus = ãã¹<br>
+                    â <span class="idiom">"miss the bus"</span> = ãã¹ã«ä¹ãéãã / ãã£ã³ã¹ãéã</div>
+                    <div class="choice">â¡ mark = æ¨è­ãç®å°<br>
+                    â <span class="idiom">"miss the mark"</span> = çãå¤ããç®æ¨ã«å±ããªã</div>
+                    <div class="choice">â¢ boat = ãã¼ã<br>
+                    â <span class="idiom">"miss the boat"</span> = æ©ä¼ãéã</div>
+                    <div class="choice">â£ point = è¦ç¹ <span class="correct">â æ­£è§£</span><br>
+                    â <span class="idiom">"miss the point"</span> = è¦ç¹ãçè§£ããªããè«ç¹ãè¦éã</div>
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: â£ point</div>
+                    çµå¶é£ã¯ãçµåãè¨ããã¨ãã¦ãã<strong>è¦ç¹</strong>ãçè§£ãã¦ããªãããã ã£ãã
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    "miss the point" = ãè¦ç¹ãçè§£ããªããã¨ããæå³ã®ã¤ãã£ãªã ãå¨ã¦ "miss the ~" ã®å½¢ã ããæèãããçè§£ãã¦ããªããã¨ããæå³ã«ãªãã®ã¯ "miss the point" ã®ã¿ã"make a point" ã¯ãä¸»å¼µãããè«ç¹ãè¿°ã¹ããã¨ããæå³ãªã®ã§ã"miss the point someone is trying to make" = ãèª°ããä¸»å¼µãããã¨ãã¦ããè¦ç¹ãçè§£ããªããã¨ãªãã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 2</div>
+                <div class="question-text">
+                    Hemingway's <em>The Old Man and the Sea</em> is as good a metaphor of humanity as (____), for it conveys the desperation and absurdity of the human condition.
+                </div>
+                <div class="japanese">ããã³ã°ã¦ã§ã¤ã®ãèäººã¨æµ·ãã¯ã(____) äººéæ§ã®åªããæ¯å©ã§ããããªããªããäººéã®ç¶æã®çµ¶æã¨ä¸æ¡çãä¼ãã¦ããããã ã</div>
+                <div class="choices">
+                    <div class="choice">â  long as I know = ç§ãç¥ã£ã¦ããéãé·ãé<br>
+                    â ææ³çã«ä¸é©åã"as long as" ã¯æéãæ¡ä»¶ãè¡¨ãããããã§ã¯ä½¿ããªã</div>
+                    <div class="choice">â¡ any I know = ç§ãç¥ã£ã¦ãããããªããã® <span class="correct">â æ­£è§£</span><br>
+                    â "as good as any (metaphor) I know" = ç§ãç¥ãä¸­ã§æãè¯ããã®ã®ä¸ã¤</div>
+                    <div class="choice">â¢ whatever I know = ç§ãç¥ã£ã¦ãããã®ã¯ä½ã§ã<br>
+                    â ææ³çã«ä¸èªç¶ã"whatever" ã¯ãã®æ§æã§ã¯ä½¿ããªã</div>
+                    <div class="choice">â£ however I know = ãããç§ã¯ç¥ã£ã¦ãã<br>
+                    â å®å¨ã«ææ³ãå´©ããã"however" ã¯å¯è©ã§ããã®ä½ç½®ã«ã¯å¥ããªã</div>
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: â¡ any I know</div>
+                    ããã³ã°ã¦ã§ã¤ã®ãèäººã¨æµ·ãã¯ã<strong>ç§ãç¥ãéãæé«ã®</strong>äººéæ§ã®ã¡ã¿ãã¡ã¼ã§ããã
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    "as good a metaphor as any I know" ã¨ããæ¯è¼æ§æã"any" ã¯ "any metaphor" ã®çç¥ã§ããç§ãç¥ã£ã¦ããã©ããªæ¯å©ã«ãå£ããªãã= ãç§ãç¥ãä¸­ã§æé«ã¯ã©ã¹ãã¨ããæå³ãæ§æ: "as + å½¢å®¹è© + a + åè© + as any I know" = ãç§ãç¥ãä¸­ã§ã©ãã«ãå£ããªããããéå¸¸ã«é«åº¦ãªè¡¨ç¾ã§ãæå­¦çãªæç« ã§ããä½¿ãããã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 3</div>
+                <div class="question-text">
+                    He wishes he (____) harder when he was young.
+                </div>
+                <div class="japanese">å½¼ã¯è¥ãé ã«ãã£ã¨ä¸çæ¸å½(____) ã¨æã£ã¦ããã</div>
+                <div class="choices">
+                    <div class="choice">â  studied = åå¼·ããï¼éå»å½¢ï¼<br>
+                    â ç¾å¨ã®é¡æã«ä½¿ãå½¢ã"I wish I studied now" = ä»åå¼·ãã¦ããã°ãªã</div>
+                    <div class="choice">â¡ had studied = åå¼·ãã¦ããï¼éå»å®äºå½¢ï¼<span class="correct">â æ­£è§£</span><br>
+                    â éå»ã«å¯¾ããå¾æãè¡¨ããããã®æåå¼·ãã¦ããã°ããã£ããªãã</div>
+                    <div class="choice">â¢ would study = åå¼·ããã ãã<br>
+                    â "wish" ã®å¾ã«ã¯ä½¿ããªãå½¢ãæªæ¥ã®æå³ã¯è¡¨ããªã</div>
+                    <div class="choice">â£ has studied = åå¼·ãã¦ããï¼ç¾å¨å®äºå½¢ï¼<br>
+                    â "wish" ã®å¾ã«ã¯ä½¿ããªãæå¶</div>
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: â¡ had studied</div>
+                    å½¼ã¯è¥ãé ã«ãã£ã¨ä¸çæ¸å½<strong>åå¼·ãã¦ããã°ããã£ã</strong>ã¨æã£ã¦ããã
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    "wish" ãä½¿ã£ãä»®å®æ³ã®æãéå»ã®ãã¨ã«å¯¾ããå¾æãé¡æãè¡¨ãæã¯ã"wish + éå»å®äºå½¢ï¼had + éå»åè©ï¼" ãä½¿ãã<br>
+                    <strong>wish ã®ä½¿ãåã:</strong><br>
+                    ã»ç¾å¨ã®é¡æ: I wish I <strong>were</strong> rich. (ä»ãéæã¡ã ã£ãããªã) â»éå»å½¢ãä½¿ã<br>
+                    ã»éå»ã®å¾æ: I wish I <strong>had been</strong> rich. (ãã®æãéæã¡ã ã£ãããªã) â»éå»å®äºå½¢ãä½¿ã<br>
+                    "when he was young" ã¨ããéå»ã®æç¹ãæãã¦ããã®ã§ãéå»å®äºå½¢ãä½¿ãã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 4</div>
+                <div class="question-text">
+                    Please don't disturb me; I've got (____).
+                </div>
+                <div class="japanese">éªé­ããªãã§ãã ãããç§ã¯(____) ãã§ãã</div>
+                <div class="choices">
+                    <div class="choice">â  a headache = é ­ç <span class="correct">â æ­£è§£</span><br>
+                    â æ­£ããè¡¨ç¾ããé ­çããããã¯å¿ãä¸å®å è© "a" ãä½¿ã</div>
+                    <div class="choice">â¡ the headache = ãã®é ­ç<br>
+                    â ç¹å®ã®é ­çãæãæã®ã¿ä½¿ãï¼ä¾: the headache I had yesterday = æ¨æ¥ãã£ãé ­çï¼</div>
+                    <div class="choice">â¢ mine headache = ç§ã®é ­ç<br>
+                    â ææ³çã«å®å¨ã«ééãã"mine" ã¯ææä»£åè©ã§åè©ã®åã«ã¯ç½®ããªã</div>
+                    <div class="choice">â£ my headache = ç§ã®é ­ç<br>
+                    â è±èªã§ã¯çæ°ãçç¶ã«æææ ¼ãä½¿ããªãï¼æ¥æ¬èªã¨ã®éãï¼</div>
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: â  a headache</div>
+                    éªé­ããªãã§ãã ãããç§ã¯<strong>é ­çããã</strong>ãã§ãã
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    è±èªã§ä¸è¬çãªçæ°ãçç¶ãè¡¨ãæã¯ã<strong>ä¸å®å è© "a" ãä½¿ã</strong>ã®ãååã<br>
+                    â have <strong>a</strong> headache (é ­çããã)<br>
+                    â have <strong>a</strong> cold (é¢¨éªãã²ãã¦ãã)<br>
+                    â have <strong>a</strong> fever (ç±ããã)<br>
+                    â have <strong>a</strong> stomachache (è¹çããã)<br>
+                    <strong>ä¾å¤:</strong> have <strong>the</strong> flu (ã¤ã³ãã«ã¨ã³ã¶ã«ããã£ã¦ãã) â ããã ã "the" ãä½¿ãï¼<br>
+                    æ¥æ¬èªã§ã¯ãç§ã®é ­çãã¨è¨ãããè±èªã§ã¯æææ ¼ãä½¿ããªãã®ãå¤§ããªéãã
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION B -->
+        <div class="section">
+            <div class="section-header">[B] ä¸ç·é¨ã«æãè¿ãæå³ãæã¤èªå¥ãé¸ã³ãªãã</div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 5</div>
+                <div class="question-text">
+                    Ben <strong>took on</strong> the responsibility for his friends.
+                </div>
+                <div class="japanese">ãã³ã¯åäººãã¡ã®ããã«è²¬ä»»ã<strong>(____)</strong> ã</div>
+                <div class="choices">
+                    <div class="choice">â  obtained = æã«å¥ãããç²å¾ãã<br>
+                    â åªåãã¦å¾ããã¥ã¢ã³ã¹ãè²¬ä»»ããç²å¾ãããã¨ã¯è¨ããªã</div>
+                    <div class="choice">â¡ assumed = å¼ãåãããè² ã£ã <span class="correct">â æ­£è§£</span><br>
+                    â è²¬ä»»ãå½¹å²ãåãå¥ããæã«ä½¿ãã"take on" ã¨ã»ã¼åãæå³</div>
+                    <div class="choice">â¢ shared = å±æãããåãã¡åã£ã<br>
+                    â "take on" ã¯å¨ã¦å¼ãåãããã¥ã¢ã³ã¹ã§ãshareï¼åæï¼ã¨ã¯ç°ãªã</div>
+                    <div class="choice">â£ escaped = éãããåé¿ãã<br>
+                    â "take on" ã®å®å¨ã«éã®æå³</div>
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: â¡ assumed</div>
+                    ãã³ã¯åäººãã¡ã®ããã«è²¬ä»»ã<strong>å¼ãåãã</strong>ã
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <span class="idiom">"take on"</span> = ãå¼ãåãããè² ããã¨ããæå³ã®å¥åè©ã"assume" ããï¼è²¬ä»»ã»å½¹å²ãªã©ãï¼å¼ãåãããæããã¨ããæå³ã§ãã»ã¼åç¾©èªã<br>
+                    <strong>"take on" ã®ä¸»ãªæå³:</strong><br>
+                    â  è²¬ä»»ã»ä»äºãå¼ãåãã: take on a responsibility / take on a new project<br>
+                    â¡ äººãéã: The company is taking on new employees.<br>
+                    â¢ ææ¦ãããå¯¾æ±ºãã: The team took on the champions.<br>
+                    ãã®æã§ã¯â ã®æå³ã§ä½¿ããã¦ããã"assume" ãæé©ãªåç¾©èªã
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION C -->
+        <div class="section">
+            <div class="section-header">[C] (a)(b)ã®è±æãã»ã¼åãæå³ã«ãªãããã«ç©ºæã«é©åãªèªãå¥ããªãã</div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 6</div>
+                <div class="question-text">
+                    (a) Thomas promised Mary to come here as early as possible.<br>
+                    (b) Thomas promised Mary that (____) (____) come here as early as possible.
+                </div>
+                <div class="japanese">
+                    (a) ãã¼ãã¹ã¯ã¡ã¢ãªã¼ã«ãã§ããã ãæ©ãããã«æ¥ãã¨ç´æããã<br>
+                    (b) ãã¼ãã¹ã¯ã¡ã¢ãªã¼ã«ã(____) (____) ã§ããã ãæ©ãããã«æ¥ãã¨ç´æããã
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: he would</div>
+                    (b) Thomas promised Mary that <strong>he would</strong> come here as early as possible.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    "promise to do" ã®æ§æã "promise that ç¯" ã«æ¸ãæããåé¡ã<br>
+                    <strong>æ¸ãæãã®ãã¤ã³ã:</strong><br>
+                    â  ä¸»èªãæç¤ºãã: "to come" â "<strong>he</strong> would come" (Thomas = he)<br>
+                    â¡ æå¶ã®ä¸è´: "promised"ï¼éå»å½¢ï¼ã®å¾ãªã®ã§ã"will" â "<strong>would</strong>" ã«å¤ãã<br>
+                    <br>
+                    <strong>ãã¿ã¼ã³:</strong><br>
+                    ã»promise + toä¸å®è© = promise + that + ä¸»èª + would + åè©ã®åå½¢<br>
+                    ä¾: He promised to help me. = He promised that he would help me.
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 7</div>
+                <div class="question-text">
+                    (a) That was the most moving film I had ever seen.<br>
+                    (b) I had never seen a (____) moving film (____) that.
+                </div>
+                <div class="japanese">
+                    (a) ããã¯ç§ãä»ã¾ã§è¦ãä¸­ã§æãæåçãªæ ç»ã ã£ãã<br>
+                    (b) ç§ã¯ãã(____) æåçãªæ ç»ãè¦ããã¨ããªãã£ãã
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: more ... than</div>
+                    (b) I had never seen a <strong>more</strong> moving film <strong>than</strong> that.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    æä¸ç´ãæ¯è¼ç´ï¼å¦å®å½¢ã«æ¸ãæããéè¦ãã¿ã¼ã³ã<br>
+                    <strong>æ¸ãæãã®å¬å¼:</strong><br>
+                    æä¸ç´: the most ï½ = å¦å® + æ¯è¼ç´ + than<br>
+                    <br>
+                    "the most moving film" (æãæåçãªæ ç») â "never seen a <strong>more</strong> moving film <strong>than</strong> that" (ããããæåçãªæ ç»ãè¦ããã¨ããªã)<br>
+                    <br>
+                    <strong>ä»ã®ä¾:</strong><br>
+                    ã»This is the best book. = I've never read a <strong>better</strong> book <strong>than</strong> this.<br>
+                    ã»He is the tallest student. = No student is <strong>taller than</strong> him.<br>
+                    <br>
+                    å¦å® + æ¯è¼ç´ = æä¸ç´ã¨åãæå³ã«ãªãè±èªç¬ç¹ã®è¡¨ç¾ã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 8</div>
+                <div class="question-text">
+                    (a) The author, knowing more about Japan, could have written a better book.<br>
+                    (b) If the author (____) (____) more about Japan, he could have written a better book.
+                </div>
+                <div class="japanese">
+                    (a) ãã®ä½èã¯ãæ¥æ¬ã«ã¤ãã¦ãã£ã¨ç¥ã£ã¦ãããããã£ã¨è¯ãæ¬ãæ¸ããã ããã<br>
+                    (b) ãããã®ä½èãæ¥æ¬ã«ã¤ãã¦(____) (____) ãå½¼ã¯ãã£ã¨è¯ãæ¬ãæ¸ããã ããã
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: had known</div>
+                    (b) If the author <strong>had known</strong> more about Japan, he could have written a better book.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    åè©æ§æãä»®å®æ³éå»å®äºï¼ç¬¬3æ¡ä»¶æï¼ã«æ¸ãæããåé¡ã<br>
+                    <strong>ä»®å®æ³éå»å®äºã®å½¢:</strong><br>
+                    If + ä¸»èª + <strong>had + éå»åè©</strong>, ä¸»èª + <strong>could/would have + éå»åè©</strong><br>
+                    = éå»ã®äºå®ã«åããä»®å®ï¼å®éã«ã¯ããã§ã¯ãªãã£ãï¼<br>
+                    <br>
+                    (a) ã®æ: "knowing more" (ãã£ã¨ç¥ã£ã¦ããã) = å®éã«ã¯ç¥ããªãã£ã<br>
+                    â "could have written" (æ¸ããã ããã«) = å®éã«ã¯æ¸ããªãã£ã<br>
+                    <br>
+                    "knowing" (ç¾å¨åè©) â "<strong>had known</strong>" (éå»å®äºå½¢) ã«å¤æ<br>
+                    <br>
+                    <strong>éå»ã®äºå®ã«åããä»®å® = å¾æãæ®å¿µãªæ°æã¡ãè¡¨ã</strong>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 9</div>
+                <div class="question-text">
+                    (a) Stephen told me not to use his teacup.<br>
+                    (b) Stephen (____) (____) me, "(____) use (____) teacup."
+                </div>
+                <div class="japanese">
+                    (a) ã¹ãã£ã¼ãã³ã¯ç§ã«å½¼ã®ãã£ã¼ã«ãããä½¿ããªãããã«è¨ã£ãã<br>
+                    (b) ã¹ãã£ã¼ãã³ã¯ç§ã«(____) (____) ãã(____) ãã£ã¼ã«ãããä½¿ã(____) ãã
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: said to / Don't / my</div>
+                    (b) Stephen <strong>said to</strong> me, "<strong>Don't</strong> use <strong>my</strong> teacup."
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    éæ¥è©±æ³ããç´æ¥è©±æ³ã¸ã®æ¸ãæãåé¡ã<br>
+                    <strong>æ¸ãæãã®ãã¤ã³ã:</strong><br>
+                    â  ä¼éåè©: "told me" â "<strong>said to</strong> me"<br>
+                    ãï¼ç´æ¥è©±æ³ã§ã¯ "say to" ãä½¿ãã"tell" ã¯ä½¿ããªãï¼<br>
+                    <br>
+                    â¡ å¦å®å½ä»¤æ: "not to use" â "<strong>Don't</strong> use"<br>
+                    ãï¼éæ¥è©±æ³: not to + åè©ã®åå½¢ â ç´æ¥è©±æ³: Don't + åè©ã®åå½¢ï¼<br>
+                    <br>
+                    â¢ ä»£åè©ã®å¤æ: "his teacup" â "<strong>my</strong> teacup"<br>
+                    ãï¼è©±ãæã®è¦ç¹ãå¤ãã: Stephen ãè¨ã£ãæã¯ "my" = èªåã®ï¼<br>
+                    <br>
+                    <strong>ã¾ã¨ã:</strong><br>
+                    éæ¥è©±æ³ â ç´æ¥è©±æ³ã®å¤æã§ã¯ãä¼éåè©ãæå¶ãä»£åè©ãå¨ã¦å¤ããå¿è¦ãããã
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION D -->
+        <div class="section">
+            <div class="section-header">[D] æ¥æ¬æã®æå³ã«ãªãããã«ç©ºæã«å¥ãé©åãªèªï¼å¥ï¼ãæ¸ããªãã</div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 10</div>
+                <div class="japanese">ã©ãªããé»è©±ã«åºã¦ã¡ããã ããä»ãæããµããã£ã¦ã¾ãããã</div>
+                <div class="question-text">
+                    I want someone to (____) the phone. I'm busy now.
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: answer</div>
+                    I want someone to <strong>answer</strong> the phone. I'm busy now.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    ãé»è©±ã«åºãã= <span class="idiom">answer the phone</span><br>
+                    <br>
+                    <strong>ããããééã:</strong><br>
+                    â "take the phone" â ããã¯ééãï¼<br>
+                    â "receive the phone" â ãããä¸èªç¶ï¼<br>
+                    â "<strong>answer</strong> the phone" â æ­£ããè¡¨ç¾<br>
+                    <br>
+                    <strong>é»è©±ã«é¢ããéè¦è¡¨ç¾:</strong><br>
+                    ã»é»è©±ã«åºã = <strong>answer</strong> the phone / pick up the phone<br>
+                    ã»é»è©±ãããã = <strong>call</strong> / make a phone call<br>
+                    ã»é»è©±ãåã = <strong>hang up</strong><br>
+                    ã»é»è©±ãã¤ãªã = <strong>put through</strong><br>
+                    ã»è©±ãä¸­ = The line is <strong>busy</strong>.<br>
+                    <br>
+                    æ¥æ¬èªã®ãé»è©±ãåããã«ã¤ããã¦ "take" ãä½¿ããªãããã«æ³¨æï¼
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION E -->
+        <div class="section">
+            <div class="section-header">[E] ä¸ç·é¨ã®èª¤ã£ã¦ããç®æãææããæ­£ããå½¢ã«ç´ããªãã</div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 11</div>
+                <div class="question-text">
+                    These days, I â drink â¡only tea, but I â¢<strong>use</strong> to drink coffee â£as well.
+                </div>
+                <div class="japanese">æè¿ã¯ç´è¶ããé£²ã¾ãªãããä»¥åã¯ã³ã¼ãã¼ãé£²ãã§ããã</div>
+                <div class="answer">
+                    <div class="answer-label">èª¤ã: â¢ use â <strong>used</strong></div>
+                    These days, I drink only tea, but I <strong>used</strong> to drink coffee as well.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    ãä»¥åã¯ããã¦ããï¼ä»ã¯ãã¦ããªãï¼ãã¨ããéå»ã®ç¿æ£ãè¡¨ãæã¯ã<strong>used to + åè©ã®åå½¢</strong> ãä½¿ãã<br>
+                    <br>
+                    <strong>éè¦ã«ã¼ã«:</strong><br>
+                    â è¯å®æ: <strong>used to</strong> + åè©ã®åå½¢ï¼å¿ã -d ãã¤ãï¼<br>
+                    â å¦å®æ: didn't <strong>use to</strong> + åè©ã®åå½¢ï¼-d ãã¤ããªãï¼<br>
+                    â çåæ: Did ... <strong>use to</strong> + åè©ã®åå½¢ï¼ï¼-d ãã¤ããªãï¼<br>
+                    <br>
+                    <strong>ä¾:</strong><br>
+                    ã»I <strong>used to</strong> play basketball. (ä»¥åã¯ãã¹ã±ããã¦ãã)<br>
+                    ã»I didn't <strong>use to</strong> like sushi. (ä»¥åã¯å¯¿å¸ãå¥½ããããªãã£ã)<br>
+                    ã»Did you <strong>use to</strong> live here? (ä»¥åããã«ä½ãã§ãã¾ãããï¼)<br>
+                    <br>
+                    <strong>æ³¨æ:</strong> è¯å®æã§ "use to" (d ãªã) ã¯çµ¶å¯¾ã«ééãï¼å¿ã "used to" ã¨æ¸ãã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 12</div>
+                <div class="question-text">
+                    I'm â sure many people â¡have â¢lived here â£<strong>during</strong> at least ten years.
+                </div>
+                <div class="japanese">å¤ãã®äººããå°ãªãã¨ã10å¹´éã¯ããã«ä½ãã§ããã¨ç¢ºä¿¡ãã¦ããã</div>
+                <div class="answer">
+                    <div class="answer-label">èª¤ã: â£ during â <strong>for</strong></div>
+                    I'm sure many people have lived here <strong>for</strong> at least ten years.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <strong>"during" ã¨ "for" ã®ä½¿ãåã:</strong><br>
+                    <br>
+                    <strong>DURING</strong> = ããã®éã«ããã®æéä¸­ã«ã<br>
+                    â ç¹å®ã®æéãåºæ¥äºãæã<br>
+                    ã»during <strong>the summer</strong> (å¤ã®éã«)<br>
+                    ã»during <strong>the meeting</strong> (ä¼è­°ä¸­ã«)<br>
+                    ã»during <strong>the pandemic</strong> (ãã³ãããã¯ã®é)<br>
+                    <br>
+                    <strong>FOR</strong> = ããã®éï¼æéã®é·ãï¼ã<br>
+                    â æéã®é·ããè¡¨ãï¼æ°å­ãä¼´ããã¨ãå¤ãï¼<br>
+                    ã»for <strong>10 years</strong> (10å¹´é)<br>
+                    ã»for <strong>three hours</strong> (3æé)<br>
+                    ã»for <strong>a long time</strong> (é·ãé)<br>
+                    <br>
+                    ãã®æã§ã¯ "at least ten years"ï¼å°ãªãã¨ã10å¹´éï¼ã¨ãã<strong>æéã®é·ã</strong>ãè¡¨ãã¦ããã®ã§ã"for" ãæ­£è§£ã<br>
+                    <br>
+                    <strong>è¦ãæ¹:</strong> æ°å­ããã = for / ç¹å®ã®ã¤ãã³ãå = during
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 13</div>
+                <div class="question-text">
+                    It was a very â <strong>tired</strong> day â¡for me today because I â¢took care of my sister's three children all afternoon â£while she went to visit her sick friend in the hospital.
+                </div>
+                <div class="japanese">ä»æ¥ã¯ç§ã«ã¨ã£ã¦ã¨ã¦ãç²ããæ¥ã ã£ãããªããªããå§ãçæ°ã®åäººãè¦èãã«çé¢ã¸è¡ã£ã¦ããéãåå¾ä¸­ãã£ã¨å§ã®3äººã®å­ä¾ã®ä¸è©±ããã¦ããããã ã</div>
+                <div class="answer">
+                    <div class="answer-label">èª¤ã: â  tired â <strong>tiring</strong></div>
+                    It was a very <strong>tiring</strong> day for me today...
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <strong>-ed / -ing å½¢å®¹è©ã®ä½¿ãåãï¼è¶éè¦ï¼ï¼:</strong><br>
+                    <br>
+                    <strong>-ing å½¢å®¹è©</strong> = ããããããããªï¼åå ã»æ§è³ªãè¡¨ãï¼ã<br>
+                    â ç©ã»äºã»ç¶æ³ãèª¬æããæã«ä½¿ã<br>
+                    ã»a <strong>tiring</strong> day (ç²ããããæ¥ = ç²ããæ¥)<br>
+                    ã»an <strong>exciting</strong> game (èå¥®ãããè©¦å = ã¯ã¯ã¯ã¯ããè©¦å)<br>
+                    ã»a <strong>boring</strong> movie (éå±ãããæ ç» = ã¤ã¾ããªãæ ç»)<br>
+                    <br>
+                    <strong>-ed å½¢å®¹è©</strong> = ãããã¦ãããããããï¼ææãè¡¨ãï¼ã<br>
+                    â äººã®ææãèª¬æããæã«ä½¿ã<br>
+                    ã»I am <strong>tired</strong>. (ç§ã¯ç²ãã¦ãã)<br>
+                    ã»I was <strong>excited</strong>. (ç§ã¯èå¥®ãã¦ãã)<br>
+                    ã»I was <strong>bored</strong>. (ç§ã¯éå±ãã¦ãã)<br>
+                    <br>
+                    <strong>ãã®åé¡:</strong><br>
+                    "It was a very _____ day" â ãæ¥ãã¨ãã<strong>ç©</strong>ãèª¬æ â <strong>-ing</strong> ãä½¿ãï¼<br>
+                    ãã®æ¥ããç²ãããããæ§è³ªãæã£ã¦ãã = tiring day<br>
+                    <br>
+                    <strong>è¦ãæ¹:</strong> ç©ã»äº = -ing / äººã®æ°æã¡ = -ed
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 14</div>
+                <div class="question-text">
+                    Neither of â the two proposals that â¡had been presented at the last meeting â¢<strong>were</strong> acceptable â£to the committee.
+                </div>
+                <div class="japanese">ååã®ä¼è­°ã§æç¤ºããã2ã¤ã®ææ¡ã®ã©ã¡ãããå§å¡ä¼ã«ã¯åãå¥ããããªãã£ãã</div>
+                <div class="answer">
+                    <div class="answer-label">èª¤ã: â¢ were â <strong>was</strong></div>
+                    Neither of the two proposals that had been presented at the last meeting <strong>was</strong> acceptable to the committee.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <strong>"Neither" ã¯å¸¸ã«åæ°æ±ãï¼</strong><br>
+                    <br>
+                    "Neither" = ãã©ã¡ããããªããã¨ããæå³ã ããææ³çã«ã¯<strong>åæ°</strong>ã¨ãã¦æ±ãã<br>
+                    â åè©ã¯åæ°å½¢ï¼was, is, has ãªã©ï¼ãä½¿ã<br>
+                    <br>
+                    <strong>éè¦ãªä¸»èªã¨åè©ã®ä¸è´:</strong><br>
+                    ã»<strong>Neither</strong> of the proposals <strong>was</strong> good. (åæ°)<br>
+                    ã»<strong>Either</strong> of the options <strong>is</strong> fine. (åæ°)<br>
+                    ã»<strong>Both</strong> of the proposals <strong>were</strong> good. (è¤æ°)<br>
+                    ã»<strong>Each</strong> of the students <strong>has</strong> a book. (åæ°)<br>
+                    ã»<strong>Every</strong> student <strong>has</strong> a book. (åæ°)<br>
+                    <br>
+                    <strong>ãã®åé¡:</strong><br>
+                    ä¸»èª: "Neither of the two proposals" â <strong>åæ°æ±ã</strong><br>
+                    åè©: "were" (è¤æ°å½¢) â <strong>"was" (åæ°å½¢) ã«è¨æ­£</strong><br>
+                    <br>
+                    "of the two proposals" ã«æããããªããã¨ï¼ä¸»èªã¯ "Neither" ãªã®ã§åæ°ã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 15</div>
+                <div class="question-text">
+                    â When it comes to the question â¡of how to pull through â¢these hard times, â£<strong>anybody cannot</strong> find an easy solution.
+                </div>
+                <div class="japanese">ãã®å°é£ãªæä»£ãä¹ãåãæ¹æ³ã®åé¡ã«é¢ãã¦ã¯ãèª°ãç°¡åãªè§£æ±ºç­ãè¦ã¤ããããªãã</div>
+                <div class="answer">
+                    <div class="answer-label">èª¤ã: â£ anybody cannot â <strong>nobody can</strong></div>
+                    When it comes to the question of how to pull through these hard times, <strong>nobody can</strong> find an easy solution.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <strong>è±èªã§ã¯äºéå¦å®ã¯ä½¿ããªãï¼</strong><br>
+                    <br>
+                    æ¥æ¬èª: ãèª°ããã§ããªããï¼å¦å®èªã2ã¤ï¼<br>
+                    â "anybody" (èª°ã) + "cannot" (ã§ããªã) = â è±èªã§ã¯ééã<br>
+                    <br>
+                    <strong>è±èªã§ã®æ­£ããè¡¨ç¾:</strong><br>
+                    â  <strong>Nobody can</strong> find... ï¼å¦å®ã®ä¸»èª + è¯å®ã®åè©ï¼<br>
+                    â¡ <strong>Not anybody can</strong> find... ï¼å¦å® + è¯å®ã®ä¸»èª + è¯å®ã®åè©ï¼â»ããä¸èªç¶<br>
+                    <br>
+                    <strong>ãã¿ã¼ã³æ´ç:</strong><br>
+                    â Anybody cannot do it. â ééã<br>
+                    â <strong>Nobody can</strong> do it. â æ­£ãã<br>
+                    â <strong>No one can</strong> do it. â æ­£ãã<br>
+                    <br>
+                    <strong>ä»ã®ä¾:</strong><br>
+                    â Anything is not good. â ééã<br>
+                    â <strong>Nothing is</strong> good. â æ­£ãã<br>
+                    <br>
+                    <strong>éè¦:</strong> ããã¯æ¥æ¬èªã®å½±é¿ã«ããå¸åçãªééããæ¥æ¬èªã§ã¯ãèª°ãããªããã¨äºéå¦å®ãèªç¶ã ããè±èªã§ã¯é¿ããï¼
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION F -->
+        <div class="section">
+            <div class="section-header">[F] æ¥æ¬æã®æå³ã«ãªãããã«èªï¼å¥ï¼ãä¸¦ã¹ããã¦è±æãå®æããªãã</div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 16</div>
+                <div class="japanese">å½¼ã¯çå­¦ããã ãã®ãã¨ã¯ãã£ããï¼1èªä¸è¦ï¼</div>
+                <div class="question-text">
+                    He did not ( nothing / for / study / abroad / without ).
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: He did not study abroad for nothing.</div>
+                    <strong>ä¸è¦ãªèª: without</strong>
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <span class="idiom">"not ... for nothing"</span> = ãç¡é§ã§ã¯ãªãã£ãããã£ãã ãã®ä¾¡å¤ããã£ãã<br>
+                    <br>
+                    ç´è¨³: ãå½¼ã¯ç¡é§ã«çå­¦ããã®ã§ã¯ãªãã£ãã<br>
+                    æè¨³: ãçå­¦ããã ãã®ä¾¡å¤ããã£ãã<br>
+                    <br>
+                    <strong>ã¤ãã£ãªã ã®æ§é :</strong><br>
+                    do something for nothing = ç¡é§ã«ããããã¿ãã§ããã<br>
+                    â <strong>NOT do something for nothing</strong> = ç¡é§ã«ãããã®ã§ã¯ãªã = ä¾¡å¤ããã£ã<br>
+                    <br>
+                    <strong>ä¾:</strong><br>
+                    ã»I didn't practice for nothing. (ç·´ç¿ã¯ç¡é§ãããªãã£ã = ç·´ç¿ã®ææãåºã)<br>
+                    ã»All that effort was not for nothing. (ãã®åªåã¯ç¡é§ãããªãã£ã)<br>
+                    <br>
+                    <strong>æ³¨æ:</strong> äºéå¦å®ï¼not + nothingï¼ã ããè±èªã§ã¯ãã®ã¤ãã£ãªã ã¯è¨±ãããç¹å¥ãªè¡¨ç¾ã"not ... for nothing" ã§1ã¤ã®çèªã¨ãã¦è¦ããã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 17</div>
+                <div class="japanese">åºå¸­ãã¦ããäººã¯ã¿ãªå½¼ã®è©±ã«æåããã</div>
+                <div class="question-text">
+                    ( people / all / present / were / moved / the ) by his speech.
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: All the people present were moved by his speech.</div>
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <strong>ã­ã¼ãã¤ã³ã: "present" ã®ä½ç½®ã¨æå³</strong><br>
+                    <br>
+                    "present" ã«ã¯2ã¤ã®æå³ãããã<strong>ä½ç½®ã«ãã£ã¦æå³ãå¤ãã</strong>:<br>
+                    <br>
+                    â  åè©ã®<strong>å</strong>: the <strong>present</strong> situation = ç¾å¨ã®ç¶æ³<br>
+                    ãâ ãç¾å¨ã®ãä»ã®ãã¨ããæå³<br>
+                    <br>
+                    â¡ åè©ã®<strong>å¾</strong>: the people <strong>present</strong> = åºå¸­ãã¦ããäººã<br>
+                    ãâ ãåºå¸­ãã¦ãããå±åããããã¨ããæå³<br>
+                    <br>
+                    <strong>ãã®åé¡:</strong><br>
+                    "All the people present" = åºå¸­ãã¦ããå¨ã¦ã®äººã<br>
+                    = All the people who were present<br>
+                    <br>
+                    <strong>èªé :</strong><br>
+                    All + the + people + present + were moved<br>
+                    â éå®è© â åè© â å½¢å®¹è©ï¼å¾ç½®ä¿®é£¾ï¼<br>
+                    <br>
+                    <strong>ä»ã®ä¾:</strong><br>
+                    ã»the members present at the meeting (ä¼è­°ã«åºå¸­ãã¦ããã¡ã³ãã¼)<br>
+                    ã»all students present (åºå¸­ãã¦ããå¨çå¾)
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 18</div>
+                <div class="japanese">å¤ªé½ãæãæã¯ããã¾ãã¾è²ªæ¬²ãªäººéã®æã®å±ãã¨ããã«ãã£ãã¨ããã°ã¨ãã®æã«ãªããªã£ã¦ããã ãããï¼1èªä¸è¦ï¼</div>
+                <div class="question-text">
+                    The sun, the moon and the stars would have disappeared long ago, ( within / happened / of / had / be / where / to / reach / they ) greedy human hands.
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: had they happened to be within reach of greedy human hands.</div>
+                    <strong>ä¸è¦ãªèª: where</strong>
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <strong>ä»®å®æ³éå»å®äºã®åç½®æ§æï¼è¶é«åº¦ï¼ï¼</strong><br>
+                    <br>
+                    <strong>éå¸¸ã®å½¢:</strong><br>
+                    <strong>If</strong> they <strong>had happened</strong> to be within reach of greedy human hands, they would have disappeared long ago.<br>
+                    <br>
+                    <strong>åç½®å½¢ï¼if ãçç¥ï¼:</strong><br>
+                    <strong>Had they happened</strong> to be within reach of greedy human hands, they would have disappeared long ago.<br>
+                    <br>
+                    <strong>åç½®ã®ã«ã¼ã«:</strong><br>
+                    If + ä¸»èª + had + éå»åè© â <strong>Had + ä¸»èª + éå»åè©</strong> (if ãåé¤)<br>
+                    <br>
+                    <strong>éè¦è¡¨ç¾:</strong><br>
+                    ã»happen to be = ãã¾ãã¾ãã§ãã<br>
+                    ã»within reach of = ãã®æã®å±ãç¯å²ã«<br>
+                    <br>
+                    <strong>ä»ã®ä¾:</strong><br>
+                    ã»If I had known â <strong>Had I known</strong><br>
+                    ã»If she had been there â <strong>Had she been there</strong><br>
+                    <br>
+                    ãã®åç½®å½¢ã¯<strong>ãã©ã¼ãã«ã»æå­¦ç</strong>ãªè¡¨ç¾ã§ãä¸»ã«æ¸ãè¨èã§ä½¿ãããã
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 19</div>
+                <div class="japanese">èç±ã¬ã©ã¹ã¯ç±ãã¦ãå²ããªããè½ã¨ãã¦ãæ®éã®ã¬ã©ã¹ã»ã©ããããªãã</div>
+                <div class="question-text">
+                    Pyrex glass neither cracks if it is heated, nor ( if / so / as / is / glass / normal / it / fragile ) it is dropped.
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: is it so fragile as normal glass if</div>
+                    Pyrex glass neither cracks if it is heated, nor <strong>is it so fragile as normal glass if</strong> it is dropped.
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <strong>2ã¤ã®éè¦ææ³ãã¤ã³ã:</strong><br>
+                    <br>
+                    <strong>â  Neither ... nor ã®åç½®</strong><br>
+                    "neither A nor B" ã®æ§æã§ã"nor" ã®å¾ã¯<strong>çåæã®èªé </strong>ã«ãªãï¼åç½®ï¼:<br>
+                    ã»Neither did I see him, nor <strong>did he</strong> see me.<br>
+                    ã»Pyrex neither cracks..., nor <strong>is it</strong> fragile...<br>
+                    <br>
+                    éå¸¸ã®èªé : nor it is fragile â<br>
+                    åç½®ã®èªé : nor <strong>is it</strong> fragile â<br>
+                    <br>
+                    <strong>â¡ So ... asï¼å¦å®æã§ã®æ¯è¼ï¼</strong><br>
+                    å¦å®æã§ã¯ "as ... as" ã®ä»£ããã« "<strong>so ... as</strong>" ãä½¿ãã:<br>
+                    ã»not <strong>so</strong> fragile <strong>as</strong> normal glass<br>
+                    = not <strong>as</strong> fragile <strong>as</strong> normal glass<br>
+                    = æ®éã®ã¬ã©ã¹ã»ã©å£ãããããªã<br>
+                    <br>
+                    <strong>å®ææã®æ§é :</strong><br>
+                    Pyrex glass <strong>neither</strong> cracks..., <strong>nor is it so fragile as</strong> normal glass...<br>
+                    â ååã®å¦å® â åç½® â æ¯è¼è¡¨ç¾
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-num">åé¡ 20</div>
+                <div class="japanese">å½¼ã®è¡åã®çµæãã©ããªããã¯å¾ã«ãªã£ã¦ã¿ãªãã¨ããããªãã</div>
+                <div class="question-text">
+                    The result ( of / seen / still remains / to / his action / be ).
+                </div>
+                <div class="answer">
+                    <div class="answer-label">æ­£è§£: The result of his action still remains to be seen.</div>
+                </div>
+                <div class="explanation">
+                    <div class="explanation-label">è§£èª¬:</div>
+                    <span class="idiom">"remain to be seen"</span> = ãã¾ã åãããªããä»å¾æããã«ãªãã<br>
+                    <br>
+                    ç´è¨³: ãè¦ããããã¨ãæ®ã£ã¦ããã<br>
+                    æè¨³: ãã¾ã åãããªããæ§å­ãè¦ãªãã¨åãããªãã<br>
+                    <br>
+                    <strong>æ§é :</strong><br>
+                    The result of his action (ä¸»èª) + still remains (åè©) + to be seen (è£èª)<br>
+                    <br>
+                    <strong>ä½¿ãæ¹:</strong><br>
+                    ãã®ã¤ãã£ãªã ã¯ãçµæãçµè«ãã¾ã åºã¦ããªãæãä»å¾ã®å±éãå¾ã¤å¿è¦ãããæã«ä½¿ãã<br>
+                    <br>
+                    <strong>ä¾:</strong><br>
+                    ã»It <strong>remains to be seen</strong> whether he will succeed.<br>
+                    ã(å½¼ãæåãããã©ããã¯ã¾ã åãããªã)<br>
+                    ã»The outcome of the election <strong>remains to be seen</strong>.<br>
+                    ã(é¸æã®çµæã¯ã¾ã åãããªã)<br>
+                    <br>
+                    <strong>é¡ä¼¼è¡¨ç¾:</strong><br>
+                    ã»We'll see. (æ§å­ãè¦ãã)<br>
+                    ã»Time will tell. (æéãçµã¦ã°åãã)<br>
+                    ã»It's too early to tell. (ã¾ã å¤æ­ããã®ã¯æ©ã)
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px; padding: 30px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 10px;">
+            <h2>ð ä»¥ä¸ã§å¨20åã®è§£èª¬ãçµããã¾ãï¼</h2>
+            <p style="margin-top: 15px; font-size: 1.1em;">
+                ãã£ããå¾©ç¿ãã¦ãææ³åãã¢ããããã¾ãããï¼<br>
+                åãããªãã¨ãããããã°ãä½åº¦ãèª­ã¿è¿ãã¦ãã ããã
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
