@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Test Breakdown - åè©ã®èªæ³</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #667eea;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .test-info h2 {
+            margin-bottom: 15px;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 0;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+        }
+        
+        .section-header h3 {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+        
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 20px;
+        }
+        
+        .section-content.active {
+            max-height: 5000px;
+            padding: 20px;
+        }
+        
+        .question-card {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+        
+        .reveal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .answer-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            margin-top: 10px;
+        }
+        
+        .answer-box.show {
+            max-height: 500px;
+        }
+        
+        .answer-content {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            margin-top: 10px;
+        }
+        
+        .answer-label {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .grammar-reference {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.95em;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .topic-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .warning {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .warning h3 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+        
+        .tips-box {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f3e5f5;
+            border-radius: 15px;
+            border: 2px solid #9c27b0;
+        }
+        
+        .tips-box h3 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ð¥ Grammar Test Breakdown ð¥</h1>
+        <p class="subtitle">åè©ã®èªæ³ï½ç¢ºèªãã¹ã - English Grammar & Usage Problems 1100</p>
+        
+        <div class="test-info">
+            <h2>ð What's This Test About?</h2>
+            <p><strong>Source:</strong> å¨æ¼ç¿ çºå± è±ææ³ã»èªæ³åé¡1100 (Pages 4-89)</p>
+            <p><strong>Focus:</strong> Verb usage, idioms, grammar structures</p>
+            <p><strong>Total Questions:</strong> 20</p>
+            <p><strong>Format:</strong> Multiple choice, fill-in-the-blank, error correction, sentence rearrangement</p>
+        </div>
+
+        <!-- Section A -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð Section A: Find the Closest Meaning (Q1-2)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        "Are you <strong>making the most of</strong> your camera?"<br><br>
+                        â  always carrying<br>
+                        â¡ repairing by yourself<br>
+                        â¢ making by yourself<br>
+                        â£ putting to the fullest possible use
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â£ putting to the fullest possible use<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãããªãã¯ã«ã¡ã©ãæå¤§éã«æ´»ç¨ãã¦ãã¾ãã?ã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â â£ putting to the fullest possible use</span> = æå¤§éã«æ´»ç¨ãã<br>
+                            ãmake the most of ~ãã¯ã~ãæå¤§éã«æ´»ç¨ãããã¨ããæå³ã®ã¤ãã£ãªã ã§ãã<br><br>
+                            <span style="color: #c62828;">â â  always carrying</span> = ãã¤ãæã¡æ­©ãï¼æå³ãéãï¼<br>
+                            <span style="color: #c62828;">â â¡ repairing by yourself</span> = èªåã§ä¿®çããï¼æå³ãéãï¼<br>
+                            <span style="color: #c62828;">â â¢ making by yourself</span> = èªåã§ä½ãï¼æå³ãéãï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Idioms with nouns (åè©ãå«ãã¤ãã£ãªã )
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        "The committee must <strong>look into</strong> what hospital conditions exist for children."<br><br>
+                        â  make sure<br>
+                        â¡ reconsider<br>
+                        â¢ study<br>
+                        â£ take care
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â¢ study<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãå§å¡ä¼ã¯å­ã©ããã¡ã®ããã®çé¢ã®ç¶æ³ãã©ããªã£ã¦ãããèª¿æ»ããªããã°ãªããªããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â â¢ study</span> = èª¿æ»ãããç ç©¶ãã<br>
+                            ãlook into ~ãã¯ã~ãèª¿æ»ãããèª¿ã¹ããã¨ããæå³ã®å¥åè©ã§ãã<br><br>
+                            <span style="color: #c62828;">â â  make sure</span> = ç¢ºèªããï¼èª¿æ»ããã»ã©æ·±ããªãï¼<br>
+                            <span style="color: #c62828;">â â¡ reconsider</span> = åèããï¼æå³ãéãï¼<br>
+                            <span style="color: #c62828;">â â£ take care</span> = ä¸è©±ãããï¼æå³ãéãï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Idioms with verbs (åè©ãå«ãã¤ãã£ãªã )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section B -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>âï¸ Section B: Fill in the Blanks (Q3-5)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        "The prices are (ãã) change without notice."<br><br>
+                        â  subject to<br>
+                        â¡ prior to<br>
+                        â¢ interested in<br>
+                        â£ dependent on
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â  subject to<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãä¾¡æ ¼ã¯äºåãªãå¤æ´ãããå ´åãããã¾ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â â  subject to</span> = ~ã®å¯¾è±¡ã§ããã~ãåããå¯è½æ§ããã<br>
+                            ãbe subject to ~ãã¯ã~ã®å½±é¿ãåããã~ãããå¯è½æ§ããããã¨ããæå³ã§ãã<br><br>
+                            <span style="color: #c62828;">â â¡ prior to</span> = ~ã®åã«ï¼æéçãªåç½®è©ã§ææ³çã«åããªãï¼<br>
+                            <span style="color: #c62828;">â â¢ interested in</span> = ~ã«èå³ãããï¼ä¾¡æ ¼ãèå³ãæã¤ã®ã¯ä¸èªç¶ï¼<br>
+                            <span style="color: #c62828;">â â£ dependent on</span> = ~ã«ä¾å­ãã¦ããï¼æå³çã«ä¸èªç¶ï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Idioms with adjectives/adverbs (å½¢å®¹è©ã»å¯è©ãå«ãã¤ãã£ãªã )
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        "His car turned (ãã) several times before falling into the river."<br><br>
+                        â  down<br>
+                        â¡ in<br>
+                        â¢ on<br>
+                        â£ over
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â£ over<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãå½¼ã®è»ã¯å·ã«è½ã¡ãåã«ä½åº¦ãæ¨ªè»¢ãããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â â£ turn over</span> = æ¨ªè»¢ãããã²ã£ããè¿ã<br>
+                            ãturn overãã¯ãè»¢è¦ãããæ¨ªè»¢ãããã¨ããæå³ã®å¥åè©ã§ãã<br><br>
+                            <span style="color: #c62828;">â â  turn down</span> = æ­ããé³éãä¸ããï¼æå³ãéãï¼<br>
+                            <span style="color: #c62828;">â â¡ turn in</span> = æåºãããå¯ãï¼æå³ãéãï¼<br>
+                            <span style="color: #c62828;">â â¢ turn on</span> = ã¹ã¤ãããå¥ããï¼æå³ãéãï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Phrasal verbs (åè©ãå«ãã¤ãã£ãªã )
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q5</span>
+                    <div class="question-text">
+                        "Tom is selfish. He thinks he can do (ãã) he wants to."<br><br>
+                        â  whenever<br>
+                        â¡ however<br>
+                        â¢ whatever<br>
+                        â£ wherever
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â¢ whatever<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ããã ã¯èªå·±ä¸­å¿çã ãå½¼ã¯èªåãæããã¨ã¯ä½ã§ãã§ããã¨æã£ã¦ãããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â â¢ whatever</span> = ä½ã§ãï¼é¢ä¿ä»£åè©ï¼<br>
+                            ãwhateverãã¯ãä½ã§ã~ãããã¨ãã¨ããæå³ã§ãããã§ã¯åè©ãdoãã®ç®çèªã«ãªã£ã¦ãã¾ãã<br><br>
+                            <span style="color: #c62828;">â â  whenever</span> = ãã¤ã§ãï¼æéãè¡¨ãã®ã§ãdoãã®ç®çèªã«ãªããªãï¼<br>
+                            <span style="color: #c62828;">â â¡ however</span> = ã©ã®ããã«~ã§ãï¼æ¹æ³ãè¡¨ãã®ã§ä¸é©åï¼<br>
+                            <span style="color: #c62828;">â â£ wherever</span> = ã©ãã§ãï¼å ´æãè¡¨ãã®ã§ãdoãã®ç®çèªã«ãªããªãï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Relative pronouns (é¢ä¿è©ã®ç¨æ³)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section C -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð¤ Section C: Common Word for Both (Q6-7)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q6</span>
+                    <div class="question-text">
+                        (a) "My host family was very kind and did everything to help me feel at (ãã)."<br>
+                        (b) "The true meaning of life was brought (ãã) to me when I saw the movie Rain Man."
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> home<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â (a) feel at home</span> = ãã¤ããããªã©ãã¯ã¹ãã<br>
+                            ãfeel at homeãã¯ããã¤ããã§ãããå±å¿å°ãè¯ããã¨ããæå³ã®ã¤ãã£ãªã ã§ãã<br><br>
+                            <span style="color: #2e7d32;">â (b) bring home to ~</span> = ~ã«çæããããå®æããã<br>
+                            ãbring home to someoneãã¯ã(äºº)ã«~ãçæããããå®æããããã¨ããæå³ã§ãã<br><br>
+                            <strong>æ¥æ¬èªè¨³:</strong><br>
+                            (a) ããã¹ããã¡ããªã¼ã¯ã¨ã¦ãè¦ªåã§ãç§ããã¤ãããããã«ãããããã¨ããã¦ããããã<br>
+                            (b) ãæ ç»ãã¬ã¤ã³ãã³ããè¦³ãæãäººçã®æ¬å½ã®æå³ãçæãããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Common phrase completion (å±éèªè£å)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q7</span>
+                    <div class="question-text">
+                        (a) "(ãã) all his campaigning, he couldn't get enough votes to win."<br>
+                        (b) "It might be better for us to make allowance (ãã) his inexperience because he is a newcomer."
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> for<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â (a) for all ~</span> = ~ã«ãããããã<br>
+                            ãfor all ~ãã¯ã~ã«ãããããããã¨ããæå³ã§ããdespiteãããin spite ofãã¨åãæå³ã§ãã<br><br>
+                            <span style="color: #2e7d32;">â (b) make allowance for ~</span> = ~ãèæ®ãããå¤§ç®ã«è¦ã<br>
+                            ãmake allowance for ~ãã¯ã~ãèæ®ã«å¥ããã~ãæéãããã¨ããæå³ã®ã¤ãã£ãªã ã§ãã<br><br>
+                            <strong>æ¥æ¬èªè¨³:</strong><br>
+                            (a) ãé¸ææ´»åãé å¼µã£ãã«ãããããããå½¼ã¯åã¤ã®ã«ååãªç¥¨ãå¾ãããªãã£ããã<br>
+                            (b) ãå½¼ã¯æ°äººãªã®ã§ãå½¼ã®çµé¨ä¸è¶³ãèæ®ããæ¹ããããããããªããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Common phrase completion (å±éèªè£å)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section D -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð¯ðµ Section D: Japanese to English (Q8)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q8</span>
+                    <div class="question-text">
+                        ãã®ãã¨ã°ã®æå³ãèª¿ã¹ããã¨å½¼ã¯è¾æ¸ãå¼ããã<br><br>
+                        "He consulted his dictionary to (ãã) up the meaning of the word."
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> look<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â look up</span> = ï¼è¾æ¸ãªã©ã§ï¼èª¿ã¹ã<br>
+                            ãlook upãã¯ãï¼è¾æ¸ã»åèæ¸ãªã©ã§ï¼èª¿ã¹ããæ¤ç´¢ãããã¨ããæå³ã®å¥åè©ã§ãã<br>
+                            ç®çèªï¼the meaning of the wordï¼ãéä¸­ã«æãå½¢ã«ãªãã¾ãã<br><br>
+                            <strong>é¡ä¼¼è¡¨ç¾:</strong><br>
+                            â¢ look up the word in a dictionary = è¾æ¸ã§åèªãèª¿ã¹ã<br>
+                            â¢ look it up = ãããèª¿ã¹ã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Phrasal verbs (åè©ãå«ãã¤ãã£ãªã )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section E -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð Section E: Same Meaning Sentences (Q9-10)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q9</span>
+                    <div class="question-text">
+                        (a) "There are no less than two hundred cherry trees in this park."<br>
+                        (b) "There are as (ãã) as two hundred cherry trees in this park."
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> many<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ããã®å¬åã«ã¯200æ¬ãã®æ¡ã®æ¨ããããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â no less than = as many as</span> = ~ãï¼å¤ããå¼·èª¿ï¼<br>
+                            ä¸¡æ¹ã¨ãã~ãã®ãã¨ããæå³ã§ãæ°ã®å¤ããå¼·èª¿ããè¡¨ç¾ã§ãã<br><br>
+                            â¢ <strong>no less than</strong> = ~ãã~ã«ãéããï¼é©ãã®ãã¥ã¢ã³ã¹ï¼<br>
+                            â¢ <strong>as many as</strong> = ~ãã®ï¼å¤ããå¼·èª¿ï¼<br><br>
+                            ãã®2ã¤ã®è¡¨ç¾ã¯ã»ã¼åãæå³ã§æ¸ãæãå¯è½ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Comparisons (æ¯è¼)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q10</span>
+                    <div class="question-text">
+                        (a) She said to me, "I've got a new dress. What do you think of it?"<br>
+                        (b) She (ãã) me that she'd got a new dress and (ãã) what I thought of it.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> told, asked<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãå½¼å¥³ã¯ç§ã«ãæ°ãããã¬ã¹ãè²·ã£ãã¨è¨ãããããã©ãæããå°ã­ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â told ... and asked</span><br>
+                            ç´æ¥è©±æ³ãéæ¥è©±æ³ã«å¤ããæã®ãã¤ã³ã:<br><br>
+                            1. <strong>told</strong> = å¹³åæï¼I've got a new dressï¼ãéæ¥è©±æ³ã«<br>
+                            ããsay to + äººãâãtell + äººãã«å¤ããã¾ã<br><br>
+                            2. <strong>asked</strong> = çåæï¼What do you think of it?ï¼ãéæ¥è©±æ³ã«<br>
+                            ãçåæã¯ãaskããä½¿ãã¾ã<br><br>
+                            3. æå¶ã®ä¸è´ã§ãhave gotãâãhad gotãã«å¤å<br>
+                            4. çåæã®èªé ãå¹³åæã®èªé ã«å¤ããï¼what I thoughtï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Reported speech (æå¶ã®ä¸è´ã¨è©±æ³)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section F -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>â Section F: Error Correction (Q11-15)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q11</span>
+                    <div class="question-text">
+                        â While the Middle Ages, which â¡followed â¢Roman times, superstition â£reigned.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â  While â During the Middle Ages / In the Middle Ages<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãã­ã¼ãæä»£ã«ç¶ããä¸­ä¸ã®éãè¿·ä¿¡ãæ¯éãã¦ãããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #c62828;">â While the Middle Ages</span> = ééã<br>
+                            ãwhileãã¯<strong>æ¥ç¶è©</strong>ãªã®ã§ãå¾ãã«ã¯ãä¸»èª+åè©ãã®ç¯ãå¿è¦ã§ãã<br>
+                            ä¾: While I was sleeping, ... ï¼ç§ãå¯ã¦ããéã«ï¼<br><br>
+                            <span style="color: #2e7d32;">â During the Middle Ages / In the Middle Ages</span> = æ­£ãã<br>
+                            æä»£ãæéãè¡¨ãæã¯<strong>åç½®è©</strong>ã®ãduringãã¾ãã¯ãinããä½¿ãã¾ãã<br>
+                            â¢ <strong>during</strong> = ~ã®éãã£ã¨<br>
+                            â¢ <strong>in</strong> = ~ã®æä»£ã«
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Prepositions (åç½®è©ã¨ç¾¤åç½®è©ã®ç¨æ³)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q12</span>
+                    <div class="question-text">
+                        The boy looked â very funny that â¡I couldn't â¢help laughing â£at him.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â  very funny â so funny<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ããã®å°å¹´ã¯ã¨ã¦ãé¢ç½ãæ ¼å¥½ã ã£ãã®ã§ãç¬ããã«ã¯ããããªãã£ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #c62828;">â very funny that ~</span> = ééã<br>
+                            ãveryãã¯åãªãç¨åº¦ãè¡¨ãå¯è©ãªã®ã§ãå¾ãã«ãthatç¯ããç¶ãããã¨ãã§ãã¾ããã<br><br>
+                            <span style="color: #2e7d32;">â so funny that ~</span> = æ­£ãã<br>
+                            ãso ~ that ...ãã¯ãã¨ã¦ã~ãªã®ã§...ãã¨ãã<strong>çµæ</strong>ãè¡¨ãæ§æã§ãã<br><br>
+                            <strong>æ§æ:</strong><br>
+                            â¢ so + å½¢å®¹è©/å¯è© + that + ç¯ = ã¨ã¦ã~ãªã®ã§...<br>
+                            â¢ such + (a/an) + åè© + that + ç¯ = ã¨ã¦ã~ãªã®ã§...
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Conjunctions (æ¥ç¶è©ã®ç¨æ³)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q13</span>
+                    <div class="question-text">
+                        You know the old saying â which goes, "â¡That who â¢live in glass houses should not throw stones," â£don't you?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â¡ That who â Those who<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãã¬ã©ã¹ã®å®¶ã«ä½ãäººã¯ç³ãæããã¹ãã§ã¯ãªããã¨ããå¤ãè«ºãç¥ã£ã¦ãã¾ããã­?ã<br>
+                            ï¼æå³: èªåã«ãæ¬ ç¹ãããã®ã«äººãæ¹å¤ããã¹ãã§ã¯ãªãï¼<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #c62828;">â That who</span> = ééã<br>
+                            ãthatãã¯åæ°ã®æç¤ºä»£åè©ãªã®ã§ããwhoãã¨çµã¿åããã¦ä½¿ããã¨ã¯ã§ãã¾ããã<br><br>
+                            <span style="color: #2e7d32;">â Those who</span> = æ­£ãã<br>
+                            ãthose who ~ãã¯ã~ããäººããã¨ããæå³ã®æ£ç¨è¡¨ç¾ã§ãã<br>
+                            â¢ <strong>those</strong> = è¤æ°ã®äººããæãæç¤ºä»£åè©<br>
+                            â¢ <strong>who</strong> = é¢ä¿ä»£åè©ï¼ä¸»æ ¼ï¼<br><br>
+                            <strong>ä¾æ:</strong><br>
+                            Those who work hard will succeed. = åªåããäººã¯æåãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Pronouns (ä»£åè©ã®èªæ³)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q14</span>
+                    <div class="question-text">
+                        Many young people would â rather spend money â¡on what they want â¢than â£to save for a rainy day.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â£ to save â save<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãå¤ãã®è¥èã¯ãããã¨ããæã®ããã«è²¯éããããããæ¬²ãããã®ã«ãéãä½¿ãããããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #c62828;">â would rather ~ than to do</span> = ééã<br>
+                            ãwould rather ~ thanãã®å¾ãã«ã¯<strong>åè©ã®åå½¢</strong>ãæ¥ã¾ãããtoä¸å®è©ãã¯ä½¿ãã¾ããã<br><br>
+                            <span style="color: #2e7d32;">â would rather ~ than do</span> = æ­£ãã<br>
+                            <strong>æ§æ:</strong><br>
+                            would rather + åè©ã®åå½¢ + than + åè©ã®åå½¢<br>
+                            = ~ããããããã...ããã<br><br>
+                            <strong>ä¾æ:</strong><br>
+                            I would rather stay home than go out.<br>
+                            = å¤åºããããå®¶ã«ããã<br><br>
+                            <strong>è£è¶³:</strong> "save for a rainy day" = ããã¨ããæã®ããã«è²¯éããï¼æ£ç¨å¥ï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: would rather...than structure (æ¯è¼)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q15</span>
+                    <div class="question-text">
+                        It's a good car, and â that is more, it's â¡quite â¢a cheap â£one.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> â  that â what<br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãããã¯è¯ãè»ã ãããã«ãããªãå®ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #c62828;">â that is more</span> = ééã<br>
+                            ãthatãã¯æç¤ºä»£åè©ã§ããã®æèã§ã¯ä½¿ãã¾ããã<br><br>
+                            <span style="color: #2e7d32;">â what is more</span> = æ­£ãã<br>
+                            ãwhat is moreãã¯ãããã«ããã®ä¸ãã¨ããæå³ã®<strong>æ£ç¨è¡¨ç¾</strong>ã§ãã<br>
+                            ãmoreoverããfurthermoreããbesidesãã¨åãæå³ã§ä½¿ããã¾ãã<br><br>
+                            <strong>whatã®ç¨æ³:</strong><br>
+                            ããã§ã®ãwhatãã¯é¢ä¿ä»£åè©ã§ã<br>
+                            ãwhat is moreã= ãããå¤ããã¨ï¼ãããªããã¨ï¼ãã¨ããæå³ãè¡¨ãã¾ãã<br><br>
+                            <strong>ä¾æ:</strong><br>
+                            He is smart, and what is more, he is kind.<br>
+                            = å½¼ã¯é ­ãè¯ããããã«ãåªããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Relative pronouns (é¢ä¿è©ã®ç¨æ³)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section G -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð§© Section G: Word Rearrangement (Q16-20)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="question-card">
+                    <span class="question-number">Q16</span>
+                    <div class="question-text">
+                        ç§ã¯æ°èã§ãååãããå­ãã¦ããã¾ãã(1èªä¸è¦)<br>
+                        Your name ( me / is / from / newspaper / familiar / to / with / the )
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> Your name is familiar to me from the newspaper. (withä¸è¦)<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â be familiar to ~</span> = ~ã«ããç¥ããã¦ãã<br>
+                            ãfamiliarããä½¿ãæã¯åç½®è©ãtoããä½¿ãã¾ãããwithãã¯ä¸è¦ã§ãã<br><br>
+                            <strong>familiarã®2ã¤ã®ä½¿ãæ¹:</strong><br>
+                            1. <strong>be familiar to + äºº</strong> = ï¼äººï¼ã«ããç¥ããã¦ãã<br>
+                            ãä¾: This song is familiar to everyone. = ãã®æ²ã¯èª°ã§ãç¥ã£ã¦ãã<br><br>
+                            2. <strong>be familiar with + ãã®</strong> = ï¼ãã®ï¼ãããç¥ã£ã¦ãã<br>
+                            ãä¾: I am familiar with this area. = ç§ã¯ãã®å°åãããç¥ã£ã¦ãã<br><br>
+                            <strong>ãã®åé¡ã®ãã¤ã³ã:</strong><br>
+                            ãYour name is familiar to meã= ããªãã®ååã¯ç§ã«ããç¥ããã¦ãã<br>
+                            ãfrom the newspaperã= æ°èããï¼æå ±æºãç¤ºãï¼
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Idioms with adjectives (å½¢å®¹è©ã»å¯è©ãå«ãã¤ãã£ãªã )
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q17</span>
+                    <div class="question-text">
+                        å½¼å¥³ã¯è´è¡ãæãã®ã¾ã¾ã«ç¬ããããæ³£ããããããè¡ãç¥ã£ã¦ããã<br>
+                        She knows ( at / her / how / laugh or cry / make / the audience / to ) will.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> She knows how to make the audience laugh or cry at her will.<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â how to + åè©ã®åå½¢</span> = ~ããæ¹æ³<br>
+                            ãhow to doãã¯ã~ããæ¹æ³ã~ã®ä»æ¹ãã¨ããæå³ã§ãã<br><br>
+                            <span style="color: #2e7d32;">â make + äºº + åè©ã®åå½¢</span> = ï¼äººï¼ã«~ããã<br>
+                            ãmakeãã¯ä½¿å½¹åè©ã§ãå¾ãã«ãäºº + åè©ã®åå½¢ããåãã¾ãã<br>
+                            ä¾: make me happy = ç§ãå¹¸ãã«ãã<br>
+                            ããmake him laugh = å½¼ãç¬ããã<br><br>
+                            <span style="color: #2e7d32;">â at one's will</span> = æãã®ã¾ã¾ã«ãèªç±ã«<br>
+                            ãat willã= èªç±ã«ãæããã¾ã¾ã«<br><br>
+                            <strong>æã®æ§é :</strong><br>
+                            She knows [how to make the audience laugh or cry] at her will.<br>
+                            = å½¼å¥³ã¯ [è´è¡ãç¬ããããæ³£ããããããæ¹æ³] ãèªç±èªå¨ã«ç¥ã£ã¦ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Infinitives (ä¸å®è©)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q18</span>
+                    <div class="question-text">
+                        ä¸­å½ã§ã¯ãã´ãç æ¼ ã®ç æ¼ åã®é²è¡ãããæ­¢ããããã«,æå½¹å ´ãèæ¨ãç¨æãã¦æ¤æãè¡ã£ã¦ããã<br>
+                        In China, people are planting young trees supplied ( an / authorities / back / by / effort / hold / in / local / to ) the advancing Gobi Desert.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> In China, people are planting young trees supplied by local authorities in an effort to hold back the advancing Gobi Desert.<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â supplied by local authorities</span> = å°æ¹èªæ²»ä½ã«ãã£ã¦æä¾ããã<br>
+                            éå»åè©ãsuppliedãããyoung treesããå¾ãããä¿®é£¾ãã¦ãã¾ãã<br><br>
+                            <span style="color: #2e7d32;">â in an effort to ~</span> = ~ãããã¨åªåãã¦ã~ããããã«<br>
+                            ãin an effort to doãã¯ã~ããããã«ãã¨ããç®çãè¡¨ãè¡¨ç¾ã§ãã<br><br>
+                            <span style="color: #2e7d32;">â hold back</span> = æãããé£ãæ­¢ãã<br>
+                            ãhold backãã¯ãæå¶ãããé»æ­¢ãããé£ãæ­¢ãããã¨ããæå³ã®å¥åè©ã§ãã<br><br>
+                            <strong>æã®æ§é :</strong><br>
+                            people are planting young trees [supplied by local authorities] [in an effort to hold back the advancing Gobi Desert]<br>
+                            = äººãã¯ [å°æ¹èªæ²»ä½ã«ãã£ã¦æä¾ããã] èæ¨ã [é²è¡ããã´ãç æ¼ ãé£ãæ­¢ããããã«] æ¤ãã¦ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Phrasal verbs (åè©ãå«ãã¤ãã£ãªã )
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q19</span>
+                    <div class="question-text">
+                        äº¤éäºæã®å¤§é¨åã¯éè»¢èã®å´ã®ä¸æ³¨æã®ããã ã¨è¨ãããã<br>
+                        It is said that most of the traffic ( carelessness / on / part / are / accidents / to / the / due ) of the drivers.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> It is said that most of the traffic accidents are due to carelessness on the part of the drivers.<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â be due to ~</span> = ~ãåå ã§ããã~ã®ããã§ãã<br>
+                            ãbe due to ~ãã¯ã~ã«èµ·å ããã~ãåå ã§ãããã¨ããæå³ã§ãã<br>
+                            ä¾: The delay was due to bad weather. = éå»¶ã¯æªå¤©åãåå ã ã£ã<br><br>
+                            <span style="color: #2e7d32;">â on the part of ~</span> = ~ã®å´ã®ã~ã«ãã<br>
+                            ãon the part of ~ãã¯ã~ã®å´ã®ã~ããã®ãã¨ããæå³ã®ç¾¤åç½®è©ã§ãã<br>
+                            ä¾: It was a mistake on the part of the company.<br>
+                            ãã= ããã¯ä¼ç¤¾å´ã®ãã¹ã ã£ã<br><br>
+                            <strong>æã®æ§é :</strong><br>
+                            most of the traffic accidents are due to [carelessness] [on the part of the drivers]<br>
+                            = äº¤éäºæã®å¤§åã¯ [ä¸æ³¨æ] [éè»¢èå´ã®] ãåå ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Prepositions (åç½®è©ã¨ç¾¤åç½®è©ã®ç¨æ³)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q20</span>
+                    <div class="question-text">
+                        å½¼ã¯ãããªãµãã«æ±ããããã¨ã«æ£ãã¦ããªãã<br>
+                        He ( like / not / is / being / that / used / treated / to ).
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> He is not used to being treated like that.<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span style="color: #2e7d32;">â be used to + ååè©(~ing)</span> = ~ãããã¨ã«æ£ãã¦ãã<br>
+                            ãbe used to ~ãã¯ã~ã«æ£ãã¦ãããã¨ãã<strong>ç¶æ</strong>ãè¡¨ãã¾ãã<br>
+                            åç½®è©ãtoãã®å¾ãã«ã¯<strong>ååè©(~ing)</strong>ã¾ãã¯<strong>åè©</strong>ãæ¥ã¾ãã<br><br>
+                            <strong>ããééããè¡¨ç¾:</strong><br>
+                            1. <strong>be used to + ååè©</strong> = ~ãããã¨ã«æ£ãã¦ããï¼ç¶æï¼<br>
+                            ãä¾: I am used to getting up early. = æ©èµ·ãã«æ£ãã¦ãã<br><br>
+                            2. <strong>used to + åè©ã®åå½¢</strong> = ä»¥åã¯~ãã¦ããï¼éå»ã®ç¿æ£ï¼<br>
+                            ãä¾: I used to play tennis. = ä»¥åã¯ããã¹ããã¦ãã<br><br>
+                            <strong>ãã®åé¡ã®ãã¤ã³ã:</strong><br>
+                            â¢ ãbe used toãã®å¾ãã¯ååè©ãbeing treatedã<br>
+                            â¢ ãbeing treatedã= æ±ããããã¨ï¼ååæã®ååè©ï¼<br>
+                            â¢ ãlike thatã= ãããªãµãã«
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: Gerunds (ååè©)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Topics Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð¯ Key Grammar Topics Covered</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <strong>Phrasal Verbs</strong>
+                        <p>look into, turn over, hold back, look up</p>
+                    </div>
+                    <div class="topic-card">
+                        <strong>Idioms</strong>
+                        <p>make the most of, subject to, at will, due to</p>
+                    </div>
+                    <div class="topic-card">
+                        <strong>Relative Pronouns</strong>
+                        <p>whatever, those who, what is more</p>
+                    </div>
+                    <div class="topic-card">
+                        <strong>Comparisons</strong>
+                        <p>no less than = as many as, would rather...than</p>
+                    </div>
+                    <div class="topic-card">
+                        <strong>Prepositions</strong>
+                        <p>during/in (time periods), on the part of</p>
+                    </div>
+                    <div class="topic-card">
+                        <strong>Gerunds & Infinitives</strong>
+                        <p>used to being, how to make, in an effort to</p>
+                    </div>
+                    <div class="topic-card">
+                        <strong>Reported Speech</strong>
+                        <p>told/asked, tense backshift</p>
+                    </div>
+                    <div class="topic-card">
+                        <strong>Result Clauses</strong>
+                        <p>so...that (not very...that)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning">
+            <h3>â ï¸ Common Mistakes to Watch For:</h3>
+            <ul style="padding-left: 20px; margin-top: 10px;">
+                <li><strong>While vs. During/In:</strong> Use "during" or "in" for time periods, not "while"</li>
+                <li><strong>very vs. so:</strong> Use "so...that" for result clauses, not "very...that"</li>
+                <li><strong>That who vs. Those who:</strong> Use "those who" for people, not "that who"</li>
+                <li><strong>would rather + base form:</strong> Don't use "to" after "than"</li>
+                <li><strong>what is more:</strong> Not "that is more" for "moreover"</li>
+            </ul>
+        </div>
+
+        <div class="tips-box">
+            <h3>ð¯ Teaching Tips</h3>
+            <p>This test hits all the major verb patterns and idioms that trip students up. Focus on the error correction sectionâthat's where students really gotta understand WHY something's wrong, not just memorize answers. The sentence rearrangement section (G) is fire for testing if they actually understand sentence structure and not just individual words.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        function toggleAnswer(button) {
+            const answerBox = button.nextElementSibling;
+            
+            if (answerBox.classList.contains('show')) {
+                answerBox.classList.remove('show');
+                button.textContent = 'Show Answer';
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>
