@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>åè©ã®èªæ³ï½ç¢ºèªãã¹ãï¼çºå±ï¼- è§£èª¬ï¼ãã³ãä»ã</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3561 0%, #1f2544 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #65398b 100%);
+        }
+
+        .toggle-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section-content.active {
+            max-height: 6000px;
+        }
+
+        .question {
+            padding: 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .choices {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .choice {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .answer-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+
+        .answer-section.active {
+            max-height: 3000px;
+        }
+
+        .correct-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .correct-answer strong {
+            color: #28a745;
+            font-size: 18px;
+        }
+
+        .explanation {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .explanation-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .wrong-answer {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .wrong-answer strong {
+            color: #dc3545;
+        }
+
+        .grammar-point {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .grammar-point-title {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .example {
+            background: #e7f3ff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .example-title {
+            color: #1976D2;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .translation {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* ãã³ããã¿ã³ï¼ã¨ãªã¢ */
+        .hint-btn {
+            background: linear-gradient(135deg, #ffe082 0%, #ffb74d 100%);
+            color: #3e2723;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 8px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .hint-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 183, 77, 0.5);
+        }
+
+        .hint-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            margin-top: 10px;
+        }
+
+        .hint-section.active {
+            max-height: 300px;
+        }
+
+        .hint-box {
+            background: #fff8e1;
+            border-left: 4px solid #ffb300;
+            padding: 10px 14px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #5d4037;
+        }
+
+        /* ãããã¼è¡¨ç¤º/éè¡¨ç¤ºç¨ã¯ã©ã¹ */
+        .header-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ãããã¼è¡¨ç¤º/éè¡¨ç¤ºãã¿ã³ */
+        .header-toggle-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            padding: 10px 18px;
+            border-radius: 20px;
+            border: none;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            z-index: 1100;
+            transition: transform 0.2s ease;
+        }
+
+        .header-toggle-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ð åè©ã®èªæ³ï½ç¢ºèªãã¹ãï¼çºå±ï¼ è§£èª¬ï¼ãã³ãä»ã</h1>
+            <p>è±ææ³ã»èªæ³åé¡1100 (P4ï½P89) - ã©ã³ãã ãã¹ã å¨20åï½ãã³ã â è§£èª¬ ã®äºæ®µéå­¦ç¿ã¢ã¼ã</p>
+        </div>
+
+        <!-- ãããã¼è¡¨ç¤º/éè¡¨ç¤ºãã¿ã³ -->
+        <button class="header-toggle-btn" onclick="toggleHeader()">
+            â² ãããã¼ãé ã
+        </button>
+
+        <div class="content">
+            <!-- Section A -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[A] ç©ºæè£ååé¡ (1)ï½(4)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (1)</div>
+                        <div class="question-text">
+                            He wasn't (ãã) of a tennis player, so he lost every game.
+                        </div>
+                        <div class="choices">
+                            â  good<br>
+                            â¡ seeing<br>
+                            â¢ much<br>
+                            â£ playing
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãããããï½ã§ã¯ãªãããè±èªã§ï¼<br>
+                                not (ãã) of a ï¼åè© ã®å½¢ãæãåºãã¦ã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¢ much</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãnot much of a ã ã®å½¢</div>
+                                <p><strong>not much of a + åè©</strong> ã§ãå¤§ãããã§ã¯ãªããããã¾ããããããªããã¨ããæå³ã«ãªãã¾ãã</p>
+                                <p>He wasn't much of a tennis player.<br>
+                                ï¼ãå½¼ã¯ãã¾ãããã¹é¸æããããªãã£ã â ããã¹ãå¾æã§ã¯ãªãã£ãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â  good:</strong> <br>
+                                <p>good of a tennis player ã¨ã¯è¨ãã¾ãããgood ã¯ãgood at tennisãã®ããã« at ã¨ä¸ç·ã«ä½¿ãã®ãåºæ¬ã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ seeing / â£ playing:</strong>
+                                <p>ããã¯åè©ãä¿®é£¾ããè¡¨ç¾ãªã®ã§ãseeing / playing ã§ã¯ä¸èªç¶ã«ãªãã¾ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããnot much of a ï½</div>
+                                <p>â not much of a singerãããããæ­æã§ã¯ãªãã</p>
+                                <p>â not much of a cookãæçã¯ãã¾ããã¾ããªãã</p>
+                                <p>â äººã®è½åã»èåãå°ãå¦å®çã«è¨ãã¨ãã«ããä½¿ãè¡¨ç¾ã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>I'm not <strong>much of a</strong> dancer.</p>
+                                <div class="translation">ï¼ç§ã¯ãã³ã¹ã¯ãã¾ãå¾æãããªãï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼ã¯ãã¾ãããã¹é¸æããããªãã£ãã®ã§ããã¹ã¦ã®è©¦åã«è² ããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (2)</div>
+                        <div class="question-text">
+                            She came pretty near (ãã) at the sight of her mother.
+                        </div>
+                        <div class="choices">
+                            â  crying<br>
+                            â¡ cry<br>
+                            â¢ cried<br>
+                            â£ being cried
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                come near ã®ãã¨ã¯ to ä¸å®è©ï¼ååè©ï¼<br>
+                                ãå±ããï½ãããã«ãªãããè¡¨ãå½¢ãæãåºããã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â  crying</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãcome near ï½ingãå±ããããããã«ãªãã</div>
+                                <p><strong>come near doing</strong> ã§ãããå°ãã§ããããã«ãªããã¨ããæå³ã«ãªãã¾ãã</p>
+                                <p>came pretty near crying = ãä»ã«ãæ³£ãåºãããã«ãªã£ãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ cry:</strong>
+                                <p>come near ã®å¾ãã¯ååè©ï¼ï½ingï¼ãã¨ãã®ã§ cry ã¯ä¸å¯ã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¢ cried / â£ being cried:</strong>
+                                <p>æå¶ãåãèº«ãããã§ã¯ä¸èªç¶ã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããååè©ãã¨ãè¡¨ç¾</div>
+                                <p>â <strong>come near doing</strong>ï¼å±ããããããã«ãªã</p>
+                                <p>â <strong>be on the point of doing</strong>ï¼ã¾ãã«ããããã¨ãã¦ãã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>He came near <strong>losing</strong> his wallet.</p>
+                                <div class="translation">ï¼å½¼ã¯å±ããè²¡å¸ããªããããã«ãªã£ãï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼å¥³ã¯æ¯è¦ªã®å§¿ãè¦ã¦ãä»ã«ãæ³£ãåºãããã«ãªã£ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (3)</div>
+                        <div class="question-text">
+                            One of my cousins is married (ãã) a novelist.
+                        </div>
+                        <div class="choices">
+                            â  with<br>
+                            â¡ over<br>
+                            â¢ to<br>
+                            â£ by
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãï½ã¨çµå©ãã¦ãããã¯ be married (ãã) ï½ã<br>
+                                with ãããªãã¦â¦ï¼
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¢ to</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãbe married to ï½ãï½ã¨çµå©ãã¦ããã</div>
+                                <p><strong>be married to äºº</strong> ã§ããã¨çµå©ãã¦ãããã¨ããæ±ºã¾ãæå¥ã</p>
+                                <p>married with ã ã¯ãå­ã©ããä½äººãããã¨è¨ãããã¨ãã«ä½¿ãå¥ãã¿ã¼ã³ã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â  with:</strong>
+                                <p>married with two children ã®ãããªå½¢ã¯ãããããèª°ã¨çµå©ãã¦ãããã«ã¯ä½¿ããªãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ over / â£ by:</strong>
+                                <p>çµå©ç¸æã¯ to ã§è¡¨ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããmarry ã®èªæ³</div>
+                                <p>â marry Aï¼Aã¨çµå©ããï¼ä»åè©ï¼</p>
+                                <p>â be married to Aï¼Aã¨çµå©ãã¦ããï¼ç¶æï¼</p>
+                                <p>â married with two kidsï¼å­ã©ãã2äººããæ¢å©è</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>She is married <strong>to</strong> a doctor.</p>
+                                <div class="translation">ï¼å½¼å¥³ã¯å»èã¨çµå©ãã¦ããï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ã®ãã¨ãã®ä¸äººã¯å°èª¬å®¶ã¨çµå©ãã¦ããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (4)</div>
+                        <div class="question-text">
+                            Hello! Are there any seats (ãã) for the concert tonight?
+                        </div>
+                        <div class="choices">
+                            â  unemployed<br>
+                            â¡ available<br>
+                            â¢ remained<br>
+                            â£ left behind
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãç©ºãã¦ããå¸­ããå©ç¨ã§ããå¸­ããè¡¨ãå½¢å®¹è©ã¯ã©ãï¼<br>
+                                hotel, room, ticket ãªã©ã«ãããã¤ãåèªã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¡ available</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãseats availableãç©ºãã¦ããå¸­ã</div>
+                                <p><strong>available</strong> ã¯ãå©ç¨å¯è½ãªããæã«å¥ããã¨ããæå³ã</p>
+                                <p>any seats available? = ãç©ºãã¦ããå¸­ã¯ããã¾ããï¼ã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â  unemployed:</strong>
+                                <p>ãå¤±æ¥­ãã¦ãããã¨ããæå³ã§ãäººã«ããä½¿ããªãã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¢ remained / â£ left behind:</strong>
+                                <p>ã©ã¡ãããã®ä½ç½®ã§ seats ãä¿®é£¾ããå½¢ã¨ãã¦ã¯ä¸èªç¶ã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããavailable ã®ä½¿ãæ¹</div>
+                                <p>â seats availableï¼ç©ºãã¦ããåº§å¸­</p>
+                                <p>â rooms availableï¼ç©ºå®¤</p>
+                                <p>â be available for äºº / to äººï¼ãã«å©ç¨å¯è½ã§ãã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>There are no tickets <strong>available</strong> now.</p>
+                                <div class="translation">ï¼ç¾å¨ããã±ããã¯ããæ®ã£ã¦ããªãï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ãããããä»å¤ã®ã³ã³ãµã¼ãã®å¸­ã¯ã¾ã ç©ºãã¦ãã¾ããã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section B -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[B] åæè¡¨ç¾é¸æåé¡ (5)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (5)</div>
+                        <div class="question-text">
+                            She did it entirely <u>of her own accord</u>.
+                        </div>
+                        <div class="choices">
+                            â  reluctantly<br>
+                            â¡ desperately<br>
+                            â¢ voluntarily<br>
+                            â£ harmoniously
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                of her own accord = ãèªåããé²ãã§ãã<br>
+                                ãã¡ã°ãæå³ãè¿ãå¯è©ãé¸ã¼ãã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: â¢ voluntarily</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãof one's own accord = voluntarily</div>
+                                <p><strong>of one's own accord</strong> ã¯ãèªåããé²ãã§ããèªçºçã«ãã¨ããæå³ã</p>
+                                <p>ãããã£ã¦åãæå³ã® <strong>voluntarily</strong>ï¼èªçºçã«ï¼ãæ­£è§£ã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â  reluctantly:</strong>
+                                <p>ããããããªãããããã¶ãã¶ããªã®ã§çéã®æå³ã</p>
+                            </div>
+                            <div class="wrong-answer">
+                                <strong>â â¡ desperately / â£ harmoniously:</strong>
+                                <p>ã©ã¡ãããèªçºçã«ãã¨ã¯æå³ãä¸è´ããªãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããã¤ãã£ãªã  of one's own accord</div>
+                                <p>â of my own accordï¼èªåããé²ãã§</p>
+                                <p>â of his own accordï¼å½¼èªãé²ãã§</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>He apologized <strong>of his own accord</strong>.</p>
+                                <div class="translation">ï¼å½¼ã¯èªåããé²ãã§è¬ã£ãï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼å¥³ã¯ãããå®å¨ã«èªåããé²ãã§è¡ã£ãã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section C -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[C] æ¸ãæãåé¡ (6)ï½(9)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (6)</div>
+                        <div class="question-text">
+                            (a) It is not likely that Sue forgot to lock the door.<br>
+                            (b) Sue is not likely (ãã) (ãã) (ãã) to lock the door.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                It is likely that S V â S is likely to V ã®æ¸ãæãã<br>
+                                ãå¿ãããã¨ããéå»ã®åå®¹ãªã®ã§ãä¸å®è©ã®å½¢ã«æ³¨æã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: to have forgotten</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãlikely ã®æ¸ãæã</div>
+                                <p>(a)ãã¹ã¼ããã¢ã®ã«ã®ãããå¿ããã¨ã¯èãã«ããã</p>
+                                <p>(b) Sue is not likely <strong>to have forgotten</strong> to lock the door.</p>
+                                <p>ï¼ãã¹ã¼ãã«ã®ãããå¿ããã¨ã¯èãã«ããã</p>
+                                <p><strong>to have + éå»åè©</strong> ã§ããããï¼ãããããªãï¼ãã¨ããéå»ã®åå®¹ãè¡¨ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããIt is likely that ï½ â S is likely to ï½</div>
+                                <p>â It is likely that S V<br>
+                                â S is likely to V</p>
+                                <p>not likely ã®å½¢ãåãããã«æ¸ãæãã§ããã</p>
+                            </div>
+                            <div class="example">
+                                <div class="example-title">ä¾æ:</div>
+                                <p>It is likely that he will win.<br>
+                                = He is likely to win.</p>
+                                <div class="translation">ï¼å½¼ãåã¡ããã ï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ã¹ã¼ããã¢ã«éµãããå¿ããã¨ã¯èãã«ããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (7)</div>
+                        <div class="question-text">
+                            (a) She had been taught how to read by her mother.<br>
+                            (b) Her mother had (ãã) (ãã) how to read.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ååæ â è½åæã¸ã®æ¸ãæãã<br>
+                                teach äºº ã ã®æåãæãåºãã¦ã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: taught her</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãååæâè½åæã®æ¸ãæã</div>
+                                <p>(a) ååæï¼She had been taught ... by her mother.</p>
+                                <p>(b) è½åæï¼Her mother had <strong>taught her</strong> how to read.</p>
+                                <p>ç®çèªã¯ herï¼å½¼å¥³ï¼ãå¥ãã¦ãããã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããteach ã®æå</div>
+                                <p>â teach äºº ç©ï¼äººã«ç©ãæãã</p>
+                                <p>Her mother taught her how to read.</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼å¥³ã¯æ¯è¦ªããèª­ã¿æ¹ãæããããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (8)</div>
+                        <div class="question-text">
+                            (a) The poet was no richer than a beggar.<br>
+                            (b) The poet was (ãã) poor (ãã) a beggar.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                no æ¯è¼ç´ than A = as åç´ as A ã®æ¸ãæããã¿ã¼ã³ã<br>
+                                åç´æ¯è¼ as ï½ as ãå¥ããã°OKã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: as, as</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãno æ¯è¼ç´ than = as åç´ as</div>
+                                <p>no richer than a beggar = ãä¹é£ã¨åããããè²§ããã</p>
+                                <p>ãããã£ã¦ (b) ã¯ The poet was <strong>as</strong> poor <strong>as</strong> a beggar.</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããæ¯è¼ã®è¨ãæã</div>
+                                <p>â no æ¯è¼ç´ than A = as åç´ as A</p>
+                                <p>ä¾ï¼no taller than I = as short as I</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ãã®è©©äººã¯ä¹é£ã¨åããããè²§ããã£ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (9)</div>
+                        <div class="question-text">
+                            (a) Needless to say, honesty is the best policy.<br>
+                            (b) It goes (ãã) (ãã) that honesty is the best policy.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãè¨ãã¾ã§ããªãããã¯ It goes (   ) (   ) that ï½ ã®å½¢ã§è¨ãæãã<br>
+                                ãè¨ããã«é²ããã¨ããç´è¨³ãã¤ã¡ã¼ã¸ãã¦ã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: without saying</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãneedless to say = It goes without saying</div>
+                                <p>ãè¨ãã¾ã§ããªããã¯ <strong>Needless to say</strong> ã<br>
+                                <strong>It goes without saying that ï½</strong> ã§è¡¨ç¾ã§ããã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããIt goes without saying that ï½</div>
+                                <p>å®åè¡¨ç¾ã¨ãã¦ä¸¸æè¨ã§OKãthat ä»¥ä¸ã«ã¯ãå½ç¶ããã ãããã¨ããåå®¹ãç¶ãã</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> è¨ãã¾ã§ããªãããæ­£ç´ãæè¯ã®ç­ã§ããã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section D -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[D] å±éèªè£ååé¡ (10)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (10)</div>
+                        <div class="question-text">
+                            (a) Will you (ãã) after the children while I'm out?<br>
+                            (b) (ãã) in the mirror before you drive off.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ã©ã¡ãããè¦ããã«é¢ä¿ããå¥åè©ã<br>
+                                å­ã©ãã®ä¸è©±ãããï¼look (   ) / é¡ãè¦ãï¼look (   ) the mirrorã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: look</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãlook after / look in</div>
+                                <p>(a) <strong>look after</strong> the childrenï¼å­ã©ãã®ä¸è©±ããã</p>
+                                <p>(b) <strong>look in</strong> the mirrorï¼é¡ãè¦ã</p>
+                                <p>ã©ã¡ããåè©ã¯ look ã§å±éããã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããlook ãä½¿ã£ãã¤ãã£ãªã </div>
+                                <p>â look after Aï¼Aã®ä¸è©±ããã</p>
+                                <p>â look for Aï¼Aãæ¢ã</p>
+                                <p>â look at Aï¼Aãè¦ã</p>
+                                <p>â look into Aï¼Aãèª¿ã¹ã</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong><br>
+                                (a) ç§ãå¤åºãã¦ããéãå­ã©ããã¡ã®ä¸è©±ããã¦ããã¾ããã<br>
+                                (b) åºçºããåã«é¡ãè¦ãªããã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section E -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[E] èª¤ãææã»è¨æ­£åé¡ (11)ï½(15)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 11 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (11)</div>
+                        <div class="question-text">
+                            â As a good Christian, he never fails â¡in going â¢to church â£on Sundays.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                never fail ã®ãã¨ãåç½®è© in ã¯æ¬å½ã«å¿è¦ï¼<br>
+                                ãå¿ãï½ãããã¨ããæ±ºã¾ãæå¥ãæãåºããã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ã: â¡ in going â æ­£: to go</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãnever fail to doãå¿ããããã</div>
+                                <p><strong>never fail to do</strong> ã§ãå¿ãããããã¨ããæ±ºã¾ãè¡¨ç¾ã</p>
+                                <p>fail ã®å¾ãã¯ <strong>to + åè©ã®åå½¢</strong> ãã¨ãã®ã§ in going ã¯èª¤ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããfail to do</div>
+                                <p>â fail to doï¼ããæãªãããããªã</p>
+                                <p>â never fail to doï¼å¿ãããã</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç±å¿ãªã­ãªã¹ãæå¾ã¨ãã¦ãå½¼ã¯æ¥æã«ã¯å¿ãæä¼ã«è¡ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 12 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (12)</div>
+                        <div class="question-text">
+                            The manager never knew â which of â¡the two sales programs â¢were likely to be â£the more successful.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                which of the two ï½ ã¯åæ°æ±ãï¼è¤æ°æ±ãï¼<br>
+                                åè© were / was ã®ã©ã¡ããåããèãã¦ã¿ããã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ã: â¢ were â æ­£: was</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãwhich of the two ï½ ãåæ°æ±ã</div>
+                                <p><strong>which of the two ï½</strong> ã¯ã2ã¤ã®ãã¡ã©ã¡ãã1ã¤ããªã®ã§åæ°æ±ãã</p>
+                                <p>ãã£ã¦åè©ã¯ <strong>was</strong> ãæ­£ããã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããä¸»èªã¨åè©ã®ä¸è´</div>
+                                <p>â which of the two plans <strong>is</strong> better?</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> é¨é·ã¯ãã®2ã¤ã®è²©å£²è¨ç»ã®ãã¡ãã©ã¡ããããæåãããããæå¾ã¾ã§åãããªãã£ãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 13 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (13)</div>
+                        <div class="question-text">
+                            John's hat â was â¡blow â¢off â£in the wind.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ååæã¯ be ï¼ãã©ããªå½¢ãï¼<br>
+                                blow ã®éå»åè©ãæãåºããï¼blow-blew-ï¼ï¼ã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ã: â¡ blow â æ­£: blown</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãååæã¯ be + éå»åè©</div>
+                                <p><strong>was blown off</strong> ã§ãå¹ãé£ã°ããããã¨ããååæã«ãªãã</p>
+                                <p>blow - blew - blown ã®éå»åè©ã«ããå¿è¦ãããã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããååæ</div>
+                                <p>â be + éå»åè©ï¼ãããã</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ã¸ã§ã³ã®å¸½å­ã¯é¢¨ã§å¹ãé£ã°ãããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 14 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (14)</div>
+                        <div class="question-text">
+                            Do you know a restaurant â which we can â¡have a really â¢good â£meal?
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                ãï½ã§é£äºãã§ããã¬ã¹ãã©ã³ãï¼ãã¬ã¹ãã©ã³ã¨ããå ´æ where ï½ãã<br>
+                                which ã¨ where ã®ä½¿ãåããæè­ãã¦ã¿ã¦ã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ã: â  which â æ­£: where</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãå ´æï¼where ã®é¢ä¿å¯è©</div>
+                                <p>ãã¬ã¹ãã©ã³ï¼å ´æï¼ã§é£äºãã§ããããªã®ã§ã<br>
+                                é¢ä¿ä»£åè© which ã§ã¯ãªã <strong>é¢ä¿å¯è© where</strong> ãä½¿ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããé¢ä¿å¯è© where</div>
+                                <p>â the place where I was born</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ãã¡ãæ¬å½ã«ããããé£äºãã§ããã¬ã¹ãã©ã³ãç¥ã£ã¦ãã¾ããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 15 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (15)</div>
+                        <div class="question-text">
+                            I â should have been going back â¡to home â¢by then but was delayed â£by a phone call.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                go / come / get ã®ãã¨ã« home ãä½¿ãã¨ããåç½®è©ã¯ï¼<br>
+                                to home ã¨è¨ããã©ããèãã¦ã¿ããã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â èª¤ã: â¡ to home â æ­£: home</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãhome ã®åã«ã¯éå¸¸åç½®è©ãã¤ããªã</div>
+                                <p>åè© go / come / get ãªã©ã¨ä¸ç·ã®ã¨ãã<strong>to home</strong> ã¨ã¯è¨ããã« <strong>home</strong> ã ãã§ä½¿ãã</p>
+                            </div>
+                            <div class="grammar-point">
+                                <div class="grammar-point-title">ãææ³ãã¤ã³ããå¯è©çãª home</div>
+                                <p>â I went home.</p>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ãã®ã¨ãã¾ã§ã«ã¯å®¶ã«å¸°ã£ã¦ããã¯ãã ã£ãããé»è©±ã§éãã¦ãã¾ã£ãã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section F -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>[F] èªå¥æ´åºã»ä¸¦ã¹ããåé¡ (16)ï½(20)</span>
+                    <span class="toggle-icon">â¼</span>
+                </div>
+                <div class="section-content">
+                    <!-- Question 16 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (16)</div>
+                        <div class="question-text">
+                            å½¼ãç´æãç ´ã£ãã®ã¯ï¼ãªãã ã¨æãã¾ããï¼<br>
+                            ( him / what / his promise / do you / break / think / made )?
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                æé ­ã¯çåè© Whatããã®ãã¨ã« do you think ãã¯ããã§ã<br>
+                                made him break his promise ãå¾ãã«ç½®ãã¤ã¡ã¼ã¸ã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: What do you think made him break his promise?</strong>
+                            </div>
+                            <div class="explanation">
+                                <div class="explanation-title">ãè§£èª¬ãWhat do you think + S + V ï½ï¼</div>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼ãç´æãç ´ã£ãã®ã¯ããªãã ã¨æãã¾ããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 17 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (17)</div>
+                        <div class="question-text">
+                            ç§ãã¡ã¯ã¨ãã©ãææãã©ã®ãããªå¤åãåããéå½ã«ããã®ãèãã¦ã¿ããæ°ã«ãªãã<br>
+                            We sometimes feel ( destined / to / civilization / tempted / guess / transformations / what / is ) to undergo.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                feel tempted to doï¼ãï½ãããæ°ã«ãªãã<br>
+                                be destined to doï¼ãï½ããéå½ã«ããã<br>
+                                ãã®2ã¤ããã¾ãæã®ä¸­ã«å¥ãã¦ã¿ããã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: We sometimes feel tempted to guess what transformations civilization is destined to undergo.</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ãã¡ã¯ãã¨ãã©ãææãã©ã®ãããªå¤åãåããéå½ã«ããã®ããæ¨æ¸¬ãã¦ã¿ããæ°ã«ãªãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 18 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (18)</div>
+                        <div class="question-text">
+                            å½¼å¥³ãè±èªãããã¹ãã®ãï¼ãã£ãã«èãããã¨ãããã¾ããã<br>
+                            Rarely ( her / English / I / speak / heard / have ).
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                Rarely ãæé ­ã«åºãã¨ãã¯åç½®ï¼å©åè©ï¼ä¸»èªï¼ã<br>
+                                have I heard ï½ ã®å½¢ãæè­ãããã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: Rarely have I heard her speak English.</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ç§ã¯å½¼å¥³ãè±èªãè©±ãã®ããã£ãã«èãããã¨ããªãã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 19 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (19)</div>
+                        <div class="question-text">
+                            ããªãããã®ä»äºã«é©ä»»ã ã¨æãäººãæ¨è¦ãã¦ãã ãããï¼1èªä¸è¦ï¼<br>
+                            Please recommend the person ( right / for / think / is / whom / you / who ) the job.
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                the person who you think is right for the job<br>
+                                é¢ä¿ä»£åè©ã¯ who ã ãã§è¶³ããï¼whom ãããï¼
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: Please recommend the person who you think is right for the job.ï¼whom ä¸è¦ï¼</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> ããªãããã®ä»äºã«é©ä»»ã ã¨æãäººãæ¨è¦ãã¦ãã ããã
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 20 -->
+                    <div class="question">
+                        <div class="question-number">åé¡ (20)</div>
+                        <div class="question-text">
+                            ç§ã¯å½¼ãç¬ã£ã¦ããã®ãè¦ã¦ï¼ãã£ã¨èªåãã©ããªã«æãã§ãã£ããã«æ°ãã¤ããã<br>
+                            ( laughing / what a fool / it was / I had been / that I realized / until I saw / him / not ).
+                        </div>
+
+                        <button class="hint-btn" onclick="toggleHint(this)">ãã³ããè¦ã</button>
+                        <div class="hint-section">
+                            <div class="hint-box">
+                                It was not until ï½ that â¦ æ§æã<br>
+                                ãï½ãã¦åãã¦â¦ãããã¨ããå½¢ã«ãªãããã«ä¸¦ã¹æ¿ãããã
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">è§£ç­ãè¦ã</button>
+                        <div class="answer-section">
+                            <div class="correct-answer">
+                                <strong>â æ­£è§£: It was not until I saw him laughing that I realized what a fool I had been.</strong>
+                            </div>
+                            <div class="translation">
+                                <strong>å¨æè¨³:</strong> å½¼ãç¬ã£ã¦ããã®ãè¦ã¦åãã¦ãç§ã¯èªåãã©ãã»ã©æãã ã£ããã«æ°ã¥ããã
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- /content -->
+    </div> <!-- /container -->
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        function toggleAnswer(button) {
+            const answerSection = button.nextElementSibling;
+            answerSection.classList.toggle('active');
+
+            if (answerSection.classList.contains('active')) {
+                button.textContent = 'è§£ç­ãé ã';
+                button.style.background = 'linear-gradient(135deg, #a8e6cf 0%, #56ab91 100%)';
+            } else {
+                button.textContent = 'è§£ç­ãè¦ã';
+                button.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+        }
+
+        function toggleHint(button) {
+            const hintSection = button.nextElementSibling;
+            hintSection.classList.toggle('active');
+
+            if (hintSection.classList.contains('active')) {
+                button.textContent = 'ãã³ããé ã';
+            } else {
+                button.textContent = 'ãã³ããè¦ã';
+            }
+        }
+
+        let headerHidden = false;
+        function toggleHeader() {
+            const header = document.querySelector('.header');
+            const btn = document.querySelector('.header-toggle-btn');
+
+            headerHidden = !headerHidden;
+
+            if (headerHidden) {
+                header.classList.add('header-hidden');
+                btn.textContent = 'â¼ ãããã¼ãè¡¨ç¤º';
+            } else {
+                header.classList.remove('header-hidden');
+                btn.textContent = 'â² ãããã¼ãé ã';
+            }
+        }
+
+        // Auto-open first section on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+    </script>
+</body>
+</html>
