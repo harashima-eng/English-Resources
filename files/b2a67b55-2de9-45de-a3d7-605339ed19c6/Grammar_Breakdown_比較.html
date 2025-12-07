@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>æ¯è¼ Grammar Test Breakdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ====== New header + toolbar ====== */
+        .page-header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
+            padding: 18px 22px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .header-main h1 {
+            font-size: 1.9rem;
+            margin-bottom: 4px;
+        }
+
+        .header-sub {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            transition: 0.15s transform, 0.15s opacity, 0.15s box-shadow;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.96;
+        }
+
+        .btn-ghost {
+            background: #ffffff;
+            color: #111827;
+        }
+
+        .btn-dark {
+            background: #111827;
+            color: #ffffff;
+        }
+
+        /* ====== Original styles ====== */
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .test-info h2 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .test-info p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+
+        .section-header h3 {
+            font-size: 1.3em;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f8f9ff;
+        }
+
+        .section-content.active {
+            max-height: 10000px;
+            padding: 20px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        .question-text {
+            color: #333;
+            font-size: 1.1em;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        .choices {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .choice-item {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .reveal-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .answer-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+
+        .answer-box.show {
+            max-height: 2000px;
+        }
+
+        .answer-content {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+            line-height: 1.8;
+        }
+
+        .answer-label {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .grammar-reference {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #ff9800;
+            font-size: 0.95em;
+        }
+
+        .correct {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .summary-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .topic-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .tips-box {
+            background: #fff3e0;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .tips-box h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+
+        .tips-box ul {
+            padding-left: 20px;
+        }
+
+        .tips-box li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header-main h1 {
+                font-size: 1.4rem;
+            }
+
+            .page-header {
+                padding: 14px 16px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section-header h3 {
+                font-size: 1.1em;
+            }
+
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- New header with toolbar -->
+        <header class="page-header">
+            <div class="header-main">
+                <h1>ð¥ æ¯è¼ (Comparative) Grammar Test Breakdown ð¥</h1>
+                <p class="header-sub">DUALSCOPE è±èªç·åæ¼ç¿ Lesson 9ï½æ¯è¼ å¨è¡¨ç¾ã»è©³ããè§£èª¬ã¤ã</p>
+            </div>
+            <div class="toolbar">
+                <button class="btn btn-ghost" data-action="open-all">å¨é¨ã²ãã</button>
+                <button class="btn btn-ghost" data-action="close-all">å¨é¨ã¨ãã</button>
+                <button class="btn btn-dark" data-action="download">â¬ï¸ ãã®ãã¼ã¸ããã¦ã³ã­ã¼ã</button>
+            </div>
+        </header>
+        
+        <div class="test-info">
+            <h2>ð DUALSCOPE è±èªç·åæ¼ç¿ - Lesson 9</h2>
+            <p><strong>ãã¹ãç¯å²:</strong> pp.250~279 (æ¯è¼ã®å¨è¡¨ç¾)</p>
+            <p><strong>åå®¹:</strong> åç´ã»æ¯è¼ç´ã»æä¸ç´ãæ£ç¨è¡¨ç¾ãå¿ç¨åé¡</p>
+            <p><strong>åé¡æ°:</strong> åºæ¬åé¡6é¡ + FOR COMMUNICATION 2é¡ + çºå±åé¡3é¡</p>
+        </div>
+
+        <!-- åºæ¬åé¡ Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð åºæ¬åé¡ 1 - é©åãªå½¢ã«ç´ãåé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        He won a gold medal and is now ( famous ) than ever.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>more famous</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> å½¼ã¯éã¡ãã«ãç²å¾ããä»ã¾ã§ä»¥ä¸ã«æåã«ãªã£ã¦ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â more famous</span> = famousã¯2é³ç¯ä»¥ä¸ã®å½¢å®¹è©ãªã®ã§ãæ¯è¼ç´ã¯moreãä½¿ã£ã¦ä½ãã¾ããfamousãmore famousã«ãã¾ãã<br>
+                            than ever = ãä»ã¾ã§ä»¥ä¸ã«ãã¨ããæå³ã®æ£ç¨è¡¨ç¾ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æ¯è¼ç´ã®ä½ãæ¹ (Forming Comparatives)<br>
+                            2é³ç¯ä»¥ä¸ã®å½¢å®¹è© â more + åç´
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        Sophie knows chemistry ( well ) than I.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>better</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ã½ãã£ã¼ã¯ç§ãããåå­¦ãããç¥ã£ã¦ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â better</span> = thanãç¶ãã®ã§æ¯è¼ç´ãå¿è¦ãwellã®ä¸è¦åå¤å: well - better - best
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: ä¸è¦åå¤åããæ¯è¼ç´<br>
+                            well(ãã) â better â best
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        Which is (far) from the earth, Mars or Venus?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>farther [ã¾ãã¯ further]</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ç«æã¨éæãã©ã¡ããå°çããé ãã§ãã?<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â farther/further</span> = whichã§2ã¤ã®ãã®ãæ¯è¼ãã¦ããã®ã§æ¯è¼ç´ãå¿è¦ãfarã®ä¸è¦åå¤å: far - farther[further] - farthest[furthest]<br>
+                            è·é¢ãè¡¨ãå ´åãfartherãå¥½ã¾ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: 2ã¤ã®ãã®ãæ¯è¼ããwhichçåæ<br>
+                            Which is æ¯è¼ç´, A or B?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        Helium is the second (light) element in the universe.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>lightest</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ããªã¦ã ã¯å®å®ã§2çªç®ã«è»½ãåç´ ã ã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â lightest</span> = ãä½çªç®ã«ããã¯ the + åºæ°è© + æä¸ç´ + åè© ã ã®å½¢ã§è¡¨ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: åºæ°è© + æä¸ç´<br>
+                            the second lightest = 2çªç®ã«è»½ã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q5</span>
+                    <div class="question-text">
+                        Smoking is ( bad ) for your health than drinking.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>worse</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> å«çã¯é£²éãããå¥åº·ã«æªãã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â worse</span> = thanãç¶ãã®ã§æ¯è¼ç´ãå¿è¦ãbadã®ä¸è¦åå¤å: bad - worse - worst
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: ä¸è¦åå¤åããæ¯è¼ç´<br>
+                            bad(æªã) â worse â worst
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q6</span>
+                    <div class="question-text">
+                        She knows (many) English words of us all.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>the most</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> å½¼å¥³ã¯ç§ãã¡å¨å¡ã®ä¸­ã§ä¸çªå¤ãã®è±åèªãç¥ã£ã¦ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â the most</span> = of us allã¨ããç¯å²ãããã®ã§æä¸ç´ã«the + æä¸ç´ãã¤ãã¾ããmanyã®ä¸è¦åå¤å: many - more - most
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æä¸ç´ã®ç¯å²ãç¤ºã of<br>
+                            of us all = ç§ãã¡å¨å¡ã®ä¸­ã§
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- åºæ¬åé¡2 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð åºæ¬åé¡ 2 - ããé©å½ãªèªå¥ãé¸ã¶</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        The theme park is very popular and no (less, more) than 10 million people visit it every year.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>less</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãã®ãã¼ããã¼ã¯ã¯ã¨ã¦ãäººæ°ããããæ¯å¹´1000ä¸äººãã®äººããè¨ªããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â less</span> = no less than + æ°è© ã§ããã(å¤ãã®)ãã¨ããæå³ã«ãªãã¾ããé©ããå¼·èª¿ãè¡¨ãã¾ãã<br>
+                            <span class="incorrect">â more</span> = no more thanã ã¨ãããã(ãªã)ãã¨ããå°ãªããå¼·èª¿ããæå³ã«ãªã£ã¦ãã¾ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: no less than vs no more than<br>
+                            no less than = ãã(é©ãã®å¤ã)<br>
+                            no more than = ããã(å°ãªã)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        This computer is superior (than, to) that one in quality.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>to</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãã®ã³ã³ãã¥ã¼ã¿ã¯åè³ªã®ç¹ã§ãã®ã³ã³ãã¥ã¼ã¿ããåªãã¦ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â to</span> = superiorã¯æ¯è¼ã®æå³ãå«ãå½¢å®¹è©ãªã®ã§ãthanã§ã¯ãªãtoãä½¿ãã¾ãã<br>
+                            <span class="incorrect">â than</span> = superior, inferior, senior, juniorãªã©ã¯toãåãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: thanã§ã¯ãªãtoãä½¿ãæ¯è¼è¡¨ç¾<br>
+                            superior/inferior/senior/junior + to
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        Which is ( the taller, taller ) of the two buildings?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>the taller</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> 2ã¤ã®å»ºç©ã®ãã¡ãã©ã¡ããããé«ãã§ãã?<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â the taller</span> = of the twoã§2ã¤ãæ¯è¼ããå ´åãæ¯è¼ç´ã®åã«theãã¤ãã¾ãã<br>
+                            <span class="incorrect">â taller</span> = 2ã¤ã®ãã®ãç¹å®ãã¦æ¯è¼ããæã¯theãå¿è¦ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: 2ã¤ã®ãã®ã®æ¯è¼<br>
+                            the + æ¯è¼ç´ + of the two
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        Mario is the fastest runner ( in, of ) our club.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>in</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ããªãªã¯ç§ãã¡ã®ã¯ã©ãã§ä¸çªéãã©ã³ãã¼ã ã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â in</span> = our clubã¯å ´æã»çµç¹ãè¡¨ãã®ã§inãä½¿ãã¾ãã<br>
+                            <span class="incorrect">â of</span> = ofã¯è¤æ°ã®ãã®ãäººãåæããæã«ä½¿ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æä¸ç´ã®ç¯å²ãç¤ºãåç½®è©<br>
+                            in + å ´æ/çµç¹<br>
+                            of + è¤æ°ã®ãã®
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q5</span>
+                    <div class="question-text">
+                        I have ( many, much ) more money than he does.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>much</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ç§ã¯å½¼ããããã£ã¨å¤ãã®ãéãæã£ã¦ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â much</span> = æ¯è¼ç´ãå¼·èª¿ããæãmuchãfarãªã©ãæ¯è¼ç´ã®åã«ç½®ãã¾ãã<br>
+                            <span class="incorrect">â many</span> = manyã¯æ¯è¼ç´ãå¼·èª¿ã§ãã¾ããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æ¯è¼ç´ãå¼·èª¿ããèª<br>
+                            much/far/even/still + æ¯è¼ç´
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- åºæ¬åé¡3 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð åºæ¬åé¡ 3 - ç©ºæè£ååé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        ãã®åå£«ã¯ç§ã®2åéãã<br>
+                        The sumo wrestler is (ã) (ã) heavy (ã) I am.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>twice as, as</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â twice as ... as</span> = ãAã¯Bã®Xåãã ãã¯ A ... X times as + åç´ + as B ã§è¡¨ãã¾ãã2åã¯twiceãä½¿ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: åæ°è¡¨ç¾<br>
+                            X times as + åç´ + as<br>
+                            2å = twice
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        å®¶æã¯ã»ãã®ã©ããªãã®ãããå¤§åã§ãã<br>
+                        Family is more important (ã) (ã) (ã).
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>than anything else</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â than anything else</span> = ãä»ã®ã©ããªãã®ããããã¯æ¯è¼ç´ + than anything else ã§è¡¨ãã¾ããæä¸ç´ã®åå®¹ãæ¯è¼ç´ã§è¡¨ç¾ãã¦ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æä¸ç´ã®åå®¹ãæ¯è¼ç´ã§è¡¨ã<br>
+                            æ¯è¼ç´ + than anything else = ä»ã®ä½ããã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        ã¾ãã¾ãå¤ãã®è¦³åå®¢ãæ¥æ¬ãè¨ªãã¦ãã¾ãã<br>
+                        (ã) and (ã) tourists are visiting Japan.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>More, more</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â More and more</span> = ãã¾ãã¾ãããã ãã ãããã¯ æ¯è¼ç´ + and + æ¯è¼ç´ ã§è¡¨ãã¾ããå¤åãç¶ãã¦ãããã¨ãç¤ºãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æ¯è¼ç´ã®åå¾©<br>
+                            æ¯è¼ç´ + and + æ¯è¼ç´ = ã¾ãã¾ãã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        ããªãã¯å½¼ã«å¯¾ãã¦å£ç­æãæ±ãå¿è¦ã¯ããã¾ããã<br>
+                        You don't need to feel (ã) (ã) him.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>inferior to</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â inferior to</span> = thanã§ã¯ãªãtoãä½¿ãæ¯è¼è¡¨ç¾ãinferior to ã ã§ããããå£ã£ã¦ãããã¨ããæå³ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: toãä½¿ãæ¯è¼è¡¨ç¾<br>
+                            inferior to = ãããå£ã£ã¦ãã
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- åºæ¬åé¡4 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð åºæ¬åé¡ 4 - åææå®æåé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        Susan is four years older than her brother.<br>
+                        Susan is older than her brother (ã) four years.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>by</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â by</span> = å¹´é½¢å·®ã4æ­³ã§ãããã¨ãè¡¨ãã¾ããããã ãéããã¨ããæ°éã®å·®ã¯ãæ¯è¼ç´ã®å¾ã«by + æ°éãç½®ãã¦è¡¨ãã¾ããbyã¯ããã®å·®ã§ãã¨ããæå³ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æ°éã®å·®ãè¡¨ãby<br>
+                            æ¯è¼ç´ + by + æ°é = ãã®å·®ã§
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        I bought this T-shirt for only one dollar.<br>
+                        I bought this T-shirt for (ã) (ã) than one dollar.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>no more</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â no more</span> = ãã£ãT-ã·ã£ãã1ãã«ã§è²·ã£ããã¨ãè¡¨ãã¾ããno more than + æ°è© ã§ããããããããããã¨ããå°ãªããå¼·èª¿ãã¾ããonlyã¨åãæå³ã«ãªãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: no more than<br>
+                            no more than + æ°è© = ããã(å°ãªãã®å¼·èª¿)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        He thinks that money is the most precious of all things.<br>
+                        He thinks that (ã) is (ã) precious than money.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>nothing, more</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â nothing, more</span> = ãéãæãå¤§åã ã¨æã£ã¦ãããã¨ãè¡¨ãã¾ãããAä»¥ä¸ã«ããªãã®ã¯ãªããã¨ããæä¸ç´ã®åå®¹ããNothing ... æ¯è¼ç´ + than A ã§è¡¨ããã¨ãã§ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æä¸ç´ã®åå®¹ãæ¯è¼ç´ã§<br>
+                            Nothing is æ¯è¼ç´ than A = Aãæããã 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        Kevin is a scientist rather than a teacher.<br>
+                        Kevin is not (ã) (ã) a teacher as a scientist.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>so much</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â so much</span> = ã±ãã³ã¯æå¸«ã¨ããããã¯ç§å­¦èã§ãããã¨ãè¡¨ãã¾ãããBã¨ããããã¯ãããAãã¯ B rather than A ã¾ãã¯ not so much A as B ã§è¡¨ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: ãAã¨ããããBãã®è¡¨ç¾<br>
+                            B rather than A = not so much A as B
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- åºæ¬åé¡5 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð åºæ¬åé¡ 5 - èªå¥æ´åºåé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        å½¼ãã¯ãã®å­ã®æ²»çã®ããã«ã§ããã ãå¤ãã®ãéãéããã<br>
+                        They raised [ as, as, for, money, much, possible ] the child's treatment.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>as much money as possible for</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â as much money as possible</span> = ãã§ããã ãå¤ãã®ããã¯ as + åç´ + as possible ã§è¡¨ãã¾ãããéã¯ä¸å¯ç®åè©ãªã®ã§ãmuch moneyãä½¿ãã¾ããas ~ as...ã®éã«åè©ãæããã¨ãã§ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: as ~ as possible<br>
+                            as + åç´ + as possible = ã§ããã ãã<br>
+                            = as + åç´ + as one can
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        å°åã¯éããã°éãã»ã©ãéãã®ã«ãéããããã<br>
+                        The heavier the package is, [ it, more, is, expensive, the ] to send.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>the more expensive it is</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â the more expensive it is</span> = ããããã°ããã»ã©â¦ãã¯ the + æ¯è¼ç´ ~, the + æ¯è¼ç´ ... ã§è¡¨ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: the æ¯è¼ç´, the æ¯è¼ç´<br>
+                            the + æ¯è¼ç´ ~, the + æ¯è¼ç´ ... = ãããã°ããã»ã©â¦
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        ããããã£ã½ãã¨ããã¯ãããããã¯ããªã³ã¯å¼ã®ãã¨ãå¥½ãã ã<br>
+                        Lin loves her brother [ the, for, less, his naughtiness, none ].
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>none the less for his naughtiness</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â none the less for his naughtiness</span> = ããã ããã¨ãã£ã¦â¦ãã¯ none the less for[because] ~ ã§è¡¨ãã¾ãããã®çç±ããã£ã¦ã(å¤ããã)ãã¯ã...ã¨ããæå³ã§ããforã®å¾ã«åè©ãS+Vå¥ã®å ´åã¯becauseãä½¿ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: none the less<br>
+                            none the less for ~ = ãã ããã¨ãã£ã¦å¤ããã<br>
+                            = all the æ¯è¼ç´ for ~
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        ãã®å¬åã¯æ±äº¬ãã¼ã 40ååã®åºãã ã<br>
+                        This park is [ as, as, forty, large, times ] Tokyo Dome.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>forty times as large as</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â forty times as large as</span> = ãAã¯Bã®Xåãã ãã¯ A ... X times as + åç´ + as B ã§è¡¨ãã¾ãã40åãªã®ã§ãforty timesãä½¿ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: åæ°è¡¨ç¾<br>
+                            X times as + åç´ + as = Xåãã 
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- åºæ¬åé¡6 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð åºæ¬åé¡ 6 - è±æå®æåé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        å½¼ã¯çé¢ç®ãªã®ã§ããã£ããæ´å©ãã¦ããããã<br>
+                        I would like to help him all (ã) (ã) (ã) he is earnest.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>the more because</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â all the more because</span> = ããã ãããªããããããã ããã£ãããã¯ all the + æ¯è¼ç´ + because S+V ~ ã§è¡¨ãã¾ããçç±ãå¼·èª¿ããè¡¨ç¾ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: all the æ¯è¼ç´<br>
+                            all the + æ¯è¼ç´ + because/for ~ = ãã ãããªããã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        ãã®ä½å®¶ã¯ä¸çã®ãã¡ã«300åãã®æ¬ãæ¸ããã<br>
+                        The writer wrote no (ã) (ã) (ã) (ã) (ã) in his life.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>less than three hundred books</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â no less than three hundred books</span> = ããã(ã®)ãã¯ no less than + æ°è© ã§è¡¨ãã¾ããé©ãã®å¤ããå¼·èª¿ãã¾ããas many as ~ã¨åãæå³ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: no less than<br>
+                            no less than + æ°è© = ãã(é©ãã®å¤ã)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        ãã®èªè»¢è»ã¯ç§ãæã£ã¦ããã»ã©å¤æ®µãé«ããªãã£ãã<br>
+                        That bicycle was less (ã) (ã) (ã) (ã) (ã).
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>expensive than I had expected[thought]</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â less expensive than I had expected</span> = ããã»ã©é«ããªãã£ããã¯ less + åç´ + than I had expected ã§è¡¨ãã¾ããäºæ³ããç¨åº¦ãä½ããã¨ãç¤ºãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: less than expected<br>
+                            less + åç´ + than I had expected = äºæ³ããããã§ãªãã£ã
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FOR COMMUNICATION Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð¬ FOR COMMUNICATION - ä¼è©±åé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        A: How far is it from here to the bus stop?<br>
+                        B: It is not far away â it will take (ã) than fifteen minutes to get there.<br>
+                        <div class="choices">
+                            a. few<br>
+                            b. little<br>
+                            c. less<br>
+                            d. more
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>c. less</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong><br>
+                            A: ãããããã¹åã¾ã§ã©ã®ãããã§ãã?<br>
+                            B: ãããªã«é ããªãããããã«çãã®ã«15åãããããªããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â c. less</span> = ããæªæºãã¨ããæå³ã§ãthanãç¶ãã®ã§æ¯è¼ç´ãå¿è¦ãlittleã®æ¯è¼ç´lessãä½¿ãã¾ããless than ~ ã§ããæªæºãããããããªããã¨ããæå³ã«ãªãã¾ãã<br>
+                            <span class="incorrect">â a. few</span> = å¯ç®åè©ç¨ã§ãæ¯è¼ç´ã§ã¯ããã¾ããã<br>
+                            <span class="incorrect">â b. little</span> = åç´ãªã®ã§thanã¨ä¸ç·ã«ä½¿ãã¾ããã<br>
+                            <span class="incorrect">â d. more</span> = more than ~ã ã¨ããä»¥ä¸ãã«ãªããæèã¨åãã¾ããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: less than / more than<br>
+                            less than ~ = ãæªæºãããããããªã<br>
+                            more than ~ = ãä»¥ä¸ãããããã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        A: I hear that Tom is a great reader.<br>
+                        B: Yes, he has read (ã) more books than I have.<br>
+                        <div class="choices">
+                            a. much<br>
+                            b. many<br>
+                            c. a lot of<br>
+                            d. plenty of
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>b. many</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong><br>
+                            A: ãã ã¯èª­æ¸å®¶ã ã¨èãã¦ãã¾ãã<br>
+                            B: ã¯ããå½¼ã¯ç§ããããã£ã¨å¤ãã®æ¬ãèª­ãã§ãã¾ãã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â b. many</span> = more + å¯ç®åè©è¤æ°ãå¼·èª¿ããæãmany[a lot] more + å¯ç®åè©è¤æ°ã®å½¢ãä½¿ãã¾ãã<br>
+                            <span class="incorrect">â a. much</span> = muchã¯ä¸å¯ç®åè©ã®æã«ä½¿ãã¾ãã<br>
+                            <span class="incorrect">â c. a lot of</span> = a lot ofã¯æ¯è¼ç´ã®åã§ã¯ä½¿ãã¾ããã<br>
+                            <span class="incorrect">â d. plenty of</span> = plenty ofãæ¯è¼ç´ã®åã§ã¯ä½¿ãã¾ããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æ¯è¼ç´ã®å¼·èª¿(å¯ç®åè©)<br>
+                            many more + å¯ç®åè©è¤æ° = ãã£ã¨å¤ãã®ã<br>
+                            much more + ä¸å¯ç®åè© = ãã£ã¨å¤ãã®ã
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- çºå±åé¡1 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð çºå±åé¡ 1 - é¸æåé¡(å¤§å­¦å¥è©¦ã¬ãã«)</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        The (ã) half of the symphony was more beautiful than the first half.ãé¢è¥¿å­¦é¢å¤§ã<br>
+                        <div class="choices">
+                            a. first<br>
+                            b. late<br>
+                            c. latter<br>
+                            d. latest
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>c. latter</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> äº¤é¿æ²ã®å¾åã¯ååãããç¾ããã£ãã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â c. latter</span> = lateã®æ¯è¼ç´ã®ä¸ã¤ãlate - latter - last ã¨ããä¸è¦åå¤åãããã¾ããlatterã¯ãå¾èã®ãå¾åã®ãã¨ããæå³ã§ãã<br>
+                            <span class="incorrect">â a. first</span> = ãæåã®ãã¨ããæå³ã§ãæèã«åãã¾ããã<br>
+                            <span class="incorrect">â b. late</span> = åç´ãªã®ã§ãthe first halfã¨å¯¾æ¯ã§ãã¾ããã<br>
+                            <span class="incorrect">â d. latest</span> = ãææ°ã®ãã¨ããæå³ã§ãæéçãªé åºãè¡¨ãã®ã«é©ãã¦ãã¾ããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: late ã®ä¸è¦åå¤å<br>
+                            late - latter - last (é åº)<br>
+                            late - later - latest (æé)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        She is (ã) than beautiful.<br>
+                        <div class="choices">
+                            a. pretty<br>
+                            b. more pretty<br>
+                            c. prettier<br>
+                            d. rather prettiest
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>b. more pretty</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> å½¼å¥³ã¯ç¾ããã¨ããããããããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â b. more pretty</span> = ãmore + å½¢å®¹è©(A) + than + å½¢å®¹è©(B)ãã§ãBã¨ããããã¯ãããAãã¨ããæ¯è¼ãè¡¨ãã¾ããéå¸¸ãprettyã¯prettierã«ãªãã¾ãããmore+åç´ã§ãthanã¨ä¸ç·ã«ä½¿ãã¾ãã<br>
+                            <span class="incorrect">â a. pretty</span> = thanãããã®ã§æ¯è¼ç´ãå¿è¦ã§ãã<br>
+                            <span class="incorrect">â c. prettier</span> = éå¸¸ã®æ¯è¼ç´ã§ããããã®æ§æã§ã¯moreãä½¿ãã¾ãã<br>
+                            <span class="incorrect">â d. rather prettiest</span> = æä¸ç´ãªã®ã§ææ³çã«èª¤ãã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: more A than B<br>
+                            more + å½¢å®¹è©A + than + å½¢å®¹è©B = Bã¨ãããããããA
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        I don't know his name, (ã) his address.ãæ±åå­¦é¢å¤§ã<br>
+                        <div class="choices">
+                            a. even more<br>
+                            b. more than<br>
+                            c. much less<br>
+                            d. much more
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>c. much less</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> å½¼ã®ååãç¥ããªããã¾ãã¦ä½æãªã©ç¥ããªãã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â c. much less</span> = å¦å®æã®å¾ã§ãããã¾ãã¦ã...ãªããã¨ããæå³ã§ãmuch[still] less ~ ãä½¿ãã¾ããåã®å¦å®ãå¼·èª¿ãã¾ãã<br>
+                            <span class="incorrect">â a. even more</span> = è¯å®æã§ä½¿ãããæå³ãéã«ãªãã¾ãã<br>
+                            <span class="incorrect">â b. more than</span> = æèã«åãã¾ããã<br>
+                            <span class="incorrect">â d. much more</span> = much moreã¯è¯å®æã§ä½¿ããã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: much less / much more<br>
+                            å¦å®æ + much less ~ = ã¾ãã¦ããªã<br>
+                            è¯å®æ + much more ~ = ã¾ãã¦ãã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q4</span>
+                    <div class="question-text">
+                        This is the (ã) best book I have ever read in my life.ãè¿ç¿å¤§ã<br>
+                        <div class="choices">
+                            a. far<br>
+                            b. most<br>
+                            c. much<br>
+                            d. very
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>d. very</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ããã¯ç§ãäººçã§èª­ãã ä¸­ã§æé«ã®æ¬ã§ãã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â d. very</span> = veryã¯theã®å¾ã«ç½®ãã¦ãthe very + æä¸ç´ + åè© ã§ãã¾ãã«æãããªãã¨ããå¼·èª¿ãè¡¨ãã¾ãã<br>
+                            <span class="incorrect">â a. far</span> = farã¯æ¯è¼ç´ãå¼·èª¿ããæã«ä½¿ãã¾ãã<br>
+                            <span class="incorrect">â b. most</span> = mostã¯æä¸ç´ãä½ãæã«ä½¿ãã¾ãããbestã¯ãã§ã«æä¸ç´ã§ãã<br>
+                            <span class="incorrect">â c. much</span> = muchã¯æ¯è¼ç´ãå¼·èª¿ããæã«ä½¿ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æä¸ç´ã®å¼·èª¿<br>
+                            the very + æä¸ç´ = ã¾ãã«æãã<br>
+                            much/by far + æä¸ç´ = ã¯ããã«æãã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q5</span>
+                    <div class="question-text">
+                        Many children prefer watching television (ã) books.ãäº¬é½ç²¾è¯å¤§ã<br>
+                        <div class="choices">
+                            a. than reading<br>
+                            b. to reading<br>
+                            c. reading<br>
+                            d. better than reading
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>b. to reading</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> å¤ãã®å­ä¾ãã¡ã¯æ¬ãèª­ãããããã¬ããè¦ããã¨ãå¥½ãã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â b. to reading</span> = thanã§ã¯ãªãtoãä½¿ãæ¯è¼è¡¨ç¾ããBããAãå¥½ããã¯ prefer A to B ã§è¡¨ãã¾ãã<br>
+                            <span class="incorrect">â a. than reading</span> = preferã¯thanã¨ä¸ç·ã«ä½¿ãã¾ããã<br>
+                            <span class="incorrect">â c. reading</span> = åç½®è©ãæ¬ ãã¦ãã¾ãã<br>
+                            <span class="incorrect">â d. better than reading</span> = prefer betterã¨ããå½¢ã¯ä½¿ãã¾ããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: toãä½¿ãæ¯è¼è¡¨ç¾<br>
+                            prefer A to B = BããAãå¥½ã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q6</span>
+                    <div class="question-text">
+                        (ã) 20 flights were cancelled due to the heavy storm.ãé¢è¥¿å­¦é¢å¤§ã<br>
+                        <div class="choices">
+                            a. As long as<br>
+                            b. As many as<br>
+                            c. As much as<br>
+                            d. As soon as
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>b. As many as</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ã²ã©ãåµã®ããã20ä¾¿ãã®é£è¡æ©ãæ¬ èªããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â b. As many as</span> = ããã(ã®)ãã¨ããé©ãã®å¤ããå¼·èª¿ããè¡¨ç¾ãas many as + æ°è© ã§ä½¿ãã¾ããno less than ~ã¨åãæå³ã§ããflightsã¯å¯ç®åè©ãªã®ã§ãas many asãä½¿ãã¾ãã<br>
+                            <span class="incorrect">â a. As long as</span> = ããããéããã¨ããæå³ã§ãæèã«åãã¾ããã<br>
+                            <span class="incorrect">â c. As much as</span> = ä¸å¯ç®åè©ãéé¡ã«ä½¿ãã¾ãã<br>
+                            <span class="incorrect">â d. As soon as</span> = ããããã¨ããã«ãã¨ããæå³ã§ãæèã«åãã¾ããã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: as many as / as much as<br>
+                            as many as + æ°è© = ãã(å¯ç®åè©)<br>
+                            as much as + éé¡ = ãã(ä¸å¯ç®åè©)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q7</span>
+                    <div class="question-text">
+                        Fresh air is no (ã) necessary to good health than sunlight.<br>
+                        <div class="choices">
+                            a. better<br>
+                            b. less<br>
+                            c. further<br>
+                            d. more
+                        </div>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>b. less</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> æ°é®®ãªç©ºæ°ã¯æ¥åã¨åæ§ã«å¥åº·ã«å¿è¦ã§ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â b. less</span> = ãAãBã§ããã®ã¯CãDã§ããã®ã¨åæ§ã§ãããã¯ A is no less B than C is D ã§è¡¨ãã¾ããã¤ã¾ããsunlightãis necessary to good healthã§ãããã¨ãåæã«ãFresh airãåæ§ã«å¿è¦ã ã¨ãããã¨ã§ãã<br>
+                            <span class="incorrect">â a. better</span> = æèã«åãã¾ããã<br>
+                            <span class="incorrect">â c. further</span> = æèã«åãã¾ããã<br>
+                            <span class="incorrect">â d. more</span> = no more B than Cã ã¨ãAãBã§ãªãã®ã¯CãDã§ãªãã®ã¨åæ§ãã¨ããéã®æå³ã«ãªãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: no less B than<br>
+                            A is no less B than C is D = AãBã§ããã®ã¯CãDã§ããã®ã¨åæ§<br>
+                            A is no more B than C is D = AãBã§ãªãã®ã¯CãDã§ãªãã®ã¨åæ§
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- çºå±åé¡2 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð çºå±åé¡ 2 - èª¤ãè¨æ­£åé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        John is one of the <u>a. most experienced</u> <u>b. member</u> <u>c. of</u> the sales department, and everybody depends <u>d. on</u> him.ãæ±åè¬ç§å¤§ã
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>b. member â members</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ã¸ã§ã³ã¯å¶æ¥­é¨ã§æãçµé¨è±å¯ãªã¡ã³ãã¼ã®1äººã§ãã¿ããªãå½¼ãé ¼ãã«ãã¦ããã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â members</span> = ãæãããª...ã®1ã¤[ã®1äºº]ãã¯ one of the + æä¸ç´ + è¤æ°åè© ã§è¡¨ãã¾ãããããã£ã¦ãb. memberã¯è¤æ°å½¢ã®membersã«è¨æ­£ããå¿è¦ãããã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: one of the æä¸ç´<br>
+                            one of the + æä¸ç´ + è¤æ°åè© = æãããª...ã®1ã¤[1äºº]
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        <u>a. Finishing</u> the project was <u>b. too difficult</u> than I <u>c. had imagined</u>, and I almost couldn't <u>d. get it done</u> by the deadline.ãåå±±å¤§ã
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>b. too difficult â more difficult</strong><br>
+                            <strong>æ¥æ¬èªè¨³:</strong> ãã­ã¸ã§ã¯ããå®æããããã¨ã¯ç§ãæ³åãã¦ãããããé£ãããç· ãåãã¾ã§ã«ã»ã¨ãã©çµãããããã¨ãã§ããªãã£ãã<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â more difficult</span> = thanãç¶ãã¦ããã®ã§æ¯è¼ç´ãå¿è¦ã§ããb. tooã¯ããã¾ãã«ããã¨ããæå³ã§ãthanã¨ä¸ç·ã«ã¯ä½¿ãã¾ããããããã£ã¦ãb.ãmore difficultã«è¨æ­£ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: than ã¨æ¯è¼ç´<br>
+                            than ãããã°å¿ãæ¯è¼ç´ãå¿è¦<br>
+                            too ~ to... = ãã¾ãã«ãããã¦...ã§ããªã
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- çºå±åé¡3 Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h3>ð çºå±åé¡ 3 - è±ä½æåé¡</h3>
+                <span class="toggle-icon">â¼</span>
+            </div>
+            <div class="section-content">
+                
+                <div class="question-card">
+                    <span class="question-number">Q1</span>
+                    <div class="question-text">
+                        éåãããå¾ã«é£²ã1æ¯ã®æ°´ã»ã©ãããããã®ã¯ãªããã*æç¥å·¥å¤§ã<br>
+                        <strong>åç´:</strong> Nothing ( ) ( ) ( ) ( ) ( ) ( ) ( ) ( ) taken after exercise.<br>
+                        <strong>æ¯è¼ç´:</strong> Nothing ( ) ( ) ( ) ( ) ( ) ( ) ( ) taken after exercise.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span><br>
+                            <strong>åç´:</strong> Nothing <strong>is as[so] good[delicious] as a glass of water</strong> taken after exercise.<br>
+                            <strong>æ¯è¼ç´:</strong> Nothing <strong>is better[more delicious] than a glass of water</strong> taken after exercise.<br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â åç´ãã¿ã¼ã³</span> = ãAä»¥ä¸ã«ããªãã®ã¯ãªããã¯ Nothing ... as[so] + åç´ + as A ã§è¡¨ãã¾ãã<br>
+                            <span class="correct">â æ¯è¼ç´ãã¿ã¼ã³</span> = Nothing ... æ¯è¼ç´ + than A ã§ãåãæå³ãè¡¨ãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: æä¸ç´ã®åå®¹ãåç´ã»æ¯è¼ç´ã§<br>
+                            Nothing is as ~ as A = Aã»ã©ããªãã®ã¯ãªã<br>
+                            Nothing is æ¯è¼ç´ than A = Aããããªãã®ã¯ãªã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q2</span>
+                    <div class="question-text">
+                        ç§ã¯åãééããç¹°ãè¿ãã»ã©æãã§ã¯ããã¾ããã<br>
+                        I know better (ã) (ã) (ã) (ã) (ã) (ã).
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>than to repeat the same mistake(s)</strong> ã¾ãã¯ <strong>than to make the same mistake(s) again</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â know better than to do</span> = ããããã»ã©æãã§ã¯ãªãããããåå¥ã¯ãããã¨ããæ£ç¨è¡¨ç¾ã§ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: know better than to do<br>
+                            know better than to do = ãããã»ã©æãã§ã¯ãªã
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Q3</span>
+                    <div class="question-text">
+                        ç§ãã¡ã®å¸ã®äººå£ã¯ããªãã®å¸ã®ç´ååã§ãã
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer-box">
+                        <div class="answer-content">
+                            <span class="answer-label">æ­£è§£:</span> <strong>The population of our city is about half as large as that of yours[your city].</strong><br><br>
+                            <strong>è§£èª¬:</strong><br>
+                            <span class="correct">â half as large as</span> = ãAã¯Bã®Xåãã ãã¯ A ... X times as + åç´ + as B ã§è¡¨ãã¾ããåå(1/2å)ã¯halfãä½¿ãã¾ããäººå£åå£«ãæ¯è¼ããã®ã§ãç¹°ãè¿ããé¿ãããããthe population of your cityãthatã§åãã¾ãã
+                        </div>
+                        <div class="grammar-reference">
+                            ð Grammar Point: åæ°è¡¨ç¾(åæ°)<br>
+                            half as ~ as = ååã®ãã <br>
+                            that = ååºã®åè©ã®ç¹°ãè¿ããé¿ããä»£åè©
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2>ð Key Grammar Topics Covered</h2>
+            <div class="topic-grid">
+                <div class="topic-card">
+                    <strong>åç´è¡¨ç¾</strong><br>
+                    as ~ as / not as ~ as<br>
+                    as ~ as possible
+                </div>
+                <div class="topic-card">
+                    <strong>æ¯è¼ç´è¡¨ç¾</strong><br>
+                    æ¯è¼ç´ + than<br>
+                    æ¯è¼ç´ and æ¯è¼ç´
+                </div>
+                <div class="topic-card">
+                    <strong>æä¸ç´è¡¨ç¾</strong><br>
+                    the + æä¸ç´<br>
+                    one of the + æä¸ç´
+                </div>
+                <div class="topic-card">
+                    <strong>åæ°è¡¨ç¾</strong><br>
+                    X times as ~ as<br>
+                    twice / half
+                </div>
+                <div class="topic-card">
+                    <strong>æ£ç¨è¡¨ç¾</strong><br>
+                    the æ¯è¼ç´, the æ¯è¼ç´<br>
+                    all the æ¯è¼ç´
+                </div>
+                <div class="topic-card">
+                    <strong>toãä½¿ãæ¯è¼</strong><br>
+                    superior/inferior to<br>
+                    prefer A to B
+                </div>
+                <div class="topic-card">
+                    <strong>no more/less than</strong><br>
+                    no more than = ããã<br>
+                    no less than = ãã
+                </div>
+                <div class="topic-card">
+                    <strong>æ¯è¼ç´ã®å¼·èª¿</strong><br>
+                    much/far + æ¯è¼ç´<br>
+                    many/much more
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-box">
+            <h3>ð Common Mistakes to Watch For</h3>
+            <ul>
+                <li><strong>æ¯è¼ç´ã®å½¢:</strong> 2é³ç¯ä»¥ä¸ã®å½¢å®¹è©ã¯more/mostãä½¿ã(more famous, not famouser)</li>
+                <li><strong>æä¸ç´ã®ç¯å²:</strong> in + å ´æ/çµç¹ãof + è¤æ°ã®ãã®(in our club, of us all)</li>
+                <li><strong>2ã¤ã®æ¯è¼:</strong> of the twoã®æã¯the + æ¯è¼ç´ãä½¿ã(the taller of the two)</li>
+                <li><strong>thanã¨to:</strong> superior/inferior/prefer ã¯toãä½¿ã(superior to, not superior than)</li>
+                <li><strong>æ¯è¼ç´ã®å¼·èª¿:</strong> much/far/even/stillãä½¿ã(much more, not very more)</li>
+                <li><strong>åæ°è¡¨ç¾:</strong> X times as ~ asã®èªé ã«æ³¨æ(twice as heavy as)</li>
+                <li><strong>one of the æä¸ç´:</strong> å¿ãè¤æ°åè©ãä½¿ã(one of the best students)</li>
+                <li><strong>no more/less than:</strong> æå³ã®éãã«æ³¨æ(no more = ãããno less = ã)</li>
+            </ul>
+        </div>
+
+        <div class="tips-box">
+            <h3>ð¨âð« Teaching Tips for Tetsuya</h3>
+            <ul>
+                <li><strong>è¦è¦çã¢ãã­ã¼ã:</strong> æ¯è¼ãå³ãçµµã§è¡¨ç¾ããã¨çè§£ãããã(ä¾: èº«é·ã®æ£ã°ã©ã)</li>
+                <li><strong>å®çæ´»ã®ä¾:</strong> çå¾ã®èº«è¿ãªè©±é¡(NBAé¸æã®æ¯è¼ãäººæ°ã¢ãã¡ãªã©)ãä½¿ã</li>
+                <li><strong>æ£ç¨è¡¨ç¾ã®æè¨:</strong> the æ¯è¼ç´, the æ¯è¼ç´ãªã©ã¯ä¾æãã¨è¦ãããã</li>
+                <li><strong>ééãããããã¤ã³ã:</strong> thanã¨toã®ä½¿ãåããéç¹çã«</li>
+                <li><strong>æ®µéçå­¦ç¿:</strong> åç´âæ¯è¼ç´âæä¸ç´ã®é ã§åºç¤ãåºãã¦ããå¿ç¨ã¸</li>
+                <li><strong>åå¾©ç·´ç¿:</strong> ä¸è¦åå¤å(good-better-best, bad-worse-worst)ã¯ä½åº¦ãç¢ºèª</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            content.classList.toggle('active');
+            if (icon) {
+                icon.classList.toggle('active');
+            }
+        }
+        
+        function toggleAnswer(button) {
+            const answerBox = button.nextElementSibling;
+            if (answerBox.classList.contains('show')) {
+                answerBox.classList.remove('show');
+                button.textContent = 'Show Answer';
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = 'Hide Answer';
+            }
+        }
+
+        // Auto-open first section for convenience
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // Toolbar actions: open-all / close-all / download
+        document.addEventListener('click', function(e) {
+            const actionBtn = e.target.closest('[data-action]');
+            if (!actionBtn) return;
+
+            const action = actionBtn.getAttribute('data-action');
+
+            if (action === 'open-all' || action === 'close-all') {
+                const headers = document.querySelectorAll('.section-header');
+                headers.forEach(function(header) {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('.toggle-icon');
+                    const isOpen = content.classList.contains('active');
+
+                    if (action === 'open-all' && !isOpen) {
+                        content.classList.add('active');
+                        if (icon) icon.classList.add('active');
+                    }
+                    if (action === 'close-all' && isOpen) {
+                        content.classList.remove('active');
+                        if (icon) icon.classList.remove('active');
+                    }
+                });
+            }
+
+            if (action === 'download') {
+                const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+                const blob = new Blob([html], { type: 'text/html' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'grammar_breakdown_comparative.html';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            }
+        });
+    </script>
+</body>
+</html>
