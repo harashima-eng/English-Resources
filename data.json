@@ -74,7 +74,7 @@
       "fileName": "index.html",
       "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/index.html",
       "date": "2025-12-07",
-      "order": 5
+      "order": 7
     },
     {
       "id": "92652805-1e2f-48f4-841c-8a3bc0b615a0",
@@ -83,7 +83,7 @@
       "fileName": "英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
       "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
       "date": "2025-12-07",
-      "order": 6
+      "order": 8
     },
     {
       "id": "fac7b94e-2c01-4072-a470-f28e5d1e301a",
@@ -92,7 +92,7 @@
       "fileName": "chapter_14.html",
       "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/chapter_14.html",
       "date": "2025-12-07",
-      "order": 0
+      "order": 2
     },
     {
       "id": "3a67ae3b-8059-44e4-9419-97657e2eb649",
@@ -101,7 +101,7 @@
       "fileName": "Chapter16.html",
       "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter16.html",
       "date": "2025-12-07",
-      "order": 2
+      "order": 4
     },
     {
       "id": "e1747e89-5683-450c-8c03-a279bad2209f",
@@ -110,7 +110,7 @@
       "fileName": "Chapter18.html",
       "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter18.html",
       "date": "2025-12-07",
-      "order": 4
+      "order": 6
     },
     {
       "id": "e4278ae4-6572-4110-b41d-d3cf07274418",
@@ -119,7 +119,7 @@
       "fileName": "Chapter17.html",
       "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter17.html",
       "date": "2025-12-07",
-      "order": 3
+      "order": 5
     },
     {
       "id": "7888d412-bd11-4d76-a2bb-0ff698bd602f",
@@ -128,7 +128,7 @@
       "fileName": "Chapter_15.html",
       "filePath": "files/73ae45da-d3ee-4536-b377-e746d95df086/Chapter_15.html",
       "date": "2025-12-07",
-      "order": 1,
+      "order": 3,
       "minutes": "",
       "tags": [],
       "keywords": ""
@@ -300,6 +300,34 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "bfcdf65a-ad17-474a-b0a7-de2e58763b79",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter9",
+      "fileName": "chapter9_living_wage_breakdown_dual_v2.html",
+      "filePath": "grade-3/english-communication-iii/files/chapter9_living_wage_breakdown_dual_v2.html",
+      "date": "2025-12-07",
+      "order": 0,
+      "originalFileName": "chapter9_living_wage_breakdown_dual_v2.html",
+      "fileSlug": "chapter9.html",
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    },
+    {
+      "id": "7c59630c-b00f-49eb-b30a-d94f33d9248c",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter10",
+      "fileName": "chapter10_global_brands_breakdown_dual_v3.html",
+      "filePath": "grade-3/english-communication-iii/files/chapter10_global_brands_breakdown_dual_v3.html",
+      "date": "2025-12-07",
+      "order": 1,
+      "originalFileName": "chapter10_global_brands_breakdown_dual_v3.html",
+      "fileSlug": "chapter10.html",
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -308,5 +336,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-07T08:02:30.617Z"
+  "lastUpdated": "2025-12-07T12:42:17.451Z"
 }
