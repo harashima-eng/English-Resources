@@ -110,7 +110,10 @@
       "fileName": "Chapter18.html",
       "filePath": "grade-3/english-communication-iii/files/Chapter18.html",
       "date": "2025-12-07",
-      "order": 9
+      "order": 9,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     },
     {
       "id": "e4278ae4-6572-4110-b41d-d3cf07274418",
@@ -369,5 +372,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-07T23:57:46.726Z"
+  "lastUpdated": "2025-12-08T00:15:04.246Z"
 }
