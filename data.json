@@ -352,20 +352,6 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
-    },
-    {
-      "id": "6c68d339-71ba-4625-8ca7-00679043d42c",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter18",
-      "fileName": "Chapter18_v2 (9).html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter18_v2 (9).html",
-      "date": "2025-12-08",
-      "order": 9,
-      "originalFileName": "Chapter18_v2 (9).html",
-      "fileSlug": "Chapter18.html",
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
     }
   ],
   "settings": {
@@ -374,5 +360,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-08T02:59:20.991Z"
+  "lastUpdated": "2025-12-08T03:03:47.562Z"
 }
