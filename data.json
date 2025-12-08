@@ -104,18 +104,6 @@
       "order": 7
     },
     {
-      "id": "e1747e89-5683-450c-8c03-a279bad2209f",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter18",
-      "fileName": "Chapter18.html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter18.html",
-      "date": "2025-12-07",
-      "order": 9,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
       "id": "e4278ae4-6572-4110-b41d-d3cf07274418",
       "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
       "title": "Chapter17",
@@ -364,6 +352,20 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "6c68d339-71ba-4625-8ca7-00679043d42c",
+      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
+      "title": "Chapter18",
+      "fileName": "Chapter18_v2 (9).html",
+      "filePath": "grade-3/english-communication-iii/files/Chapter18_v2 (9).html",
+      "date": "2025-12-08",
+      "order": 9,
+      "originalFileName": "Chapter18_v2 (9).html",
+      "fileSlug": "Chapter18.html",
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -372,5 +374,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-08T00:15:04.246Z"
+  "lastUpdated": "2025-12-08T02:59:20.991Z"
 }
