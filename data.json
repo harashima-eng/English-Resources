@@ -64,6 +64,16 @@
       "oldSlug": "new-folder",
       "iconImage": null,
       "lockNavigation": true
+    },
+    {
+      "id": "b56df86e-7e00-422f-ba4c-bd49ecb9710b",
+      "parentId": null,
+      "name": "New Folder",
+      "slug": "new-folder",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 2
     }
   ],
   "items": [
@@ -74,7 +84,7 @@
       "fileName": "index.html",
       "filePath": "grade-3/english-communication-iii/files/index.html",
       "date": "2025-12-07",
-      "order": 10
+      "order": 11
     },
     {
       "id": "92652805-1e2f-48f4-841c-8a3bc0b615a0",
@@ -83,7 +93,7 @@
       "fileName": "英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
       "filePath": "grade-3/english-communication-iii/files/英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
       "date": "2025-12-07",
-      "order": 11
+      "order": 10
     },
     {
       "id": "fac7b94e-2c01-4072-a470-f28e5d1e301a",
@@ -374,5 +384,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-08T04:48:53.431Z"
+  "lastUpdated": "2025-12-09T09:52:11.629Z"
 }
