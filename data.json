@@ -66,14 +66,17 @@
       "lockNavigation": true
     },
     {
-      "id": "b56df86e-7e00-422f-ba4c-bd49ecb9710b",
+      "id": "136e3394-d86a-4900-bcf2-432539d5ad83",
       "parentId": null,
-      "name": "New Folder",
-      "slug": "new-folder",
+      "name": "共通テスト",
+      "slug": "folder",
       "htmlFile": "index.html",
       "icon": "📁",
-      "color": "#6b7280",
-      "order": 2
+      "color": "#d309b8",
+      "order": 3,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
     }
   ],
   "items": [
@@ -376,6 +379,14 @@
       "keywords": "",
       "originalFileName": "Chapter18_v2 (9).html",
       "fileSlug": "Chapter18.html"
+    },
+    {
+      "id": "8f0d46e7-1653-4def-af26-c8a05a6afb7f",
+      "folderId": "136e3394-d86a-4900-bcf2-432539d5ad83",
+      "title": "",
+      "fileName": "",
+      "date": "2025-12-21",
+      "order": 0
     }
   ],
   "settings": {
@@ -384,5 +395,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-09T09:52:11.629Z"
+  "lastUpdated": "2025-12-21T23:25:37.684Z"
 }
