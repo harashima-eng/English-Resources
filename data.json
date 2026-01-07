@@ -77,6 +77,19 @@
       "oldSlug": "new-folder",
       "iconImage": null,
       "lockNavigation": false
+    },
+    {
+      "id": "33a50e9d-829c-4b34-a723-629cb0069d10",
+      "parentId": null,
+      "name": "Dragon Quest",
+      "slug": "dragon-quest",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#d74c42",
+      "order": 3,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
     }
   ],
   "items": [
@@ -391,6 +404,18 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "bfa8081a-bf39-4281-8b65-ac16b982a6ea",
+      "folderId": "33a50e9d-829c-4b34-a723-629cb0069d10",
+      "title": "Dragon Quest English Guide",
+      "fileName": "dragon_quest_english_guide.html",
+      "filePath": "dragon-quest/files/dragon_quest_english_guide.html",
+      "date": "2026-01-07",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -399,5 +424,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2025-12-25T00:00:36.505Z"
+  "lastUpdated": "2026-01-07T00:40:23.839Z"
 }
