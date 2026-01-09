@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>2025 工学院大学 英語 完全解説 | S日程</title>
+  <style>
+    /* ============================================
+       CSS RESET & BASE - Apple Design System
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    :root {
+      /* Colors - Dark Theme */
+      --bg-primary: #000000;
+      --bg-secondary: #1c1c1e;
+      --bg-tertiary: #2c2c2e;
+      --bg-card: #1c1c1e;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.7);
+      --text-tertiary: rgba(255,255,255,0.5);
+      --border-color: rgba(255,255,255,0.1);
+      --accent: #ff6b6b;
+      --accent-secondary: #ff8e53;
+      --success: #30d158;
+      --warning: #ff9f0a;
+      
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      
+      /* Typography */
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      --font-mono: "SF Mono", SFMono-Regular, Menlo, Monaco, monospace;
+      
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+      
+      /* Transitions - Apple Easing */
+      --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --duration-fast: 0.2s;
+      --duration-normal: 0.3s;
+      --duration-slow: 0.5s;
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    /* Light Theme */
+    .light-theme {
+      --bg-primary: #f2f2f7;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f2f2f7;
+      --bg-card: #ffffff;
+      --text-primary: #1d1d1f;
+      --text-secondary: rgba(0,0,0,0.6);
+      --text-tertiary: rgba(0,0,0,0.4);
+      --border-color: rgba(0,0,0,0.1);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background-color var(--duration-normal) var(--ease-apple),
+                  color var(--duration-normal) var(--ease-apple);
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-md);
+      padding-bottom: 100px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: var(--space-xl);
+      }
+    }
+
+    /* ============================================
+       HEADER - Hero Style
+       ============================================ */
+    .header {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 500;
+      color: white;
+      margin-bottom: var(--space-md);
+    }
+
+    .header-eyebrow {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: var(--space-xs);
+      letter-spacing: 0.5px;
+    }
+
+    .header h1 {
+      font-size: clamp(24px, 6vw, 32px);
+      font-weight: 700;
+      color: white;
+      margin-bottom: var(--space-sm);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      text-align: center;
+      min-width: 70px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ============================================
+       CONTROLS BAR
+       ============================================ */
+    .controls {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: var(--radius-full);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform var(--duration-fast) var(--ease-apple),
+                  opacity var(--duration-fast) var(--ease-apple);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .ctrl-btn:active {
+      transform: scale(0.96);
+      opacity: 0.9;
+    }
+
+    .ctrl-btn.primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: white;
+    }
+
+    .ctrl-btn.secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    /* ============================================
+       SECTIONS - Accordion Style
+       ============================================ */
+    .section {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-md);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      will-change: transform;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md) var(--space-lg);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      user-select: none;
+      transition: background-color var(--duration-fast) var(--ease-apple);
+    }
+
+    .section-header:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .section-header:active {
+      background: var(--bg-tertiary);
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .section-index {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: white;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .section-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .section-badge {
+      background: rgba(255,107,107,0.15);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .light-theme .section-badge {
+      background: rgba(255,107,107,0.1);
+    }
+
+    .toggle-icon {
+      color: var(--text-tertiary);
+      font-size: 12px;
+      transition: transform var(--duration-normal) var(--ease-apple);
+    }
+
+    .toggle-icon.active {
+      transform: rotate(180deg);
+    }
+
+    .section-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--duration-slow) var(--ease-apple);
+    }
+
+    .section-content.active {
+      max-height: 100000px;
+    }
+
+    .section-body {
+      padding: 0 var(--space-lg) var(--space-lg);
+    }
+
+    /* ============================================
+       PASSAGE BOX
+       ============================================ */
+    .passage-box {
+      background: var(--bg-tertiary);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .passage-box p {
+      margin-bottom: var(--space-md);
+      text-indent: 1em;
+    }
+
+    .passage-box p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .passage-source {
+      font-style: italic;
+      color: var(--text-tertiary);
+      font-size: 13px;
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--border-color);
+      text-indent: 0;
+    }
+
+    .blank {
+      display: inline-block;
+      background: rgba(255,159,10,0.2);
+      color: var(--warning);
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin: 0 2px;
+    }
+
+    .light-theme .blank {
+      background: rgba(255,159,10,0.15);
+    }
+
+    .underline-mark {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 1px;
+    }
+
+    /* ============================================
+       SECTION HEADINGS
+       ============================================ */
+    .section-heading {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent);
+      margin: var(--space-xl) 0 var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .section-heading::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+      border-radius: 2px;
+    }
+
+    /* ============================================
+       QUESTION ITEMS
+       ============================================ */
+    .q-item {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    .q-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .q-label {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: white;
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: var(--space-md);
+    }
+
+    .q-en {
+      font-size: 15px;
+      color: var(--text-primary);
+      margin-bottom: var(--space-sm);
+      line-height: 1.7;
+    }
+
+    .q-jp {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: var(--space-md);
+      padding-left: var(--space-md);
+      border-left: 2px solid var(--border-color);
+    }
+
+    /* Choices - NO translations shown */
+    .q-choices {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .choice-item {
+      background: var(--bg-card);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .choice-label {
+      font-weight: 600;
+      color: var(--accent);
+      margin-right: 6px;
+    }
+
+    /* ============================================
+       BUTTONS - Hint & Answer
+       ============================================ */
+    .btn-row {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .hint-btn, .answer-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--radius-full);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform var(--duration-fast) var(--ease-apple),
+                  opacity var(--duration-fast) var(--ease-apple);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .hint-btn:active, .answer-btn:active {
+      transform: scale(0.96);
+      opacity: 0.9;
+    }
+
+    .hint-btn {
+      background: rgba(255,159,10,0.15);
+      color: var(--warning);
+      border: 1px solid rgba(255,159,10,0.3);
+    }
+
+    .answer-btn {
+      background: var(--success);
+      color: white;
+    }
+
+    /* ============================================
+       HINT BOX
+       ============================================ */
+    .hint-box {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height var(--duration-normal) var(--ease-apple),
+                  opacity var(--duration-normal) var(--ease-apple),
+                  margin var(--duration-normal) var(--ease-apple);
+    }
+
+    .hint-box.show {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: var(--space-md);
+    }
+
+    .hint-content {
+      background: rgba(255,159,10,0.1);
+      border: 1px solid rgba(255,159,10,0.2);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .hint-content strong {
+      color: var(--warning);
+    }
+
+    /* ============================================
+       ANSWER BOX
+       ============================================ */
+    .answer-box {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height var(--duration-normal) var(--ease-apple),
+                  opacity var(--duration-normal) var(--ease-apple),
+                  margin var(--duration-normal) var(--ease-apple);
+    }
+
+    .answer-box.show {
+      max-height: 5000px;
+      opacity: 1;
+      margin-top: var(--space-md);
+    }
+
+    .answer-content {
+      background: rgba(48,209,88,0.1);
+      border: 1px solid rgba(48,209,88,0.2);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .answer-label {
+      display: inline-block;
+      background: var(--success);
+      color: white;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: var(--space-md);
+    }
+
+    .correct-choice {
+      color: var(--success);
+      font-weight: 700;
+      font-size: 17px;
+    }
+
+    .translation-line {
+      margin-top: var(--space-sm);
+      color: var(--text-secondary);
+    }
+
+    /* Grammar Point Box */
+    .grammar-point {
+      background: rgba(175,130,255,0.1);
+      border-left: 3px solid #af82ff;
+      padding: var(--space-md);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-md) 0;
+    }
+
+    .grammar-point b {
+      color: #af82ff;
+    }
+
+    /* Example Box */
+    .example-box {
+      background: rgba(100,160,255,0.1);
+      border: 1px solid rgba(100,160,255,0.2);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    /* Wrong Box */
+    .wrong-box {
+      background: rgba(255,69,58,0.1);
+      border: 1px solid rgba(255,69,58,0.2);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .wrong-box > div {
+      margin-bottom: var(--space-sm);
+    }
+
+    .wrong-box > div:last-child {
+      margin-bottom: 0;
+    }
+
+    .wrong-choice {
+      color: #ff453a;
+      font-weight: 600;
+    }
+
+    /* Reference Box */
+    .ref-box {
+      background: rgba(255,214,10,0.1);
+      border-left: 3px solid #ffd60a;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: var(--space-md);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       OPTIONS LIST (Long text options)
+       ============================================ */
+    .options-list {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .options-list-title {
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+      font-size: 14px;
+    }
+
+    .option-full {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md);
+      margin-bottom: var(--space-sm);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .option-full:last-child {
+      margin-bottom: 0;
+    }
+
+    .option-label {
+      display: inline-block;
+      background: var(--bg-card);
+      color: var(--accent);
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 12px;
+      margin-right: var(--space-sm);
+    }
+
+    /* ============================================
+       CONVERSATION
+       ============================================ */
+    .conversation {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .conv-line {
+      margin-bottom: var(--space-md);
+      padding-left: 70px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .conv-line:last-child {
+      margin-bottom: 0;
+    }
+
+    .conv-speaker {
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 700;
+      color: var(--accent);
+      width: 60px;
+    }
+
+    @media (max-width: 480px) {
+      .conv-line {
+        padding-left: 0;
+        padding-top: 24px;
+      }
+      .conv-speaker {
+        width: auto;
+      }
+    }
+
+    /* ============================================
+       WRITING BOX
+       ============================================ */
+    .writing-box {
+      background: rgba(255,159,10,0.15);
+      border: 2px solid var(--warning);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      text-align: center;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: var(--space-lg);
+      color: var(--text-primary);
+    }
+
+    .model-answer {
+      background: rgba(48,209,88,0.1);
+      border: 1px solid rgba(48,209,88,0.3);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .model-label {
+      display: inline-block;
+      background: var(--success);
+      color: white;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 11px;
+      margin-bottom: var(--space-sm);
+    }
+
+    /* ============================================
+       FAB - Floating Action Button
+       ============================================ */
+    .fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity var(--duration-normal) var(--ease-apple),
+                  transform var(--duration-normal) var(--ease-apple);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .fab.visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .fab:active {
+      transform: scale(0.92);
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      text-align: center;
+      padding: var(--space-xl);
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
+    .footer p {
+      margin-bottom: var(--space-xs);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 480px) {
+      .container {
+        padding: var(--space-sm);
+      }
+
+      .header {
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+      }
+
+      .section-header {
+        padding: var(--space-md);
+      }
+
+      .section-body {
+        padding: 0 var(--space-md) var(--space-md);
+      }
+
+      .section-title {
+        font-size: 14px;
+      }
+
+      .q-item {
+        padding: var(--space-md);
+      }
+
+      .passage-box {
+        padding: var(--space-md);
+      }
+
+      .q-choices {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .controls {
+        gap: 6px;
+      }
+
+      .ctrl-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
+
+    /* ============================================
+       PRINT STYLES
+       ============================================ */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+      }
+
+      .section-content {
+        max-height: none !important;
+        opacity: 1 !important;
+      }
+
+      .answer-box, .hint-box {
+        max-height: none !important;
+        opacity: 1 !important;
+      }
+
+      .controls, .fab {
+        display: none !important;
+      }
+    }
+
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
+    .mt-sm { margin-top: var(--space-sm); }
+    .mt-md { margin-top: var(--space-md); }
+    .mt-lg { margin-top: var(--space-lg); }
+    .mb-sm { margin-bottom: var(--space-sm); }
+    .mb-md { margin-bottom: var(--space-md); }
+    .mb-lg { margin-bottom: var(--space-lg); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-badge">
+        <span>🎯</span>
+        <span>大学入試 完全解説</span>
+      </div>
+      <div class="header-eyebrow">2025年度 S日程 先進工・工・建築・情報学部</div>
+      <h1>工学院大学 英語 入試問題</h1>
+      <p class="header-subtitle">全問題を徹底解説！文法・語法・読解のポイントを日本語でわかりやすく説明します。</p>
+      <div class="header-stats">
+        <div class="stat-item">
+          <div class="stat-value">5</div>
+          <div class="stat-label">大問</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">26</div>
+          <div class="stat-label">設問</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">60分</div>
+          <div class="stat-label">試験時間</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="ctrl-btn primary" id="themeBtn">
+        <span id="themeIcon">☀️</span>
+        <span id="themeText">Light</span>
+      </button>
+      <button class="ctrl-btn secondary" id="expandAllBtn">📂 すべて開く</button>
+      <button class="ctrl-btn secondary" id="collapseAllBtn">📁 閉じる</button>
+    </div>
+
+    <!-- ==========================================
+         SECTION 1: Procrastination
+         ========================================== -->
+    <div class="section" data-sec="1">
+      <div class="section-header" data-target="sec1">
+        <div class="section-title-wrap">
+          <div class="section-index">1</div>
+          <span class="section-title">【１】長文読解：Procrastination</span>
+        </div>
+        <div class="section-meta">
+          <span class="section-badge">11問</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+      </div>
+      <div class="section-content active" id="sec1">
+        <div class="section-body">
+          
+          <!-- Passage -->
+          <div class="passage-box">
+            <p>The word procrastination comes from the Latin "pro," which means forward or forth, and "crastinus," meaning tomorrow. Procrastination is a very common problem today and affects universities, workplaces, and all modes of life. Researchers have estimated that 80 to 95 percent of college students procrastinate, with as many as 50 percent of the regular population doing it frequently. Delaying some work because of health reasons is not procrastination because <span class="blank">( ⅰ )</span>. All delay is not necessarily procrastination. Procrastination is clearly delaying something at a higher overall cost to oneself.</p>
+            
+            <p>Procrastination cuts across all domains of life. Procrastinators don't pay bills on time, miss assignments, miss doing work on time, go to work late, lose others' trust, miss on savings, and suffer a range of other consequences that impact the very goals they want to achieve for themselves. Therefore, procrastinators almost always <span class="blank">( 1 )</span> the act of procrastination. Procrastination seems irrational from an outside perspective and to procrastinators' own logical minds, but <span class="blank">( ⅱ )</span>.</p>
+            
+            <p>Procrastination is often confused with laziness. Laziness is common among people, but when we see this laziness and procrastination together in a person, we <span class="blank">( 2 )</span> conclude that procrastinators are extreme forms of lazy people.</p>
+            
+            <p>For a delay to be considered as procrastination, it has to have a higher overall cost to the procrastinator in the form of fear, worry, stress, guilt, loss of reputation, or loss of productivity. Procrastination always has some element of fearful avoidance to it. People delaying a task out of laziness don't experience this kind of fear, worry, or stress. Most procrastinators while delaying a task are fearful, worried, or anxious about the delay in a helpless manner. The only similarity between laziness and procrastination is that they both involve a lack of motivation, but the similarity just ends there. <span class="blank">( 3 )</span>, we judge procrastinators as lazy without looking deeper into the underlying causes to differentiate laziness and procrastination.</p>
+            
+            <p>We will always feel disinterested to do any work until we start doing it well, get an upper hand in that work, and build trust in ourselves. Once we have that trust in ourselves, we seek similar opportunities to do better. Once we achieve a level of mastery, we automatically start to like a task, even if it is a task that we didn't like initially. For example, a kid who doesn't like to put effort in learning cycling will refuse to cycle initially, but after enough experience, he will start to like it, and he will not refuse anymore. So, we arrive at a <span class="underline-mark">chicken-and-egg problem</span> (下線部Ⅰ). We need to attain a certain level of mastery and trust in oneself to enjoy a task. But in order to attain this, we need to first spend many hours in practice, and to practice many hours of an activity, we need to enjoy it.</p>
+            
+            <p>In professions or activities where you can easily see the direct effect of labor, it is easier to trust in oneself and begin practice to break the chicken-and-egg problem. In professions or activities where you cannot see this directly, it becomes much more difficult. <span class="blank">( 4 )</span>, a teacher can look at his students doing well and take that as a sign of his success and build that trust in himself, whereas an administrative staff member in a school cannot be so certain about the effect of his labor.</p>
+            
+            <p>For a person to start working on an activity, <span class="blank">( ⅲ )</span>. While theoretically it is true that any activity is better than sitting idle (any output is better than no output), it requires the person to trust in oneself that they can produce the desired output. The person has to observe and establish a close relation between their effort and their output. Procrastinators, generally being low on self-confidence, struggle to trust that they can construct their desired output and success through effort. Hence, they find it difficult to overcome their natural tendencies to delay doing things. So, by judging procrastinators as lazy, you are only looking at the <span class="blank">( 5 )</span> and not understanding the deeper reasons behind it.</p>
+            
+            <p class="passage-source">Adapted from Balivada (2020). The procrastinator's mind: Why we procrastinate and how to overcome it?. Notion Press.</p>
+          </div>
+
+          <!-- Section A -->
+          <h3 class="section-heading">A 空所補充 (1)～(5)</h3>
+
+          <!-- Q1 -->
+          <div class="q-item">
+            <div class="q-label">(1)</div>
+            <div class="q-en">Therefore, procrastinators almost always ( 1 ) the act of procrastination.</div>
+            <div class="q-jp">したがって、先延ばしをする人はほぼ常に先延ばしという行為を（ 1 ）。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>anticipate</div>
+              <div class="choice-item"><span class="choice-label">イ</span>enjoy</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>ignore</div>
+              <div class="choice-item"><span class="choice-label">エ</span>regret</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 直前の文を見てみよう！"Procrastinators don't pay bills on time, miss assignments..." とネガティブな結果がずらっと並んでいるね。これらの結果に対して、先延ばしする人はどう感じる？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (エ) regret（後悔する）</span></div>
+                <div class="translation-line">訳：したがって、先延ばしをする人はほぼ常に先延ばしという行為を<b>後悔する</b>。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 文脈からの解き方：</b><br>
+                  直前の文で「請求書を払わない、課題を出さない、信頼を失う」などの<b>ネガティブな結果</b>が列挙されている。<br>
+                  → これらの結果を経験した人が感じるのは「後悔」が最も自然！
+                </div>
+                
+                <div class="mt-md">
+                  <b>regret の使い方：</b><br>
+                  • regret + 名詞/動名詞：〜を後悔する<br>
+                  • regret to do：残念ながら〜する（これからすることを残念に思う）<br><br>
+                  
+                  <b>例文：</b><br>
+                  • I regret wasting so much time.<br>
+                  　（あんなに時間を無駄にしたことを後悔している）<br>
+                  • She regrets not studying harder.<br>
+                  　（もっと勉強しなかったことを後悔している）
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) anticipate（予期する）：</span>先延ばしを「予期する」では文脈に合わない。</div>
+                  <div><span class="wrong-choice">✗ (イ) enjoy（楽しむ）：</span>ネガティブな結果の後で「楽しむ」は論理的に矛盾。</div>
+                  <div><span class="wrong-choice">✗ (ウ) ignore（無視する）：</span>本文では「非合理的だとわかっている」とあるので、無視しているわけではない。</div>
+                </div>
+                
+                <div class="ref-box">📖 語彙問題｜文脈から適切な動詞を選ぶ</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="q-item">
+            <div class="q-label">(2)</div>
+            <div class="q-en">...when we see this laziness and procrastination together in a person, we ( 2 ) conclude that procrastinators are extreme forms of lazy people.</div>
+            <div class="q-jp">...怠惰と先延ばしが同時に見られると、私たちは先延ばしする人は怠け者の極端な形だと（ 2 ）結論づける。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>accidentally</div>
+              <div class="choice-item"><span class="choice-label">イ</span>correctly</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>successfully</div>
+              <div class="choice-item"><span class="choice-label">エ</span>wrongly</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> この文章全体のテーマは何？「先延ばしと怠惰は<b>違う</b>」ということを筆者は主張しているよね。ということは、「先延ばし＝怠惰」という結論は正しい？間違い？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (エ) wrongly（間違って）</span></div>
+                <div class="translation-line">訳：...怠惰と先延ばしが同時に見られると、私たちは先延ばしする人は怠け者の極端な形だと<b>間違って</b>結論づける。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 筆者の主張を読み取る：</b><br>
+                  この文章の<b>メインテーマ</b>は「先延ばし（procrastination）と怠惰（laziness）は別物」ということ。<br>
+                  → 「先延ばし＝怠惰」という結論は筆者にとって「間違い」！
+                </div>
+                
+                <div class="mt-md">
+                  <b>副詞の位置：</b><br>
+                  wrongly のような<b>様態を表す副詞</b>は動詞の前に置くことが多い。<br><br>
+                  
+                  <b>例文：</b><br>
+                  • He wrongly assumed I was angry.<br>
+                  　（彼は私が怒っていると間違って思い込んだ）<br>
+                  • The police wrongly arrested an innocent man.<br>
+                  　（警察は無実の男を間違って逮捕した）
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) accidentally（偶然に）：</span>結論を「偶然」出すというのは不自然。</div>
+                  <div><span class="wrong-choice">✗ (イ) correctly（正しく）：</span>筆者の主張と真逆になってしまう。</div>
+                  <div><span class="wrong-choice">✗ (ウ) successfully（うまく）：</span>結論を「うまく」出すは文脈に合わない。</div>
+                </div>
+                
+                <div class="ref-box">📖 読解問題｜筆者の主張・論旨を把握する</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="q-item">
+            <div class="q-label">(3)</div>
+            <div class="q-en">The only similarity between laziness and procrastination is that they both involve a lack of motivation, but the similarity just ends there. ( 3 ), we judge procrastinators as lazy without looking deeper...</div>
+            <div class="q-jp">怠惰と先延ばしの唯一の共通点は、どちらもモチベーションの欠如を伴うことだが、共通点はそこで終わる。（ 3 ）、私たちはより深く見ることなく先延ばしする人を怠け者だと判断する...</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>Moreover</div>
+              <div class="choice-item"><span class="choice-label">イ</span>Subsequently</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>Therefore</div>
+              <div class="choice-item"><span class="choice-label">エ</span>Yet</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 前文と後文の関係を確認しよう。<br>
+                前文：「共通点は<b>そこで終わる</b>」（＝違いがある）<br>
+                後文：「深く見ずに怠け者と判断する」<br>
+                この2つの文は順接？逆接？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (エ) Yet（しかし）</span></div>
+                <div class="translation-line">訳：<b>しかし</b>、私たちはより深く見ることなく先延ばしする人を怠け者だと判断する。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 接続詞・接続副詞の選び方：</b><br>
+                  前文：「共通点は<b>そこで終わる</b>」（＝本当は違う）<br>
+                  後文：「<b>深く見ずに</b>怠け者と判断する」（＝表面的な判断）<br><br>
+                  → 「本当は違う」のに「表面的に同じと判断してしまう」＝<b>逆接</b>の関係！
+                </div>
+                
+                <div class="mt-md">
+                  <b>Yet の使い方：</b><br>
+                  Yetは文頭で使うと「しかし、それでも」という<b>逆接</b>を表す。<br>
+                  ※ButやHoweverと同じような働き<br><br>
+                  
+                  <b>例文：</b><br>
+                  • The movie got bad reviews. Yet, it was a box office hit.<br>
+                  　（その映画は悪い批評を受けた。しかし、興行的には大ヒットした）<br>
+                  • He's very wealthy. Yet he lives a simple life.<br>
+                  　（彼はとても裕福だ。それでも質素な生活を送っている）
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) Moreover（さらに）：</span><b>追加</b>を表す。逆接ではない。</div>
+                  <div><span class="wrong-choice">✗ (イ) Subsequently（その後）：</span><b>時間的順序</b>を表す。論理関係を示さない。</div>
+                  <div><span class="wrong-choice">✗ (ウ) Therefore（したがって）：</span><b>因果関係</b>を表す。前文から後文は導けない。</div>
+                </div>
+                
+                <div class="ref-box">📖 接続詞・接続副詞｜逆接を表す Yet</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="q-item">
+            <div class="q-label">(4)</div>
+            <div class="q-en">In professions or activities where you cannot see this directly, it becomes much more difficult. ( 4 ), a teacher can look at his students doing well and take that as a sign of his success...</div>
+            <div class="q-jp">直接見ることができない職業や活動では、それがずっと難しくなる。（ 4 ）、教師は生徒がうまくやっているのを見て、それを自分の成功の証と捉えることができる...</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>For example</div>
+              <div class="choice-item"><span class="choice-label">イ</span>However</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>In contrast</div>
+              <div class="choice-item"><span class="choice-label">エ</span>Nevertheless</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 後文で「教師」と「事務職員」の<b>具体例</b>が挙げられているよね。この具体例は何を説明している？前文との関係を考えよう。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ア) For example（例えば）</span></div>
+                <div class="translation-line">訳：<b>例えば</b>、教師は生徒がうまくやっているのを見て、それを自分の成功の証と捉えることができる。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 具体例を導く表現：</b><br>
+                  前文：「労働の直接的な効果が見えない職業では難しい」（<b>抽象的な主張</b>）<br>
+                  後文：「教師 vs 事務職員」の話（<b>具体例</b>）<br><br>
+                  → 抽象→具体 の流れなので「For example」が正解！
+                </div>
+                
+                <div class="mt-md">
+                  <b>For example の使い方：</b><br>
+                  一般的な主張の後に、具体例を挙げるときに使う。<br>
+                  同様の表現：For instance, Such as, Like<br><br>
+                  
+                  <b>例文：</b><br>
+                  • Many animals are endangered. For example, the panda population is declining.<br>
+                  　（多くの動物が絶滅の危機にある。例えば、パンダの個体数は減少している）
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (イ) However（しかし）：</span>逆接。前文と後文は対立していない。</div>
+                  <div><span class="wrong-choice">✗ (ウ) In contrast（対照的に）：</span>対比。2つの異なるものを比較する場面ではない。</div>
+                  <div><span class="wrong-choice">✗ (エ) Nevertheless（それにもかかわらず）：</span>譲歩。文脈に合わない。</div>
+                </div>
+                
+                <div class="ref-box">📖 ディスコースマーカー｜具体例を導く For example</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="q-item">
+            <div class="q-label">(5)</div>
+            <div class="q-en">So, by judging procrastinators as lazy, you are only looking at the ( 5 ) and not understanding the deeper reasons behind it.</div>
+            <div class="q-jp">だから、先延ばしする人を怠け者と判断することで、あなたは（ 5 ）だけを見て、その背後にあるより深い理由を理解していない。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>core</div>
+              <div class="choice-item"><span class="choice-label">イ</span>depth</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>surface</div>
+              <div class="choice-item"><span class="choice-label">エ</span>width</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 後半に "deeper reasons"（より深い理由）とあるね。「深い理由を理解していない」ということは、何を見ている？「深い」の反対は？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ウ) surface（表面）</span></div>
+                <div class="translation-line">訳：だから、先延ばしする人を怠け者と判断することで、あなたは<b>表面</b>だけを見て、その背後にあるより深い理由を理解していない。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 対比構造を見抜く：</b><br>
+                  「( 5 )だけを見て」⇔「<b>deeper</b> reasons を理解していない」<br><br>
+                  → deeper（より深い）の反対 ＝ surface（表面）
+                </div>
+                
+                <div class="mt-md">
+                  <b>surface の使い方：</b><br>
+                  • on the surface：表面上は、うわべは<br>
+                  • scratch the surface：表面をかすっただけ<br>
+                  • look at the surface：表面だけを見る<br><br>
+                  
+                  <b>例文：</b><br>
+                  • On the surface, everything seems fine, but there are hidden problems.<br>
+                  　（表面上はすべてうまくいっているように見えるが、隠れた問題がある）
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) core（核心）：</span>deeper と同じ方向性なので対比にならない。</div>
+                  <div><span class="wrong-choice">✗ (イ) depth（深さ）：</span>これも deeper と同じ方向性。</div>
+                  <div><span class="wrong-choice">✗ (エ) width（幅）：</span>深い/浅いの対比には関係ない。</div>
+                </div>
+                
+                <div class="ref-box">📖 語彙問題｜対比構造から正解を導く</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section B -->
+          <h3 class="section-heading">B 空所補充 (ⅰ)～(ⅲ) ※2つ余る</h3>
+          
+          <div class="options-list">
+            <div class="options-list-title">選択肢一覧：</div>
+            <div class="option-full"><span class="option-label">ア</span>they have to value the result of the activity or fear the consequence of not doing the activity more than their loss of present comfort</div>
+            <div class="option-full"><span class="option-label">イ</span>one should always strive to complete tasks ahead of time</div>
+            <div class="option-full"><span class="option-label">ウ</span>the cost of doing the work when you are not well could be higher than the cost of doing the work a day or two later after taking some rest</div>
+            <div class="option-full"><span class="option-label">エ</span>they don't always choose to do fun activities over important tasks</div>
+            <div class="option-full"><span class="option-label">オ</span>they still cannot avoid it because procrastination feels good at that moment</div>
+          </div>
+
+          <!-- Q-i -->
+          <div class="q-item">
+            <div class="q-label">(ⅰ)</div>
+            <div class="q-en">Delaying some work because of health reasons is not procrastination because ( ⅰ ).</div>
+            <div class="q-jp">健康上の理由で仕事を遅らせることは先延ばしではない、なぜなら（ ⅰ ）。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 「健康上の理由で遅らせる＝先延ばしではない」と筆者は言っている。なぜ？先延ばしの定義は「自分に対してより高いコストがかかる遅延」だったよね。健康が悪いときに無理して仕事をするコストと、休んでからやるコスト、どっちが高い？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ウ)</span></div>
+                <div class="translation-line">訳：体調が悪いときに仕事をするコストは、少し休んでから1日か2日後に仕事をするコストよりも高くなる可能性がある。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 定義との照合：</b><br>
+                  本文の定義：「先延ばし＝<b>自分に対してより高い総コスト</b>がかかる遅延」<br><br>
+                  健康が悪いときに無理して働く → コストが高い<br>
+                  休んでから働く → コストが低い<br><br>
+                  → 休んでから働く方がコストが低いなら、それは「先延ばし」ではない！
+                </div>
+                
+                <div class="ref-box">📖 長文読解｜本文の定義を使って空所を埋める</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q-ii -->
+          <div class="q-item">
+            <div class="q-label">(ⅱ)</div>
+            <div class="q-en">Procrastination seems irrational from an outside perspective and to procrastinators' own logical minds, but ( ⅱ ).</div>
+            <div class="q-jp">先延ばしは外部の視点からも、先延ばしする人自身の論理的な心にとっても非合理的に見えるが、（ ⅱ ）。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 「非合理的だとわかっている、<b>but</b>（しかし）...」という逆接の構造に注目！「わかっているのに、それでも～してしまう」という内容が来るはず。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (オ)</span></div>
+                <div class="translation-line">訳：その瞬間は先延ばしが気持ちいいので、彼らはそれでも避けることができない。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 逆接の構造を完成させる：</b><br>
+                  「非合理的だとわかっている」＋ but ＋「？」<br><br>
+                  → 「わかっているのに<b>やめられない</b>」という内容が必要<br>
+                  → 「still cannot avoid it」（それでも避けられない）がピッタリ！
+                </div>
+                
+                <div class="ref-box">📖 長文読解｜逆接の構造を読み取る</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q-iii -->
+          <div class="q-item">
+            <div class="q-label">(ⅲ)</div>
+            <div class="q-en">For a person to start working on an activity, ( ⅲ ).</div>
+            <div class="q-jp">人が活動に取り組み始めるためには、（ ⅲ ）。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 「～するためには」という条件を表す構文。活動を始めるためには何が必要？直後の文を見ると「自分が望む成果を出せると<b>信じる</b>必要がある」と書いてあるね。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ア)</span></div>
+                <div class="translation-line">訳：彼らは現在の快適さを失うことよりも、その活動の結果を重視するか、その活動をしないことの結果を恐れなければならない。</div>
+                
+                <div class="grammar-point">
+                  <b>🔍 文脈からの推測：</b><br>
+                  直後の文：「自分が望む成果を出せると信じる必要がある」<br>
+                  → つまり、<b>結果を重視する</b>か<b>やらないことの結果を恐れる</b>必要がある
+                </div>
+                
+                <div class="mt-md">
+                  <b>⚠️ 余る選択肢：</b><br>
+                  • <span class="wrong-choice">(イ)</span> は「期限前に完了すべき」で、本文の論旨と関係ない<br>
+                  • <span class="wrong-choice">(エ)</span> は「楽しい活動を選ぶわけではない」で、どの空所にも合わない
+                </div>
+                
+                <div class="ref-box">📖 長文読解｜消去法と文脈の両方を使う</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section C -->
+          <h3 class="section-heading">C 記述問題：下線部(Ⅰ) chicken-and-egg problem</h3>
+
+          <div class="q-item">
+            <div class="q-label">C</div>
+            <div class="q-en">下線部(Ⅰ)の "chicken-and-egg problem" とはどのような問題なのかを本文の内容をもとに説明しなさい。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> "chicken-and-egg problem"（鶏と卵の問題）＝「どちらが先かわからない循環的な問題」。本文では「タスクを楽しむこと」と「熟達すること」の関係について述べているよ。下線部の直後の文を特に注意して読もう！
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">模範解答</div>
+                <div class="model-answer">
+                  <div class="model-label">日本語解答</div>
+                  タスクを楽しむためには熟達度と自信が必要だが、そのためには多くの練習時間が必要であり、多くの時間を練習に費やすにはそのタスクを楽しむ必要があるという循環的な問題。
+                </div>
+                
+                <div class="grammar-point mt-md">
+                  <b>🔍 解答のポイント：</b><br>
+                  以下の3点を含めること：<br>
+                  ① タスクを<b>楽しむ</b>には→熟達と自信が必要<br>
+                  ② 熟達と自信を得るには→<b>多くの練習</b>が必要<br>
+                  ③ 多くの練習をするには→タスクを<b>楽しむ</b>必要がある<br>
+                  → ①→②→③→①... と<b>循環</b>している！
+                </div>
+                
+                <div class="ref-box">📖 記述問題｜本文の内容を自分の言葉でまとめる</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section D -->
+          <h3 class="section-heading">D 内容一致問題（2つ選ぶ）</h3>
+
+          <div class="q-item">
+            <div class="q-label">D</div>
+            <div class="q-en">本文の内容と一致するものを2つ選びなさい。</div>
+            
+            <div class="options-list mt-md" style="padding:0;border:none;background:transparent;">
+              <div class="option-full"><span class="option-label">ア</span>According to the text, procrastination and laziness are essentially the same thing, with procrastinators being extremely lazy individuals.</div>
+              <div class="option-full"><span class="option-label">イ</span>Procrastination is a widespread issue affecting a significant portion of both students and the general population in various aspects of life.</div>
+              <div class="option-full"><span class="option-label">ウ</span>Procrastinators generally have high self-confidence and trust in their ability to produce desired outcomes through effort.</div>
+              <div class="option-full"><span class="option-label">エ</span>The main difference between laziness and procrastination is that procrastinators experience negative emotions such as fear and anxiety when delaying tasks.</div>
+              <div class="option-full"><span class="option-label">オ</span>The text suggests that overcoming procrastination is equally challenging in all professions, regardless of how visible the results of one's efforts are.</div>
+            </div>
+            
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 各選択肢を本文の内容と照らし合わせよう。特に「本文と<b>反対</b>のことを言っている」選択肢に注意！筆者の主張は「先延ばし≠怠惰」だったよね。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (イ) と (エ)</span></div>
+                
+                <div class="mt-md">
+                  <b>✔ (イ) が正解の理由：</b><br>
+                  本文第1段落：「80～95%の大学生が先延ばしをし、一般人口の50%が頻繁にそうする」<br>
+                  → 「広範な問題」という記述と<b>一致</b>！
+                </div>
+                
+                <div class="mt-md">
+                  <b>✔ (エ) が正解の理由：</b><br>
+                  本文第4段落：「先延ばしには恐怖、心配、ストレス、罪悪感などが伴う」「怠惰な人はこの種の恐怖を経験しない」<br>
+                  → 違いは「ネガティブな感情の有無」という記述と<b>一致</b>！
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア)：</span>本文は「先延ばしと怠惰は<b>違う</b>」と主張。<b>真逆</b>。</div>
+                  <div><span class="wrong-choice">✗ (ウ)：</span>本文：「先延ばしする人は<b>自信が低い</b>」。<b>真逆</b>。</div>
+                  <div><span class="wrong-choice">✗ (オ)：</span>本文：「効果が見えやすい職業では<b>克服しやすい</b>」。<b>不一致</b>。</div>
+                </div>
+                
+                <div class="ref-box">📖 内容一致問題｜本文の記述と選択肢を照合する</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 2: Nicaraguan Sign Language
+         ========================================== -->
+    <div class="section" data-sec="2">
+      <div class="section-header" data-target="sec2">
+        <div class="section-title-wrap">
+          <div class="section-index">2</div>
+          <span class="section-title">【２】長文読解：Nicaraguan Sign Language</span>
+        </div>
+        <div class="section-meta">
+          <span class="section-badge">6問</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+      </div>
+      <div class="section-content" id="sec2">
+        <div class="section-body">
+          
+          <div class="passage-box">
+            <p>Before the 1970s, deaf Nicaraguan children and adults <span class="blank">( 1 )</span> little contact with each other. Societal attitudes kept most deaf individuals at home, and the few schools and clinics available served small numbers of children. Interviews with former students reveal little evidence of contact with classmates outside school, or after graduation. In this context, no sign language <span class="blank">( 2 )</span>.</p>
+            
+            <p>In such situations, deaf people will often develop "home signs": communication systems built up out of common gestures, used with family members. Although not full languages, home signs exhibit some of the basic elements of language. The home sign systems developed by Nicaraguans appear to have <span class="blank">( 3 )</span> widely from one deaf person to another in form and complexity.</p>
+            
+            <p>This situation changed suddenly with the opening of an expanded elementary school for special education in 1977, followed by a vocational school in 1981, both in Managua, the capital of Nicaragua. Deaf enrollment in the programs initially comprised about 50 students, growing to more than 200 by 1981 and increasing gradually throughout the 1980s. For the first time, students continued their contact outside school hours, and by the mid-1980s deaf children were meeting regularly on the weekends. Although instruction in school was <span class="blank">( 4 )</span> in Spanish (with minimal success), these first children began to develop a new, gestural system for communicating with each other. The gestures soon expanded to form an early sign language. Through continued use, both in and out of school, the growing language has been <span class="blank">( 5 )</span> down and relearned naturally every year since, as each new wave of children entered the community.</p>
+            
+            <p>Today there are about 800 deaf signers of Nicaraguan Sign Language (NSL), ranging from 4 to 45 years of age. Previous research on NSL has <span class="blank">( 6 )</span> that changes in its grammar first appear among preadolescent (9 to 12-year-old) signers, soon spreading to subsequent, younger learners, but not to adults.</p>
+            
+            <p class="passage-source">Adapted from Senghas, A., Kita, S., & Özyürek, A. (2004). Science 305, 1779-1782.</p>
+          </div>
+
+          <div class="options-list">
+            <div class="options-list-title">選択肢一覧（各1回のみ使用）：</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>asked</div>
+              <div class="choice-item"><span class="choice-label">イ</span>conducted</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>emerged</div>
+              <div class="choice-item"><span class="choice-label">エ</span>followed</div>
+              <div class="choice-item"><span class="choice-label">オ</span>found</div>
+              <div class="choice-item"><span class="choice-label">カ</span>had</div>
+              <div class="choice-item"><span class="choice-label">キ</span>laid</div>
+              <div class="choice-item"><span class="choice-label">ク</span>passed</div>
+              <div class="choice-item"><span class="choice-label">ケ</span>varied</div>
+              <div class="choice-item"><span class="choice-label">コ</span>wondered</div>
+            </div>
+          </div>
+
+          <!-- Q1-6 for Section 2 -->
+          <div class="q-item">
+            <div class="q-label">(1)</div>
+            <div class="q-en">Before the 1970s, deaf Nicaraguan children and adults ( 1 ) little contact with each other.</div>
+            <div class="q-jp">1970年代以前、ニカラグアの聴覚障害のある子供と大人は互いにほとんど接触を（ 1 ）。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> "have contact with ~"（～と接触がある）という熟語を知っていれば簡単！1970年代「以前」の話なので時制は過去形。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (カ) had</span></div>
+                <div class="translation-line">訳：1970年代以前、ニカラグアの聴覚障害のある子供と大人は互いにほとんど接触が<b>なかった</b>。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 重要コロケーション：</b><br>
+                  <b>have contact with ~</b>：～と接触・連絡がある<br>
+                  1970年代以前 = 過去の話 → <b>had</b>（過去形）
+                </div>
+                
+                <div class="ref-box">📖 コロケーション｜have contact with ~</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(2)</div>
+            <div class="q-en">In this context, no sign language ( 2 ).</div>
+            <div class="q-jp">この状況では、手話は（ 2 ）。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 聴覚障害者同士が接触しない状況で、手話がどうなる？「生まれる」「出現する」という意味の動詞を探そう。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ウ) emerged</span></div>
+                <div class="translation-line">訳：この状況では、手話は<b>生まれなかった</b>。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 emerge の意味：</b><br>
+                  <b>emerge</b>：現れる、出現する、生じる<br>
+                  聴覚障害者同士の接触がない → 手話が「生まれない」という論理
+                </div>
+                
+                <div class="ref-box">📖 語彙｜emerge（出現する、生じる）</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(3)</div>
+            <div class="q-en">The home sign systems... appear to have ( 3 ) widely from one deaf person to another in form and complexity.</div>
+            <div class="q-jp">ホームサインのシステムは、形式と複雑さにおいて聴覚障害者ごとに大きく（ 3 ）ようだ。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> "from one person to another"（ある人から別の人へ）と "widely"（大きく）に注目。人によって「異なる」という意味の動詞は？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ケ) varied</span></div>
+                <div class="translation-line">訳：ホームサインのシステムは、形式と複雑さにおいて聴覚障害者ごとに大きく<b>異なっていた</b>ようだ。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 vary の使い方：</b><br>
+                  <b>vary</b>：異なる、変わる<br>
+                  <b>vary from A to B</b>：AからBまで様々である
+                </div>
+                
+                <div class="ref-box">📖 語彙｜vary（異なる、変わる）</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(4)</div>
+            <div class="q-en">Although instruction in school was ( 4 ) in Spanish...</div>
+            <div class="q-jp">学校での指導はスペイン語で（ 4 ）たが...</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> "conduct a class/lesson"（授業を行う）という熟語。受動態で "instruction was conducted"。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (イ) conducted</span></div>
+                <div class="translation-line">訳：学校での指導はスペイン語で<b>行われた</b>が...</div>
+                
+                <div class="grammar-point">
+                  <b>📝 conduct の使い方：</b><br>
+                  <b>conduct</b>：（授業・実験・調査などを）行う、実施する<br>
+                  受動態：instruction was conducted ＝ 指導が行われた
+                </div>
+                
+                <div class="ref-box">📖 語彙｜conduct（行う、実施する）</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(5)</div>
+            <div class="q-en">...the growing language has been ( 5 ) down and relearned naturally every year since...</div>
+            <div class="q-jp">...成長する言語は毎年自然に（ 5 ）下され、再学習されてきた...</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> "( 5 ) down" という句動詞の形に注目！言語が世代から世代へ「伝えられる」という意味になる動詞は？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ク) passed</span></div>
+                <div class="translation-line">訳：...成長する言語は毎年自然に<b>受け継がれ</b>、再学習されてきた...</div>
+                
+                <div class="grammar-point">
+                  <b>📝 pass down の意味：</b><br>
+                  <b>pass down</b>：（伝統・知識などを）後世に伝える、受け継ぐ<br>
+                  受動態：be passed down ＝ 受け継がれる
+                </div>
+                
+                <div class="ref-box">📖 句動詞｜pass down（受け継ぐ、伝える）</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(6)</div>
+            <div class="q-en">Previous research on NSL has ( 6 ) that changes in its grammar first appear among preadolescent signers...</div>
+            <div class="q-jp">NSLに関する以前の研究は、文法の変化が最初に思春期前の使用者の間で現れることを（ 6 ）...</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> "research has ( 6 ) that ~"（研究は～ということを( 6 )）という構文。研究が何かを「発見した」という意味になる動詞は？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (オ) found</span></div>
+                <div class="translation-line">訳：NSLに関する以前の研究は、文法の変化が最初に思春期前の使用者の間で現れることを<b>発見した</b>。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 find that ~ の使い方：</b><br>
+                  <b>find that ~</b>：～ということを発見する、明らかにする<br>
+                  学術的な文脈で「研究が～を発見した」という表現でよく使われる
+                </div>
+                
+                <div class="mt-md">
+                  <b>⚠️ 余る選択肢：</b><br>
+                  (ア) asked、(エ) followed、(キ) laid、(コ) wondered は使用しない
+                </div>
+                
+                <div class="ref-box">📖 語彙｜find that ~（～を発見する）</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 3: Grammar
+         ========================================== -->
+    <div class="section" data-sec="3">
+      <div class="section-header" data-target="sec3">
+        <div class="section-title-wrap">
+          <div class="section-index">3</div>
+          <span class="section-title">【３】文法・語法問題</span>
+        </div>
+        <div class="section-meta">
+          <span class="section-badge">5問</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+      </div>
+      <div class="section-content" id="sec3">
+        <div class="section-body">
+
+          <div class="q-item">
+            <div class="q-label">(1)</div>
+            <div class="q-en">The hotel receptionist asked us ( 1 ) we would like a room with a view.</div>
+            <div class="q-jp">ホテルの受付係は私たちに眺めの良い部屋がいいか（ 1 ）尋ねた。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>that</div>
+              <div class="choice-item"><span class="choice-label">イ</span>what</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>whether</div>
+              <div class="choice-item"><span class="choice-label">エ</span>which</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 「眺めの良い部屋がいいですか？」という質問。「はい/いいえ」で答えられるYes/No疑問文を間接話法にすると？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ウ) whether（〜かどうか）</span></div>
+                <div class="translation-line">訳：ホテルの受付係は私たちに眺めの良い部屋がいい<b>かどうか</b>尋ねた。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 間接疑問文のルール：</b><br><br>
+                  <b>① Yes/No疑問文</b> → <b>whether / if</b> を使う<br>
+                  "Do you like coffee?" → asked whether/if I liked coffee<br><br>
+                  <b>② 疑問詞疑問文</b> → <b>疑問詞をそのまま</b>使う<br>
+                  "What do you want?" → asked what I wanted
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) that：</span>Yes/No疑問の意味を表せない。</div>
+                  <div><span class="wrong-choice">✗ (イ) what：</span>「何」で、Yes/No疑問には使えない。</div>
+                  <div><span class="wrong-choice">✗ (エ) which：</span>「どちら」で、ここでは不適切。</div>
+                </div>
+                
+                <div class="ref-box">📖 文法｜間接疑問文（whether + S + V）</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(2)</div>
+            <div class="q-en">She has been working at this company ( 2 ) 2010.</div>
+            <div class="q-jp">彼女は2010年（ 2 ）この会社で働いている。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>for</div>
+              <div class="choice-item"><span class="choice-label">イ</span>from</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>in</div>
+              <div class="choice-item"><span class="choice-label">エ</span>since</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 現在完了進行形 "has been working" に注目！「～から（ずっと）」という<b>起点</b>を表す前置詞は？for と since の違いを思い出そう。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (エ) since（〜から、〜以来）</span></div>
+                <div class="translation-line">訳：彼女は2010年<b>から</b>この会社で働いている。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 for vs since：</b><br><br>
+                  <b>since + 起点（時点）</b>：～から、～以来<br>
+                  since 2010, since Monday<br><br>
+                  <b>for + 期間（長さ）</b>：～の間<br>
+                  for 10 years, for three days
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) for：</span>for の後には「期間」が来る。"for 2010" は不自然。</div>
+                  <div><span class="wrong-choice">✗ (イ) from：</span>from は現在完了形とは一緒に使わないのが普通。</div>
+                  <div><span class="wrong-choice">✗ (ウ) in：</span>in 2010 は「2010年に」で、継続の意味にならない。</div>
+                </div>
+                
+                <div class="ref-box">📖 文法｜現在完了形と since / for</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(3)</div>
+            <div class="q-en">If I ( 3 ) a millionaire, I would buy a yacht.</div>
+            <div class="q-jp">もし私が億万長者（ 3 ）、ヨットを買うのに。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>am</div>
+              <div class="choice-item"><span class="choice-label">イ</span>had been</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>were</div>
+              <div class="choice-item"><span class="choice-label">エ</span>would be</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 主節に "would buy" があるね。これは<b>仮定法過去</b>の形！「もし今～なら、～するのに」という現在の事実に反する仮定。
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ウ) were</span></div>
+                <div class="translation-line">訳：もし私が億万長者<b>だったら</b>、ヨットを買うのに。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 仮定法過去の公式：</b><br><br>
+                  <b>If + S + 過去形 ~, S + would/could/might + 動詞原形</b><br><br>
+                  ⚠️ <b>be動詞は人称に関係なく were を使う</b>のが正式<br>
+                  ※口語では was も使われるが、入試では were が正解
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) am：</span>直説法現在。仮定法ではない。</div>
+                  <div><span class="wrong-choice">✗ (イ) had been：</span>仮定法過去完了。過去の事実に反する仮定に使う。</div>
+                  <div><span class="wrong-choice">✗ (エ) would be：</span>if節には would を使わない。</div>
+                </div>
+                
+                <div class="ref-box">📖 文法｜仮定法過去</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(4)</div>
+            <div class="q-en">The new policy aims to reduce the amount of plastic waste ( 4 ) into the ocean.</div>
+            <div class="q-jp">新しい政策は海に（ 4 ）プラスチックごみの量を減らすことを目指している。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>dumps</div>
+              <div class="choice-item"><span class="choice-label">イ</span>dumped</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>dumping</div>
+              <div class="choice-item"><span class="choice-label">エ</span>to dump</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> plastic waste（プラスチックごみ）と dump（捨てる）の関係は？ごみは「捨てる」？「捨てられる」？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (イ) dumped（捨てられる）</span></div>
+                <div class="translation-line">訳：新しい政策は海に<b>捨てられる</b>プラスチックごみの量を減らすことを目指している。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 分詞の形容詞的用法：</b><br><br>
+                  <b>過去分詞</b>：名詞が動作を<b>受ける</b>関係（受動）<br>
+                  → waste <b>dumped</b> into the ocean<br><br>
+                  <b>現在分詞</b>：名詞が動作を<b>する</b>関係（能動）<br>
+                  → people <b>dumping</b> waste
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) dumps：</span>文の述語動詞はすでに aims なので不可。</div>
+                  <div><span class="wrong-choice">✗ (ウ) dumping：</span>現在分詞（能動）。ごみが「捨てている」は不自然。</div>
+                  <div><span class="wrong-choice">✗ (エ) to dump：</span>不定詞。ここでは意味が通らない。</div>
+                </div>
+                
+                <div class="ref-box">📖 文法｜分詞の形容詞的用法</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(5)</div>
+            <div class="q-en">( 5 ) to popular belief, bats are not blind.</div>
+            <div class="q-jp">一般的な考えに（ 5 ）、コウモリは目が見えないわけではない。</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>Against</div>
+              <div class="choice-item"><span class="choice-label">イ</span>Contrast</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>Contrary</div>
+              <div class="choice-item"><span class="choice-label">エ</span>Oppose</div>
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 「一般的な考えに反して」という意味の熟語。"( 5 ) to popular belief" という形に注目！
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ウ) Contrary（〜に反して）</span></div>
+                <div class="translation-line">訳：一般的な考えに<b>反して</b>、コウモリは目が見えないわけではない。</div>
+                
+                <div class="grammar-point">
+                  <b>📝 contrary to ~ の使い方：</b><br><br>
+                  <b>contrary to ~</b>：～に反して、～とは逆に<br><br>
+                  よく使われる表現：<br>
+                  • contrary to popular belief（一般的な考えに反して）<br>
+                  • contrary to expectations（予想に反して）
+                </div>
+                
+                <div class="wrong-box">
+                  <div><span class="wrong-choice">✗ (ア) Against：</span>"against to ~" とは言わない。</div>
+                  <div><span class="wrong-choice">✗ (イ) Contrast：</span>"in contrast to ~" なら正しい。</div>
+                  <div><span class="wrong-choice">✗ (エ) Oppose：</span>動詞なので "Oppose to ~" は不自然。</div>
+                </div>
+                
+                <div class="ref-box">📖 熟語｜contrary to ~（～に反して）</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 4: Conversation
+         ========================================== -->
+    <div class="section" data-sec="4">
+      <div class="section-header" data-target="sec4">
+        <div class="section-title-wrap">
+          <div class="section-index">4</div>
+          <span class="section-title">【４】会話・イディオム問題</span>
+        </div>
+        <div class="section-meta">
+          <span class="section-badge">5問</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+      </div>
+      <div class="section-content" id="sec4">
+        <div class="section-body">
+
+          <div class="conversation">
+            <div class="conv-line"><span class="conv-speaker">Alex:</span>Hey, Sam! A little bird told me you're planning a surprise party for Mike's birthday next week.</div>
+            <div class="conv-line"><span class="conv-speaker">Sam:</span>What? How did you .... Never mind. <span class="blank">( 1 )</span>. Yes, I am. But please keep it a secret!</div>
+            <div class="conv-line"><span class="conv-speaker">Alex:</span>Of course! My lips are sealed. Do you need any help with the preparations?</div>
+            <div class="conv-line"><span class="conv-speaker">Sam:</span>Actually, yes. I'm trying to remember the name of that restaurant Mike really liked. <span class="blank">( 2 )</span>, but I just can't recall it.</div>
+            <div class="conv-line"><span class="conv-speaker">Alex:</span>Oh, you mean Bella Vita? That Italian place downtown?</div>
+            <div class="conv-line"><span class="conv-speaker">Sam:</span>That's it! Thanks! Do you think Mike would like to have the party there?</div>
+            <div class="conv-line"><span class="conv-speaker">Alex:</span>Hmm, he might prefer something more casual. Why don't you subtly ask him? That way, <span class="blank">( 3 )</span> without giving away the surprise.</div>
+            <div class="conv-line"><span class="conv-speaker">Sam:</span>Good idea. <span class="blank">( 4 )</span>. He loves surprises. Do you think he suspects anything?</div>
+            <div class="conv-line"><span class="conv-speaker">Alex:</span><span class="blank">( 5 )</span>. Mike's not usually the type to catch on to these things.</div>
+          </div>
+
+          <div class="options-list">
+            <div class="options-list-title">選択肢一覧（各1回のみ使用）：</div>
+            <div class="q-choices">
+              <div class="choice-item"><span class="choice-label">ア</span>hang in there</div>
+              <div class="choice-item"><span class="choice-label">イ</span>I don't think so</div>
+              <div class="choice-item"><span class="choice-label">ウ</span>I think so</div>
+              <div class="choice-item"><span class="choice-label">エ</span>I'll try to bring it up casually</div>
+              <div class="choice-item"><span class="choice-label">オ</span>it's on the tip of my tongue</div>
+              <div class="choice-item"><span class="choice-label">カ</span>he doesn't like surprises at all</div>
+              <div class="choice-item"><span class="choice-label">キ</span>let's not beat around the bush</div>
+              <div class="choice-item"><span class="choice-label">ク</span>you can get a better idea</div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(1)</div>
+            <div class="q-en">Sam: What? How did you .... Never mind. ( 1 ). Yes, I am.</div>
+            <div class="q-jp">サム：何？どうやって...いや、いいや。（ 1 ）。うん、そうだよ。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> Samは「どうやって知ったの？」と聞きかけて、「いや、いいや」と言い直している。「遠回しに言わないで本題に入ろう」という意味の表現が入りそう！
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (キ) let's not beat around the bush（遠回しにしないで）</span></div>
+                
+                <div class="grammar-point">
+                  <b>📝 beat around the bush：</b><br>
+                  遠回しに言う、本題を避ける<br>
+                  → <b>let's not beat around the bush</b>：単刀直入に行こう
+                </div>
+                
+                <div class="ref-box">📖 イディオム｜beat around the bush</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(2)</div>
+            <div class="q-en">Sam: I'm trying to remember the name... ( 2 ), but I just can't recall it.</div>
+            <div class="q-jp">サム：名前を思い出そうとしてるんだ...（ 2 ）、でも思い出せない。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 「思い出そうとしているけど思い出せない」という状況。「喉まで出かかってる」という日本語と同じ意味のイディオムは？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (オ) it's on the tip of my tongue（喉まで出かかっている）</span></div>
+                
+                <div class="grammar-point">
+                  <b>📝 on the tip of one's tongue：</b><br>
+                  舌先まで来ている、喉まで出かかっている<br>
+                  → 思い出せそうで思い出せない状態
+                </div>
+                
+                <div class="ref-box">📖 イディオム｜on the tip of one's tongue</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(3)</div>
+            <div class="q-en">Alex: That way, ( 3 ) without giving away the surprise.</div>
+            <div class="q-jp">アレックス：そうすれば、サプライズをバラさずに（ 3 ）よ。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> Alexは「さりげなく聞いてみたら」とアドバイスしている。そうすることで何ができる？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (ク) you can get a better idea（より良いアイデアが得られる）</span></div>
+                
+                <div class="grammar-point">
+                  <b>🔍 会話の流れ：</b><br>
+                  Alex のアドバイス：「さりげなく好きなレストランを聞いてみたら」<br>
+                  → その結果：「より良いアイデアが得られる」
+                </div>
+                
+                <div class="ref-box">📖 会話表現｜文脈から適切な表現を選ぶ</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(4)</div>
+            <div class="q-en">Sam: Good idea. ( 4 ). He loves surprises.</div>
+            <div class="q-jp">サム：いいアイデアだね。（ 4 ）。彼はサプライズが大好きだから。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> SamはAlexのアドバイス（さりげなく聞いてみる）に「いいアイデアだね」と賛成している。次に「やってみるよ」という意味の表現を探そう！
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (エ) I'll try to bring it up casually（さりげなく話題に出してみる）</span></div>
+                
+                <div class="grammar-point">
+                  <b>📝 bring up の意味：</b><br>
+                  <b>bring up</b>：（話題を）持ち出す、切り出す<br>
+                  <b>casually</b>：さりげなく、何気なく
+                </div>
+                
+                <div class="ref-box">📖 句動詞｜bring up（話題を持ち出す）</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">(5)</div>
+            <div class="q-en">Sam: Do you think he suspects anything?<br>Alex: ( 5 ). Mike's not usually the type to catch on.</div>
+            <div class="q-jp">サム：彼は気づいてると思う？<br>アレックス：（ 5 ）。マイクは気づくタイプじゃないから。</div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> Alexは「マイクは気づくタイプじゃない」と言っている。つまり、「気づいていない」と思っている。Yes/Noどっち？
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">正解</div>
+                <div><span class="correct-choice">✔ (イ) I don't think so（そうは思わないよ）</span></div>
+                
+                <div class="grammar-point">
+                  <b>🔍 会話の流れ：</b><br>
+                  Sam：「気づいてると思う？」<br>
+                  Alex：「？」→「マイクは気づくタイプじゃない」<br>
+                  → 「気づいていない」と思っている ＝ I don't think so
+                </div>
+                
+                <div class="mt-md">
+                  <b>⚠️ 余る選択肢：</b><br>
+                  (ア) hang in there、(ウ) I think so、(カ) he doesn't like surprises は使用しない
+                </div>
+                
+                <div class="ref-box">📖 会話表現｜I don't think so</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 5: Translation
+         ========================================== -->
+    <div class="section" data-sec="5">
+      <div class="section-header" data-target="sec5">
+        <div class="section-title-wrap">
+          <div class="section-index">5</div>
+          <span class="section-title">【５】英作文（和文英訳）</span>
+        </div>
+        <div class="section-meta">
+          <span class="section-badge">1問</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+      </div>
+      <div class="section-content" id="sec5">
+        <div class="section-body">
+
+          <div class="q-item">
+            <div class="q-label">英作文</div>
+            <div class="writing-box">
+              その映画は時間が経つのを忘れるくらい面白かった。
+            </div>
+            <div class="btn-row">
+              <button class="hint-btn">💡 ヒント</button>
+              <button class="answer-btn">Show Answer</button>
+            </div>
+            <div class="hint-box">
+              <div class="hint-content">
+                <strong>ヒント：</strong> 「～するくらい...だった」＝ <b>so ... that ~</b>（とても...なので～）の構文を使おう！
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-content">
+                <div class="answer-label">模範解答</div>
+                
+                <div class="model-answer">
+                  <div class="model-label">解答例①</div>
+                  <b>The movie was so interesting that I forgot about time passing.</b>
+                </div>
+                
+                <div class="model-answer">
+                  <div class="model-label">解答例②（公式解答）</div>
+                  <b>The movie was so interesting that we didn't notice the time passing.</b>
+                </div>
+                
+                <div class="model-answer">
+                  <div class="model-label">解答例③</div>
+                  <b>The movie was interesting enough to make me lose track of time.</b>
+                </div>
+                
+                <div class="grammar-point mt-md">
+                  <b>📝 so ... that ~ 構文：</b><br><br>
+                  <b>so + 形容詞/副詞 + that + S + V</b><br>
+                  「とても～なので...」「...するほど～」
+                </div>
+                
+                <div class="wrong-box">
+                  <b>⚠️ よくある間違い：</b>
+                  <div><span class="wrong-choice">✗ ...that I forgot time passes.</span> → 時制の一致に注意！</div>
+                  <div><span class="wrong-choice">✗ The movie is so interesting...</span> → 過去なので was を使う。</div>
+                </div>
+                
+                <div class="ref-box">📖 構文｜so ... that ~（とても～なので...）</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>📚 2025年度 工学院大学 英語入試 完全解説</p>
+      <p>頑張れ受験生！💪</p>
+    </div>
+  </div>
+
+  <!-- FAB -->
+  <button class="fab" id="fab" aria-label="トップに戻る">↑</button>
+
+  <script>
+    // ============================================
+    // OPTIMIZED JAVASCRIPT - Apple-grade Performance
+    // ============================================
+    
+    (function() {
+      'use strict';
+      
+      // Cache DOM elements
+      const body = document.body;
+      const fab = document.getElementById('fab');
+      const themeBtn = document.getElementById('themeBtn');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      const expandAllBtn = document.getElementById('expandAllBtn');
+      const collapseAllBtn = document.getElementById('collapseAllBtn');
+      
+      // State
+      let isLightTheme = false;
+      let ticking = false;
+      
+      // ============================================
+      // Section Toggle
+      // ============================================
+      document.querySelectorAll('.section-header').forEach(header => {
+        header.addEventListener('click', function() {
+          const content = this.nextElementSibling;
+          const icon = this.querySelector('.toggle-icon');
+          
+          content.classList.toggle('active');
+          icon.classList.toggle('active');
+        });
+      });
+      
+      // ============================================
+      // Hint & Answer Toggle (Event Delegation)
+      // ============================================
+      document.addEventListener('click', function(e) {
+        // Hint button
+        if (e.target.classList.contains('hint-btn')) {
+          const btn = e.target;
+          const hintBox = btn.closest('.btn-row').nextElementSibling;
+          const isShowing = hintBox.classList.toggle('show');
+          btn.textContent = isShowing ? '💡 ヒントを隠す' : '💡 ヒント';
+        }
+        
+        // Answer button
+        if (e.target.classList.contains('answer-btn')) {
+          const btn = e.target;
+          const btnRow = btn.closest('.btn-row');
+          const hintBox = btnRow.nextElementSibling;
+          const answerBox = hintBox.nextElementSibling;
+          const isShowing = answerBox.classList.toggle('show');
+          btn.textContent = isShowing ? 'Hide Answer' : 'Show Answer';
+        }
+      });
+      
+      // ============================================
+      // Theme Toggle
+      // ============================================
+      themeBtn.addEventListener('click', function() {
+        isLightTheme = !isLightTheme;
+        body.classList.toggle('light-theme', isLightTheme);
+        themeIcon.textContent = isLightTheme ? '🌙' : '☀️';
+        themeText.textContent = isLightTheme ? 'Dark' : 'Light';
+      });
+      
+      // ============================================
+      // Expand/Collapse All
+      // ============================================
+      expandAllBtn.addEventListener('click', function() {
+        document.querySelectorAll('.section-content').forEach(content => {
+          content.classList.add('active');
+        });
+        document.querySelectorAll('.toggle-icon').forEach(icon => {
+          icon.classList.add('active');
+        });
+      });
+      
+      collapseAllBtn.addEventListener('click', function() {
+        document.querySelectorAll('.section-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        document.querySelectorAll('.toggle-icon').forEach(icon => {
+          icon.classList.remove('active');
+        });
+      });
+      
+      // ============================================
+      // FAB - Scroll to Top (Debounced)
+      // ============================================
+      function updateFAB() {
+        const shouldShow = window.scrollY > 300;
+        fab.classList.toggle('visible', shouldShow);
+        ticking = false;
+      }
+      
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(updateFAB);
+          ticking = true;
+        }
+      }, { passive: true });
+      
+      fab.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      
+      // ============================================
+      // Error Boundary
+      // ============================================
+      window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.error('Error: ', msg, url, lineNo);
+        return false;
+      };
+      
+    })();
+  </script>
+</body>
+</html>
