@@ -90,6 +90,19 @@
       "oldSlug": "new-folder",
       "iconImage": null,
       "lockNavigation": false
+    },
+    {
+      "id": "60d020f4-8e2a-4d2c-bf94-70c0ea5965d6",
+      "parentId": null,
+      "name": "直前講座",
+      "slug": "folder-2",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#1a5adb",
+      "order": 4,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
     }
   ],
   "items": [
@@ -416,6 +429,18 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "ebad6bfa-bb61-46e5-8efc-ba5fc4765fca",
+      "folderId": "60d020f4-8e2a-4d2c-bf94-70c0ea5965d6",
+      "title": "工学院｜２０２５年度｜理工",
+      "fileName": "kogakuin_2025_apple_v2.html",
+      "filePath": "folder/files/kogakuin_2025_apple_v2.html",
+      "date": "2026-01-09",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -424,5 +449,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-07T00:40:23.839Z"
+  "lastUpdated": "2026-01-09T16:18:09.407Z"
 }
