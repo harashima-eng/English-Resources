@@ -429,6 +429,18 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "4a57af89-ce63-416a-923c-6b10dc1eb660",
+      "folderId": "60d020f4-8e2a-4d2c-bf94-70c0ea5965d6",
+      "title": "工学院｜２０２５｜S日程",
+      "fileName": "kogakuin_2025_v3.html",
+      "filePath": "folder-2/files/kogakuin_2025_v3.html",
+      "date": "2026-01-10",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -437,5 +449,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-10T04:10:12.008Z"
+  "lastUpdated": "2026-01-10T04:10:50.868Z"
 }
