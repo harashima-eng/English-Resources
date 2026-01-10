@@ -102,7 +102,7 @@
       "order": 4,
       "oldSlug": "folder-2",
       "iconImage": null,
-      "lockNavigation": false
+      "lockNavigation": true
     }
   ],
   "items": [
@@ -449,5 +449,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-10T04:28:42.332Z"
+  "lastUpdated": "2026-01-10T04:29:19.142Z"
 }
