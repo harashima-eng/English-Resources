@@ -431,14 +431,14 @@
       "keywords": ""
     },
     {
-      "id": "c5702a05-5dba-4bb1-bac0-0d91bb9416e5",
+      "id": "5a943211-b653-47dc-94bf-c8a008761231",
       "folderId": "60d020f4-8e2a-4d2c-bf94-70c0ea5965d6",
-      "title": "工学院｜２０２５｜理工",
-      "fileName": "kogakuin_2025_dual_mode (2).html",
-      "filePath": "folder-2/files/kogakuin_2025_dual_mode (2).html",
+      "title": "２０２５｜工学院｜理工",
+      "fileName": "kogakuin_2025_dual_mode (3).html",
+      "filePath": "folder-2/files/kogakuin_2025_dual_mode (3).html",
       "date": "2026-01-10",
       "order": 0,
-      "minutes": "60",
+      "minutes": "",
       "tags": [],
       "keywords": ""
     }
@@ -449,5 +449,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-10T00:41:42.392Z"
+  "lastUpdated": "2026-01-10T00:54:23.717Z"
 }
