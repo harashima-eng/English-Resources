@@ -490,6 +490,18 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "80803f53-ccf3-41c3-a5ff-3124161e10f2",
+      "folderId": "a118e2de-59c5-4795-a96d-148d294080e0",
+      "title": "Day 6 Local Problems and possible solutions",
+      "fileName": "Day 6 Local Problems and possible solutions.html",
+      "filePath": "grade-2/engoo/files/Day 6 Local Problems and possible solutions.html",
+      "date": "2026-01-13",
+      "order": 3,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -498,5 +510,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-13T04:54:42.464Z"
+  "lastUpdated": "2026-01-13T04:55:10.931Z"
 }
