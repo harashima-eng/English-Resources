@@ -103,6 +103,19 @@
       "oldSlug": "folder-2",
       "iconImage": null,
       "lockNavigation": true
+    },
+    {
+      "id": "a118e2de-59c5-4795-a96d-148d294080e0",
+      "parentId": "de8bba21-3f80-46f9-a3f7-23f1096cd66c",
+      "name": "Engoo",
+      "slug": "engoo",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 1,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": true
     }
   ],
   "items": [
@@ -441,6 +454,42 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "378faeb9-3a25-446b-9da8-e9b272f5f615",
+      "folderId": "a118e2de-59c5-4795-a96d-148d294080e0",
+      "title": "Day 3 Task_ Hometown",
+      "fileName": "Day 3 Task_ Hometown - Conversation Flow Mode.html",
+      "filePath": "grade-2/engoo/files/Day 3 Task_ Hometown - Conversation Flow Mode.html",
+      "date": "2026-01-13",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    },
+    {
+      "id": "ac475e80-39ec-4907-91c9-3e4981dd866d",
+      "folderId": "a118e2de-59c5-4795-a96d-148d294080e0",
+      "title": "Day 4 Task_ Sports",
+      "fileName": "Day 4 Task_ Sports - Conversation Flow Mode.html",
+      "filePath": "grade-2/engoo/files/Day 4 Task_ Sports - Conversation Flow Mode.html",
+      "date": "2026-01-13",
+      "order": 1,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    },
+    {
+      "id": "7e8b2b01-ed8d-4139-abf4-e0e99a2ceb7c",
+      "folderId": "a118e2de-59c5-4795-a96d-148d294080e0",
+      "title": "Day 5 Task_ Entertainment",
+      "fileName": "Day 5 Task_ Entertainment - Conversation Flow Mode.html",
+      "filePath": "grade-2/engoo/files/Day 5 Task_ Entertainment - Conversation Flow Mode.html",
+      "date": "2026-01-13",
+      "order": 2,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -449,5 +498,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-11T08:39:22.828Z"
+  "lastUpdated": "2026-01-13T00:14:55.463Z"
 }
