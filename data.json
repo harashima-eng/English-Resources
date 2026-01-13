@@ -492,13 +492,15 @@
       "keywords": ""
     },
     {
-      "id": "04a75a57-fd15-45f2-8729-03d6d469bd9d",
+      "id": "8c9cf7db-d465-4347-b9e1-5f97c10a32da",
       "folderId": "a118e2de-59c5-4795-a96d-148d294080e0",
       "title": "Day 6 Local Problems and possible solutions",
-      "fileName": "Day 6 Local Problems and possible solutions.html",
-      "filePath": "grade-2/engoo/files/Day 6 Local Problems and possible solutions.html",
+      "fileName": "day6-bulletproof.html",
+      "filePath": "grade-2/engoo/files/day6-bulletproof.html",
       "date": "2026-01-13",
-      "order": 3,
+      "order": 4,
+      "originalFileName": "day6-bulletproof.html",
+      "fileSlug": "Day 6 Local Problems and possible solutions.html",
       "minutes": "",
       "tags": [],
       "keywords": ""
@@ -510,5 +512,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-13T04:06:46.317Z"
+  "lastUpdated": "2026-01-13T04:30:31.181Z"
 }
