@@ -1,11 +1,101 @@
 {
-  "folders": [],
-  "items": [],
+  "folders": [
+    {
+      "id": "1f9ba071-a4c5-4ac3-baa1-905f7e31cddf",
+      "parentId": null,
+      "name": "高校３年",
+      "slug": "grade3",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
+    },
+    {
+      "id": "05f8e688-3f56-4391-bf0a-925c36822a70",
+      "parentId": "1f9ba071-a4c5-4ac3-baa1-905f7e31cddf",
+      "name": "大学入試",
+      "slug": "pastexamquestion",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
+    },
+    {
+      "id": "56e7861a-3d02-423d-a40b-4987f70e7a33",
+      "parentId": null,
+      "name": "高校２年",
+      "slug": "grade2",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 1,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
+    },
+    {
+      "id": "6a8717ea-8606-46b1-8aaf-e7b2f28aea5c",
+      "parentId": "56e7861a-3d02-423d-a40b-4987f70e7a33",
+      "name": "論理・表現Ⅱ",
+      "slug": "englishexpressionsii",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": true
+    }
+  ],
+  "items": [
+    {
+      "id": "c7c281bd-71b6-4309-97c9-2dad6ae26e67",
+      "folderId": "05f8e688-3f56-4391-bf0a-925c36822a70",
+      "title": "２０２５｜東京都市大学｜前期｜理工",
+      "fileName": "２０２５｜東京都市大学｜前期｜理工.html",
+      "filePath": "grade3/pastexamquestion/files/２０２５｜東京都市大学｜前期｜理工.html",
+      "date": "2026-01-15",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    },
+    {
+      "id": "4ac9b0ee-c769-4eff-b7e0-ccf96163bd36",
+      "folderId": "05f8e688-3f56-4391-bf0a-925c36822a70",
+      "title": "２０２５｜工学院｜全学部",
+      "fileName": "２０２５｜工学院｜全学部.html",
+      "filePath": "grade3/pastexamquestion/files/２０２５｜工学院｜全学部.html",
+      "date": "2026-01-15",
+      "order": 1,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    },
+    {
+      "id": "fce6962a-5b7b-4f0e-93a0-1f4683ed6c99",
+      "folderId": "6a8717ea-8606-46b1-8aaf-e7b2f28aea5c",
+      "title": "15接続詞-breakdown",
+      "fileName": "15接続詞-breakdown.html",
+      "filePath": "grade2/englishexpressionsii/files/15接続詞-breakdown.html",
+      "date": "2026-01-15",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    }
+  ],
   "settings": {
     "siteName": "English Resources",
     "siteIcon": "📚",
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T15:39:18.863Z"
+  "lastUpdated": "2026-01-15T15:47:27.334Z"
 }
