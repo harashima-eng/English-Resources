@@ -1,11 +1,47 @@
 {
-  "folders": [],
-  "items": [],
+  "folders": [
+    {
+      "id": "6c0cfb94-ba18-4e1e-bf40-1a401a63530e",
+      "parentId": null,
+      "name": "New Folder",
+      "slug": "new-folder",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0
+    },
+    {
+      "id": "ca42b289-8d1e-49b2-9639-cb546dc7f9bc",
+      "parentId": "6c0cfb94-ba18-4e1e-bf40-1a401a63530e",
+      "name": "New Folder",
+      "slug": "new-folder",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "iconImage": null,
+      "lockNavigation": false
+    }
+  ],
+  "items": [
+    {
+      "id": "d052b699-f588-4e18-ad31-1b50e7049794",
+      "folderId": "ca42b289-8d1e-49b2-9639-cb546dc7f9bc",
+      "title": "２０２５｜東京都市大学｜前期｜理工",
+      "fileName": "２０２５｜東京都市大学｜前期｜理工.html",
+      "filePath": "new-folder/new-folder/files/２０２５｜東京都市大学｜前期｜理工.html",
+      "date": "2026-01-15",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
+    }
+  ],
   "settings": {
     "siteName": "English Resources",
     "siteIcon": "📚",
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T16:16:30.816Z"
+  "lastUpdated": "2026-01-15T16:21:42.605Z"
 }
