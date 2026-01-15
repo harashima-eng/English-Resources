@@ -120,117 +120,6 @@
   ],
   "items": [
     {
-      "id": "b8779b2d-64b7-4c0c-a129-8f086b1a0bf7",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_2",
-      "fileName": "grammar_breakdown_2.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_2.html",
-      "date": "2025-12-07",
-      "order": 1
-    },
-    {
-      "id": "9975ef94-5523-42be-a6d1-ead4d4748a25",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_3",
-      "fileName": "grammar_breakdown_3.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_3.html",
-      "date": "2025-12-07",
-      "order": 2
-    },
-    {
-      "id": "5b13c384-ebbf-4f47-906f-5d6f2f7579e3",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_5",
-      "fileName": "grammar_breakdown_5.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_5.html",
-      "date": "2025-12-07",
-      "order": 4
-    },
-    {
-      "id": "e3550b3f-3ae4-4a3b-b9c9-d2369a87c0c5",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_4",
-      "fileName": "grammar_breakdown_4.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_4.html",
-      "date": "2025-12-07",
-      "order": 3
-    },
-    {
-      "id": "c6ea4b9e-1448-4377-8e36-d4b582946ea1",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_1",
-      "fileName": "grammar_breakdown_1.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_1.html",
-      "date": "2025-12-07",
-      "order": 0
-    },
-    {
-      "id": "f34e110e-0ec0-4701-b440-ee2fab7e1e76",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_10",
-      "fileName": "grammar_breakdown_10.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_10.html",
-      "date": "2025-12-07",
-      "order": 9
-    },
-    {
-      "id": "043a4848-a009-4408-bc26-db3da794dd6e",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "index",
-      "fileName": "index.html",
-      "filePath": "grade-3/english-expression-iii/files/index.html",
-      "date": "2025-12-07",
-      "order": 11
-    },
-    {
-      "id": "cca4df17-64bf-451f-b0cc-f557ad2966e0",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_8",
-      "fileName": "grammar_breakdown_8.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_8.html",
-      "date": "2025-12-07",
-      "order": 7
-    },
-    {
-      "id": "989da13e-e267-4d11-84e5-ab02eae8d2c8",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_9",
-      "fileName": "grammar_breakdown_9.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_9.html",
-      "date": "2025-12-07",
-      "order": 8
-    },
-    {
-      "id": "410c98d8-1297-492f-88e8-a708aa345d7f",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_6",
-      "fileName": "grammar_breakdown_6.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_6.html",
-      "date": "2025-12-07",
-      "order": 5
-    },
-    {
-      "id": "96df2e3e-964e-4c4d-b092-a98898ff4af4",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "grammar_breakdown_7",
-      "fileName": "grammar_breakdown_7.html",
-      "filePath": "grade-3/english-expression-iii/files/grammar_breakdown_7.html",
-      "date": "2025-12-07",
-      "order": 6
-    },
-    {
-      "id": "9dd2a00f-4108-48f4-9ed8-b1c63f6bd2c3",
-      "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
-      "title": "polysemy_test_breakdown",
-      "fileName": "polysemy_test_breakdown.html",
-      "filePath": "grade-3/english-expression-iii/files/polysemy_test_breakdown.html",
-      "date": "2025-12-07",
-      "order": 10,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
       "id": "bc000a09-b4ff-4e2a-8cc4-6528ecd9e434",
       "folderId": "b2a67b55-2de9-45de-a3d7-605339ed19c6",
       "title": "Grammar_Breakdown_仮定法",
@@ -378,5 +267,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T14:55:38.793Z"
+  "lastUpdated": "2026-01-15T15:05:23.283Z"
 }
