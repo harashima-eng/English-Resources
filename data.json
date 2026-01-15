@@ -16,14 +16,15 @@
     {
       "id": "ca42b289-8d1e-49b2-9639-cb546dc7f9bc",
       "parentId": "6c0cfb94-ba18-4e1e-bf40-1a401a63530e",
-      "name": "New Folder",
-      "slug": "new-folder",
+      "name": "大学入試",
+      "slug": "past-exams",
       "htmlFile": "index.html",
       "icon": "📁",
       "color": "#6b7280",
       "order": 0,
       "iconImage": null,
-      "lockNavigation": false
+      "lockNavigation": true,
+      "oldSlug": "new-folder"
     },
     {
       "id": "83686ec6-3b6c-4b09-9f5c-6866110642cf",
@@ -84,5 +85,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T16:51:11.419Z"
+  "lastUpdated": "2026-01-15T16:52:53.077Z"
 }
