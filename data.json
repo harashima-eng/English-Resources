@@ -3,7 +3,7 @@
     {
       "id": "5f50a451-9520-4cf8-9528-7029444401fc",
       "parentId": null,
-      "name": "高３",
+      "name": "Grade 3",
       "slug": "grade-3",
       "htmlFile": "index.html",
       "icon": "📗",
@@ -522,5 +522,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T11:33:46.301Z"
+  "lastUpdated": "2026-01-15T11:38:50.818Z"
 }
