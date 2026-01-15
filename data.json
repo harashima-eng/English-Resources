@@ -120,63 +120,6 @@
   ],
   "items": [
     {
-      "id": "dbb0ddea-94d1-4645-9aaa-114859201584",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "index",
-      "fileName": "index.html",
-      "filePath": "grade-3/english-communication-iii/files/index.html",
-      "date": "2025-12-07",
-      "order": 11
-    },
-    {
-      "id": "92652805-1e2f-48f4-841c-8a3bc0b615a0",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "英語コミュニケーションIII｜2学期｜期末試験範囲表",
-      "fileName": "英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
-      "filePath": "grade-3/english-communication-iii/files/英語コミュニケーションIII｜2学期｜期末試験範囲表.html",
-      "date": "2025-12-07",
-      "order": 10
-    },
-    {
-      "id": "fac7b94e-2c01-4072-a470-f28e5d1e301a",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "chapter_14",
-      "fileName": "chapter_14.html",
-      "filePath": "grade-3/english-communication-iii/files/chapter_14.html",
-      "date": "2025-12-07",
-      "order": 5
-    },
-    {
-      "id": "3a67ae3b-8059-44e4-9419-97657e2eb649",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter16",
-      "fileName": "Chapter16.html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter16.html",
-      "date": "2025-12-07",
-      "order": 7
-    },
-    {
-      "id": "e4278ae4-6572-4110-b41d-d3cf07274418",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter17",
-      "fileName": "Chapter17.html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter17.html",
-      "date": "2025-12-07",
-      "order": 8
-    },
-    {
-      "id": "7888d412-bd11-4d76-a2bb-0ff698bd602f",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter_15",
-      "fileName": "Chapter_15.html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter_15.html",
-      "date": "2025-12-07",
-      "order": 6,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
       "id": "b8779b2d-64b7-4c0c-a129-8f086b1a0bf7",
       "folderId": "cb6fd1e7-867c-4804-a504-68a4e507f6b4",
       "title": "grammar_breakdown_2",
@@ -345,93 +288,6 @@
       "keywords": ""
     },
     {
-      "id": "bfcdf65a-ad17-474a-b0a7-de2e58763b79",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter9",
-      "fileName": "chapter9_living_wage_breakdown_dual_v2.html",
-      "filePath": "grade-3/english-communication-iii/files/chapter9.html",
-      "date": "2025-12-07",
-      "order": 0,
-      "originalFileName": "chapter9_living_wage_breakdown_dual_v2.html",
-      "fileSlug": "chapter9.html",
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
-      "id": "7c59630c-b00f-49eb-b30a-d94f33d9248c",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter10",
-      "fileName": "chapter10_global_brands_breakdown_dual_v3.html",
-      "filePath": "grade-3/english-communication-iii/files/chapter10.html",
-      "date": "2025-12-07",
-      "order": 1,
-      "originalFileName": "chapter10_global_brands_breakdown_dual_v3.html",
-      "fileSlug": "chapter10.html",
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
-      "id": "80b82dc9-ecba-4bba-b39b-71ce63f210b9",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter11",
-      "fileName": "Chapter11.html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter11.html",
-      "date": "2025-12-07",
-      "order": 2,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
-      "id": "8e8cb77d-8e96-4e07-bb72-f560f575406f",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter13",
-      "fileName": "Chapter13.html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter13.html",
-      "date": "2025-12-07",
-      "order": 4
-    },
-    {
-      "id": "bf4a5014-b36c-446c-8504-329f4915fd13",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter12",
-      "fileName": "Chapter12.html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter12.html",
-      "date": "2025-12-07",
-      "order": 3,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
-      "id": "161cbdaa-f8af-4506-833f-28b4cd24dfb1",
-      "folderId": "73ae45da-d3ee-4536-b377-e746d95df086",
-      "title": "Chapter18",
-      "fileName": "Chapter18_v2 (9).html",
-      "filePath": "grade-3/english-communication-iii/files/Chapter18.html",
-      "date": "2025-12-08",
-      "order": 9,
-      "minutes": "",
-      "tags": [],
-      "keywords": "",
-      "originalFileName": "Chapter18_v2 (9).html",
-      "fileSlug": "Chapter18.html"
-    },
-    {
-      "id": "60967778-f8d4-4383-93f7-589601eb186a",
-      "folderId": "136e3394-d86a-4900-bcf2-432539d5ad83",
-      "title": "Listening_improvement_guide_1",
-      "fileName": "listening_improvement_guide.html",
-      "filePath": "folder/files/listening_improvement_guide.html",
-      "date": "2025-12-24",
-      "order": 0,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
       "id": "bfa8081a-bf39-4281-8b65-ac16b982a6ea",
       "folderId": "33a50e9d-829c-4b34-a723-629cb0069d10",
       "title": "Dragon Quest English Guide",
@@ -522,5 +378,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T13:20:24.737Z"
+  "lastUpdated": "2026-01-15T14:55:38.793Z"
 }
