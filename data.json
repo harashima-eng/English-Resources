@@ -3,26 +3,26 @@
     {
       "id": "5f50a451-9520-4cf8-9528-7029444401fc",
       "parentId": null,
-      "name": "Grade 3",
-      "slug": "grade-3",
+      "name": "高校３年",
+      "slug": "grade3",
       "htmlFile": "index.html",
       "icon": "📗",
       "color": "#30d158",
       "order": 0,
-      "oldSlug": "folder-1",
+      "oldSlug": "kounen",
       "iconImage": null,
       "lockNavigation": false
     },
     {
       "id": "de8bba21-3f80-46f9-a3f7-23f1096cd66c",
       "parentId": null,
-      "name": "高２",
-      "slug": "grade-2",
+      "name": "高校２年",
+      "slug": "grade2",
       "htmlFile": "index.html",
       "icon": "📘",
       "color": "#2997ff",
       "order": 1,
-      "oldSlug": "folder",
+      "oldSlug": "kounen",
       "iconImage": null,
       "lockNavigation": true
     },
@@ -125,5 +125,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T15:08:24.960Z"
+  "lastUpdated": "2026-01-15T15:09:51.013Z"
 }
