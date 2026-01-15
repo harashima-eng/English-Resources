@@ -3,12 +3,15 @@
     {
       "id": "6c0cfb94-ba18-4e1e-bf40-1a401a63530e",
       "parentId": null,
-      "name": "New Folder",
-      "slug": "new-folder",
+      "name": "高校３年",
+      "slug": "grade3",
       "htmlFile": "index.html",
       "icon": "📁",
       "color": "#6b7280",
-      "order": 0
+      "order": 0,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
     },
     {
       "id": "ca42b289-8d1e-49b2-9639-cb546dc7f9bc",
@@ -81,5 +84,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T16:48:14.017Z"
+  "lastUpdated": "2026-01-15T16:51:11.419Z"
 }
