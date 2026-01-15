@@ -24,7 +24,7 @@
       "order": 1,
       "oldSlug": "folder",
       "iconImage": null,
-      "lockNavigation": false
+      "lockNavigation": true
     },
     {
       "id": "73ae45da-d3ee-4536-b377-e746d95df086",
@@ -522,5 +522,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-14T01:10:26.815Z"
+  "lastUpdated": "2026-01-15T10:40:48.226Z"
 }
