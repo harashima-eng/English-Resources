@@ -21,6 +21,32 @@
       "order": 0,
       "iconImage": null,
       "lockNavigation": false
+    },
+    {
+      "id": "83686ec6-3b6c-4b09-9f5c-6866110642cf",
+      "parentId": null,
+      "name": "高校２年",
+      "slug": "kounen",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 1,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": false
+    },
+    {
+      "id": "31f2b5c9-0c1f-49c4-ba29-fd9d614552e0",
+      "parentId": "83686ec6-3b6c-4b09-9f5c-6866110642cf",
+      "name": "論表Ⅱ",
+      "slug": "folder",
+      "htmlFile": "index.html",
+      "icon": "📁",
+      "color": "#6b7280",
+      "order": 0,
+      "oldSlug": "new-folder",
+      "iconImage": null,
+      "lockNavigation": true
     }
   ],
   "items": [
@@ -35,6 +61,26 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "7a3941bd-59a4-4a1b-9864-b0b60ec11546",
+      "folderId": "83686ec6-3b6c-4b09-9f5c-6866110642cf",
+      "title": "",
+      "fileName": "",
+      "date": "2026-01-15",
+      "order": 0
+    },
+    {
+      "id": "317842b1-57b1-4d8a-b8f2-2ea07678fd34",
+      "folderId": "31f2b5c9-0c1f-49c4-ba29-fd9d614552e0",
+      "title": "15接続詞-breakdown",
+      "fileName": "15接続詞-breakdown.html",
+      "filePath": "kounen/folder/files/15接続詞-breakdown.html",
+      "date": "2026-01-15",
+      "order": 0,
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -43,5 +89,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-15T16:43:37.754Z"
+  "lastUpdated": "2026-01-15T16:46:22.288Z"
 }
