@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 接続詞｜Grammar Breakdown</title>
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text-primary:#1d1d1f;
+      --text-secondary:#6e6e73;
+      --blue:#007aff;
+      --blue-light:#e8f4fd;
+      --purple:#af52de;
+      --purple-light:#f5ebff;
+      --green:#34c759;
+      --green-light:#ecfdf5;
+      --orange:#ff9500;
+      --orange-light:#fff4e6;
+      --red:#ff3b30;
+      --border:#d2d2d7;
+      --shadow:0 2px 16px rgba(0,0,0,0.08);
+      --shadow-hover:0 4px 24px rgba(0,0,0,0.12);
+      --radius:12px;
+    }
+    [data-theme="dark"]{
+      --bg:#000000;
+      --card:#1c1c1e;
+      --text-primary:#f5f5f7;
+      --text-secondary:#98989d;
+      --border:#38383a;
+      --shadow:0 2px 16px rgba(0,0,0,0.4);
+      --shadow-hover:0 4px 24px rgba(0,0,0,0.6);
+      --blue-light:#1a2332;
+      --purple-light:#2a1f3d;
+      --green-light:#1a2f24;
+      --orange-light:#2f2419;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg:#000000;
+        --card:#1c1c1e;
+        --text-primary:#f5f5f7;
+        --text-secondary:#98989d;
+        --border:#38383a;
+        --shadow:0 2px 16px rgba(0,0,0,0.4);
+        --shadow-hover:0 4px 24px rgba(0,0,0,0.6);
+        --blue-light:#1a2332;
+        --purple-light:#2a1f3d;
+        --green-light:#1a2f24;
+        --orange-light:#2f2419;
+      }
+    }
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      /* GPU acceleration for all elements */
+      -webkit-transform:translateZ(0);
+      transform:translateZ(0);
+      -webkit-backface-visibility:hidden;
+      backface-visibility:hidden;
+      -webkit-perspective:1000;
+      perspective:1000;
+    }
+    html,body{
+      height:100%;
+      /* Smooth scrolling */
+      scroll-behavior:smooth;
+    }
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text-primary);
+      line-height:1.6;
+      padding:20px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      /* Enable hardware acceleration */
+      transform:translate3d(0,0,0);
+    }
+    .container{
+      width:100%;
+      max-width:900px;
+      margin:0 auto;
+      /* Prevent overlap with sticky header */
+      position:relative;
+      z-index:1;
+    }
+    header{
+      background:rgba(var(--card-rgb, 255,255,255), 0.95);
+      border-radius:var(--radius);
+      padding:32px;
+      margin-bottom:24px;
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:20px;
+      z-index:50;
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      /* 60fps optimized transitions - only transform and opacity */
+      transition:transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
+                 opacity 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+      will-change:transform, opacity;
+      isolation:isolate;
+    }
+    header.hidden{
+      transform:translate3d(0,-120%,0);
+      opacity:0;
+      pointer-events:none;
+    }
+    .header-reveal-zone{
+      position:fixed;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:200px;
+      height:50px;
+      z-index:99;
+      cursor:pointer;
+      display:none;
+    }
+    .header-reveal-zone.active{
+      display:block;
+    }
+    .header-reveal-zone.active::before{
+      content:'';
+      position:absolute;
+      top:8px;
+      left:50%;
+      transform:translateX(-50%);
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:var(--green);
+      opacity:0.15;
+      animation:header-pulse 2.5s ease-in-out infinite;
+    }
+    .header-reveal-zone:hover::before{
+      opacity:0;
+    }
+    @keyframes header-pulse{
+      0%, 100%{
+        transform:translateX(-50%) scale(1);
+        opacity:0.15;
+      }
+      50%{
+        transform:translateX(-50%) scale(1.4);
+        opacity:0.05;
+      }
+    }
+    .header-reveal-indicator{
+      position:fixed;
+      top:0;
+      left:50%;
+      transform:translate3d(-50%,0,0);
+      width:60px;
+      height:5px;
+      background:var(--green);
+      border-radius:0 0 6px 6px;
+      opacity:0;
+      transition:opacity 0.25s cubic-bezier(0.25,0.46,0.45,0.94),
+                 transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events:none;
+      z-index:98;
+      will-change:opacity, transform;
+    }
+    .header-reveal-zone.active .header-reveal-indicator{
+      opacity:0.5;
+    }
+    .header-reveal-zone:hover .header-reveal-indicator{
+      opacity:0.9;
+      transform:translate3d(-50%,2px,0);
+    }
+    /* Floating Action Buttons - Bottom Right */
+    .fab-container{
+      position:fixed;
+      bottom:32px;
+      right:32px;
+      z-index:200;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:flex-end;
+    }
+    .fab-zone{
+      position:fixed;
+      bottom:0;
+      right:0;
+      width:120px;
+      height:120px;
+      z-index:199;
+      pointer-events:all;
+    }
+    .fab-zone::after{
+      content:'';
+      position:absolute;
+      bottom:32px;
+      right:32px;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:var(--blue);
+      opacity:0.2;
+      animation:fab-pulse 2s ease-in-out infinite;
+    }
+    .fab-zone:hover::after{
+      opacity:0;
+    }
+    @keyframes fab-pulse{
+      0%, 100%{
+        transform:scale(1);
+        opacity:0.2;
+      }
+      50%{
+        transform:scale(1.3);
+        opacity:0.1;
+      }
+    }
+    .fab-zone:hover ~ .fab-container .fab,
+    .fab-container:hover .fab{
+      opacity:1;
+      transform:translate3d(0,0,0) scale(1);
+      pointer-events:auto;
+    }
+    .fab{
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      background:var(--blue);
+      color:#fff;
+      border:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      box-shadow:0 4px 12px rgba(0,122,255,0.3);
+      opacity:0;
+      transform:translate3d(0,20px,0) scale(0.8);
+      transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events:none;
+      will-change:transform, opacity;
+    }
+    .fab:hover{
+      background:var(--purple);
+      box-shadow:0 6px 20px rgba(175,82,222,0.4);
+      transform:translate3d(0,-2px,0) scale(1.05);
+    }
+    .fab:active{
+      transform:translate3d(0,0,0) scale(0.95);
+    }
+    .fab-show-header{
+      background:var(--green);
+      box-shadow:0 4px 12px rgba(52,199,89,0.3);
+    }
+    .fab-show-header:hover{
+      background:#30d158;
+      box-shadow:0 6px 20px rgba(52,199,89,0.5);
+    }
+    .fab-show-header.hidden{
+      display:none;
+    }
+    h1{
+      font-size:32px;
+      font-weight:700;
+      margin-bottom:8px;
+      letter-spacing:-0.5px;
+    }
+    .subtitle{
+      color:var(--text-secondary);
+      font-size:16px;
+      margin-bottom:20px;
+    }
+    .toolbar{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .theme-toggle{
+      position:relative;
+      width:51px;
+      height:31px;
+      background:var(--border);
+      border-radius:31px;
+      cursor:pointer;
+      transition:background 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+      border:none;
+      padding:0;
+      margin-left:auto;
+      will-change:background;
+    }
+    .theme-toggle:hover{
+      background:var(--text-secondary);
+    }
+    .theme-toggle-slider{
+      position:absolute;
+      top:2px;
+      left:2px;
+      width:27px;
+      height:27px;
+      background:#ffffff;
+      border-radius:50%;
+      /* 60fps smooth sliding with spring physics */
+      transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow:0 2px 4px rgba(0,0,0,0.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      will-change:transform;
+    }
+    [data-theme="dark"] .theme-toggle{
+      background:var(--green);
+    }
+    [data-theme="dark"] .theme-toggle-slider{
+      transform:translate3d(20px,0,0);
+      background:#1c1c1e;
+    }
+    .hide-header-btn{
+      background:rgba(0,122,255,0.1);
+      color:var(--blue);
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      padding:10px 18px;
+      border-radius:8px;
+      transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+      font-size:14px;
+      font-family:inherit;
+    }
+    .hide-header-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:var(--shadow);
+      background:rgba(0,122,255,0.15);
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      padding:10px 18px;
+      border-radius:8px;
+      /* 60fps transitions - only transform and box-shadow */
+      transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1),
+                 box-shadow 0.2s cubic-bezier(0.25,0.46,0.45,0.94);
+      font-size:14px;
+      font-family:inherit;
+      will-change:transform;
+    }
+    .btn:hover{
+      transform:translate3d(0,-2px,0);
+      box-shadow:var(--shadow);
+    }
+    .btn:active{
+      transform:translate3d(0,0,0);
+      transition:transform 0.1s cubic-bezier(0.4,0,0.2,1);
+    }
+    .btn-primary{
+      background:var(--blue);
+      color:#fff;
+    }
+    .btn-secondary{
+      background:rgba(0,122,255,0.1);
+      color:var(--blue);
+    }
+    .section{
+      background:var(--card);
+      border-radius:var(--radius);
+      margin-bottom:16px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transition:box-shadow 0.25s cubic-bezier(0.25,0.46,0.45,0.94),
+                 transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+      will-change:box-shadow, transform;
+      position:relative;
+      z-index:2;
+    }
+    .section:hover{
+      box-shadow:var(--shadow-hover);
+      transform:translate3d(0,-1px,0);
+    }
+    .section-header{
+      padding:20px 24px;
+      cursor:pointer;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-weight:700;
+      font-size:18px;
+      user-select:none;
+      border-bottom:1px solid var(--border);
+      transition:background 0.2s;
+    }
+    .section-header:hover{
+      background:rgba(0,122,255,0.05);
+    }
+    .section-header .arrow{
+      transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      color:var(--text-secondary);
+      will-change:transform;
+    }
+    .section-header.open .arrow{
+      transform:rotate3d(0,0,1,180deg);
+    }
+    .section-body{
+      display:none;
+      padding:16px;
+    }
+    .section-body.open{
+      display:block;
+    }
+    .qcard{
+      background:var(--bg);
+      border-radius:10px;
+      padding:20px;
+      margin:12px 0;
+      border:1px solid var(--border);
+      transition:border-color 0.25s cubic-bezier(0.25,0.46,0.45,0.94),
+                 box-shadow 0.25s cubic-bezier(0.25,0.46,0.45,0.94),
+                 transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+      will-change:transform, border-color;
+    }
+    .qcard:hover{
+      border-color:var(--blue);
+      box-shadow:var(--shadow);
+      transform:translate3d(0,-1px,0);
+    }
+    .qnum{
+      display:inline-block;
+      font-weight:800;
+      color:var(--blue);
+      background:var(--blue-light);
+      padding:4px 12px;
+      border-radius:6px;
+      font-size:14px;
+      margin-bottom:12px;
+    }
+    .qtext{
+      margin-top:8px;
+      font-size:16px;
+      line-height:1.8;
+    }
+    .scramble{
+      margin-top:12px;
+      padding:12px;
+      background:var(--blue-light);
+      border-radius:8px;
+      font-family:"SF Mono",Monaco,monospace;
+      font-size:14px;
+      border:1px solid var(--blue);
+      color:var(--text-primary);
+    }
+    .choices{
+      margin-top:12px;
+      padding:12px;
+      background:var(--purple-light);
+      border-radius:8px;
+      font-size:14px;
+      color:var(--text-primary);
+      border:1px solid var(--purple);
+    }
+    .button-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .vocab-btn{
+      background:linear-gradient(135deg,var(--purple),#c77dff);
+      color:#fff;
+      flex:1;
+      min-width:140px;
+    }
+    .hint-btn{
+      background:linear-gradient(135deg,var(--orange),#ffb038);
+      color:#fff;
+      flex:1;
+      min-width:140px;
+    }
+    .ans-btn{
+      background:linear-gradient(135deg,var(--green),#5edb7e);
+      color:#fff;
+      flex:1;
+      min-width:140px;
+    }
+    .collapsible{
+      max-height:0;
+      overflow:hidden;
+      /* 60fps smooth expand with spring easing */
+      transition:max-height 0.5s cubic-bezier(0.34,1.56,0.64,1),
+                 opacity 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                 margin 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      opacity:0;
+      will-change:max-height, opacity;
+    }
+    .collapsible.open{
+      max-height:3000px;
+      opacity:1;
+      margin-top:16px;
+    }
+    .box{
+      border-radius:10px;
+      padding:16px;
+      font-size:15px;
+      line-height:1.7;
+    }
+    .vocab-box{
+      background:var(--purple-light);
+      border:1px solid var(--purple);
+    }
+    .hint-box{
+      background:var(--orange-light);
+      border:1px solid var(--orange);
+    }
+    .ans-box{
+      background:var(--green-light);
+      border:1px solid var(--green);
+    }
+    .vocab-item{
+      padding:10px 0;
+      border-bottom:1px solid rgba(175,82,222,0.2);
+    }
+    .vocab-item:last-child{
+      border-bottom:none;
+    }
+    .vocab-word{
+      font-weight:700;
+      color:var(--purple);
+      margin-right:8px;
+    }
+    .label{
+      font-weight:800;
+      font-size:16px;
+      display:block;
+      margin-bottom:12px;
+      color:var(--text-primary);
+    }
+    .jp{
+      margin-top:12px;
+      font-style:italic;
+      color:var(--text-secondary);
+      font-size:15px;
+    }
+    .muted{
+      color:var(--text-secondary);
+      margin-top:12px;
+      font-size:15px;
+    }
+    .correct-choice{
+      color:var(--green);
+      font-weight:800;
+    }
+    .ref-box{
+      background:var(--blue-light);
+      border:1px solid var(--blue);
+      margin-top:12px;
+      padding:12px;
+      border-radius:8px;
+      font-size:14px;
+      color:var(--text-primary);
+    }
+    footer{
+      padding:32px;
+      text-align:center;
+      color:var(--text-secondary);
+      font-size:14px;
+    }
+    @media (max-width:768px){
+      body{padding:12px}
+      header{padding:24px;top:12px}
+      h1{font-size:24px}
+      .qcard{padding:16px}
+      .button-row{flex-direction:column}
+      .vocab-btn,.hint-btn,.ans-btn{min-width:100%}
+      .fab-container{bottom:20px;right:20px}
+      .fab{width:48px;height:48px;font-size:20px}
+      .fab-zone{width:100px;height:100px}
+    }
+  </style>
+</head>
+<body>
+<div class="header-reveal-zone" onclick="showHeader()">
+  <div class="header-reveal-indicator"></div>
+</div>
+
+<!-- Floating Action Buttons - Bottom Right -->
+<div class="fab-zone"></div>
+<div class="fab-container">
+  <button class="fab fab-show-header" id="fabShowHeader" onclick="showHeader()" aria-label="Show header" title="Show Header">
+    ▼
+  </button>
+  <button class="fab" onclick="scrollToTop()" aria-label="Back to top" title="Back to Top">
+    ↑
+  </button>
+</div>
+
+<div class="container">
+  <header id="mainHeader">
+    <h1>📚 15 接続詞</h1>
+    <div class="subtitle">Grammar Breakdown - All Questions</div>
+    <div class="toolbar">
+      <button class="btn btn-primary" onclick="openAll()">Open All Sections</button>
+      <button class="btn btn-secondary" onclick="closeAll()">Close All Sections</button>
+      <button class="btn btn-secondary" onclick="downloadPage()">⬇ Download</button>
+      <button class="hide-header-btn" onclick="hideHeader()">▲ Hide Header</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="theme-toggle-slider">
+          <span class="theme-icon">☀️</span>
+        </div>
+      </button>
+    </div>
+  </header>
+  <div id="content"></div>
+</div>
+<footer>Grammar Breakdown｜15 接続詞 Complete Edition</footer>
+
+<script>
+// ALL GRAMMAR DATA
+const grammarData = {
+  sections: [
+    {
+      title: "[1] 基本問題 1｜語句選択 (1)～(7)",
+      open: true,
+      questions: [
+        {
+          num: "(1)",
+          text: "Watch your step, (   ) you'll fall down the stairs.",
+          choices: "選択肢: and, or, but",
+          vocab: [
+            ["watch your step", "足元に気をつける"],
+            ["fall down", "落ちる、転ぶ"],
+            ["stairs", "階段"]
+          ],
+          hint: [
+            "文の構造を確認：命令文 + 接続詞 + 帰結",
+            "意味を考える：「～しなさい、そうでないと…」",
+            "「さもないと」という否定的な結果を示す接続詞を選ぶ"
+          ],
+          answer: "or",
+          translation: "足元に気をつけてください，そうでないと階段から落ちますよ",
+          explanation: "orは「そうでないと」という意味で、前の命令を守らなかった場合の否定的な結果を示します。",
+          grammar: "命令文 + or = ～しなさい、さもないと…"
+        },
+        {
+          num: "(2)",
+          text: "Hurry up, (   ) you'll be in time for school.",
+          choices: "選択肢: and, or, but",
+          vocab: [
+            ["hurry up", "急ぐ"],
+            ["in time for", "～に間に合って"]
+          ],
+          hint: [
+            "文の構造を確認：命令文 + 接続詞 + 結果",
+            "意味を考える：「～しなさい、そうすれば…」",
+            "肯定的な結果を導く接続詞を選ぶ"
+          ],
+          answer: "and",
+          translation: "急ぎなさい，そうすれば学校に間に合うよ",
+          explanation: "andは前の命令を実行した場合の肯定的な結果を示します。",
+          grammar: "命令文 + and = ～しなさい、そうすれば…"
+        },
+        {
+          num: "(3)",
+          text: "I stood still, (   ) I didn't know what to do.",
+          choices: "選択肢: if, although, for",
+          vocab: [
+            ["stand still", "じっと立っている"],
+            ["what to do", "何をすべきか"]
+          ],
+          hint: [
+            "前の文と後の文の関係を考える",
+            "後の文が前の文の理由・原因を説明している",
+            "「というのは～だから」という意味の接続詞を選ぶ"
+          ],
+          answer: "for",
+          translation: "私はじっと立っていた．というのはどうしたらいいかわからなかったからだ",
+          explanation: "forは直前に述べたことの原因・理由を追加的に述べる等位接続詞です。becauseと違い、補足的な説明として使われます。",
+          grammar: "for = というのは～だから（補足的な理由）"
+        },
+        {
+          num: "(4)",
+          text: "(   ) you will succeed or not depends on your effort.",
+          choices: "選択肢: That, If, Whether",
+          vocab: [
+            ["succeed", "成功する"],
+            ["depend on", "～次第である、～に依存する"],
+            ["effort", "努力"]
+          ],
+          hint: [
+            "文全体の構造を確認：「～かどうか」が主語になっている",
+            "「or not」があることに注目",
+            "文頭で主語を形成する接続詞を選ぶ"
+          ],
+          answer: "Whether",
+          translation: "あなたが成功するかどうかは努力次第だ",
+          explanation: "主語になり文頭にくる場合には、ifではなくwhetherを用います。",
+          grammar: "Whether S + V (or not) = Sが～かどうか（文頭・主語はwhether）"
+        },
+        {
+          num: "(5)",
+          text: "She succeeded even (   ) she was young.",
+          choices: "選択肢: although, if, though",
+          vocab: [
+            ["succeed", "成功する"],
+            ["even though", "～だけれども（強調）"],
+            ["young", "若い"]
+          ],
+          hint: [
+            "前後の文の関係：「若い」と「成功」という対比",
+            "「even」という強調語がある",
+            "譲歩を表す接続詞を選ぶ"
+          ],
+          answer: "though",
+          translation: "彼女は若かったが，成功した",
+          explanation: "強調する場合はeven thoughとなり、even althoughとは言いません。even thoughは実際に「～である[あった]」場合に用います。",
+          grammar: "even though = ～だけれども（強調、実際の事実）"
+        },
+        {
+          num: "(6)",
+          text: "(   ) it grew darker, it snowed more and more.",
+          choices: "選択肢: As, Because, Since",
+          vocab: [
+            ["grow dark", "暗くなる"],
+            ["more and more", "ますます、どんどん"],
+            ["snow", "雪が降る"]
+          ],
+          hint: [
+            "主節に「more and more」（比較級）がある",
+            "2つの動作が同時進行している",
+            "「～するにつれて」という意味の接続詞を選ぶ"
+          ],
+          answer: "As",
+          translation: "暗くなるにつれて，ますます雪が降ってきた",
+          explanation: "as節には事態の経過を表す表現が、主節には比較級を伴う表現がくることが多いです。",
+          grammar: "As S + V, S' + V'（比較級） = ～するにつれて、ますます…"
+        },
+        {
+          num: "(7)",
+          text: "(   ) you start reading the book, you cannot stop it.",
+          choices: "選択肢: Though, Whether, Once",
+          vocab: [
+            ["start reading", "読み始める"],
+            ["cannot stop", "やめられない"],
+            ["once", "いったん～すると"]
+          ],
+          hint: [
+            "文の意味：「読み始める」→「やめられない」",
+            "ある時点から継続する状態",
+            "「いったん～すると」という意味の接続詞を選ぶ"
+          ],
+          answer: "Once",
+          translation: "その本はいったん読み始めたら，やめられない",
+          explanation: "接続詞のonceは「時」と「条件」の両方の意味を合わせもちます。",
+          grammar: "Once S + V = いったん～すると（時＋条件）"
+        }
+      ]
+    },
+    {
+      title: "[2] 基本問題 2｜空所補充 (1)～(5)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "アンジェラの手料理はおいしいし，健康にもよい．<br>Angela's homemade cooking is (   ) delicious (   ) healthy.",
+          vocab: [
+            ["homemade", "手作りの、家庭料理の"],
+            ["delicious", "おいしい"],
+            ["healthy", "健康的な"],
+            ["both A and B", "AもBも（両方とも）"]
+          ],
+          hint: [
+            "2つの形容詞が並んでいる：delicious と healthy",
+            "両方とも肯定的な意味",
+            "「AもBも（両方とも）」を表す表現を使う"
+          ],
+          answer: "both, and",
+          explanation: "2つの要素を等しく強調する表現です。",
+          grammar: "both A and B = AもBも（両方とも）"
+        },
+        {
+          num: "(2)",
+          text: "それは毒にも薬にもならない．<br>That will do (   ) harm (   ) good.",
+          vocab: [
+            ["do harm", "害を及ぼす"],
+            ["do good", "良いことをする、役に立つ"],
+            ["neither A nor B", "AもBもどちらも～ない"]
+          ],
+          hint: [
+            "日本語の意味：「毒にも薬にもならない」= どちらでもない",
+            "harm も good も否定する",
+            "「AもBもどちらも～ない」を表す表現を使う"
+          ],
+          answer: "neither, nor",
+          explanation: "AとBの両方を打ち消します。",
+          grammar: "neither A nor B = AもBもどちらも～ない"
+        },
+        {
+          num: "(3)",
+          text: "彼女はネコ好きだという点で母親に似ている．<br>She takes after her mother (   ) (   ) she is fond of cats.",
+          vocab: [
+            ["take after", "～に似ている"],
+            ["be fond of", "～が好き"],
+            ["in that", "～という点で"]
+          ],
+          hint: [
+            "「～という点で」という限定的な理由を示す",
+            "特定の側面での類似性",
+            "「in that」で「～という点で」を表す"
+          ],
+          answer: "in that",
+          explanation: "接続詞thatが導く名詞節は通常、前置詞の目的語にはなりませんが、〈in that〉〈except that〉などの例外があります。",
+          grammar: "in that = ～という点で（理由・根拠の限定）"
+        },
+        {
+          num: "(4)",
+          text: "日本だけでなく他国もその決定を支持している．<br>Not (   ) Japan (   ) also other countries support the decision.",
+          vocab: [
+            ["support", "支持する、支援する"],
+            ["decision", "決定"],
+            ["not only A but also B", "AだけでなくBも"]
+          ],
+          hint: [
+            "「日本だけでなく他国も」という追加の情報",
+            "後者（他国）に重点がある",
+            "「not only A but also B」の構文を使う"
+          ],
+          answer: "only[just], but",
+          explanation: "Bに重点を置いた表現なので、主語になった場合、動詞はBに一致させます。",
+          grammar: "not only A but (also) B = AだけでなくBも（Bに重点）"
+        },
+        {
+          num: "(5)",
+          text: "私たちが家に着くころには夕食ができているでしょう．<br>Dinner will be ready (   ) the (   ) we reach home.",
+          vocab: [
+            ["be ready", "用意ができている"],
+            ["reach home", "家に着く"],
+            ["by the time", "～するまでには"]
+          ],
+          hint: [
+            "未来の時点での完了を表す",
+            "「～するまでには」という期限",
+            "「by the time」で期限を表す"
+          ],
+          answer: "by, time",
+          explanation: "動作や状態がある時点までに完了する期限を表します。時を表す副詞節なので、節中では未来のことでも現在形で表すことに注意。",
+          grammar: "by the time S + V（現在形） = Sが～するまでには（未来の期限）"
+        }
+      ]
+    },
+    {
+      title: "[3] 基本問題 3｜並べかえ (1)～(3)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "アンも仲間に入れるように，英語で話しましょう．",
+          scramble: "Let's talk in English [ Ann, so, join, can, that, us ].",
+          vocab: [
+            ["join", "加わる、参加する"],
+            ["so that", "～できるように、～するために"]
+          ],
+          hint: [
+            "「Aが～できるように」という目的を表す",
+            "「so that A can」の構文",
+            "語順：so that + 主語 + can + 動詞"
+          ],
+          answer: "so that Ann can join us",
+          explanation: "「Aが～できるように[するように，するために]」〈目的〉は〈so that A can[will / may] ～〉で表します。",
+          grammar: "so that S + can/will/may do = Sが～できるように（目的）"
+        },
+        {
+          num: "(2)",
+          text: "私をいら立たせたのは彼の言葉ではなく，彼の態度だった．",
+          scramble: "It [ but, his attitude, his words, not, that, was ] irritated me.",
+          vocab: [
+            ["irritate", "いら立たせる"],
+            ["attitude", "態度"]
+          ],
+          hint: [
+            "「AではなくB」という対比",
+            "強調構文「It is/was ... that ~」を使う",
+            "「not A but B」を強調構文に組み込む"
+          ],
+          answer: "was not his words but his attitude that",
+          explanation: "「AではなくてB」は〈not A but B〉で表します。また、「…(なの)は～だ[だった]」は〈It is[was] ～ that…〉の形で～の部分を強調する強調構文を使って表します。",
+          grammar: "It is/was not A but B that ~ = …なのはAではなくBだ（強調構文）"
+        },
+        {
+          num: "(3)",
+          text: "人はみな平等だという考えが頭に浮かんだ．",
+          scramble: "The [ are, that, idea, occurred, all human beings, to me ] equal.",
+          vocab: [
+            ["occur to", "～の頭に浮かぶ"],
+            ["human beings", "人間"],
+            ["equal", "平等な"]
+          ],
+          hint: [
+            "「～という考え」という同格のthat節",
+            "that節が長いので後置する",
+            "The idea occurred to me that ..."
+          ],
+          answer: "idea occurred to me that all human beings are",
+          explanation: "thatが導く名詞節は主語のthe ideaの内容を説明し、同格の関係になっています。The ideaの直後にthat節を置くと主語が長すぎてバランスが悪いので、that以下を切り離して後置しています。",
+          grammar: "The idea occurred to me that S + V = Sが～という考えが浮かんだ（同格のthat節の後置）"
+        }
+      ]
+    },
+    {
+      title: "[4] 基本問題 4｜英文和訳 (1)～(4)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "It is true that the doctor is over eighty, but he looks young.",
+          vocab: [
+            ["It is true that", "確かに～だ"],
+            ["over eighty", "80歳を過ぎて"],
+            ["look young", "若く見える"]
+          ],
+          translation: "確かにその医師は80歳を過ぎているが，若く見える．",
+          explanation: "〈It is true (that) ～ but …〉は「確かに～だが，しかし…」という〈譲歩〉の意味を表します。",
+          grammar: "It is true (that) ~ but ... = 確かに～だが、しかし…"
+        },
+        {
+          num: "(2)",
+          text: "As far as I can remember, his house is around here.",
+          vocab: [
+            ["as far as", "～する限り"],
+            ["around here", "このあたり"]
+          ],
+          translation: "私の覚えている限り，彼の家はこのあたりだ．",
+          explanation: "〈as[so] far as ～〉は〈程度・限界・空間的な範囲〉を示し、「～する限り」という意味を表します。",
+          grammar: "as far as S + V = Sが～する限り（範囲・程度）"
+        },
+        {
+          num: "(3)",
+          text: "I was so tired that I couldn't continue to work any longer.",
+          vocab: [
+            ["so ... that", "とても…なので～"],
+            ["continue to work", "働き続ける"],
+            ["any longer", "もはや（否定文で）"]
+          ],
+          translation: "私はとても疲れていたので，もはや働き続けることができなかった．/ もはや働き続けることができないほど私は疲れていた．",
+          explanation: "〈so＋形容詞[副詞]＋that ～〉の形で「とても…なので～」という〈結果〉と，「～なほど…」という〈程度〉の意味を表します。",
+          grammar: "so + 形容詞/副詞 + that S + V = とても…なので～"
+        },
+        {
+          num: "(4)",
+          text: "Since you know how hurt she was, you should apologize to her.",
+          vocab: [
+            ["since", "～なのだから"],
+            ["how hurt", "どんなに傷ついたか"],
+            ["apologize to", "～に謝る"]
+          ],
+          translation: "彼女がどんなに傷ついたか君は知っているのだから，彼女に謝るべきだ．",
+          explanation: "since, asは主に文頭で使われ、becauseよりも意味が弱く、「～なのだから」と原因・理由について補足的に述べます。また、相手が既に知っている理由を述べるのに使われます。",
+          grammar: "Since S + V, S' should ... = Sが～なのだから、S'は…すべきだ"
+        }
+      ]
+    },
+    {
+      title: "[5] 基本問題 5｜並べかえ (1)～(5)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          scramble: "It [ be, his cat, will, gets, not, before, long ] well.",
+          text: "彼のネコはまもなく元気になるでしょう",
+          vocab: [
+            ["It will not be long before", "まもなく～だろう"],
+            ["get well", "元気になる、回復する"]
+          ],
+          hint: [
+            "「まもなく」という近い未来を表す構文",
+            "「It will not be long before」のイディオム",
+            "時を表す副詞節では現在形を使う"
+          ],
+          answer: "will not be long before his cat gets",
+          explanation: "〈It will not be long before ～〉は「まもなく～だろう」という意味を表します。時・条件を表す副詞節の中では未来の内容も現在形で表すので「before his cat gets well」となります。",
+          grammar: "It will not be long before S + V（現在形） = まもなくSが～するだろう"
+        },
+        {
+          num: "(2)",
+          scramble: "It [ not, last night, that, the girl, until, was, was ] found safe.",
+          text: "昨夜になって初めてその少女が無事に発見された",
+          vocab: [
+            ["not until", "～になって初めて"],
+            ["be found safe", "無事に発見される"]
+          ],
+          hint: [
+            "「～になって初めて」という強調",
+            "強調構文「It is/was ... that ~」を使う",
+            "「not until」を強調する形"
+          ],
+          answer: "was not until last night that the girl was",
+          explanation: "〈It is not until...that ～〉は強調構文の一種で「…して初めて～する」という意味を表します。通常の語順から「until」の部分を強調するために「It was」で始める構文です。",
+          grammar: "It is/was not until ... that S + V = …して初めてSが～する"
+        },
+        {
+          num: "(3)",
+          scramble: "He is [ he, to, wins, a champion, us, whether ] or loses the game.",
+          text: "その試合に勝っても負けても彼は私たちにとってチャンピオンだ",
+          vocab: [
+            ["champion", "チャンピオン、優勝者"],
+            ["win/lose the game", "試合に勝つ/負ける"]
+          ],
+          hint: [
+            "「勝っても負けても」という譲歩",
+            "「whether A or B」で「AであろうとBであろうと」",
+            "主節と副詞節の構造を整理"
+          ],
+          answer: "a champion to us whether he wins",
+          explanation: "この〈whether A or B〉は副詞節を導き、「AであろうとBであろうと」という「譲歩」の意味を表します。名詞節を導く接続詞whetherを使った〈whether A or B〉は「AかBか」の意味なので区別すること。",
+          grammar: "S + V whether A or B = AであろうとBであろうとSは～（譲歩）"
+        },
+        {
+          num: "(4)",
+          scramble: "It [ day, a, that, such, nice, was ] the park was full of people.",
+          text: "とても天気のよい日だったので，公園は人でいっぱいだった",
+          vocab: [
+            ["such a nice day", "とても良い天気の日"],
+            ["be full of", "～でいっぱいである"]
+          ],
+          hint: [
+            "結果を表す構文",
+            "名詞を含むので「such」を使う",
+            "「such a/an + 形容詞 + 名詞 + that」の語順"
+          ],
+          answer: "was such a nice day that",
+          explanation: "〈such a[an]＋形容詞＋名詞＋that～〉で「とても…なので～」〈結果〉、「～なほど…」〈程度〉の意味を表します。名詞がある場合はsuchを、形容詞・副詞のみの場合はsoを使います。",
+          grammar: "such a/an + 形容詞 + 名詞 + that S + V = とても…なので～"
+        },
+        {
+          num: "(5)",
+          scramble: "I [ impossible, it, lose, that, think, this team, will ] the game.",
+          text: "このチームが試合に負けることはありえないと思う",
+          vocab: [
+            ["impossible", "不可能な、ありえない"],
+            ["lose the game", "試合に負ける"]
+          ],
+          hint: [
+            "「S + V + O + C」の第5文型",
+            "that節が長いので形式目的語itを使う",
+            "「think + it + C + that ~」の語順"
+          ],
+          answer: "think it impossible that this team will lose",
+          explanation: "〈S＋V＋O＋C〉の文型でthat節が目的語(O)になる場合、itを形式目的語にして先に出し、that節を後に回します。〈think＋it＋C＋that ～〉で「～ということをCと思う」という意味を表します。",
+          grammar: "S + think + it + C + that ~ = Sは～ということをCと思う（形式目的語）"
+        }
+      ]
+    },
+    {
+      title: "[6] FOR COMMUNICATION (1)～(3)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "A：Do you know what Miki's secret is?<br>B：Yes. I don't want to tell it to you, (   ).",
+          choices: "a. although　b. though　c. but　d. for",
+          vocab: [
+            ["secret", "秘密"],
+            ["though（副詞用法）", "でも、けれども（文末）"]
+          ],
+          hint: [
+            "文末に置ける譲歩の表現",
+            "althoughは文末に置けない",
+            "thoughは副詞として文末に使える"
+          ],
+          answer: "b. though",
+          translation: "A「君はミキの秘密が何か知ってるの」<br>B「うん．でも，君には教えたくないんだ」",
+          explanation: "「譲歩」を表す接続詞thoughが副詞として使われ、文中や文尾に置かれることがあります。althoughにはこの用法はありません。",
+          grammar: "though（副詞用法）= でも、けれども（文末）"
+        },
+        {
+          num: "(2)",
+          text: "A：What do you want to have as a pet?<br>B：I love dogs, (   ) my mother doesn't want to keep pets.",
+          choices: "a. while　b. so　c. for　d. or",
+          vocab: [
+            ["pet", "ペット"],
+            ["keep pets", "ペットを飼う"],
+            ["while", "～なのに、一方では～（譲歩・対比）"]
+          ],
+          hint: [
+            "前半：「犬が好き」と後半：「母は飼いたくない」の対比",
+            "「～なのに、一方では～」という譲歩・対比",
+            "whileの譲歩用法"
+          ],
+          answer: "a. while",
+          translation: "A「ペットとして何を飼いたいの」<br>B「僕は犬が大好きなんだけど，(一方で)お母さんはペットを飼いたくないんだよ」",
+          explanation: "whileが「～なのに，一方では～」という「譲歩」の意味を表す場合があります。",
+          grammar: "while = ～なのに、一方では～（譲歩・対比）"
+        },
+        {
+          num: "(3)",
+          text: "A：Jim, take an umbrella with you (   ) it rains.<br>B：All right. I will.",
+          choices: "a. even if　b. if only　c. in case　d. so that",
+          vocab: [
+            ["take an umbrella", "傘を持って行く"],
+            ["in case", "～するといけないから（未来の備え）"]
+          ],
+          hint: [
+            "「雨が降るといけないから」という備え",
+            "未然の事態への備えを表す",
+            "「in case」を使う"
+          ],
+          answer: "c. in case",
+          translation: "A「ジム，雨が降るといけないから，傘を持って行ってね」<br>B「わかった．そうするよ」",
+          explanation: "〈in case ～〉は「～するといけないから，～する場合に備えて」の意味を表します。未来の内容でも現在形を用います。",
+          grammar: "in case S + V（現在形） = Sが～するといけないから（未来の備え）"
+        }
+      ]
+    },
+    {
+      title: "[発展1] 各文の（　）に入る最も適当な語句をa～dから選びなさい (1)～(7)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "She will not sign the contract (   ) these conditions are met.【名城大】",
+          choices: "a. in place of　b. instead of　c. despite　d. unless",
+          vocab: [
+            ["sign the contract", "契約書にサインする"],
+            ["conditions are met", "条件が満たされる"],
+            ["unless", "もし～でないなら、～でない限り"]
+          ],
+          hint: [
+            "否定文 + 条件節の構造",
+            "「条件が満たされない場合」という意味",
+            "「もし～でないなら」を表す接続詞を選ぶ"
+          ],
+          answer: "d. unless",
+          translation: "これらの条件が満たされなければ，彼女は契約書にサインしないだろう",
+          explanation: "unlessは「条件」を表す接続詞で「もし～でないなら」「～でない限り」の意味を表します。「if not」と同じ意味ですが、より簡潔な表現です。",
+          grammar: "unless S + V = もし～でないなら（if not と同義）"
+        },
+        {
+          num: "(2)",
+          text: "As (   ) as I know, he has never done such a terrible thing.【関西学院大】",
+          choices: "a. soon　b. long　c. far　d. much",
+          vocab: [
+            ["as far as I know", "私の知っている限り"],
+            ["terrible", "ひどい、恐ろしい"]
+          ],
+          hint: [
+            "「～する限り」という範囲・程度の表現",
+            "知識の範囲を示す慣用句",
+            "「as far as」のイディオム"
+          ],
+          answer: "c. far",
+          translation: "私の知っている限り，彼はこのようなひどいことは決してしたことがない",
+          explanation: "〈as [so] far as ～〉は〈範囲・程度の限度〉を示し、「～する限り」という意味を表します。知識・経験・能力などの範囲を限定する表現です。",
+          grammar: "as far as S + V = Sが～する限り（範囲・程度の限定）"
+        },
+        {
+          num: "(3)",
+          text: "Please call me the (   ) you hear anything from the hospital.【自治医大】",
+          choices: "a. minute　b. month　c. season　d. year",
+          vocab: [
+            ["call", "電話する"],
+            ["hear from", "～から連絡をもらう"],
+            ["the minute", "～するとすぐに"]
+          ],
+          hint: [
+            "「～するとすぐに」という即時性",
+            "時間を表す名詞が接続詞として機能",
+            "「the minute」のイディオム"
+          ],
+          answer: "a. minute",
+          translation: "病院から何かを聞いたらすぐに，私に電話してください",
+          explanation: "〈the minute [moment, instant] ～〉で「～するとすぐに」の意味を表します。時間を表す名詞が接続詞的に使われる表現です。",
+          grammar: "the minute/moment/instant S + V = Sが～するとすぐに"
+        },
+        {
+          num: "(4)",
+          text: "Don't touch my writing table; leave it (   ) it is.【中央大】",
+          choices: "a. as　b. if　c. that　d. when",
+          vocab: [
+            ["writing table", "書き物用テーブル、机"],
+            ["leave", "～のままにしておく"],
+            ["as it is", "あるがままに、そのまま"]
+          ],
+          hint: [
+            "「～のままに」という状態の維持",
+            "様態を表す接続詞",
+            "「as it is」のイディオム"
+          ],
+          answer: "a. as",
+          translation: "私の書き物用テーブルをさわらないで．そのまま[今のまま]にしておいて",
+          explanation: "「様態」を表す接続詞asは「～(する，である)ように」という意味を表します。「as it is」で「あるがままに、そのまま」という慣用表現になります。",
+          grammar: "as S + V = Sが～するように（様態）/ as it is = あるがままに"
+        },
+        {
+          num: "(5)",
+          text: "(   ) our teacher is ill, we shall have to study by ourselves.【*成城大】",
+          choices: "a. Even if　b. Though　c. Now that　d. However",
+          vocab: [
+            ["be ill", "病気である"],
+            ["study by ourselves", "自習する、自分たちで勉強する"],
+            ["now that", "（今やもう）～なので"]
+          ],
+          hint: [
+            "既知の事実としての理由",
+            "「～なのだから」という因果関係",
+            "現在の状況に基づく理由を示す"
+          ],
+          answer: "c. Now that",
+          translation: "先生が病気なのだから，私たちは自習[自分たちで勉強]しなければならないだろう",
+          explanation: "〈now (that) ～〉は「(今やもう)～なので」の意味。既に明らかになっている状況や事実を理由として述べる表現です。thatはしばしば省略されます。",
+          grammar: "now (that) S + V = （今やもう）Sが～なので（既知の事実）"
+        },
+        {
+          num: "(6)",
+          text: "It won't be long (   ) we see each other again.【広島工業大】",
+          choices: "a. before　b. after　c. when　d. soon",
+          vocab: [
+            ["It won't be long before", "まもなく～だろう"],
+            ["see each other", "お互いに会う"]
+          ],
+          hint: [
+            "「まもなく」という近い未来",
+            "「It won't be long before」のイディオム",
+            "時を表す副詞節では現在形"
+          ],
+          answer: "a. before",
+          translation: "私たちはまもなくまたお互いに会うでしょう",
+          explanation: "〈It won't be long before ～〉は「～する前に長い時間は経過しないでしょう」→「まもなく～だろう」という意味を表します。時・条件を表す副詞節中では未来の事柄も現在形で表すことに注意。",
+          grammar: "It won't be long before S + V（現在形） = まもなくSが～するだろう"
+        },
+        {
+          num: "(7)",
+          text: "I had hardly gone out of the house (   ) I heard a telephone ringing.【名城大】",
+          choices: "a. if　b. since　c. than　d. when",
+          vocab: [
+            ["go out of", "～から出る"],
+            ["hear ... ringing", "～が鳴るのが聞こえる"],
+            ["hardly ... when", "～するかしないうちに"]
+          ],
+          hint: [
+            "「hardly」という否定的な副詞に注目",
+            "2つの動作がほぼ同時",
+            "「hardly ... when」のイディオム"
+          ],
+          answer: "d. when",
+          translation: "私が家から出たとたんに，電話が鳴るのが聞こえた",
+          explanation: "〈hardly [scarcely]…when [before] ～〉で「…するかしないうちに～(した)，…するとすぐに～(した)」という意味を表します。…には過去完了形、～には過去形がくることに注意。〈no sooner…than ～〉も同じ意味を表します。",
+          grammar: "S + had hardly + 過去分詞 + when + S' + 過去形 = Sが～するかしないうちにS'が…した"
+        }
+      ]
+    },
+    {
+      title: "[発展2] 各文の下線部の誤りを1か所選び，正しい形に直しなさい (1)～(3)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "John is <u>a. so</u> a good hairdresser <u>b. that</u> I always <u>c. have</u> my hair <u>d. cut</u> at his salon.【東京理科大】",
+          vocab: [
+            ["hairdresser", "美容師"],
+            ["have my hair cut", "髪を切ってもらう"],
+            ["salon", "美容室"]
+          ],
+          hint: [
+            "名詞（hairdresser）があることに注目",
+            "名詞がある場合は「such」を使う",
+            "「so + 形容詞・副詞」vs「such + 名詞」"
+          ],
+          answer: "a. so → such",
+          translation: "ジョンは非常に上手な美容師なので私はいつも彼の美容室で髪を切ってもらう",
+          explanation: "「とても…なので～」という意味を表す表現は〈so＋形容詞・副詞＋that ～〉と〈such＋a[an]＋形容詞＋名詞＋that ～〉の2種類があります。前者は形容詞・副詞を強調する場合に、後者は形容詞＋名詞を強調する場合に用いられます。ここでは名詞(hairdresser)があるので、aをsuchに訂正します。",
+          grammar: "such a/an + 形容詞 + 名詞 + that S + V"
+        },
+        {
+          num: "(2)",
+          text: "I'll <u>a. draw</u> a map <u>b. for</u> you <u>c. at case</u> you can't <u>d. find</u> our house.【札幌学院大】",
+          vocab: [
+            ["draw a map", "地図を描く"],
+            ["find", "見つける"],
+            ["in case", "～するといけないから"]
+          ],
+          hint: [
+            "「～する場合に備えて」という表現",
+            "「in case」が正しい形",
+            "「at case」は誤り"
+          ],
+          answer: "c. at case → in case",
+          translation: "私たちの家が見つからないといけないから，地図を描いてあげましょう",
+          explanation: "〈in case S＋V ～〉で「Sが～するといけないから，～する場合に備えて」の意味を表します。in caseの後は未来の内容でも現在形を使うことに注意。また予想される事柄が起こる可能性が低いと思われる場合はshouldを使います。",
+          grammar: "in case S + V（現在形） = Sが～するといけないから"
+        },
+        {
+          num: "(3)",
+          text: "<u>a. Though</u> he was tired after working <u>b. hard</u>, <u>c. but</u> he went to the <u>d. movies</u> with his friends.【*東京薬科大】",
+          vocab: [
+            ["tired", "疲れた"],
+            ["work hard", "一生懸命働く/勉強する"],
+            ["go to the movies", "映画を見に行く"]
+          ],
+          hint: [
+            "「though」と「but」は同時に使えない",
+            "thoughが接続詞なのでbutは不要",
+            "cのbutを削除または「he」に変更"
+          ],
+          answer: "c. but → he（削除）",
+          translation: "彼は一生懸命働いた[勉強した]後で疲れていたけれども，友人たちと映画を見に行った",
+          explanation: "〈though ～〉は「～だけれども，～だが」という意味の「譲歩」を表す接続詞なので、cのbutは不要。日本語では「～だけれども、しかし…」と言えますが、英語ではthoughとbutを同時に使うことはできません。",
+          grammar: "though と but は同時に使えない"
+        }
+      ]
+    },
+    {
+      title: "[発展3] 日本文を英文に直しなさい (1)～(2)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "困ったことに私は十分なお金を持っていません．【*愛知工業大】<br>The trouble 	.",
+          vocab: [
+            ["trouble", "困ったこと、問題"],
+            ["enough money", "十分なお金"],
+            ["The trouble is (that)", "困ったことに～だ"]
+          ],
+          hint: [
+            "「困ったことに～だ」という表現",
+            "名詞節を導く従位接続詞thatを使う",
+            "「The trouble is (that) ~」"
+          ],
+          answer: "is (that) I don't[do not] have enough money",
+          explanation: "「困ったことに～だ」は名詞節を導く従位接続詞thatを使って〈The trouble is (that) ～〉という形で表現できます。「問題は～ということだ」→「困ったことに～だ」と考えます。",
+          grammar: "The trouble is (that) S + V = 困ったことにSが～だ"
+        },
+        {
+          num: "(2)",
+          text: "私はこの音楽を聞くたびに，癒される気がする．",
+          vocab: [
+            ["every/each time", "～するたびに"],
+            ["hear this music", "この音楽を聞く"],
+            ["feel comforted", "癒される気がする"]
+          ],
+          hint: [
+            "「～するたびに」という表現",
+            "「every/each time」または「whenever」",
+            "複数の解答が可能"
+          ],
+          answer: "Every[Each] time I hear this music, I feel comforted. / Whenever[No matter when] I hear this music, I feel comforted. / I never hear this music without feeling comforted.",
+          explanation: "〈every [each] time ～〉は接続詞的に「～するたびに」という意味を表します。wheneverやno matter whenでも同じ意味を表せます。また、「never ... without -ing」（～するたびに必ず…する）という表現も使えます。",
+          grammar: "every/each time S + V = Sが～するたびに / whenever S + V = Sが～するたびに / never ... without -ing = ～するたびに必ず…する"
+        }
+      ]
+    }
+  ]
+};
+
+// RENDER FUNCTIONS
+function renderQuestion(q) {
+  let html = `<div class="qcard">
+    <div class="qnum">${q.num}</div>
+    <div class="qtext">${q.text}</div>`;
+
+  if (q.choices) html += `<div class="choices">${q.choices}</div>`;
+  if (q.scramble) html += `<div class="scramble">${q.scramble}</div>`;
+
+  html += `<div class="button-row">
+    <button class="btn vocab-btn" onclick="toggle(this,'vocab')">📚 Words & Phrases</button>`;
+
+  if (q.hint) html += `<button class="btn hint-btn" onclick="toggle(this,'hint')">💡 Solution</button>`;
+
+  html += `<button class="btn ans-btn" onclick="toggle(this,'answer')">✅ Answer</button>
+  </div>`;
+
+  if (q.vocab) {
+    html += `<div class="collapsible" data-type="vocab"><div class="box vocab-box">`;
+    q.vocab.forEach(v => {
+      html += `<div class="vocab-item"><span class="vocab-word">${v[0]}</span> ${v[1]}</div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  if (q.hint) {
+    html += `<div class="collapsible" data-type="hint"><div class="box hint-box">
+      <div class="label">🔍 Solution Process</div>`;
+    q.hint.forEach(h => {
+      html += `<div>→ ${h}</div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  html += `<div class="collapsible" data-type="answer"><div class="box ans-box">
+    <div class="label">✓ 正解: ${q.answer}</div>`;
+
+  if (q.translation) html += `<div class="jp">${q.translation}</div>`;
+  if (q.explanation) html += `<div class="muted"><b>${q.grammar || ''}</b><br><br>${q.explanation}</div>`;
+  if (q.grammar) html += `<div class="ref-box">📖 ${q.grammar}</div>`;
+
+  html += `</div></div></div>`;
+
+  return html;
+}
+
+function renderSection(section, index) {
+  let html = `<section class="section">
+    <div class="section-header ${section.open ? 'open' : ''}" onclick="toggleSection(this)">
+      <span>${section.title}</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body ${section.open ? 'open' : ''}">`;
+
+  section.questions.forEach(q => {
+    html += renderQuestion(q);
+  });
+
+  html += `</div></section>`;
+  return html;
+}
+
+function init() {
+  const content = document.getElementById('content');
+  let html = '';
+  grammarData.sections.forEach((section, index) => {
+    html += renderSection(section, index);
+  });
+  content.innerHTML = html;
+}
+
+// EVENT HANDLERS
+function toggle(btn, type) {
+  const card = btn.closest('.qcard');
+  const block = card.querySelector(`.collapsible[data-type="${type}"]`);
+  if (block) {
+    block.classList.toggle('open');
+  }
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  // Close all collapsibles when closing section
+  if (!body.classList.contains('open')) {
+    body.querySelectorAll('.collapsible').forEach(c => c.classList.remove('open'));
+  }
+}
+
+function openAll() {
+  document.querySelectorAll('.section-header').forEach(h => {
+    h.classList.add('open');
+    h.nextElementSibling.classList.add('open');
+  });
+}
+
+function closeAll() {
+  document.querySelectorAll('.section-header').forEach(h => {
+    h.classList.remove('open');
+    h.nextElementSibling.classList.remove('open');
+    h.nextElementSibling.querySelectorAll('.collapsible').forEach(c => c.classList.remove('open'));
+  });
+}
+
+function downloadPage() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '15接続詞_grammar_breakdown.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+// THEME MANAGEMENT
+function toggleTheme() {
+  const root = document.documentElement;
+  const currentTheme = root.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+  root.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+
+  // Update icon
+  const icon = document.querySelector('.theme-icon');
+  icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme) {
+    root.setAttribute('data-theme', savedTheme);
+    const icon = document.querySelector('.theme-icon');
+    if (icon) icon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    root.setAttribute('data-theme', 'dark');
+    const icon = document.querySelector('.theme-icon');
+    if (icon) icon.textContent = '🌙';
+  }
+}
+
+// HEADER HIDE/SHOW
+let headerHidden = false;
+
+function hideHeader() {
+  const header = document.getElementById('mainHeader');
+  const revealZone = document.querySelector('.header-reveal-zone');
+  const fabShowHeader = document.getElementById('fabShowHeader');
+
+  header.classList.add('hidden');
+  revealZone.classList.add('active');
+  fabShowHeader.classList.remove('hidden');
+  headerHidden = true;
+  localStorage.setItem('headerHidden', 'true');
+}
+
+function showHeader() {
+  const header = document.getElementById('mainHeader');
+  const revealZone = document.querySelector('.header-reveal-zone');
+  const fabShowHeader = document.getElementById('fabShowHeader');
+
+  header.classList.remove('hidden');
+  revealZone.classList.remove('active');
+  fabShowHeader.classList.add('hidden');
+  headerHidden = false;
+  localStorage.setItem('headerHidden', 'false');
+}
+
+function initHeaderState() {
+  const savedState = localStorage.getItem('headerHidden');
+  const fabShowHeader = document.getElementById('fabShowHeader');
+
+  if (savedState === 'true') {
+    hideHeader();
+  } else {
+    // Hide the show header button by default if header is visible
+    if (fabShowHeader) fabShowHeader.classList.add('hidden');
+  }
+}
+
+// SCROLL TO TOP
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+// AUTO-HIDE HEADER ON SCROLL (Optional)
+let lastScrollTop = 0;
+window.addEventListener('scroll', () => {
+  if (headerHidden) return; // Don't auto-hide if manually hidden
+
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const header = document.getElementById('mainHeader');
+
+  if (scrollTop > lastScrollTop && scrollTop > 100) {
+    // Scrolling down - optionally auto-hide
+    // header.style.opacity = '0.7';
+  } else {
+    // Scrolling up
+    header.style.opacity = '1';
+  }
+
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+}, false);
+
+// Initialize on load
+window.addEventListener('DOMContentLoaded', () => {
+  init();
+  initTheme();
+  initHeaderState();
+});
+</script>
+</body>
+</html>
