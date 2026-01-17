@@ -26,7 +26,7 @@
 --ease-out-expo:cubic-bezier(0.16,1,0.3,1);--ease-out-back:cubic-bezier(0.34,1.56,0.64,1);--ease-spring:cubic-bezier(0.175,0.885,0.32,1.275);
 --duration-fast:200ms;--duration-normal:350ms;--duration-slow:500ms
 }
-@media(prefers-color-scheme:dark){:root{
+html.dark{
 --bg-primary:#000;--bg-secondary:#1c1c1e;
 --glass-bg:linear-gradient(135deg,rgba(40,40,45,0.85) 0%,rgba(30,30,35,0.7) 50%,rgba(35,35,40,0.8) 100%);
 --glass-border:linear-gradient(135deg,rgba(255,255,255,0.18) 0%,rgba(255,255,255,0.06) 100%);
@@ -34,7 +34,7 @@
 --border:rgba(255,255,255,0.1);--border-hover:rgba(255,255,255,0.2);
 --shadow-card:0 20px 60px -15px rgba(0,0,0,0.5),0 8px 24px -8px rgba(0,0,0,0.4),0 2px 4px rgba(0,0,0,0.2);
 --shadow-card-hover:0 32px 80px -20px rgba(0,0,0,0.6),0 16px 40px -12px rgba(0,0,0,0.5),0 4px 8px rgba(0,0,0,0.3)
-}}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:0.01ms!important}}
 html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 body{min-height:100vh;min-height:100dvh;font-family:'Sora','Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.5;overflow-x:hidden}
@@ -60,6 +60,14 @@ body{min-height:100vh;min-height:100dvh;font-family:'Sora','Noto Sans JP',-apple
 .view-btn:active{transform:scale(0.95)}
 .view-btn.active{background:var(--glass-bg);color:var(--text-primary);box-shadow:0 2px 8px rgba(0,0,0,0.08),inset 0 1px 0 rgba(255,255,255,0.1)}
 .view-btn svg{width:16px;height:16px}
+.theme-btn{width:36px;height:36px;border:1px solid var(--border);background:var(--bg-secondary);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:transform var(--duration-fast) var(--ease-out-back),background var(--duration-fast) ease,color var(--duration-fast) ease}
+.theme-btn:hover{transform:scale(1.05);color:var(--text-primary)}
+.theme-btn:active{transform:scale(0.95)}
+.theme-btn svg{width:18px;height:18px}
+.theme-btn .sun-icon{display:block}
+.theme-btn .moon-icon{display:none}
+html.dark .theme-btn .sun-icon{display:none}
+html.dark .theme-btn .moon-icon{display:block}
 main{padding:48px 24px 80px}
 .container{max-width:980px;margin:0 auto}
 .hero{text-align:center;margin-bottom:56px}
@@ -120,6 +128,7 @@ footer{margin-top:64px;padding-top:32px;border-top:1px solid var(--border);text-
       <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html" class="breadcrumb-item">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">高校３年</span></nav>
     </div>
     <div class="header-actions">
+      <button class="theme-btn" aria-label="Toggle theme"><svg class="sun-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="moon-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
       <div class="view-toggle">
         <button class="view-btn active" data-view="grid" aria-label="Grid view"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
         <button class="view-btn" data-view="list" aria-label="List view"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
@@ -160,6 +169,20 @@ footer{margin-top:64px;padding-top:32px;border-top:1px solid var(--border);text-
     grid.classList.toggle('list-view',mode==='list');
     toggle.querySelectorAll('.view-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===mode));
     localStorage.setItem('er-view',mode);
+  });
+})();
+</script>
+<script>
+(function(){
+  const btn=document.querySelector('.theme-btn');
+  if(!btn)return;
+  const saved=localStorage.getItem('er-theme');
+  if(saved==='dark'){
+    document.documentElement.classList.add('dark');
+  }
+  btn.addEventListener('click',()=>{
+    const isDark=document.documentElement.classList.toggle('dark');
+    localStorage.setItem('er-theme',isDark?'dark':'light');
   });
 })();
 </script>
