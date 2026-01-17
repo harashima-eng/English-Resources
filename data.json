@@ -1,91 +1,11 @@
 {
-  "folders": [
-    {
-      "id": "6c0cfb94-ba18-4e1e-bf40-1a401a63530e",
-      "parentId": null,
-      "name": "高校３年",
-      "slug": "grade3",
-      "htmlFile": "index.html",
-      "icon": "📁",
-      "color": "#6b7280",
-      "order": 0,
-      "oldSlug": "new-folder",
-      "iconImage": null,
-      "lockNavigation": false
-    },
-    {
-      "id": "ca42b289-8d1e-49b2-9639-cb546dc7f9bc",
-      "parentId": "6c0cfb94-ba18-4e1e-bf40-1a401a63530e",
-      "name": "大学入試",
-      "slug": "past-exams",
-      "htmlFile": "index.html",
-      "icon": "📁",
-      "color": "#6b7280",
-      "order": 0,
-      "iconImage": null,
-      "lockNavigation": true,
-      "oldSlug": "new-folder"
-    },
-    {
-      "id": "83686ec6-3b6c-4b09-9f5c-6866110642cf",
-      "parentId": null,
-      "name": "高校２年",
-      "slug": "kounen",
-      "htmlFile": "index.html",
-      "icon": "📁",
-      "color": "#6b7280",
-      "order": 1,
-      "oldSlug": "new-folder",
-      "iconImage": null,
-      "lockNavigation": false
-    },
-    {
-      "id": "31f2b5c9-0c1f-49c4-ba29-fd9d614552e0",
-      "parentId": "83686ec6-3b6c-4b09-9f5c-6866110642cf",
-      "name": "論表Ⅱ",
-      "slug": "folder",
-      "htmlFile": "index.html",
-      "icon": "📁",
-      "color": "#6b7280",
-      "order": 0,
-      "oldSlug": "new-folder",
-      "iconImage": null,
-      "lockNavigation": true
-    }
-  ],
-  "items": [
-    {
-      "id": "d052b699-f588-4e18-ad31-1b50e7049794",
-      "folderId": "ca42b289-8d1e-49b2-9639-cb546dc7f9bc",
-      "title": "２０２５｜東京都市大学｜前期｜理工",
-      "fileName": "２０２５｜東京都市大学｜前期｜理工.html",
-      "filePath": "grade3/past-exams/files/２０２５｜東京都市大学｜前期｜理工.html",
-      "date": "2026-01-15",
-      "order": 0,
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    },
-    {
-      "id": "f09f44c3-fc4b-4cdf-ac4e-e4fa89fd589c",
-      "folderId": "31f2b5c9-0c1f-49c4-ba29-fd9d614552e0",
-      "title": "15｜接続詞",
-      "fileName": "15接続詞-premium.html",
-      "filePath": "kounen/folder/files/15接続詞-premium.html",
-      "date": "2026-01-17",
-      "order": 1,
-      "originalFileName": "15接続詞-premium.html",
-      "fileSlug": "15｜接続詞.html",
-      "minutes": "",
-      "tags": [],
-      "keywords": ""
-    }
-  ],
+  "folders": [],
+  "items": [],
   "settings": {
     "siteName": "English Resources",
     "siteIcon": "📚",
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-17T00:05:27.275Z"
+  "lastUpdated": "2026-01-17T11:29:48.436780"
 }
