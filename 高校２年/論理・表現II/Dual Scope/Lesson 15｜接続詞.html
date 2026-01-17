@@ -15,10 +15,10 @@
       --text: #1a1a1a;
       --text-secondary: #6b6b6b;
       --text-muted: #999999;
-      --border: rgba(0,0,0,0.08);
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-      --shadow: 0 4px 20px rgba(0,0,0,0.06);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+      --border: rgba(0,0,0,0.12);
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
       --radius: 20px;
       --radius-sm: 12px;
       /* Conjunction type colors */
@@ -793,14 +793,14 @@
       margin-bottom: 12px;
     }
     .qtext {
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1.8;
       margin-bottom: 12px;
     }
     .choices, .scramble {
       padding: 14px 16px;
       border-radius: var(--radius-sm);
-      font-size: 17px;
+      font-size: 19px;
     }
     .qcard-question .choices:last-child,
     .qcard-question .scramble:last-child {
@@ -840,8 +840,9 @@
     .box {
       border-radius: var(--radius-sm);
       padding: 16px;
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.7;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     .vocab-box {
       background: var(--correl-light);
@@ -862,7 +863,7 @@
     }
     .choice-exp {
       padding: 6px 0;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.6;
     }
     .choice-exp.correct {
@@ -884,21 +885,21 @@
     }
     .box-label {
       font-weight: 700;
-      font-size: 17px;
+      font-size: 19px;
       margin-bottom: 12px;
       display: block;
     }
     .jp-text {
       color: var(--text-secondary);
       margin-top: 12px;
-      font-size: 14px;
+      font-size: 18px;
     }
     .grammar-ref {
       background: var(--subord-light);
       border-left: 3px solid var(--subord);
       padding: 12px 14px;
       border-radius: var(--radius-sm);
-      font-size: 13px;
+      font-size: 16px;
       margin-top: 12px;
     }
     .no-match { display: none !important; }
