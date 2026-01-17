@@ -23,6 +23,28 @@ Edit files locally → Auto-generates indexes → Pushes to GitHub → Live on w
 
 ---
 
+## UI Features
+
+### Premium Apple-Style Design
+- **Glass morphism** - Multi-layer frosted glass with gradient overlays
+- **Glow effects** - Colored halos behind icons that intensify on hover
+- **3-layer shadows** - Ambient, key, and contact shadows for depth
+- **60fps animations** - GPU-accelerated with spring physics timing
+
+### User Controls
+- **Light/Dark mode** - Toggle in header (light is default, preference saved)
+- **Grid/List view** - Toggle layout style (preference saved)
+- **Breadcrumb navigation** - Easy path navigation on subpages
+
+### Other Features
+- Recursive lesson counts for folders
+- Last updated date in footer
+- Favicon and Open Graph meta tags for social sharing
+- Staggered reveal animation on page load
+- Reduced motion support for accessibility
+
+---
+
 ## How It Works
 
 ### 1. Auto-Sync (runs on Mac login)
@@ -36,6 +58,7 @@ Edit files locally → Auto-generates indexes → Pushes to GitHub → Live on w
 - Scans all folders and HTML files
 - Regenerates every `index.html` to list current contents
 - URL-encodes Japanese folder/file names for web compatibility
+- Applies premium Apple-style UI with all features above
 
 ---
 
