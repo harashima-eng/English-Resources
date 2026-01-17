@@ -6,75 +6,73 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Day 6: Local Problems</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
     <style>
         /*
-         * EDITORIAL LANGUAGE LAB
-         * Warm, magazine-style aesthetic
-         * Sophisticated yet approachable
+         * APPLE-INSPIRED UI
+         * 60fps GPU-accelerated animations
+         * Spring physics, frosted glass, smooth everything
          */
 
         *{margin:0;padding:0;box-sizing:border-box}
 
         :root{
-            /* Warm Light Palette */
-            --bg:#FAF8F5;
-            --bg-texture:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            --card:#FFFFFF;
-            --card-hover:#FEFEFE;
-            --card2:#F5F3F0;
+            --bg:#F5F5F7;
+            --card:rgba(255,255,255,.8);
+            --card-solid:#FFFFFF;
+            --card-hover:rgba(255,255,255,.95);
+            --card2:#F5F5F7;
 
-            /* Typography Colors */
-            --t1:#1A1A1A;
-            --t2:#6B6B6B;
-            --t3:#9A9A9A;
+            --text:#1D1D1F;
+            --text-secondary:#86868B;
+            --text-tertiary:#AEAEB2;
 
-            /* Accent Colors */
-            --indigo:#2E3A59;
-            --indigo-light:#E8EBF0;
-            --coral:#E8634B;
-            --coral-light:#FDF0ED;
-            --forest:#2D6A4F;
-            --forest-light:#E8F5EE;
-            --amber:#D4A017;
-            --amber-light:#FDF8E8;
-            --purple:#6B4C9A;
-            --purple-light:#F3EEF8;
+            --blue:#007AFF;
+            --blue-bg:rgba(0,122,255,.08);
+            --green:#34C759;
+            --green-bg:rgba(52,199,89,.1);
+            --orange:#FF9500;
+            --orange-bg:rgba(255,149,0,.1);
+            --purple:#AF52DE;
+            --purple-bg:rgba(175,82,222,.08);
+            --red:#FF3B30;
+            --pink:#FF2D55;
 
-            /* Borders & Shadows */
-            --border:#E5E2DE;
-            --shadow:0 2px 8px rgba(46,58,89,.06), 0 1px 2px rgba(0,0,0,.04);
-            --shadow-hover:0 8px 24px rgba(46,58,89,.1), 0 2px 4px rgba(0,0,0,.04);
+            --border:rgba(0,0,0,.06);
+            --shadow-sm:0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+            --shadow-md:0 4px 12px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.04);
+            --shadow-lg:0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
 
-            /* Fonts */
-            --font-display:'Fraunces', Georgia, serif;
-            --font-body:'Source Serif 4', 'Hiragino Mincho ProN', serif;
-            --font-mono:'JetBrains Mono', ui-monospace, monospace;
+            --spring:cubic-bezier(.175,.885,.32,1.275);
+            --smooth:cubic-bezier(.25,.1,.25,1);
+            --bounce:cubic-bezier(.34,1.56,.64,1);
         }
 
         .dark{
-            --bg:#1A1A1A;
-            --card:#252525;
-            --card-hover:#2A2A2A;
-            --card2:#303030;
-            --t1:#F5F5F5;
-            --t2:#A0A0A0;
-            --t3:#707070;
-            --indigo:#8B9DC3;
-            --indigo-light:#2E3A59;
-            --coral:#F0816D;
-            --coral-light:#3D2A26;
-            --forest:#5CB88A;
-            --forest-light:#1E3D2E;
-            --amber:#E8B84A;
-            --amber-light:#3D3520;
-            --purple:#A78BCC;
-            --purple-light:#2E2640;
-            --border:#3A3A3A;
-            --shadow:0 2px 8px rgba(0,0,0,.3);
-            --shadow-hover:0 8px 24px rgba(0,0,0,.4);
+            --bg:#000000;
+            --card:rgba(28,28,30,.8);
+            --card-solid:#1C1C1E;
+            --card-hover:rgba(44,44,46,.9);
+            --card2:#2C2C2E;
+
+            --text:#F5F5F7;
+            --text-secondary:#98989D;
+            --text-tertiary:#636366;
+
+            --blue:#0A84FF;
+            --blue-bg:rgba(10,132,255,.15);
+            --green:#30D158;
+            --green-bg:rgba(48,209,88,.15);
+            --orange:#FF9F0A;
+            --orange-bg:rgba(255,159,10,.15);
+            --purple:#BF5AF2;
+            --purple-bg:rgba(191,90,242,.12);
+            --red:#FF453A;
+            --pink:#FF375F;
+
+            --border:rgba(255,255,255,.08);
+            --shadow-sm:0 1px 3px rgba(0,0,0,.3);
+            --shadow-md:0 4px 12px rgba(0,0,0,.4);
+            --shadow-lg:0 12px 40px rgba(0,0,0,.5);
         }
 
         html{
@@ -83,49 +81,31 @@
         }
 
         body{
-            font-family:var(--font-body);
-            font-size:16px;
-            line-height:1.65;
+            font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Hiragino Sans','Hiragino Kaku Gothic ProN',sans-serif;
+            font-size:17px;
+            line-height:1.47059;
+            letter-spacing:-0.022em;
             background:var(--bg);
-            color:var(--t1);
+            color:var(--text);
             min-height:100vh;
             -webkit-font-smoothing:antialiased;
             -moz-osx-font-smoothing:grayscale;
         }
 
-        /* Subtle background texture */
-        body::before{
-            content:'';
-            position:fixed;
-            inset:0;
-            background:var(--bg-texture);
-            opacity:.03;
-            pointer-events:none;
-            z-index:-1;
-        }
-
-        .dark body::before{opacity:.02}
-
-        /* HEADER - Full bleed editorial style */
+        /* HEADER */
         .hdr{
             background:var(--card);
+            backdrop-filter:saturate(180%) blur(20px);
+            -webkit-backdrop-filter:saturate(180%) blur(20px);
             border-bottom:1px solid var(--border);
-            padding:32px 24px 28px;
-            margin-bottom:32px;
-            position:relative;
-            overflow:hidden;
-        }
-
-        .hdr::before{
-            content:'';
-            position:absolute;
-            top:0;left:0;right:0;
-            height:4px;
-            background:linear-gradient(90deg, var(--coral) 0%, var(--indigo) 50%, var(--forest) 100%);
+            padding:24px 20px;
+            position:sticky;
+            top:0;
+            z-index:100;
         }
 
         .hdr-inner{
-            max-width:880px;
+            max-width:800px;
             margin:0 auto;
         }
 
@@ -135,38 +115,21 @@
             align-items:flex-start;
             gap:16px;
             flex-wrap:wrap;
-            margin-bottom:24px;
+            margin-bottom:20px;
         }
 
         .hdr h1{
-            font-family:var(--font-display);
-            font-size:clamp(28px, 5vw, 36px);
+            font-size:28px;
             font-weight:700;
-            letter-spacing:-0.02em;
-            line-height:1.2;
-            color:var(--indigo);
-            position:relative;
-            display:inline-block;
-        }
-
-        .dark .hdr h1{color:var(--t1)}
-
-        .hdr h1::after{
-            content:'';
-            position:absolute;
-            bottom:-6px;
-            left:0;
-            width:60px;
-            height:3px;
-            background:var(--coral);
-            border-radius:2px;
+            letter-spacing:-0.015em;
+            line-height:1.14286;
         }
 
         .hdr-sub{
             font-size:15px;
-            color:var(--t2);
-            margin-top:16px;
-            font-weight:400;
+            color:var(--text-secondary);
+            margin-top:6px;
+            letter-spacing:-0.01em;
         }
 
         .btns{
@@ -178,494 +141,479 @@
         .btn{
             display:inline-flex;
             align-items:center;
-            gap:8px;
-            padding:10px 18px;
-            border-radius:8px;
+            justify-content:center;
+            gap:6px;
+            height:36px;
+            padding:0 16px;
+            border-radius:18px;
             border:none;
-            font-family:var(--font-body);
-            font-size:14px;
-            font-weight:600;
-            cursor:pointer;
-            transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
-            -webkit-tap-highlight-color:transparent;
-        }
-
-        .btn:hover{transform:translateY(-1px)}
-        .btn:active{transform:translateY(0)}
-
-        .btn-dark{
-            background:var(--indigo);
-            color:#fff;
-            box-shadow:0 2px 8px rgba(46,58,89,.2);
-        }
-        .btn-dark:hover{box-shadow:0 4px 12px rgba(46,58,89,.3)}
-
-        .btn-outline{
-            background:transparent;
-            color:var(--coral);
-            border:2px solid var(--coral);
-        }
-        .btn-outline:hover{background:var(--coral-light)}
-
-        .info{
-            background:linear-gradient(135deg, var(--indigo-light) 0%, rgba(232,235,240,.5) 100%);
-            border-radius:12px;
-            padding:20px 24px;
+            font-family:inherit;
             font-size:15px;
-            line-height:1.7;
-            border-left:4px solid var(--indigo);
+            font-weight:500;
+            letter-spacing:-0.01em;
+            cursor:pointer;
+            transition:transform .2s var(--spring), opacity .2s var(--smooth);
+            -webkit-tap-highlight-color:transparent;
+            will-change:transform;
         }
 
-        .dark .info{
-            background:var(--indigo-light);
-            border-left-color:var(--indigo);
+        .btn:hover{transform:scale(1.02)}
+        .btn:active{transform:scale(.98);opacity:.8}
+
+        .btn-primary{
+            background:var(--blue);
+            color:#fff;
         }
 
-        .info b{
-            color:var(--indigo);
+        .btn-secondary{
+            background:var(--blue-bg);
+            color:var(--blue);
+        }
+
+        .info-card{
+            background:var(--card-solid);
+            border-radius:16px;
+            padding:16px 20px;
+            box-shadow:var(--shadow-sm);
+            border:1px solid var(--border);
+        }
+
+        .info-card p{
+            font-size:15px;
+            line-height:1.5;
+            color:var(--text);
+        }
+
+        .info-card b{
+            color:var(--blue);
             font-weight:600;
         }
 
         .deadline{
             display:inline-flex;
             align-items:center;
-            gap:8px;
-            margin-top:14px;
-            padding:8px 16px;
-            background:var(--coral);
+            gap:6px;
+            margin-top:12px;
+            padding:6px 14px;
+            background:linear-gradient(135deg, var(--red), var(--pink));
             color:#fff;
             border-radius:20px;
             font-size:13px;
             font-weight:600;
-            animation:pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse{
-            0%,100%{opacity:1}
-            50%{opacity:.85}
+            letter-spacing:-0.01em;
         }
 
         .note{
-            max-width:880px;
-            margin:0 auto 24px;
-            padding:0 24px;
+            max-width:800px;
+            margin:20px auto;
+            padding:0 20px;
             font-size:14px;
-            color:var(--t2);
-            font-style:italic;
+            color:var(--text-secondary);
         }
 
-        /* CARDS CONTAINER */
+        /* CARDS */
         .cards{
-            max-width:880px;
+            max-width:800px;
             margin:0 auto;
-            padding:0 24px;
+            padding:0 20px 40px;
             display:flex;
             flex-direction:column;
-            gap:16px;
+            gap:12px;
         }
 
-        /* CARD - Editorial asymmetric design */
+        /* Individual card with staggered entrance */
         .c{
             background:var(--card);
+            backdrop-filter:saturate(180%) blur(20px);
+            -webkit-backdrop-filter:saturate(180%) blur(20px);
             border:1px solid var(--border);
-            border-radius:12px;
-            box-shadow:var(--shadow);
+            border-radius:16px;
+            box-shadow:var(--shadow-sm);
             overflow:hidden;
-            position:relative;
             opacity:0;
-            transform:translateY(12px);
-            animation:cardIn .5s ease forwards;
+            transform:translateY(20px) scale(.98);
+            animation:slideIn .6s var(--smooth) forwards;
+            will-change:transform,opacity;
         }
 
-        .c:nth-child(1){animation-delay:.05s}
-        .c:nth-child(2){animation-delay:.1s}
-        .c:nth-child(3){animation-delay:.15s}
-        .c:nth-child(4){animation-delay:.2s}
-        .c:nth-child(5){animation-delay:.25s}
-        .c:nth-child(6){animation-delay:.3s}
-        .c:nth-child(7){animation-delay:.35s}
-        .c:nth-child(8){animation-delay:.4s}
-        .c:nth-child(9){animation-delay:.45s}
-        .c:nth-child(10){animation-delay:.5s}
+        .c:nth-child(1){animation-delay:0s}
+        .c:nth-child(2){animation-delay:.04s}
+        .c:nth-child(3){animation-delay:.08s}
+        .c:nth-child(4){animation-delay:.12s}
+        .c:nth-child(5){animation-delay:.16s}
+        .c:nth-child(6){animation-delay:.2s}
+        .c:nth-child(7){animation-delay:.24s}
+        .c:nth-child(8){animation-delay:.28s}
+        .c:nth-child(9){animation-delay:.32s}
+        .c:nth-child(10){animation-delay:.36s}
+        .c:nth-child(11){animation-delay:.4s}
 
-        @keyframes cardIn{
-            to{opacity:1;transform:translateY(0)}
+        @keyframes slideIn{
+            to{opacity:1;transform:translateY(0) scale(1)}
         }
-
-        .c::before{
-            content:'';
-            position:absolute;
-            left:0;
-            top:0;
-            bottom:0;
-            width:4px;
-            background:var(--indigo);
-            opacity:0;
-            transition:opacity .2s;
-        }
-
-        .c:hover::before,.c.open::before{opacity:1}
-
-        /* Category colors */
-        .c.cat-start::before{background:var(--forest)}
-        .c.cat-q::before{background:var(--indigo)}
-        .c.cat-hw::before{background:var(--coral)}
-        .c.cat-help::before{background:var(--amber)}
 
         .c:hover{
-            box-shadow:var(--shadow-hover);
+            box-shadow:var(--shadow-md);
             background:var(--card-hover);
         }
 
         .c-h{
             display:flex;
             align-items:center;
-            gap:16px;
-            padding:18px 20px;
+            gap:14px;
+            padding:16px 18px;
             cursor:pointer;
             -webkit-tap-highlight-color:transparent;
             user-select:none;
-            transition:background .2s;
+            transition:background .15s var(--smooth);
         }
 
-        /* BADGE - Large prominent design */
+        .c-h:active{
+            background:var(--card2);
+        }
+
+        /* BADGE - Apple SF Symbol style */
         .badge{
-            width:48px;
-            height:48px;
+            width:44px;
+            height:44px;
             border-radius:12px;
             display:flex;
             align-items:center;
             justify-content:center;
-            font-family:var(--font-display);
-            font-size:16px;
+            font-size:15px;
             font-weight:700;
             flex-shrink:0;
-            background:var(--indigo-light);
-            color:var(--indigo);
-            transition:transform .2s ease;
+            background:var(--blue-bg);
+            color:var(--blue);
+            transition:transform .3s var(--spring);
+            will-change:transform;
         }
 
-        .c:hover .badge{transform:scale(1.05)}
+        .c:hover .badge{transform:scale(1.08)}
+        .c:active .badge{transform:scale(.95)}
 
-        .badge.st{background:var(--forest-light);color:var(--forest)}
-        .badge.sm{background:var(--coral-light);color:var(--coral)}
-        .badge.hp{background:var(--amber-light);color:var(--amber)}
+        .badge.st{background:var(--green-bg);color:var(--green)}
+        .badge.hw{background:var(--orange-bg);color:var(--orange)}
+        .badge.hp{background:var(--purple-bg);color:var(--purple)}
 
         .c-info{flex:1;min-width:0}
 
         .c-lbl{
-            font-family:var(--font-mono);
-            font-size:10px;
-            font-weight:500;
+            font-size:11px;
+            font-weight:600;
             text-transform:uppercase;
-            letter-spacing:.1em;
-            color:var(--indigo);
-            margin-bottom:4px;
+            letter-spacing:.06em;
+            color:var(--blue);
+            margin-bottom:3px;
         }
 
         .c-ttl{
-            font-family:var(--font-display);
-            font-size:17px;
+            font-size:16px;
             font-weight:600;
-            line-height:1.4;
-            color:var(--t1);
+            line-height:1.3;
+            letter-spacing:-0.01em;
         }
 
         .c-jp{
             font-size:13px;
-            color:var(--t2);
-            margin-top:4px;
+            color:var(--text-secondary);
+            margin-top:3px;
         }
 
         .pill{
             display:inline-block;
             padding:3px 10px;
             border-radius:12px;
-            font-family:var(--font-mono);
-            font-size:10px;
-            font-weight:500;
-            letter-spacing:.05em;
-            margin-top:8px;
-            background:var(--indigo);
+            font-size:11px;
+            font-weight:600;
+            letter-spacing:.02em;
+            margin-top:6px;
+            background:var(--blue);
             color:#fff;
         }
 
+        /* Chevron with smooth rotation */
         .chv{
-            font-size:12px;
-            color:var(--t3);
-            transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-            flex-shrink:0;
-            width:24px;
-            height:24px;
+            width:28px;
+            height:28px;
+            border-radius:8px;
+            background:var(--card2);
             display:flex;
             align-items:center;
             justify-content:center;
-            border-radius:6px;
-            background:var(--card2);
+            flex-shrink:0;
+            transition:transform .4s var(--spring), background .2s var(--smooth);
+            will-change:transform;
         }
 
-        .c.open .chv{transform:rotate(90deg)}
+        .chv svg{
+            width:12px;
+            height:12px;
+            fill:none;
+            stroke:var(--text-tertiary);
+            stroke-width:2.5;
+            stroke-linecap:round;
+            stroke-linejoin:round;
+        }
 
-        /* CONTENT - Smooth accordion */
+        .c.open .chv{
+            transform:rotate(90deg);
+            background:var(--blue-bg);
+        }
+
+        .c.open .chv svg{stroke:var(--blue)}
+
+        /* CONTENT - Smooth height animation */
         .c-b{
             display:grid;
             grid-template-rows:0fr;
-            transition:grid-template-rows .35s cubic-bezier(.34,1.56,.64,1);
+            transition:grid-template-rows .5s var(--smooth);
         }
 
-        .c.open .c-b{grid-template-rows:1fr}
+        .c.open .c-b{
+            grid-template-rows:1fr;
+        }
 
         .c-b-inner{
             overflow:hidden;
         }
 
         .c-content{
-            padding:0 20px 24px;
+            padding:0 18px 20px;
             display:flex;
             flex-direction:column;
-            gap:16px;
+            gap:14px;
             opacity:0;
-            transition:opacity .2s ease .1s;
+            transform:translateY(-8px);
+            transition:opacity .3s var(--smooth) .1s, transform .4s var(--spring) .1s;
+            will-change:opacity,transform;
         }
 
-        .c.open .c-content{opacity:1}
+        .c.open .c-content{
+            opacity:1;
+            transform:translateY(0);
+        }
 
-        /* GOAL BOX */
+        /* GOAL */
         .goal{
-            background:linear-gradient(135deg, var(--coral-light) 0%, rgba(253,240,237,.5) 100%);
-            border-left:4px solid var(--coral);
-            border-radius:8px;
-            padding:14px 18px;
+            background:var(--orange-bg);
+            border-radius:12px;
+            padding:14px 16px;
             font-size:14px;
             font-weight:500;
-            color:var(--t1);
+            color:var(--text);
         }
 
-        .dark .goal{background:var(--coral-light)}
-
-        /* STEP - Timeline style */
+        /* STEP */
         .step{
             background:var(--card2);
-            border-radius:10px;
-            padding:16px 18px;
-            position:relative;
+            border-radius:14px;
+            padding:16px;
         }
 
         .step-h{
-            font-family:var(--font-mono);
-            font-size:11px;
-            font-weight:500;
+            font-size:12px;
+            font-weight:600;
             text-transform:uppercase;
-            letter-spacing:.08em;
-            color:var(--coral);
+            letter-spacing:.04em;
+            color:var(--orange);
             margin-bottom:10px;
-            display:flex;
-            align-items:center;
-            gap:8px;
-        }
-
-        .step-h::before{
-            content:'';
-            width:6px;
-            height:6px;
-            border-radius:50%;
-            background:var(--coral);
         }
 
         .en{
             font-size:15px;
             font-weight:500;
             margin-bottom:4px;
-            color:var(--t1);
         }
 
         .jp{
             font-size:13px;
-            color:var(--t2);
+            color:var(--text-secondary);
         }
 
         .sm{
             font-size:12px;
-            color:var(--t3);
+            color:var(--text-tertiary);
             margin-bottom:8px;
-            font-style:italic;
         }
 
-        /* LIST - 2 columns */
+        /* LIST */
         .ls{
             display:grid;
             grid-template-columns:repeat(2,1fr);
-            gap:10px;
+            gap:8px;
             list-style:none;
         }
 
         .ls li{
-            background:var(--card);
-            border-radius:8px;
+            background:var(--card-solid);
+            border-radius:12px;
             padding:12px 14px;
             border:1px solid var(--border);
-            transition:border-color .2s, box-shadow .2s;
+            transition:transform .2s var(--spring), box-shadow .2s var(--smooth);
+            will-change:transform;
         }
 
         .ls li:hover{
-            border-color:var(--indigo);
-            box-shadow:0 2px 8px rgba(46,58,89,.08);
+            transform:translateY(-2px);
+            box-shadow:var(--shadow-md);
         }
 
-        /* VOCAB - 2 columns with hover */
+        .ls li:active{
+            transform:scale(.98);
+        }
+
+        /* VOCAB */
         .voc{
             display:grid;
             grid-template-columns:repeat(2,1fr);
-            gap:10px;
+            gap:8px;
         }
 
         .voc-i{
-            background:var(--card);
-            border-radius:8px;
-            padding:10px 14px;
+            background:var(--card-solid);
+            border-radius:12px;
+            padding:12px 14px;
             border:1px solid var(--border);
-            transition:transform .2s, box-shadow .2s;
+            transition:transform .25s var(--spring), box-shadow .2s var(--smooth);
+            will-change:transform;
         }
 
         .voc-i:hover{
-            transform:translateY(-2px);
-            box-shadow:0 4px 12px rgba(46,58,89,.1);
+            transform:translateY(-3px) scale(1.01);
+            box-shadow:var(--shadow-md);
+        }
+
+        .voc-i:active{
+            transform:scale(.97);
         }
 
         .voc-en{
-            font-size:13px;
+            font-size:14px;
             font-weight:600;
-            color:var(--indigo);
+            color:var(--blue);
             display:block;
             margin-bottom:2px;
         }
 
         .voc-jp{
             font-size:12px;
-            color:var(--t2);
+            color:var(--text-secondary);
             display:block;
         }
 
-        /* PATTERN BOX */
+        /* PATTERN */
         .pat{
-            margin-top:12px;
-            padding:12px 16px;
-            background:var(--purple-light);
-            border-radius:8px;
+            margin-top:10px;
+            padding:12px 14px;
+            background:var(--purple-bg);
+            border-radius:10px;
             font-size:13px;
-            border-left:3px solid var(--purple);
         }
 
         .pat code{
-            font-family:var(--font-mono);
-            background:rgba(107,76,154,.1);
+            font-family:'SF Mono',ui-monospace,monospace;
+            background:rgba(175,82,222,.12);
             padding:2px 6px;
-            border-radius:4px;
+            border-radius:5px;
             font-size:12px;
             color:var(--purple);
         }
 
-        .dark .pat code{background:rgba(167,139,204,.15)}
-
         /* TEMPLATE */
         .tpl{
             background:var(--card2);
-            border-radius:10px;
+            border-radius:14px;
             padding:20px;
-            font-size:14px;
+            font-size:15px;
             line-height:2;
-            border:1px dashed var(--border);
         }
 
         .blank{
             display:inline-block;
-            min-width:100px;
+            min-width:90px;
             border-bottom:2px solid var(--purple);
             color:var(--purple);
             font-style:italic;
             text-align:center;
             padding:0 4px;
             margin:0 2px;
-            transition:background .2s;
+            transition:background .2s var(--smooth);
         }
 
-        .blank:hover{background:var(--purple-light)}
+        .blank:hover{
+            background:var(--purple-bg);
+            border-radius:6px 6px 0 0;
+        }
 
-        /* CHECKLIST - 2 columns */
+        /* CHECKLIST */
         .chk{
             display:grid;
             grid-template-columns:repeat(2,1fr);
-            gap:10px;
+            gap:8px;
         }
 
         .chk-i{
             display:flex;
             align-items:flex-start;
             gap:12px;
-            background:var(--card);
-            border-radius:8px;
-            padding:14px 16px;
+            background:var(--card-solid);
+            border-radius:12px;
+            padding:14px;
             font-size:13px;
             border:1px solid var(--border);
+            transition:transform .2s var(--spring);
+            will-change:transform;
+        }
+
+        .chk-i:hover{
+            transform:translateY(-2px);
         }
 
         .chk-ic{
-            width:22px;
-            height:22px;
+            width:24px;
+            height:24px;
             border-radius:50%;
-            background:var(--forest);
+            background:linear-gradient(135deg, var(--green), #28A745);
             color:#fff;
             display:flex;
             align-items:center;
             justify-content:center;
-            font-family:var(--font-mono);
-            font-size:11px;
-            font-weight:600;
+            font-size:12px;
+            font-weight:700;
             flex-shrink:0;
         }
 
         /* FOOTER */
         .ftr{
-            max-width:880px;
-            margin:40px auto 32px;
-            padding:24px;
+            max-width:800px;
+            margin:0 auto;
+            padding:24px 20px 40px;
             text-align:center;
             font-size:13px;
-            color:var(--t2);
-            position:relative;
-        }
-
-        .ftr::before{
-            content:'';
-            position:absolute;
-            top:0;
-            left:50%;
-            transform:translateX(-50%);
-            width:60px;
-            height:2px;
-            background:linear-gradient(90deg, var(--coral), var(--indigo));
-            border-radius:1px;
+            color:var(--text-secondary);
         }
 
         /* RESPONSIVE */
         @media(max-width:600px){
-            .hdr{padding:24px 16px 20px}
-            .cards{padding:0 16px}
+            .hdr{padding:16px}
+            .hdr h1{font-size:24px}
+            .cards{padding:0 16px 32px}
             .note{padding:0 16px}
             .ls,.voc,.chk{grid-template-columns:1fr}
-            .hdr h1{font-size:24px}
             .btns{width:100%}
-            .btn{flex:1;justify-content:center}
-            .badge{width:42px;height:42px;font-size:14px}
+            .btn{flex:1}
+            .badge{width:40px;height:40px}
             .c-h{padding:14px 16px;gap:12px}
             .c-ttl{font-size:15px}
         }
 
         /* REDUCED MOTION */
         @media(prefers-reduced-motion:reduce){
-            *{
-                animation:none!important;
-                transition:none!important;
+            *,*::before,*::after{
+                animation-duration:0.01ms!important;
+                animation-iteration-count:1!important;
+                transition-duration:0.01ms!important;
             }
             .c{opacity:1;transform:none}
         }
@@ -681,31 +629,33 @@
                 <p class="hdr-sub">チューターに地元の問題を質問する7つの会話フロー</p>
             </div>
             <div class="btns">
-                <button class="btn btn-outline" id="closeAll">✕ Close All</button>
-                <button class="btn btn-dark" id="theme">☽ Dark</button>
+                <button class="btn btn-secondary" id="closeAll">Close All</button>
+                <button class="btn btn-primary" id="theme">
+                    <span id="themeIcon">☀</span>
+                </button>
             </div>
         </div>
-        <div class="info">
-            🏠 <b>今日のゴール:</b> チューターに質問して、地元や学校の問題について情報を集める。その後、約100語のサマリーを書く。
+        <div class="info-card">
+            <p>🏠 <b>今日のゴール:</b> チューターに質問して、地元や学校の問題について情報を集める。その後、約100語のサマリーを書く。</p>
             <div class="deadline">⏰ 締切: 今日 21:00</div>
         </div>
     </div>
 </header>
 
-<p class="note">🔍 カードをタップして展開 → STEP 1〜5 の流れで会話してみよう。</p>
+<p class="note">カードをタップして展開 → STEP 1〜5 の流れで会話してみよう</p>
 
 <main class="cards">
 
     <!-- START -->
-    <section class="c cat-start">
+    <section class="c">
         <div class="c-h">
             <div class="badge st">▶</div>
             <div class="c-info">
-                <div class="c-lbl">CONVERSATION START</div>
+                <div class="c-lbl">Conversation Start</div>
                 <div class="c-ttl">会話を始める</div>
                 <div class="c-jp">まず挨拶して、今日のトピックを伝えよう</div>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：挨拶して、今日聞きたいことを伝える</div>
@@ -720,16 +670,16 @@
     </section>
 
     <!-- Q1 -->
-    <section class="c cat-q">
+    <section class="c">
         <div class="c-h">
             <div class="badge">Q1</div>
             <div class="c-info">
-                <div class="c-lbl">ASK ABOUT COMPLAINTS</div>
+                <div class="c-lbl">Ask About Complaints</div>
                 <div class="c-ttl">Do you have any complaints about your local area or school?</div>
                 <div class="c-jp">地元や学校について何か不満はありますか？</div>
                 <span class="pill">Problem</span>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：チューターの地元の「問題」を聞き出す（具体的な名前をメモ）</div>
@@ -781,16 +731,16 @@
     </section>
 
     <!-- Q2 -->
-    <section class="c cat-q">
+    <section class="c">
         <div class="c-h">
             <div class="badge">Q2</div>
             <div class="c-info">
-                <div class="c-lbl">ASK FOR DETAILS</div>
+                <div class="c-lbl">Ask For Details</div>
                 <div class="c-ttl">Can you explain this problem in more detail?</div>
                 <div class="c-jp">この問題についてもっと詳しく説明してもらえますか？</div>
                 <span class="pill">Details</span>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：具体例を聞き出す（いつ・どこで・何が起きたか）</div>
@@ -846,16 +796,16 @@
     </section>
 
     <!-- Q3 -->
-    <section class="c cat-q">
+    <section class="c">
         <div class="c-h">
             <div class="badge">Q3</div>
             <div class="c-info">
-                <div class="c-lbl">ASK ABOUT CAUSES</div>
+                <div class="c-lbl">Ask About Causes</div>
                 <div class="c-ttl">Why do you think this problem happens?</div>
                 <div class="c-jp">なぜこの問題が起こると思いますか？</div>
                 <span class="pill">Cause</span>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：問題の原因を聞き出す</div>
@@ -910,16 +860,16 @@
     </section>
 
     <!-- Q4 -->
-    <section class="c cat-q">
+    <section class="c">
         <div class="c-h">
             <div class="badge">Q4</div>
             <div class="c-info">
-                <div class="c-lbl">ASK ABOUT SOLUTIONS ⭐</div>
+                <div class="c-lbl">Ask About Solutions ⭐</div>
                 <div class="c-ttl">How do you think this problem could be solved?</div>
                 <div class="c-jp">この問題はどうすれば解決できると思いますか？</div>
                 <span class="pill">Solution</span>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：解決策を聞き出す（⭐サマリーに必須！）</div>
@@ -974,16 +924,16 @@
     </section>
 
     <!-- Q5 -->
-    <section class="c cat-q">
+    <section class="c">
         <div class="c-h">
             <div class="badge">Q5</div>
             <div class="c-info">
-                <div class="c-lbl">ASK ABOUT EFFECTS</div>
+                <div class="c-lbl">Ask About Effects</div>
                 <div class="c-ttl">How does this problem affect people's daily lives?</div>
                 <div class="c-jp">この問題は人々の日常生活にどう影響していますか？</div>
                 <span class="pill">Effects</span>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：問題が生活に与える影響を聞く</div>
@@ -1037,16 +987,16 @@
     </section>
 
     <!-- Q6 -->
-    <section class="c cat-q">
+    <section class="c">
         <div class="c-h">
             <div class="badge">Q6</div>
             <div class="c-info">
-                <div class="c-lbl">ASK ABOUT RESPONSIBILITY</div>
+                <div class="c-lbl">Ask About Responsibility</div>
                 <div class="c-ttl">Who should be responsible for solving this problem?</div>
                 <div class="c-jp">この問題を解決する責任は誰にあるべきですか？</div>
                 <span class="pill">Responsibility</span>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：誰が解決すべきか意見を聞く</div>
@@ -1096,16 +1046,16 @@
     </section>
 
     <!-- Q7 -->
-    <section class="c cat-q">
+    <section class="c">
         <div class="c-h">
             <div class="badge">Q7</div>
             <div class="c-info">
-                <div class="c-lbl">ASK IF COMMON</div>
+                <div class="c-lbl">Ask If Common</div>
                 <div class="c-ttl">Is this problem common in other places?</div>
                 <div class="c-jp">この問題は他の場所でもよくありますか？</div>
                 <span class="pill">Comparison</span>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="goal">🎯 ゴール：問題が他でも見られるか確認する</div>
@@ -1150,15 +1100,15 @@
     </section>
 
     <!-- END -->
-    <section class="c cat-start">
+    <section class="c">
         <div class="c-h">
             <div class="badge st">✓</div>
             <div class="c-info">
-                <div class="c-lbl">CONVERSATION END</div>
+                <div class="c-lbl">Conversation End</div>
                 <div class="c-ttl">会話を終える</div>
                 <div class="c-jp">お礼を言って会話を終わろう</div>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="step">
@@ -1173,16 +1123,16 @@
         </div></div></div>
     </section>
 
-    <!-- SUMMARY -->
-    <section class="c cat-hw">
+    <!-- HOMEWORK -->
+    <section class="c">
         <div class="c-h">
-            <div class="badge sm">✍</div>
+            <div class="badge hw">✍</div>
             <div class="c-info">
-                <div class="c-lbl">HOMEWORK</div>
+                <div class="c-lbl">Homework</div>
                 <div class="c-ttl">サマリーを書く（約100語）</div>
                 <div class="c-jp">会話で得た情報をまとめよう</div>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="step">
@@ -1205,20 +1155,19 @@
                 <div class="step-h">📝 Template</div>
                 <div class="tpl">The tutor, <span class="blank">(Name)</span>, talked about a problem in their <span class="blank">local area</span>. One major issue is <span class="blank">(problem)</span>. This problem happens because <span class="blank">(reason)</span>. For example, <span class="blank">(example)</span>. It affects people by <span class="blank">(effects)</span>. To solve this, they suggested <span class="blank">(solution)</span>.</div>
             </div>
-
         </div></div></div>
     </section>
 
     <!-- HELP -->
-    <section class="c cat-help">
+    <section class="c">
         <div class="c-h">
             <div class="badge hp">?</div>
             <div class="c-info">
-                <div class="c-lbl">HELP</div>
+                <div class="c-lbl">Help</div>
                 <div class="c-ttl">聞き取れなかったとき</div>
                 <div class="c-jp">困ったときに使えるフレーズ</div>
             </div>
-            <div class="chv">▶</div>
+            <div class="chv"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
         </div>
         <div class="c-b"><div class="c-b-inner"><div class="c-content">
             <div class="step">
@@ -1239,68 +1188,51 @@
 
 <script>
 /*
- * EDITORIAL LANGUAGE LAB - JavaScript
- * Clean, bulletproof interactions
+ * Apple-style 60fps interactions
+ * GPU-accelerated, spring physics
  */
 (function(){
     'use strict';
 
-    var body, themeBtn, closeBtn, cards;
+    var body = document.body;
+    var themeBtn = document.getElementById('theme');
+    var themeIcon = document.getElementById('themeIcon');
+    var closeBtn = document.getElementById('closeAll');
+    var cards = document.querySelectorAll('.c');
 
-    try {
-        body = document.body;
-        themeBtn = document.getElementById('theme');
-        closeBtn = document.getElementById('closeAll');
-        cards = document.querySelectorAll('.c');
-    } catch(e) {
-        console.error('DOM init failed:', e);
-        return;
-    }
-
-    // Theme toggle
+    // Theme
     function setTheme(dark) {
-        try {
-            body.classList.toggle('dark', dark);
-            themeBtn.textContent = dark ? '☀ Light' : '☽ Dark';
-            localStorage.setItem('d6-theme', dark ? 'dark' : 'light');
-        } catch(e) {}
+        body.classList.toggle('dark', dark);
+        themeIcon.textContent = dark ? '☀' : '☽';
+        localStorage.setItem('d6-apple', dark ? 'dark' : 'light');
     }
 
-    // Load saved theme
-    try {
-        if (localStorage.getItem('d6-theme') === 'dark') setTheme(true);
-    } catch(e) {}
+    // Load saved
+    if (localStorage.getItem('d6-apple') === 'dark') setTheme(true);
 
-    // Theme button click
-    if (themeBtn) {
-        themeBtn.addEventListener('click', function() {
-            setTheme(!body.classList.contains('dark'));
-        }, {passive: true});
-    }
+    themeBtn.addEventListener('click', function() {
+        setTheme(!body.classList.contains('dark'));
+    });
 
-    // Close all button
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            try {
-                for (var i = 0; i < cards.length; i++) {
-                    cards[i].classList.remove('open');
-                }
-            } catch(e) {}
-        }, {passive: true});
-    }
+    // Close all with smooth animation
+    closeBtn.addEventListener('click', function() {
+        cards.forEach(function(card, i) {
+            setTimeout(function() {
+                card.classList.remove('open');
+            }, i * 30);
+        });
+    });
 
-    // Card toggle - event delegation
+    // Card toggle with event delegation
     document.addEventListener('click', function(e) {
-        try {
-            var header = e.target.closest('.c-h');
-            if (header) {
-                var card = header.closest('.c');
-                if (card) {
-                    card.classList.toggle('open');
-                }
+        var header = e.target.closest('.c-h');
+        if (header) {
+            var card = header.closest('.c');
+            if (card) {
+                card.classList.toggle('open');
             }
-        } catch(e) {}
-    }, {passive: true});
+        }
+    });
 
 })();
 </script>
