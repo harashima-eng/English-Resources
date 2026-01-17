@@ -104,6 +104,16 @@ launchctl unload ~/Library/LaunchAgents/com.english-resources.autosync.plist
 launchctl load ~/Library/LaunchAgents/com.english-resources.autosync.plist
 ```
 
+### Manual backup
+```bash
+bash /usr/local/bin/english-resources-backup.sh
+```
+
+### View backup log
+```bash
+cat /tmp/english-resources-backup.log
+```
+
 ---
 
 ## Adding Content
