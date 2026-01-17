@@ -74,9 +74,7 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(250, 249, 247, 0.8);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(250, 249, 247, 0.95);
       border-bottom: 1px solid var(--border);
       padding: 0 24px;
       height: 52px;
@@ -85,7 +83,7 @@
       justify-content: space-between;
     }
     [data-theme="dark"] .top-nav {
-      background: rgba(13, 13, 13, 0.8);
+      background: rgba(13, 13, 13, 0.95);
     }
     .top-nav-logo {
       font-family: 'New York', 'Georgia', serif;
@@ -136,7 +134,8 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* Grain overlay */
+    /* Grain overlay - DISABLED for performance */
+    /*
     body::before {
       content: '';
       position: fixed;
@@ -145,10 +144,11 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      opacity: 0.02;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.015;
+      background-image: url("data:image/svg+xml,...");
       z-index: 9999;
     }
+    */
 
     /* ===== INTRO / HERO SECTION ===== */
     .intro {
@@ -165,11 +165,8 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, var(--coord-light) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 80% 60%, var(--subord-light) 0%, transparent 40%),
-        radial-gradient(ellipse 50% 30% at 20% 80%, var(--correl-light) 0%, transparent 40%);
-      opacity: 0.7;
+      background: var(--bg-warm);
+      opacity: 0.5;
     }
     .intro-nav {
       position: absolute;
@@ -300,22 +297,8 @@
       color: var(--text-muted);
       font-size: 12px;
       letter-spacing: 0.1em;
-      animation: float 2s ease-in-out infinite;
     }
-    @keyframes float {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(8px); }
-    }
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    /* Animations disabled for performance testing */
 
     /* ===== CONJUNCTION TYPES OVERVIEW ===== */
     .overview {
@@ -346,6 +329,7 @@
       gap: 24px;
       max-width: 1400px;
       margin: 0 auto;
+      perspective: 1000px;
     }
     @media (max-width: 1100px) {
       .type-grid { grid-template-columns: repeat(2, 1fr); }
@@ -361,30 +345,17 @@
       padding: 32px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
-      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
+      border-top: 4px solid var(--card-accent);
+      transition: box-shadow 0.3s ease;
+      animation: fadeIn 0.4s ease backwards;
+      transform-style: preserve-3d;
     }
-    .type-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--card-accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .type-card:hover::before {
-      transform: scaleX(1);
-    }
-    .type-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-lg);
-    }
+    /* Hover handled by JS for 3D tilt effect */
+    .type-card:nth-child(1) { animation-delay: 0s; }
+    .type-card:nth-child(2) { animation-delay: 0.08s; }
+    .type-card:nth-child(3) { animation-delay: 0.16s; }
+    .type-card:nth-child(4) { animation-delay: 0.24s; }
     .type-card.coord { --card-accent: var(--coord); }
     .type-card.subord { --card-accent: var(--subord); }
     .type-card.correl { --card-accent: var(--correl); }
@@ -485,59 +456,19 @@
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
       position: relative;
-      overflow: hidden;
-      transform: perspective(800px) rotateX(0deg) rotateY(0deg);
-      transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      will-change: transform;
-      backface-visibility: hidden;
-      -webkit-font-smoothing: subpixel-antialiased;
+      border-left: 4px solid var(--card-accent);
+      transition: box-shadow 0.3s ease;
+      animation: fadeIn 0.4s ease backwards;
+      transform-style: preserve-3d;
     }
-    .conj-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--card-accent);
-      opacity: 0.5;
-      transition: opacity 0.4s ease;
-    }
-    /* Glare/shine overlay */
-    .conj-card .card-glare {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 30%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      border-radius: var(--radius);
-      z-index: 1;
-    }
-    .conj-card:hover::before {
-      opacity: 1;
-    }
-    .conj-card:hover {
-      box-shadow:
-        0 8px 25px rgba(0,0,0,0.06),
-        0 4px 12px rgba(0,0,0,0.04);
-    }
-    [data-theme="dark"] .conj-card:hover {
-      box-shadow:
-        0 8px 25px rgba(0,0,0,0.25),
-        0 4px 12px rgba(0,0,0,0.15);
-    }
-    [data-theme="dark"] .conj-card .card-glare {
-      background: radial-gradient(
-        ellipse 80% 80% at var(--gx) var(--gy),
-        rgba(255,255,255,0.1) 0%,
-        rgba(255,255,255,0.04) 25%,
-        transparent 55%
-      );
-    }
+    /* Hover handled by JS 3D tilt */
+    /* Staggered card animation delays */
+    .conj-card:nth-child(1) { animation-delay: 0s; }
+    .conj-card:nth-child(2) { animation-delay: 0.05s; }
+    .conj-card:nth-child(3) { animation-delay: 0.1s; }
+    .conj-card:nth-child(4) { animation-delay: 0.15s; }
+    .conj-card:nth-child(5) { animation-delay: 0.2s; }
+    .conj-card:nth-child(6) { animation-delay: 0.25s; }
     .conj-section.coord .conj-card { --card-accent: var(--coord); }
     .conj-section.subord .conj-card { --card-accent: var(--subord); }
     .conj-section.correl .conj-card { --card-accent: var(--correl); }
@@ -595,11 +526,7 @@
       line-height: 1.6;
       color: var(--text-secondary);
     }
-    /* Card initial state - fade in on load */
-    .conj-card {
-      opacity: 0;
-      transition: opacity 0.4s ease, box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
+    /* Card animations disabled for performance */
 
     /* ===== MAIN STUDY SECTION ===== */
     .study {
@@ -682,7 +609,6 @@
       background: linear-gradient(90deg, var(--coord), var(--subord));
       border-radius: 100px;
       width: 0%;
-      transition: width 0.5s ease;
     }
     .progress-label {
       font-size: 13px;
@@ -741,15 +667,11 @@
       align-items: center;
       font-weight: 600;
       font-size: 16px;
-      transition: background 0.2s;
-    }
-    .section-header:hover {
-      background: var(--bg-warm);
     }
     .section-arrow {
       font-size: 12px;
       color: var(--text-muted);
-      transition: transform 0.3s ease;
+      transition: transform 0.2s ease;
     }
     .section-header.open .section-arrow {
       transform: rotate(180deg);
@@ -773,10 +695,6 @@
       background: var(--bg);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      transition: border-color 0.2s ease;
-    }
-    .qcard:hover {
-      border-color: var(--accent);
     }
     .qcard-question, .qcard-buttons, .qcard-left, .qcard-right {
       box-sizing: border-box;
@@ -822,7 +740,6 @@
     [data-view="dual"] .collapsible.open {
       display: block;
       margin-top: 16px;
-      animation: slideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     /* Single view */
     [data-view="single"] .qcard {
@@ -851,11 +768,6 @@
     [data-view="single"] .collapsible.open {
       display: block;
       margin-top: 16px;
-      animation: slideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 800px) {
       [data-view="dual"] .qcard {
@@ -913,20 +825,14 @@
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
-      transform: translateZ(0);
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-                  box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-                  filter 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
     .toggle-btn:hover {
-      transform: translateY(-2px) translateZ(0);
-      box-shadow: var(--shadow);
-      filter: brightness(1.05);
+      opacity: 0.9;
+      transform: translateY(-2px);
     }
     .toggle-btn:active {
-      transform: translateY(0) scale(0.98) translateZ(0);
-      transition-duration: 0.1s;
+      transform: scale(0.98);
     }
     .toggle-btn.vocab { background: var(--correl); color: white; }
     .toggle-btn.hint { background: var(--coord); color: white; }
@@ -948,6 +854,23 @@
     .ans-box {
       background: var(--adverb-light);
       border-left: 3px solid var(--adverb);
+    }
+    .choice-explanations {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(90, 154, 110, 0.2);
+    }
+    .choice-exp {
+      padding: 6px 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .choice-exp.correct {
+      color: var(--adverb);
+      font-weight: 600;
+    }
+    .choice-exp.wrong {
+      color: var(--text-secondary);
     }
     .vocab-item {
       padding: 6px 0;
@@ -1003,11 +926,42 @@
       cursor: pointer;
       font-size: 24px;
       box-shadow: var(--shadow-lg);
-      transition: all 0.3s ease;
       z-index: 100;
     }
-    .fab:hover {
-      transform: scale(1.1);
+
+    /* ===== CSS ANIMATIONS ===== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .collapsible.open {
+      animation: slideIn 0.2s ease;
     }
   </style>
 </head>
@@ -1412,7 +1366,12 @@ const grammarData = {
           answer: "or",
           translation: "足元に気をつけてください，そうでないと階段から落ちますよ",
           explanation: "orは「そうでないと」という意味で、前の命令を守らなかった場合の否定的な結果を示します。",
-          grammar: "命令文 + or = ～しなさい、さもないと…"
+          grammar: "命令文 + or = ～しなさい、さもないと…",
+          choiceExplanations: {
+            "or": "○ 正解。「命令文 + or」は「～しなさい、さもないと…」という警告を表す。",
+            "and": "× 「命令文 + and」は「～しなさい、そうすれば…」と肯定的な結果を表すので不適切。",
+            "but": "× butは前後を対比する接続詞で、命令文との構文では使わない。"
+          }
         },
         {
           num: "(2)",
@@ -1423,7 +1382,12 @@ const grammarData = {
           answer: "and",
           translation: "急ぎなさい，そうすれば学校に間に合うよ",
           explanation: "andは前の命令を実行した場合の肯定的な結果を示します。",
-          grammar: "命令文 + and = ～しなさい、そうすれば…"
+          grammar: "命令文 + and = ～しなさい、そうすれば…",
+          choiceExplanations: {
+            "and": "○ 正解。「命令文 + and」は「～しなさい、そうすれば…」と肯定的結果を表す。",
+            "or": "× 「命令文 + or」は否定的な結果（警告）を表すので、文意に合わない。",
+            "but": "× butは対比を表す接続詞で、この構文では使用しない。"
+          }
         },
         {
           num: "(3)",
@@ -1434,7 +1398,12 @@ const grammarData = {
           answer: "for",
           translation: "私はじっと立っていた．というのはどうしたらいいかわからなかったからだ",
           explanation: "forは直前に述べたことの原因・理由を追加的に述べる等位接続詞です。",
-          grammar: "for = というのは～だから（補足的な理由）"
+          grammar: "for = というのは～だから（補足的な理由）",
+          choiceExplanations: {
+            "for": "○ 正解。forは補足的に理由を述べる等位接続詞。",
+            "if": "× ifは条件を表す接続詞で、理由を表すことはできない。",
+            "although": "× althoughは譲歩を表し、「～だけれども」という逆接の意味。"
+          }
         },
         {
           num: "(4)",
@@ -1445,7 +1414,12 @@ const grammarData = {
           answer: "Whether",
           translation: "あなたが成功するかどうかは努力次第だ",
           explanation: "主語になり文頭にくる場合には、ifではなくwhetherを用います。",
-          grammar: "Whether S + V (or not) = Sが～かどうか"
+          grammar: "Whether S + V (or not) = Sが～かどうか",
+          choiceExplanations: {
+            "Whether": "○ 正解。文頭で主語になる場合はwhetherを使う。or notとも相性が良い。",
+            "That": "× that節は「～ということ」で、「～かどうか」の意味にはならない。",
+            "If": "× ifは文頭で主語になる節を導くことができない。"
+          }
         },
         {
           num: "(5)",
@@ -1456,7 +1430,12 @@ const grammarData = {
           answer: "though",
           translation: "彼女は若かったが，成功した",
           explanation: "強調する場合はeven thoughとなり、even althoughとは言いません。",
-          grammar: "even though = ～だけれども（強調、実際の事実）"
+          grammar: "even though = ～だけれども（強調、実際の事実）",
+          choiceExplanations: {
+            "though": "○ 正解。even thoughで「～だけれども」と強調された譲歩を表す。",
+            "although": "× even althoughという表現は使わない。althoughはevenと結合しない。",
+            "if": "× even ifは「たとえ～でも」で仮定の譲歩。ここは事実なので不適切。"
+          }
         },
         {
           num: "(6)",
@@ -1467,7 +1446,12 @@ const grammarData = {
           answer: "As",
           translation: "暗くなるにつれて，ますます雪が降ってきた",
           explanation: "as節には事態の経過を表す表現が、主節には比較級を伴う表現がくることが多いです。",
-          grammar: "As S + V, S' + V'（比較級） = ～するにつれて"
+          grammar: "As S + V, S' + V'（比較級） = ～するにつれて",
+          choiceExplanations: {
+            "As": "○ 正解。Asは「～するにつれて」と比例・変化を表す。比較級と相性が良い。",
+            "Because": "× Becauseは理由を表す。「暗くなったから雪が降った」は意味が不自然。",
+            "Since": "× Sinceは理由または時を表すが、比例の意味はない。"
+          }
         },
         {
           num: "(7)",
@@ -1478,7 +1462,12 @@ const grammarData = {
           answer: "Once",
           translation: "その本はいったん読み始めたら，やめられない",
           explanation: "接続詞のonceは「時」と「条件」の両方の意味を合わせもちます。",
-          grammar: "Once S + V = いったん～すると"
+          grammar: "Once S + V = いったん～すると",
+          choiceExplanations: {
+            "Once": "○ 正解。「いったん～すると」という時と条件を表す接続詞。",
+            "Though": "× Thoughは「～だけれども」という譲歩で、文意に合わない。",
+            "Whether": "× Whetherは「～かどうか」で、ここでは意味が通らない。"
+          }
         }
       ]
     },
@@ -1680,7 +1669,13 @@ const grammarData = {
           answer: "b. though",
           translation: "A「君はミキの秘密が何か知ってるの」B「うん．でも，君には教えたくないんだ」",
           explanation: "「譲歩」を表す接続詞thoughが副詞として使われ、文末に置かれることがあります。",
-          grammar: "though（副詞用法）= でも、けれども（文末）"
+          grammar: "though（副詞用法）= でも、けれども（文末）",
+          choiceExplanations: {
+            "b. though": "○ 正解。thoughは副詞として文末に置け、「でも」という意味になる。",
+            "a. although": "× althoughは文末に置くことができない。接続詞としてのみ使用。",
+            "c. but": "× butは等位接続詞で、文末に単独で置くことはできない。",
+            "d. for": "× forは理由を表す接続詞で、文末には置けない。"
+          }
         },
         {
           num: "(2)",
@@ -1691,7 +1686,13 @@ const grammarData = {
           answer: "a. while",
           translation: "A「ペットとして何を飼いたいの」B「僕は犬が大好きなんだけど，お母さんはペットを飼いたくないんだよ」",
           explanation: "whileが「～なのに，一方では～」という「譲歩」の意味を表す場合があります。",
-          grammar: "while = ～なのに、一方では～"
+          grammar: "while = ～なのに、一方では～",
+          choiceExplanations: {
+            "a. while": "○ 正解。whileは「～なのに」と対比・譲歩を表すことができる。",
+            "b. so": "× soは「だから」と結果を表す。前後の関係が逆になる。",
+            "c. for": "× forは理由を追加する接続詞。ここでは文意に合わない。",
+            "d. or": "× orは「または」で選択を表し、対比の意味にはならない。"
+          }
         },
         {
           num: "(3)",
@@ -1702,7 +1703,13 @@ const grammarData = {
           answer: "c. in case",
           translation: "A「ジム，雨が降るといけないから，傘を持って行ってね」B「わかった．そうするよ」",
           explanation: "〈in case ～〉は「～するといけないから」の意味を表します。",
-          grammar: "in case S + V = Sが～するといけないから"
+          grammar: "in case S + V = Sが～するといけないから",
+          choiceExplanations: {
+            "c. in case": "○ 正解。「～するといけないから」と備えを表す。",
+            "a. even if": "× 「たとえ～でも」という仮定の譲歩で、文意に合わない。",
+            "b. if only": "× 「～さえすれば」という願望を表し、意味が異なる。",
+            "d. so that": "× 「～するために」という目的を表す。備えの意味にならない。"
+          }
         }
       ]
     },
@@ -1719,7 +1726,13 @@ const grammarData = {
           answer: "d. unless",
           translation: "これらの条件が満たされなければ，彼女は契約書にサインしないだろう",
           explanation: "unlessは「もし～でないなら」「～でない限り」の意味を表します。",
-          grammar: "unless S + V = もし～でないなら"
+          grammar: "unless S + V = もし～でないなら",
+          choiceExplanations: {
+            "d. unless": "○ 正解。「～でない限り」という否定条件を表す接続詞。",
+            "a. in place of": "× 「～の代わりに」という前置詞句で、接続詞ではない。",
+            "b. instead of": "× 「～の代わりに」という前置詞句で、節を導けない。",
+            "c. despite": "× 「～にもかかわらず」という前置詞で、節を導けない。"
+          }
         },
         {
           num: "(2)",
@@ -1730,7 +1743,13 @@ const grammarData = {
           answer: "c. far",
           translation: "私の知っている限り，彼はこのようなひどいことは決してしたことがない",
           explanation: "〈as far as ～〉は〈範囲・程度〉を示し、「～する限り」という意味を表します。",
-          grammar: "as far as S + V = Sが～する限り"
+          grammar: "as far as S + V = Sが～する限り",
+          choiceExplanations: {
+            "c. far": "○ 正解。as far as ～で「～する限り」と範囲を表す。",
+            "a. soon": "× as soon asは「～するとすぐに」で時を表し、範囲ではない。",
+            "b. long": "× as long asは「～する限り」だが、条件を表す。知識の範囲には不適切。",
+            "d. much": "× as much asは「～と同じくらい」で程度を表す。"
+          }
         },
         {
           num: "(3)",
@@ -1741,7 +1760,13 @@ const grammarData = {
           answer: "a. minute",
           translation: "病院から何かを聞いたらすぐに，私に電話してください",
           explanation: "〈the minute ～〉で「～するとすぐに」の意味を表します。",
-          grammar: "the minute S + V = Sが～するとすぐに"
+          grammar: "the minute S + V = Sが～するとすぐに",
+          choiceExplanations: {
+            "a. minute": "○ 正解。the minuteは「～するとすぐに」という即時性を表す。",
+            "b. month": "× the monthという接続詞的用法はない。",
+            "c. season": "× the seasonという接続詞的用法はない。",
+            "d. year": "× the yearという接続詞的用法はない。"
+          }
         },
         {
           num: "(4)",
@@ -1752,7 +1777,13 @@ const grammarData = {
           answer: "a. as",
           translation: "私の書き物用テーブルをさわらないで．そのままにしておいて",
           explanation: "「様態」を表す接続詞asは「～(する)ように」という意味を表します。",
-          grammar: "as S + V = Sが～するように / as it is = そのまま"
+          grammar: "as S + V = Sが～するように / as it is = そのまま",
+          choiceExplanations: {
+            "a. as": "○ 正解。as it isで「そのまま」という様態を表すイディオム。",
+            "b. if": "× if it isは条件を表し、「そのまま」の意味にならない。",
+            "c. that": "× that it isという用法はこの文脈では不適切。",
+            "d. when": "× when it isは時を表し、様態の意味にならない。"
+          }
         },
         {
           num: "(5)",
@@ -1763,7 +1794,13 @@ const grammarData = {
           answer: "c. Now that",
           translation: "先生が病気なのだから，私たちは自習しなければならないだろう",
           explanation: "〈now (that) ～〉は「(今やもう)～なので」の意味を表します。",
-          grammar: "now (that) S + V = ～なので"
+          grammar: "now (that) S + V = ～なので",
+          choiceExplanations: {
+            "c. Now that": "○ 正解。「～なのだから」と既知の事実に基づく理由を表す。",
+            "a. Even if": "× 「たとえ～でも」と仮定の譲歩で、理由にならない。",
+            "b. Though": "× 「～だけれども」と譲歩で、因果関係を表さない。",
+            "d. However": "× 副詞で「しかしながら」。接続詞として節を導けない。"
+          }
         },
         {
           num: "(6)",
@@ -1774,7 +1811,13 @@ const grammarData = {
           answer: "a. before",
           translation: "私たちはまもなくまたお互いに会うでしょう",
           explanation: "〈It won't be long before ～〉は「まもなく～だろう」という意味を表します。",
-          grammar: "It won't be long before S + V = まもなくSが～するだろう"
+          grammar: "It won't be long before S + V = まもなくSが～するだろう",
+          choiceExplanations: {
+            "a. before": "○ 正解。It won't be long beforeで「まもなく～」のイディオム。",
+            "b. after": "× It won't be long afterという表現は使わない。",
+            "c. when": "× It won't be long whenという表現は使わない。",
+            "d. soon": "× soonは副詞で、ここでは接続詞が必要。"
+          }
         },
         {
           num: "(7)",
@@ -1785,7 +1828,13 @@ const grammarData = {
           answer: "d. when",
           translation: "私が家から出たとたんに，電話が鳴るのが聞こえた",
           explanation: "〈hardly…when ～〉で「…するかしないうちに～」という意味を表します。",
-          grammar: "S + had hardly + 過去分詞 + when + 過去形 = ～するとすぐに…した"
+          grammar: "S + had hardly + 過去分詞 + when + 過去形 = ～するとすぐに…した",
+          choiceExplanations: {
+            "d. when": "○ 正解。hardly...whenで「～するかしないうちに」のイディオム。",
+            "a. if": "× hardly...ifという表現はない。",
+            "b. since": "× hardly...sinceという表現はない。",
+            "c. than": "× no sooner...thanと混同しないこと。hardlyにはwhenを使う。"
+          }
         }
       ]
     },
@@ -1895,6 +1944,14 @@ function renderQuestion(q) {
       <span class="box-label">正解: ${q.answer}</span>`;
   if (q.translation) rightHtml += `<div class="jp-text">${q.translation}</div>`;
   if (q.explanation) rightHtml += `<div class="jp-text">${q.explanation}</div>`;
+  if (q.choiceExplanations) {
+    rightHtml += `<div class="choice-explanations">`;
+    for (const [choice, exp] of Object.entries(q.choiceExplanations)) {
+      const isCorrect = q.answer.includes(choice);
+      rightHtml += `<div class="choice-exp ${isCorrect ? 'correct' : 'wrong'}">${exp}</div>`;
+    }
+    rightHtml += `</div>`;
+  }
   if (q.grammar) rightHtml += `<div class="grammar-ref">${q.grammar}</div>`;
   rightHtml += `</div></div></div>`;
 
@@ -2030,117 +2087,86 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Optional entrance animation for conjunction cards (non-blocking)
+// Card animations now handled by CSS - this function is a no-op for compatibility
 function initCardAnimations() {
-  const cards = document.querySelectorAll('.conj-card');
-  // Stagger animation on page load for visible cards
-  cards.forEach((card, i) => {
-    setTimeout(() => {
-      card.style.opacity = '1';
-    }, i * 50);
-  });
+  // CSS handles the staggered fade-in animation
 }
 
-// Smooth 3D Tilt effect
+// 3D Tilt effect for question cards - DISABLED for performance
 function init3DTilt() {
+  // Disabled - was causing Chrome crashes during scroll (22 RAF loops)
+}
+
+// Smooth 3D tilt for conj-cards (RAF-throttled for 60fps, no continuous loops)
+function initTypeCardTilt() {
   const cards = document.querySelectorAll('.conj-card');
+  if (!cards.length) return;
 
   cards.forEach(card => {
-    // Create and add glare element
-    const glare = document.createElement('div');
-    glare.className = 'card-glare';
-    card.appendChild(glare);
-
-    let bounds = null;
     let rafId = null;
-    let currentX = 0, currentY = 0;
     let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
 
-    function animate() {
-      // Smooth lerp
-      currentX += (targetX - currentX) * 0.15;
-      currentY += (targetY - currentY) * 0.15;
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'box-shadow 0.3s ease';
+    });
 
-      // Apply rotation (max 5 degrees)
-      const rotateY = currentX * 5;
-      const rotateX = currentY * -5;
-      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      targetX = (y - centerY) / 80;
+      targetY = (centerX - x) / 80;
 
-      // Update glare
-      const gx = 50 + currentX * 40;
-      const gy = 50 + currentY * 40;
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      glare.style.background = `radial-gradient(ellipse 70% 70% at ${gx}% ${gy}%, rgba(255,255,255,${isDark ? 0.12 : 0.22}) 0%, rgba(255,255,255,${isDark ? 0.04 : 0.08}) 30%, transparent 60%)`;
-
-      // Continue animation
-      const delta = Math.abs(currentX - targetX) + Math.abs(currentY - targetY);
-      if (delta > 0.001) {
-        rafId = requestAnimationFrame(animate);
-      } else {
-        rafId = null;
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          currentX += (targetX - currentX) * 0.15;
+          currentY += (targetY - currentY) * 0.15;
+          card.style.transform = `perspective(1000px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(-3px)`;
+          card.style.boxShadow = 'var(--shadow-lg)';
+          rafId = null;
+        });
       }
-    }
-
-    card.addEventListener('mouseenter', function(e) {
-      bounds = this.getBoundingClientRect();
-      glare.style.opacity = '1';
     });
 
-    card.addEventListener('mousemove', function(e) {
-      if (!bounds) bounds = this.getBoundingClientRect();
-      targetX = ((e.clientX - bounds.left) / bounds.width - 0.5) * 2;
-      targetY = ((e.clientY - bounds.top) / bounds.height - 0.5) * 2;
-      if (!rafId) rafId = requestAnimationFrame(animate);
-    });
-
-    card.addEventListener('mouseleave', function() {
+    card.addEventListener('mouseleave', () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease';
+      card.style.transform = '';
+      card.style.boxShadow = '';
+      currentX = 0;
+      currentY = 0;
       targetX = 0;
       targetY = 0;
-      bounds = null;
-      glare.style.opacity = '0';
-      if (!rafId) rafId = requestAnimationFrame(animate);
     });
   });
 }
 
-// Update active nav link on scroll (throttled)
+// Nav highlight using Intersection Observer (replaces scroll listener for better performance)
 function initNavHighlight() {
-  const sectionIds = ['intro', 'overview', 'study'];
+  const sections = document.querySelectorAll('#intro, #overview, #study');
   const navLinks = document.querySelectorAll('.top-nav-link');
-  let ticking = false;
-  let sectionCache = [];
 
-  function cacheSections() {
-    sectionCache = sectionIds.map(id => {
-      const el = document.getElementById(id);
-      return el ? { id, top: el.offsetTop, bottom: el.offsetTop + el.offsetHeight } : null;
-    }).filter(Boolean);
-  }
+  if (!sections.length || !navLinks.length) return;
 
-  function updateActiveNav() {
-    const scrollPos = window.scrollY + 100;
-    for (const s of sectionCache) {
-      if (scrollPos >= s.top && scrollPos < s.bottom) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.id;
         navLinks.forEach(link => {
-          link.classList.toggle('active', link.dataset.section === s.id);
+          link.classList.toggle('active', link.dataset.section === sectionId);
         });
-        break;
       }
-    }
-    ticking = false;
-  }
+    });
+  }, {
+    rootMargin: '-20% 0px -70% 0px',
+    threshold: 0
+  });
 
-  cacheSections();
-  window.addEventListener('resize', cacheSections);
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateActiveNav);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  updateActiveNav();
+  sections.forEach(section => observer.observe(section));
 }
 
 // Init
@@ -2148,6 +2174,7 @@ window.addEventListener('DOMContentLoaded', () => {
   init();
   initCardAnimations();
   init3DTilt();
+  initTypeCardTilt();
   initNavHighlight();
   try {
     const savedTheme = localStorage.getItem('theme');
