@@ -20,6 +20,9 @@ Edit files locally → Auto-generates indexes → Pushes to GitHub → Live on w
 | **Index Generator** | `/usr/local/bin/english-resources-generate.py` |
 | **LaunchAgent** | `~/Library/LaunchAgents/com.english-resources.autosync.plist` |
 | **Sync Log** | `/tmp/english-resources-autosync.log` |
+| **Backup Script** | `/usr/local/bin/english-resources-backup.sh` |
+| **Backup Location** | `iCloud Drive/Backups/English-Resources/` |
+| **Backup Log** | `/tmp/english-resources-backup.log` |
 
 ---
 
