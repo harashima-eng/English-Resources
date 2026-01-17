@@ -63,6 +63,12 @@ Edit files locally → Auto-generates indexes → Pushes to GitHub → Live on w
 - URL-encodes Japanese folder/file names for web compatibility
 - Applies premium Apple-style UI with all features above
 
+### 3. Auto-Backup (runs weekly)
+- Runs every Sunday at 2:00 AM
+- Backs up to iCloud Drive (syncs to all devices)
+- Keeps last 4 weekly backups (1 month rolling history)
+- Location: `iCloud Drive/Backups/English-Resources/YYYY-MM-DD/`
+
 ---
 
 ## Common Commands
