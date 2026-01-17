@@ -65,6 +65,20 @@
       "minutes": "",
       "tags": [],
       "keywords": ""
+    },
+    {
+      "id": "f09f44c3-fc4b-4cdf-ac4e-e4fa89fd589c",
+      "folderId": "31f2b5c9-0c1f-49c4-ba29-fd9d614552e0",
+      "title": "15｜接続詞",
+      "fileName": "15接続詞-premium.html",
+      "filePath": "kounen/folder/files/15接続詞-premium.html",
+      "date": "2026-01-17",
+      "order": 1,
+      "originalFileName": "15接続詞-premium.html",
+      "fileSlug": "15｜接続詞.html",
+      "minutes": "",
+      "tags": [],
+      "keywords": ""
     }
   ],
   "settings": {
@@ -73,5 +87,5 @@
     "siteColor": "#2997ff",
     "mainHtmlFile": "index.html"
   },
-  "lastUpdated": "2026-01-17T00:04:31.341Z"
+  "lastUpdated": "2026-01-17T00:05:27.275Z"
 }
