@@ -2017,12 +2017,15 @@ function setView(view) {
   });
 }
 
+let cachedTotal = 0;
 function updateProgress() {
-  const total = document.querySelectorAll('.collapsible[data-type="answer"]').length;
+  if (!cachedTotal) {
+    cachedTotal = document.querySelectorAll('.collapsible[data-type="answer"]').length;
+  }
   const revealed = document.querySelectorAll('.collapsible[data-type="answer"].open').length;
-  const pct = total > 0 ? Math.round((revealed / total) * 100) : 0;
+  const pct = cachedTotal > 0 ? Math.round((revealed / cachedTotal) * 100) : 0;
   document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressText').textContent = `${revealed} / ${total} answers revealed`;
+  document.getElementById('progressText').textContent = `${revealed} / ${cachedTotal} answers revealed`;
 }
 
 let searchTimeout = null;
