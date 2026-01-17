@@ -146,8 +146,20 @@ launchctl load ~/Library/LaunchAgents/com.english-resources.autosync.plist
 - `data.json` - stores settings
 - `.nojekyll` - needed for GitHub Pages
 - `index.html` files - auto-generated, but needed
+- `favicon.svg` - site favicon
+- `og-image.png` - social sharing preview image
+
+---
+
+## User Preferences (localStorage)
+
+| Key | Values | Default |
+|-----|--------|---------|
+| `er-theme` | `light` / `dark` | `light` |
+| `er-view` | `grid` / `list` | `grid` |
 
 ---
 
 Created: 2026-01-17
+Updated: 2026-01-17
 System set up with Claude Code
