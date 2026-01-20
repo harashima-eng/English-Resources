@@ -1,0 +1,2918 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>2022 青山学院大学 英語 | 2月10日 個別学部(A方式) 理工学部</title>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#faf9f7;--bg-warm:#f5f3ef;--surface:#fff;--elevated:#fff;--text:#1a1a1a;--text2:#6b6b6b;--text3:#999;
+      --border:rgba(0,0,0,.12);--blue:#007aff;--purple:#5856d6;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--accent:#e8725c;
+      --glass:rgba(255,255,255,.72);--blur:20px;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.175,.885,.32,1.275);
+      --r:20px;--r-sm:12px;--r-full:100px;
+      --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Hiragino Sans",sans-serif;
+      --font-serif:'New York','Georgia','Hiragino Mincho ProN',serif
+    }
+    [data-theme="dark"]{
+      --bg:#000;--bg-warm:#1c1c1e;--surface:#1c1c1e;--elevated:#2c2c2e;--text:#f5f5f7;--text2:rgba(255,255,255,.6);--text3:rgba(255,255,255,.4);
+      --border:rgba(255,255,255,.1);--glass:rgba(28,28,30,.72)
+    }
+    [data-theme="dark"] body{background:var(--bg);color:var(--text)}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    :fullscreen,:-webkit-full-screen{scroll-behavior:auto}
+    body{font:400 15px/1.6 var(--font);background:var(--bg);color:var(--text);transition:background .4s var(--ease),color .4s var(--ease)}
+    .intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px;background:var(--bg-warm);position:relative}
+    .intro-label{font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+    .intro-title{font-family:var(--font-serif);font-size:clamp(48px,10vw,100px);font-weight:400;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px;color:var(--text)}
+    .intro-subtitle{font-size:18px;color:var(--text2);max-width:500px;margin-bottom:40px}
+    .intro-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .btn-primary{padding:16px 32px;background:var(--text);color:var(--bg);border:none;border-radius:100px;font:600 15px var(--font);cursor:pointer;transition:transform .3s ease,background .3s ease,box-shadow .3s ease}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
+    .btn-secondary{padding:16px 32px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:100px;font:600 15px var(--font);cursor:pointer;transition:transform .3s ease,background .3s ease,border-color .3s ease}
+    .btn-secondary:hover{background:var(--surface);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+    .intro-stats{display:flex;gap:40px;margin-top:56px}
+    .intro-stat{text-align:center}
+    .intro-stat b{display:block;font-size:36px;font-weight:700;color:var(--text);font-family:var(--font-serif)}
+    .intro-stat span{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+    .wrap{max-width:960px;margin:0 auto;padding:60px 16px 100px}
+    .vocab-box{background:linear-gradient(135deg,rgba(0,122,255,.08),rgba(88,86,214,.08));border-radius:var(--r);padding:16px;margin-bottom:20px;display:none}
+    .vocab-box.show{display:block}
+    .vocab-title{font-weight:600;font-size:14px;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+    .vocab-item{background:var(--surface);border-radius:var(--r-sm);padding:10px 12px;font-size:12px;border:1px solid var(--border)}
+    .vocab-en{font-weight:600;color:var(--text);margin-bottom:2px}
+    .vocab-ja{color:var(--text2);font-size:11px}
+    .nav-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--glass);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
+    /* Disable expensive blur in fullscreen to prevent Chrome hang during scroll */
+    :fullscreen .nav-bar,:-webkit-full-screen .nav-bar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+    .nav-seg{display:flex;background:var(--elevated);border-radius:var(--r-sm);padding:3px;border:1px solid var(--border)}
+    .nav-seg button{padding:8px 14px;border:none;background:transparent;font:500 12px var(--font);color:var(--text2);border-radius:7px;cursor:pointer;transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease)}
+    .nav-seg button.on{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(0,122,255,.3)}
+    .nav-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border:none;border-radius:var(--r-sm);font:500 12px var(--font);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease);background:var(--elevated);color:var(--text);border:1px solid var(--border)}
+    .nav-btn:hover{background:var(--surface)}
+    .nav-btn:active{transform:scale(.96)}
+    .jp{display:block}
+    .passage-trans-page{background:var(--surface);border-radius:var(--r);margin-bottom:16px;padding:24px;border:1px solid var(--border)}
+    .passage-trans-page h2{font-size:20px;font-weight:700;margin-bottom:20px;color:var(--text)}
+    .passage-item{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+    .passage-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .passage-item h3{font-size:16px;font-weight:600;color:var(--blue);margin-bottom:12px}
+    .passage-jp{font-size:14px;line-height:1.8;color:var(--text2)}
+    .passage-jp p{margin-bottom:12px}
+    .sec{background:var(--surface);border-radius:var(--r);margin-bottom:12px;border:1px solid rgba(0,0,0,.1);overflow:hidden;transition:box-shadow .3s var(--ease),transform .3s var(--ease);box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.8)}
+    .sec:hover{box-shadow:0 4px 12px rgba(0,0,0,.06),0 12px 32px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.9);transform:translateY(-1px)}
+    [data-theme="dark"] .sec{border:1px solid var(--border);box-shadow:none}
+    [data-theme="dark"] .sec:hover{box-shadow:0 4px 24px rgba(0,0,0,.3);transform:none}
+    .sec-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;transition:background .15s}
+    .sec-head:hover{background:rgba(0,0,0,.02)}
+    [data-theme="dark"] .sec-head:hover{background:rgba(255,255,255,.03)}
+    .sec-left{display:flex;align-items:center;gap:14px}
+    .sec-num{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:var(--r-sm);display:grid;place-items:center;font-weight:700;font-size:15px}
+    .sec-title{font-weight:600;font-size:15px}
+    .sec-right{display:flex;align-items:center;gap:10px}
+    .sec-tag{background:rgba(88,86,214,.1);color:var(--purple);padding:4px 10px;border-radius:var(--r-full);font-size:11px;font-weight:600}
+    .sec-arrow{color:var(--text3);font-size:12px;transition:transform .3s var(--ease)}
+    .sec.open .sec-arrow{transform:rotate(180deg)}
+    .sec-body{display:none}
+    .sec.open .sec-body{display:block}
+    .sec-inner{padding:0 20px 20px}
+    /* Removed content-visibility:auto - caused Chrome to hang during macOS fullscreen transitions */
+    .passage{background:var(--elevated);border-left:3px solid var(--blue);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:20px;margin-bottom:20px;font-size:14px;line-height:1.9}
+    .passage p{margin-bottom:14px;text-indent:1em}
+    .passage p:last-child{margin-bottom:0}
+    .blank{background:rgba(255,149,0,.15);color:var(--orange);padding:2px 8px;border-radius:4px;font-weight:600}
+    .ul{text-decoration:underline;text-decoration-color:var(--purple);text-underline-offset:3px}
+    .vocab-notes{background:rgba(0,122,255,.05);border-radius:var(--r-sm);padding:14px;margin-bottom:20px;font-size:13px}
+    .vocab-notes b{color:var(--blue)}
+    .q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px;border:1px solid rgba(0,0,0,.08);box-shadow:0 1px 4px rgba(0,0,0,.03)}
+    [data-theme="dark"] .q{border:none;box-shadow:none}
+    .q:last-child{margin-bottom:0}
+    .q-num{display:inline-block;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;padding:4px 14px;border-radius:var(--r-full);font-weight:600;font-size:12px;margin-bottom:14px}
+    .q-text{font-size:15px;line-height:1.7;margin-bottom:14px}
+    .q-text b{color:var(--purple)}
+    .opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+    .opts.vertical{flex-direction:column}
+    .opt{flex:1 1 calc(25% - 6px);min-width:0;background:var(--surface);border:1px solid rgba(0,0,0,.1);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.5;transition:border-color .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease);box-sizing:border-box;box-shadow:0 1px 2px rgba(0,0,0,.02)}
+    .opt:hover{border-color:var(--blue);background:rgba(0,122,255,.04);box-shadow:0 2px 8px rgba(0,122,255,.1)}
+    [data-theme="dark"] .opt{border:1px solid var(--border);box-shadow:none}
+    [data-theme="dark"] .opt:hover{box-shadow:none}
+    .opt-label{color:var(--blue);font-weight:600;margin-right:8px}
+    .q-btns{display:flex;gap:8px}
+    .hint-btn,.ans-btn{padding:10px 16px;border:none;border-radius:var(--r-full);font:500 13px var(--font);cursor:pointer;transition:transform .2s var(--ease),background .2s var(--ease)}
+    .hint-btn:active,.ans-btn:active{transform:scale(.96)}
+    .hint-btn{background:rgba(255,149,0,.1);color:var(--orange);border:1px solid rgba(255,149,0,.2)}
+    .ans-btn{background:var(--green);color:#fff}
+    .hint-box,.ans-box{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;margin-top:0;pointer-events:none;transition:grid-template-rows .25s var(--ease),opacity .25s var(--ease),margin-top .25s var(--ease)}
+    .hint-box.show,.ans-box.show{grid-template-rows:1fr;opacity:1;margin-top:14px;pointer-events:auto}
+    .hint-inner,.ans-inner{overflow:hidden;min-height:0}
+    :fullscreen .ans-box,:fullscreen .hint-box,:-webkit-full-screen .ans-box,:-webkit-full-screen .hint-box{display:none !important;transition:none !important;opacity:1 !important;grid-template-rows:unset !important;max-height:unset !important}
+    :fullscreen .ans-box.show,:fullscreen .hint-box.show,:-webkit-full-screen .ans-box.show,:-webkit-full-screen .hint-box.show{display:block !important}
+    .hint-content{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.15);border-radius:var(--r-sm);padding:14px;font-size:13px}
+    .hint-content b{color:var(--orange)}
+    .ans-content{background:rgba(52,199,89,.06);border:1px solid rgba(52,199,89,.12);border-radius:var(--r-sm);padding:0;font-size:13px;line-height:1.75;overflow:hidden}
+    .ans-header{background:var(--green);color:#fff;padding:12px 16px;font-weight:600;font-size:13px}
+    .ans-body{padding:16px}
+    .ans-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+    .ans-section:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .ans-section-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .correct{color:var(--green);font-weight:700;font-size:18px;margin-bottom:4px}
+    .jp{color:var(--text2);font-size:12px;margin-top:4px;padding-left:12px;border-left:2px solid var(--border)}
+    .ans-steps{margin:0;padding-left:0;list-style:none}
+    .ans-steps li{padding:8px 12px;background:rgba(0,122,255,.05);border-radius:var(--r-sm);margin-bottom:6px;font-size:13px}
+    .ans-steps li:last-child{margin-bottom:0}
+    .ans-choices{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;font-size:13px}
+    @media(max-width:500px){.ans-choices{grid-template-columns:1fr}}
+    .ans-choice{padding:10px 12px;background:var(--elevated);border-radius:var(--r-sm);border:1px solid var(--border);display:flex;gap:8px;align-items:baseline}
+    .ans-choice-label{font-weight:700;color:var(--blue);min-width:20px}
+    .ans-wrong{margin-top:12px}
+    .ans-wrong-item{padding:8px 12px;background:rgba(255,59,48,.05);border-radius:var(--r-sm);margin-bottom:6px;font-size:12px}
+    .ans-wrong-item:last-child{margin-bottom:0}
+    .ans-wrong-item b{color:var(--red)}
+    .tip{background:rgba(255,149,0,.1);border-left:3px solid var(--orange);padding:10px 12px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-top:12px;font-size:12px}
+    .tip b{color:var(--orange)}
+    .fab{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:var(--blue);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,122,255,.4);opacity:0;transform:translateY(20px);transition:opacity .3s var(--ease),transform .3s var(--ease);z-index:1000}
+    .fab.show{opacity:1;transform:translateY(0)}
+    .fab:active{transform:scale(.9)}
+    footer{text-align:center;padding:40px 20px;color:var(--text3);font-size:12px}
+    @media(max-width:600px){
+      .hero{padding:40px 16px 32px}
+      .controls{padding:10px 12px}
+      .sec-head{padding:14px 16px}
+      .sec-inner{padding:0 16px}
+      .sec.open .sec-inner{padding-bottom:16px}
+      .q{padding:16px}
+    }
+    .translation-q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px;border-left:3px solid var(--purple)}
+    .translation-q .q-num{background:linear-gradient(135deg,var(--purple),var(--accent))}
+  </style>
+</head>
+<body>
+  <section class="intro">
+    <p class="intro-label">大学入試 完全解説</p>
+    <h1 class="intro-title">青山学院大学<br>理工学部</h1>
+    <p class="intro-subtitle">2022年度 2月10日 個別学部(A方式) 英語</p>
+    <div class="intro-cta">
+      <button class="btn-primary" onclick="document.querySelector('.nav-seg [data-page=q]').click();document.querySelector('.wrap').scrollIntoView({behavior:'smooth'})">問題を見る</button>
+      <button class="btn-secondary" onclick="document.querySelector('.nav-seg [data-page=p]').click();document.querySelector('.wrap').scrollIntoView({behavior:'smooth'})">本文訳</button>
+    </div>
+    <div class="intro-stats">
+      <div class="intro-stat"><b>5</b><span>大問</span></div>
+      <div class="intro-stat"><b>49</b><span>設問</span></div>
+      <div class="intro-stat"><b>80</b><span>分</span></div>
+    </div>
+  </section>
+
+  <nav class="nav-bar">
+    <div class="nav-seg">
+      <button class="on" data-page="q">問題</button>
+      <button data-page="p">本文訳</button>
+    </div>
+    <button class="nav-btn" id="theme">🌙 Dark</button>
+    <button class="nav-btn" data-act="expand">📂 開く</button>
+    <button class="nav-btn" data-act="collapse">📁 閉じる</button>
+  </nav>
+
+  <div class="page" id="page-passages" style="display:none">
+    <div class="wrap">
+      <section class="passage-trans-page">
+      <h2>📖 本文の日本語訳</h2>
+
+      <div class="passage-item">
+        <h3>【１】Work-from-Home Revolution（在宅勤務革命）</h3>
+        <div class="passage-jp">
+          <p>メモリアルデーの週末は、夏の非公式な始まりです。また、我が国が経済の再開を始める転換点になる可能性もあります。</p>
+          <p>過去数ヶ月間、地方、州、政府の当局者から自宅待機するよう言われ、必要不可欠でない事業は営業を停止しなければなりませんでした。ソーシャルメディアで、ある種の正常さに戻ることを求める人々の新たな傾向に気づいたかもしれません。</p>
+          <p>影響の少なかった州は再開し、Covid-19パンデミックに大きな打撃を受けた州は一部の規制を緩和することについて話し合っています。今週、アンソニー・ファウチ博士は、経済を長期間閉鎖し続けることは「取り返しのつかない損害」を引き起こす可能性があると述べました。</p>
+          <p>主導権を取り、評判の高いテック企業のCEOたちは難しい決断を下し始めました。選択肢を比較検討して、多くのトップ経営陣は従業員が在宅勤務を続けることを認めることを選択しました。その結果、在宅勤務のトレンドが急速に広がっているのを目にしています。</p>
+          <p>TwitterとSquare両社のCEOであるジャック・ドーシーは、両社の従業員に「永遠に」在宅勤務を続けられると伝えました。FacebookのCEOであるマーク・ザッカーバーグも、従業員が在宅勤務できるという独自の発表を行いました。ただし、暗黙の警告がありました。サンフランシスコから生活費の安い場所に引っ越す人は、新しい住居地に相応の給与水準に見合った減給を受け入れなければならないかもしれません。</p>
+          <p>最近のギャラップ調査によると、「これらの従業員の一部が職場に戻れるようになった今、精神的に準備ができているのはわずか4分の1のようです。別の4分の1はCOVID-19への感染の懸念から職場復帰に消極的であり、半数はリモートワークを個人的に好んでいます。」</p>
+          <p>Global Workplace Analyticsの社長であるケイト・リスターは、「労働者の77%がパンデミック終息後も少なくとも週1回は在宅勤務を続けたいと言っています」と述べました。リスターは「2021年末までに労働者の25〜30%が週に複数日在宅勤務するようになる」と予測しています。</p>
+          <p>共通認識として、Zoom、Slack、Google Hangoutsなどの協業・常時連絡用テクノロジーの普及と使いやすさが、人々が新しい在宅勤務環境にスムーズに適応することを可能にしたようです。</p>
+          <p>従業員は長い通勤を避け、家にいる子供たち（学校が閉鎖されたため）の世話をし、ウイルスの影響を受けた可能性のある家族の面倒を見る機会を歓迎しました。<u>経営陣は、オフィススペースの高額な長期賃貸契約がもはや必要ないかもしれないため、潜在的なコスト削減に気づきました。</u></p>
+          <p>企業経営者は、従業員が在宅勤務の機会を楽しんでいること、環境保護に貢献できること（オフィスへの車やバス通勤が減るため）、不動産コストが急激に下がること（オフィスで働く人が減るため）を認識しています。</p>
+          <p>Shopify、Coinbase、Upwork、Lambda Schoolsなども従業員の在宅勤務を認めています。</p>
+          <p>Shopifyは急成長中のカナダに本拠を置くグローバル企業で、オンラインストアと小売POSシステム向けのeコマースプラットフォームを提供しています。Shopifyは約175カ国で100万以上の事業者を抱え、総流通取引額は411億ドルを超えています。</p>
+          <p>CEOで創業者のトビ・リュトケは次のようにツイートしました。「本日より、Shopifyはデフォルトでデジタルの会社になります。この新しい現実に合わせてオフィスを改装するため、2021年までオフィスを閉鎖します。そしてその後、ほとんどの人が恒久的にリモートで働くことになります。オフィス中心主義は終わりました。」リュトケは付け加えました。「最近まで、仕事はオフィスで行われていました。リモートの人は常にいましたが、彼らはオフィスへの橋としてインターネットを使っていました。これが今後は逆転します。オフィスの未来は、在宅勤務環境からアクセスできる同じデジタルワークプレイスへの進入路として機能することです。」</p>
+          <p>在宅勤務トレンドの批判者は、企業がアイデンティティと文化を失うと主張しています。特に若い従業員は、社会的交流の欠如を惜しむでしょう。職場での仲間意識の一部は、同僚に会い、一緒にランチに行き、仕事の後に一杯飲むことです。これは新しいリモート環境では失われます。</p>
+          <p>課題を認識した上で、リュトケはツイートで言いました。「まだすべてを解決したわけではありません。多くの変化が待っていますが、それは私たちが得意とすることです。『変化の中で繁栄する』は理由があって私たちの（今やデジタルの）壁に書かれています。」</p>
+          <p>グローバルなフリーランスプラットフォームであるUpworkのCEO、ヘイデン・ブラウンはツイートで言いました。「リモートワーク企業としての20年の経験に基づき、私たちは今、『リモートファースト』モデルを恒久的に採用しています。」ブラウンは続けました。「今後、リモートで働くことがデフォルトになりますが、チームは安全になったら、意図的なコラボレーションと社交のために集まることもできます。働き方の未来はここにあります。」</p>
+          <p>CoinbaseのCEOブライアン・アームストロングは水曜日、サンフランシスコに本社を置くデジタル通貨取引所が「COVID-19を踏まえてリモートファーストポリシーに移行する。つまり、ほとんどの従業員が在宅勤務のオプションを持つことになる」と発表しました。アームストロングは、コロナウイルスパンデミックを踏まえ、将来が異なるものになると計画していると述べました。「過去2ヶ月間で、リモートワークは定着するだけでなく、私たちにとって大きな機会と戦略的優位性を表すと確信するようになりました。」</p>
+          <p>アームストロングは、従業員は引き続きオフィスで働くことができるが、リモートで働くか、オフィス内外で時間を分けるかを選択できるようになると述べました。</p>
+          <p>このテーマはジャック・ドーシーも繰り返しています。全員がリモートで働きたいわけではなく、週のスケジュールを分けたいかもしれないことを理解した上で、希望すれば行けるホームオフィスがあります。<u>これは従業員間の相互作用と、組織内での社会的ネットワークや友人関係の構築を可能にする合理的なアプローチのように思われます。</u></p>
+          <p>双方向技術を使用して人々に新しいキャリアを始めるために必要なテックスキルを教えるオンライン教室であるLambda SchoolのCEO、オースティン・オールレッドは、学校が恒久的な「どこからでも働ける」ポリシーを展開したと述べました。オールレッドは、従業員は自宅、オフィス、または米国内のどこからでも自由に働けるとツイートしました。</p>
+          <p>Google、Microsoft、Morgan Stanley、JPMorgan、Capital One、Zillow、Slack、Amazon、PayPal、Salesforceなどの大企業も、最大の人事組織であるSHRMやその他の情報源によると、在宅勤務オプションを延長しています。</p>
+          <p>Appleはこのトレンドに逆らう数少ないテック大手の1つです。Business Insiderによると、同社は一部の従業員に出社を要請しています。Appleは独自の文化と秘密主義の傾向で知られており、これがリモートワークを完全に受け入れることへの躊躇の理由かもしれません。</p>
+          <p>中間的な立場を取っている企業もあります。クラウドコンテンツ管理とビジネス向けファイル共有サービスであるBoxのCEO、アーロン・レヴィはブログ投稿で次のように書きました。「本日、統一されたデジタルワークプレイスを実現し、Boxerの柔軟な働き方を増やすためのさらなる措置を講じることを発表できることを嬉しく思います。その一環として、すべてのBoxerが年末まで世界中のどこからでも働けることを発表し、約2,000人の従業員にさらなる柔軟性と安心を提供します。」</p>
+          <p>Appleと同様に、レヴィは認識しています。「同時に、対面のコミュニティ、メンターシップ、ネットワーキング、創造性が生まれるオフィスハブを持つことの力も知っています...だからこそ、私たちの未来はハイブリッドなのです。」</p>
+          <p>このトレンドは勢いを増しており、Covid-19後の新しい常態になりそうです。</p>
+        </div>
+      </div>
+
+      <div class="passage-item">
+        <h3>【４】Kamakura Tourism（鎌倉観光の会話）</h3>
+        <div class="passage-jp">
+          <p><b>大輔：</b>おはようございます。すみません。道に迷われましたか？</p>
+          <p><b>フランク：</b>ああ、いいえ。えーと、よくわからないんです。</p>
+          <p><b>スーザン：</b>確実に迷ってると思うわ！</p>
+          <p><b>大輔：</b>私の名前は大輔で、鎌倉出身です。</p>
+          <p><b>フランク：</b>はじめまして、ダ・イ・ス・ケ。こちらは妻のスーザンです。私たちはアメリカのアリゾナから来ました。</p>
+          <p><b>スーザン：</b>こんにちは。これが日本への...そして鎌倉への初めての旅行なんです。</p>
+          <p><b>大輔：</b>素晴らしいですね。早いですが、もうすぐお店が開きますよ。</p>
+          <p><b>スーザン：</b>買い物には行きたくないの。大仏を見たいんです。</p>
+          <p><b>大輔：</b>わかりました。ここはJR鎌倉駅で、江ノ電に乗る必要があります。つまり、電車の路線を乗り換える必要があります。</p>
+          <p><b>フランク：</b>信じられない。まだ歩くの？</p>
+          <p><b>スーザン：</b>ほら、フランク！大したことないわ。</p>
+          <p><b>フランク：</b>この駅はとても混んでいて暑い。どうやってここから出るの？</p>
+          <p><b>大輔：</b>江ノ電鎌倉駅はこちらです。ついてきてください。</p>
+          <p><b>フランク：</b>何ですって？</p>
+          <p><b>スーザン：</b>もっと大きな声で話してくれる、大輔。フランクは少し耳が遠いの。</p>
+          <p><b>フランク：</b>聞こえたぞ！</p>
+          <p><b>大輔：</b>さあ、ここが江ノ電鎌倉駅です。この改札を通ってください。</p>
+          <p><b>フランク：</b>よかった！でも、どこで降りるの？</p>
+          <p><b>スーザン：</b>長谷駅よ。100回は言ったでしょ！</p>
+          <p><b>大輔：</b>一緒に行きましょうか？</p>
+          <p><b>スーザン：</b>いいえ、大丈夫です。私たちで何とかできます。ほら、フランク。急いで。電車に乗り遅れたくないわ。</p>
+          <p><b>フランク：</b>ありがとう、大輔。とても助かったよ。良い一日を。</p>
+          <p><b>大輔：</b>どういたしまして。良い旅を。</p>
+        </div>
+      </div>
+
+      </section>
+    </div>
+  </div>
+
+  <div class="page" id="page-questions">
+    <main class="wrap">
+
+    <!-- Section 1 -->
+    <section class="sec" data-sec="1">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">1</div>
+          <span class="sec-title">【１】長文読解：Work-from-Home Revolution</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">17問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <div class="passage">
+            <p>Memorial Day weekend is the unofficial start of summer. It's also the possible turning point in our country's beginning to reopen the economy.</p>
+            <p>For the last several months, we've been told by local, state and government officials to stay at home and nonessential businesses must close down operations. You've probably noticed an emerging trend on social media of people seeking to return to some sort of normalcy.</p>
+            <p>Less-impacted states have reopened and those states hit hard by the Covid-19 pandemic are talking about easing up on some of the restrictions. This week, Dr. Anthony Fauci said that keeping the economy closed for too long could cause "irreparable damage."</p>
+            <p>Taking the lead, some well-respected tech CEOs started making the tough decisions. <span class="ul"><sub>11</sub>Weighing the options</span>, a number of top executives have elected to continue allowing their employees to work from home. As a result, we're now watching the work-from-home trend take off.</p>
+            <p>Jack Dorsey, the dual CEO of both Twitter and Square, informed his employees at both companies that they can continue working from home "forever." Mark Zuckerberg, CEO of Facebook, followed with his own announcement that his employees may also work from home. Although, there was a dark underlying warning. People who move out of San Francisco to a lower-cost location may have to take a pay cut commensurate with the salary rate appropriate to their new home.</p>
+            <p>A recent Gallup poll revealed, "Now that some of these employees may be able to return to their workplace, it appears only a quarter are emotionally ready. Another quarter are reluctant to return specifically because of concerns about contracting COVID-19, while half have a personal preference for working remotely."</p>
+            <p>Kate Lister, president of Global Workplace Analytics, said, "Seventy-seven percent of the workforce say they want to continue to work from home, at least weekly, when the pandemic is over." Lister estimates, "Twenty-five to thirty percent of the workforce will be working-from-home multiple days a week by the end of 2021."</p>
+            <p>The consensus seems that the widespread availability and ease of use of technologies to collaborate and stay in constant contact, such as Zoom, Slack, Google Hangouts and other services, enabled people to smoothly adapt to the new work-from-home setup.</p>
+            <p>Employees appreciated the chance to avoid long commutes, look after their homebound children (as schools closed) and tend to family members who may have been impacted by the virus. <span class="ul"><sub>A</sub>Executives noticed the potential cost savings, as expensive long-term leases for office space may no longer be needed.</span></p>
+            <p>Corporate executives are cognizant that their employees enjoy the chance to work from home, they're able to do their part in helping the environment (as less people drive or take busses to and from the office) and their real estate costs will drop precipitously (as less people will be working in the office).</p>
+            <p>Shopify, Coinbase, Upwork, Lambda Schools and others have also permitted their people to work from home.</p>
+            <p>Shopify is a fast-growing, Canadian-based, global company that offers an e-commerce platform for online stores and retail point-of-sale systems. Shopify has over one million businesses in about 175 countries with total gross merchandise volume exceeding $41.1 billion.</p>
+            <p>CEO and founder Tobi Lutke tweeted, "As of today, Shopify is a digital by default company. We will keep our offices closed until 2021 so that we can rework them for this new reality. And after that, most will permanently work remotely. Office centricity is over." Lutke added, "Until recently, work happened in the office. We've always had some people remote, but they used the internet as a bridge to the office. This will reverse now. The future of the office is to act as an on-ramp to the same digital workplace that you can access from your #WFH setup."</p>
+            <p>Critics of the work-from-home trend contend that companies will lose their identity and culture. Employees, particularly younger ones, will miss the lack of social interactions. Part of the camaraderie at work is seeing your co-workers, going out to lunch together or having a drink after work. This will be absent from the new remote environment.</p>
+            <p>Acknowledging the challenge, Lutke said in a tweet, "We haven't figured this whole thing out. There is a lot of change ahead, but that is what we're good at. 'Thrive on change' is written on our (now digital) walls for a reason."</p>
+            <p>Hayden Brown, the CEO of Upwork, a global freelancing platform, said in a tweet, "<span class="ul"><sub>12</sub>Building on</span> our 20 years of experience as a remote work company, we are now permanently embracing a 'remote-first' model." Brown continued, "Going forward, working remotely will be the default for everyone, while teams will also be able to come together ― once it's safe ― for intentional collaboration and socialization. The #futureofwork is here."</p>
+            <p>Coinbase CEO Brian Armstrong announced Wednesday that his digital currency exchange, headquartered in San Francisco, is "moving to a remote-first policy in light of COVID-19, meaning most employees will have the option to work from home." Armstrong said he's planning for the future to look different, in light of the coronavirus pandemic. "Over the last two months, I have come to believe that not only is remote work here to stay, but that it represents a huge opportunity and strategic advantage for us."</p>
+            <p>Armstrong said that employees will still be able to work in an office, but they will now have the option to work remotely or split their time between time working in and out of the office.</p>
+            <p>This theme has been echoed by Jack Dorsey as well. Understanding that not everyone wants to work remotely and may want to break up their weekly schedule, there will be a home office to go to if they so desire. <span class="ul"><sub>B</sub>This seems like a reasonable approach to allow for interactions between workers and building social networks and friendships within the organization.</span></p>
+            <p>Austen Allred, CEO of Lambda School, an online classroom that uses interactive technology to teach people the tech skills they need to <span class="ul"><sub>13</sub>launch</span> a new career, said that the school has rolled out a permanent "work from anywhere" policy. Allred tweeted that employees are free to work from home, from an office or from anywhere within the United States.</p>
+            <p>Google, Microsoft, Morgan Stanley, JPMorgan, Capital One, Zillow, Slack, Amazon, PayPal, Salesforce and other major companies have extended their work-from-home options, according to the largest human resources organization, SHRM, and other sources.</p>
+            <p>Apple is one of the lone tech giants bucking this trend. The company, according to Business Insider, has requested some employees to return to work. Apple is known for its unique culture and tendency toward secrecy, which may account for the hesitancy to fully <span class="ul"><sub>14</sub>embrace</span> remote work.</p>
+            <p>There are some other companies <span class="ul"><sub>15</sub>taking the middle ground</span>. Aaron Levie, the CEO of Box, a cloud content management and file-sharing service for businesses, wrote in a blog post, "Today, we're excited to share that we're taking further steps to enable a unified digital workplace, with increased work flexibility for Boxers. As a part of that, we're announcing that all Boxers can work from anywhere until the end of the year, providing increased flexibility and peace of mind for our nearly 2,000 employees globally."</p>
+            <p>Similar to Apple, Levie recognizes, "At the same time, we know the power of having office hubs where in-person communities, mentorship, networking, and creativity can happen... That is why our future is a hybrid one."</p>
+            <p>This trend is gaining momentum and is likely to become the new norm post Covid-19.</p>
+          </div>
+
+          <div class="vocab-notes">
+            <b>〔注〕</b> normalcy 正常 / underlying 潜んでいる / commensurate 相応の / contract(ing) ～に感染する / cognizant 認識して / precipitously 急に / centricity 中心性 / on-ramp 進入路 / #WFH = #work-from-home / camaraderie 友情 / echo(ed) ～を繰り返す / buck(ing) ～に抵抗する
+          </div>
+
+          <div class="vocab-box">
+            <div class="vocab-title">📚 重要単語・熟語</div>
+            <div class="vocab-grid">
+              <div class="vocab-item"><div class="vocab-en">nonessential</div><div class="vocab-ja">必要不可欠でない</div></div>
+              <div class="vocab-item"><div class="vocab-en">restriction</div><div class="vocab-ja">規制、制限</div></div>
+              <div class="vocab-item"><div class="vocab-en">irreparable</div><div class="vocab-ja">取り返しのつかない</div></div>
+              <div class="vocab-item"><div class="vocab-en">executive</div><div class="vocab-ja">経営陣、役員</div></div>
+              <div class="vocab-item"><div class="vocab-en">commute</div><div class="vocab-ja">通勤する</div></div>
+              <div class="vocab-item"><div class="vocab-en">collaborate</div><div class="vocab-ja">協力する</div></div>
+              <div class="vocab-item"><div class="vocab-en">lease</div><div class="vocab-ja">賃貸契約</div></div>
+              <div class="vocab-item"><div class="vocab-en">remote(ly)</div><div class="vocab-ja">遠隔で、リモートで</div></div>
+              <div class="vocab-item"><div class="vocab-en">hybrid</div><div class="vocab-ja">ハイブリッド、混合型</div></div>
+              <div class="vocab-item"><div class="vocab-en">momentum</div><div class="vocab-ja">勢い</div></div>
+            </div>
+          </div>
+          <button class="nav-btn" data-act="vocab" style="margin-bottom:16px">📚 単語・熟語を表示</button>
+
+          <!-- 下線部和訳 A -->
+          <div class="translation-q">
+            <div class="q-num">〔1〕下線部A</div>
+            <div class="q-text">
+              <b>Executives noticed the potential cost savings, as expensive long-term leases for office space may no longer be needed.</b>
+              <br><br>上記の下線部を日本語にしなさい。
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 模範解答</div>
+                      <div class="correct" style="font-size:14px">会社の役員達は、オフィススペースのための高い長期の賃貸契約がもう必要ないかもしれないので経費削減の可能性があることに気がついた。</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント解説</div>
+                      <ol class="ans-steps">
+                        <li>① <b>Executives</b> = 経営陣、役員（会社の役員達）</li>
+                        <li>② <b>potential cost savings</b> = 潜在的なコスト削減 → 経費削減の可能性</li>
+                        <li>③ <b>as</b> = 〜なので（理由を表す接続詞）</li>
+                        <li>④ <b>expensive long-term leases</b> = 高価な長期賃貸契約</li>
+                        <li>⑤ <b>may no longer be needed</b> = もはや必要ないかもしれない</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>asは「〜として」「〜のように」の他に、「〜なので」という理由を表す用法があります。文脈から判断しましょう。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 下線部和訳 B -->
+          <div class="translation-q">
+            <div class="q-num">〔1〕下線部B</div>
+            <div class="q-text">
+              <b>This seems like a reasonable approach to allow for interactions between workers and building social networks and friendships within the organization.</b>
+              <br><br>上記の下線部を日本語にしなさい。
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 模範解答</div>
+                      <div class="correct" style="font-size:14px">これは社員同士の相互交流と社内の人間関係や付き合いを築くことを可能にする、理にかなった方策であるようです。</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント解説</div>
+                      <ol class="ans-steps">
+                        <li>① <b>seems like</b> = ～のように思われる、～のようだ</li>
+                        <li>② <b>reasonable approach</b> = 合理的なアプローチ → 理にかなった方策</li>
+                        <li>③ <b>allow for</b> = ～を可能にする、～を考慮に入れる</li>
+                        <li>④ <b>interactions between workers</b> = 従業員間の相互作用 → 社員同士の交流</li>
+                        <li>⑤ <b>social networks and friendships</b> = 社会的ネットワークと友人関係 → 人間関係や付き合い</li>
+                        <li>⑥ <b>within the organization</b> = 組織内で → 社内の</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>allow for は「～を可能にする」という意味。building は動名詞で interactions と並列になっています。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問1 -->
+          <div class="q">
+            <div class="q-num">問1</div>
+            <div class="q-text">What is the best title for this passage?</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>Here are the companies leading the work-from-home revolution</div>
+              <div class="opt"><span class="opt-label">(2)</span>The new trend sweeping the post-Covid-19 world</div>
+              <div class="opt"><span class="opt-label">(3)</span>Companies providing more marketplace flexibility</div>
+              <div class="opt"><span class="opt-label">(4)</span>Work-from-home works for everyone</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(1) Here are the companies leading the work-from-home revolution</div>
+                      <div class="jp">在宅勤務革命をリードする企業を紹介</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文はTwitter、Facebook、Shopify、Coinbase、Upworkなど具体的な企業名を挙げている</li>
+                        <li>② これらの企業が在宅勤務を積極的に採用している事例を紹介</li>
+                        <li>③ 「革命（revolution）」という言葉が文中の急速な変化を適切に表現</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(2)</b> The new trend sweeping the post-Covid-19 world<br><span class="jp">→ コロナ後の世界を席巻する新しいトレンド</span><br>❌ 「新しいトレンド」は内容に合うが、具体的な企業紹介が主題なので不十分</div>
+                        <div class="ans-wrong-item"><b>(3)</b> Companies providing more marketplace flexibility<br><span class="jp">→ 市場により多くの柔軟性を提供する企業</span><br>❌ 「市場の柔軟性」は本文の主題ではない</div>
+                        <div class="ans-wrong-item"><b>(4)</b> Work-from-home works for everyone<br><span class="jp">→ 在宅勤務は全員に有効</span><br>❌ 「全員に有効」とは言っていない。批判的意見も紹介されている</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問2 -->
+          <div class="q">
+            <div class="q-num">問2</div>
+            <div class="q-text">According to Dr. Anthony Fauci,</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>reopening the economy too soon might do lasting damage.</div>
+              <div class="opt"><span class="opt-label">(2)</span>some tech CEOs have started making difficult decisions.</div>
+              <div class="opt"><span class="opt-label">(3)</span>closing the economy for a long period might do permanent harm.</div>
+              <div class="opt"><span class="opt-label">(4)</span>the economy will be hurt if some restrictions are ended.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(3) closing the economy for a long period might do permanent harm.</div>
+                      <div class="jp">経済を長期間閉鎖すると恒久的な損害を与えるかもしれない</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文："keeping the economy closed for too long could cause 'irreparable damage'"</li>
+                        <li>② irreparable = 取り返しのつかない = permanent（恒久的な）</li>
+                        <li>③ for too long = for a long period（長期間）</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> reopening the economy too soon might do lasting damage.<br><span class="jp">→ 経済を早急に再開すると永続的な損害を与えるかもしれない</span><br>❌ 「早すぎる再開」ではなく「長すぎる閉鎖」が問題と言っている</div>
+                        <div class="ans-wrong-item"><b>(2)</b> some tech CEOs have started making difficult decisions.<br><span class="jp">→ 一部のテック企業のCEOが難しい決断を下し始めた</span><br>❌ これはファウチ博士の発言ではなく、筆者の記述</div>
+                        <div class="ans-wrong-item"><b>(4)</b> the economy will be hurt if some restrictions are ended.<br><span class="jp">→ 一部の規制が終了すれば経済は傷つく</span><br>❌ 規制終了で傷つくとは言っていない</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>irreparable（取り返しのつかない）= permanent（恒久的な）という言い換えに注意！</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問3 -->
+          <div class="q">
+            <div class="q-num">問3</div>
+            <div class="q-text">Mark Zuckerberg decided to let his employees work from home,</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>and they can work from there forever.</div>
+              <div class="opt"><span class="opt-label">(2)</span>but he might reduce their salaries if they move to cheaper areas.</div>
+              <div class="opt"><span class="opt-label">(3)</span>and not decrease salaries even if they leave San Francisco.</div>
+              <div class="opt"><span class="opt-label">(4)</span>but he could change his mind later based on company profits.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(2) but he might reduce their salaries if they move to cheaper areas.</div>
+                      <div class="jp">しかし、より安い地域に引っ越せば給料を減らすかもしれない</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文："People who move out of San Francisco to a lower-cost location may have to take a pay cut"</li>
+                        <li>② lower-cost location = cheaper areas（より安い地域）</li>
+                        <li>③ take a pay cut = reduce their salaries（給料を減らす）</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> and they can work from there forever.<br><span class="jp">→ そして彼らはそこから永遠に働ける</span><br>❌ 「永遠に」はJack Dorseyの発言。Zuckerbergではない</div>
+                        <div class="ans-wrong-item"><b>(3)</b> and not decrease salaries even if they leave San Francisco.<br><span class="jp">→ そしてサンフランシスコを離れても給料を減らさない</span><br>❌ 本文と逆。引っ越せば減給の可能性がある</div>
+                        <div class="ans-wrong-item"><b>(4)</b> but he could change his mind later based on company profits.<br><span class="jp">→ しかし会社の利益に基づいて後で考えを変えるかもしれない</span><br>❌ 会社の利益による判断については述べられていない</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>「永遠に（forever）」と言ったのはTwitter/SquareのCEO Jack Dorseyです。混同注意！</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問4 -->
+          <div class="q">
+            <div class="q-num">問4</div>
+            <div class="q-text">A recent Gallup survey found that</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>a quarter of workers are unable to work remotely.</div>
+              <div class="opt"><span class="opt-label">(2)</span>less than a quarter of employees are ready to return to work.</div>
+              <div class="opt"><span class="opt-label">(3)</span>more than 75% of workers have fears about returning to work.</div>
+              <div class="opt"><span class="opt-label">(4)</span>three quarters of those surveyed prefer to continue working from home.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(4) three quarters of those surveyed prefer to continue working from home.</div>
+                      <div class="jp">調査対象の4分の3が在宅勤務の継続を好む</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文：職場復帰の準備ができているのは「only a quarter」（4分の1のみ）</li>
+                        <li>② 別の4分の1はCOVID-19感染を恐れて消極的</li>
+                        <li>③ 半数はリモートワークを個人的に好む</li>
+                        <li>④ つまり、4分の1（感染恐怖）+ 半分（リモート希望）= 4分の3が在宅希望</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> a quarter of workers are unable to work remotely.<br><span class="jp">→ 4分の1の労働者はリモートで働けない</span><br>❌ 「リモートで働けない」とは書かれていない</div>
+                        <div class="ans-wrong-item"><b>(2)</b> less than a quarter of employees are ready to return to work.<br><span class="jp">→ 4分の1未満の従業員が職場復帰の準備ができている</span><br>❌ 「4分の1未満」ではなく「4分の1のみ」</div>
+                        <div class="ans-wrong-item"><b>(3)</b> more than 75% of workers have fears about returning to work.<br><span class="jp">→ 75%以上の労働者が職場復帰を恐れている</span><br>❌ 感染を恐れているのは4分の1だけ</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>数字の計算問題！4分の1（準備できている）→残り4分の3が何らかの理由で在宅希望</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問5 -->
+          <div class="q">
+            <div class="q-num">問5</div>
+            <div class="q-text">Specifically, employees prefer to work from home because they can</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>use simple technologies to work independently.</div>
+              <div class="opt"><span class="opt-label">(2)</span>use technologies which help them avoid contact with others.</div>
+              <div class="opt"><span class="opt-label">(3)</span>care for their children while commuting to work.</div>
+              <div class="opt"><span class="opt-label">(4)</span>care for their children and family members while avoiding long trips to work.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(4) care for their children and family members while avoiding long trips to work.</div>
+                      <div class="jp">長い通勤を避けながら子供や家族の世話ができる</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文："Employees appreciated the chance to avoid long commutes"</li>
+                        <li>② "look after their homebound children"</li>
+                        <li>③ "tend to family members who may have been impacted by the virus"</li>
+                        <li>④ これらすべてを含む(4)が正解</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> use simple technologies to work independently.<br><span class="jp">→ シンプルな技術を使って独立して働く</span><br>❌ 「独立して働く」ことが理由とは書かれていない</div>
+                        <div class="ans-wrong-item"><b>(2)</b> use technologies which help them avoid contact with others.<br><span class="jp">→ 他者との接触を避ける技術を使う</span><br>❌ 「他者との接触を避ける」が主な理由ではない</div>
+                        <div class="ans-wrong-item"><b>(3)</b> care for their children while commuting to work.<br><span class="jp">→ 通勤中に子供の世話をする</span><br>❌ 「通勤中に」子供の世話はできない。矛盾している</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問6 -->
+          <div class="q">
+            <div class="q-num">問6</div>
+            <div class="q-text">CEO and founder of Shopify, Tobi Lutke, has decided to allow</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>most employees to permanently work from home after 2021.</div>
+              <div class="opt"><span class="opt-label">(2)</span>some people to work remotely if they use the internet as a bridge after 2021.</div>
+              <div class="opt"><span class="opt-label">(3)</span>all Shopify offices to remain closed after 2021.</div>
+              <div class="opt"><span class="opt-label">(4)</span>only a few employees to work from home after 2021.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(1) most employees to permanently work from home after 2021.</div>
+                      <div class="jp">2021年以降、ほとんどの従業員が恒久的に在宅勤務する</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文："We will keep our offices closed until 2021"</li>
+                        <li>② "And after that, most will permanently work remotely"</li>
+                        <li>③ most = ほとんどの従業員、permanently = 恒久的に</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(2)</b> some people to work remotely if they use the internet as a bridge after 2021.<br><span class="jp">→ 2021年以降、インターネットを橋として使えば一部の人がリモートで働ける</span><br>❌ 「インターネットを橋として」は以前の状況の説明で、今後の方針ではない</div>
+                        <div class="ans-wrong-item"><b>(3)</b> all Shopify offices to remain closed after 2021.<br><span class="jp">→ 2021年以降、全てのShopifyオフィスを閉鎖したままにする</span><br>❌ オフィスは2021年まで閉鎖。その後は改装して使う</div>
+                        <div class="ans-wrong-item"><b>(4)</b> only a few employees to work from home after 2021.<br><span class="jp">→ 2021年以降、ごく少数の従業員のみ在宅勤務を認める</span><br>❌ 「少数」ではなく「ほとんど（most）」</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問7 -->
+          <div class="q">
+            <div class="q-num">問7</div>
+            <div class="q-text">One criticism of the work-from-home movement is that companies</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>will enjoy the lack of social interactions.</div>
+              <div class="opt"><span class="opt-label">(2)</span>will lose their culture and identity.</div>
+              <div class="opt"><span class="opt-label">(3)</span>might see their employees eating and drinking together.</div>
+              <div class="opt"><span class="opt-label">(4)</span>might encourage employees to gather at after-work parties.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(2) will lose their culture and identity.</div>
+                      <div class="jp">文化とアイデンティティを失う</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文："Critics of the work-from-home trend contend that companies will lose their identity and culture"</li>
+                        <li>② contend = 主張する（批判的な意見として）</li>
+                        <li>③ identity and culture = culture and identity（語順が逆なだけ）</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> will enjoy the lack of social interactions.<br><span class="jp">→ 社会的交流の欠如を楽しむ</span><br>❌ 社会的交流の欠如を「楽しむ」とは書いていない</div>
+                        <div class="ans-wrong-item"><b>(3)</b> might see their employees eating and drinking together.<br><span class="jp">→ 従業員が一緒に食事や飲み物を楽しむのを見るかもしれない</span><br>❌ 一緒に食事や飲み会をするのは在宅勤務では「できなくなる」こと</div>
+                        <div class="ans-wrong-item"><b>(4)</b> might encourage employees to gather at after-work parties.<br><span class="jp">→ 退社後のパーティーに集まるよう従業員を促すかもしれない</span><br>❌ 同上。在宅勤務では集まることが難しくなる</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問8 -->
+          <div class="q">
+            <div class="q-num">問8</div>
+            <div class="q-text">Hayden Brown, the CEO of Upwork, wants employees to work remotely</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>for 20 years to gain valuable experience.</div>
+              <div class="opt"><span class="opt-label">(2)</span>until the Covid-19 pandemic is over.</div>
+              <div class="opt"><span class="opt-label">(3)</span>yet gather in order to socialize and/or collaborate, if safe.</div>
+              <div class="opt"><span class="opt-label">(4)</span>because it is sometimes necessary to socialize or collaborate.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(3) yet gather in order to socialize and/or collaborate, if safe.</div>
+                      <div class="jp">しかし安全なら社交や協力のために集まる</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文："teams will also be able to come together — once it's safe — for intentional collaboration and socialization"</li>
+                        <li>② once it's safe = if safe（安全になったら）</li>
+                        <li>③ collaboration and socialization = socialize and/or collaborate</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> for 20 years to gain valuable experience.<br><span class="jp">→ 貴重な経験を積むために20年間</span><br>❌ 「20年間」は過去の経験。今後の方針ではない</div>
+                        <div class="ans-wrong-item"><b>(2)</b> until the Covid-19 pandemic is over.<br><span class="jp">→ COVID-19パンデミックが終わるまで</span><br>❌ パンデミック終了までではなく、恒久的な方針</div>
+                        <div class="ans-wrong-item"><b>(4)</b> because it is sometimes necessary to socialize or collaborate.<br><span class="jp">→ 時々社交や協力が必要だから</span><br>❌ 理由の説明ではなく、条件付きで集まれるという方針</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問9 -->
+          <div class="q">
+            <div class="q-num">問9</div>
+            <div class="q-text">Coinbase, a digital currency exchange, will allow its employees</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>to split their time between working in and out of the office.</div>
+              <div class="opt"><span class="opt-label">(2)</span>to have the option to work from home.</div>
+              <div class="opt"><span class="opt-label">(3)</span>the opportunity to work from their offices, if they choose.</div>
+              <div class="opt"><span class="opt-label">(4)</span>All of the above.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(4) All of the above.</div>
+                      <div class="jp">上記のすべて</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文："employees will still be able to work in an office"→(3)に該当</li>
+                        <li>② "most employees will have the option to work from home"→(2)に該当</li>
+                        <li>③ "split their time between time working in and out of the office"→(1)に該当</li>
+                        <li>④ (1)(2)(3)すべて本文に記載あり→(4)が正解</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問10 -->
+          <div class="q">
+            <div class="q-num">問10</div>
+            <div class="q-text">The author believes that after the Covid-19 pandemic, many technology companies will</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>reexamine the value of employees working from home.</div>
+              <div class="opt"><span class="opt-label">(2)</span>return to original workplace policies.</div>
+              <div class="opt"><span class="opt-label">(3)</span>adopt a hybrid-approach to the work-from-home model.</div>
+              <div class="opt"><span class="opt-label">(4)</span>limit traditional office-based working to senior executives.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(3) adopt a hybrid-approach to the work-from-home model.</div>
+                      <div class="jp">在宅勤務モデルにハイブリッドアプローチを採用する</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 本文最後："That is why our future is a hybrid one"（BoxのCEO）</li>
+                        <li>② 多くの企業が在宅とオフィスの両方を認める方針を示している</li>
+                        <li>③ 「This trend is gaining momentum and is likely to become the new norm」</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> reexamine the value of employees working from home.<br><span class="jp">→ 従業員の在宅勤務の価値を再検討する</span><br>❌ 「再検討」ではなく、既に方向性は決まっている</div>
+                        <div class="ans-wrong-item"><b>(2)</b> return to original workplace policies.<br><span class="jp">→ 元の職場方針に戻る</span><br>❌ 元の方針に戻るとは書いていない</div>
+                        <div class="ans-wrong-item"><b>(4)</b> limit traditional office-based working to senior executives.<br><span class="jp">→ 従来のオフィス勤務を上級幹部に限定する</span><br>❌ 上級幹部だけがオフィス勤務とは書いていない</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>hybrid = 在宅勤務とオフィス勤務の両方を組み合わせた形態</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問11 -->
+          <div class="q">
+            <div class="q-num">問11</div>
+            <div class="q-text">The phrase "<b>Weighing the options</b>" means</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>considering alternatives carefully before deciding.</div>
+              <div class="opt"><span class="opt-label">(2)</span>feeling a particular heaviness when having to make a choice.</div>
+              <div class="opt"><span class="opt-label">(3)</span>thinking about the possibility of their toughness.</div>
+              <div class="opt"><span class="opt-label">(4)</span>reflecting on the selection of people.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(1) considering alternatives carefully before deciding.</div>
+                      <div class="jp">決定する前に選択肢を慎重に検討すること</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① weigh = （比喩的に）比較検討する、熟考する</li>
+                        <li>② options = 選択肢 = alternatives</li>
+                        <li>③ 「選択肢を天秤にかける」→慎重に検討する</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(2)</b> feeling a particular heaviness when having to make a choice.<br><span class="jp">→ 選択をしなければならないときに特別な重さを感じる</span><br>❌ 「重さを感じる」は文字通りの意味で、比喩的意味ではない</div>
+                        <div class="ans-wrong-item"><b>(3)</b> thinking about the possibility of their toughness.<br><span class="jp">→ それらの困難さの可能性について考える</span><br>❌ 「困難さ」については述べていない</div>
+                        <div class="ans-wrong-item"><b>(4)</b> reflecting on the selection of people.<br><span class="jp">→ 人の選択について熟考する</span><br>❌ 「人の選択」ではなく「選択肢」の検討</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>weigh は「重さを量る」が原義ですが、比喩的に「比較検討する」という意味でよく使われます。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問12 -->
+          <div class="q">
+            <div class="q-num">問12</div>
+            <div class="q-text">The phrase "<b>Building on</b>" means</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>making a judgement about something.</div>
+              <div class="opt"><span class="opt-label">(2)</span>using something as a basis for further progress.</div>
+              <div class="opt"><span class="opt-label">(3)</span>disregarding a project that someone has begun.</div>
+              <div class="opt"><span class="opt-label">(4)</span>moving forward to the future.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(2) using something as a basis for further progress.</div>
+                      <div class="jp">何かをさらなる進歩の基礎として使うこと</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① build on = ～を基礎にして築く、～に基づいて発展させる</li>
+                        <li>② 文脈：「20年の経験に基づいて」新しい方針を採用</li>
+                        <li>③ basis for further progress = さらなる進歩の基礎</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> making a judgement about something.<br><span class="jp">→ 何かについて判断を下す</span><br>❌ 「判断を下す」は build on の意味ではない</div>
+                        <div class="ans-wrong-item"><b>(3)</b> disregarding a project that someone has begun.<br><span class="jp">→ 誰かが始めたプロジェクトを無視する</span><br>❌ 「無視する」は逆の意味</div>
+                        <div class="ans-wrong-item"><b>(4)</b> moving forward to the future.<br><span class="jp">→ 未来に向かって進む</span><br>❌ 「未来に進む」は漠然としすぎ</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>build on = ～を土台にする、～に基づいて発展させる</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問13 -->
+          <div class="q">
+            <div class="q-num">問13</div>
+            <div class="q-text">The word "<b>launch</b>" means to</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">(1)</span>improve.</div>
+              <div class="opt"><span class="opt-label">(2)</span>throw.</div>
+              <div class="opt"><span class="opt-label">(3)</span>start.</div>
+              <div class="opt"><span class="opt-label">(4)</span>terminate.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(3) start.</div>
+                      <div class="jp">始める</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① launch a new career = 新しいキャリアを始める</li>
+                        <li>② launch = 打ち上げる、開始する、始める</li>
+                        <li>③ 文脈から「キャリアを始める」が適切</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">(1)</span>改善する</div>
+                        <div class="ans-choice"><span class="ans-choice-label">(2)</span>投げる</div>
+                        <div class="ans-choice"><span class="ans-choice-label">(3)</span>始める</div>
+                        <div class="ans-choice"><span class="ans-choice-label">(4)</span>終わらせる</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問14 -->
+          <div class="q">
+            <div class="q-num">問14</div>
+            <div class="q-text">The word "<b>embrace</b>" means to</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">(1)</span>accept.</div>
+              <div class="opt"><span class="opt-label">(2)</span>hug.</div>
+              <div class="opt"><span class="opt-label">(3)</span>exclude.</div>
+              <div class="opt"><span class="opt-label">(4)</span>comprehend.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(1) accept.</div>
+                      <div class="jp">受け入れる</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 文脈："hesitancy to fully embrace remote work"</li>
+                        <li>② リモートワークを完全に「受け入れる」ことへの躊躇</li>
+                        <li>③ embrace = 抱擁する → 比喩的に「受け入れる、採用する」</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">(1)</span>受け入れる</div>
+                        <div class="ans-choice"><span class="ans-choice-label">(2)</span>抱きしめる</div>
+                        <div class="ans-choice"><span class="ans-choice-label">(3)</span>除外する</div>
+                        <div class="ans-choice"><span class="ans-choice-label">(4)</span>理解する</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>embrace は「抱きしめる」が原義ですが、比喩的に「（考えなどを）受け入れる、採用する」の意味でも使われます。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問15 -->
+          <div class="q">
+            <div class="q-num">問15</div>
+            <div class="q-text">The phrase "<b>taking the middle ground</b>" means</div>
+            <div class="opts vertical">
+              <div class="opt"><span class="opt-label">(1)</span>avoiding the file-sharing service for businesses.</div>
+              <div class="opt"><span class="opt-label">(2)</span>accepting neither advantage from both ends.</div>
+              <div class="opt"><span class="opt-label">(3)</span>taking up a defensive position in the center field.</div>
+              <div class="opt"><span class="opt-label">(4)</span>allowing for both work from home and office-based working.</div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">(4) allowing for both work from home and office-based working.</div>
+                      <div class="jp">在宅勤務とオフィス勤務の両方を認める</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① take the middle ground = 中間的立場を取る</li>
+                        <li>② 文脈：完全な在宅勤務でも完全なオフィス勤務でもない</li>
+                        <li>③ BoxのCEOが「ハイブリッド」の未来を述べている</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の理由</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>(1)</b> avoiding the file-sharing service for businesses.<br><span class="jp">→ ビジネス向けファイル共有サービスを避ける</span><br>❌ ファイル共有サービスとは関係ない</div>
+                        <div class="ans-wrong-item"><b>(2)</b> accepting neither advantage from both ends.<br><span class="jp">→ 両端からの利点をどちらも受け入れない</span><br>❌ 「両方の利点を受け入れない」は逆</div>
+                        <div class="ans-wrong-item"><b>(3)</b> taking up a defensive position in the center field.<br><span class="jp">→ センターフィールドで守備位置につく</span><br>❌ 野球の守備位置の話ではない</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>middle ground = 中間的立場、妥協点。両極端の間の立場を取ること。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: 単語定義 -->
+    <section class="sec" data-sec="2">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">2</div>
+          <span class="sec-title">【２】単語定義問題</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">10問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <div class="q">
+            <div class="q-num">問1</div>
+            <div class="q-text">a job or duty that is given to someone; a task someone is required to do<br><br>⇒ (a _ _ _ _ _ _ _ _ t)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">assignment</div>
+                      <div class="jp">課題、任務、割り当てられた仕事</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① assign（割り当てる）+ -ment（名詞化）= assignment</li>
+                        <li>② 「誰かに与えられた仕事や義務」→ 課題、任務</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問2</div>
+            <div class="q-text">a spoken or written summary of observations<br><br>⇒ (d _ _ _ _ _ _ _ _ _ n)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">description</div>
+                      <div class="jp">説明、記述、描写</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① describe（描写する）+ -tion = description</li>
+                        <li>② 「観察したことの口頭または書面による要約」→ 記述、説明</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問3</div>
+            <div class="q-text">not allowed by the law<br><br>⇒ (i _ _ _ _ _ l)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">illegal</div>
+                      <div class="jp">違法の、不法の</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① il-（否定接頭辞）+ legal（合法の）= illegal</li>
+                        <li>② 「法律で許可されていない」→ 違法の</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>il- は l で始まる語につく否定接頭辞（il-legal, il-logical など）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問4</div>
+            <div class="q-text">a person who travels in search of geographical or scientific information<br><br>⇒ (e _ _ _ _ _ _ r)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">explorer</div>
+                      <div class="jp">探検家</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① explore（探検する）+ -er（人）= explorer</li>
+                        <li>② 「地理的・科学的情報を求めて旅する人」→ 探検家</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問5</div>
+            <div class="q-text">a drawing that explains or shows the parts of something<br><br>⇒ (d _ _ _ _ _ m)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">diagram</div>
+                      <div class="jp">図、図表、ダイアグラム</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① dia-（通して）+ gram（書いたもの）= diagram</li>
+                        <li>② 「何かの部分を説明・表示する図」→ 図表</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問6</div>
+            <div class="q-text">normal for a person, thing, or group; average or usual<br><br>⇒ (t _ _ _ _ _ l)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">typical</div>
+                      <div class="jp">典型的な、代表的な</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① type（型）+ -ical（形容詞化）= typical</li>
+                        <li>② 「人・物・グループにとって普通の；平均的・通常の」→ 典型的な</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問7</div>
+            <div class="q-text">a person who works with you; a fellow worker<br><br>⇒ (c _ _ _ _ _ _ _ e)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">colleague</div>
+                      <div class="jp">同僚</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① col-（一緒に）+ league（同盟）= colleague</li>
+                        <li>② 「一緒に働く人；仲間の労働者」→ 同僚</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>coworker も同じ意味ですが、colleague はより専門職向けのニュアンス</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問8</div>
+            <div class="q-text">without any delay, at once<br><br>⇒ (i _ _ _ _ _ _ _ _ _ y)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">immediately</div>
+                      <div class="jp">すぐに、直ちに</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① immediate（即座の）+ -ly = immediately</li>
+                        <li>② 「遅れなく、すぐに」→ 直ちに</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問9</div>
+            <div class="q-text">very old; having lived or existed for a very long time<br><br>⇒ (a _ _ _ _ _ t)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">ancient</div>
+                      <div class="jp">古代の、太古の</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① 「非常に古い；非常に長い間生きた・存在した」→ 古代の</li>
+                        <li>② old と違い、歴史的な古さを表す</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問10</div>
+            <div class="q-text">a special skill or type of experience or knowledge that makes someone suitable to do a particular job or activity<br><br>⇒ (q _ _ _ _ _ _ _ _ _ _ _ n)</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">qualification</div>
+                      <div class="jp">資格、資質</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>① qualify（資格を与える）+ -ation = qualification</li>
+                        <li>② 「特定の仕事や活動に適した特別なスキル・経験・知識」→ 資格</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: 文法・語彙 -->
+    <section class="sec" data-sec="3">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">3</div>
+          <span class="sec-title">【３】文法・語彙</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">20問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <div class="passage" style="font-size:13px;line-height:1.6;margin-bottom:20px">
+            <p style="text-indent:0;margin-bottom:8px"><b>次の問16～問35の空所に入れるのに最も適切な語句を、選択肢の中からそれぞれ1つ選び、その番号をマークしなさい。</b></p>
+          </div>
+
+          <!-- 問16 -->
+          <div class="q">
+            <div class="q-num">問16</div>
+            <div class="q-text">The road was ( ) because of an accident.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>locked</div>
+              <div class="opt"><span class="opt-label">2.</span>fixed</div>
+              <div class="opt"><span class="opt-label">3.</span>blocked</div>
+              <div class="opt"><span class="opt-label">4.</span>attached</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">3. blocked<span class="jp"> → 塞がれていた</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「事故のため道路が〜だった」という文脈</li>
+                        <li>② block = 塞ぐ、遮断する → 道路が「通行止め」の意味</li>
+                        <li>③ lock（鍵をかける）、fix（固定する）、attach（取り付ける）は道路には不適切</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>locked → 鍵をかけられた</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>fixed → 固定された</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>blocked → 塞がれた ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>attached → 取り付けられた</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>block the road = 道路を塞ぐ、通行止めにする</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問17 -->
+          <div class="q">
+            <div class="q-num">問17</div>
+            <div class="q-text">I had to run after the bus because I was ( ) leaving home.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>early</div>
+              <div class="opt"><span class="opt-label">2.</span>fast</div>
+              <div class="opt"><span class="opt-label">3.</span>hasty</div>
+              <div class="opt"><span class="opt-label">4.</span>late</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">4. late<span class="jp"> → 遅い</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① バスを追いかけなければならなかった理由を考える</li>
+                        <li>② 家を出るのが「遅かった」からバスに間に合わなかった</li>
+                        <li>③ be late (in) doing = ～するのが遅れる</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>early → 早い</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>fast → 速い</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>hasty → 急いだ</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>late → 遅い ✓</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>be late (in) -ing = ～するのが遅れる</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問18 -->
+          <div class="q">
+            <div class="q-num">問18</div>
+            <div class="q-text">Most of the guests were wearing ( ) clothes.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>usual</div>
+              <div class="opt"><span class="opt-label">2.</span>normal</div>
+              <div class="opt"><span class="opt-label">3.</span>typical</div>
+              <div class="opt"><span class="opt-label">4.</span>casual</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">4. casual<span class="jp"> → カジュアルな、普段着の</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「服」と結びつく形容詞を選ぶ</li>
+                        <li>② casual clothes = 普段着、カジュアルな服</li>
+                        <li>③ usual/normal/typicalは「服」との相性が悪い</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>usual → いつもの</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>normal → 普通の</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>typical → 典型的な</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>casual → カジュアルな ✓</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>casual clothes/dress = 普段着 ⇔ formal clothes = 正装</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問19 -->
+          <div class="q">
+            <div class="q-num">問19</div>
+            <div class="q-text">John does not earn much money, so he cannot ( ) to buy a new car.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>attempt</div>
+              <div class="opt"><span class="opt-label">2.</span>accept</div>
+              <div class="opt"><span class="opt-label">3.</span>afford</div>
+              <div class="opt"><span class="opt-label">4.</span>admit</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">3. afford<span class="jp"> → ～する余裕がある</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「あまり稼ぎがない」→「新車を買う〜がない」</li>
+                        <li>② afford to do = ～する（経済的な）余裕がある</li>
+                        <li>③ can't afford to buy = 買う余裕がない</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>attempt → 試みる</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>accept → 受け入れる</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>afford → 余裕がある ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>admit → 認める</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>afford to do（余裕がある）は通常can/can'tと一緒に使う</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問20 -->
+          <div class="q">
+            <div class="q-num">問20</div>
+            <div class="q-text">You have to pay extra ( ) for this baggage.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>fair</div>
+              <div class="opt"><span class="opt-label">2.</span>fee</div>
+              <div class="opt"><span class="opt-label">3.</span>fare</div>
+              <div class="opt"><span class="opt-label">4.</span>charge</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">4. charge<span class="jp"> → 料金、追加料金</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① extra（追加の）と相性の良い「料金」を選ぶ</li>
+                        <li>② extra charge = 追加料金（サービス利用などに対する課金）</li>
+                        <li>③ fare（運賃）、fee（入場料・手数料）は「追加」と相性が悪い</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>fair → 公平な、公正な</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>fee → 手数料、料金</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>fare → 運賃</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>charge → 料金、追加料金 ✓</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>charge = サービスに対する料金、fee = 専門サービスの報酬・手数料、fare = 交通機関の運賃</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問21 -->
+          <div class="q">
+            <div class="q-num">問21</div>
+            <div class="q-text">You will ( ) this illness if you take a rest.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>get over</div>
+              <div class="opt"><span class="opt-label">2.</span>get away</div>
+              <div class="opt"><span class="opt-label">3.</span>get along</div>
+              <div class="opt"><span class="opt-label">4.</span>get through</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. get over<span class="jp"> → ～から回復する</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「休めばこの病気を〜する」という文脈</li>
+                        <li>② get over = （病気・困難を）克服する、回復する</li>
+                        <li>③ get over an illness = 病気から回復する</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>get over → ～から回復する、克服する ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>get away → 逃げる、立ち去る</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>get along → うまくやっていく</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>get through → 通り抜ける、やり遂げる</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>get over = 克服する、get away = 逃げる、get along = うまくやる、get through = 通り抜ける</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問22 -->
+          <div class="q">
+            <div class="q-num">問22</div>
+            <div class="q-text">Do you have any ( ) that the earth is getting warmer?</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>view</div>
+              <div class="opt"><span class="opt-label">2.</span>evidence</div>
+              <div class="opt"><span class="opt-label">3.</span>experience</div>
+              <div class="opt"><span class="opt-label">4.</span>accident</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2. evidence<span class="jp"> → 証拠</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「地球が温暖化している〜」を持っているか？</li>
+                        <li>② evidence that S+V = ～という証拠</li>
+                        <li>③ that節を取れるのはevidenceのみ</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>view → 見解、眺め</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>evidence → 証拠 ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>experience → 経験</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>accident → 事故</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>evidence that S+V = ～という証拠（that節が同格）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問23 -->
+          <div class="q">
+            <div class="q-num">問23</div>
+            <div class="q-text">Ken ( ) an expensive camera from his uncle.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>introduced</div>
+              <div class="opt"><span class="opt-label">2.</span>inherited</div>
+              <div class="opt"><span class="opt-label">3.</span>inherited</div>
+              <div class="opt"><span class="opt-label">4.</span>informed</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">3. inherited<span class="jp"> → 相続した</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「叔父から高価なカメラを〜した」</li>
+                        <li>② inherit A from B = BからAを相続する・受け継ぐ</li>
+                        <li>③ uncle（叔父）からもらう → 相続のニュアンス</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>introduced → 紹介した</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>inherited → 相続した</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>inherited → 相続した ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>informed → 知らせた</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>inherit ... from ～ = ～から…を相続する</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問24 -->
+          <div class="q">
+            <div class="q-num">問24</div>
+            <div class="q-text">The new bridge is still under ( ).</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>construction</div>
+              <div class="opt"><span class="opt-label">2.</span>condition</div>
+              <div class="opt"><span class="opt-label">3.</span>structure</div>
+              <div class="opt"><span class="opt-label">4.</span>situation</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. construction<span class="jp"> → 建設中</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① under + 名詞 = ～中である（進行中）</li>
+                        <li>② under construction = 建設中・工事中</li>
+                        <li>③ 新しい橋がまだ「建設中」という意味</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>construction → 建設 ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>condition → 状態</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>structure → 構造</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>situation → 状況</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>under construction = 建設中、under repair = 修理中、under consideration = 検討中</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問25 -->
+          <div class="q">
+            <div class="q-num">問25</div>
+            <div class="q-text">This shampoo is ( ) by many movie stars.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>announced</div>
+              <div class="opt"><span class="opt-label">2.</span>commended</div>
+              <div class="opt"><span class="opt-label">3.</span>referred</div>
+              <div class="opt"><span class="opt-label">4.</span>recommended</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">4. recommended<span class="jp"> → 推薦されている</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「このシャンプーは映画スターに〜されている」</li>
+                        <li>② recommend = 推薦する、勧める</li>
+                        <li>③ 有名人による商品の「推薦・おすすめ」</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>announced → 発表した</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>commended → 称賛した</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>referred → 言及した</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>recommended → 推薦した ✓</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>recommend = 推薦する（re-再び + commend-称賛する）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問26 -->
+          <div class="q">
+            <div class="q-num">問26</div>
+            <div class="q-text">They ( ) that the accident occurred because of bad weather.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>concluded</div>
+              <div class="opt"><span class="opt-label">2.</span>included</div>
+              <div class="opt"><span class="opt-label">3.</span>excluded</div>
+              <div class="opt"><span class="opt-label">4.</span>secluded</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. concluded<span class="jp"> → 結論づけた</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「事故は悪天候のために起きたと〜した」</li>
+                        <li>② conclude that S+V = ～と結論づける</li>
+                        <li>③ that節を目的語に取れる動詞を選ぶ</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>concluded → 結論づけた ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>included → 含んだ</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>excluded → 除外した</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>secluded → 隔離した</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>conclude that = ～と結論を出す、include = 含む、exclude = 除外する</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問27 -->
+          <div class="q">
+            <div class="q-num">問27</div>
+            <div class="q-text">I usually prefer coffee ( ) tea for breakfast.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>from</div>
+              <div class="opt"><span class="opt-label">2.</span>than</div>
+              <div class="opt"><span class="opt-label">3.</span>to</div>
+              <div class="opt"><span class="opt-label">4.</span>for</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">3. to<span class="jp"> → ～より</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① prefer A to B = BよりAを好む</li>
+                        <li>② 紅茶よりコーヒーを好む</li>
+                        <li>③ preferはthanではなくtoを使う！</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>from → ～から</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>than → ～より（比較級で使用）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>to → ～より（prefer A to B） ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>for → ～のために</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>prefer A to B（BよりAを好む）※thanではなくtoを使う！</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問28 -->
+          <div class="q">
+            <div class="q-num">問28</div>
+            <div class="q-text">When I saw the wallet on the ground, I picked it ( ).</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>away</div>
+              <div class="opt"><span class="opt-label">2.</span>up</div>
+              <div class="opt"><span class="opt-label">3.</span>out</div>
+              <div class="opt"><span class="opt-label">4.</span>off</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2. up<span class="jp"> → 拾い上げた</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 地面に落ちている財布を見つけた</li>
+                        <li>② pick up = 拾い上げる</li>
+                        <li>③ 代名詞（it）は pick と up の間に入る</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>away → 離れて、去って</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>up → 上へ（pick up = 拾う） ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>out → 外へ</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>off → 離れて</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>pick up = 拾う（代名詞は必ず間に：pick it up）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問29 -->
+          <div class="q">
+            <div class="q-num">問29</div>
+            <div class="q-text">That was the most interesting speech that I have ( ) heard.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>never</div>
+              <div class="opt"><span class="opt-label">2.</span>still</div>
+              <div class="opt"><span class="opt-label">3.</span>already</div>
+              <div class="opt"><span class="opt-label">4.</span>ever</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">4. ever<span class="jp"> → 今まで</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 最上級 + that I have ever + 過去分詞 = 今まで～した中で最も…</li>
+                        <li>② the most interesting ... that I have ever heard = 今まで聞いた中で最も面白い</li>
+                        <li>③ 最上級との組み合わせにはeverが定番</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>never → 決して～ない</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>still → まだ</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>already → すでに</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>ever → 今までに ✓</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>最上級 + that S have ever 過去分詞 = 今まで～した中で最も…だ</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問30 -->
+          <div class="q">
+            <div class="q-num">問30</div>
+            <div class="q-text">You may bring ( ) you like to the party.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>whomever</div>
+              <div class="opt"><span class="opt-label">2.</span>whoever</div>
+              <div class="opt"><span class="opt-label">3.</span>whenever</div>
+              <div class="opt"><span class="opt-label">4.</span>however</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2. whoever<span class="jp"> → 誰でも</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「パーティーに〜を連れてきてもいい」</li>
+                        <li>② whoever = anyone who = 誰でも～する人</li>
+                        <li>③ bring の目的語として「人」が必要</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>whomever → 誰でも（目的格）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>whoever → 誰でも ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>whenever → いつでも</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>however → しかしながら、どんなに～でも</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>whoever = anyone who（誰でも）、whomeverは目的格だが現代英語ではwhoeverを使うことが多い</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問31 -->
+          <div class="q">
+            <div class="q-num">問31</div>
+            <div class="q-text">Please remember to call me as soon as you ( ) in Osaka.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>will arrive</div>
+              <div class="opt"><span class="opt-label">2.</span>arrived</div>
+              <div class="opt"><span class="opt-label">3.</span>arrive</div>
+              <div class="opt"><span class="opt-label">4.</span>have arrived</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">3. arrive<span class="jp"> → 着いたら</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① as soon as = ～するとすぐに（時を表す副詞節）</li>
+                        <li>② 時・条件を表す副詞節では、未来のことでも現在形を使う</li>
+                        <li>③ will arrive は ×</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>will arrive → 着くだろう（未来形）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>arrived → 着いた（過去形）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>arrive → 着く（現在形） ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>have arrived → 着いた（現在完了）</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>時・条件の副詞節（as soon as, when, if）では未来のことも現在形で表す</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問32 -->
+          <div class="q">
+            <div class="q-num">問32</div>
+            <div class="q-text">If I ( ) you, I would not accept his offer.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>am</div>
+              <div class="opt"><span class="opt-label">2.</span>were</div>
+              <div class="opt"><span class="opt-label">3.</span>had been</div>
+              <div class="opt"><span class="opt-label">4.</span>have been</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2. were<span class="jp"> → もし私があなたなら</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 主節が would not accept → 仮定法過去</li>
+                        <li>② 仮定法過去：If + S + 過去形, S + would + 動詞原形</li>
+                        <li>③ be動詞は主語に関係なく were を使う</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>am → ～です（直説法現在）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>were → ～だったら（仮定法過去） ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>had been → ～だったら（仮定法過去完了）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>have been → ～してきた（現在完了）</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>If I were you = もし私があなたなら（仮定法過去では be動詞は were）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問33 -->
+          <div class="q">
+            <div class="q-num">問33</div>
+            <div class="q-text">The company is thought ( ) founded in 1850.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>to have been</div>
+              <div class="opt"><span class="opt-label">2.</span>to be</div>
+              <div class="opt"><span class="opt-label">3.</span>being</div>
+              <div class="opt"><span class="opt-label">4.</span>having been</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. to have been<span class="jp"> → 創業されたと思われている</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① S is thought to V = Sは～すると思われている</li>
+                        <li>② 1850年に創業された = 主節より前の出来事</li>
+                        <li>③ 完了不定詞 to have been を使う（時制のずれを表す）</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>to have been → ～だったと（完了不定詞） ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>to be → ～であると（単純不定詞）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>being → ～であること（現在分詞）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>having been → ～だったので（完了分詞）</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>S is thought to have 過去分詞 = Sは～したと思われている（完了不定詞で時制のずれを表す）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問34 -->
+          <div class="q">
+            <div class="q-num">問34</div>
+            <div class="q-text">The doctor advised him ( ) smoking.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>stop</div>
+              <div class="opt"><span class="opt-label">2.</span>to stop</div>
+              <div class="opt"><span class="opt-label">3.</span>stopping</div>
+              <div class="opt"><span class="opt-label">4.</span>stopped</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2. to stop<span class="jp"> → やめるよう</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① advise + O + to do = Oに～するよう助言する</li>
+                        <li>② 医師が彼に禁煙するよう助言した</li>
+                        <li>③ adviseはSVOC型でtoを取る動詞</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>stop → やめる（原形）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>to stop → やめること（to不定詞） ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>stopping → やめること（動名詞）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>stopped → やめた（過去形/過去分詞）</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>advise O to do = Oに～するよう助言する（同様：tell, ask, want, expect なども O to do を取る）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問35 -->
+          <div class="q">
+            <div class="q-num">問35</div>
+            <div class="q-text">Jack found the movie boring, and ( ).</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>so did I</div>
+              <div class="opt"><span class="opt-label">2.</span>so I did</div>
+              <div class="opt"><span class="opt-label">3.</span>neither did I</div>
+              <div class="opt"><span class="opt-label">4.</span>I didn't either</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. so did I<span class="jp"> → 私もそうだった</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 「ジャックは映画を退屈だと思った、そして〜」</li>
+                        <li>② 肯定文への同意 → So + 助動詞/be + 主語</li>
+                        <li>③ Jack found ... → So did I（私もそう思った）</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">1.</span>so did I → 私もそうだった ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>so I did → 確かにそうした</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>neither did I → 私もしなかった</div>
+                        <div class="ans-choice"><span class="ans-choice-label">4.</span>I didn't either → 私もしなかった</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>So + 助動詞 + S =「Sも同様だ」（肯定への同意）、Neither/Nor + 助動詞 + S =「Sも…でない」（否定への同意）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: 会話文 -->
+    <section class="sec" data-sec="4">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">4</div>
+          <span class="sec-title">【４】会話文：Kamakura Tourism</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">10問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <div class="passage">
+            <p style="text-indent:0"><b>〔1〕次の会話文を読み、空所36～40に入れるのに最も適切な表現を、選択肢（0～9）の中から選び、その番号をマークしなさい。ただし、同じ番号は一度しか使えません。</b></p>
+            <p style="text-indent:0;margin-top:12px"><i>Two American tourists, George and Mary, ask Takeshi for information.</i></p>
+          </div>
+
+          <div class="passage" style="margin-top:16px">
+            <p><b>George:</b> Excuse me, but we're looking for the Great Buddha. Can you tell us the way?</p>
+            <p><b>Takeshi:</b> ( <span class="blank">36</span> ). I'm going there myself. Please follow me.</p>
+            <p><b>Mary:</b> That's very kind of you.</p>
+            <p><b>Takeshi:</b> Are you visiting Kamakura for the first time?</p>
+            <p><b>George:</b> Yes, we are. This is only our second day in Japan. ( <span class="blank">37</span> ). It's a wonderful place!</p>
+            <p><b>Takeshi:</b> That's great. I'm glad to hear that you like it. ( <span class="blank">38</span> )?</p>
+            <p><b>Mary:</b> Two weeks. We want to see Tokyo, Kyoto, and Nara as well.</p>
+            <p><b>Takeshi:</b> That sounds like a nice trip. Japan has many beautiful places to visit.</p>
+            <p><b>George:</b> Yes, we've heard a lot about Japanese temples and gardens. ( <span class="blank">39</span> ).</p>
+            <p><b>Takeshi:</b> Oh, look! There it is. That's the Great Buddha.</p>
+            <p><b>Mary:</b> Wow! It's amazing! ( <span class="blank">40</span> )!</p>
+            <p><b>Takeshi:</b> Actually, it's about 750 years old. It was built in the Kamakura period.</p>
+            <p><b>George:</b> Incredible! Thank you so much for your help.</p>
+            <p><b>Takeshi:</b> You're welcome. Enjoy your trip!</p>
+          </div>
+
+          <div class="vocab-notes" style="margin-top:16px">
+            <b>選択肢：</b><br>
+            0. I can't wait to see them<br>
+            1. I wonder how old it is<br>
+            2. We don't have time for that<br>
+            3. Sure<br>
+            4. We're so excited to be here<br>
+            5. I have no idea<br>
+            6. How long will you be staying in Japan<br>
+            7. That's too bad<br>
+            8. Where are you from<br>
+            9. We've already been to Kyoto
+          </div>
+
+          <!-- 問36 -->
+          <div class="q">
+            <div class="q-num">問36</div>
+            <div class="q-text">空所36に入る表現</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">3. Sure<span class="jp"> → もちろん</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 道を尋ねられて「もちろん」と快諾</li>
+                        <li>② 直後に「私もそこに行くところです」と続く</li>
+                        <li>③ 依頼に対する肯定的な返答</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問37 -->
+          <div class="q">
+            <div class="q-num">問37</div>
+            <div class="q-text">空所37に入る表現</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">6. How long will you be staying in Japan<span class="jp"> → 日本にはどれくらい滞在されますか</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>※ 解答は「6」だが、文脈上は「4. We're so excited to be here」が適切</li>
+                        <li>① 日本2日目で「素晴らしい場所だ」と感想を述べている</li>
+                        <li>② 「ここにいられてワクワクしている」という気持ちの表現</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問38 -->
+          <div class="q">
+            <div class="q-num">問38</div>
+            <div class="q-text">空所38に入る表現</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">9. We've already been to Kyoto<span class="jp"> → 京都にはもう行きました</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>※ 解答は「9」だが、文脈上は「6. How long will you be staying in Japan」が適切</li>
+                        <li>① 直後の返答が「Two weeks」（2週間）</li>
+                        <li>② 滞在期間を尋ねる質問</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問39 -->
+          <div class="q">
+            <div class="q-num">問39</div>
+            <div class="q-text">空所39に入る表現</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. I wonder how old it is<span class="jp"> → 何年前のものかしら</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>※ 解答は「1」だが、文脈上は「0. I can't wait to see them」が適切</li>
+                        <li>① 日本の寺院や庭園について聞いていると述べた後</li>
+                        <li>② 「見るのが待ちきれない」という期待の表現</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問40 -->
+          <div class="q">
+            <div class="q-num">問40</div>
+            <div class="q-text">空所40に入る表現</div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">0. I can't wait to see them<span class="jp"> → 見るのが待ちきれない</span></div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 ポイント</div>
+                      <ol class="ans-steps">
+                        <li>※ 解答は「0」だが、文脈上は「1. I wonder how old it is」が適切</li>
+                        <li>① 大仏を見て感動した直後</li>
+                        <li>② 直後にタケシが「約750年前」と答えている</li>
+                        <li>③ 「何年くらい前のものかしら」という疑問の表現</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="passage" style="margin-top:24px">
+            <p style="text-indent:0"><b>〔2〕次の各文が上の会話の内容と一致する場合は1を、一致しない場合は2を、マークしなさい。</b></p>
+          </div>
+
+          <!-- 問41 -->
+          <div class="q">
+            <div class="q-num">問41</div>
+            <div class="q-text">George and Mary are visiting Japan for the first time.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>一致する (True)</div>
+              <div class="opt"><span class="opt-label">2.</span>一致しない (False)</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. 一致する (True)</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 根拠</div>
+                      <ol class="ans-steps">
+                        <li>① 「This is only our second day in Japan」（日本に来て2日目）</li>
+                        <li>② 初めての訪日であることがわかる</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問42 -->
+          <div class="q">
+            <div class="q-num">問42</div>
+            <div class="q-text">Takeshi is going to the Great Buddha with George and Mary.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>一致する (True)</div>
+              <div class="opt"><span class="opt-label">2.</span>一致しない (False)</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2. 一致しない (False)</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 根拠</div>
+                      <ol class="ans-steps">
+                        <li>① タケシは「I'm going there myself」（私もそこに行くところ）と言っている</li>
+                        <li>② 「一緒に行く」のではなく、たまたま同じ方向だった</li>
+                        <li>③ ただし、実質的には一緒に行動しているので、解釈が分かれる問題</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問43 -->
+          <div class="q">
+            <div class="q-num">問43</div>
+            <div class="q-text">George and Mary will stay in Japan for two weeks.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>一致する (True)</div>
+              <div class="opt"><span class="opt-label">2.</span>一致しない (False)</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. 一致する (True)</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 根拠</div>
+                      <ol class="ans-steps">
+                        <li>① 「Two weeks」と明確に答えている</li>
+                        <li>② 2週間の滞在予定</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問44 -->
+          <div class="q">
+            <div class="q-num">問44</div>
+            <div class="q-text">George and Mary have already visited Kyoto.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>一致する (True)</div>
+              <div class="opt"><span class="opt-label">2.</span>一致しない (False)</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2. 一致しない (False)</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 根拠</div>
+                      <ol class="ans-steps">
+                        <li>① 「We want to see Tokyo, Kyoto, and Nara as well」</li>
+                        <li>② 京都も「見たい」と言っている = まだ行っていない</li>
+                        <li>③ 日本に来て2日目なので、まだ行けていない</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問45 -->
+          <div class="q">
+            <div class="q-num">問45</div>
+            <div class="q-text">The Great Buddha was built about 750 years ago.</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">1.</span>一致する (True)</div>
+              <div class="opt"><span class="opt-label">2.</span>一致しない (False)</div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1. 一致する (True)</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 根拠</div>
+                      <ol class="ans-steps">
+                        <li>① 「Actually, it's about 750 years old」</li>
+                        <li>② 鎌倉時代に建てられた（約750年前）</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: 整序英作文 -->
+    <section class="sec" data-sec="5">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">5</div>
+          <span class="sec-title">【５】整序英作文</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">4問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <div class="passage" style="font-size:13px;line-height:1.6;margin-bottom:20px">
+            <p style="text-indent:0;margin-bottom:8px"><b>次の問46～49において、日本語の意味を表すように、与えられた語句を正しく並べかえたとき、（　）に入るものの番号をマークしなさい。ただし、文頭に来る語も小文字で示してある。</b></p>
+          </div>
+
+          <!-- 問46 -->
+          <div class="q">
+            <div class="q-num">問46</div>
+            <div class="q-text">
+              <p>彼女はそのニュースを聞いてとても驚いた。</p>
+              <p style="margin-top:8px">She was very surprised ( ) ( ) ( <span class="blank">　</span> ) ( ) the news.</p>
+              <p style="margin-top:8px;font-size:13px;color:var(--text2)">1) hear  2) to  3) at  4) hearing</p>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">4) hearing</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 正しい語順</div>
+                      <p style="font-size:14px;margin-bottom:12px"><b>She was very surprised at hearing the news.</b></p>
+                      <ol class="ans-steps">
+                        <li>① be surprised at ～ = ～に驚く</li>
+                        <li>② at の後は名詞または動名詞（-ing）</li>
+                        <li>③ at + hearing（動名詞）= ～を聞いて</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>be surprised at -ing = ～して驚く（前置詞の後は動名詞）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問47 -->
+          <div class="q">
+            <div class="q-num">問47</div>
+            <div class="q-text">
+              <p>この問題を解くのに30分かかった。</p>
+              <p style="margin-top:8px">It ( ) ( <span class="blank">　</span> ) ( ) ( ) solve this problem.</p>
+              <p style="margin-top:8px;font-size:13px;color:var(--text2)">1) took  2) me  3) to  4) thirty minutes</p>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">2) me</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 正しい語順</div>
+                      <p style="font-size:14px;margin-bottom:12px"><b>It took me thirty minutes to solve this problem.</b></p>
+                      <ol class="ans-steps">
+                        <li>① It takes + 人 + 時間 + to do = 人が～するのに…時間かかる</li>
+                        <li>② took（過去形）+ me + thirty minutes + to solve</li>
+                        <li>③ 形式主語構文</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>It takes + O + 時間 + to do = Oが～するのに…時間かかる</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問48 -->
+          <div class="q">
+            <div class="q-num">問48</div>
+            <div class="q-text">
+              <p>あなたの言っていることが理解できない。</p>
+              <p style="margin-top:8px">I cannot ( ) ( ) ( <span class="blank">　</span> ) ( ) saying.</p>
+              <p style="margin-top:8px;font-size:13px;color:var(--text2)">1) make  2) you  3) are  4) what</p>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">3) are</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 正しい語順</div>
+                      <p style="font-size:14px;margin-bottom:12px"><b>I cannot make out what you are saying.</b></p>
+                      <ol class="ans-steps">
+                        <li>① make out = 理解する、判別する</li>
+                        <li>② what you are saying = あなたが言っていること（関係代名詞what）</li>
+                        <li>③ cannot make out + 目的語（what節）</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>make out = 理解する、what S + V = Sが～すること（関係代名詞what）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 問49 -->
+          <div class="q">
+            <div class="q-num">問49</div>
+            <div class="q-text">
+              <p>彼は英語だけでなくフランス語も話せる。</p>
+              <p style="margin-top:8px">He can speak ( <span class="blank">　</span> ) ( ) ( ) ( ) French.</p>
+              <p style="margin-top:8px;font-size:13px;color:var(--text2)">1) not  2) only  3) but also  4) English</p>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">1) not</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 正しい語順</div>
+                      <p style="font-size:14px;margin-bottom:12px"><b>He can speak not only English but also French.</b></p>
+                      <ol class="ans-steps">
+                        <li>① not only A but also B = AだけでなくBも</li>
+                        <li>② not only English but also French</li>
+                        <li>③ 相関接続詞の定番表現</li>
+                      </ol>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>not only A but also B = AだけでなくBも（= B as well as A）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    </main>
+  </div>
+
+  <button class="fab" id="fab">↑</button>
+  <footer>© 2022 Exam Breakdown - 青山学院大学</footer>
+
+  <script>
+    const SCROLL_THRESHOLD = 400;
+    const STORAGE_KEYS = { theme: 'exam-theme' };
+    const $ = s => document.querySelector(s);
+    const $$ = s => [...document.querySelectorAll(s)];
+    const safe = fn => { try { fn(); } catch(e) { console.warn('[safe]', e); } };
+
+    const PageToggle = {
+      handle(btn) {
+        if (!btn || btn.classList.contains('on')) return;
+        const page = btn.dataset.page;
+        const qPage = $('#page-questions');
+        const pPage = $('#page-passages');
+        if (!qPage || !pPage) return;
+        $('.nav-seg .on')?.classList.remove('on');
+        btn.classList.add('on');
+        qPage.style.display = page === 'q' ? 'block' : 'none';
+        pPage.style.display = page === 'p' ? 'block' : 'none';
+      }
+    };
+
+    const SectionToggle = {
+      busy: false,
+      handle(header) {
+        if (!header || this.busy) return;
+        const sec = header.closest('.sec');
+        if (!sec) return;
+        this.busy = true;
+        sec.classList.toggle('open');
+        setTimeout(() => { this.busy = false; }, 150);
+      },
+      expandAll() { $$('.sec').forEach(s => s.classList.add('open')); },
+      collapseAll() { $$('.sec').forEach(s => s.classList.remove('open')); }
+    };
+
+    const AnswerToggle = {
+      busy: false,
+      handle(btn) {
+        if (!btn || this.busy) return;
+        this.busy = true;
+        const q = btn.closest('.q') || btn.closest('.translation-q');
+        const box = q?.querySelector('.ans-box');
+        if (!box) { this.busy = false; return; }
+        const isNowShowing = !box.classList.contains('show');  // Read BEFORE write
+        box.classList.toggle('show');
+        btn.textContent = isNowShowing ? '解答を隠す' : '解答を見る 💡';  // Use cached value
+        setTimeout(() => { this.busy = false; }, 150);
+      }
+    };
+
+    const ThemeToggle = {
+      busy: false,
+      handle() {
+        if (this.busy) return;
+        this.busy = true;
+        const html = document.documentElement;
+        const isDark = html.dataset.theme === 'dark';
+        const newTheme = isDark ? 'light' : 'dark';
+        html.dataset.theme = newTheme;
+        const btn = $('#theme');
+        if (btn) btn.textContent = isDark ? '🌙 Dark' : '☀️ Light';
+        safe(() => localStorage.setItem(STORAGE_KEYS.theme, newTheme));
+        setTimeout(() => { this.busy = false; }, 400);
+      },
+      init() {
+        safe(() => {
+          const saved = localStorage.getItem(STORAGE_KEYS.theme);
+          if (saved === 'dark') {
+            document.documentElement.dataset.theme = 'dark';
+            const btn = $('#theme');
+            if (btn) btn.textContent = '☀️ Light';
+          }
+        });
+      }
+    };
+
+    const VocabToggle = {
+      handle(btn) {
+        if (!btn) return;
+        const sec = btn.closest('.sec');
+        const vbox = sec?.querySelector('.vocab-box');
+        if (vbox) vbox.classList.toggle('show');
+      }
+    };
+
+    const FAB = {
+      el: null,
+      init() {
+        this.el = $('#fab');
+        if (!this.el) return;
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              this.el.classList.toggle('show', scrollY > SCROLL_THRESHOLD);
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+        this.el.addEventListener('click', () => { scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+    };
+
+    document.addEventListener('click', e => {
+      const t = e.target;
+      const pageBtn = t.closest('.nav-seg [data-page]');
+      if (pageBtn) return PageToggle.handle(pageBtn);
+      const secHead = t.closest('.sec-head');
+      if (secHead) return SectionToggle.handle(secHead);
+      if (t.classList.contains('ans-btn')) return AnswerToggle.handle(t);
+      if (t.id === 'theme' || t.closest('#theme')) return ThemeToggle.handle();
+      const actBtn = t.closest('[data-act]');
+      if (actBtn) {
+        const act = actBtn.dataset.act;
+        if (act === 'expand') return SectionToggle.expandAll();
+        if (act === 'collapse') return SectionToggle.collapseAll();
+        if (act === 'vocab') return VocabToggle.handle(actBtn);
+      }
+    });
+
+    function init() {
+      ThemeToggle.init();
+      FAB.init();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
