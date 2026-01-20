@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Day 7: Young People and Adult Responsibilities</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+
+        :root{
+            --bg:#f2f2f7;
+            --card:#fff;
+            --card2:#f5f5f7;
+            --t1:#1d1d1f;
+            --t2:#86868b;
+            --t3:#aeaeb2;
+            --blue:#007aff;
+            --blue-bg:#e5f1ff;
+            --green:#34c759;
+            --green-bg:#e3f9e8;
+            --orange:#ff9500;
+            --orange-bg:#fff4e5;
+            --purple:#af52de;
+            --purple-bg:#f5e6ff;
+            --red:#ff3b30;
+            --red-bg:#ffe5e5;
+            --border:#d1d1d6;
+            --shadow:0 1px 3px rgba(0,0,0,.1);
+        }
+
+        .dark{
+            --bg:#000;
+            --card:#1c1c1e;
+            --card2:#2c2c2e;
+            --t1:#f5f5f7;
+            --t2:#98989d;
+            --t3:#636366;
+            --blue:#0a84ff;
+            --blue-bg:#0a84ff22;
+            --green:#30d158;
+            --green-bg:#30d15822;
+            --orange:#ff9f0a;
+            --orange-bg:#ff9f0a22;
+            --purple:#bf5af2;
+            --purple-bg:#bf5af222;
+            --red:#ff453a;
+            --red-bg:#ff453a22;
+            --border:#38383a;
+            --shadow:0 1px 3px rgba(0,0,0,.3);
+        }
+
+        html{
+            scroll-behavior:smooth;
+            -webkit-text-size-adjust:100%;
+        }
+
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN",sans-serif;
+            font-size:16px;
+            line-height:1.5;
+            background:var(--bg);
+            color:var(--t1);
+            padding:16px;
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+        }
+
+        .hdr{
+            max-width:900px;
+            margin:0 auto 20px;
+            background:var(--card);
+            border-radius:16px;
+            padding:20px;
+            border:1px solid var(--border);
+            box-shadow:var(--shadow);
+            contain:layout style;
+        }
+
+        .hdr-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:12px;
+            flex-wrap:wrap;
+            margin-bottom:16px;
+        }
+
+        .hdr h1{
+            font-size:26px;
+            font-weight:700;
+            letter-spacing:-0.3px;
+        }
+
+        .hdr-sub{
+            font-size:14px;
+            color:var(--t2);
+            margin-top:4px;
+        }
+
+        .btns{
+            display:flex;
+            gap:8px;
+            flex-shrink:0;
+        }
+
+        .btn{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:8px 14px;
+            border-radius:20px;
+            border:none;
+            font-size:14px;
+            font-weight:600;
+            cursor:pointer;
+            transition:opacity .2s;
+            -webkit-tap-highlight-color:transparent;
+        }
+
+        .btn:active{opacity:.7}
+        .btn-dark{background:var(--t1);color:var(--card)}
+        .btn-red{background:var(--red-bg);color:var(--red)}
+
+        .info{
+            background:var(--blue-bg);
+            border-radius:12px;
+            padding:14px;
+            font-size:14px;
+            line-height:1.6;
+        }
+
+        .info b{color:var(--blue)}
+
+        .deadline{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            margin-top:10px;
+            padding:6px 12px;
+            background:var(--red-bg);
+            color:var(--red);
+            border-radius:14px;
+            font-size:13px;
+            font-weight:600;
+        }
+
+        .note{
+            max-width:900px;
+            margin:0 auto 16px;
+            font-size:13px;
+            color:var(--t2);
+        }
+
+        .cards{
+            max-width:900px;
+            margin:0 auto;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .c{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:14px;
+            box-shadow:var(--shadow);
+            overflow:hidden;
+            contain:layout style;
+        }
+
+        .c-h{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:14px 16px;
+            cursor:pointer;
+            -webkit-tap-highlight-color:transparent;
+            user-select:none;
+        }
+
+        .c-h:hover{background:var(--card2)}
+
+        .badge{
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:14px;
+            font-weight:700;
+            flex-shrink:0;
+            background:var(--blue-bg);
+            color:var(--blue);
+        }
+
+        .badge.st{background:var(--green-bg);color:var(--green)}
+        .badge.sm{background:var(--purple-bg);color:var(--purple)}
+        .badge.hp{background:var(--orange-bg);color:var(--orange)}
+
+        .c-info{flex:1;min-width:0}
+        .c-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--blue)}
+        .c-ttl{font-size:15px;font-weight:600;margin-top:2px}
+        .c-jp{font-size:12px;color:var(--t2);margin-top:2px}
+
+        .pill{
+            display:inline-block;
+            padding:2px 8px;
+            border-radius:10px;
+            font-size:10px;
+            font-weight:600;
+            margin-top:6px;
+            background:var(--blue-bg);
+            color:var(--blue);
+        }
+
+        .chv{
+            font-size:14px;
+            color:var(--t3);
+            transition:transform .25s ease;
+            flex-shrink:0;
+        }
+
+        .c.open .chv{transform:rotate(90deg)}
+
+        .c-b{
+            display:grid;
+            grid-template-rows:0fr;
+            transition:grid-template-rows .3s ease;
+        }
+
+        .c.open .c-b{grid-template-rows:1fr}
+
+        .c-b-inner{
+            overflow:hidden;
+        }
+
+        .c-content{
+            padding:0 16px 16px;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .goal{
+            background:var(--orange-bg);
+            border-radius:10px;
+            padding:10px 12px;
+            font-size:13px;
+        }
+
+        .step{
+            background:var(--card2);
+            border-radius:10px;
+            padding:12px 14px;
+        }
+
+        .step-h{
+            font-size:11px;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:.05em;
+            color:var(--orange);
+            margin-bottom:8px;
+        }
+
+        .en{font-size:14px;font-weight:500;margin-bottom:2px}
+        .jp{font-size:12px;color:var(--t2)}
+        .sm{font-size:11px;color:var(--t3);margin-bottom:6px}
+
+        .ls{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:8px;
+            list-style:none;
+        }
+
+        .ls li{
+            background:var(--card);
+            border-radius:8px;
+            padding:10px 12px;
+            border:1px solid var(--border);
+        }
+
+        .voc{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:8px;
+        }
+
+        .voc-i{
+            background:var(--card);
+            border-radius:8px;
+            padding:8px 10px;
+            border:1px solid var(--border);
+        }
+
+        .voc-en{font-size:12px;font-weight:600}
+        .voc-jp{font-size:11px;color:var(--t2)}
+
+        .pat{
+            margin-top:10px;
+            padding:10px 12px;
+            background:var(--purple-bg);
+            border-radius:8px;
+            font-size:12px;
+        }
+
+        .pat code{
+            font-family:ui-monospace,monospace;
+            background:rgba(0,0,0,.05);
+            padding:1px 4px;
+            border-radius:3px;
+            font-size:11px;
+        }
+
+        .dark .pat code{background:rgba(255,255,255,.1)}
+
+        .tpl{
+            background:var(--card2);
+            border-radius:10px;
+            padding:14px;
+            font-size:13px;
+            line-height:1.9;
+        }
+
+        .blank{
+            display:inline-block;
+            min-width:80px;
+            border-bottom:2px solid var(--purple);
+            color:var(--purple);
+            font-style:italic;
+            text-align:center;
+            padding:0 2px;
+        }
+
+        .chk{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:8px;
+        }
+
+        .chk-i{
+            display:flex;
+            align-items:flex-start;
+            gap:8px;
+            background:var(--card);
+            border-radius:8px;
+            padding:10px 12px;
+            font-size:12px;
+            border:1px solid var(--border);
+        }
+
+        .chk-ic{
+            width:18px;
+            height:18px;
+            border-radius:50%;
+            background:var(--green);
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:10px;
+            flex-shrink:0;
+        }
+
+        .ftr{
+            max-width:900px;
+            margin:24px auto 0;
+            text-align:center;
+            font-size:12px;
+            color:var(--t2);
+            padding-top:16px;
+            border-top:1px solid var(--border);
+        }
+
+        @media(max-width:600px){
+            .ls,.voc,.chk{grid-template-columns:1fr}
+            .hdr h1{font-size:22px}
+            .btns{width:100%}
+            .btn{flex:1;justify-content:center}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            *{transition:none!important}
+        }
+    </style>
+</head>
+<body>
+
+<header class="hdr">
+    <div class="hdr-top">
+        <div>
+            <h1>Day 7: Young People and Adult Responsibilities</h1>
+            <p class="hdr-sub">チューターに18歳で大人になることについて質問する7つの会話フロー</p>
+        </div>
+        <div class="btns">
+            <button class="btn btn-red" id="closeAll">✕ Close All</button>
+            <button class="btn btn-dark" id="theme">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="info">
+        🎓 <b>今日のゴール:</b> チューターに質問して、18歳で大人になることについて情報を集める。その後、約100語のサマリーを書く。
+        <div class="deadline">⏰ 締切: 今日 21:00</div>
+    </div>
+</header>
+
+<p class="note">🔍 カードをタップして展開 → STEP 1〜5 の流れで会話してみよう。</p>
+
+<main class="cards">
+
+    <!-- START -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge st">▶</div>
+            <div class="c-info">
+                <div class="c-lbl">CONVERSATION START</div>
+                <div class="c-ttl">会話を始める</div>
+                <div class="c-jp">まず挨拶して、今日のトピックを伝えよう</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：挨拶して、今日聞きたいことを伝える</div>
+            <div class="step">
+                <div class="step-h">🙋 Say to your tutor</div>
+                <ul class="ls">
+                    <li><div class="en">"Hi! Today I'd like to ask you about becoming an adult at age 18."</div><div class="jp">こんにちは！今日は18歳で大人になることについて聞きたいです。</div></li>
+                    <li><div class="en">"Can I ask you some questions about adult responsibilities in your country?"</div><div class="jp">あなたの国の大人の責任についていくつか質問してもいいですか？</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q1 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q1</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT LEGAL AGE</div>
+                <div class="c-ttl">In your country, at what age do people become legal adults?</div>
+                <div class="c-jp">あなたの国では、何歳で法的な成人になりますか？</div>
+                <span class="pill">Legal Age</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：チューターの国の成人年齢を聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"In your country, at what age do people become legal adults?"</div>
+                <div class="jp">あなたの国では、何歳で法的な成人になりますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"In my country, people become adults at 18."</div><div class="jp">私の国では、18歳で成人になります。</div></li>
+                    <li><div class="en">"The legal age is 21 here."</div><div class="jp">ここでは法定年齢は21歳です。</div></li>
+                    <li><div class="en">"We become adults at 18, but can't drink until 21."</div><div class="jp">18歳で成人になりますが、飲酒は21歳までできません。</div></li>
+                    <li><div class="en">"It depends on the activity."</div><div class="jp">活動によって異なります。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <p class="sm">どれか一つでOK。短くていい。</p>
+                <ul class="ls">
+                    <li><div class="en">"I see. That's the same as Japan."</div><div class="jp">なるほど。日本と同じですね。</div></li>
+                    <li><div class="en">"That's interesting. It's different in Japan."</div><div class="jp">面白いですね。日本とは違います。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, we recently changed the legal age from 20 to 18."</div>
+                <div class="jp">日本では、最近成人年齢が20歳から18歳に変わりました。</div>
+                <div class="pat">📝 型：<code>In Japan, the legal age is _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"What rights do people gain at that age?"</div>
+                <div class="jp">その年齢でどんな権利を得られますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">📚 Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">legal adult</span><span class="voc-jp">法的な成人</span></div>
+                    <div class="voc-i"><span class="voc-en">legal age</span><span class="voc-jp">法定年齢</span></div>
+                    <div class="voc-i"><span class="voc-en">come of age</span><span class="voc-jp">成人する</span></div>
+                    <div class="voc-i"><span class="voc-en">turn 18</span><span class="voc-jp">18歳になる</span></div>
+                    <div class="voc-i"><span class="voc-en">depending on</span><span class="voc-jp">〜によって</span></div>
+                    <div class="voc-i"><span class="voc-en">it varies</span><span class="voc-jp">それは様々です</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q2 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q2</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT RIGHTS</div>
+                <div class="c-ttl">What rights do people gain at 18?</div>
+                <div class="c-jp">18歳でどんな権利を得られますか？</div>
+                <span class="pill">Rights</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：成人になると得られる権利を聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"What rights do people gain at 18?"</div>
+                <div class="jp">18歳でどんな権利を得られますか？</div>
+                <p class="sm" style="margin-top:8px">他の聞き方：</p>
+                <ul class="ls">
+                    <li><div class="en">"What can you do when you become an adult?"</div><div class="jp">大人になると何ができますか？</div></li>
+                    <li><div class="en">"What new freedoms do adults have?"</div><div class="jp">大人にはどんな新しい自由がありますか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"You can vote in elections."</div><div class="jp">選挙で投票できます。</div></li>
+                    <li><div class="en">"You can sign contracts without your parents."</div><div class="jp">親なしで契約を結べます。</div></li>
+                    <li><div class="en">"You can get married without permission."</div><div class="jp">許可なしで結婚できます。</div></li>
+                    <li><div class="en">"You can get a driver's license."</div><div class="jp">運転免許を取得できます。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That's a big responsibility."</div><div class="jp">それは大きな責任ですね。</div></li>
+                    <li><div class="en">"Voting is very important."</div><div class="jp">投票はとても大切ですね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, 18-year-olds can now vote and sign contracts too."</div>
+                <div class="jp">日本でも、18歳は今投票や契約ができます。</div>
+                <div class="pat">📝 型：<code>In Japan, 18-year-olds can _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"What new responsibilities do people have when they become adults?"</div>
+                <div class="jp">大人になると、どんな新しい責任がありますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">📚 Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">vote</span><span class="voc-jp">投票する</span></div>
+                    <div class="voc-i"><span class="voc-en">sign a contract</span><span class="voc-jp">契約を結ぶ</span></div>
+                    <div class="voc-i"><span class="voc-en">get married</span><span class="voc-jp">結婚する</span></div>
+                    <div class="voc-i"><span class="voc-en">driver's license</span><span class="voc-jp">運転免許</span></div>
+                    <div class="voc-i"><span class="voc-en">without permission</span><span class="voc-jp">許可なしで</span></div>
+                    <div class="voc-i"><span class="voc-en">freedom</span><span class="voc-jp">自由</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q3 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q3</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT RESPONSIBILITIES</div>
+                <div class="c-ttl">What new responsibilities do people have when they become adults?</div>
+                <div class="c-jp">大人になると、どんな新しい責任がありますか？</div>
+                <span class="pill">Responsibilities</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：大人の責任について聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"What new responsibilities do people have when they become adults?"</div>
+                <div class="jp">大人になると、どんな新しい責任がありますか？</div>
+                <ul class="ls" style="margin-top:8px">
+                    <li><div class="en">"What are adults responsible for?"</div><div class="jp">大人は何に責任を持ちますか？</div></li>
+                    <li><div class="en">"What duties do adults have?"</div><div class="jp">大人にはどんな義務がありますか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"You have to pay taxes."</div><div class="jp">税金を払わなければなりません。</div></li>
+                    <li><div class="en">"You're responsible for your own decisions."</div><div class="jp">自分の決定に責任を持ちます。</div></li>
+                    <li><div class="en">"You can be tried as an adult in court."</div><div class="jp">裁判で大人として裁かれる可能性があります。</div></li>
+                    <li><div class="en">"You have to support yourself financially."</div><div class="jp">経済的に自立しなければなりません。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That sounds like a lot of pressure."</div><div class="jp">プレッシャーが大きそうですね。</div></li>
+                    <li><div class="en">"I agree, that's very important."</div><div class="jp">そうですね、それはとても大切です。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, adults also have to pay taxes and are responsible for their actions."</div>
+                <div class="jp">日本でも、大人は税金を払い、自分の行動に責任を持ちます。</div>
+                <div class="pat">📝 型：<code>In Japan, adults have to _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"What responsibilities do you think are the most important for young adults?"</div>
+                <div class="jp">若い大人にとって最も重要な責任は何だと思いますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">📚 Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">pay taxes</span><span class="voc-jp">税金を払う</span></div>
+                    <div class="voc-i"><span class="voc-en">responsibility</span><span class="voc-jp">責任</span></div>
+                    <div class="voc-i"><span class="voc-en">financial independence</span><span class="voc-jp">経済的自立</span></div>
+                    <div class="voc-i"><span class="voc-en">be tried in court</span><span class="voc-jp">裁判にかけられる</span></div>
+                    <div class="voc-i"><span class="voc-en">make decisions</span><span class="voc-jp">決定を下す</span></div>
+                    <div class="voc-i"><span class="voc-en">support yourself</span><span class="voc-jp">自立する</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q4 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q4</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT MOST IMPORTANT ⭐</div>
+                <div class="c-ttl">What responsibilities do you think are the most important for young adults?</div>
+                <div class="c-jp">若い大人にとって最も重要な責任は何だと思いますか？</div>
+                <span class="pill">Most Important</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：最も重要な責任を聞き出す（⭐サマリーに必須！）</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"What responsibilities do you think are the most important for young adults?"</div>
+                <div class="jp">若い大人にとって最も重要な責任は何だと思いますか？</div>
+                <ul class="ls" style="margin-top:8px">
+                    <li><div class="en">"Which responsibility is the most important?"</div><div class="jp">どの責任が最も重要ですか？</div></li>
+                    <li><div class="en">"What should young adults focus on?"</div><div class="jp">若い大人は何に集中すべきですか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"I think being financially responsible is most important."</div><div class="jp">経済的に責任を持つことが最も重要だと思います。</div></li>
+                    <li><div class="en">"Taking care of your health is crucial."</div><div class="jp">健康管理が重要です。</div></li>
+                    <li><div class="en">"Being a good citizen and voting."</div><div class="jp">良い市民であること、投票すること。</div></li>
+                    <li><div class="en">"Learning to make good decisions."</div><div class="jp">良い決断を学ぶこと。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"I agree with you."</div><div class="jp">私もそう思います。</div></li>
+                    <li><div class="en">"That's a great point."</div><div class="jp">素晴らしい意見ですね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"I think managing money is also very important for young people in Japan."</div>
+                <div class="jp">日本の若者にとってもお金の管理はとても大切だと思います。</div>
+                <div class="pat">📝 型：<code>I think _____ is also very important.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"Do you think young people are ready to vote at 18?"</div>
+                <div class="jp">若者は18歳で投票する準備ができていると思いますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">📚 Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">financially responsible</span><span class="voc-jp">経済的に責任ある</span></div>
+                    <div class="voc-i"><span class="voc-en">crucial</span><span class="voc-jp">重要な</span></div>
+                    <div class="voc-i"><span class="voc-en">good citizen</span><span class="voc-jp">良い市民</span></div>
+                    <div class="voc-i"><span class="voc-en">manage money</span><span class="voc-jp">お金を管理する</span></div>
+                    <div class="voc-i"><span class="voc-en">focus on</span><span class="voc-jp">〜に集中する</span></div>
+                    <div class="voc-i"><span class="voc-en">take care of</span><span class="voc-jp">〜の世話をする</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q5 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q5</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT VOTING</div>
+                <div class="c-ttl">Do you think young people are ready to vote at 18?</div>
+                <div class="c-jp">若者は18歳で投票する準備ができていると思いますか？</div>
+                <span class="pill">Voting</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：18歳での投票についての意見を聞く</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"Do you think young people are ready to vote at 18? Why or why not?"</div>
+                <div class="jp">若者は18歳で投票する準備ができていると思いますか？なぜですか？</div>
+                <ul class="ls" style="margin-top:8px">
+                    <li><div class="en">"Should 18-year-olds be allowed to vote?"</div><div class="jp">18歳は投票を許可されるべきですか？</div></li>
+                    <li><div class="en">"Are teenagers mature enough to vote?"</div><div class="jp">ティーンエイジャーは投票するのに十分成熟していますか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"Yes, I think they can make good decisions."</div><div class="jp">はい、良い決断ができると思います。</div></li>
+                    <li><div class="en">"No, I think they need more life experience."</div><div class="jp">いいえ、もっと人生経験が必要だと思います。</div></li>
+                    <li><div class="en">"It depends on the person."</div><div class="jp">人によると思います。</div></li>
+                    <li><div class="en">"Yes, but they need better education about politics."</div><div class="jp">はい、でも政治についてもっと教育が必要です。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That's an interesting opinion."</div><div class="jp">興味深い意見ですね。</div></li>
+                    <li><div class="en">"I see your point."</div><div class="jp">あなたの言いたいことはわかります。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, many young people don't vote because they're not interested in politics."</div>
+                <div class="jp">日本では、多くの若者は政治に興味がないので投票しません。</div>
+                <div class="pat">📝 型：<code>In Japan, many young people _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"Do laws about drinking or smoking differ in your country?"</div>
+                <div class="jp">あなたの国では飲酒や喫煙の法律は異なりますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">📚 Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">vote</span><span class="voc-jp">投票する</span></div>
+                    <div class="voc-i"><span class="voc-en">mature</span><span class="voc-jp">成熟した</span></div>
+                    <div class="voc-i"><span class="voc-en">life experience</span><span class="voc-jp">人生経験</span></div>
+                    <div class="voc-i"><span class="voc-en">politics</span><span class="voc-jp">政治</span></div>
+                    <div class="voc-i"><span class="voc-en">make decisions</span><span class="voc-jp">決定を下す</span></div>
+                    <div class="voc-i"><span class="voc-en">it depends</span><span class="voc-jp">場合による</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q6 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q6</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT LAWS</div>
+                <div class="c-ttl">Do laws about drinking or smoking differ in your country?</div>
+                <div class="c-jp">あなたの国では飲酒や喫煙の法律は異なりますか？</div>
+                <span class="pill">Laws</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：飲酒・喫煙の法律について聞く</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"Do laws about drinking or smoking differ in your country?"</div>
+                <div class="jp">あなたの国では飲酒や喫煙の法律は異なりますか？</div>
+                <ul class="ls" style="margin-top:8px">
+                    <li><div class="en">"At what age can you drink alcohol?"</div><div class="jp">何歳でお酒を飲めますか？</div></li>
+                    <li><div class="en">"What's the legal drinking age?"</div><div class="jp">法定飲酒年齢は何歳ですか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"The drinking age is 21, but you can vote at 18."</div><div class="jp">飲酒年齢は21歳ですが、18歳で投票できます。</div></li>
+                    <li><div class="en">"You can drink and smoke at 18."</div><div class="jp">18歳で飲酒も喫煙もできます。</div></li>
+                    <li><div class="en">"Smoking is 21 now in my country."</div><div class="jp">私の国では今、喫煙は21歳からです。</div></li>
+                    <li><div class="en">"The rules are the same for everything at 18."</div><div class="jp">18歳ですべて同じルールです。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That's quite different from Japan."</div><div class="jp">日本とはかなり違いますね。</div></li>
+                    <li><div class="en">"Interesting, we have similar rules."</div><div class="jp">面白いですね、似たようなルールがあります。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, you can vote at 18, but drinking and smoking are still 20."</div>
+                <div class="jp">日本では18歳で投票できますが、飲酒と喫煙は20歳のままです。</div>
+                <div class="pat">📝 型：<code>In Japan, you can _____ at 18, but _____ is 20.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"What do you think is the hardest part of becoming an adult?"</div>
+                <div class="jp">大人になることで最も難しいことは何だと思いますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">📚 Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">drinking age</span><span class="voc-jp">飲酒年齢</span></div>
+                    <div class="voc-i"><span class="voc-en">smoking age</span><span class="voc-jp">喫煙年齢</span></div>
+                    <div class="voc-i"><span class="voc-en">alcohol</span><span class="voc-jp">アルコール</span></div>
+                    <div class="voc-i"><span class="voc-en">legal age</span><span class="voc-jp">法定年齢</span></div>
+                    <div class="voc-i"><span class="voc-en">rules</span><span class="voc-jp">ルール</span></div>
+                    <div class="voc-i"><span class="voc-en">differ</span><span class="voc-jp">異なる</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q7 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q7</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT DIFFICULTIES</div>
+                <div class="c-ttl">What do you think is the hardest part of becoming an adult?</div>
+                <div class="c-jp">大人になることで最も難しいことは何だと思いますか？</div>
+                <span class="pill">Difficulties</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：大人になることの難しさを聞く</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"What do you think is the hardest part of becoming an adult?"</div>
+                <div class="jp">大人になることで最も難しいことは何だと思いますか？</div>
+                <ul class="ls" style="margin-top:8px">
+                    <li><div class="en">"Was becoming an adult stressful for you?"</div><div class="jp">大人になることはあなたにとってストレスでしたか？</div></li>
+                    <li><div class="en">"What challenges did you face as a new adult?"</div><div class="jp">新しい大人として、どんな課題に直面しましたか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"Managing money was the hardest for me."</div><div class="jp">私にとってはお金の管理が最も難しかったです。</div></li>
+                    <li><div class="en">"Making important decisions alone was scary."</div><div class="jp">一人で重要な決断をするのが怖かったです。</div></li>
+                    <li><div class="en">"Yes, it was stressful at first."</div><div class="jp">はい、最初はストレスでした。</div></li>
+                    <li><div class="en">"Finding a job and becoming independent."</div><div class="jp">仕事を見つけて自立すること。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"I can imagine that was difficult."</div><div class="jp">それは難しかったと想像できます。</div></li>
+                    <li><div class="en">"Thank you for sharing that."</div><div class="jp">教えてくれてありがとうございます。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"I think many Japanese students worry about finding a job after graduation."</div>
+                <div class="jp">多くの日本の学生は卒業後の就職を心配していると思います。</div>
+            </div>
+            <div class="step">
+                <div class="step-h">📚 Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">hardest part</span><span class="voc-jp">最も難しい部分</span></div>
+                    <div class="voc-i"><span class="voc-en">stressful</span><span class="voc-jp">ストレスの多い</span></div>
+                    <div class="voc-i"><span class="voc-en">challenge</span><span class="voc-jp">課題</span></div>
+                    <div class="voc-i"><span class="voc-en">independent</span><span class="voc-jp">自立した</span></div>
+                    <div class="voc-i"><span class="voc-en">scary</span><span class="voc-jp">怖い</span></div>
+                    <div class="voc-i"><span class="voc-en">worry about</span><span class="voc-jp">〜を心配する</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- END -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge st">✓</div>
+            <div class="c-info">
+                <div class="c-lbl">CONVERSATION END</div>
+                <div class="c-ttl">会話を終える</div>
+                <div class="c-jp">お礼を言って会話を終わろう</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">🙏 Thank your tutor</div>
+                <ul class="ls">
+                    <li><div class="en">"Thank you so much! This was very helpful."</div><div class="jp">ありがとうございました！とても参考になりました。</div></li>
+                    <li><div class="en">"I appreciate you sharing your experiences with me."</div><div class="jp">経験を共有してくれて感謝しています。</div></li>
+                    <li><div class="en">"This will help me write my summary."</div><div class="jp">サマリーを書くのに役立ちます。</div></li>
+                    <li><div class="en">"Have a great day!"</div><div class="jp">良い一日を！</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge sm">✍</div>
+            <div class="c-info">
+                <div class="c-lbl">HOMEWORK</div>
+                <div class="c-ttl">サマリーを書く（約100語）</div>
+                <div class="c-jp">会話で得た情報をまとめよう</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">✅ Requirements</div>
+                <div class="chk">
+                    <div class="chk-i"><span class="chk-ic">1</span><span><b>Legal age and freedoms</b>：成人年齢と得られる権利</span></div>
+                    <div class="chk-i"><span class="chk-ic">2</span><span><b>Responsibilities</b>：大人の責任と最も重要なもの</span></div>
+                    <div class="chk-i"><span class="chk-ic">3</span><span><b>Opinions/Difficulties</b>：投票や大人になることの難しさ</span></div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-h">📤 提出の流れ</div>
+                <div class="chk">
+                    <div class="chk-i"><span class="chk-ic">①</span><span>「手書き採点アシスタント」に提出</span></div>
+                    <div class="chk-i"><span class="chk-ic">②</span><span>フィードバックに基づいて修正</span></div>
+                    <div class="chk-i"><span class="chk-ic">③</span><span>Loilonoteに2つ提出（修正前・後）</span></div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-h">📝 Template</div>
+                <div class="tpl">The tutor, <span class="blank">(Name)</span>, talked about becoming an adult at age 18. In his/her country, people become legal adults at the age of <span class="blank">(age)</span>, and they gain freedoms such as <span class="blank">(freedoms)</span>. When people become adults, they have new responsibilities, including <span class="blank">(responsibilities)</span>, and the tutor thinks the most important responsibility is <span class="blank">(most important)</span>. The tutor also shared that <span class="blank">(opinions/difficulties)</span>.</div>
+            </div>
+
+        </div></div></div>
+    </section>
+
+    <!-- HELP -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge hp">?</div>
+            <div class="c-info">
+                <div class="c-lbl">HELP</div>
+                <div class="c-ttl">聞き取れなかったとき</div>
+                <div class="c-jp">困ったときに使えるフレーズ</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">🤔 When you don't understand</div>
+                <ul class="ls">
+                    <li><div class="en">"Could you say that again?"</div><div class="jp">もう一度言ってもらえますか？</div></li>
+                    <li><div class="en">"Could you speak more slowly?"</div><div class="jp">もう少しゆっくり話してもらえますか？</div></li>
+                    <li><div class="en">"What do you mean by [word]?"</div><div class="jp">[word]とはどういう意味ですか？</div></li>
+                    <li><div class="en">"So the legal age is _____, right?"</div><div class="jp">つまり成人年齢は_____ということですね？</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+</main>
+
+<footer class="ftr">👂 Teacher tip: 「STEP 1＋STEP 3＋STEP 4だけでも十分」と伝えると、苦手な生徒も会話に入りやすくなります。</footer>
+
+<script>
+(function(){
+    'use strict';
+
+    var body, themeBtn, closeBtn, cards;
+
+    try {
+        body = document.body;
+        themeBtn = document.getElementById('theme');
+        closeBtn = document.getElementById('closeAll');
+        cards = document.querySelectorAll('.c');
+    } catch(e) {
+        console.error('DOM init failed:', e);
+        return;
+    }
+
+    function setTheme(dark) {
+        try {
+            body.classList.toggle('dark', dark);
+            themeBtn.textContent = dark ? '☀️ Light' : '🌙 Dark';
+            localStorage.setItem('d7', dark ? '1' : '0');
+        } catch(e) {}
+    }
+
+    try {
+        if (localStorage.getItem('d7') === '1') setTheme(true);
+    } catch(e) {}
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+            setTheme(!body.classList.contains('dark'));
+        }, {passive: true});
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            try {
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i].classList.remove('open');
+                }
+            } catch(e) {}
+        }, {passive: true});
+    }
+
+    document.addEventListener('click', function(e) {
+        try {
+            var header = e.target.closest('.c-h');
+            if (header) {
+                var card = header.closest('.c');
+                if (card) {
+                    card.classList.toggle('open');
+                }
+            }
+        } catch(e) {}
+    }, {passive: true});
+
+})();
+</script>
+</body>
+</html>
