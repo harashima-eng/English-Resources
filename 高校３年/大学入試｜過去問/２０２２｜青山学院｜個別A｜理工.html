@@ -8,9 +8,9 @@
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --bg:#faf9f7;--bg-warm:#f5f3ef;--surface:#fff;--elevated:#fff;--text:#1a1a1a;--text2:#6b6b6b;--text3:#999;
-      --border:rgba(0,0,0,.12);--blue:#007aff;--purple:#5856d6;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--accent:#e8725c;
-      --glass:rgba(255,255,255,.72);--blur:20px;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.175,.885,.32,1.275);
+      --bg:#FFFFE3;--bg-warm:#F5F5D9;--surface:#fff;--elevated:#fff;--text:#4A4A4A;--text2:#6D8196;--text3:#CBCBCB;
+      --border:rgba(74,74,74,.15);--blue:#6D8196;--purple:#5856d6;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--accent:#6D8196;
+      --glass:rgba(255,255,227,.72);--blur:20px;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.175,.885,.32,1.275);
       --r:20px;--r-sm:12px;--r-full:100px;
       --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Hiragino Sans",sans-serif;
       --font-serif:'New York','Georgia','Hiragino Mincho ProN',serif
@@ -20,10 +20,14 @@
       --border:rgba(255,255,255,.1);--glass:rgba(28,28,30,.72)
     }
     [data-theme="dark"] body{background:var(--bg);color:var(--text)}
+    [data-theme="dark"] .intro{background:var(--bg-warm)}
+    [data-theme="dark"] .ans-content{background:rgba(52,199,89,.08);border-color:rgba(52,199,89,.2)}
+    [data-theme="dark"] .ans-content:hover{box-shadow:0 4px 20px rgba(0,0,0,.3);border-color:rgba(52,199,89,.4)}
+    [data-theme="dark"] .ans-body{background:rgba(52,199,89,.04)}
     html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
     :fullscreen,:-webkit-full-screen{scroll-behavior:auto}
-    body{font:400 15px/1.6 var(--font);background:var(--bg);color:var(--text);transition:background .4s var(--ease),color .4s var(--ease)}
-    .intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px;background:var(--bg-warm);position:relative}
+    body{font:400 15px/1.6 var(--font);background:linear-gradient(145deg, #FFFFE3 0%, #F5F5D9 50%, #FFFFE3 100%);color:var(--text);transition:background .4s var(--ease),color .4s var(--ease);will-change:background}
+    .intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px;background:radial-gradient(ellipse at top, #FFFFE3 0%, #F5F5D9 70%);position:relative}
     .intro-label{font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
     .intro-title{font-family:var(--font-serif);font-size:clamp(48px,10vw,100px);font-weight:400;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px;color:var(--text)}
     .intro-subtitle{font-size:18px;color:var(--text2);max-width:500px;margin-bottom:40px}
@@ -45,14 +49,21 @@
     .vocab-en{font-weight:600;color:var(--text);margin-bottom:2px}
     .vocab-ja{color:var(--text2);font-size:11px}
     .nav-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--glass);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
-    /* Disable expensive blur in fullscreen to prevent Chrome hang during scroll */
     :fullscreen .nav-bar,:-webkit-full-screen .nav-bar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
     .nav-seg{display:flex;background:var(--elevated);border-radius:var(--r-sm);padding:3px;border:1px solid var(--border)}
     .nav-seg button{padding:8px 14px;border:none;background:transparent;font:500 12px var(--font);color:var(--text2);border-radius:7px;cursor:pointer;transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease)}
     .nav-seg button.on{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(0,122,255,.3)}
+    .nav-seg button:not(.on):hover{background:rgba(255,255,255,.1);color:var(--text)}
+    .nav-label{padding:8px 12px;font:500 12px var(--font);color:var(--text2);opacity:0.5;letter-spacing:0.5px;user-select:none}
     .nav-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border:none;border-radius:var(--r-sm);font:500 12px var(--font);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease);background:var(--elevated);color:var(--text);border:1px solid var(--border)}
     .nav-btn:hover{background:var(--surface)}
     .nav-btn:active{transform:scale(.96)}
+    .view{display:none}
+    .view.active{display:block}
+    .sec-header{display:flex;align-items:center;gap:14px;padding:20px;margin-bottom:20px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border)}
+    .sec-num{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:var(--r-sm);display:grid;place-items:center;font-weight:700;font-size:15px}
+    .sec-title{font-weight:600;font-size:15px}
+    .sec-tag{background:rgba(88,86,214,.1);color:var(--purple);padding:4px 10px;border-radius:var(--r-full);font-size:11px;font-weight:600;margin-left:auto}
     .jp{display:block}
     .passage-trans-page{background:var(--surface);border-radius:var(--r);margin-bottom:16px;padding:24px;border:1px solid var(--border)}
     .passage-trans-page h2{font-size:20px;font-weight:700;margin-bottom:20px;color:var(--text)}
@@ -61,24 +72,6 @@
     .passage-item h3{font-size:16px;font-weight:600;color:var(--blue);margin-bottom:12px}
     .passage-jp{font-size:14px;line-height:1.8;color:var(--text2)}
     .passage-jp p{margin-bottom:12px}
-    .sec{background:var(--surface);border-radius:var(--r);margin-bottom:12px;border:1px solid rgba(0,0,0,.1);overflow:hidden;transition:box-shadow .3s var(--ease),transform .3s var(--ease);box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.8)}
-    .sec:hover{box-shadow:0 4px 12px rgba(0,0,0,.06),0 12px 32px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.9);transform:translateY(-1px)}
-    [data-theme="dark"] .sec{border:1px solid var(--border);box-shadow:none}
-    [data-theme="dark"] .sec:hover{box-shadow:0 4px 24px rgba(0,0,0,.3);transform:none}
-    .sec-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;transition:background .15s}
-    .sec-head:hover{background:rgba(0,0,0,.02)}
-    [data-theme="dark"] .sec-head:hover{background:rgba(255,255,255,.03)}
-    .sec-left{display:flex;align-items:center;gap:14px}
-    .sec-num{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:var(--r-sm);display:grid;place-items:center;font-weight:700;font-size:15px}
-    .sec-title{font-weight:600;font-size:15px}
-    .sec-right{display:flex;align-items:center;gap:10px}
-    .sec-tag{background:rgba(88,86,214,.1);color:var(--purple);padding:4px 10px;border-radius:var(--r-full);font-size:11px;font-weight:600}
-    .sec-arrow{color:var(--text3);font-size:12px;transition:transform .3s var(--ease)}
-    .sec.open .sec-arrow{transform:rotate(180deg)}
-    .sec-body{display:none}
-    .sec.open .sec-body{display:block}
-    .sec-inner{padding:0 20px 20px}
-    /* Removed content-visibility:auto - caused Chrome to hang during macOS fullscreen transitions */
     .passage{background:var(--elevated);border-left:3px solid var(--blue);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:20px;margin-bottom:20px;font-size:14px;line-height:1.9}
     .passage p{margin-bottom:14px;text-indent:1em}
     .passage p:last-child{margin-bottom:0}
@@ -86,15 +79,18 @@
     .ul{text-decoration:underline;text-decoration-color:var(--purple);text-underline-offset:3px}
     .vocab-notes{background:rgba(0,122,255,.05);border-radius:var(--r-sm);padding:14px;margin-bottom:20px;font-size:13px}
     .vocab-notes b{color:var(--blue)}
-    .q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px;border:1px solid rgba(0,0,0,.08);box-shadow:0 1px 4px rgba(0,0,0,.03)}
-    [data-theme="dark"] .q{border:none;box-shadow:none}
+    .q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px;border:1px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.02);transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
+    .q:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:rgba(0,122,255,.15)}
+    [data-theme="dark"] .q{border:1px solid var(--border);box-shadow:none}
+    [data-theme="dark"] .q:hover{box-shadow:0 4px 20px rgba(0,0,0,.3);border-color:rgba(255,255,255,.1)}
+    [data-theme="dark"] .translation-q:hover{box-shadow:0 4px 20px rgba(0,0,0,.3)}
     .q:last-child{margin-bottom:0}
     .q-num{display:inline-block;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;padding:4px 14px;border-radius:var(--r-full);font-weight:600;font-size:12px;margin-bottom:14px}
     .q-text{font-size:15px;line-height:1.7;margin-bottom:14px}
     .q-text b{color:var(--purple)}
     .opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
     .opts.vertical{flex-direction:column}
-    .opt{flex:1 1 calc(25% - 6px);min-width:0;background:var(--surface);border:1px solid rgba(0,0,0,.1);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.5;transition:border-color .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease);box-sizing:border-box;box-shadow:0 1px 2px rgba(0,0,0,.02)}
+    .opt{flex:1 1 calc(25% - 6px);min-width:0;background:var(--surface);border:1px solid rgba(0,0,0,.15);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.5;transition:border-color .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease),transform .2s var(--ease);box-sizing:border-box;box-shadow:0 1px 3px rgba(0,0,0,.05);will-change:transform,box-shadow;transform:translateZ(0)}
     .opt:hover{border-color:var(--blue);background:rgba(0,122,255,.04);box-shadow:0 2px 8px rgba(0,122,255,.1)}
     [data-theme="dark"] .opt{border:1px solid var(--border);box-shadow:none}
     [data-theme="dark"] .opt:hover{box-shadow:none}
@@ -104,16 +100,19 @@
     .hint-btn:active,.ans-btn:active{transform:scale(.96)}
     .hint-btn{background:rgba(255,149,0,.1);color:var(--orange);border:1px solid rgba(255,149,0,.2)}
     .ans-btn{background:var(--green);color:#fff}
-    .hint-box,.ans-box{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;margin-top:0;pointer-events:none;transition:grid-template-rows .25s var(--ease),opacity .25s var(--ease),margin-top .25s var(--ease)}
+    .ans-btn:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(52,199,89,.25)}
+    .hint-btn:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(255,149,0,.2)}
+    .hint-box,.ans-box{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;margin-top:0;pointer-events:none;transition:grid-template-rows .25s var(--ease),opacity .25s var(--ease),margin-top .25s var(--ease);will-change:grid-template-rows,opacity}
     .hint-box.show,.ans-box.show{grid-template-rows:1fr;opacity:1;margin-top:14px;pointer-events:auto}
     .hint-inner,.ans-inner{overflow:hidden;min-height:0}
     :fullscreen .ans-box,:fullscreen .hint-box,:-webkit-full-screen .ans-box,:-webkit-full-screen .hint-box{display:none !important;transition:none !important;opacity:1 !important;grid-template-rows:unset !important;max-height:unset !important}
     :fullscreen .ans-box.show,:fullscreen .hint-box.show,:-webkit-full-screen .ans-box.show,:-webkit-full-screen .hint-box.show{display:block !important}
     .hint-content{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.15);border-radius:var(--r-sm);padding:14px;font-size:13px}
     .hint-content b{color:var(--orange)}
-    .ans-content{background:rgba(52,199,89,.06);border:1px solid rgba(52,199,89,.12);border-radius:var(--r-sm);padding:0;font-size:13px;line-height:1.75;overflow:hidden}
-    .ans-header{background:var(--green);color:#fff;padding:12px 16px;font-weight:600;font-size:13px}
-    .ans-body{padding:16px}
+    .ans-content{background:linear-gradient(180deg, rgba(52,199,89,.04) 0%, rgba(255,255,227,.5) 100%);border:1px solid rgba(52,199,89,.12);border-radius:var(--r-sm);padding:0;font-size:13px;line-height:1.75;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease);will-change:transform}
+    .ans-content:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(52,199,89,.12);border-color:rgba(52,199,89,.25)}
+    .ans-header{background:linear-gradient(135deg, #34c759 0%, #2aa54a 100%);color:#fff;padding:12px 16px;font-weight:600;font-size:13px}
+    .ans-body{padding:16px;background:rgba(255,255,227,.4)}
     .ans-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
     .ans-section:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
     .ans-section-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
@@ -139,42 +138,55 @@
     @media(max-width:600px){
       .hero{padding:40px 16px 32px}
       .controls{padding:10px 12px}
-      .sec-head{padding:14px 16px}
-      .sec-inner{padding:0 16px}
-      .sec.open .sec-inner{padding-bottom:16px}
       .q{padding:16px}
     }
-    .translation-q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px;border-left:3px solid var(--purple)}
+    .translation-q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px;border-left:3px solid var(--purple);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+    .translation-q:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
     .translation-q .q-num{background:linear-gradient(135deg,var(--purple),var(--accent))}
   </style>
 </head>
 <body>
-  <section class="intro">
-    <p class="intro-label">大学入試 完全解説</p>
-    <h1 class="intro-title">青山学院大学<br>理工学部</h1>
-    <p class="intro-subtitle">2022年度 2月10日 個別学部(A方式) 英語</p>
-    <div class="intro-cta">
-      <button class="btn-primary" onclick="document.querySelector('.nav-seg [data-page=q]').click();document.querySelector('.wrap').scrollIntoView({behavior:'smooth'})">問題を見る</button>
-      <button class="btn-secondary" onclick="document.querySelector('.nav-seg [data-page=p]').click();document.querySelector('.wrap').scrollIntoView({behavior:'smooth'})">本文訳</button>
-    </div>
-    <div class="intro-stats">
-      <div class="intro-stat"><b>5</b><span>大問</span></div>
-      <div class="intro-stat"><b>49</b><span>設問</span></div>
-      <div class="intro-stat"><b>80</b><span>分</span></div>
-    </div>
-  </section>
 
   <nav class="nav-bar">
     <div class="nav-seg">
-      <button class="on" data-page="q">問題</button>
-      <button data-page="p">本文訳</button>
+      <button class="on" data-view="start">Start</button>
+    </div>
+    <div class="nav-seg">
+      <button data-view="sec-1">問題</button>
+    </div>
+    <div class="nav-seg">
+      <button data-view="sec-1">1</button>
+      <button data-view="sec-2">2</button>
+      <button data-view="sec-3">3</button>
+      <button data-view="sec-4">4</button>
+      <button data-view="sec-5">5</button>
+    </div>
+    <div class="nav-seg">
+      <button data-view="passages">本文訳</button>
     </div>
     <button class="nav-btn" id="theme">🌙 Dark</button>
-    <button class="nav-btn" data-act="expand">📂 開く</button>
-    <button class="nav-btn" data-act="collapse">📁 閉じる</button>
   </nav>
 
-  <div class="page" id="page-passages" style="display:none">
+  <!-- View: Start -->
+  <div class="view active" id="view-start">
+    <section class="intro">
+      <p class="intro-label">大学入試 完全解説</p>
+      <h1 class="intro-title">青山学院大学<br>理工学部</h1>
+      <p class="intro-subtitle">2022年度 2月10日 個別学部(A方式) 英語</p>
+      <div class="intro-cta">
+        <button class="btn-primary" onclick="document.querySelector('[data-view=sec-1]').click()">問題を見る</button>
+        <button class="btn-secondary" onclick="document.querySelector('[data-view=passages]').click()">本文訳</button>
+      </div>
+      <div class="intro-stats">
+        <div class="intro-stat"><b>5</b><span>大問</span></div>
+        <div class="intro-stat"><b>49</b><span>設問</span></div>
+        <div class="intro-stat"><b>80</b><span>分</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- View: Passages -->
+  <div class="view" id="view-passages">
     <div class="wrap">
       <section class="passage-trans-page">
       <h2>📖 本文の日本語訳</h2>
@@ -243,23 +255,14 @@
     </div>
   </div>
 
-  <div class="page" id="page-questions">
+  <!-- View: Section 1 -->
+  <div class="view" id="view-sec-1">
     <main class="wrap">
-
-    <!-- Section 1 -->
-    <section class="sec" data-sec="1">
-      <div class="sec-head">
-        <div class="sec-left">
-          <div class="sec-num">1</div>
-          <span class="sec-title">【１】長文読解：Work-from-Home Revolution</span>
-        </div>
-        <div class="sec-right">
-          <span class="sec-tag">17問</span>
-          <span class="sec-arrow">▼</span>
-        </div>
+      <div class="sec-header">
+        <div class="sec-num">1</div>
+        <span class="sec-title">【１】長文読解：Work-from-Home Revolution</span>
+        <span class="sec-tag">17問</span>
       </div>
-      <div class="sec-body">
-        <div class="sec-inner">
 
           <div class="passage">
             <p>Memorial Day weekend is the unofficial start of summer. It's also the possible turning point in our country's beginning to reopen the economy.</p>
@@ -1063,24 +1066,17 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </section>
+    </main>
+  </div>
 
-    <!-- Section 2: 単語定義 -->
-    <section class="sec" data-sec="2">
-      <div class="sec-head">
-        <div class="sec-left">
-          <div class="sec-num">2</div>
-          <span class="sec-title">【２】単語定義問題</span>
-        </div>
-        <div class="sec-right">
-          <span class="sec-tag">10問</span>
-          <span class="sec-arrow">▼</span>
-        </div>
+  <!-- View: Section 2 -->
+  <div class="view" id="view-sec-2">
+    <main class="wrap">
+      <div class="sec-header">
+        <div class="sec-num">2</div>
+        <span class="sec-title">【２】単語定義問題</span>
+        <span class="sec-tag">10問</span>
       </div>
-      <div class="sec-body">
-        <div class="sec-inner">
 
           <div class="q">
             <div class="q-num">問1</div>
@@ -1354,24 +1350,17 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </section>
+    </main>
+  </div>
 
-    <!-- Section 3: 文法・語彙 -->
-    <section class="sec" data-sec="3">
-      <div class="sec-head">
-        <div class="sec-left">
-          <div class="sec-num">3</div>
-          <span class="sec-title">【３】文法・語彙</span>
-        </div>
-        <div class="sec-right">
-          <span class="sec-tag">20問</span>
-          <span class="sec-arrow">▼</span>
-        </div>
+  <!-- View: Section 3 -->
+  <div class="view" id="view-sec-3">
+    <main class="wrap">
+      <div class="sec-header">
+        <div class="sec-num">3</div>
+        <span class="sec-title">【３】文法・語彙</span>
+        <span class="sec-tag">20問</span>
       </div>
-      <div class="sec-body">
-        <div class="sec-inner">
 
           <div class="passage" style="font-size:13px;line-height:1.6;margin-bottom:20px">
             <p style="text-indent:0;margin-bottom:8px"><b>次の問16～問35の空所に入れるのに最も適切な語句を、選択肢の中からそれぞれ1つ選び、その番号をマークしなさい。</b></p>
@@ -1703,7 +1692,7 @@
                   <div class="ans-body">
                     <div class="ans-section">
                       <div class="ans-section-title">✅ 正解</div>
-                      <div class="correct">3. inherited<span class="jp"> → 相続した</span></div>
+                      <div class="correct">2. inherited<span class="jp"> → 相続した</span></div>
                     </div>
                     <div class="ans-section">
                       <div class="ans-section-title">🎯 解き方ステップ</div>
@@ -1717,8 +1706,8 @@
                       <div class="ans-section-title">📖 選択肢の日本語訳</div>
                       <div class="ans-choices">
                         <div class="ans-choice"><span class="ans-choice-label">1.</span>introduced → 紹介した</div>
-                        <div class="ans-choice"><span class="ans-choice-label">2.</span>inherited → 相続した</div>
-                        <div class="ans-choice"><span class="ans-choice-label">3.</span>inherited → 相続した ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">2.</span>inherited → 相続した ✓</div>
+                        <div class="ans-choice"><span class="ans-choice-label">3.</span>inherited → 相続した</div>
                         <div class="ans-choice"><span class="ans-choice-label">4.</span>informed → 知らせた</div>
                       </div>
                     </div>
@@ -2257,24 +2246,17 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </section>
+    </main>
+  </div>
 
-    <!-- Section 4: 会話文 -->
-    <section class="sec" data-sec="4">
-      <div class="sec-head">
-        <div class="sec-left">
-          <div class="sec-num">4</div>
-          <span class="sec-title">【４】会話文：Kamakura Tourism</span>
-        </div>
-        <div class="sec-right">
-          <span class="sec-tag">10問</span>
-          <span class="sec-arrow">▼</span>
-        </div>
+  <!-- View: Section 4 -->
+  <div class="view" id="view-sec-4">
+    <main class="wrap">
+      <div class="sec-header">
+        <div class="sec-num">4</div>
+        <span class="sec-title">【４】会話文：Kamakura Tourism</span>
+        <span class="sec-tag">10問</span>
       </div>
-      <div class="sec-body">
-        <div class="sec-inner">
 
           <div class="passage">
             <p style="text-indent:0"><b>〔1〕次の会話文を読み、空所36～40に入れるのに最も適切な表現を、選択肢（0～9）の中から選び、その番号をマークしなさい。ただし、同じ番号は一度しか使えません。</b></p>
@@ -2614,24 +2596,17 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </section>
+    </main>
+  </div>
 
-    <!-- Section 5: 整序英作文 -->
-    <section class="sec" data-sec="5">
-      <div class="sec-head">
-        <div class="sec-left">
-          <div class="sec-num">5</div>
-          <span class="sec-title">【５】整序英作文</span>
-        </div>
-        <div class="sec-right">
-          <span class="sec-tag">4問</span>
-          <span class="sec-arrow">▼</span>
-        </div>
+  <!-- View: Section 5 -->
+  <div class="view" id="view-sec-5">
+    <main class="wrap">
+      <div class="sec-header">
+        <div class="sec-num">5</div>
+        <span class="sec-title">【５】整序英作文</span>
+        <span class="sec-tag">4問</span>
       </div>
-      <div class="sec-body">
-        <div class="sec-inner">
 
           <div class="passage" style="font-size:13px;line-height:1.6;margin-bottom:20px">
             <p style="text-indent:0;margin-bottom:8px"><b>次の問46～49において、日本語の意味を表すように、与えられた語句を正しく並べかえたとき、（　）に入るものの番号をマークしなさい。ただし、文頭に来る語も小文字で示してある。</b></p>
@@ -2773,10 +2748,6 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </section>
-
     </main>
   </div>
 
@@ -2790,32 +2761,17 @@
     const $$ = s => [...document.querySelectorAll(s)];
     const safe = fn => { try { fn(); } catch(e) { console.warn('[safe]', e); } };
 
-    const PageToggle = {
+    const ViewToggle = {
       handle(btn) {
         if (!btn || btn.classList.contains('on')) return;
-        const page = btn.dataset.page;
-        const qPage = $('#page-questions');
-        const pPage = $('#page-passages');
-        if (!qPage || !pPage) return;
-        $('.nav-seg .on')?.classList.remove('on');
+        const view = btn.dataset.view;
+        $$('.view').forEach(v => v.classList.remove('active'));
+        const target = $(`#view-${view}`);
+        if (target) target.classList.add('active');
+        $$('[data-view]').forEach(b => b.classList.remove('on'));
         btn.classList.add('on');
-        qPage.style.display = page === 'q' ? 'block' : 'none';
-        pPage.style.display = page === 'p' ? 'block' : 'none';
+        window.scrollTo(0, 0);
       }
-    };
-
-    const SectionToggle = {
-      busy: false,
-      handle(header) {
-        if (!header || this.busy) return;
-        const sec = header.closest('.sec');
-        if (!sec) return;
-        this.busy = true;
-        sec.classList.toggle('open');
-        setTimeout(() => { this.busy = false; }, 150);
-      },
-      expandAll() { $$('.sec').forEach(s => s.classList.add('open')); },
-      collapseAll() { $$('.sec').forEach(s => s.classList.remove('open')); }
     };
 
     const AnswerToggle = {
@@ -2826,9 +2782,9 @@
         const q = btn.closest('.q') || btn.closest('.translation-q');
         const box = q?.querySelector('.ans-box');
         if (!box) { this.busy = false; return; }
-        const isNowShowing = !box.classList.contains('show');  // Read BEFORE write
+        const isNowShowing = !box.classList.contains('show');
         box.classList.toggle('show');
-        btn.textContent = isNowShowing ? '解答を隠す' : '解答を見る 💡';  // Use cached value
+        btn.textContent = isNowShowing ? '解答を隠す' : '解答を見る 💡';
         setTimeout(() => { this.busy = false; }, 150);
       }
     };
@@ -2862,8 +2818,8 @@
     const VocabToggle = {
       handle(btn) {
         if (!btn) return;
-        const sec = btn.closest('.sec');
-        const vbox = sec?.querySelector('.vocab-box');
+        const view = btn.closest('.view');
+        const vbox = view?.querySelector('.vocab-box');
         if (vbox) vbox.classList.toggle('show');
       }
     };
@@ -2889,17 +2845,13 @@
 
     document.addEventListener('click', e => {
       const t = e.target;
-      const pageBtn = t.closest('.nav-seg [data-page]');
-      if (pageBtn) return PageToggle.handle(pageBtn);
-      const secHead = t.closest('.sec-head');
-      if (secHead) return SectionToggle.handle(secHead);
+      const viewBtn = t.closest('[data-view]');
+      if (viewBtn) return ViewToggle.handle(viewBtn);
       if (t.classList.contains('ans-btn')) return AnswerToggle.handle(t);
       if (t.id === 'theme' || t.closest('#theme')) return ThemeToggle.handle();
       const actBtn = t.closest('[data-act]');
       if (actBtn) {
         const act = actBtn.dataset.act;
-        if (act === 'expand') return SectionToggle.expandAll();
-        if (act === 'collapse') return SectionToggle.collapseAll();
         if (act === 'vocab') return VocabToggle.handle(actBtn);
       }
     });
