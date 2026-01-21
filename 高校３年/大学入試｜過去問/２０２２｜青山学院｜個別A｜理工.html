@@ -10,7 +10,7 @@
     :root{
       --bg:#FFFFE3;--bg-warm:#F5F5D9;--surface:#fff;--elevated:#fff;--text:#4A4A4A;--text2:#6D8196;--text3:#CBCBCB;
       --border:rgba(74,74,74,.15);--blue:#6D8196;--purple:#5856d6;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--accent:#6D8196;
-      --glass:rgba(255,255,227,.72);--blur:20px;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.175,.885,.32,1.275);
+      --glass:rgba(255,255,227,.72);--blur:8px;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.175,.885,.32,1.275);
       --r:20px;--r-sm:12px;--r-full:100px;
       --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Hiragino Sans",sans-serif;
       --font-serif:'New York','Georgia','Hiragino Mincho ProN',serif
@@ -50,6 +50,7 @@
     .vocab-ja{color:var(--text2);font-size:11px}
     .nav-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--glass);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
     :fullscreen .nav-bar,:-webkit-full-screen .nav-bar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+    @media(prefers-reduced-motion:reduce){.nav-bar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg-primary,var(--bg))}}
     .nav-seg{display:flex;background:var(--elevated);border-radius:var(--r-sm);padding:3px;border:1px solid var(--border)}
     .nav-seg button{padding:8px 14px;border:none;background:transparent;font:500 12px var(--font);color:var(--text2);border-radius:7px;cursor:pointer;transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease)}
     .nav-seg button.on{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(0,122,255,.3)}
@@ -102,14 +103,14 @@
     .ans-btn{background:var(--green);color:#fff}
     .ans-btn:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(52,199,89,.25)}
     .hint-btn:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(255,149,0,.2)}
-    .hint-box,.ans-box{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;margin-top:0;pointer-events:none;transition:grid-template-rows .25s var(--ease),opacity .25s var(--ease),margin-top .25s var(--ease);will-change:grid-template-rows,opacity}
+    .hint-box,.ans-box{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;margin-top:0;pointer-events:none;transition:grid-template-rows .25s var(--ease),opacity .25s var(--ease),margin-top .25s var(--ease)}
     .hint-box.show,.ans-box.show{grid-template-rows:1fr;opacity:1;margin-top:14px;pointer-events:auto}
     .hint-inner,.ans-inner{overflow:hidden;min-height:0}
     :fullscreen .ans-box,:fullscreen .hint-box,:-webkit-full-screen .ans-box,:-webkit-full-screen .hint-box{display:none !important;transition:none !important;opacity:1 !important;grid-template-rows:unset !important;max-height:unset !important}
     :fullscreen .ans-box.show,:fullscreen .hint-box.show,:-webkit-full-screen .ans-box.show,:-webkit-full-screen .hint-box.show{display:block !important}
     .hint-content{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.15);border-radius:var(--r-sm);padding:14px;font-size:13px}
     .hint-content b{color:var(--orange)}
-    .ans-content{background:linear-gradient(180deg, rgba(52,199,89,.04) 0%, rgba(255,255,227,.5) 100%);border:1px solid rgba(52,199,89,.12);border-radius:var(--r-sm);padding:0;font-size:13px;line-height:1.75;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease);will-change:transform}
+    .ans-content{background:linear-gradient(180deg, rgba(52,199,89,.04) 0%, rgba(255,255,227,.5) 100%);border:1px solid rgba(52,199,89,.12);border-radius:var(--r-sm);padding:0;font-size:13px;line-height:1.75;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
     .ans-content:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(52,199,89,.12);border-color:rgba(52,199,89,.25)}
     .ans-header{background:linear-gradient(135deg, #34c759 0%, #2aa54a 100%);color:#fff;padding:12px 16px;font-weight:600;font-size:13px}
     .ans-body{padding:16px;background:rgba(255,255,227,.4)}
@@ -2812,7 +2813,7 @@
         const isNowShowing = !box.classList.contains('show');
         box.classList.toggle('show');
         btn.textContent = isNowShowing ? '解答を隠す' : '解答を見る 💡';
-        setTimeout(() => { this.busy = false; }, 150);
+        setTimeout(() => { this.busy = false; }, 280);
       }
     };
 
