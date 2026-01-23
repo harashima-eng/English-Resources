@@ -219,6 +219,14 @@
     rulerBtn.appendChild(createSVG('M3 5v14h2V5H3zm4 0v14h1V5H7zm3 0v14h1V5h-1zm3 0v14h1V5h-1zm3 0v14h2V5h-2zm4 0v14h2V5h-2z', 20));
     tools.appendChild(rulerBtn);
 
+    // Select button
+    const selectBtn = document.createElement('button');
+    selectBtn.className = 'ann-btn';
+    selectBtn.dataset.tool = 'select';
+    selectBtn.title = 'Select & Move';
+    selectBtn.appendChild(createSVG('M3 3h8v2H5v6H3V3zm18 0v8h-2V5h-6V3h8zM3 13v8h8v-2H5v-6H3zm18 0v6h-6v2h8v-8h-2z', 20));
+    tools.appendChild(selectBtn);
+
     // Divider
     const divider1 = document.createElement('div');
     divider1.className = 'ann-divider';
