@@ -610,6 +610,56 @@
     };
   }
 
+  // ========== Smoothing Functions ==========
+  /**
+   * Apply Exponential Moving Average (EMA) smoothing to reduce jitter
+   * Uses CONFIG.smoothing as the alpha factor (lower = smoother, higher = more responsive)
+   */
+  function smoothPoint(rawPoint) {
+    if (!state.lastSmoothedPoint) {
+      state.lastSmoothedPoint = rawPoint;
+      return rawPoint;
+    }
+
+    const alpha = CONFIG.smoothing; // 0.3 = more smoothing
+    const smoothed = {
+      x: state.lastSmoothedPoint.x + alpha * (rawPoint.x - state.lastSmoothedPoint.x),
+      y: state.lastSmoothedPoint.y + alpha * (rawPoint.y - state.lastSmoothedPoint.y),
+      pressure: state.lastSmoothedPoint.pressure + alpha * (rawPoint.pressure - state.lastSmoothedPoint.pressure),
+      tiltX: rawPoint.tiltX,
+      tiltY: rawPoint.tiltY
+    };
+
+    state.lastSmoothedPoint = smoothed;
+    return smoothed;
+  }
+
+  /**
+   * Check if a new point should be added (point decimation)
+   * Skips points that are too close together to reduce jitter
+   */
+  function shouldAddPoint(newPoint, lastPoint) {
+    if (!lastPoint) return true;
+    const dx = newPoint.x - lastPoint.x;
+    const dy = newPoint.y - lastPoint.y;
+    return Math.hypot(dx, dy) >= CONFIG.minPointDistance;
+  }
+
+  /**
+   * Calculate velocity factor for width adjustment
+   * Fast strokes = thinner lines (more natural feel)
+   */
+  function getVelocityFactor(lastPoint, newPoint, timeDelta) {
+    if (!lastPoint || timeDelta <= 0) return 1;
+
+    const distance = Math.hypot(newPoint.x - lastPoint.x, newPoint.y - lastPoint.y);
+    const velocity = distance / timeDelta;
+    const normalizedVelocity = Math.min(1, velocity / CONFIG.maxVelocity);
+
+    // Returns 1 at rest, down to (1 - velocityWeight) at max velocity
+    return 1 - (normalizedVelocity * CONFIG.velocityWeight);
+  }
+
   // ========== Drawing ==========
   function drawStrokeSegment(stroke) {
     const ctx = state.ctx;
