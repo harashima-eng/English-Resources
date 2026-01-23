@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>2022 中央大学 英語 | 2/15 一般 理工</title>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#faf9f7;--bg-warm:#f5f3ef;--surface:#fff;--elevated:#fff;--text:#1a1a1a;--text2:#6b6b6b;--text3:#999;
+      --border:rgba(0,0,0,.12);--blue:#007aff;--purple:#5856d6;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--accent:#e8725c;
+      --glass:rgba(255,255,255,.72);--blur:20px;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.175,.885,.32,1.275);
+      --r:20px;--r-sm:12px;--r-full:100px;
+      --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Hiragino Sans",sans-serif;
+      --font-serif:'New York','Georgia','Hiragino Mincho ProN',serif
+    }
+    [data-theme="dark"]{
+      --bg:#000;--bg-warm:#1c1c1e;--surface:#1c1c1e;--elevated:#2c2c2e;--text:#f5f5f7;--text2:rgba(255,255,255,.6);--text3:rgba(255,255,255,.4);
+      --border:rgba(255,255,255,.1);--glass:rgba(28,28,30,.72)
+    }
+    [data-theme="dark"] body{background:var(--bg);color:var(--text)}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{font:400 15px/1.6 var(--font);background:var(--bg);color:var(--text);transition:background .4s var(--ease),color .4s var(--ease)}
+
+    /* Intro Section */
+    .intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px;background:var(--bg-warm);position:relative}
+    .intro-label{font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+    .intro-title{font-family:var(--font-serif);font-size:clamp(48px,10vw,100px);font-weight:400;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px;color:var(--text)}
+    .intro-subtitle{font-size:18px;color:var(--text2);max-width:500px;margin-bottom:40px}
+    .intro-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .btn-primary{padding:16px 32px;background:var(--text);color:var(--bg);border:none;border-radius:100px;font:600 15px var(--font);cursor:pointer;transition:all .3s ease}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
+    .btn-secondary{padding:16px 32px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:100px;font:600 15px var(--font);cursor:pointer;transition:all .3s ease}
+    .btn-secondary:hover{background:var(--surface);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+    .intro-stats{display:flex;gap:40px;margin-top:56px}
+    .intro-stat{text-align:center}
+    .intro-stat b{display:block;font-size:36px;font-weight:700;color:var(--text);font-family:var(--font-serif)}
+    .intro-stat span{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+
+    /* Container */
+    .wrap{max-width:960px;margin:0 auto;padding:60px 16px 100px}
+
+    /* Vocab Box */
+    .vocab-box{background:linear-gradient(135deg,rgba(0,122,255,.08),rgba(88,86,214,.08));border-radius:var(--r);padding:16px;margin-bottom:20px;display:none}
+    .vocab-box.show{display:block}
+    .vocab-title{font-weight:600;font-size:14px;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+    .vocab-item{background:var(--surface);border-radius:var(--r-sm);padding:10px 12px;font-size:12px;border:1px solid var(--border)}
+    .vocab-en{font-weight:600;color:var(--text);margin-bottom:2px}
+    .vocab-ja{color:var(--text2);font-size:11px}
+
+    /* Nav Bar */
+    .nav-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--glass);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;will-change:transform}
+    .nav-seg{display:flex;background:var(--elevated);border-radius:var(--r-sm);padding:3px;border:1px solid var(--border)}
+    .nav-seg button{padding:8px 14px;border:none;background:transparent;font:500 12px var(--font);color:var(--text2);border-radius:7px;cursor:pointer;transition:all .25s var(--ease)}
+    .nav-seg button.on{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(0,122,255,.3)}
+    .nav-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border:none;border-radius:var(--r-sm);font:500 12px var(--font);cursor:pointer;transition:all .2s var(--ease);background:var(--elevated);color:var(--text);border:1px solid var(--border)}
+    .nav-btn:hover{background:var(--surface)}
+    .nav-btn:active{transform:scale(.96)}
+    .nav-spacer{flex:1;max-width:20px}
+
+    /* Translations always visible */
+    .jp{display:block}
+
+    /* Passage Translations Page */
+    .passage-trans-page{background:var(--surface);border-radius:var(--r);margin-bottom:16px;padding:24px;border:1px solid var(--border)}
+    .passage-trans-page h2{font-size:20px;font-weight:700;margin-bottom:20px;color:var(--text)}
+    .passage-item{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+    .passage-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .passage-item h3{font-size:16px;font-weight:600;color:var(--blue);margin-bottom:12px}
+    .passage-jp{font-size:14px;line-height:1.8;color:var(--text2)}
+    .passage-jp p{margin-bottom:12px}
+
+    /* Section */
+    .sec{background:var(--surface);border-radius:var(--r);margin-bottom:12px;border:1px solid var(--border);overflow:hidden;transition:box-shadow .3s var(--ease)}
+    .sec:hover{box-shadow:0 4px 24px rgba(0,0,0,.06)}
+    .sec-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;transition:background .15s}
+    .sec-head:hover{background:rgba(0,0,0,.02)}
+    [data-theme="dark"] .sec-head:hover{background:rgba(255,255,255,.03)}
+    .sec-left{display:flex;align-items:center;gap:14px}
+    .sec-num{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:var(--r-sm);display:grid;place-items:center;font-weight:700;font-size:15px}
+    .sec-title{font-weight:600;font-size:15px}
+    .sec-right{display:flex;align-items:center;gap:10px}
+    .sec-tag{background:rgba(88,86,214,.1);color:var(--purple);padding:4px 10px;border-radius:var(--r-full);font-size:11px;font-weight:600}
+    .sec-arrow{color:var(--text3);font-size:12px;transition:transform .3s var(--ease)}
+    .sec.open .sec-arrow{transform:rotate(180deg)}
+    .sec-body{display:none}
+    .sec.open .sec-body{display:block}
+    .sec-inner{padding:0 20px 20px}
+    .sec{content-visibility:auto;contain-intrinsic-size:0 500px}
+
+    /* Passage */
+    .passage{background:var(--elevated);border-left:3px solid var(--blue);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:20px;margin-bottom:20px;font-size:14px;line-height:1.9}
+    .passage p{margin-bottom:14px;text-indent:1em}
+    .passage p:last-child{margin-bottom:0}
+    .blank{background:rgba(255,149,0,.15);color:var(--orange);padding:2px 8px;border-radius:4px;font-weight:600}
+    .ul{text-decoration:underline;text-decoration-color:var(--purple);text-underline-offset:3px}
+
+    /* Vocab Notes */
+    .vocab-notes{background:rgba(0,122,255,.05);border-radius:var(--r-sm);padding:14px;margin-bottom:20px;font-size:13px}
+    .vocab-notes b{color:var(--blue)}
+
+    /* Question */
+    .q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px}
+    .q:last-child{margin-bottom:0}
+    .q-num{display:inline-block;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;padding:4px 14px;border-radius:var(--r-full);font-weight:600;font-size:12px;margin-bottom:14px}
+    .q-text{font-size:15px;line-height:1.7;margin-bottom:14px}
+    .q-text b{color:var(--purple)}
+    .opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+    .opts.vertical{flex-direction:column}
+    .opt{flex:1 1 calc(25% - 6px);min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.5;transition:all .2s var(--ease);box-sizing:border-box}
+    .opt:hover{border-color:var(--blue);background:rgba(0,122,255,.03)}
+    .opt-label{color:var(--blue);font-weight:600;margin-right:8px}
+
+    /* Buttons */
+    .q-btns{display:flex;gap:8px}
+    .hint-btn,.ans-btn{padding:10px 16px;border:none;border-radius:var(--r-full);font:500 13px var(--font);cursor:pointer;transition:all .2s var(--ease)}
+    .hint-btn:active,.ans-btn:active{transform:scale(.96)}
+    .hint-btn{background:rgba(255,149,0,.1);color:var(--orange);border:1px solid rgba(255,149,0,.2)}
+    .ans-btn{background:var(--green);color:#fff}
+
+    /* Hint/Answer Boxes */
+    .hint-box,.ans-box{display:none;margin-top:14px}
+    .hint-box.show,.ans-box.show{display:block}
+    .hint-inner,.ans-inner{overflow:hidden}
+    .hint-content{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.15);border-radius:var(--r-sm);padding:14px;font-size:13px}
+    .hint-content b{color:var(--orange)}
+    .ans-content{background:rgba(52,199,89,.06);border:1px solid rgba(52,199,89,.12);border-radius:var(--r-sm);padding:0;font-size:13px;line-height:1.75;overflow:hidden}
+    .ans-header{background:var(--green);color:#fff;padding:12px 16px;font-weight:600;font-size:13px}
+    .ans-body{padding:16px}
+    .ans-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+    .ans-section:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .ans-section-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .correct{color:var(--green);font-weight:700;font-size:18px;margin-bottom:4px}
+    .jp{color:var(--text2);font-size:12px;margin-top:4px;padding-left:12px;border-left:2px solid var(--border)}
+    .ans-steps{margin:0;padding-left:0;list-style:none}
+    .ans-steps li{padding:8px 12px;background:rgba(0,122,255,.05);border-radius:var(--r-sm);margin-bottom:6px;font-size:13px}
+    .ans-steps li:last-child{margin-bottom:0}
+    .ans-choices{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;font-size:13px}
+    @media(max-width:500px){.ans-choices{grid-template-columns:1fr}}
+    .ans-choice{padding:10px 12px;background:var(--elevated);border-radius:var(--r-sm);border:1px solid var(--border);display:flex;gap:8px;align-items:baseline}
+    .ans-choice-label{font-weight:700;color:var(--blue);min-width:20px}
+    .ans-wrong{margin-top:12px}
+    .ans-wrong-item{padding:8px 12px;background:rgba(255,59,48,.05);border-radius:var(--r-sm);margin-bottom:6px;font-size:12px}
+    .ans-wrong-item:last-child{margin-bottom:0}
+    .ans-wrong-item b{color:var(--red)}
+    .wrong-ok{color:var(--green)}
+    .wrong-no{color:var(--red)}
+    .tip{background:rgba(255,149,0,.1);border-left:3px solid var(--orange);padding:10px 12px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-top:12px;font-size:12px}
+    .tip b{color:var(--orange)}
+
+    /* Pair Question */
+    .pair{background:var(--elevated);border-radius:var(--r);padding:16px;margin-bottom:10px}
+    .pair-label{font-weight:700;color:var(--purple);margin-bottom:8px}
+    .pair-sent{font-size:14px;margin-bottom:6px;padding-left:8px;border-left:2px solid var(--border)}
+    .pair-sent:last-child{margin-bottom:0}
+    .pair-sent b{font-weight:600}
+
+    /* FAB */
+    .fab{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:var(--blue);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,122,255,.4);opacity:0;transform:translateY(20px);transition:all .3s var(--ease);z-index:1000}
+    .fab.show{opacity:1;transform:translateY(0)}
+    .fab:active{transform:scale(.9)}
+
+    /* Footer */
+    footer{text-align:center;padding:40px 20px;color:var(--text3);font-size:12px}
+
+    /* Responsive */
+    @media(max-width:600px){
+      .hero{padding:40px 16px 32px}
+      .controls{padding:10px 12px}
+      .sec-head{padding:14px 16px}
+      .sec-inner{padding:0 16px}
+      .sec.open .sec-inner{padding-bottom:16px}
+      .q{padding:16px}
+    }
+  </style>
+</head>
+<body>
+  <!-- Intro -->
+  <section class="intro">
+    <p class="intro-label">大学入試 完全解説</p>
+    <h1 class="intro-title">中央大学<br>理工学部</h1>
+    <p class="intro-subtitle">2022年度 2月15日 一般入試 英語</p>
+    <div class="intro-cta">
+      <button class="btn-primary" onclick="document.querySelector('.nav-seg [data-page=q]').click();document.querySelector('.wrap').scrollIntoView({behavior:'smooth'})">問題を見る</button>
+      <button class="btn-secondary" onclick="document.querySelector('.nav-seg [data-page=p]').click();document.querySelector('.wrap').scrollIntoView({behavior:'smooth'})">本文訳</button>
+    </div>
+    <div class="intro-stats">
+      <div class="intro-stat"><b>6</b><span>大問</span></div>
+      <div class="intro-stat"><b>50+</b><span>設問</span></div>
+      <div class="intro-stat"><b>80</b><span>分</span></div>
+    </div>
+  </section>
+
+  <!-- Nav Bar -->
+  <nav class="nav-bar">
+    <div class="nav-seg">
+      <button class="on" data-page="q">問題</button>
+      <button data-page="p">本文訳</button>
+    </div>
+    <button class="nav-btn" id="theme">🌙 Dark</button>
+    <button class="nav-btn" data-act="expand">📂 開く</button>
+    <button class="nav-btn" data-act="collapse">📁 閉じる</button>
+  </nav>
+
+  <!-- Passage Translations Page (separate view) -->
+  <div class="page" id="page-passages" style="display:none">
+    <div class="wrap">
+      <section class="passage-trans-page">
+      <h2>📖 本文の日本語訳</h2>
+
+      <div class="passage-item">
+        <h3>【１】Mars Exploration（火星探査）</h3>
+        <div class="passage-jp">
+          <p>2021年2月、中国の天問1号とアラブ首長国連邦のホープ探査機という2つの宇宙船が火星の周回軌道に独立して到着した。天問1号は中国初の惑星間ミッションで、5月に火星表面に探査車を着陸させる予定だった。</p>
+          <p>これらのミッションはそれぞれの国にとって並外れた偉業であり、米国、ロシア、ヨーロッパ、インドに続いて火星への宇宙船打ち上げに成功した。しかし、最も注目を集めたのは3番目のミッションだった。</p>
+          <p>2月18日、NASAは自動車サイズの探査車パーサヴィアランスを火星表面に着陸させた。取り組むべき科学的目的の長いリストがあった。「私たちは火星がどのように惑星として形成されたかをより完全に理解したい」とパーサヴィアランス科学チームのメンバー、サンジーブ・グプタは言う。地球では地殻の絶え間ない動きにより最初の表面岩石はほぼ破壊されたが、火星では最も古い岩石は保存されており、40億年以上前まで遡る途切れない記録がある。惑星形成の歴史を教えてくれるだけでなく、それらの古代の岩石には赤い惑星で生命が始まったかどうかの手がかりも含まれている可能性がある。</p>
+          <p>しかし、パーサヴィアランスのミッションをユニークにしているのは、NASAと欧州宇宙機関の間の野心的な10年計画の最初の部分であり、2031年頃に火星の岩石を地球に持ち帰ることだ。「科学者たちは本当に火星の岩石を地球に持ち帰りたい」とグプタは言う。サンプルは最も進んだ火星探査車を使うよりも地球ではるかに慎重に分析できる。そして実験技術は常に向上しているので、新しい発見のために年々検査し続けることができる。</p>
+          <p>サンプルを地球に持ち帰る価値は1970年代に実証された。アポロ宇宙飛行士が持ち帰った月の岩石の分析により、太陽系の歴史と形成についての理解が変わった。</p>
+          <p>火星でこの成功を繰り返すために、パーサヴィアランスには興味深そうな岩石を入れる30以上のコンテナが装備されている。NASAとESAの共同プロジェクトに従い、ヨーロッパの探査車が2028年に火星に到着してコンテナを回収する。それをマーズ・アセント・ビークルと呼ばれるNASA宇宙船に積み込み、アース・リターン・オービターと呼ばれるヨーロッパの宇宙船がサンプルを地球に持ち帰る。</p>
+          <p>1970年代の月のサンプルは生命のない世界からのものだったのに対し、火星はかつて居住可能な惑星だった可能性がある。そのため、主要な調査は過去の—あるいはおそらく現在の—生命の証拠を探すことを含み、それは全く新しい問題を生み出す。「火星で生命の兆候を発見したら、それが火星の生命だと知りたいよね？宇宙船と一緒に偶然来たバクテリアを発見したくはない」と宇宙政策アドバイザーのケイシー・ドライアーは言う。</p>
+          <p>科学的結果をできるだけ純粋に保つために、宇宙船と機器は化学物質や加熱によって洗浄される。このような措置は惑星保護として知られ、2つの部分に分かれている。前方汚染は地球の生命を他の世界に導入すること；後方汚染は、いかに可能性が低くても、宇宙人の生命が地球に持ち帰られて野外に逃げる可能性に関係している。</p>
+          <p>惑星保護の問題は1950年代、最初の衛星が地球の周回軌道に打ち上げられた時に最初に議論された。しかし、1971年にマリナー9号が火星の周回軌道に入った最初の宇宙船になった時、状況が変わった。送り返された写真は多くの人々を失望させた。植生はなく、生命の目に見える兆候もなかった。実際、過去の生命の兆候さえなかった。「人々は火星が実際にどれほど死んで見えるかに驚いた」と宇宙講師のトーマス・チェニーは言う。</p>
+          <p>しかし、より最近の数十年間のより詳しい調査により、意見は再び変わった。現在、火星は居住可能だった可能性があり、液体の水が存在する惑星の一部では小さなバクテリアがまだ生き残っている可能性があると考えられている。惑星保護は宇宙船がこれらの地域に行けないことを意味する。そのため、生命検出実験は生命を支える可能性が最も高い地域を調査できず、火星の過去の生命の証拠を探すことに集中しなければならない。</p>
+          <p>過去に地球での探検で人々が犯した過ちを繰り返すことへの懸念もある。例えば、ヨーロッパ人によるハワイの植民地化は、以前そこに存在しなかった様々なバクテリアを島に導入し、自然な防御を持たない病気で多くの先住民を殺した。火星に動物の生命の可能性はないが、一部の科学者は同じ懸念がバクテリアにも当てはまるべきだと考えている。「もしそこに生命があれば、それを破壊する生物を偶然導入したくない」とチェニーは主張する。これは特にNASAの火星に人を送り、最終的に人間の植民地を設立する計画において重要だ。</p>
+          <p>しかし、惑星保護規則が適用されるべきかについて誰もが同意しているわけではない。火星への人間派遣の強力な支持者であるロバート・ズブリンは、隕石が定期的に宇宙から地球に衝突することを指摘する。特に1つの火星隕石、ALH84001は、1996年に科学者グループが内部に火星バクテリアの化石を発見したと主張した時に大きな関心を集めた。その結論はまだ激しく議論されているが、分析によると隕石は40度を超える温度にさらされたことがなかった。「もしバクテリアがいたら、旅を生き延びることができただろう」とズブリンは言う。「そして過去40億年間で何十億トンものそのような物質が火星から地球に移動した。」言い換えれば、自然が惑星保護規則を尊重しないなら、なぜ私たちがするのか？</p>
+        </div>
+      </div>
+
+      <div class="passage-item">
+        <h3>【５-1】Plastic's Recycling Problem（プラスチックリサイクルの問題）</h3>
+        <div class="passage-jp">
+          <p>リサイクルは気持ちがいい。ゴミからソーダボトルやビニール袋を分別すると、地球を助けているように感じる。不燃ゴミに入れるプラスチックが多いほど、埋め立て地を減らしている...と思うよね？違う。どれだけリサイクルしようとしても、ほとんどがゴミになる。食品パッケージを例に取ろう。それらは複数の層で構成され、各層は異なる種類のプラスチックでできている。種類が異なるため、リサイクルできない。1種類のプラスチックで作られたものでさえリサイクルできない場合がある。例えばヨーグルトカップはポリプロピレンを含む。これをリサイクルすると暗い色で臭い材料になる。その結果、ほとんどのリサイクル工場は何もしない。</p>
+          <p>一般的にリサイクルされるプラスチックは2種類だけ。1つはPETとして知られるソーダボトルに使われるもの、もう1つは石鹸容器のプラスチック。これらを合わせてもプラスチックゴミのほんの一部を構成するだけ。世界のプラスチックゴミの9%しかリサイクルされていない。約12%は燃やされ、残りの79%は陸や海に積み上がる。プラスチックリサイクルは解決すべき問題だ。</p>
+        </div>
+      </div>
+
+      <div class="passage-item">
+        <h3>【５-2】Job Application Email（求人応募メール）</h3>
+        <div class="passage-jp">
+          <p><b>宛先:</b> Richard Landon, Hinkerton Retail Ltd<br><b>差出人:</b> Peter Girton<br><b>件名:</b> Retail Times誌の広告について</p>
+          <p>Landon様、</p>
+          <p>10月14日のRetail Times誌に掲載されたマーケティングマネージャーの職に応募するためにご連絡しています。</p>
+          <p>私はスーパーマーケット業界で20年以上の経験があり、Kallmart Holdings、Fresco Supermarkets、そして直近ではBalmoral Groupで働いてきました。Balmoral Groupではマーケティング部門のアシスタントマネージャーを務め、グループ内のすべての新製品・サービスの立ち上げを共同で担当していました。2018年には、Balmoralの銀行サービス参入を担当し、全国的な広告キャンペーンを管理し、予想売上を40%以上上回ることに貢献しました。翌年、新店舗レイアウトが顧客行動に与える影響についてデータを収集するプロジェクトを管理しました。</p>
+          <p>私の強い専門的背景と努力により、Hinkerton Retailのマーケティングチームに貢献できると信じています。私の資格と経験の詳細を記載した履歴書を添付してご覧ください。</p>
+          <p>ご検討ありがとうございます。近いうちにお返事をいただけることを楽しみにしております。</p>
+        </div>
+      </div>
+
+      <div class="passage-item">
+        <h3>【６】Letterlocking（レターロッキング）</h3>
+        <div class="passage-jp">
+          <p>1697年、フランスのある男性がオランダの従兄弟に重要な証明書を求める手紙を書いた。彼は封筒なしでまとまるように手紙を折って封印し、従兄弟に送った。何らかの理由で、それは目的地に届かず、今日も封印されたままだ。しかし、高解像度イメージングと「仮想展開」アルゴリズムのおかげで、歴史家と科学者のチームはその手紙を読むことができた。</p>
+          <p>スキャンと展開の技術は様々な用途がありうる。繊細すぎて触れない歴史的文書のテキストを明らかにすることから、歴史的な折り紙の手順を理解することまで。しかし、Nature Communicationsに発表された新しい研究の研究者たちは、「レターロッキング」の技術を調べるためにこの技術を使うことに最も興奮している。レターロッキングは、簡単に開けられないように手紙を注意深く折り、切り、封印する技術だ。この技術は、現代の封筒が発明される前の時代に広く使われていた。約20年前、それがMIT図書館の研究者でこの論文の共著者であるJana Dambrogioの興味を引いた。</p>
+          <p>Dambrogioは多くの歴史的文書で、明らかに意図的に行われた小さな切り込みと折り目に気づき、最終的にその目的を推測した。「それらは錠のように見えました。そしてセキュリティが私の推測でした—それは意図的に組み込まれていると」と彼女は言う。「私の反応は『すごい、この証拠を取り除かないように人々に知らせなければ。なぜなら小さな切り込みと折り目は、深く研究されていないこのセキュリティの伝統の証拠なのだから』でした。」</p>
+          <p>過去7年間、彼女はこの探求においてKing's College Londonの近世英文学講師で論文の共著者であるDaniel Starza Smithと協力してきた。2人の研究者とそのチームは60以上のレターロッキング方法を目録化した。「1850年以前には、現代の封筒のようなものは本当になかった」とSmithは言う。紙は高価な材料だったので別の封筒に無駄にしなかった。「だから手紙を送りたければ、レターロッキングを使わなければならなかった—手紙自体が封筒や送信装置にならなければならなかった。」</p>
+        </div>
+      </div>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- Questions Page -->
+  <div class="page" id="page-questions">
+    <main class="wrap">
+
+    <!-- Section 1 -->
+    <section class="sec" data-sec="1">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">1</div>
+          <span class="sec-title">【１】長文読解：Mars Exploration</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">18問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="passage">
+            <p>In February 2021, three new spacecraft arrived independently at Mars. For two of them, it was the first time their countries had sent craft so deeply into space, while the third opened a new period of Mars exploration. The first was the UAE's Mars Mission, also known as Hope, which entered *orbit on 9 February. Shortly after, China's Tianwen-1 spacecraft reached the planet with a plan to send a *rover down to its surface.</p>
+            <p>Both of these missions were extraordinary achievements for their countries, allowing their makers to join the U.S., Russia, Europe, and India in having successfully sent spacecraft to Mars. However, it was the third mission that captured the most headlines.</p>
+            <p>On 18 February, NASA landed the car-sized rover Perseverance onto the surface of Mars. It had a long list of scientific objectives to work through. "We want to get a fuller understanding of how Mars formed as a planet," says Sanjeev Gupta, a member of the Perseverance science team. On Earth, the constant movement of the *crust has mostly destroyed the very first surface rocks to form, but on Mars the oldest rocks are <span class="blank">[ 1 ]</span>, so there is an unbroken record stretching back more than four billion years. As well as telling us about the history of the planet's formation, those ancient rocks could also contain clues as to whether life ever started on the red planet.</p>
+            <p>Yet what makes the Perseverance mission unique is that it is also the first part of an ambitious 10-year plan between NASA and the European Space Agency to bring *Martian rocks to Earth in around 2031. "Scientists really want rocks from Mars back on Earth," says Gupta. Samples can be analyzed much more carefully on Earth than using even the most advanced Mars vehicle. And because laboratory techniques improve constantly, <span class="ul">(ア)they</span> can continue to be examined year after year for new discoveries.</p>
+            <p>The <span class="blank">[ 2 ]</span> of returning samples to Earth was demonstrated in the 1970s when the analysis of moon rocks brought back by the Apollo astronauts changed our understanding of the solar system's history and formation.</p>
+            <p>To repeat this success for Mars, Perseverance is equipped with more than 30 containers into which interesting-looking rocks will be loaded. In accordance with the joint project between NASA and the European Space Agency, a European rover will arrive on Mars in 2028 to collect the containers. It will load them into a NASA spacecraft known as the Mars Ascent Vehicle, which will carry them to a European craft called the Earth Return Orbiter that will bring the samples to Earth.</p>
+            <p><span class="blank">[ 3 ]</span> the moon samples of the 1970s were from a lifeless world, Mars could once have been a *habitable planet. So key investigations will involve looking for evidence of past — or possibly present — life, and that produces a whole new problem. "If you discover signs of life on Mars, you want to know that it's Martian life, right? You don't want to discover bacteria that accidentally came with you on your spacecraft," says Casey Dreier, a space policy adviser.</p>
+            <p>To keep the scientific results as pure as possible, spacecraft and equipment are cleaned with chemicals or by heating. Such measures are known as planetary protection, which is split into two parts. Forward *contamination is the introduction of Earth life on to other worlds; backwards contamination is concerned with the possibility, however unlikely, of alien life being brought back to Earth and escaping into the open.</p>
+            <p>The issue of planetary protection was originally discussed in the 1950s when the first satellites were launched into orbit around Earth. But the story changed in 1971 when Mariner 9 became the first spacecraft to enter orbit around Mars. The pictures <span class="ul">(イ)it</span> sent back disappointed many people. There was no vegetation and no visible signs of life. Indeed, there was not even an indication of past life. "People were surprised at just how dead Mars actually turned out to look," says space lecturer Thomas Cheney.</p>
+            <p>Closer investigation in more recent decades, however, has swung opinions back again. It is now thought that Mars could have been habitable and that tiny bacteria may still be surviving in parts of the planet where liquid water is present. Planetary protection means spacecraft cannot go into <span class="ul">(ウ)these areas</span>. So life-detection experiments cannot investigate the areas most likely to support life and must concentrate, therefore, on looking for evidence of past life on Mars.</p>
+            <p>There is also concern about repeating the mistakes people made in terms of exploration on Earth in the past. The European colonization of Hawaii, for example, introduced various bacteria to the island that had not existed there previously, killing a large number of the native people with diseases <span class="ul">(エ)they</span> had no natural protection against. While there is no real chance of animal life on Mars, some scientists think that the same concerns should apply to bacteria. "If there's life there, we don't want to accidentally introduce an organism that destroys it," argues Cheney. This is particularly significant with NASA's plan to send people to Mars and eventually set up a human colony.</p>
+            <p>Not everyone agrees, however, that planetary protection rules should be <span class="blank">[ 4 ]</span>. Robert Zubrin, a strong supporter of sending humans to Mars, points out that *meteorites regularly crash into Earth from outer space. One Martian meteorite in particular, ALH84001, attracted great interest in 1996 when a group of scientists claimed to have found fossils of Martian bacteria inside. Although that conclusion is still hotly debated, the analysis showed that the meteorite had never been exposed to temperatures above 40 degrees Celsius. "If there had been bacteria in it, they could have survived the trip," says Zubrin, "and billions of tons of such material have transferred from Mars to Earth in the last four billion years." In other words, if nature does not respect planetary protection rules, why should we?</p>
+          </div>
+
+          <div class="vocab-notes">
+            <b>〔注〕</b> orbit 軌道 / rover 探査車 / crust 地殻 / Martian Mars の形容詞 / habitable 居住可能な / contamination 汚染 / meteorite 隕石
+          </div>
+
+          <!-- Vocab Box -->
+          <div class="vocab-box">
+            <div class="vocab-title">📚 重要単語・熟語</div>
+            <div class="vocab-grid">
+              <div class="vocab-item"><div class="vocab-en">spacecraft</div><div class="vocab-ja">宇宙船</div></div>
+              <div class="vocab-item"><div class="vocab-en">independently</div><div class="vocab-ja">独立して</div></div>
+              <div class="vocab-item"><div class="vocab-en">extraordinary</div><div class="vocab-ja">並外れた、驚くべき</div></div>
+              <div class="vocab-item"><div class="vocab-en">capture headlines</div><div class="vocab-ja">ニュースになる</div></div>
+              <div class="vocab-item"><div class="vocab-en">objective</div><div class="vocab-ja">目的</div></div>
+              <div class="vocab-item"><div class="vocab-en">formation</div><div class="vocab-ja">形成</div></div>
+              <div class="vocab-item"><div class="vocab-en">stretch back</div><div class="vocab-ja">〜まで遡る</div></div>
+              <div class="vocab-item"><div class="vocab-en">demonstrate</div><div class="vocab-ja">実証する</div></div>
+              <div class="vocab-item"><div class="vocab-en">equipped with</div><div class="vocab-ja">〜を備えた</div></div>
+              <div class="vocab-item"><div class="vocab-en">in accordance with</div><div class="vocab-ja">〜に従って</div></div>
+              <div class="vocab-item"><div class="vocab-en">investigation</div><div class="vocab-ja">調査</div></div>
+              <div class="vocab-item"><div class="vocab-en">planetary protection</div><div class="vocab-ja">惑星保護</div></div>
+            </div>
+          </div>
+          <button class="nav-btn" data-act="vocab" style="margin-bottom:16px">📚 単語・熟語を表示</button>
+
+          <h4 style="font-size:14px;color:var(--purple);margin:20px 0 14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:16px;background:var(--purple);border-radius:2px"></span>1. 下線部(ア)～(エ)が指すもの</h4>
+
+          <div class="q">
+            <div class="q-num">(ア) they</div>
+            <div class="q-text jp">下線部 (ア) they が指すものを選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>laboratory techniques<span class="jp"> → 実験技術</span></div>
+              <div class="opt"><span class="opt-label">B.</span>scientists on Earth<span class="jp"> → 地球上の科学者</span></div>
+              <div class="opt"><span class="opt-label">C.</span>rock samples<span class="jp"> → 岩石サンプル</span></div>
+              <div class="opt"><span class="opt-label">D.</span>signs of life<span class="jp"> → 生命の痕跡</span></div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">C. rock samples（岩石サンプル）</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 下線部(ア)は<b>第4段落</b>にあるよ。まず they の直前の文を確認しよう！</li>
+                        <li>② 第4段落: "Samples can be analyzed much more carefully on Earth" とあるね</li>
+                        <li>③ その後 "they can continue to be examined" と続く</li>
+                        <li>④ 「検査され続ける」のは Samples（=rock samples）だね！</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">A.</span>laboratory techniques → 実験技術</div>
+                        <div class="ans-choice"><span class="ans-choice-label">B.</span>scientists on Earth → 地球上の科学者</div>
+                        <div class="ans-choice"><span class="ans-choice-label">C.</span>rock samples → 岩石サンプル</div>
+                        <div class="ans-choice"><span class="ans-choice-label">D.</span>signs of life → 生命の痕跡</div>
+                      </div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>A:</b> techniques は「検査される」対象じゃないよ</div>
+                        <div class="ans-wrong-item"><b>B:</b> scientists が examined されるのは変だよね</div>
+                        <div class="ans-wrong-item"><b>D:</b> signs of life は本文のもっと後で出てくる話だよ</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>代名詞の指示対象は直前の文をチェック！複数形 they なら複数名詞を探そう</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">(イ) it</div>
+            <div class="q-text jp">下線部 (イ) it が指すものを選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>Mariner 9<span class="jp"> → マリナー9号</span></div>
+              <div class="opt"><span class="opt-label">B.</span>orbit around Mars<span class="jp"> → 火星周回軌道</span></div>
+              <div class="opt"><span class="opt-label">C.</span>Mars<span class="jp"> → 火星</span></div>
+              <div class="opt"><span class="opt-label">D.</span>the first satellite<span class="jp"> → 最初の人工衛星</span></div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">A. Mariner 9（マリナー9号）</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 下線部(イ)は<b>第9段落</b>にあるよ。"The pictures (イ)it sent back" の it を探そう</li>
+                        <li>② 第9段落の直前を見ると "Mariner 9 became the first spacecraft to enter orbit around Mars"</li>
+                        <li>③ 「写真を送り返した」のは宇宙探査機＝Mariner 9 だね！</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">A.</span>Mariner 9 → マリナー9号（宇宙探査機）</div>
+                        <div class="ans-choice"><span class="ans-choice-label">B.</span>orbit around Mars → 火星周回軌道</div>
+                        <div class="ans-choice"><span class="ans-choice-label">C.</span>Mars → 火星</div>
+                        <div class="ans-choice"><span class="ans-choice-label">D.</span>the first satellite → 最初の人工衛星</div>
+                      </div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>B:</b> orbit（軌道）は写真を「送り返す」ことはできないよ</div>
+                        <div class="ans-wrong-item"><b>C:</b> Mars 自体が写真を送り返すわけないよね</div>
+                        <div class="ans-wrong-item"><b>D:</b> first satellite は1950年代の話。ここは火星探査の話だよ</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>it が指すのは単数名詞。動作の主語として意味が通るかチェック！</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">(ウ) these areas</div>
+            <div class="q-text jp">下線部 (ウ) these areas が指すものを選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>areas that are now habitable<span class="jp"> → 現在居住可能な地域</span></div>
+              <div class="opt"><span class="opt-label">B.</span>areas where tiny bacteria have been found<span class="jp"> → 微小なバクテリアが発見された地域</span></div>
+              <div class="opt"><span class="opt-label">C.</span>areas protected by planets<span class="jp"> → 惑星によって保護された地域</span></div>
+              <div class="opt"><span class="opt-label">D.</span>areas where liquid water is present<span class="jp"> → 液体の水が存在する地域</span></div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">D. areas where liquid water is present（液体の水が存在する地域）</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 下線部(ウ)は<b>第10段落</b>にあるよ。these areas の直前の文をチェック！</li>
+                        <li>② 第10段落: "parts of the planet where liquid water is present" という表現があるね</li>
+                        <li>③ these areas = これらの地域 = 液体の水がある地域 と分かる！</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">A.</span>areas that are now habitable → 現在居住可能な地域</div>
+                        <div class="ans-choice"><span class="ans-choice-label">B.</span>areas where tiny bacteria have been found → 微小なバクテリアが発見された地域</div>
+                        <div class="ans-choice"><span class="ans-choice-label">C.</span>areas protected by planets → 惑星によって保護された地域</div>
+                        <div class="ans-choice"><span class="ans-choice-label">D.</span>areas where liquid water is present → 液体の水が存在する地域</div>
+                      </div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>A:</b> habitable は "could have been habitable" と過去の可能性の話</div>
+                        <div class="ans-wrong-item"><b>B:</b> バクテリアは「いるかもしれない」という話で「発見された」とは言ってない</div>
+                        <div class="ans-wrong-item"><b>C:</b> planetary protection は「惑星保護政策」で「惑星に保護された」ではないよ</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>these は直前の具体的な名詞を指すよ！本文の言い換えを探そう</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">(エ) they</div>
+            <div class="q-text jp">下線部 (エ) they が指すものを選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>bacteria brought to Hawaii<span class="jp"> → ハワイに持ち込まれたバクテリア</span></div>
+              <div class="opt"><span class="opt-label">B.</span>diseases taken to Hawaii<span class="jp"> → ハワイに持ち込まれた病気</span></div>
+              <div class="opt"><span class="opt-label">C.</span>animals on Hawaii<span class="jp"> → ハワイの動物</span></div>
+              <div class="opt"><span class="opt-label">D.</span>the native people of Hawaii<span class="jp"> → ハワイの先住民</span></div>
+            </div>
+            <div class="q-btns">
+              <button class="ans-btn">解答を見る 💡</button>
+            </div>
+            <div class="ans-box">
+              <div class="ans-inner">
+                <div class="ans-content">
+                  <div class="ans-header">💡 解答解説</div>
+                  <div class="ans-body">
+                    <div class="ans-section">
+                      <div class="ans-section-title">✅ 正解</div>
+                      <div class="correct">D. the native people of Hawaii（ハワイの先住民）</div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">🎯 解き方ステップ</div>
+                      <ol class="ans-steps">
+                        <li>① 下線部(エ)は<b>第11段落</b>にあるよ。文の構造を確認："killing a large number of the native people with diseases (エ)they had no natural protection against"</li>
+                        <li>② "they had no natural protection" = 「彼らは自然の免疫を持っていなかった」</li>
+                        <li>③ 病気に対する免疫を持っていなかったのは native people（先住民）だね！</li>
+                      </ol>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">📖 選択肢の日本語訳</div>
+                      <div class="ans-choices">
+                        <div class="ans-choice"><span class="ans-choice-label">A.</span>bacteria brought to Hawaii → ハワイに持ち込まれたバクテリア</div>
+                        <div class="ans-choice"><span class="ans-choice-label">B.</span>diseases taken to Hawaii → ハワイに持ち込まれた病気</div>
+                        <div class="ans-choice"><span class="ans-choice-label">C.</span>animals on Hawaii → ハワイの動物</div>
+                        <div class="ans-choice"><span class="ans-choice-label">D.</span>the native people of Hawaii → ハワイの先住民</div>
+                      </div>
+                    </div>
+                    <div class="ans-section">
+                      <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                      <div class="ans-wrong">
+                        <div class="ans-wrong-item"><b>A:</b> bacteria が「免疫を持つ/持たない」とは言わないよね</div>
+                        <div class="ans-wrong-item"><b>B:</b> diseases が protection を持つ、というのは意味が通らない</div>
+                        <div class="ans-wrong-item"><b>C:</b> 本文にハワイの動物の話は出てこないよ</div>
+                      </div>
+                    </div>
+                    <div class="tip"><b>💡 ポイント：</b>関係代名詞の先行詞問題！have protection against diseases の主語は人間だね</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h4 style="font-size:14px;color:var(--purple);margin:28px 0 14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:16px;background:var(--purple);border-radius:2px"></span>2. 空所 [ 1 ]～[ 4 ] に入る語</h4>
+
+          <div class="q">
+            <div class="q-num">[ 1 ]</div>
+            <div class="q-text">On Earth, the constant movement of the crust has mostly destroyed the very first surface rocks to form, but on Mars the oldest rocks are <b>[ 1 ]</b>...</div>
+            <div class="q-text jp">地球では地殻の絶え間ない動きにより最初の表面岩石はほぼ破壊されたが、火星では最も古い岩石は[ 1 ]である...</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>broken<span class="jp"> → 壊れている</span></div>
+              <div class="opt"><span class="opt-label">B.</span>preserved<span class="jp"> → 保存されている</span></div>
+              <div class="opt"><span class="opt-label">C.</span>missing<span class="jp"> → 欠けている</span></div>
+              <div class="opt"><span class="opt-label">D.</span>discovered<span class="jp"> → 発見された</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. preserved（保存されている）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 第3段落の文。"but" があるから対比の文だね！</li>
+                    <li>② 地球: rocks destroyed（破壊された）</li>
+                    <li>③ 火星: 対比だから → preserved（保存されている）！</li>
+                    <li>④ 直後に "unbroken record" もヒントになるよ</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> broken は destroyed と同じ意味。対比にならないよ</div>
+                    <div class="ans-wrong-item"><b>C:</b> missing だと「記録がない」ことになり矛盾する</div>
+                    <div class="ans-wrong-item"><b>D:</b> discovered は文脈に合わない。状態を表す語が必要</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>but の対比構造に注目！destroyed の反対は preserved だね</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">[ 2 ]</div>
+            <div class="q-text">The <b>[ 2 ]</b> of returning samples to Earth was demonstrated in the 1970s...</div>
+            <div class="q-text jp">サンプルを地球に持ち帰ることの[ 2 ]は1970年代に実証された...</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>value<span class="jp"> → 価値</span></div>
+              <div class="opt"><span class="opt-label">B.</span>difficulty<span class="jp"> → 困難さ</span></div>
+              <div class="opt"><span class="opt-label">C.</span>danger<span class="jp"> → 危険性</span></div>
+              <div class="opt"><span class="opt-label">D.</span>investigation<span class="jp"> → 調査</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. value（価値）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 第5段落のアポロ計画の話に注目！</li>
+                    <li>② 月の岩石を持ち帰ったら "changed our understanding" と書いてある</li>
+                    <li>③ 理解が深まった = 持ち帰る「価値」があった！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>B:</b> difficulty は文脈にネガティブすぎる</div>
+                    <div class="ans-wrong-item"><b>C:</b> danger の話はこの段落ではしていない</div>
+                    <div class="ans-wrong-item"><b>D:</b> investigation of returning... は文法的に不自然</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>demonstrate（実証する）の目的語は「価値」が自然だね！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">[ 3 ]</div>
+            <div class="q-text"><b>[ 3 ]</b> the moon samples of the 1970s were from a lifeless world, Mars could once have been a habitable planet.</div>
+            <div class="q-text jp">[ 3 ] 1970年代の月のサンプルは生命のない世界からのものだったが、火星はかつて居住可能な惑星だった可能性がある。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>However<span class="jp"> → しかし</span></div>
+              <div class="opt"><span class="opt-label">B.</span>Unlike<span class="jp"> → ～と違って</span></div>
+              <div class="opt"><span class="opt-label">C.</span>Because<span class="jp"> → なぜなら</span></div>
+              <div class="opt"><span class="opt-label">D.</span>Whereas<span class="jp"> → ～である一方で</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">D. Whereas（～である一方で）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 第7段落の文。月: lifeless world（生命なし）</li>
+                    <li>② 火星: could have been habitable（生命いたかも）</li>
+                    <li>③ 2つを対比している → Whereas が最適！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> However は文頭に節を取れない（副詞）</div>
+                    <div class="ans-wrong-item"><b>B:</b> Unlike の後は名詞句。"Unlike the moon samples, Mars..." なら可</div>
+                    <div class="ans-wrong-item"><b>C:</b> Because だと因果関係になり意味が通らない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>Whereas = While（対比）。接続詞として節を導けるよ！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">[ 4 ]</div>
+            <div class="q-text">Not everyone agrees, however, that planetary protection rules should be <b>[ 4 ]</b>.</div>
+            <div class="q-text jp">しかし、惑星保護規則が[ 4 ]されるべきだということに全員が同意しているわけではない。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>warned<span class="jp"> → 警告された</span></div>
+              <div class="opt"><span class="opt-label">B.</span>obeyed<span class="jp"> → 従われた</span></div>
+              <div class="opt"><span class="opt-label">C.</span>allowed<span class="jp"> → 許可された</span></div>
+              <div class="opt"><span class="opt-label">D.</span>ignored<span class="jp"> → 無視された</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. obeyed（従われた）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 第12段落の文。"Not everyone agrees" = 全員が同意してるわけじゃない</li>
+                    <li>② rules（規則）と相性のいい動詞は？</li>
+                    <li>③ rules should be obeyed（規則は守られるべき）が自然！</li>
+                    <li>④ 後の Zubrin の議論が「規則不要」論だから辻褄が合う</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> rules are warned は文法的に不自然</div>
+                    <div class="ans-wrong-item"><b>C:</b> rules are allowed も意味が通らない</div>
+                    <div class="ans-wrong-item"><b>D:</b> ignored だと「無視すべき」となり、後の文脈と逆</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>rules との相性は obey（従う）！follow/obey the rules は頻出</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <h4 style="font-size:14px;color:var(--purple);margin:28px 0 14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:16px;background:var(--purple);border-radius:2px"></span>3. 内容理解問題</h4>
+
+          <div class="q">
+            <div class="q-num">問1</div>
+            <div class="q-text">Which objective is <b>NOT</b> part of the Perseverance mission to Mars?</div>
+            <div class="q-text jp">パーサヴィアランスの火星ミッションの目的に含まれて<b>いない</b>のはどれか？</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>Beginning the process of bringing Martian rocks back to Earth.<span class="jp"> → 火星の岩石を地球に持ち帰るプロセスを開始する</span></div>
+              <div class="opt"><span class="opt-label">B.</span>Discovering more about the formation of Mars.<span class="jp"> → 火星の形成についてより多く発見する</span></div>
+              <div class="opt"><span class="opt-label">C.</span>Investigating crust movements on the surface of Mars.<span class="jp"> → 火星表面の地殻変動を調査する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>Finding evidence of past life on Mars.<span class="jp"> → 火星の過去の生命の証拠を見つける</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">C. Investigating crust movements on the surface of Mars.</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① NOT問題は消去法で解こう！</li>
+                    <li>② A: 第4段落 "first part of an ambitious 10-year plan" ✓ 本文にある</li>
+                    <li>③ B: 第3段落 "fuller understanding of how Mars formed" ✓ 本文にある</li>
+                    <li>④ D: 第3段落 "clues as to whether life ever started" ✓ 本文にある</li>
+                    <li>⑤ C: crust movements の調査？→ 本文に記載なし！これが答え</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> 本文に明記あり→ミッションの目的</div>
+                    <div class="ans-wrong-item"><b>B:</b> 本文に明記あり→ミッションの目的</div>
+                    <div class="ans-wrong-item"><b>D:</b> 本文に明記あり→ミッションの目的</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>NOT問題は「書いてないもの」を探す！本文3-4段落を要チェック</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問2</div>
+            <div class="q-text">Why is it important to bring Martian rocks to Earth?</div>
+            <div class="q-text jp">火星の岩石を地球に持ち帰ることが重要なのはなぜか？</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>To prevent forward contamination on Mars.<span class="jp"> → 火星への前方汚染を防ぐため</span></div>
+              <div class="opt"><span class="opt-label">B.</span>Because the Mars rover cannot analyze them in as much detail.<span class="jp"> → 火星探査車では詳細に分析できないから</span></div>
+              <div class="opt"><span class="opt-label">C.</span>So they can be compared to the moon rocks brought back in the 1970s.<span class="jp"> → 1970年代の月の岩石と比較できるように</span></div>
+              <div class="opt"><span class="opt-label">D.</span>Since pictures taken from space seem to show there is no life on the rocks.<span class="jp"> → 宇宙からの写真では岩石に生命がないように見えるから</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. Because the Mars rover cannot analyze them in as much detail.</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 第4段落をチェック！</li>
+                    <li>② "Samples can be analyzed much more carefully on Earth than using even the most advanced Mars vehicle"</li>
+                    <li>③ 地球の方が詳しく分析できる → 探査車では不十分ということ！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> forward contamination の話は持ち帰る理由じゃないよ</div>
+                    <div class="ans-wrong-item"><b>C:</b> 月の岩石との比較が目的とは書いてない</div>
+                    <div class="ans-wrong-item"><b>D:</b> 写真の話は全く関係ないよ</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>本文の言い換えを見抜こう！"more carefully" → "in more detail"</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問3</div>
+            <div class="q-text">What purpose of planetary protection rules is <b>NOT</b> mentioned in the article?</div>
+            <div class="q-text jp">惑星保護規則の目的として本文に言及されて<b>いない</b>のはどれか？</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>To prevent Earth bacteria being accidentally brought to Mars.<span class="jp"> → 地球のバクテリアが誤って火星に持ち込まれるのを防ぐ</span></div>
+              <div class="opt"><span class="opt-label">B.</span>To make sure life on Mars is not destroyed if it exists.<span class="jp"> → 火星に生命がいる場合に破壊されないようにする</span></div>
+              <div class="opt"><span class="opt-label">C.</span>To introduce Earth life safely to Mars.<span class="jp"> → 地球の生命を安全に火星に導入する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>To stop alien life escaping on Earth.<span class="jp"> → 宇宙生命体が地球で逃げ出すのを止める</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">C. To introduce Earth life safely to Mars.</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 第8段落で惑星保護の2つの目的を確認しよう</li>
+                    <li>② Forward contamination: 地球→火星への汚染防止（A）</li>
+                    <li>③ Backwards contamination: 火星→地球への汚染防止（D）</li>
+                    <li>④ 第11段落 "we don't want to... destroy it" で火星の生命保護（B）も本文にある</li>
+                    <li>⑤ 「安全に導入する」は目的じゃない！逆だね</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> forward contamination として本文に記載あり</div>
+                    <div class="ans-wrong-item"><b>B:</b> "we don't want to... destroy it" と本文にあり</div>
+                    <div class="ans-wrong-item"><b>D:</b> backwards contamination として本文に記載あり</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>惑星保護は「持ち込まない・持ち帰らない」が原則。「導入」は目的と真逆！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">問4</div>
+            <div class="q-text">What is the significance of meteorite ALH84001 in terms of planetary protection?</div>
+            <div class="q-text jp">惑星保護の観点から、隕石ALH84001の重要性は何か？</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>It means that alien life might already have been brought to Earth.<span class="jp"> → 宇宙生命体がすでに地球に運ばれた可能性がある</span></div>
+              <div class="opt"><span class="opt-label">B.</span>It shows that bacteria can survive high temperatures.<span class="jp"> → バクテリアが高温でも生存できることを示す</span></div>
+              <div class="opt"><span class="opt-label">C.</span>It proves there used to be life on Mars.<span class="jp"> → かつて火星に生命がいたことを証明する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>It reminds us we must protect ourselves from large space objects.<span class="jp"> → 大きな宇宙物体から身を守る必要性を思い出させる</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. It means that alien life might already have been brought to Earth.</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 最終段落のZubrinの議論に注目！</li>
+                    <li>② 隕石は40度以下だった → バクテリアは生存できた可能性</li>
+                    <li>③ "billions of tons of such material have transferred from Mars to Earth"</li>
+                    <li>④ つまり：もう既に火星の生命が地球に来てるかも！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>B:</b> 逆！40度「以下」だから生存できた可能性がある</div>
+                    <div class="ans-wrong-item"><b>C:</b> "still hotly debated" とあり、証明はされていない</div>
+                    <div class="ans-wrong-item"><b>D:</b> 隕石衝突の防護の話ではないよ</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>Zubrinの主張＝「自然が惑星保護を守らないなら人間も守る必要ない」</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <h4 style="font-size:14px;color:var(--purple);margin:28px 0 14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:16px;background:var(--purple);border-radius:2px"></span>4. 内容一致（2つ選択）</h4>
+
+          <div class="q">
+            <div class="q-num">A～G から本文に一致するものを2つ選べ</div>
+            <div class="q-text jp">以下のA～Gから本文の内容に一致するものを2つ選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>Of the three missions to Mars in February 2021, only NASA's intended to land on the planet.<span class="jp"> → 2021年2月の3つの火星ミッションのうち、NASAだけが着陸を目指した</span></div>
+              <div class="opt"><span class="opt-label">B.</span>As on Earth, the rocks on Mars can reveal a history of over four billion years.<span class="jp"> → 地球と同様、火星の岩石も40億年以上の歴史を明らかにできる</span></div>
+              <div class="opt"><span class="opt-label">C.</span>Including Perseverance, at least four rovers and spacecraft will be needed to complete the process of bringing Martian rocks to Earth.<span class="jp"> → パーサヴィアランスを含め、少なくとも4機の探査機が火星の岩石を地球に持ち帰るために必要</span></div>
+              <div class="opt"><span class="opt-label">D.</span>Casey Dreier is talking about the danger of backwards contamination.<span class="jp"> → ケイシー・ドライヤーは逆方向汚染の危険について話している</span></div>
+              <div class="opt"><span class="opt-label">E.</span>Opinions about life on Mars have not really changed since 1971.<span class="jp"> → 火星の生命についての意見は1971年以来あまり変わっていない</span></div>
+              <div class="opt"><span class="opt-label">F.</span>Perseverance cannot travel to the parts of Mars where life is most likely to exist.<span class="jp"> → パーサヴィアランスは生命が存在する可能性が最も高い場所に行けない</span></div>
+              <div class="opt"><span class="opt-label">G.</span>Hawaii is mentioned as an example of the dangers of bringing harmful bacteria back to Earth.<span class="jp"> → ハワイは有害なバクテリアを地球に持ち帰る危険の例として挙げられている</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">C, F</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 正解の選択肢の根拠</div>
+                  <ol class="ans-steps">
+                    <li><b>C:</b> 第6段落に4機が明記されている：①Perseverance、②European rover (2028)、③Mars Ascent Vehicle、④Earth Return Orbiter</li>
+                    <li><b>F:</b> 第9段落 "Planetary protection means spacecraft cannot go into these areas"（液体の水がある場所）と一致！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> 中国も "send a rover down to its surface" と着陸を計画していた</div>
+                    <div class="ans-wrong-item"><b>B:</b> 地球では岩石が破壊された（destroyed）。火星だけ記録が残っている</div>
+                    <div class="ans-wrong-item"><b>D:</b> Dreier は forward contamination（地球→火星）の話をしている</div>
+                    <div class="ans-wrong-item"><b>E:</b> "swung opinions back again" と意見は変わったと書いてある</div>
+                    <div class="ans-wrong-item"><b>G:</b> ハワイは forward contamination の例。地球への持ち帰りの話ではない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>内容一致問題は本文と選択肢の細かいズレに注意！「地球」と「火星」の取り違えに気をつけよう</div>
+              </div>
+            </div></div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="sec" data-sec="2">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">2</div>
+          <span class="sec-title">【２】文法・語法問題</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">10問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <!-- Vocab Box for Section 2 -->
+          <div class="vocab-box">
+            <div class="vocab-title">📚 文法のポイント</div>
+            <div class="vocab-grid">
+              <div class="vocab-item"><div class="vocab-en">Not only A but also B</div><div class="vocab-ja">AだけでなくBも（倒置あり）</div></div>
+              <div class="vocab-item"><div class="vocab-en">独立分詞構文</div><div class="vocab-ja">主語が異なる分詞構文</div></div>
+              <div class="vocab-item"><div class="vocab-en">It is + 性格形容詞 + of 人</div><div class="vocab-ja">人の性格を表す構文</div></div>
+              <div class="vocab-item"><div class="vocab-en">in relation to</div><div class="vocab-ja">〜に関して</div></div>
+              <div class="vocab-item"><div class="vocab-en">nor + 倒置</div><div class="vocab-ja">〜もまた...ない</div></div>
+              <div class="vocab-item"><div class="vocab-en">in such a way that</div><div class="vocab-ja">〜するような方法で</div></div>
+            </div>
+          </div>
+          <button class="nav-btn" data-act="vocab" style="margin-bottom:16px">📚 文法ポイントを表示</button>
+
+          <div class="q">
+            <div class="q-num">1</div>
+            <div class="q-text">There came the day ( ) the final presentation.</div>
+            <div class="q-text jp">最終プレゼンテーションの日が来た。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>of<span class="jp"> → 〜の</span></div>
+              <div class="opt"><span class="opt-label">B.</span>that<span class="jp"> → 関係代名詞</span></div>
+              <div class="opt"><span class="opt-label">C.</span>in<span class="jp"> → 〜の中で</span></div>
+              <div class="opt"><span class="opt-label">D.</span>as<span class="jp"> → 〜として</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. of</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "the day of ~" = 「～の日」という表現を覚えよう！</li>
+                    <li>② the day of the final presentation = 最終プレゼンの日</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>B:</b> that なら the day that S+V の形が必要</div>
+                    <div class="ans-wrong-item"><b>C:</b> in the day は不自然な表現</div>
+                    <div class="ans-wrong-item"><b>D:</b> as は「〜として」の意味で使えない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 頻出：</b>the day of 〜 / the time of 〜 / the moment of 〜</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">2</div>
+            <div class="q-text">Not ( ) has she collaborated internationally with leading researchers, Dr. Sato has led many research projects in Japan as well.</div>
+            <div class="q-text jp">佐藤博士は国際的に一流の研究者と協力しただけでなく、日本でも多くの研究プロジェクトを率いてきた。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>even<span class="jp"> → 〜でさえ</span></div>
+              <div class="opt"><span class="opt-label">B.</span>all<span class="jp"> → すべて</span></div>
+              <div class="opt"><span class="opt-label">C.</span>only<span class="jp"> → 〜だけ</span></div>
+              <div class="opt"><span class="opt-label">D.</span>always<span class="jp"> → いつも</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">C. only</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "as well" = "also" に注目！</li>
+                    <li>② Not only A but also B の構文だ！</li>
+                    <li>③ Not only が文頭に来ると倒置が起こる</li>
+                    <li>④ Not only has she... の形になるよ</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> Not even だと「〜でさえない」で意味が逆</div>
+                    <div class="ans-wrong-item"><b>B:</b> Not all は「すべてではない」で文意に合わない</div>
+                    <div class="ans-wrong-item"><b>D:</b> Not always は「いつもではない」で文意に合わない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 超頻出：</b>Not only A but also B（倒置形）は入試の定番！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">3</div>
+            <div class="q-text">It ( ) six o'clock, the office was closed.</div>
+            <div class="q-text jp">6時だったので、オフィスは閉まっていた。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>was<span class="jp"> → だった</span></div>
+              <div class="opt"><span class="opt-label">B.</span>being<span class="jp"> → であるので（分詞）</span></div>
+              <div class="opt"><span class="opt-label">C.</span>has been<span class="jp"> → だった（現在完了）</span></div>
+              <div class="opt"><span class="opt-label">D.</span>is<span class="jp"> → である</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. being</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① カンマで区切られた2つの節に注目！</li>
+                    <li>② 前半と後半で主語が違う（It と the office）</li>
+                    <li>③ これは「独立分詞構文」だ！</li>
+                    <li>④ It being six o'clock = 6時だったので</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> It was..., the office was... だと2つの完全な文をカンマだけで繋げることになる（文法エラー）</div>
+                    <div class="ans-wrong-item"><b>C:</b> has been も同様に完全な文になってしまう</div>
+                    <div class="ans-wrong-item"><b>D:</b> is も完全な文になり、時制も合わない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 重要：</b>独立分詞構文 = 主語が異なる分詞構文。It being 〜 は頻出！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">4</div>
+            <div class="q-text">It is careless ( ) you to make such an obvious mistake.</div>
+            <div class="q-text jp">そんな明らかなミスをするとは、あなたは不注意だ。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>for<span class="jp"> → 〜にとって</span></div>
+              <div class="opt"><span class="opt-label">B.</span>of<span class="jp"> → 〜の（性格を表す）</span></div>
+              <div class="opt"><span class="opt-label">C.</span>on<span class="jp"> → 〜の上に</span></div>
+              <div class="opt"><span class="opt-label">D.</span>to<span class="jp"> → 〜へ</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. of</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 形容詞 careless は「性格」を表す</li>
+                    <li>② It is + 性格形容詞 + <b>of</b> + 人 + to do</li>
+                    <li>③ for を使うのは性格以外（difficult, easy など）</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 覚えよう：</b>kind, nice, careless, foolish, clever → of 人 / difficult, easy, important → for 人</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">5</div>
+            <div class="q-text">I can't say anything ( ) relation to this matter.</div>
+            <div class="q-text jp">この件に関しては何も言えません。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>in<span class="jp"> → 〜において</span></div>
+              <div class="opt"><span class="opt-label">B.</span>of<span class="jp"> → 〜の</span></div>
+              <div class="opt"><span class="opt-label">C.</span>for<span class="jp"> → 〜のために</span></div>
+              <div class="opt"><span class="opt-label">D.</span>on<span class="jp"> → 〜について</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. in</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① イディオム "in relation to" = 〜に関して</li>
+                    <li>② 丸ごと覚えておこう！</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 類似表現：</b>in terms of / with regard to / concerning / regarding</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">6</div>
+            <div class="q-text">She hadn't done the assignment for the class, nor ( ) she read the textbook.</div>
+            <div class="q-text jp">彼女は授業の課題をやっていなかったし、教科書も読んでいなかった。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>didn't<span class="jp"> → しなかった</span></div>
+              <div class="opt"><span class="opt-label">B.</span>had<span class="jp"> → していた</span></div>
+              <div class="opt"><span class="opt-label">C.</span>does<span class="jp"> → する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>has<span class="jp"> → した</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. had</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① nor の後は倒置が起こる！</li>
+                    <li>② nor + 助動詞 + 主語 の語順になる</li>
+                    <li>③ 前文が hadn't done（過去完了）だから had を使う</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>否定語（nor, neither, never）が文頭に来ると倒置！時制を合わせよう</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">7</div>
+            <div class="q-text">There are, despite the criticism, still ( ) who follow that theory.</div>
+            <div class="q-text jp">批判にもかかわらず、まだその理論に従う人々がいる。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>that<span class="jp"> → あの</span></div>
+              <div class="opt"><span class="opt-label">B.</span>some<span class="jp"> → 何人かの人</span></div>
+              <div class="opt"><span class="opt-label">C.</span>these<span class="jp"> → これらの</span></div>
+              <div class="opt"><span class="opt-label">D.</span>them<span class="jp"> → 彼らを</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. some</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "some who ~" = 〜する人々（some people who...の省略）</li>
+                    <li>② There are still some who... = まだ...する人がいる</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 覚えよう：</b>some / those / many / few + who 〜 は頻出パターン！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">8</div>
+            <div class="q-text">He is now very different from ( ) he used to be five years ago.</div>
+            <div class="q-text jp">彼は今、5年前の彼とは大きく異なっている。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>as<span class="jp"> → 〜として</span></div>
+              <div class="opt"><span class="opt-label">B.</span>so<span class="jp"> → そのように</span></div>
+              <div class="opt"><span class="opt-label">C.</span>that<span class="jp"> → あの</span></div>
+              <div class="opt"><span class="opt-label">D.</span>how<span class="jp"> → どのように</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">D. how</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① different from の後に「様子・状態」を表す節が来る</li>
+                    <li>② how he used to be = 彼がかつてどのようだったか</li>
+                    <li>③ 関係副詞的な使い方の how だね</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>different from how S + V / different from what S + V は頻出！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">9</div>
+            <div class="q-text">They made their speech scripts in such a way ( ) only the positive aspects were seen.</div>
+            <div class="q-text jp">彼らは肯定的な側面だけが見えるようなやり方でスピーチ原稿を作った。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>as<span class="jp"> → 〜として</span></div>
+              <div class="opt"><span class="opt-label">B.</span>which<span class="jp"> → どちらの</span></div>
+              <div class="opt"><span class="opt-label">C.</span>that<span class="jp"> → 〜という</span></div>
+              <div class="opt"><span class="opt-label">D.</span>it<span class="jp"> → それ</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">C. that</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "in such a way that ~" = 〜するような方法で</li>
+                    <li>② such...that の相関構文！</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 頻出構文：</b>such...that / so...that / in such a way that</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">10</div>
+            <div class="q-text">The medicine should arrive tomorrow ( ) delivery services here usually run on schedule.</div>
+            <div class="q-text jp">ここの配送サービスは通常スケジュール通りに動くので、薬は明日届くはずだ。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>given that<span class="jp"> → 〜を考えると</span></div>
+              <div class="opt"><span class="opt-label">B.</span>according to<span class="jp"> → 〜によると</span></div>
+              <div class="opt"><span class="opt-label">C.</span>as if<span class="jp"> → まるで〜かのように</span></div>
+              <div class="opt"><span class="opt-label">D.</span>as soon as<span class="jp"> → 〜するとすぐに</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. given that</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① given that = 〜を考えると、〜なので（接続詞）</li>
+                    <li>② 後ろに S+V が続いているからOK</li>
+                    <li>③ 「配送が時間通り→届くはず」という因果関係</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>B:</b> according to の後は名詞が来る</div>
+                    <div class="ans-wrong-item"><b>C:</b> as if は仮定の意味で文意に合わない</div>
+                    <div class="ans-wrong-item"><b>D:</b> as soon as は時間の接続詞で文意に合わない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 覚えよう：</b>given that / considering that / seeing that ≒ because</div>
+              </div>
+            </div></div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="sec" data-sec="3">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">3</div>
+          <span class="sec-title">【３】語彙問題</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">10問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <!-- Vocab Box for Section 3 -->
+          <div class="vocab-box">
+            <div class="vocab-title">📚 重要単語・熟語</div>
+            <div class="vocab-grid">
+              <div class="vocab-item"><div class="vocab-en">afford to do</div><div class="vocab-ja">〜する余裕がある</div></div>
+              <div class="vocab-item"><div class="vocab-en">available from</div><div class="vocab-ja">〜から入手可能</div></div>
+              <div class="vocab-item"><div class="vocab-en">without notice</div><div class="vocab-ja">予告なしに</div></div>
+              <div class="vocab-item"><div class="vocab-en">combine A with B</div><div class="vocab-ja">AとBを組み合わせる</div></div>
+              <div class="vocab-item"><div class="vocab-en">set up</div><div class="vocab-ja">立てる、設立する</div></div>
+              <div class="vocab-item"><div class="vocab-en">misleading</div><div class="vocab-ja">誤解を招く</div></div>
+              <div class="vocab-item"><div class="vocab-en">omit</div><div class="vocab-ja">省略する、除外する</div></div>
+              <div class="vocab-item"><div class="vocab-en">expire</div><div class="vocab-ja">期限が切れる</div></div>
+              <div class="vocab-item"><div class="vocab-en">reliable</div><div class="vocab-ja">信頼できる</div></div>
+              <div class="vocab-item"><div class="vocab-en">widely accepted</div><div class="vocab-ja">広く受け入れられた</div></div>
+            </div>
+          </div>
+          <button class="nav-btn" data-act="vocab" style="margin-bottom:16px">📚 重要単語を表示</button>
+
+          <div class="q">
+            <div class="q-num">1</div>
+            <div class="q-text">I can't ( ) to purchase the house.</div>
+            <div class="q-text jp">私はその家を購入する（　）ない。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>determine<span class="jp"> → 決心する</span></div>
+              <div class="opt"><span class="opt-label">B.</span>afford<span class="jp"> → 余裕がある</span></div>
+              <div class="opt"><span class="opt-label">C.</span>stand<span class="jp"> → 我慢する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>force<span class="jp"> → 強制する</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. afford（余裕がある）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① can't ( ) to do の形に注目！</li>
+                    <li>② can't afford to ~ = 〜する余裕がない</li>
+                    <li>③ 「家を買う余裕がない」で文意ピッタリ！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> determine to do は「〜することを決心する」で文意に合わない</div>
+                    <div class="ans-wrong-item"><b>C:</b> can't stand は「我慢できない」だけど、to不定詞とは使わない</div>
+                    <div class="ans-wrong-item"><b>D:</b> force は「強制する」で文意に合わない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 超頻出：</b>can't afford to ~ は入試で超頻出！「〜する余裕がない」で覚えよう</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">2</div>
+            <div class="q-text">The document for the submission is ( ) from the website of this company.</div>
+            <div class="q-text jp">提出用の書類はこの会社のウェブサイトから（　）。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>capable<span class="jp"> → 能力がある</span></div>
+              <div class="opt"><span class="opt-label">B.</span>suitable<span class="jp"> → 適した</span></div>
+              <div class="opt"><span class="opt-label">C.</span>comfortable<span class="jp"> → 快適な</span></div>
+              <div class="opt"><span class="opt-label">D.</span>available<span class="jp"> → 入手可能な</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">D. available（入手可能な）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "from the website" に注目！</li>
+                    <li>② available from ~ = 〜から入手可能</li>
+                    <li>③ 「ウェブサイトから入手できる」で完璧！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> capable は capable of の形で使う</div>
+                    <div class="ans-wrong-item"><b>B:</b> suitable は suitable for の形で使う</div>
+                    <div class="ans-wrong-item"><b>C:</b> comfortable は from とは結びつかない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 覚えよう：</b>available from/at/on 〜 = 〜で入手可能</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">3</div>
+            <div class="q-text">The part-time staff member has left without ( ).</div>
+            <div class="q-text jp">そのアルバイトスタッフは（　）なしに辞めた。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>notice<span class="jp"> → 通知、予告</span></div>
+              <div class="opt"><span class="opt-label">B.</span>exception<span class="jp"> → 例外</span></div>
+              <div class="opt"><span class="opt-label">C.</span>potential<span class="jp"> → 可能性</span></div>
+              <div class="opt"><span class="opt-label">D.</span>regulation<span class="jp"> → 規則</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. notice（通知、予告）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "without ( )" に注目！</li>
+                    <li>② without notice = 予告なしに</li>
+                    <li>③ 「予告なしに辞めた」で文意ピッタリ！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>B:</b> without exception = 例外なく（意味が違う）</div>
+                    <div class="ans-wrong-item"><b>C:</b> without potential は自然な表現じゃない</div>
+                    <div class="ans-wrong-item"><b>D:</b> without regulation も不自然</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ビジネス英語：</b>give notice = 退職届を出す / at short notice = 急に</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">4</div>
+            <div class="q-text">The coach tried to ( ) mental strength with physical fitness in order to develop the team.</div>
+            <div class="q-text jp">コーチはチームを育成するために精神力と体力を（　）しようとした。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>insert<span class="jp"> → 挿入する</span></div>
+              <div class="opt"><span class="opt-label">B.</span>combine<span class="jp"> → 組み合わせる</span></div>
+              <div class="opt"><span class="opt-label">C.</span>attach<span class="jp"> → 取り付ける</span></div>
+              <div class="opt"><span class="opt-label">D.</span>confuse<span class="jp"> → 混同する</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. combine（組み合わせる）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "( ) A with B" の形に注目！</li>
+                    <li>② combine A with B = AとBを組み合わせる</li>
+                    <li>③ 「精神力と体力を組み合わせる」で完璧！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> insert A into B の形（withは使わない）</div>
+                    <div class="ans-wrong-item"><b>C:</b> attach A to B の形（withは使わない）</div>
+                    <div class="ans-wrong-item"><b>D:</b> confuse A with B は「AとBを混同する」で意味が違う</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 頻出：</b>combine A with B / mix A with B / associate A with B</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">5</div>
+            <div class="q-text">He ( ) a schedule, taking into account the needs of all members.</div>
+            <div class="q-text jp">彼は全メンバーのニーズを考慮してスケジュールを（　）。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>set up<span class="jp"> → 立てる、設定する</span></div>
+              <div class="opt"><span class="opt-label">B.</span>got over<span class="jp"> → 乗り越える</span></div>
+              <div class="opt"><span class="opt-label">C.</span>brought about<span class="jp"> → 引き起こす</span></div>
+              <div class="opt"><span class="opt-label">D.</span>stood out<span class="jp"> → 目立つ</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. set up（立てる、設定する）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "( ) a schedule" に注目！</li>
+                    <li>② set up a schedule = スケジュールを立てる</li>
+                    <li>③ これは定型表現だね！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>B:</b> get over は「乗り越える、克服する」でscheduleとは合わない</div>
+                    <div class="ans-wrong-item"><b>C:</b> bring about は「引き起こす」でscheduleとは合わない</div>
+                    <div class="ans-wrong-item"><b>D:</b> stand out は自動詞で目的語を取らない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 set up の用法：</b>set up a meeting/schedule/system/company など多用途！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">6</div>
+            <div class="q-text">The team president apologized for the ( ) wording.</div>
+            <div class="q-text jp">チームの社長は（　）な表現について謝罪した。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>incorporated<span class="jp"> → 法人化された</span></div>
+              <div class="opt"><span class="opt-label">B.</span>unemployed<span class="jp"> → 失業した</span></div>
+              <div class="opt"><span class="opt-label">C.</span>misleading<span class="jp"> → 誤解を招く</span></div>
+              <div class="opt"><span class="opt-label">D.</span>depressed<span class="jp"> → 落ち込んだ</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">C. misleading（誤解を招く）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "apologized for the ( ) wording" に注目！</li>
+                    <li>② 謝罪するのは「悪い表現」だよね</li>
+                    <li>③ misleading wording = 誤解を招く表現</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> incorporated wording は意味不明</div>
+                    <div class="ans-wrong-item"><b>B:</b> unemployed wording も意味不明</div>
+                    <div class="ans-wrong-item"><b>D:</b> depressed wording も意味不明</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 関連語：</b>mislead（誤解させる）/ misleading（誤解を招く）/ misunderstanding（誤解）</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">7</div>
+            <div class="q-text">The newspaper ( ) some important information from the article.</div>
+            <div class="q-text jp">新聞は記事からいくつかの重要な情報を（　）。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>converted<span class="jp"> → 変換した</span></div>
+              <div class="opt"><span class="opt-label">B.</span>distracted<span class="jp"> → 気を散らせた</span></div>
+              <div class="opt"><span class="opt-label">C.</span>registered<span class="jp"> → 登録した</span></div>
+              <div class="opt"><span class="opt-label">D.</span>omitted<span class="jp"> → 省略した</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">D. omitted（省略した）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "( ) A from B" の形に注目！</li>
+                    <li>② omit A from B = BからAを省略する</li>
+                    <li>③ 「記事から情報を省いた」で文意ピッタリ！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> convert A into/to B の形で使う</div>
+                    <div class="ans-wrong-item"><b>B:</b> distract は「気を散らす」で文意に合わない</div>
+                    <div class="ans-wrong-item"><b>C:</b> register は「登録する」で from とは合わない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 覚えよう：</b>omit = 省略する、除外する（名詞: omission）</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">8</div>
+            <div class="q-text">I realized that my license was about to ( ) when I received the message.</div>
+            <div class="q-text jp">メッセージを受け取ったとき、免許証がまもなく（　）ことに気づいた。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>expire<span class="jp"> → 期限が切れる</span></div>
+              <div class="opt"><span class="opt-label">B.</span>exhaust<span class="jp"> → 使い果たす</span></div>
+              <div class="opt"><span class="opt-label">C.</span>extend<span class="jp"> → 延長する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>exclude<span class="jp"> → 除外する</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">A. expire（期限が切れる）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 主語が "my license"（免許証）に注目！</li>
+                    <li>② 免許証に関連する動詞は？→ expire（期限切れ）</li>
+                    <li>③ be about to expire = まもなく期限が切れる</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>B:</b> exhaust は「使い果たす」で免許証には使わない</div>
+                    <div class="ans-wrong-item"><b>C:</b> extend は「延長する」で意味が逆</div>
+                    <div class="ans-wrong-item"><b>D:</b> exclude は「除外する」で免許証には使わない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ex- で始まる単語：</b>expire（期限切れ）/ exhaust（使い果たす）/ extend（延長）/ exclude（除外）→ 混同注意！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">9</div>
+            <div class="q-text">We will need to find more ( ) evidence if we want to confirm the idea.</div>
+            <div class="q-text jp">そのアイデアを確認したいなら、より（　）な証拠を見つける必要がある。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>considerable<span class="jp"> → かなりの</span></div>
+              <div class="opt"><span class="opt-label">B.</span>reliable<span class="jp"> → 信頼できる</span></div>
+              <div class="opt"><span class="opt-label">C.</span>conditional<span class="jp"> → 条件付きの</span></div>
+              <div class="opt"><span class="opt-label">D.</span>functional<span class="jp"> → 機能的な</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">B. reliable（信頼できる）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "confirm the idea"（アイデアを確認する）に注目！</li>
+                    <li>② 確認するのに必要なのは「信頼できる証拠」</li>
+                    <li>③ reliable evidence で完璧！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> considerable evidence は「かなりの量の証拠」で意味が違う</div>
+                    <div class="ans-wrong-item"><b>C:</b> conditional evidence は不自然な表現</div>
+                    <div class="ans-wrong-item"><b>D:</b> functional evidence も不自然な表現</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 コロケーション：</b>reliable + evidence/source/information/data は超頻出！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">10</div>
+            <div class="q-text">It is a widely ( ) view that global warming is caused by human activity.</div>
+            <div class="q-text jp">地球温暖化は人間の活動によって引き起こされるというのは広く（　）見解だ。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>scientific<span class="jp"> → 科学的な</span></div>
+              <div class="opt"><span class="opt-label">B.</span>specific<span class="jp"> → 特定の</span></div>
+              <div class="opt"><span class="opt-label">C.</span>opposing<span class="jp"> → 対立する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>accepted<span class="jp"> → 受け入れられた</span></div>
+            </div>
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">D. accepted（受け入れられた）</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "widely ( ) view" に注目！</li>
+                    <li>② widely accepted = 広く受け入れられた</li>
+                    <li>③ これは定型表現だね！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A:</b> widely scientific は文法的に不自然</div>
+                    <div class="ans-wrong-item"><b>B:</b> widely specific も不自然</div>
+                    <div class="ans-wrong-item"><b>C:</b> widely opposing も不自然</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 widely + 過去分詞：</b>widely accepted/known/used/recognized は頻出パターン！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section class="sec" data-sec="4">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">4</div>
+          <span class="sec-title">【４】文意一致（4つ選択）</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">12組</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <p style="font-size:13px;color:var(--text2);margin-bottom:16px">1の文から判断して2の文が妥当なものを<b>4つ</b>選びなさい。</p>
+
+          <!-- Vocab Box for Section 4 -->
+          <div class="vocab-box">
+            <div class="vocab-title">📚 この問題のポイント</div>
+            <div class="vocab-grid">
+              <div class="vocab-item"><div class="vocab-en">rarely</div><div class="vocab-ja">ほとんど〜ない</div></div>
+              <div class="vocab-item"><div class="vocab-en">nothing worse than</div><div class="vocab-ja">〜より悪いものはない</div></div>
+              <div class="vocab-item"><div class="vocab-en">turn down</div><div class="vocab-ja">却下する</div></div>
+              <div class="vocab-item"><div class="vocab-en">regardless of</div><div class="vocab-ja">〜に関係なく</div></div>
+              <div class="vocab-item"><div class="vocab-en">anticipate</div><div class="vocab-ja">予想する</div></div>
+              <div class="vocab-item"><div class="vocab-en">open question</div><div class="vocab-ja">未解決の問題</div></div>
+            </div>
+          </div>
+          <button class="nav-btn" data-act="vocab" style="margin-bottom:16px">📚 重要表現を表示</button>
+
+          <div class="pair">
+            <div class="pair-label">A.</div>
+            <div class="pair-sent"><b>1:</b> The trains rarely run on time around here.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ この辺りでは電車はほとんど時間通りに走らない</div>
+            <div class="pair-sent"><b>2:</b> It is unusual for the trains to be late in this town.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ この町では電車が遅れるのは珍しい</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">B.</div>
+            <div class="pair-sent"><b>1:</b> There is nothing worse for me than roller coasters.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 私にとってジェットコースターより悪いものはない（＝最も嫌い）</div>
+            <div class="pair-sent"><b>2:</b> I love roller coasters more than anything else.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 私はジェットコースターが何よりも好きだ</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">C.</div>
+            <div class="pair-sent"><b>1:</b> Had I known about the test earlier, I would have studied for it.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ もっと早くテストのことを知っていれば、勉強したのに</div>
+            <div class="pair-sent"><b>2:</b> By the time I heard about the test, it was too late to study for it.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ テストのことを聞いた時には、勉強するには遅すぎた</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">D.</div>
+            <div class="pair-sent"><b>1:</b> My proposal was turned down after some discussion.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 私の提案は議論の後に却下された</div>
+            <div class="pair-sent"><b>2:</b> Once we'd talked about it, we decided to go ahead with my idea.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 話し合った後、私のアイデアで進めることにした</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">E.</div>
+            <div class="pair-sent"><b>1:</b> Innovation was said to be behind the firm's profitable year.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ イノベーションが会社の利益年の背景にあると言われた</div>
+            <div class="pair-sent"><b>2:</b> The firm made profits this year because of its ability to innovate.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 会社は革新能力のおかげで今年利益を上げた</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">F.</div>
+            <div class="pair-sent"><b>1:</b> The company hires people regardless of experience.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 会社は経験に関係なく人を雇う</div>
+            <div class="pair-sent"><b>2:</b> Despite its lack of experience, the company was still hiring people.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 経験不足にもかかわらず、会社は人を雇い続けていた</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">G.</div>
+            <div class="pair-sent"><b>1:</b> We anticipated the problems we would have in introducing the new system.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 私たちは新システム導入で起こる問題を予想していた</div>
+            <div class="pair-sent"><b>2:</b> The introduction of the new system did not create any unexpected problems.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 新システムの導入は予期せぬ問題を生まなかった</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">H.</div>
+            <div class="pair-sent"><b>1:</b> Being alone does not necessarily mean you feel lonely.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 一人でいることは必ずしも孤独を感じることを意味しない</div>
+            <div class="pair-sent"><b>2:</b> It's not necessary to be by yourself if it makes you feel lonely.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 孤独を感じるなら一人でいる必要はない</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">I.</div>
+            <div class="pair-sent"><b>1:</b> The harder the wind blew, the faster the boat began to go.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 風が強く吹くほど、ボートは速く進んだ</div>
+            <div class="pair-sent"><b>2:</b> As the wind got stronger, the boat could hardly keep up its speed.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ 風が強くなるにつれ、ボートはスピードを維持できなくなった</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">J.</div>
+            <div class="pair-sent"><b>1:</b> It is an open question as to whether social media has been positive for society.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ SNSが社会にとってプラスかどうかは未解決の問題だ</div>
+            <div class="pair-sent"><b>2:</b> We now know that social media has been good for society on the whole.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ SNSは全体的に社会に良いことが今では分かっている</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">K.</div>
+            <div class="pair-sent"><b>1:</b> This lake is almost as large as the one in Michigan.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ この湖はミシガン湖とほぼ同じ大きさだ</div>
+            <div class="pair-sent"><b>2:</b> The lake in Michigan has only a slightly greater area than this one.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ ミシガン湖はこの湖よりわずかに面積が大きいだけだ</div>
+          </div>
+          <div class="pair">
+            <div class="pair-label">L.</div>
+            <div class="pair-sent"><b>1:</b> I ran out of time before completing the test.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ テストを終える前に時間切れになった</div>
+            <div class="pair-sent"><b>2:</b> I managed to finish the test just in time.</div>
+            <div class="pair-sent jp" style="font-size:12px;color:var(--text2)">→ ギリギリでテストを終えることができた</div>
+          </div>
+
+          <div class="q" style="margin-top:20px">
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">C, E, G, K</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 正解の選択肢を確認しよう！</div>
+                  <ol class="ans-steps">
+                    <li><b>C ✓：</b>「早く知っていれば勉強した」＝「知った時は遅すぎた」→ 同じ意味！</li>
+                    <li><b>E ✓：</b>「イノベーションが利益の背景」＝「革新能力で利益」→ 言い換えOK！</li>
+                    <li><b>G ✓：</b>「問題を予想した」＝「予期せぬ問題なし」→ 論理的に一致！</li>
+                    <li><b>K ✓：</b>「ほぼ同じ大きさ」＝「わずかに大きいだけ」→ 同じことを言ってる！</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の選択肢はなぜダメ？</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>A ✗:</b> rarely = ほとんど〜ない → unusual to be late = 遅れるのは珍しい → 意味が逆！</div>
+                    <div class="ans-wrong-item"><b>B ✗:</b> nothing worse = 最も嫌い → love most = 最も好き → 完全に逆！</div>
+                    <div class="ans-wrong-item"><b>D ✗:</b> turned down = 却下された → go ahead = 進めた → 結果が逆！</div>
+                    <div class="ans-wrong-item"><b>F ✗:</b> regardless of experience = 経験に関係なく(採用者の経験) → lack of experience = 経験不足(会社が) → 主語が違う！</div>
+                    <div class="ans-wrong-item"><b>H ✗:</b> 「一人＝孤独とは限らない」→「孤独なら一人でいなくていい」→ 全然違う話！</div>
+                    <div class="ans-wrong-item"><b>I ✗:</b> the faster = より速く → could hardly keep = 維持できない → 正反対！</div>
+                    <div class="ans-wrong-item"><b>J ✗:</b> open question = 未解決 → we now know = もう分かっている → 矛盾！</div>
+                    <div class="ans-wrong-item"><b>L ✗:</b> ran out of time = 時間切れ → managed to finish = 終えた → 結果が逆！</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 攻略法：</b>文意一致問題は「肯定↔否定」「成功↔失敗」の逆転がないか要チェック！日本語に訳して確認しよう</div>
+              </div>
+            </div></div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5 -->
+    <section class="sec" data-sec="5">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">5</div>
+          <span class="sec-title">【５】読解穴埋め</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">10問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <!-- Vocab Box for Section 5 -->
+          <div class="vocab-box">
+            <div class="vocab-title">📚 重要表現</div>
+            <div class="vocab-grid">
+              <div class="vocab-item"><div class="vocab-en">No matter how ~</div><div class="vocab-ja">どれだけ〜しても</div></div>
+              <div class="vocab-item"><div class="vocab-en">as a result</div><div class="vocab-ja">その結果</div></div>
+              <div class="vocab-item"><div class="vocab-en">One... the other</div><div class="vocab-ja">一方は...もう一方は</div></div>
+              <div class="vocab-item"><div class="vocab-en">make up</div><div class="vocab-ja">構成する、占める</div></div>
+              <div class="vocab-item"><div class="vocab-en">responsible for</div><div class="vocab-ja">〜を担当して</div></div>
+              <div class="vocab-item"><div class="vocab-en">effect of ~ on...</div><div class="vocab-ja">〜が...に与える影響</div></div>
+            </div>
+          </div>
+          <button class="nav-btn" data-act="vocab" style="margin-bottom:16px">📚 重要表現を表示</button>
+
+          <h4 style="font-size:14px;color:var(--purple);margin:0 0 14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:16px;background:var(--purple);border-radius:2px"></span>設問1: PLASTIC'S RECYCLING PROBLEM</h4>
+
+          <div class="passage" style="font-size:13px">
+            <p style="text-indent:0">It feels good to recycle. When you sort soda bottles and plastic bags from the rest of your garbage, it seems like you're helping the planet. The more plastic you put in the unburnable bin, the more you're keeping out of landfills, right? Wrong. <span class="blank">[ 1 ]</span> how much plastic you try to recycle, most ends up in the trash. Take food packages. Those packages contain several layers, each constructed of a different type of plastic. Because each type is different, these packages are not recyclable. Even some items made from only one kind of plastic are not recyclable. Yogurt cups, for instance, contain a plastic called polypropylene. When this gets recycled, it turns into a dark and smelly material. <span class="blank">[ 2 ]</span>, most recycling plants don't do anything with it.</p>
+            <p style="text-indent:0">Only two kinds of plastic are commonly recycled. One is the type used in soda bottles, known as PET, and <span class="blank">[ 3 ]</span> is the plastic in soap containers. Together, those plastics <span class="blank">[ 4 ]</span> only a small fraction of plastic trash. What this means is that only 9 percent of all the world's plastic trash is recycled. Almost 12 percent is burned, while the remaining 79 percent piles up on land or sea. <span class="blank">[ 5 ]</span>.</p>
+          </div>
+          <div class="passage jp" style="font-size:12px;color:var(--text2);margin-top:8px;padding:12px;background:var(--card);border-radius:var(--r-sm)">
+            <p>リサイクルは気持ちがいい。ゴミからソーダボトルやビニール袋を分別すると、地球を助けているように感じる。不燃ゴミに入れるプラスチックが多いほど、埋め立て地を減らしている...と思うよね？違う。<b>[1]</b> どれだけリサイクルしようとしても、ほとんどがゴミになる。食品パッケージを例に取ろう。それらは複数の層で構成され、各層は異なる種類のプラスチックでできている。種類が異なるため、リサイクルできない。1種類のプラスチックで作られたものでさえリサイクルできない場合がある。例えばヨーグルトカップはポリプロピレンを含む。これをリサイクルすると暗い色で臭い材料になる。<b>[2]</b> ほとんどのリサイクル工場は何もしない。</p>
+            <p>一般的にリサイクルされるプラスチックは2種類だけ。1つはPETとして知られるソーダボトルに使われるもの、<b>[3]</b> は石鹸容器のプラスチック。これらを合わせてもプラスチックゴミのほんの一部を <b>[4]</b> だけ。世界のプラスチックゴミの9%しかリサイクルされていない。約12%は燃やされ、残りの79%は陸や海に積み上がる。<b>[5]</b></p>
+          </div>
+
+          <div class="q">
+            <div class="q-num">1</div>
+            <div class="q-text jp">空所[ 1 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>For<span class="jp"> → 〜のために</span></div>
+              <div class="opt"><span class="opt-label">B.</span>No matter<span class="jp"> → どれだけ〜しても</span></div>
+              <div class="opt"><span class="opt-label">C.</span>However<span class="jp"> → しかしながら</span></div>
+              <div class="opt"><span class="opt-label">D.</span>As<span class="jp"> → 〜として</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">2</div>
+            <div class="q-text jp">空所[ 2 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>Likewise<span class="jp"> → 同様に</span></div>
+              <div class="opt"><span class="opt-label">B.</span>Fortunately<span class="jp"> → 幸いにも</span></div>
+              <div class="opt"><span class="opt-label">C.</span>For example<span class="jp"> → 例えば</span></div>
+              <div class="opt"><span class="opt-label">D.</span>As a result<span class="jp"> → その結果</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">3</div>
+            <div class="q-text jp">空所[ 3 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>the other<span class="jp"> → もう一方</span></div>
+              <div class="opt"><span class="opt-label">B.</span>another<span class="jp"> → 別の</span></div>
+              <div class="opt"><span class="opt-label">C.</span>other<span class="jp"> → 他の</span></div>
+              <div class="opt"><span class="opt-label">D.</span>two<span class="jp"> → 2つ</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">4</div>
+            <div class="q-text jp">空所[ 4 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>make by<span class="jp"> → ×（存在しない）</span></div>
+              <div class="opt"><span class="opt-label">B.</span>make from<span class="jp"> → 〜から作る</span></div>
+              <div class="opt"><span class="opt-label">C.</span>make out<span class="jp"> → 理解する</span></div>
+              <div class="opt"><span class="opt-label">D.</span>make up<span class="jp"> → 構成する</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">5</div>
+            <div class="q-text jp">空所[ 5 ]に入る文を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>Plastic recycling is a problem to be solved<span class="jp"> → プラスチックリサイクルは解決すべき問題</span></div>
+              <div class="opt"><span class="opt-label">B.</span>We must find a way to recycle more<span class="jp"> → もっとリサイクルする方法を見つけなければ</span></div>
+              <div class="opt"><span class="opt-label">C.</span>This percentage must be increased dramatically<span class="jp"> → この割合を劇的に増やす必要がある</span></div>
+              <div class="opt"><span class="opt-label">D.</span>If we can burn more plastic, we can throw away less<span class="jp"> → もっと燃やせば捨てる量は減る</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">1. B / 2. D / 3. A / 4. D / 5. A</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 各問の解き方</div>
+                  <ol class="ans-steps">
+                    <li><b>1. B:</b> 第1段落。"No matter how much ~" = どれだけ〜しても。後ろに "how much" が続くからコレ！</li>
+                    <li><b>2. D:</b> 第1段落末尾。臭くなる → 工場が何もしない。因果関係だから "As a result"（その結果）</li>
+                    <li><b>3. A:</b> 第2段落。"One is... the other is..." = 2つのうち一方は...もう一方は。2種類だけと明記あり！</li>
+                    <li><b>4. D:</b> 第2段落。"make up" = 構成する、占める。a small fraction を「占める」だね</li>
+                    <li><b>5. A:</b> 第2段落末尾。文章全体の結論！リサイクル率9%という深刻な問題を述べているから「解決すべき問題」</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 長文穴埋めのコツ：</b>前後の文脈から論理関係（原因→結果、対比、例示など）を見抜こう！</div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <h4 style="font-size:14px;color:var(--purple);margin:28px 0 14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:16px;background:var(--purple);border-radius:2px"></span>設問2: Job Application Email</h4>
+
+          <div class="passage" style="font-size:13px">
+            <p style="text-indent:0"><b>To:</b> Richard Landon, Hinkerton Retail Ltd<br><b>From:</b> Peter Girton<br><b>Subject:</b> Retail Times advertisement</p>
+            <p style="text-indent:0">Dear Mr. Landon,</p>
+            <p style="text-indent:0">I am writing to apply for the position of marketing manager that was advertised in Retail Times magazine on October 14th.</p>
+            <p style="text-indent:0">I have over twenty years' experience in the supermarket industry, having worked for Kallmart Holdings, Fresco Supermarkets and, most recently, the Balmoral Group. At the Balmoral Group, I served as the assistant manager of the marketing department, where I was jointly <span class="blank">[ 1 ]</span> organizing the launch of all new products and services within the group. In 2018, I took charge of Balmoral's move into banking services, <span class="blank">[ 2 ]</span> a national advertising campaign that helped to beat predicted sales by over forty percent. The following year, I managed a project to gather data about the <span class="blank">[ 3 ]</span> new store layouts on customer behavior. The project made several recommendations that were put into operation in Balmoral stores nationwide.</p>
+            <p style="text-indent:0">I believe that with my strong professional background and hard work, I can make a positive contribution to your marketing team at Hinkerton Retail. Please find <span class="blank">[ 4 ]</span> my resumé, which provides further details of my qualifications and experience.</p>
+            <p style="text-indent:0"><span class="blank">[ 5 ]</span>. I look forward to hearing from you in due course.</p>
+            <p style="text-indent:0">Yours sincerely,<br>Peter Girton</p>
+          </div>
+          <div class="passage jp" style="font-size:12px;color:var(--text2);margin-top:8px;padding:12px;background:var(--card);border-radius:var(--r-sm)">
+            <p><b>宛先:</b> Richard Landon, Hinkerton Retail Ltd<br><b>差出人:</b> Peter Girton<br><b>件名:</b> Retail Times誌の広告について</p>
+            <p>Landon様、</p>
+            <p>10月14日のRetail Times誌に掲載されたマーケティングマネージャーの職に応募するためにご連絡しています。</p>
+            <p>私はスーパーマーケット業界で20年以上の経験があり、Kallmart Holdings、Fresco Supermarkets、そして直近ではBalmoral Groupで働いてきました。Balmoral Groupではマーケティング部門のアシスタントマネージャーを務め、グループ内のすべての新製品・サービスの立ち上げを共同で <b>[1]</b>。2018年には、Balmoralの銀行サービス参入を担当し、全国的な広告キャンペーンを <b>[2]</b>、予想売上を40%以上上回ることに貢献しました。翌年、新店舗レイアウトが顧客行動に与える <b>[3]</b> についてデータを収集するプロジェクトを管理しました。</p>
+            <p>私の強い専門的背景と努力により、Hinkerton Retailのマーケティングチームに貢献できると信じています。私の資格と経験の詳細を記載した履歴書を <b>[4]</b> ご覧ください。</p>
+            <p><b>[5]</b>。近いうちにお返事をいただけることを楽しみにしております。</p>
+          </div>
+
+          <div class="q">
+            <div class="q-num">1</div>
+            <div class="q-text jp">空所[ 1 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>in place of<span class="jp"> → 〜の代わりに</span></div>
+              <div class="opt"><span class="opt-label">B.</span>subject to<span class="jp"> → 〜次第で</span></div>
+              <div class="opt"><span class="opt-label">C.</span>responsible for<span class="jp"> → 〜を担当して</span></div>
+              <div class="opt"><span class="opt-label">D.</span>capable of<span class="jp"> → 〜できる</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">2</div>
+            <div class="q-text jp">空所[ 2 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>managed<span class="jp"> → 管理した</span></div>
+              <div class="opt"><span class="opt-label">B.</span>manage<span class="jp"> → 管理する</span></div>
+              <div class="opt"><span class="opt-label">C.</span>managing<span class="jp"> → 管理しながら</span></div>
+              <div class="opt"><span class="opt-label">D.</span>have managed<span class="jp"> → 管理してきた</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">3</div>
+            <div class="q-text jp">空所[ 3 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>effect of<span class="jp"> → 〜の影響</span></div>
+              <div class="opt"><span class="opt-label">B.</span>change to<span class="jp"> → 〜への変更</span></div>
+              <div class="opt"><span class="opt-label">C.</span>design of<span class="jp"> → 〜のデザイン</span></div>
+              <div class="opt"><span class="opt-label">D.</span>turn to<span class="jp"> → 〜に頼る</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">4</div>
+            <div class="q-text jp">空所[ 4 ]に入る語を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>placed<span class="jp"> → 置いた</span></div>
+              <div class="opt"><span class="opt-label">B.</span>attached<span class="jp"> → 添付した</span></div>
+              <div class="opt"><span class="opt-label">C.</span>arranged<span class="jp"> → 整えた</span></div>
+              <div class="opt"><span class="opt-label">D.</span>concerned<span class="jp"> → 関係した</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-num">5</div>
+            <div class="q-text jp">空所[ 5 ]に入る文を選びなさい。</div>
+            <div class="opts">
+              <div class="opt"><span class="opt-label">A.</span>I will contact you again soon<span class="jp"> → 近日中に再度ご連絡します</span></div>
+              <div class="opt"><span class="opt-label">B.</span>Thank you very much for your consideration<span class="jp"> → ご検討ありがとうございます</span></div>
+              <div class="opt"><span class="opt-label">C.</span>I know you will be satisfied<span class="jp"> → ご満足いただけると思います</span></div>
+              <div class="opt"><span class="opt-label">D.</span>Please let me know when my first day will be<span class="jp"> → 初日がいつか教えてください</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">1. C / 2. C / 3. A / 4. B / 5. B</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 各問の解き方</div>
+                  <ol class="ans-steps">
+                    <li><b>1. C:</b> 第3段落（経歴紹介部分）。"be responsible for ~" = 〜を担当して。ビジネス英語の超頻出表現！</li>
+                    <li><b>2. C:</b> 第3段落。分詞構文！カンマの後に動詞の-ing形が来るパターン。"managing a campaign"で「キャンペーンを管理しながら」</li>
+                    <li><b>3. A:</b> 第3段落。"effect of ~ on..." = 〜が...に与える影響。the effect of new layouts on customer behavior</li>
+                    <li><b>4. B:</b> 第4段落（締めくくり部分）。"Please find attached ~" = 〜を添付しております。ビジネスメールの定型表現！</li>
+                    <li><b>5. B:</b> 第5段落（結び）。ビジネスメールの締めくくり。"Thank you for your attention"はフォーマルな結び文句</li>
+                  </ol>
+                </div>
+                <div class="tip"><b>💡 ビジネスメール頻出表現：</b>be responsible for / Please find attached / Thank you for your attention / I look forward to hearing from you</div>
+              </div>
+            </div></div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6 -->
+    <section class="sec" data-sec="6">
+      <div class="sec-head">
+        <div class="sec-left">
+          <div class="sec-num">6</div>
+          <span class="sec-title">【６】読解：Letterlocking</span>
+        </div>
+        <div class="sec-right">
+          <span class="sec-tag">7問</span>
+          <span class="sec-arrow">▼</span>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+
+          <!-- Vocab Box for Section 6 -->
+          <div class="vocab-box">
+            <div class="vocab-title">📚 重要単語</div>
+            <div class="vocab-grid">
+              <div class="vocab-item"><div class="vocab-en">reach its destination</div><div class="vocab-ja">目的地に届く</div></div>
+              <div class="vocab-item"><div class="vocab-en">capture the interest</div><div class="vocab-ja">興味を引く</div></div>
+              <div class="vocab-item"><div class="vocab-en">a variety of</div><div class="vocab-ja">様々な</div></div>
+              <div class="vocab-item"><div class="vocab-en">catalogue</div><div class="vocab-ja">目録化する</div></div>
+              <div class="vocab-item"><div class="vocab-en">on purpose</div><div class="vocab-ja">わざと、故意に</div></div>
+              <div class="vocab-item"><div class="vocab-en">evidence of</div><div class="vocab-ja">〜の証拠</div></div>
+            </div>
+          </div>
+          <button class="nav-btn" data-act="vocab" style="margin-bottom:16px">📚 重要単語を表示</button>
+
+          <div class="passage" style="font-size:13px">
+            <p style="text-indent:0">In 1697 a man in France wrote to his cousin in the Netherlands to request an important certificate. He folded and sealed his letter so it would hold together without an envelope and mailed it off to his cousin. For some reason, it <span class="blank">[ 1 ]</span> and remains sealed today. Yet a team of historians and scientists have still read it — thanks to high-resolution imaging and a "virtual unfolding" algorithm.</p>
+            <p style="text-indent:0">The scanning-and-unfolding technique <span class="blank">[ 2 ]</span> of applications, from revealing text on historical documents too delicate to touch to understanding historical origami procedures. But the researchers behind the new study, published in Nature Communications, are most excited about using it to examine the art of "letterlocking." Letterlocking is a technique to carefully fold, cut, and seal letters so that they cannot be opened easily. This technique was used widely in the period before the invention of modern envelopes, which are also used to keep letters "locked" inside. Almost two decades ago it <span class="blank">[ 3 ]</span> of Jana Dambrogio, a researcher at Massachusetts Institute of Technology Libraries and a co-author of the new paper.</p>
+            <p style="text-indent:0">Dambrogio had noticed tiny cuts and folds, apparently done on purpose, in a number of historical documents and eventually guessed their purpose. "They <span class="blank">[ 4 ]</span>, and security was my guess — that it was built in on purpose," she says. "The reaction for me was, 'Oh my gosh, we need to let people know not to remove this evidence, because the little tiny cuts and folds <span class="blank">[ 5 ]</span> of this security tradition that has not been deeply studied.'"</p>
+            <p style="text-indent:0">For the past seven years, she has collaborated in this quest with Daniel Starza Smith, a lecturer in early modern English literature at King's College London and a co-author of the paper. The two researchers and their team <span class="blank">[ 6 ]</span> more than 60 letterlocking methods. "Before 1850 there weren't really any such things as modern envelopes," Smith says. Paper <span class="blank">[ 7 ]</span> not to be wasted on a separate envelope. "So if you wanted to send a letter, you had to use letterlocking — the letter had to become its own envelope or sending device."</p>
+          </div>
+          <div class="passage jp" style="font-size:12px;color:var(--text2);margin-top:8px;padding:12px;background:var(--card);border-radius:var(--r-sm)">
+            <p>1697年、フランスのある男性がオランダの従兄弟に重要な証明書を求める手紙を書いた。彼は封筒なしでまとまるように手紙を折って封印し、従兄弟に送った。何らかの理由で、それは<b>[1]</b>、今日も封印されたままだ。しかし、高解像度イメージングと「仮想展開」アルゴリズムのおかげで、歴史家と科学者のチームはその手紙を読むことができた。</p>
+            <p>スキャンと展開の技術は<b>[2]</b>、繊細すぎて触れない歴史的文書のテキストを明らかにすることから、歴史的な折り紙の手順を理解することまで様々な用途がある。しかし、Nature Communicationsに発表された新しい研究の研究者たちは、「レターロッキング」の技術を調べるためにこの技術を使うことに最も興奮している。レターロッキングは、簡単に開けられないように手紙を注意深く折り、切り、封印する技術だ。この技術は、現代の封筒が発明される前の時代に広く使われていた。約20年前、それがMIT図書館の研究者でこの論文の共著者であるJana Dambrogioの<b>[3]</b>。</p>
+            <p>Dambrogioは多くの歴史的文書で、明らかに意図的に行われた小さな切り込みと折り目に気づき、最終的にその目的を推測した。「それらは<b>[4]</b>、そしてセキュリティが私の推測でした—それは意図的に組み込まれていると」と彼女は言う。「私の反応は『すごい、この証拠を取り除かないように人々に知らせなければ。なぜなら小さな切り込みと折り目は、深く研究されていないこのセキュリティの伝統の<b>[5]</b>から』でした。」</p>
+            <p>過去7年間、彼女はこの探求においてKing's College Londonの近世英文学講師で論文の共著者であるDaniel Starza Smithと協力してきた。2人の研究者とそのチームは60以上のレターロッキング方法を<b>[6]</b>。「1850年以前には、現代の封筒のようなものは本当になかった」とSmithは言う。紙は別の封筒に無駄にしない<b>[7]</b>。「だから手紙を送りたければ、レターロッキングを使わなければならなかった—手紙自体が封筒や送信装置にならなければならなかった。」</p>
+          </div>
+
+          <div class="vocab-notes" style="background:var(--card);padding:16px;border-radius:var(--r);margin:16px 0">
+            <b>📋 選択肢：</b><br>
+            <span style="display:inline-block;margin:4px 8px">A. are the evidence<span class="jp"> → 〜の証拠である</span></span>
+            <span style="display:inline-block;margin:4px 8px">B. captured the interest<span class="jp"> → 興味を引いた</span></span>
+            <span style="display:inline-block;margin:4px 8px">C. could have a variety<span class="jp"> → 様々な〜がありうる</span></span>
+            <span style="display:inline-block;margin:4px 8px">D. have catalogued<span class="jp"> → 目録化した</span></span>
+            <span style="display:inline-block;margin:4px 8px">E. looked like locks<span class="jp"> → 錠のように見えた</span></span>
+            <span style="display:inline-block;margin:4px 8px">F. never reached its destination<span class="jp"> → 目的地に届かなかった</span></span>
+            <span style="display:inline-block;margin:4px 8px">G. was an expensive material<span class="jp"> → 高価な材料だった</span></span>
+          </div>
+
+          <div class="q">
+            <div class="q-btns"><button class="ans-btn">解答を見る 💡</button></div>
+            <div class="ans-box"><div class="ans-inner"><div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section"><div class="ans-section-title">✅ 正解</div><div class="correct">1. F / 2. C / 3. B / 4. E / 5. A / 6. D / 7. G</div></div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 各問の解き方</div>
+                  <ol class="ans-steps">
+                    <li><b>1. F:</b> 第1段落。"never reached its destination" = 届かなかった → だから今も封印されたまま！論理的だね</li>
+                    <li><b>2. C:</b> 第2段落冒頭。"could have a variety of ~" = 様々な用途がある → 後ろに "from A to B" の例示が続く</li>
+                    <li><b>3. B:</b> 第2段落末尾。"captured the interest of ~" = 〜の興味を引いた → 研究者の興味を引いたという文脈</li>
+                    <li><b>4. E:</b> 第3段落。"looked like locks" = 錠のように見えた → "security was my guess" につながる！</li>
+                    <li><b>5. A:</b> 第3段落末尾。"are the evidence of ~" = 〜の証拠である → "this security tradition" の証拠</li>
+                    <li><b>6. D:</b> 第4段落。"have catalogued" = 目録化した → "more than 60 methods" を目録化した</li>
+                    <li><b>7. G:</b> 第4段落。"was an expensive material" = 高価な材料だった → 別の封筒に使うのはもったいなかった</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ よくある間違い</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>2と3を逆にしがち：</b> 2は "of applications"、3は "of Jana Dambrogio" と後ろの単語をチェック！</div>
+                    <div class="ans-wrong-item"><b>4と5を迷う：</b> 4は外見（looked）、5は本質（evidence）。文脈をよく読もう！</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 空所補充のコツ：</b>空所の前後の単語（特に前置詞）に注目！ variety of / interest of / evidence of などのコロケーションがヒントになるよ</div>
+              </div>
+            </div></div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <p style="font-size:14px;font-weight:600">2022年度 中央大学 英語入試 完全解説</p>
+    <p style="margin-top:8px;font-size:13px;color:var(--text2)">💪 最後まで諦めずに頑張ろう！君なら絶対できる！</p>
+    <p style="margin-top:4px;font-size:12px;opacity:.6">🌐 翻訳ボタンで日本語訳を表示できるよ</p>
+  </footer>
+
+  <button class="fab" id="fab">↑</button>
+
+  <script>
+    // ==========================================
+    // Constants
+    // ==========================================
+    const SCROLL_THRESHOLD = 400;
+    const STORAGE_KEYS = { theme: 'chuo-theme' };
+
+    // ==========================================
+    // Utilities
+    // ==========================================
+    const $ = s => document.querySelector(s);
+    const $$ = s => [...document.querySelectorAll(s)];
+    const safe = fn => { try { fn(); } catch(e) { console.warn('[safe]', e); } };
+
+    // ==========================================
+    // Feature Modules
+    // ==========================================
+
+    // Page Toggle (問題/本文訳)
+    const PageToggle = {
+      handle(btn) {
+        if (!btn || btn.classList.contains('on')) return;
+        const page = btn.dataset.page;
+        const qPage = $('#page-questions');
+        const pPage = $('#page-passages');
+        if (!qPage || !pPage) return;
+
+        $('.nav-seg .on')?.classList.remove('on');
+        btn.classList.add('on');
+        qPage.style.display = page === 'q' ? 'block' : 'none';
+        pPage.style.display = page === 'p' ? 'block' : 'none';
+      }
+    };
+
+    // Section Toggle
+    const SectionToggle = {
+      handle(header) {
+        if (!header) return;
+        const sec = header.closest('.sec');
+        if (!sec) return;
+        sec.classList.toggle('open');
+      },
+      expandAll() {
+        $$('.sec').forEach(s => s.classList.add('open'));
+      },
+      collapseAll() {
+        $$('.sec').forEach(s => s.classList.remove('open'));
+      }
+    };
+
+    // Answer Toggle
+    const AnswerToggle = {
+      handle(btn) {
+        if (!btn) return;
+        const q = btn.closest('.q');
+        const box = q?.querySelector('.ans-box');
+        if (!box) return;
+
+        box.classList.toggle('show');
+        btn.textContent = box.classList.contains('show') ? '解答を隠す' : '解答を見る 💡';
+      }
+    };
+
+    // Theme Toggle
+    const ThemeToggle = {
+      handle() {
+        const html = document.documentElement;
+        const isDark = html.dataset.theme === 'dark';
+        const newTheme = isDark ? 'light' : 'dark';
+        html.dataset.theme = newTheme;
+
+        const btn = $('#theme');
+        if (btn) btn.textContent = isDark ? '🌙 Dark' : '☀️ Light';
+
+        safe(() => localStorage.setItem(STORAGE_KEYS.theme, newTheme));
+      },
+      init() {
+        safe(() => {
+          const saved = localStorage.getItem(STORAGE_KEYS.theme);
+          if (saved === 'dark') {
+            document.documentElement.dataset.theme = 'dark';
+            const btn = $('#theme');
+            if (btn) btn.textContent = '☀️ Light';
+          }
+        });
+      }
+    };
+
+    // Vocab Toggle
+    const VocabToggle = {
+      handle(btn) {
+        if (!btn) return;
+        const sec = btn.closest('.sec');
+        const vbox = sec?.querySelector('.vocab-box');
+        if (vbox) vbox.classList.toggle('show');
+      }
+    };
+
+    // FAB (Floating Action Button)
+    const FAB = {
+      el: null,
+      init() {
+        this.el = $('#fab');
+        if (!this.el) return;
+
+        window.addEventListener('scroll', () => {
+          this.el.classList.toggle('show', scrollY > SCROLL_THRESHOLD);
+        }, { passive: true });
+
+        this.el.addEventListener('click', () => {
+          scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    };
+
+    // Options Layout Check
+    const OptsLayout = {
+      gap: 8,
+      check() {
+        $$('.opts').forEach(opts => {
+          if (opts.offsetParent === null) return;
+
+          const optItems = opts.querySelectorAll('.opt');
+          if (optItems.length === 0) return;
+
+          // Reset first
+          opts.classList.remove('vertical');
+          optItems.forEach(opt => {
+            opt.style.width = '';
+            opt.style.flex = '';
+            opt.style.minWidth = '';
+            opt.style.maxWidth = '';
+          });
+
+          const containerWidth = opts.clientWidth;
+          const optCount = optItems.length;
+
+          // Measure longest text
+          let maxTextLen = 0;
+          optItems.forEach(opt => {
+            const fullText = opt.textContent || '';
+            const mainText = fullText.split('→')[0].trim();
+            if (mainText.length > maxTextLen) maxTextLen = mainText.length;
+          });
+
+          // Decide layout based on content length
+          let columns;
+          if (maxTextLen > 40 || optCount <= 2) {
+            columns = 1;
+          } else if (maxTextLen > 25) {
+            columns = 2;
+          } else if (optCount === 4 && maxTextLen <= 20) {
+            columns = 4;
+          } else {
+            columns = 2;
+          }
+
+          if (columns === 1) {
+            opts.classList.add('vertical');
+            optItems.forEach(opt => {
+              opt.style.flex = '1 1 100%';
+              opt.style.width = '100%';
+            });
+            return;
+          }
+
+          // Calculate width for equal sizing
+          const totalGaps = this.gap * (columns - 1);
+          const optWidth = Math.floor((containerWidth - totalGaps) / columns);
+
+          optItems.forEach(opt => {
+            opt.style.flex = `0 0 ${optWidth}px`;
+            opt.style.width = `${optWidth}px`;
+            opt.style.minWidth = `${optWidth}px`;
+            opt.style.maxWidth = `${optWidth}px`;
+          });
+
+          // Post-render check for overflow
+          requestAnimationFrame(() => {
+            let needsVertical = false;
+            optItems.forEach(opt => {
+              if (opt.scrollHeight > 80) needsVertical = true;
+            });
+
+            if (needsVertical) {
+              opts.classList.add('vertical');
+              optItems.forEach(opt => {
+                opt.style.flex = '1 1 100%';
+                opt.style.width = '100%';
+                opt.style.minWidth = '';
+                opt.style.maxWidth = '';
+              });
+            }
+          });
+        });
+      }
+    };
+
+    // ==========================================
+    // Event Delegation (Master Click Handler)
+    // ==========================================
+    document.addEventListener('click', e => {
+      const t = e.target;
+
+      // Page toggle
+      const pageBtn = t.closest('.nav-seg [data-page]');
+      if (pageBtn) return PageToggle.handle(pageBtn);
+
+      // Section toggle
+      const secHead = t.closest('.sec-head');
+      if (secHead) return SectionToggle.handle(secHead);
+
+      // Answer toggle
+      if (t.classList.contains('ans-btn')) return AnswerToggle.handle(t);
+
+      // Theme toggle
+      if (t.id === 'theme' || t.closest('#theme')) return ThemeToggle.handle();
+
+      // Action buttons (expand/collapse/vocab)
+      const actBtn = t.closest('[data-act]');
+      if (actBtn) {
+        const act = actBtn.dataset.act;
+        if (act === 'expand') return SectionToggle.expandAll();
+        if (act === 'collapse') return SectionToggle.collapseAll();
+        if (act === 'vocab') return VocabToggle.handle(actBtn);
+      }
+    });
+
+    // ==========================================
+    // Initialize
+    // ==========================================
+    function init() {
+      ThemeToggle.init();
+      FAB.init();
+      OptsLayout.check();
+
+      // Re-check opts when sections open
+      document.addEventListener('click', e => {
+        if (e.target.closest('.sec-head')) {
+          setTimeout(() => OptsLayout.check(), 100);
+        }
+      });
+    }
+
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
