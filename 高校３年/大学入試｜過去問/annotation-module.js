@@ -393,9 +393,14 @@
 
   function getPoint(e) {
     const rect = state.canvas.getBoundingClientRect();
+    const clientY = e.clientY - rect.top;
+    const scrollY = window.scrollY;
+    const docY = clientY + scrollY;
+    // DEBUG: Log coordinate calculation
+    console.log('[getPoint] clientY:', Math.round(clientY), 'scrollY:', Math.round(scrollY), 'docY:', Math.round(docY));
     return {
       x: e.clientX - rect.left,
-      y: e.clientY - rect.top + window.scrollY,  // Store document-relative Y
+      y: docY,  // Store document-relative Y
       pressure: e.pressure || 0.5,
       tiltX: e.tiltX || 0,
       tiltY: e.tiltY || 0
