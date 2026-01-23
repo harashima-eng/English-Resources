@@ -34,6 +34,8 @@
     dpr: 1,
     sizeMultiplier: 1,  // Size: XS=0.3, S=0.6, M=1, L=1.5, XL=2
     rulerStart: null,   // Starting point for ruler tool
+    lastSmoothedPoint: null,  // For EMA smoothing between points
+    lastPointTime: 0,         // Timestamp for velocity calculation
     // Selection tool state
     selectionStart: null,
     selectionRect: null,
