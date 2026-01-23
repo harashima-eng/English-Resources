@@ -140,7 +140,7 @@
     eraserBtn.className = 'ann-btn';
     eraserBtn.dataset.tool = 'eraser';
     eraserBtn.title = 'Eraser';
-    eraserBtn.appendChild(createSVG('M5 19h14v2H5v-2zm4.42-7.46L7.41 9.54a1.5 1.5 0 010-2.12l5.66-5.66a1.5 1.5 0 012.12 0l4.24 4.24a1.5 1.5 0 010 2.12l-5.66 5.66a1.5 1.5 0 01-2.12 0l-2.23-2.24z', 20));
+    eraserBtn.appendChild(createSVG('M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z', 20));
     tools.appendChild(eraserBtn);
 
     // Divider
@@ -170,7 +170,7 @@
     clearBtn.className = 'ann-btn';
     clearBtn.dataset.action = 'clear';
     clearBtn.title = 'Clear All';
-    clearBtn.appendChild(createSVG('M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z', 20));
+    clearBtn.appendChild(createSVG('M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z', 20));
     tools.appendChild(clearBtn);
 
     // Pencil Only button
@@ -178,7 +178,7 @@
     pencilOnlyBtn.className = 'ann-btn';
     pencilOnlyBtn.dataset.action = 'pencilOnly';
     pencilOnlyBtn.title = 'Pencil Only Mode';
-    pencilOnlyBtn.appendChild(createSVG('M17.75 7L14 3.25l-10 10V17h3.75l10-10zm2.96-2.96c.39-.39.39-1.02 0-1.41L18.37.29c-.39-.39-1.02-.39-1.41 0L15 2.25 18.75 6l1.96-1.96z', 20));
+    pencilOnlyBtn.appendChild(createSVG('M12 2L6.5 11h11L12 2z', 20));
     tools.appendChild(pencilOnlyBtn);
 
     toolbar.appendChild(tools);
@@ -324,6 +324,11 @@
       scheduleSave();
     }
     state.currentStroke = null;
+
+    // Release pointer capture to prevent stuck state
+    try {
+      state.canvas.releasePointerCapture(e.pointerId);
+    } catch (err) { /* ignore if not captured */ }
   }
 
   function getPoint(e) {
