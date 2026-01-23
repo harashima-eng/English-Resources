@@ -230,14 +230,6 @@
     clearBtn.appendChild(createSVG('M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z', 20));
     tools.appendChild(clearBtn);
 
-    // Pencil Only button
-    const pencilOnlyBtn = document.createElement('button');
-    pencilOnlyBtn.className = 'ann-btn';
-    pencilOnlyBtn.dataset.action = 'pencilOnly';
-    pencilOnlyBtn.title = 'Pencil Only Mode';
-    pencilOnlyBtn.appendChild(createSVG('M12 2L6.5 11h11L12 2z', 20));
-    tools.appendChild(pencilOnlyBtn);
-
     toolbar.appendChild(tools);
     document.body.appendChild(toolbar);
 
