@@ -451,6 +451,34 @@
   }
 
   function handlePointerUp(e) {
+    // Ruler: finalize the straight line
+    if (state.currentTool === 'ruler' && state.rulerStart) {
+      const point = getPoint(e);
+      const snappedEnd = snapToAngle(state.rulerStart, point);
+
+      // Only save if there's actual distance
+      const dx = snappedEnd.x - state.rulerStart.x;
+      const dy = snappedEnd.y - state.rulerStart.y;
+      if (Math.hypot(dx, dy) > 5) {
+        const stroke = {
+          tool: 'pen',
+          color: state.currentColor,
+          sizeMultiplier: state.sizeMultiplier,
+          points: [state.rulerStart, snappedEnd]
+        };
+        state.strokes.push(stroke);
+        scheduleSave();
+      }
+
+      state.rulerStart = null;
+      redrawAllStrokes();
+
+      try {
+        state.canvas.releasePointerCapture(e.pointerId);
+      } catch (err) { /* ignore */ }
+      return;
+    }
+
     if (state.currentStroke && state.currentStroke.points.length > 1) {
       state.strokes.push(state.currentStroke);
       scheduleSave();
