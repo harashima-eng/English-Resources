@@ -46,6 +46,7 @@
     createToolbar();
     loadAnnotations();
     setupResizeHandler();
+    setupScrollHandler();
   }
 
   // ========== Canvas Setup ==========
