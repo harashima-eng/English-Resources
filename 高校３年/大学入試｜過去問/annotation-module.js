@@ -1,0 +1,490 @@
+/**
+ * Annotation Module - GoodNotes-quality drawing for HTML pages
+ * Optimized for iPad + Apple Pencil with pressure sensitivity
+ */
+
+(function() {
+  'use strict';
+
+  // ========== Configuration ==========
+  const CONFIG = {
+    tools: {
+      pen: { minWidth: 1, maxWidth: 6, opacity: 1 },
+      highlighter: { minWidth: 15, maxWidth: 25, opacity: 0.35 },
+      eraser: { radius: 20 }
+    },
+    colors: ['#1a1a1a', '#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa'],
+    palmRejectRadius: 20,
+    saveDebounce: 500,
+    smoothing: 0.3
+  };
+
+  // ========== State ==========
+  let state = {
+    isDrawMode: false,
+    currentTool: 'pen',
+    currentColor: CONFIG.colors[0],
+    strokes: [],
+    currentStroke: null,
+    canvas: null,
+    ctx: null,
+    dpr: 1,
+    pencilOnly: false
+  };
+
+  // ========== Initialization ==========
+  function init() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setup);
+    } else {
+      setup();
+    }
+  }
+
+  function setup() {
+    createCanvas();
+    createToolbar();
+    loadAnnotations();
+    setupResizeHandler();
+  }
+
+  // ========== Canvas Setup ==========
+  function createCanvas() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'annotation-canvas';
+    canvas.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9998;
+      touch-action: none;
+    `;
+    document.body.appendChild(canvas);
+    state.canvas = canvas;
+    state.ctx = canvas.getContext('2d', { willReadFrequently: false });
+
+    resizeCanvas();
+  }
+
+  function resizeCanvas() {
+    const canvas = state.canvas;
+    state.dpr = window.devicePixelRatio || 1;
+
+    canvas.width = window.innerWidth * state.dpr;
+    canvas.height = window.innerHeight * state.dpr;
+
+    state.ctx.scale(state.dpr, state.dpr);
+    redrawAllStrokes();
+  }
+
+  function setupResizeHandler() {
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(resizeCanvas, 100);
+    });
+  }
+
+  // ========== SVG Icons ==========
+  function createSVG(pathD, size = 24) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('width', size);
+    svg.setAttribute('height', size);
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', pathD);
+    path.setAttribute('fill', 'currentColor');
+    svg.appendChild(path);
+    return svg;
+  }
+
+  // ========== Toolbar ==========
+  function createToolbar() {
+    const toolbar = document.createElement('div');
+    toolbar.id = 'annotation-toolbar';
+
+    // Toggle button
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'ann-btn ann-toggle';
+    toggleBtn.dataset.action = 'toggle';
+    toggleBtn.title = 'Toggle Draw Mode';
+    toggleBtn.appendChild(createSVG('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'));
+    toolbar.appendChild(toggleBtn);
+
+    // Tools container
+    const tools = document.createElement('div');
+    tools.className = 'ann-tools';
+    tools.style.display = 'none';
+
+    // Pen button
+    const penBtn = document.createElement('button');
+    penBtn.className = 'ann-btn active';
+    penBtn.dataset.tool = 'pen';
+    penBtn.title = 'Pen';
+    penBtn.appendChild(createSVG('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z', 20));
+    tools.appendChild(penBtn);
+
+    // Highlighter button
+    const highlightBtn = document.createElement('button');
+    highlightBtn.className = 'ann-btn';
+    highlightBtn.dataset.tool = 'highlighter';
+    highlightBtn.title = 'Highlighter';
+    highlightBtn.appendChild(createSVG('M6 14l3 3v5h6v-5l3-3V9H6v5zm5-12h2v3h-2V2zM3.5 5.875L4.914 4.46l2.12 2.122L5.622 8 3.5 5.875zm13.46.71l2.123-2.12 1.414 1.414L18.375 8l-1.414-1.414z', 20));
+    tools.appendChild(highlightBtn);
+
+    // Eraser button
+    const eraserBtn = document.createElement('button');
+    eraserBtn.className = 'ann-btn';
+    eraserBtn.dataset.tool = 'eraser';
+    eraserBtn.title = 'Eraser';
+    eraserBtn.appendChild(createSVG('M15.14 3c-.51 0-1.02.2-1.41.59L2.59 14.73c-.78.78-.78 2.05 0 2.83l4.83 4.83c.78.78 2.05.78 2.83 0l11.14-11.14c.78-.78.78-2.05 0-2.83l-4.83-4.83c-.39-.39-.9-.59-1.42-.59z', 20));
+    tools.appendChild(eraserBtn);
+
+    // Divider
+    const divider1 = document.createElement('div');
+    divider1.className = 'ann-divider';
+    tools.appendChild(divider1);
+
+    // Colors
+    const colorsContainer = document.createElement('div');
+    colorsContainer.className = 'ann-colors';
+    CONFIG.colors.forEach((color, i) => {
+      const colorBtn = document.createElement('button');
+      colorBtn.className = 'ann-color' + (i === 0 ? ' active' : '');
+      colorBtn.dataset.color = color;
+      colorBtn.style.background = color;
+      colorsContainer.appendChild(colorBtn);
+    });
+    tools.appendChild(colorsContainer);
+
+    // Divider
+    const divider2 = document.createElement('div');
+    divider2.className = 'ann-divider';
+    tools.appendChild(divider2);
+
+    // Clear button
+    const clearBtn = document.createElement('button');
+    clearBtn.className = 'ann-btn';
+    clearBtn.dataset.action = 'clear';
+    clearBtn.title = 'Clear All';
+    clearBtn.appendChild(createSVG('M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z', 20));
+    tools.appendChild(clearBtn);
+
+    // Pencil Only button
+    const pencilOnlyBtn = document.createElement('button');
+    pencilOnlyBtn.className = 'ann-btn';
+    pencilOnlyBtn.dataset.action = 'pencilOnly';
+    pencilOnlyBtn.title = 'Pencil Only Mode';
+    pencilOnlyBtn.appendChild(createSVG('M17.75 7L14 3.25l-10 10V17h3.75l10-10zm2.96-2.96c.39-.39.39-1.02 0-1.41L18.37.29c-.39-.39-1.02-.39-1.41 0L15 2.25 18.75 6l1.96-1.96z', 20));
+    tools.appendChild(pencilOnlyBtn);
+
+    toolbar.appendChild(tools);
+    document.body.appendChild(toolbar);
+
+    setupToolbarEvents(toolbar);
+  }
+
+  function setupToolbarEvents(toolbar) {
+    toolbar.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action], [data-tool], [data-color]');
+      if (!btn) return;
+
+      if (btn.dataset.action === 'toggle') {
+        toggleDrawMode();
+      } else if (btn.dataset.action === 'clear') {
+        if (confirm('Clear all annotations?')) {
+          state.strokes = [];
+          redrawAllStrokes();
+          saveAnnotations();
+        }
+      } else if (btn.dataset.action === 'pencilOnly') {
+        state.pencilOnly = !state.pencilOnly;
+        btn.classList.toggle('active', state.pencilOnly);
+      } else if (btn.dataset.tool) {
+        state.currentTool = btn.dataset.tool;
+        toolbar.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else if (btn.dataset.color) {
+        state.currentColor = btn.dataset.color;
+        toolbar.querySelectorAll('[data-color]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    });
+  }
+
+  // ========== Draw Mode ==========
+  function toggleDrawMode() {
+    state.isDrawMode = !state.isDrawMode;
+    const toolbar = document.getElementById('annotation-toolbar');
+    const tools = toolbar.querySelector('.ann-tools');
+    const toggle = toolbar.querySelector('.ann-toggle');
+
+    state.canvas.style.pointerEvents = state.isDrawMode ? 'auto' : 'none';
+    tools.style.display = state.isDrawMode ? 'flex' : 'none';
+    toggle.classList.toggle('active', state.isDrawMode);
+
+    if (state.isDrawMode) {
+      setupDrawingEvents();
+    } else {
+      removeDrawingEvents();
+    }
+  }
+
+  // ========== Drawing Events ==========
+  let boundPointerDown, boundPointerMove, boundPointerUp;
+
+  function setupDrawingEvents() {
+    boundPointerDown = handlePointerDown.bind(this);
+    boundPointerMove = handlePointerMove.bind(this);
+    boundPointerUp = handlePointerUp.bind(this);
+
+    state.canvas.addEventListener('pointerdown', boundPointerDown);
+    state.canvas.addEventListener('pointermove', boundPointerMove);
+    state.canvas.addEventListener('pointerup', boundPointerUp);
+    state.canvas.addEventListener('pointerleave', boundPointerUp);
+    state.canvas.addEventListener('pointercancel', boundPointerUp);
+
+    // Prevent default touch behaviors
+    state.canvas.addEventListener('touchstart', preventDefault, { passive: false });
+    state.canvas.addEventListener('touchmove', preventDefault, { passive: false });
+  }
+
+  function removeDrawingEvents() {
+    state.canvas.removeEventListener('pointerdown', boundPointerDown);
+    state.canvas.removeEventListener('pointermove', boundPointerMove);
+    state.canvas.removeEventListener('pointerup', boundPointerUp);
+    state.canvas.removeEventListener('pointerleave', boundPointerUp);
+    state.canvas.removeEventListener('pointercancel', boundPointerUp);
+
+    state.canvas.removeEventListener('touchstart', preventDefault);
+    state.canvas.removeEventListener('touchmove', preventDefault);
+  }
+
+  function preventDefault(e) {
+    e.preventDefault();
+  }
+
+  // ========== Palm Rejection ==========
+  function isPalmTouch(e) {
+    // Large contact area = likely palm
+    if (e.radiusX > CONFIG.palmRejectRadius || e.radiusY > CONFIG.palmRejectRadius) {
+      return true;
+    }
+    // Zero pressure with touch = accidental
+    if (e.pointerType === 'touch' && e.pressure === 0) {
+      return true;
+    }
+    // Pencil-only mode rejects all finger input
+    if (state.pencilOnly && e.pointerType !== 'pen') {
+      return true;
+    }
+    return false;
+  }
+
+  // ========== Pointer Handlers ==========
+  function handlePointerDown(e) {
+    if (isPalmTouch(e)) return;
+
+    const point = getPoint(e);
+
+    if (state.currentTool === 'eraser') {
+      eraseAtPoint(point);
+      return;
+    }
+
+    state.currentStroke = {
+      tool: state.currentTool,
+      color: state.currentColor,
+      points: [point]
+    };
+
+    state.canvas.setPointerCapture(e.pointerId);
+  }
+
+  function handlePointerMove(e) {
+    if (isPalmTouch(e)) return;
+
+    const point = getPoint(e);
+
+    if (state.currentTool === 'eraser' && e.buttons > 0) {
+      eraseAtPoint(point);
+      return;
+    }
+
+    if (!state.currentStroke) return;
+
+    state.currentStroke.points.push(point);
+    drawStrokeSegment(state.currentStroke);
+  }
+
+  function handlePointerUp(e) {
+    if (state.currentStroke && state.currentStroke.points.length > 1) {
+      state.strokes.push(state.currentStroke);
+      scheduleSave();
+    }
+    state.currentStroke = null;
+  }
+
+  function getPoint(e) {
+    const rect = state.canvas.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      pressure: e.pressure || 0.5,
+      tiltX: e.tiltX || 0,
+      tiltY: e.tiltY || 0
+    };
+  }
+
+  // ========== Drawing ==========
+  function drawStrokeSegment(stroke) {
+    const ctx = state.ctx;
+    const points = stroke.points;
+    const len = points.length;
+
+    if (len < 2) return;
+
+    const tool = CONFIG.tools[stroke.tool];
+    const p1 = points[len - 2];
+    const p2 = points[len - 1];
+
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = stroke.color;
+    ctx.globalAlpha = tool.opacity;
+
+    // Pressure-sensitive width
+    const width = tool.minWidth + (p2.pressure * (tool.maxWidth - tool.minWidth));
+    ctx.lineWidth = width;
+
+    ctx.beginPath();
+
+    if (len === 2) {
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+    } else {
+      // Quadratic Bézier for smoothing
+      const p0 = points[len - 3];
+      const mid1 = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 };
+      const mid2 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+
+      ctx.moveTo(mid1.x, mid1.y);
+      ctx.quadraticCurveTo(p1.x, p1.y, mid2.x, mid2.y);
+    }
+
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function redrawAllStrokes() {
+    const ctx = state.ctx;
+    ctx.clearRect(0, 0, state.canvas.width / state.dpr, state.canvas.height / state.dpr);
+
+    for (const stroke of state.strokes) {
+      drawFullStroke(stroke);
+    }
+  }
+
+  function drawFullStroke(stroke) {
+    const ctx = state.ctx;
+    const points = stroke.points;
+
+    if (points.length < 2) return;
+
+    const tool = CONFIG.tools[stroke.tool];
+
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = stroke.color;
+    ctx.globalAlpha = tool.opacity;
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+
+    for (let i = 1; i < points.length; i++) {
+      const p0 = points[i - 1];
+      const p1 = points[i];
+
+      const width = tool.minWidth + (p1.pressure * (tool.maxWidth - tool.minWidth));
+      ctx.lineWidth = width;
+
+      if (i === 1) {
+        ctx.lineTo(p1.x, p1.y);
+      } else {
+        const mid = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 };
+        ctx.quadraticCurveTo(p0.x, p0.y, mid.x, mid.y);
+      }
+    }
+
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // ========== Eraser ==========
+  function eraseAtPoint(point) {
+    const radius = CONFIG.tools.eraser.radius;
+    let erased = false;
+
+    state.strokes = state.strokes.filter(stroke => {
+      for (const p of stroke.points) {
+        const dx = p.x - point.x;
+        const dy = p.y - point.y;
+        if (dx * dx + dy * dy < radius * radius) {
+          erased = true;
+          return false;
+        }
+      }
+      return true;
+    });
+
+    if (erased) {
+      redrawAllStrokes();
+      scheduleSave();
+    }
+  }
+
+  // ========== Persistence ==========
+  let saveTimeout = null;
+
+  function scheduleSave() {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(saveAnnotations, CONFIG.saveDebounce);
+  }
+
+  function getStorageKey() {
+    // Use filename as unique key
+    const path = window.location.pathname;
+    const filename = path.split('/').pop() || 'index';
+    return 'annotations-' + filename;
+  }
+
+  async function saveAnnotations() {
+    const key = getStorageKey();
+    try {
+      await localforage.setItem(key, state.strokes);
+    } catch (err) {
+      console.error('Failed to save annotations:', err);
+    }
+  }
+
+  async function loadAnnotations() {
+    const key = getStorageKey();
+    try {
+      const saved = await localforage.getItem(key);
+      if (saved && Array.isArray(saved)) {
+        state.strokes = saved;
+        redrawAllStrokes();
+      }
+    } catch (err) {
+      console.error('Failed to load annotations:', err);
+    }
+  }
+
+  // ========== Start ==========
+  init();
+})();
