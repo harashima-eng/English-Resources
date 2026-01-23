@@ -342,7 +342,7 @@
     const rect = state.canvas.getBoundingClientRect();
     return {
       x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      y: e.clientY - rect.top + window.scrollY,  // Store document-relative Y
       pressure: e.pressure || 0.5,
       tiltX: e.tiltX || 0,
       tiltY: e.tiltY || 0
