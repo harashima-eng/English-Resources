@@ -409,6 +409,13 @@
       return;
     }
 
+    // Ruler: record start point only
+    if (state.currentTool === 'ruler') {
+      state.rulerStart = point;
+      state.canvas.setPointerCapture(e.pointerId);
+      return;
+    }
+
     state.currentStroke = {
       tool: state.currentTool,
       color: state.currentColor,
