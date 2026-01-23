@@ -244,7 +244,9 @@
       if (btn.dataset.action === 'toggle') {
         toggleDrawMode();
       } else if (btn.dataset.action === 'clear') {
+        // Only clear current view's strokes
         state.strokes = [];
+        state.strokesByView[state.currentViewId] = [];
         redrawAllStrokes();
         saveAnnotations();
       } else if (btn.dataset.action === 'pencilOnly') {
