@@ -29,21 +29,13 @@
     0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
-/* Dark mode support */
+/* Dark mode support - toolbar background */
 @media (prefers-color-scheme: dark) {
   .ann-tools {
     background: rgba(40, 40, 40, 0.95);
     box-shadow:
       0 4px 24px rgba(0, 0, 0, 0.4),
       0 0 0 1px rgba(255, 255, 255, 0.1);
-  }
-
-  .ann-btn {
-    color: #e0e0e0;
-  }
-
-  .ann-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
   }
 }
 
