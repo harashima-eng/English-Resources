@@ -484,6 +484,11 @@
 
     if (points.length < 2) return;
 
+    // DEBUG: Log first point's Y transformation
+    const firstY = points[0].y;
+    const renderY = firstY - scrollY;
+    console.log('[drawFullStroke] storedY:', Math.round(firstY), 'scrollY:', scrollY, 'renderY:', Math.round(renderY));
+
     const tool = CONFIG.tools[stroke.tool];
 
     ctx.save();
