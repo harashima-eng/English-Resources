@@ -524,7 +524,23 @@
 
     if (!state.currentStroke) return;
 
-    state.currentStroke.points.push(point);
+    // Apply EMA smoothing to reduce jitter
+    const smoothedPoint = smoothPoint(point);
+
+    // Point decimation: skip points too close together
+    const lastPoint = state.currentStroke.points[state.currentStroke.points.length - 1];
+    if (!shouldAddPoint(smoothedPoint, lastPoint)) return;
+
+    // Calculate velocity factor for natural width variation
+    const now = performance.now();
+    const timeDelta = (now - state.lastPointTime) / 1000; // Convert to seconds
+    const velocityFactor = getVelocityFactor(lastPoint, smoothedPoint, timeDelta);
+    state.lastPointTime = now;
+
+    // Add velocity factor to point for width calculation
+    smoothedPoint.velocityFactor = velocityFactor;
+
+    state.currentStroke.points.push(smoothedPoint);
     drawStrokeSegment(state.currentStroke);
   }
 
