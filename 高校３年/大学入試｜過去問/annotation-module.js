@@ -16,7 +16,10 @@
     colors: ['#1a1a1a', '#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa'],
     palmRejectRadius: 20,
     saveDebounce: 500,
-    smoothing: 0.3
+    smoothing: 0.3,
+    minPointDistance: 2,    // Minimum pixels between points (jitter filter)
+    velocityWeight: 0.3,    // How much velocity affects width (0-1)
+    maxVelocity: 1000       // Pixels per second for minimum width
   };
 
   // ========== State ==========
