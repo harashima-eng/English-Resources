@@ -747,6 +747,238 @@
     ctx.restore();
   }
 
+  // ========== Selection Helpers ==========
+  function isInsideRect(point, rect) {
+    return point.x >= rect.x && point.x <= rect.x + rect.w &&
+           point.y >= rect.y && point.y <= rect.y + rect.h;
+  }
+
+  function getStrokeBounds(stroke) {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const p of stroke.points) {
+      minX = Math.min(minX, p.x);
+      minY = Math.min(minY, p.y);
+      maxX = Math.max(maxX, p.x);
+      maxY = Math.max(maxY, p.y);
+    }
+    return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
+  }
+
+  function isStrokeInRect(stroke, rect) {
+    const bounds = getStrokeBounds(stroke);
+    // Check if any point of the stroke is inside the selection rectangle
+    for (const p of stroke.points) {
+      if (p.x >= rect.x && p.x <= rect.x + rect.w &&
+          p.y >= rect.y && p.y <= rect.y + rect.h) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function getResizeHandle(point) {
+    if (!state.selectionRect) return null;
+    const rect = state.selectionRect;
+    const handleSize = 20; // Touch-friendly size
+
+    const corners = [
+      { name: 'nw', x: rect.x, y: rect.y },
+      { name: 'ne', x: rect.x + rect.w, y: rect.y },
+      { name: 'sw', x: rect.x, y: rect.y + rect.h },
+      { name: 'se', x: rect.x + rect.w, y: rect.y + rect.h }
+    ];
+
+    for (const corner of corners) {
+      if (Math.abs(point.x - corner.x) < handleSize &&
+          Math.abs(point.y - corner.y) < handleSize) {
+        return corner.name;
+      }
+    }
+    return null;
+  }
+
+  function finalizeSelection(endPoint) {
+    const rect = {
+      x: Math.min(state.selectionStart.x, endPoint.x),
+      y: Math.min(state.selectionStart.y, endPoint.y),
+      w: Math.abs(endPoint.x - state.selectionStart.x),
+      h: Math.abs(endPoint.y - state.selectionStart.y)
+    };
+
+    // Minimum selection size
+    if (rect.w < 10 || rect.h < 10) {
+      state.selectionRect = null;
+      state.selectedStrokes = [];
+      redrawAllStrokes();
+      return;
+    }
+
+    // Find strokes that intersect with selection
+    state.selectedStrokes = state.strokes.filter(s => isStrokeInRect(s, rect));
+
+    if (state.selectedStrokes.length > 0) {
+      // Calculate tight bounding box around selected strokes
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (const stroke of state.selectedStrokes) {
+        const b = getStrokeBounds(stroke);
+        minX = Math.min(minX, b.x);
+        minY = Math.min(minY, b.y);
+        maxX = Math.max(maxX, b.x + b.w);
+        maxY = Math.max(maxY, b.y + b.h);
+      }
+      // Add padding around selection
+      const padding = 10;
+      state.selectionRect = {
+        x: minX - padding,
+        y: minY - padding,
+        w: (maxX - minX) + padding * 2,
+        h: (maxY - minY) + padding * 2
+      };
+    } else {
+      state.selectionRect = null;
+    }
+
+    redrawAllStrokes();
+    drawSelectionBox();
+  }
+
+  function moveSelection(point) {
+    const dx = point.x - state.dragOffset.x - state.selectionRect.x;
+    const dy = point.y - state.dragOffset.y - state.selectionRect.y;
+
+    // Move all selected stroke points
+    for (const stroke of state.selectedStrokes) {
+      for (const p of stroke.points) {
+        p.x += dx;
+        p.y += dy;
+      }
+    }
+
+    // Update selection rectangle
+    state.selectionRect.x += dx;
+    state.selectionRect.y += dy;
+
+    redrawAllStrokes();
+    drawSelectionBox();
+  }
+
+  function resizeSelection(point) {
+    if (!state.originalBounds || !state.resizeHandle) return;
+
+    const orig = state.originalBounds;
+    let newRect = { ...state.selectionRect };
+
+    // Calculate new bounds based on which handle is being dragged
+    switch (state.resizeHandle) {
+      case 'se':
+        newRect.w = Math.max(20, point.x - orig.x);
+        newRect.h = Math.max(20, point.y - orig.y);
+        break;
+      case 'sw':
+        newRect.x = Math.min(point.x, orig.x + orig.w - 20);
+        newRect.w = orig.x + orig.w - newRect.x;
+        newRect.h = Math.max(20, point.y - orig.y);
+        break;
+      case 'ne':
+        newRect.w = Math.max(20, point.x - orig.x);
+        newRect.y = Math.min(point.y, orig.y + orig.h - 20);
+        newRect.h = orig.y + orig.h - newRect.y;
+        break;
+      case 'nw':
+        newRect.x = Math.min(point.x, orig.x + orig.w - 20);
+        newRect.y = Math.min(point.y, orig.y + orig.h - 20);
+        newRect.w = orig.x + orig.w - newRect.x;
+        newRect.h = orig.y + orig.h - newRect.y;
+        break;
+    }
+
+    // Calculate scale factors
+    const scaleX = newRect.w / orig.w;
+    const scaleY = newRect.h / orig.h;
+
+    // Scale all selected stroke points relative to original bounds
+    for (const stroke of state.selectedStrokes) {
+      for (const p of stroke.points) {
+        // Get position relative to original bounds center
+        const relX = p.x - (orig.x + orig.w / 2);
+        const relY = p.y - (orig.y + orig.h / 2);
+
+        // Scale and reposition
+        p.x = (newRect.x + newRect.w / 2) + relX * scaleX;
+        p.y = (newRect.y + newRect.h / 2) + relY * scaleY;
+      }
+    }
+
+    state.selectionRect = newRect;
+    state.originalBounds = { ...newRect }; // Update for continuous resize
+
+    redrawAllStrokes();
+    drawSelectionBox();
+  }
+
+  function drawSelectionPreview(start, end) {
+    const ctx = state.ctx;
+    const scrollY = window.scrollY;
+
+    const rect = {
+      x: Math.min(start.x, end.x),
+      y: Math.min(start.y, end.y) - scrollY,
+      w: Math.abs(end.x - start.x),
+      h: Math.abs(end.y - start.y)
+    };
+
+    ctx.save();
+    ctx.strokeStyle = '#007AFF';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.globalAlpha = 0.8;
+    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+
+    // Semi-transparent fill
+    ctx.fillStyle = 'rgba(0, 122, 255, 0.1)';
+    ctx.setLineDash([]);
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+    ctx.restore();
+  }
+
+  function drawSelectionBox() {
+    if (!state.selectionRect || state.selectedStrokes.length === 0) return;
+
+    const ctx = state.ctx;
+    const rect = state.selectionRect;
+    const scrollY = window.scrollY;
+
+    ctx.save();
+    // Dashed border
+    ctx.strokeStyle = '#007AFF';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.strokeRect(rect.x, rect.y - scrollY, rect.w, rect.h);
+
+    // Corner handles (solid squares)
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#007AFF';
+    const handleSize = 12;
+
+    const corners = [
+      [rect.x, rect.y],
+      [rect.x + rect.w, rect.y],
+      [rect.x, rect.y + rect.h],
+      [rect.x + rect.w, rect.y + rect.h]
+    ];
+
+    for (const [x, y] of corners) {
+      ctx.fillRect(
+        x - handleSize / 2,
+        y - scrollY - handleSize / 2,
+        handleSize,
+        handleSize
+      );
+    }
+
+    ctx.restore();
+  }
+
   // ========== Eraser ==========
   function eraseAtPoint(point) {
     const radius = CONFIG.tools.eraser.radius;
