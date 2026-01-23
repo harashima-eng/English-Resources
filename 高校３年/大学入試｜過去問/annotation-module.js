@@ -29,6 +29,7 @@
     canvas: null,
     ctx: null,
     dpr: 1,
+    sizeMultiplier: 1,  // Size: XS=0.3, S=0.6, M=1, L=1.5, XL=2
     // Per-view annotation storage
     currentViewId: null,
     strokesByView: {}
