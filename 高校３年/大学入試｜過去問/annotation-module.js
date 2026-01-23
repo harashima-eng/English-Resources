@@ -283,9 +283,6 @@
         state.strokesByView[state.currentViewId] = [];
         redrawAllStrokes();
         saveAnnotations();
-      } else if (btn.dataset.action === 'pencilOnly') {
-        state.pencilOnly = !state.pencilOnly;
-        btn.classList.toggle('active', state.pencilOnly);
       } else if (btn.dataset.tool) {
         state.currentTool = btn.dataset.tool;
         toolbar.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
