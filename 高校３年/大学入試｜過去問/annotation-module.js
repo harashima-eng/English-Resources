@@ -316,6 +316,10 @@
         state.currentColor = btn.dataset.color;
         toolbar.querySelectorAll('[data-color]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+      } else if (btn.dataset.size) {
+        state.sizeMultiplier = parseFloat(btn.dataset.size);
+        toolbar.querySelectorAll('[data-size]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       }
     });
   }
