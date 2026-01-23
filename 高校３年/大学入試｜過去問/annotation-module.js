@@ -132,7 +132,7 @@
     highlightBtn.className = 'ann-btn';
     highlightBtn.dataset.tool = 'highlighter';
     highlightBtn.title = 'Highlighter';
-    highlightBtn.appendChild(createSVG('M6 14l3 3v5h6v-5l3-3V9H6v5zm5-12h2v3h-2V2zM3.5 5.875L4.914 4.46l2.12 2.122L5.622 8 3.5 5.875zm13.46.71l2.123-2.12 1.414 1.414L18.375 8l-1.414-1.414z', 20));
+    highlightBtn.appendChild(createSVG('M4 19h16v2H4v-2zm3-4h2v3H7v-3zm4-3h2v6h-2v-6zm4-3h2v9h-2V9zm4-3h2v12h-2V6z', 20));
     tools.appendChild(highlightBtn);
 
     // Eraser button
@@ -195,11 +195,9 @@
       if (btn.dataset.action === 'toggle') {
         toggleDrawMode();
       } else if (btn.dataset.action === 'clear') {
-        if (confirm('Clear all annotations?')) {
-          state.strokes = [];
-          redrawAllStrokes();
-          saveAnnotations();
-        }
+        state.strokes = [];
+        redrawAllStrokes();
+        saveAnnotations();
       } else if (btn.dataset.action === 'pencilOnly') {
         state.pencilOnly = !state.pencilOnly;
         btn.classList.toggle('active', state.pencilOnly);
