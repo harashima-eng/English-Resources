@@ -809,8 +809,8 @@
     ctx.moveTo(points[0].x, points[0].y - scrollY);
 
     const sizeMult = stroke.sizeMultiplier || 1;
+
     for (let i = 1; i < points.length; i++) {
-      const p0 = points[i - 1];
       const p1 = points[i];
 
       const velocityFactor = p1.velocityFactor || 1;  // Fast strokes = thinner
@@ -819,11 +819,40 @@
       ctx.lineWidth = width;
 
       if (i === 1) {
+        // First segment: simple line
         ctx.lineTo(p1.x, p1.y - scrollY);
+      } else if (i === 2) {
+        // Second segment: quadratic Bézier
+        const p0 = points[i - 2];
+        const pPrev = points[i - 1];
+        const mid = { x: (pPrev.x + p1.x) / 2, y: (pPrev.y + p1.y) / 2 - scrollY };
+        ctx.quadraticCurveTo(pPrev.x, pPrev.y - scrollY, mid.x, mid.y);
       } else {
-        const mid = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 - scrollY };
-        ctx.quadraticCurveTo(p0.x, p0.y - scrollY, mid.x, mid.y);
+        // Catmull-Rom for 4+ points
+        const p0 = points[i - 3];
+        const pA = points[i - 2];
+        const pB = points[i - 1];
+        const p3 = p1;
+
+        // Catmull-Rom to Bézier conversion
+        const cp1 = {
+          x: pA.x + (pB.x - p0.x) / 6,
+          y: (pA.y + (pB.y - p0.y) / 6) - scrollY
+        };
+        const cp2 = {
+          x: pB.x - (p3.x - pA.x) / 6,
+          y: (pB.y - (p3.y - pA.y) / 6) - scrollY
+        };
+
+        const mid = { x: (pA.x + pB.x) / 2, y: (pA.y + pB.y) / 2 - scrollY };
+        ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, mid.x, mid.y);
       }
+    }
+
+    // Draw final segment to last point
+    if (points.length >= 2) {
+      const last = points[points.length - 1];
+      ctx.lineTo(last.x, last.y - scrollY);
     }
 
     ctx.stroke();
