@@ -621,6 +621,41 @@
     ctx.restore();
   }
 
+  // ========== Ruler Helpers ==========
+  function snapToAngle(start, end) {
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const angle = Math.atan2(dy, dx);
+    const distance = Math.hypot(dx, dy);
+
+    // Snap to nearest 45° (π/4 radians)
+    const snapAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4);
+
+    return {
+      x: start.x + Math.cos(snapAngle) * distance,
+      y: start.y + Math.sin(snapAngle) * distance,
+      pressure: end.pressure || 0.5
+    };
+  }
+
+  function drawRulerPreview(start, end) {
+    const ctx = state.ctx;
+    const scrollY = window.scrollY;
+    const tool = CONFIG.tools.pen;
+
+    ctx.save();
+    ctx.strokeStyle = state.currentColor;
+    ctx.lineWidth = tool.maxWidth * state.sizeMultiplier;
+    ctx.lineCap = 'round';
+    ctx.globalAlpha = 0.5;
+    ctx.setLineDash([8, 8]);
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y - scrollY);
+    ctx.lineTo(end.x, end.y - scrollY);
+    ctx.stroke();
+    ctx.restore();
+  }
+
   // ========== Eraser ==========
   function eraseAtPoint(point) {
     const radius = CONFIG.tools.eraser.radius;
