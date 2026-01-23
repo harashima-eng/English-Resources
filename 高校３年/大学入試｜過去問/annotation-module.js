@@ -47,9 +47,48 @@
   function setup() {
     createCanvas();
     createToolbar();
+    initViewTracking();
     loadAnnotations();
     setupResizeHandler();
     setupScrollHandler();
+    setupViewChangeListener();
+  }
+
+  // ========== View Tracking ==========
+  function getCurrentViewId() {
+    const activeView = document.querySelector('.view.active');
+    return activeView ? activeView.id : 'default';
+  }
+
+  function initViewTracking() {
+    state.currentViewId = getCurrentViewId();
+  }
+
+  function setupViewChangeListener() {
+    // Watch for class changes on any .view element
+    const views = document.querySelectorAll('.view');
+    if (views.length === 0) return; // No view system on this page
+
+    const observer = new MutationObserver(() => {
+      const newViewId = getCurrentViewId();
+      if (newViewId !== state.currentViewId) {
+        // Save current strokes to the old view
+        state.strokesByView[state.currentViewId] = state.strokes;
+
+        // Switch to new view
+        state.currentViewId = newViewId;
+
+        // Load strokes for the new view
+        state.strokes = state.strokesByView[newViewId] || [];
+
+        // Redraw canvas with new view's strokes
+        redrawAllStrokes();
+      }
+    });
+
+    views.forEach(view => {
+      observer.observe(view, { attributes: true, attributeFilter: ['class'] });
+    });
   }
 
   // ========== Canvas Setup ==========
