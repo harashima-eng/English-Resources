@@ -140,7 +140,7 @@
     eraserBtn.className = 'ann-btn';
     eraserBtn.dataset.tool = 'eraser';
     eraserBtn.title = 'Eraser';
-    eraserBtn.appendChild(createSVG('M15.14 3c-.51 0-1.02.2-1.41.59L2.59 14.73c-.78.78-.78 2.05 0 2.83l4.83 4.83c.78.78 2.05.78 2.83 0l11.14-11.14c.78-.78.78-2.05 0-2.83l-4.83-4.83c-.39-.39-.9-.59-1.42-.59z', 20));
+    eraserBtn.appendChild(createSVG('M5 19h14v2H5v-2zm4.42-7.46L7.41 9.54a1.5 1.5 0 010-2.12l5.66-5.66a1.5 1.5 0 012.12 0l4.24 4.24a1.5 1.5 0 010 2.12l-5.66 5.66a1.5 1.5 0 01-2.12 0l-2.23-2.24z', 20));
     tools.appendChild(eraserBtn);
 
     // Divider
