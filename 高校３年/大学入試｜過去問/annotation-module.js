@@ -703,9 +703,11 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Pressure-sensitive width with size multiplier
+    // Pressure-sensitive width with size multiplier and velocity factor
     const sizeMult = stroke.sizeMultiplier || 1;
-    const width = (tool.minWidth + (p2.pressure * (tool.maxWidth - tool.minWidth))) * sizeMult;
+    const velocityFactor = p2.velocityFactor || 1;  // Fast strokes = thinner
+    const baseWidth = tool.minWidth + (p2.pressure * (tool.maxWidth - tool.minWidth));
+    const width = baseWidth * sizeMult * velocityFactor;
     ctx.lineWidth = width;
 
     // For highlighter, draw the full visible stroke to avoid segment gaps
