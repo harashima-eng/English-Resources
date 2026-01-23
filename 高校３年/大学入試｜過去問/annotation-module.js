@@ -476,6 +476,10 @@
       return;
     }
 
+    // Initialize smoothing state for new stroke
+    state.lastSmoothedPoint = point;
+    state.lastPointTime = performance.now();
+
     state.currentStroke = {
       tool: state.currentTool,
       color: state.currentColor,
