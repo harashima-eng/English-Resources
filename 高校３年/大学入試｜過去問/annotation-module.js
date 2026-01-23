@@ -403,6 +403,7 @@
   function drawFullStroke(stroke) {
     const ctx = state.ctx;
     const points = stroke.points;
+    const scrollY = window.scrollY;  // Get current scroll for rendering
 
     if (points.length < 2) return;
 
@@ -415,7 +416,7 @@
     ctx.globalAlpha = tool.opacity;
 
     ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
+    ctx.moveTo(points[0].x, points[0].y - scrollY);
 
     for (let i = 1; i < points.length; i++) {
       const p0 = points[i - 1];
@@ -425,10 +426,10 @@
       ctx.lineWidth = width;
 
       if (i === 1) {
-        ctx.lineTo(p1.x, p1.y);
+        ctx.lineTo(p1.x, p1.y - scrollY);
       } else {
-        const mid = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 };
-        ctx.quadraticCurveTo(p0.x, p0.y, mid.x, mid.y);
+        const mid = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 - scrollY };
+        ctx.quadraticCurveTo(p0.x, p0.y - scrollY, mid.x, mid.y);
       }
     }
 
