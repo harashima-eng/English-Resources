@@ -29,7 +29,6 @@
     canvas: null,
     ctx: null,
     dpr: 1,
-    pencilOnly: false,
     // Per-view annotation storage
     currentViewId: null,
     strokesByView: {}
