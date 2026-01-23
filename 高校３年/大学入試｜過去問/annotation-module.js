@@ -292,7 +292,7 @@
     }
 
     toolbar.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-action], [data-tool], [data-color]');
+      const btn = e.target.closest('[data-action], [data-tool], [data-color], [data-size]');
       if (!btn) return;
 
       if (btn.dataset.action === 'toggle') {
