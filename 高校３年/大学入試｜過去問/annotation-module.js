@@ -335,6 +335,13 @@
         redrawAllStrokes();
         saveAnnotations();
       } else if (btn.dataset.tool) {
+        // Clear selection when switching away from select tool
+        if (state.currentTool === 'select' && btn.dataset.tool !== 'select') {
+          state.selectionRect = null;
+          state.selectedStrokes = [];
+          state.selectionStart = null;
+          redrawAllStrokes();
+        }
         state.currentTool = btn.dataset.tool;
         toolbar.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
