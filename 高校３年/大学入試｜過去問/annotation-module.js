@@ -667,6 +667,11 @@
     for (const stroke of state.strokes) {
       drawFullStroke(stroke);
     }
+
+    // Draw selection box if active
+    if (state.currentTool === 'select') {
+      drawSelectionBox();
+    }
   }
 
   function drawFullStroke(stroke) {
