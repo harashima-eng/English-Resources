@@ -436,6 +436,14 @@
       return;
     }
 
+    // Ruler: show preview line with angle snapping
+    if (state.currentTool === 'ruler' && state.rulerStart && e.buttons > 0) {
+      const snappedEnd = snapToAngle(state.rulerStart, point);
+      redrawAllStrokes();
+      drawRulerPreview(state.rulerStart, snappedEnd);
+      return;
+    }
+
     if (!state.currentStroke) return;
 
     state.currentStroke.points.push(point);
