@@ -517,6 +517,31 @@
   }
 
   function handlePointerUp(e) {
+    // Selection tool: finalize operations
+    if (state.currentTool === 'select') {
+      if (state.isDraggingSelection) {
+        state.isDraggingSelection = false;
+        scheduleSave();
+        try { state.canvas.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        return;
+      }
+      if (state.isResizingSelection) {
+        state.isResizingSelection = false;
+        state.resizeHandle = null;
+        state.originalBounds = null;
+        scheduleSave();
+        try { state.canvas.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        return;
+      }
+      if (state.selectionStart) {
+        const point = getPoint(e);
+        finalizeSelection(point);
+        state.selectionStart = null;
+        try { state.canvas.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        return;
+      }
+    }
+
     // Ruler: finalize the straight line
     if (state.currentTool === 'ruler' && state.rulerStart) {
       const point = getPoint(e);
