@@ -403,6 +403,7 @@
     state.currentStroke = {
       tool: state.currentTool,
       color: state.currentColor,
+      sizeMultiplier: state.sizeMultiplier,
       points: [point]
     };
 
