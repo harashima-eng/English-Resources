@@ -354,6 +354,7 @@
     const ctx = state.ctx;
     const points = stroke.points;
     const len = points.length;
+    const scrollY = window.scrollY;  // Get current scroll for rendering
 
     if (len < 2) return;
 
@@ -374,16 +375,16 @@
     ctx.beginPath();
 
     if (len === 2) {
-      ctx.moveTo(p1.x, p1.y);
-      ctx.lineTo(p2.x, p2.y);
+      ctx.moveTo(p1.x, p1.y - scrollY);
+      ctx.lineTo(p2.x, p2.y - scrollY);
     } else {
       // Quadratic Bézier for smoothing
       const p0 = points[len - 3];
-      const mid1 = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 };
-      const mid2 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+      const mid1 = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 - scrollY };
+      const mid2 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 - scrollY };
 
       ctx.moveTo(mid1.x, mid1.y);
-      ctx.quadraticCurveTo(p1.x, p1.y, mid2.x, mid2.y);
+      ctx.quadraticCurveTo(p1.x, p1.y - scrollY, mid2.x, mid2.y);
     }
 
     ctx.stroke();
