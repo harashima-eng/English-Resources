@@ -732,16 +732,39 @@
     ctx.beginPath();
 
     if (len === 2) {
+      // Simple line for first segment
       ctx.moveTo(p1.x, p1.y - scrollY);
       ctx.lineTo(p2.x, p2.y - scrollY);
-    } else {
-      // Quadratic Bézier for smoothing
+    } else if (len === 3) {
+      // Quadratic Bézier for 3 points
       const p0 = points[len - 3];
       const mid1 = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 - scrollY };
       const mid2 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 - scrollY };
-
       ctx.moveTo(mid1.x, mid1.y);
       ctx.quadraticCurveTo(p1.x, p1.y - scrollY, mid2.x, mid2.y);
+    } else {
+      // Catmull-Rom spline for 4+ points (smoother curves)
+      const p0 = points[len - 4];
+      const p3 = p2;  // p2 is already points[len - 1]
+      const pA = p1;  // points[len - 2]
+      const pB = points[len - 3];
+
+      // Catmull-Rom to Bézier conversion
+      const cp1 = {
+        x: pB.x + (pA.x - p0.x) / 6,
+        y: (pB.y + (pA.y - p0.y) / 6) - scrollY
+      };
+      const cp2 = {
+        x: pA.x - (p3.x - pB.x) / 6,
+        y: (pA.y - (p3.y - pB.y) / 6) - scrollY
+      };
+
+      // Draw from previous midpoint to new midpoint
+      const midPrev = { x: (p0.x + pB.x) / 2, y: (p0.y + pB.y) / 2 - scrollY };
+      const midCurr = { x: (pB.x + pA.x) / 2, y: (pB.y + pA.y) / 2 - scrollY };
+
+      ctx.moveTo(midPrev.x, midPrev.y);
+      ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, midCurr.x, midCurr.y);
     }
 
     ctx.stroke();
