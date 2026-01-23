@@ -433,6 +433,37 @@
       return;
     }
 
+    // Selection tool
+    if (state.currentTool === 'select') {
+      // Check if clicking inside existing selection (drag mode)
+      if (state.selectionRect && isInsideRect(point, state.selectionRect)) {
+        state.isDraggingSelection = true;
+        state.dragOffset = {
+          x: point.x - state.selectionRect.x,
+          y: point.y - state.selectionRect.y
+        };
+        state.canvas.setPointerCapture(e.pointerId);
+        return;
+      }
+
+      // Check if clicking a resize handle
+      const handle = getResizeHandle(point);
+      if (handle) {
+        state.isResizingSelection = true;
+        state.resizeHandle = handle;
+        state.originalBounds = { ...state.selectionRect };
+        state.canvas.setPointerCapture(e.pointerId);
+        return;
+      }
+
+      // Start new selection rectangle
+      state.selectionStart = point;
+      state.selectedStrokes = [];
+      state.selectionRect = null;
+      state.canvas.setPointerCapture(e.pointerId);
+      return;
+    }
+
     state.currentStroke = {
       tool: state.currentTool,
       color: state.currentColor,
