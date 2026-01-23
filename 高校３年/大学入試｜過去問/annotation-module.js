@@ -466,7 +466,7 @@
   function drawFullStroke(stroke) {
     const ctx = state.ctx;
     const points = stroke.points;
-    const scrollY = window.scrollY;  // Get current scroll for rendering
+    const scrollY = Math.round(window.scrollY);  // Round for consistent rendering
 
     if (points.length < 2) return;
 
