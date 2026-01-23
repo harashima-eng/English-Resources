@@ -246,6 +246,35 @@
   }
 
   function setupToolbarEvents(toolbar) {
+    // Long-press handler for clear button (clear ALL sections)
+    let clearPressTimer = null;
+    let didLongPress = false;
+    const clearBtn = toolbar.querySelector('[data-action="clear"]');
+
+    if (clearBtn) {
+      clearBtn.addEventListener('pointerdown', () => {
+        didLongPress = false;
+        clearPressTimer = setTimeout(() => {
+          didLongPress = true;
+          // Long press = clear ALL views for this file
+          if (confirm('Clear ALL annotations for ALL sections?')) {
+            state.strokes = [];
+            state.strokesByView = {};
+            localforage.removeItem(getStorageKey());
+            redrawAllStrokes();
+          }
+        }, 1500);
+      });
+
+      clearBtn.addEventListener('pointerup', () => {
+        clearTimeout(clearPressTimer);
+      });
+
+      clearBtn.addEventListener('pointerleave', () => {
+        clearTimeout(clearPressTimer);
+      });
+    }
+
     toolbar.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-action], [data-tool], [data-color]');
       if (!btn) return;
@@ -253,7 +282,12 @@
       if (btn.dataset.action === 'toggle') {
         toggleDrawMode();
       } else if (btn.dataset.action === 'clear') {
-        // Only clear current view's strokes
+        // Skip if long-press already handled it
+        if (didLongPress) {
+          didLongPress = false;
+          return;
+        }
+        // Short click = only clear current view's strokes
         state.strokes = [];
         state.strokesByView[state.currentViewId] = [];
         redrawAllStrokes();
