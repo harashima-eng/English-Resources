@@ -1,0 +1,229 @@
+/**
+ * Annotation Toolbar Styles
+ * Touch-optimized for iPad with 44px+ touch targets
+ */
+
+#annotation-toolbar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ann-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .ann-tools {
+    background: rgba(40, 40, 40, 0.95);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .ann-btn {
+    color: #e0e0e0;
+  }
+
+  .ann-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Button base - 44px minimum for touch */
+.ann-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.ann-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.ann-btn:active {
+  transform: scale(0.95);
+}
+
+.ann-btn.active {
+  background: #007AFF;
+  color: white;
+}
+
+.ann-btn.active:hover {
+  background: #0066DD;
+}
+
+/* Toggle button - larger and more prominent */
+.ann-toggle {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 50%;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .ann-toggle {
+    background: rgba(40, 40, 40, 0.95);
+    color: #e0e0e0;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.ann-toggle.active {
+  background: #007AFF;
+  color: white;
+  box-shadow:
+    0 4px 20px rgba(0, 122, 255, 0.4),
+    0 0 0 1px rgba(0, 122, 255, 0.2);
+}
+
+/* Color buttons */
+.ann-colors {
+  display: flex;
+  gap: 6px;
+}
+
+.ann-color {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.ann-color:hover {
+  transform: scale(1.1);
+}
+
+.ann-color:active {
+  transform: scale(0.95);
+}
+
+.ann-color.active {
+  border-color: #007AFF;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+/* Divider */
+.ann-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ann-divider {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* SVG icons */
+.ann-btn svg {
+  pointer-events: none;
+}
+
+/* iPad landscape - move toolbar to side */
+@media (min-width: 1024px) and (orientation: landscape) {
+  #annotation-toolbar {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .ann-tools {
+    flex-direction: row;
+  }
+}
+
+/* Small screens - adjust position */
+@media (max-width: 480px) {
+  #annotation-toolbar {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .ann-tools {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .ann-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ann-toggle {
+    width: 52px;
+    height: 52px;
+  }
+
+  .ann-color {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .ann-btn,
+  .ann-color {
+    transition: none;
+  }
+}
+
+/* Canvas cursor indicators */
+#annotation-canvas {
+  cursor: default;
+}
+
+#annotation-canvas[data-tool="pen"] {
+  cursor: crosshair;
+}
+
+#annotation-canvas[data-tool="highlighter"] {
+  cursor: crosshair;
+}
+
+#annotation-canvas[data-tool="eraser"] {
+  cursor: cell;
+}
