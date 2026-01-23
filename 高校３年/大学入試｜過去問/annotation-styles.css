@@ -136,6 +136,54 @@
   box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
 }
 
+/* Size buttons */
+.ann-sizes {
+  display: flex;
+  gap: 4px;
+}
+
+.ann-size {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.ann-size:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.ann-size.active {
+  border-color: #007AFF;
+  background: rgba(0, 122, 255, 0.15);
+  color: #007AFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ann-size {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+  }
+
+  .ann-size:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .ann-size.active {
+    background: rgba(0, 122, 255, 0.25);
+    color: #5ac8fa;
+  }
+}
+
 /* Divider */
 .ann-divider {
   width: 1px;
