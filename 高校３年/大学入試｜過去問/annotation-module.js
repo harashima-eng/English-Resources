@@ -357,17 +357,6 @@
     if (e.pointerType === 'touch' && e.pressure === 0) {
       return true;
     }
-    // Pencil-only mode rejects all finger input
-    if (state.pencilOnly && e.pointerType !== 'pen') {
-      // Visual feedback: flash the pencil-only button
-      const pencilBtn = document.querySelector('[data-action="pencilOnly"]');
-      if (pencilBtn) {
-        pencilBtn.style.transform = 'scale(1.2)';
-        setTimeout(() => pencilBtn.style.transform = '', 150);
-      }
-      console.log('[PencilOnly] Rejected input:', e.pointerType, '(only "pen" allowed)');
-      return true;
-    }
     return false;
   }
 
