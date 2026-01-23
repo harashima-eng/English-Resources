@@ -511,7 +511,7 @@
   }
 
   function getStorageKey() {
-    // Use filename as unique key
+    // Use filename as base key (per-view data stored in single object)
     const path = window.location.pathname;
     const filename = path.split('/').pop() || 'index';
     return 'annotations-' + filename;
@@ -520,7 +520,11 @@
   async function saveAnnotations() {
     const key = getStorageKey();
     try {
-      await localforage.setItem(key, state.strokes);
+      // Update strokesByView with current view's strokes
+      state.strokesByView[state.currentViewId] = state.strokes;
+
+      // Save all views in one storage item
+      await localforage.setItem(key, state.strokesByView);
     } catch (err) {
       console.error('Failed to save annotations:', err);
     }
@@ -530,8 +534,18 @@
     const key = getStorageKey();
     try {
       const saved = await localforage.getItem(key);
-      if (saved && Array.isArray(saved)) {
-        state.strokes = saved;
+
+      if (saved && typeof saved === 'object') {
+        // Check if it's old format (array) or new format (object with views)
+        if (Array.isArray(saved)) {
+          // Old format: migrate to new per-view format
+          state.strokesByView = { [state.currentViewId]: saved };
+          state.strokes = saved;
+        } else {
+          // New format: load all views
+          state.strokesByView = saved;
+          state.strokes = saved[state.currentViewId] || [];
+        }
         redrawAllStrokes();
       }
     } catch (err) {
