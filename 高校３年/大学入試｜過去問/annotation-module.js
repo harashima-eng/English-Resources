@@ -604,6 +604,10 @@
     }
     state.currentStroke = null;
 
+    // Reset smoothing state for next stroke
+    state.lastSmoothedPoint = null;
+    state.lastPointTime = 0;
+
     // Release pointer capture to prevent stuck state
     try {
       state.canvas.releasePointerCapture(e.pointerId);
