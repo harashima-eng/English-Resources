@@ -474,8 +474,9 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Pressure-sensitive width
-    const width = tool.minWidth + (p2.pressure * (tool.maxWidth - tool.minWidth));
+    // Pressure-sensitive width with size multiplier
+    const sizeMult = stroke.sizeMultiplier || 1;
+    const width = (tool.minWidth + (p2.pressure * (tool.maxWidth - tool.minWidth))) * sizeMult;
     ctx.lineWidth = width;
 
     // For highlighter, draw the full visible stroke to avoid segment gaps
