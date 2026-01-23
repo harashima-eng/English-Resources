@@ -140,6 +140,8 @@
 
   function setupScrollHandler() {
     window.addEventListener('scroll', () => {
+      // DEBUG: Log scroll redraw
+      console.log('[Scroll] scrollY:', Math.round(window.scrollY), 'strokes:', state.strokes.length);
       redrawAllStrokes();
     }, { passive: true });
   }
