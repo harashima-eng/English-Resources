@@ -398,7 +398,7 @@
     const ctx = state.ctx;
     const points = stroke.points;
     const len = points.length;
-    const scrollY = window.scrollY;  // Get current scroll for rendering
+    const scrollY = Math.round(window.scrollY);  // Round for consistent rendering
 
     if (len < 2) return;
 
@@ -415,6 +415,25 @@
     // Pressure-sensitive width
     const width = tool.minWidth + (p2.pressure * (tool.maxWidth - tool.minWidth));
     ctx.lineWidth = width;
+
+    // For highlighter, draw the full visible stroke to avoid segment gaps
+    if (stroke.tool === 'highlighter') {
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y - scrollY);
+      for (let i = 1; i < len; i++) {
+        const prev = points[i - 1];
+        const curr = points[i];
+        if (i === 1) {
+          ctx.lineTo(curr.x, curr.y - scrollY);
+        } else {
+          const mid = { x: (prev.x + curr.x) / 2, y: (prev.y + curr.y) / 2 - scrollY };
+          ctx.quadraticCurveTo(prev.x, prev.y - scrollY, mid.x, mid.y);
+        }
+      }
+      ctx.stroke();
+      ctx.restore();
+      return;
+    }
 
     ctx.beginPath();
 
