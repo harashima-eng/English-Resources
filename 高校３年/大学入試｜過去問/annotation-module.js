@@ -549,11 +549,12 @@
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y - scrollY);
 
+    const sizeMult = stroke.sizeMultiplier || 1;
     for (let i = 1; i < points.length; i++) {
       const p0 = points[i - 1];
       const p1 = points[i];
 
-      const width = tool.minWidth + (p1.pressure * (tool.maxWidth - tool.minWidth));
+      const width = (tool.minWidth + (p1.pressure * (tool.maxWidth - tool.minWidth))) * sizeMult;
       ctx.lineWidth = width;
 
       if (i === 1) {
