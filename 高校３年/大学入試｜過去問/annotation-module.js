@@ -202,6 +202,14 @@
     eraserBtn.appendChild(createSVG('M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z', 20));
     tools.appendChild(eraserBtn);
 
+    // Ruler button
+    const rulerBtn = document.createElement('button');
+    rulerBtn.className = 'ann-btn';
+    rulerBtn.dataset.tool = 'ruler';
+    rulerBtn.title = 'Ruler (straight line, 45° snap)';
+    rulerBtn.appendChild(createSVG('M3 5v14h2V5H3zm4 0v14h1V5H7zm3 0v14h1V5h-1zm3 0v14h1V5h-1zm3 0v14h2V5h-2zm4 0v14h2V5h-2z', 20));
+    tools.appendChild(rulerBtn);
+
     // Divider
     const divider1 = document.createElement('div');
     divider1.className = 'ann-divider';
