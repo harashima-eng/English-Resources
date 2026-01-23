@@ -223,6 +223,30 @@
     divider2.className = 'ann-divider';
     tools.appendChild(divider2);
 
+    // Size presets
+    const sizesContainer = document.createElement('div');
+    sizesContainer.className = 'ann-sizes';
+    const sizes = [
+      { label: 'XS', mult: 0.3 },
+      { label: 'S', mult: 0.6 },
+      { label: 'M', mult: 1 },
+      { label: 'L', mult: 1.5 },
+      { label: 'XL', mult: 2 }
+    ];
+    sizes.forEach((size, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'ann-size' + (i === 2 ? ' active' : ''); // M is default
+      btn.dataset.size = size.mult;
+      btn.textContent = size.label;
+      sizesContainer.appendChild(btn);
+    });
+    tools.appendChild(sizesContainer);
+
+    // Divider
+    const divider3 = document.createElement('div');
+    divider3.className = 'ann-divider';
+    tools.appendChild(divider3);
+
     // Clear button
     const clearBtn = document.createElement('button');
     clearBtn.className = 'ann-btn';
