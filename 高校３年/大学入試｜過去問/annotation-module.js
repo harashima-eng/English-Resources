@@ -31,6 +31,15 @@
     dpr: 1,
     sizeMultiplier: 1,  // Size: XS=0.3, S=0.6, M=1, L=1.5, XL=2
     rulerStart: null,   // Starting point for ruler tool
+    // Selection tool state
+    selectionStart: null,
+    selectionRect: null,
+    selectedStrokes: [],
+    isDraggingSelection: false,
+    isResizingSelection: false,
+    resizeHandle: null,
+    dragOffset: { x: 0, y: 0 },
+    originalBounds: null,  // For resize calculations
     // Per-view annotation storage
     currentViewId: null,
     strokesByView: {}
