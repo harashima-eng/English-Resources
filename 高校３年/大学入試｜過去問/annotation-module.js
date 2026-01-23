@@ -492,6 +492,24 @@
       return;
     }
 
+    // Selection tool handling
+    if (state.currentTool === 'select') {
+      if (state.isDraggingSelection && e.buttons > 0) {
+        moveSelection(point);
+        return;
+      }
+      if (state.isResizingSelection && e.buttons > 0) {
+        resizeSelection(point);
+        return;
+      }
+      if (state.selectionStart && e.buttons > 0) {
+        // Drawing selection rectangle
+        redrawAllStrokes();
+        drawSelectionPreview(state.selectionStart, point);
+        return;
+      }
+    }
+
     if (!state.currentStroke) return;
 
     state.currentStroke.points.push(point);
