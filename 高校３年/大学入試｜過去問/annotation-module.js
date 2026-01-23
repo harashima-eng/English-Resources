@@ -70,19 +70,26 @@
     if (views.length === 0) return; // No view system on this page
 
     const observer = new MutationObserver(() => {
-      const newViewId = getCurrentViewId();
-      if (newViewId !== state.currentViewId) {
-        // Save current strokes to the old view
-        state.strokesByView[state.currentViewId] = state.strokes;
+      // CRITICAL: Don't switch views during active drawing - prevents crash
+      if (state.currentStroke) return;
 
-        // Switch to new view
-        state.currentViewId = newViewId;
+      try {
+        const newViewId = getCurrentViewId();
+        if (newViewId !== state.currentViewId) {
+          // Save current strokes to the old view
+          state.strokesByView[state.currentViewId] = state.strokes;
 
-        // Load strokes for the new view
-        state.strokes = state.strokesByView[newViewId] || [];
+          // Switch to new view
+          state.currentViewId = newViewId;
 
-        // Redraw canvas with new view's strokes
-        redrawAllStrokes();
+          // Load strokes for the new view
+          state.strokes = state.strokesByView[newViewId] || [];
+
+          // Redraw canvas with new view's strokes
+          redrawAllStrokes();
+        }
+      } catch (err) {
+        console.error('View change error:', err);
       }
     });
 
