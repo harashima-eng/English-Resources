@@ -790,7 +790,9 @@
       const p0 = points[i - 1];
       const p1 = points[i];
 
-      const width = (tool.minWidth + (p1.pressure * (tool.maxWidth - tool.minWidth))) * sizeMult;
+      const velocityFactor = p1.velocityFactor || 1;  // Fast strokes = thinner
+      const baseWidth = tool.minWidth + (p1.pressure * (tool.maxWidth - tool.minWidth));
+      const width = baseWidth * sizeMult * velocityFactor;
       ctx.lineWidth = width;
 
       if (i === 1) {
