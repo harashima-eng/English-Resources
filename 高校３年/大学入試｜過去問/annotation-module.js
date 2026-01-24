@@ -96,14 +96,13 @@
    */
   function screenToDoc(screenX, screenY) {
     const vv = window.visualViewport;
-    const zoom = vv?.scale || 1;
     const offsetX = vv?.offsetLeft || 0;
     const offsetY = vv?.offsetTop || 0;
 
-    // CORRECT ORDER: divide by zoom FIRST (offset is in CSS pixels, not visual viewport pixels)
+    // NO ZOOM: clientX/Y are already in CSS pixels
     return {
-      x: screenX / zoom + offsetX + window.scrollX,
-      y: screenY / zoom + offsetY + window.scrollY
+      x: screenX + offsetX + window.scrollX,
+      y: screenY + offsetY + window.scrollY
     };
   }
 
@@ -117,14 +116,13 @@
    */
   function docToCanvas(docX, docY) {
     const vv = window.visualViewport;
-    const zoom = vv?.scale || 1;
     const offsetX = vv?.offsetLeft || 0;
     const offsetY = vv?.offsetTop || 0;
 
-    // CORRECT ORDER: subtract offset FIRST, then multiply by zoom
+    // NO ZOOM: canvas follows visual viewport, so just subtract scroll and offset
     return {
-      x: (docX - window.scrollX - offsetX) * zoom,
-      y: (docY - window.scrollY - offsetY) * zoom
+      x: docX - window.scrollX - offsetX,
+      y: docY - window.scrollY - offsetY
     };
   }
 
@@ -205,9 +203,9 @@
     canvas.style.width = cssWidth + 'px';
     canvas.style.height = cssHeight + 'px';
 
-    // Canvas stays at 0,0 - position:fixed already follows visual viewport on iOS
-    canvas.style.left = '0px';
-    canvas.style.top = '0px';
+    // Canvas follows visual viewport (iOS Safari position:fixed stays at LAYOUT viewport)
+    canvas.style.left = (vv?.offsetLeft || 0) + 'px';
+    canvas.style.top = (vv?.offsetTop || 0) + 'px';
 
     // Reset and scale context for DPR
     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -801,7 +799,6 @@
     if (len < 2) return;
 
     const tool = CONFIG.tools[stroke.tool];
-    const zoom = getZoom();
 
     ctx.save();
     ctx.lineCap = 'round';
@@ -809,12 +806,12 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Line width scales with zoom for consistent visual appearance
+    // NO ZOOM in line width - strokes scale naturally with content
     const sizeMult = stroke.sizeMultiplier || 1;
     const lastPoint = points[len - 1];
     const velocityFactor = lastPoint.velocityFactor || 1;
     const baseWidth = tool.minWidth + (lastPoint.pressure * (tool.maxWidth - tool.minWidth));
-    ctx.lineWidth = baseWidth * sizeMult * velocityFactor * zoom;
+    ctx.lineWidth = baseWidth * sizeMult * velocityFactor;
 
     // Draw path - convert each point from document to screen space
     ctx.beginPath();
@@ -854,7 +851,6 @@
     if (points.length < 2) return;
 
     const tool = CONFIG.tools[stroke.tool];
-    const zoom = getZoom();
 
     ctx.save();
     ctx.lineCap = 'round';
@@ -862,11 +858,11 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Use average pressure for consistent width
+    // Use average pressure for consistent width — NO ZOOM
     const avgPressure = points.reduce((sum, p) => sum + (p.pressure || 0.5), 0) / points.length;
     const sizeMult = stroke.sizeMultiplier || 1;
     const baseWidth = tool.minWidth + (avgPressure * (tool.maxWidth - tool.minWidth));
-    ctx.lineWidth = baseWidth * sizeMult * zoom;
+    ctx.lineWidth = baseWidth * sizeMult;
 
     // Draw in screen coordinates
     ctx.beginPath();
@@ -910,7 +906,6 @@
   function drawRulerPreview(start, end) {
     const ctx = state.ctx;
     const tool = CONFIG.tools[state.currentTool];
-    const zoom = getZoom();
 
     const startScreen = docToCanvas(start.x, start.y);
     const endScreen = docToCanvas(end.x, end.y);
@@ -919,7 +914,7 @@
     ctx.lineCap = 'round';
     ctx.strokeStyle = state.currentColor;
     ctx.globalAlpha = tool.opacity;
-    ctx.lineWidth = (tool.minWidth + tool.maxWidth) / 2 * state.sizeMultiplier * zoom;
+    ctx.lineWidth = (tool.minWidth + tool.maxWidth) / 2 * state.sizeMultiplier;  // NO ZOOM
     ctx.setLineDash([10, 5]);
 
     ctx.beginPath();
