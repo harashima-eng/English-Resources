@@ -1223,22 +1223,18 @@
     const key = getStorageKey();
     try {
       const saved = await localforage.getItem(key);
-      console.log('[loadAnnotations] key:', key, 'viewId:', state.currentViewId, 'saved:', saved ? (Array.isArray(saved) ? 'array' : 'object') : 'null');
 
       if (saved && typeof saved === 'object') {
         // Check if it's old format (array) or new format (object with views)
         if (Array.isArray(saved)) {
           // Old format: migrate to new per-view format
-          console.log('[loadAnnotations] Migrating old array format');
           state.strokesByView = { [state.currentViewId]: saved };
           state.strokes = saved;
         } else {
           // New format: load all views
-          console.log('[loadAnnotations] Loading new object format, views:', Object.keys(saved));
           state.strokesByView = saved;
           state.strokes = saved[state.currentViewId] || [];
         }
-        console.log('[loadAnnotations] Loaded', state.strokes.length, 'strokes for view', state.currentViewId);
         redrawAllStrokes();
       }
     } catch (err) {
