@@ -50,11 +50,18 @@
   border: none;
   border-radius: 12px;
   background: transparent;
-  color: #ffffff;
+  color: #1a1a1a;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+/* Dark mode icon colors */
+@media (prefers-color-scheme: dark) {
+  .ann-btn {
+    color: #e0e0e0;
+  }
 }
 
 .ann-btn:hover {
