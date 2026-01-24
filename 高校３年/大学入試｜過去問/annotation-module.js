@@ -1106,25 +1106,23 @@
 
   function drawSelectionPreview(start, end) {
     const ctx = state.ctx;
-    const scale = window.visualViewport?.scale || 1;
-    const offsetX = window.visualViewport?.offsetLeft || 0;
-    const offsetY = window.visualViewport?.offsetTop || 0;
-    const scrollY = window.scrollY / scale;
+
+    // Convert document coordinates to screen coordinates
+    const startScreen = docToScreen(start.x, start.y);
+    const endScreen = docToScreen(end.x, end.y);
 
     const rect = {
-      x: Math.min(start.x, end.x),
-      y: Math.min(start.y, end.y) - scrollY,
-      w: Math.abs(end.x - start.x),
-      h: Math.abs(end.y - start.y)
+      x: Math.min(startScreen.x, endScreen.x),
+      y: Math.min(startScreen.y, endScreen.y),
+      w: Math.abs(endScreen.x - startScreen.x),
+      h: Math.abs(endScreen.y - startScreen.y)
     };
 
     ctx.save();
-    ctx.scale(scale, scale);
-    ctx.translate(-offsetX / scale, -offsetY / scale);
 
     ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2 / scale;  // Keep UI elements consistent size
-    ctx.setLineDash([6 / scale, 4 / scale]);
+    ctx.lineWidth = 2;  // UI elements stay consistent size in screen space
+    ctx.setLineDash([6, 4]);
     ctx.globalAlpha = 0.8;
     ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
 
