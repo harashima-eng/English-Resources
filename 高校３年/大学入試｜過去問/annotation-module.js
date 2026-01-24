@@ -816,14 +816,14 @@
 
     // Draw path - convert each point from document to screen space
     ctx.beginPath();
-    const firstScreen = docToScreen(points[0].x, points[0].y);
+    const firstScreen = docToCanvas(points[0].x, points[0].y);
     ctx.moveTo(firstScreen.x, firstScreen.y);
 
     for (let i = 1; i < len; i++) {
       const prev = points[i - 1];
       const curr = points[i];
-      const prevScreen = docToScreen(prev.x, prev.y);
-      const currScreen = docToScreen(curr.x, curr.y);
+      const prevScreen = docToCanvas(prev.x, prev.y);
+      const currScreen = docToCanvas(curr.x, curr.y);
 
       if (i === 1) {
         ctx.lineTo(currScreen.x, currScreen.y);
@@ -868,14 +868,14 @@
 
     // Draw in screen coordinates
     ctx.beginPath();
-    const firstScreen = docToScreen(points[0].x, points[0].y);
+    const firstScreen = docToCanvas(points[0].x, points[0].y);
     ctx.moveTo(firstScreen.x, firstScreen.y);
 
     for (let i = 1; i < points.length; i++) {
       const prev = points[i - 1];
       const curr = points[i];
-      const prevScreen = docToScreen(prev.x, prev.y);
-      const currScreen = docToScreen(curr.x, curr.y);
+      const prevScreen = docToCanvas(prev.x, prev.y);
+      const currScreen = docToCanvas(curr.x, curr.y);
 
       if (i === 1) {
         ctx.lineTo(currScreen.x, currScreen.y);
@@ -910,8 +910,8 @@
     const tool = CONFIG.tools[state.currentTool];
     const zoom = getZoom();
 
-    const startScreen = docToScreen(start.x, start.y);
-    const endScreen = docToScreen(end.x, end.y);
+    const startScreen = docToCanvas(start.x, start.y);
+    const endScreen = docToCanvas(end.x, end.y);
 
     ctx.save();
     ctx.lineCap = 'round';
@@ -1084,8 +1084,8 @@
     const ctx = state.ctx;
     const zoom = getZoom();
 
-    const startScreen = docToScreen(start.x, start.y);
-    const endScreen = docToScreen(end.x, end.y);
+    const startScreen = docToCanvas(start.x, start.y);
+    const endScreen = docToCanvas(end.x, end.y);
 
     const rect = {
       x: Math.min(startScreen.x, endScreen.x),
@@ -1114,8 +1114,8 @@
     const rect = state.selectionRect;
 
     // Convert document rect to screen rect
-    const topLeft = docToScreen(rect.x, rect.y);
-    const bottomRight = docToScreen(rect.x + rect.w, rect.y + rect.h);
+    const topLeft = docToCanvas(rect.x, rect.y);
+    const bottomRight = docToCanvas(rect.x + rect.w, rect.y + rect.h);
     const screenRect = {
       x: topLeft.x,
       y: topLeft.y,
