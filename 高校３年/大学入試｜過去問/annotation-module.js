@@ -906,14 +906,20 @@
 
   function drawRulerPreview(start, end) {
     const ctx = state.ctx;
-    const scrollY = window.scrollY;
-    const tool = CONFIG.tools.pen;
+    const scale = window.visualViewport?.scale || 1;
+    const offsetX = window.visualViewport?.offsetLeft || 0;
+    const offsetY = window.visualViewport?.offsetTop || 0;
+    const scrollY = window.scrollY / scale;
+    const tool = CONFIG.tools[state.currentTool] || CONFIG.tools.pen;
 
     ctx.save();
+    ctx.scale(scale, scale);
+    ctx.translate(-offsetX / scale, -offsetY / scale);
+
     ctx.strokeStyle = state.currentColor;
     ctx.lineWidth = tool.maxWidth * state.sizeMultiplier;
     ctx.lineCap = 'round';
-    ctx.globalAlpha = 0.5;
+    ctx.globalAlpha = state.currentTool === 'highlighter' ? 0.35 : 0.5;
     ctx.setLineDash([8, 8]);
     ctx.beginPath();
     ctx.moveTo(start.x, start.y - scrollY);
