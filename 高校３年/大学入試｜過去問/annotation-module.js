@@ -915,23 +915,22 @@
   function drawRulerPreview(start, end) {
     const ctx = state.ctx;
     const scale = window.visualViewport?.scale || 1;
-    const offsetX = window.visualViewport?.offsetLeft || 0;
-    const offsetY = window.visualViewport?.offsetTop || 0;
-    const scrollY = window.scrollY / scale;
     const tool = CONFIG.tools[state.currentTool] || CONFIG.tools.pen;
 
     ctx.save();
-    ctx.scale(scale, scale);
-    ctx.translate(-offsetX / scale, -offsetY / scale);
 
     ctx.strokeStyle = state.currentColor;
-    ctx.lineWidth = tool.maxWidth * state.sizeMultiplier;
+    ctx.lineWidth = tool.maxWidth * state.sizeMultiplier * scale;
     ctx.lineCap = 'round';
     ctx.globalAlpha = state.currentTool === 'highlighter' ? 0.35 : 0.5;
-    ctx.setLineDash([8, 8]);
+    ctx.setLineDash([8 * scale, 8 * scale]);
+
+    const startScreen = docToScreen(start.x, start.y);
+    const endScreen = docToScreen(end.x, end.y);
+
     ctx.beginPath();
-    ctx.moveTo(start.x, start.y - scrollY);
-    ctx.lineTo(end.x, end.y - scrollY);
+    ctx.moveTo(startScreen.x, startScreen.y);
+    ctx.lineTo(endScreen.x, endScreen.y);
     ctx.stroke();
     ctx.restore();
   }
