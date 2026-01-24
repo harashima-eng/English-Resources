@@ -734,41 +734,14 @@
   }
 
   /**
-   * Convert screen coordinates to document coordinates.
-   * Screen = what user sees (visual viewport)
-   * Document = absolute position in the full document at scale=1
+   * Get point from pointer event.
+   * With visual-viewport-space architecture, we store raw screen coordinates.
+   * The canvas follows the visual viewport, so no transforms are needed.
    */
-  function screenToDoc(screenX, screenY) {
-    const scale = window.visualViewport?.scale || 1;
-    const offsetX = window.visualViewport?.offsetLeft || 0;
-    const offsetY = window.visualViewport?.offsetTop || 0;
-    return {
-      x: screenX / scale + offsetX,
-      y: screenY / scale + offsetY + window.scrollY
-    };
-  }
-
-  /**
-   * Convert document coordinates to screen coordinates.
-   * This is the inverse of screenToDoc().
-   */
-  function docToScreen(docX, docY) {
-    const scale = window.visualViewport?.scale || 1;
-    const offsetX = window.visualViewport?.offsetLeft || 0;
-    const offsetY = window.visualViewport?.offsetTop || 0;
-    return {
-      x: (docX - offsetX) * scale,
-      y: (docY - window.scrollY - offsetY) * scale
-    };
-  }
-
   function getPoint(e) {
-    // Convert screen coordinates to document coordinates
-    const doc = screenToDoc(e.clientX, e.clientY);
-
     return {
-      x: doc.x,
-      y: doc.y,  // Store document-relative Y
+      x: e.clientX,
+      y: e.clientY,
       pressure: e.pressure || 0.5,
       tiltX: e.tiltX || 0,
       tiltY: e.tiltY || 0
