@@ -185,10 +185,45 @@
       state.viewportOffsetX = vv.offsetLeft;
       state.viewportOffsetY = vv.offsetTop;
       redrawAllStrokes();
+      repositionToolbar();  // Keep toolbar visible during pinch-zoom
     }
 
     window.visualViewport.addEventListener('resize', handleViewportChange);
     window.visualViewport.addEventListener('scroll', handleViewportChange);
+  }
+
+  /**
+   * Repositions toolbar to stay visible during pinch-zoom.
+   * CSS position:fixed is relative to layout viewport, not visual viewport,
+   * so we manually position based on visualViewport offset and scale.
+   */
+  function repositionToolbar() {
+    const toolbar = document.getElementById('annotation-toolbar');
+    if (!toolbar) return;
+
+    const vv = window.visualViewport;
+    if (!vv || vv.scale === 1) {
+      // Reset to CSS defaults when not zoomed
+      toolbar.style.transform = '';
+      toolbar.style.left = '';
+      toolbar.style.top = '';
+      toolbar.style.right = '24px';
+      toolbar.style.bottom = '24px';
+      return;
+    }
+
+    // Maintain 24px visual padding at current zoom
+    const padding = 24;
+
+    // Position at bottom-right of VISUAL viewport
+    toolbar.style.right = 'auto';
+    toolbar.style.bottom = 'auto';
+    toolbar.style.left = (vv.offsetLeft + vv.width - toolbar.offsetWidth - padding) + 'px';
+    toolbar.style.top = (vv.offsetTop + vv.height - toolbar.offsetHeight - padding) + 'px';
+
+    // Counter-scale to maintain visual size
+    toolbar.style.transform = `scale(${1 / vv.scale})`;
+    toolbar.style.transformOrigin = 'bottom right';
   }
 
   // ========== SVG Icons ==========
