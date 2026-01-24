@@ -218,11 +218,7 @@
     function handleViewportChange() {
       if (viewportRAF) return;
       viewportRAF = requestAnimationFrame(() => {
-        const vv = window.visualViewport;
-        state.viewportScale = vv.scale;
-        state.viewportOffsetX = vv.offsetLeft;
-        state.viewportOffsetY = vv.offsetTop;
-        redrawAllStrokes();
+        repositionCanvas();   // Move canvas to follow visual viewport
         repositionToolbar();  // Keep toolbar visible during pinch-zoom
         viewportRAF = null;
       });
@@ -230,6 +226,9 @@
 
     window.visualViewport.addEventListener('resize', handleViewportChange);
     window.visualViewport.addEventListener('scroll', handleViewportChange);
+
+    // Initial positioning
+    repositionCanvas();
   }
 
   /**
