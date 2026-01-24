@@ -46,11 +46,7 @@
     originalBounds: null,  // For resize calculations
     // Per-view annotation storage
     currentViewId: null,
-    strokesByView: {},
-    // Pinch-zoom tracking
-    viewportScale: 1,
-    viewportOffsetX: 0,
-    viewportOffsetY: 0
+    strokesByView: {}
   };
 
   // ========== Initialization ==========
