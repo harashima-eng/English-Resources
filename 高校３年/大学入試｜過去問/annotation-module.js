@@ -1138,37 +1138,42 @@
 
     const ctx = state.ctx;
     const rect = state.selectionRect;
-    const scale = window.visualViewport?.scale || 1;
-    const offsetX = window.visualViewport?.offsetLeft || 0;
-    const offsetY = window.visualViewport?.offsetTop || 0;
-    const scrollY = window.scrollY / scale;
+
+    // Convert all four corners from document to screen coordinates
+    const topLeft = docToScreen(rect.x, rect.y);
+    const bottomRight = docToScreen(rect.x + rect.w, rect.y + rect.h);
+
+    const screenRect = {
+      x: topLeft.x,
+      y: topLeft.y,
+      w: bottomRight.x - topLeft.x,
+      h: bottomRight.y - topLeft.y
+    };
 
     ctx.save();
-    ctx.scale(scale, scale);
-    ctx.translate(-offsetX / scale, -offsetY / scale);
 
-    // Dashed border - keep UI consistent size regardless of zoom
+    // Dashed border - UI stays consistent size in screen space
     ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2 / scale;
-    ctx.setLineDash([6 / scale, 4 / scale]);
-    ctx.strokeRect(rect.x, rect.y - scrollY, rect.w, rect.h);
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.strokeRect(screenRect.x, screenRect.y, screenRect.w, screenRect.h);
 
-    // Corner handles (solid squares) - keep consistent size
+    // Corner handles (solid squares) - consistent size in screen space
     ctx.setLineDash([]);
     ctx.fillStyle = '#007AFF';
-    const handleSize = 12 / scale;
+    const handleSize = 12;
 
     const corners = [
-      [rect.x, rect.y],
-      [rect.x + rect.w, rect.y],
-      [rect.x, rect.y + rect.h],
-      [rect.x + rect.w, rect.y + rect.h]
+      [screenRect.x, screenRect.y],
+      [screenRect.x + screenRect.w, screenRect.y],
+      [screenRect.x, screenRect.y + screenRect.h],
+      [screenRect.x + screenRect.w, screenRect.y + screenRect.h]
     ];
 
     for (const [x, y] of corners) {
       ctx.fillRect(
         x - handleSize / 2,
-        y - scrollY - handleSize / 2,
+        y - handleSize / 2,
         handleSize,
         handleSize
       );
