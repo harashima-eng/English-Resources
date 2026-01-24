@@ -200,6 +200,11 @@
   }
 
   function setupScrollHandler() {
+    // With visual-viewport-space architecture, scroll is handled by
+    // setupViewportHandler() via visualViewport.scroll event.
+    // This handler is kept for browsers without Visual Viewport API.
+    if (window.visualViewport) return;
+
     let scrollRAF = null;
     window.addEventListener('scroll', () => {
       if (scrollRAF) return;
