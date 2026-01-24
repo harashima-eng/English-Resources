@@ -1104,21 +1104,18 @@
   function drawSelectionPreview(start, end) {
     const ctx = state.ctx;
 
-    // Convert document coordinates to screen coordinates
-    const startScreen = docToScreen(start.x, start.y);
-    const endScreen = docToScreen(end.x, end.y);
-
+    // Use coordinates directly
     const rect = {
-      x: Math.min(startScreen.x, endScreen.x),
-      y: Math.min(startScreen.y, endScreen.y),
-      w: Math.abs(endScreen.x - startScreen.x),
-      h: Math.abs(endScreen.y - startScreen.y)
+      x: Math.min(start.x, end.x),
+      y: Math.min(start.y, end.y),
+      w: Math.abs(end.x - start.x),
+      h: Math.abs(end.y - start.y)
     };
 
     ctx.save();
 
     ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2;  // UI elements stay consistent size in screen space
+    ctx.lineWidth = 2;
     ctx.setLineDash([6, 4]);
     ctx.globalAlpha = 0.8;
     ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
