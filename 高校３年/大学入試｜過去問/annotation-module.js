@@ -1,15 +1,15 @@
 /**
- * Annotation Module v7.1 - Performance Optimized
+ * Annotation Module v7.2 - Undo/Redo + Toolbar Fix + Performance
  *
  * ARCHITECTURE (same as v7):
  * - Canvas uses position: absolute (part of document)
  * - Strokes stored as raw document coordinates
  * - Canvas zooms/scrolls with HTML naturally
  *
- * PERFORMANCE FIX (v7.1):
- * - INCREMENTAL DRAWING: Only draw new segment, don't redraw everything
- * - Full redraw only on: stroke complete, eraser, selection, view change
- * - Huge performance boost on large documents
+ * NEW IN v7.2:
+ * - Undo/Redo with history stack (50 steps max)
+ * - Toolbar stays visible during pinch-zoom (Visual Viewport API)
+ * - More aggressive throttling (8ms pointer events, minPointDistance: 3)
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
@@ -27,11 +27,12 @@
     colors: ['#1a1a1a', '#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa'],
     palmRejectRadius: 20,
     saveDebounce: 500,
-    minPointDistance: 2,
+    minPointDistance: 3,        // v7.2: Increased from 2 to 3
     velocityWeight: 0.3,
     maxVelocity: 1000,
-    // Performance: max canvas height (prevents memory issues on very long pages)
-    maxCanvasHeight: 32000
+    maxCanvasHeight: 32000,
+    maxHistorySize: 50,         // v7.2: Undo history limit
+    pointerThrottleMs: 8        // v7.2: ~120fps max
   };
 
   // ========== State ==========
@@ -49,6 +50,12 @@
     rulerStart: null,
     rulerEnabled: false,
     lastPointTime: 0,
+    // v7.2: Undo/Redo
+    undoStack: [],
+    redoStack: [],
+    // v7.2: Pointer throttling
+    lastPointerTime: 0,
+    pendingPoint: null,
     // Selection tool state
     selectionStart: null,
     selectionRect: null,
@@ -79,6 +86,7 @@
     loadAnnotations();
     setupResizeHandler();
     setupViewChangeListener();
+    setupToolbarViewportHandler();  // v7.2: Keep toolbar visible during zoom
 
     // Initial render
     requestAnimationFrame(() => {
@@ -87,12 +95,80 @@
     });
   }
 
+  // ========== v7.2: Undo/Redo Functions ==========
+
+  /**
+   * Deep clone strokes array for history
+   */
+  function cloneStrokes(strokes) {
+    return strokes.map(stroke => ({
+      ...stroke,
+      points: stroke.points.map(p => ({ ...p }))
+    }));
+  }
+
+  /**
+   * Push current state to undo stack before making changes
+   */
+  function pushToUndoStack() {
+    state.undoStack.push(cloneStrokes(state.strokes));
+    if (state.undoStack.length > CONFIG.maxHistorySize) {
+      state.undoStack.shift();  // Remove oldest entry
+    }
+    state.redoStack = [];  // Clear redo on new action
+  }
+
+  /**
+   * Undo last action
+   */
+  function undo() {
+    if (state.undoStack.length === 0) return;
+    state.redoStack.push(cloneStrokes(state.strokes));
+    state.strokes = state.undoStack.pop();
+    state.strokesByView[state.currentViewId] = state.strokes;
+    redrawAllStrokes();
+    saveAnnotations();
+  }
+
+  /**
+   * Redo last undone action
+   */
+  function redo() {
+    if (state.redoStack.length === 0) return;
+    state.undoStack.push(cloneStrokes(state.strokes));
+    state.strokes = state.redoStack.pop();
+    state.strokesByView[state.currentViewId] = state.strokes;
+    redrawAllStrokes();
+    saveAnnotations();
+  }
+
+  // ========== v7.2: Toolbar Viewport Handler ==========
+
+  /**
+   * Keep toolbar visible during pinch-zoom using Visual Viewport API
+   */
+  function setupToolbarViewportHandler() {
+    if (!window.visualViewport) return;
+
+    function repositionToolbar() {
+      const toolbar = document.getElementById('annotation-toolbar');
+      if (!toolbar) return;
+
+      const vv = window.visualViewport;
+      toolbar.style.left = (vv.offsetLeft + 24) + 'px';
+      toolbar.style.bottom = 'auto';
+      toolbar.style.top = (vv.offsetTop + vv.height - toolbar.offsetHeight - 24) + 'px';
+    }
+
+    window.visualViewport.addEventListener('resize', repositionToolbar);
+    window.visualViewport.addEventListener('scroll', repositionToolbar);
+  }
+
   // ========== Coordinate Functions ==========
 
   /**
    * Get document coordinates from a pointer event.
    * Since canvas is part of document, we use pageX/pageY directly!
-   * No transforms needed - this is the beauty of document-space canvas.
    */
   function getDocumentPoint(e) {
     return {
@@ -107,14 +183,12 @@
   /**
    * Convert document coordinates to canvas coordinates.
    * With document-space canvas, this is just 1:1 mapping!
-   * The only adjustment is for the canvas offset within the document.
    */
   function docToCanvas(docX, docY) {
     const rect = state.canvas.getBoundingClientRect();
     const scrollX = window.scrollX || window.pageXOffset;
     const scrollY = window.scrollY || window.pageYOffset;
 
-    // Canvas position in document space
     const canvasDocX = rect.left + scrollX;
     const canvasDocY = rect.top + scrollY;
 
@@ -147,6 +221,9 @@
           state.strokesByView[state.currentViewId] = state.strokes;
           state.currentViewId = newViewId;
           state.strokes = state.strokesByView[newViewId] || [];
+          // Clear undo/redo on view change
+          state.undoStack = [];
+          state.redoStack = [];
           redrawAllStrokes();
         }
       } catch (err) {
@@ -173,7 +250,6 @@
       z-index: 9998;
     `;
 
-    // Insert at beginning of body so it's behind other fixed elements
     document.body.insertBefore(canvas, document.body.firstChild);
 
     state.canvas = canvas;
@@ -186,7 +262,6 @@
     const canvas = state.canvas;
     state.dpr = window.devicePixelRatio || 1;
 
-    // Get full document dimensions
     const docWidth = Math.max(
       document.body.scrollWidth,
       document.body.offsetWidth,
@@ -203,30 +278,25 @@
       document.documentElement.clientHeight
     );
 
-    // Cap height to prevent memory issues
     if (docHeight > CONFIG.maxCanvasHeight) {
       console.warn(`Document height ${docHeight}px exceeds max ${CONFIG.maxCanvasHeight}px. Capping canvas.`);
       docHeight = CONFIG.maxCanvasHeight;
     }
 
-    // Set canvas size to match document
     canvas.width = docWidth * state.dpr;
     canvas.height = docHeight * state.dpr;
     canvas.style.width = docWidth + 'px';
     canvas.style.height = docHeight + 'px';
 
-    // Scale context for DPR
     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
     state.ctx.scale(state.dpr, state.dpr);
 
-    // Redraw after resize
     redrawAllStrokes();
   }
 
   function setupResizeHandler() {
     let resizeTimeout;
 
-    // Resize on window resize
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
@@ -234,7 +304,6 @@
       }, 200);
     });
 
-    // Also check periodically for document height changes (dynamic content)
     let lastHeight = 0;
     setInterval(() => {
       const currentHeight = Math.max(
@@ -365,6 +434,27 @@
     divider3.className = 'ann-divider';
     tools.appendChild(divider3);
 
+    // v7.2: Undo button
+    const undoBtn = document.createElement('button');
+    undoBtn.className = 'ann-btn';
+    undoBtn.dataset.action = 'undo';
+    undoBtn.title = 'Undo';
+    undoBtn.appendChild(createSVG('M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z', 20));
+    tools.appendChild(undoBtn);
+
+    // v7.2: Redo button
+    const redoBtn = document.createElement('button');
+    redoBtn.className = 'ann-btn';
+    redoBtn.dataset.action = 'redo';
+    redoBtn.title = 'Redo';
+    redoBtn.appendChild(createSVG('M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z', 20));
+    tools.appendChild(redoBtn);
+
+    // Divider
+    const divider4 = document.createElement('div');
+    divider4.className = 'ann-divider';
+    tools.appendChild(divider4);
+
     // Clear button
     const clearBtn = document.createElement('button');
     clearBtn.className = 'ann-btn';
@@ -391,6 +481,7 @@
         clearPressTimer = setTimeout(() => {
           didLongPress = true;
           if (confirm('Clear ALL annotations for ALL sections?')) {
+            pushToUndoStack();  // v7.2: Save state before clearing
             state.strokes = [];
             state.strokesByView = {};
             localforage.removeItem(getStorageKey());
@@ -414,10 +505,15 @@
           didLongPress = false;
           return;
         }
+        pushToUndoStack();  // v7.2: Save state before clearing
         state.strokes = [];
         state.strokesByView[state.currentViewId] = [];
         redrawAllStrokes();
         saveAnnotations();
+      } else if (btn.dataset.action === 'undo') {
+        undo();
+      } else if (btn.dataset.action === 'redo') {
+        redo();
       } else if (btn.dataset.tool) {
         if (state.currentTool === 'select' && btn.dataset.tool !== 'select') {
           state.selectionRect = null;
@@ -478,7 +574,6 @@
     state.canvas.addEventListener('pointerleave', boundPointerUp);
     state.canvas.addEventListener('pointercancel', boundPointerUp);
 
-    // Touch events for scroll control
     state.canvas.addEventListener('touchstart', boundTouchStart, { passive: false });
     state.canvas.addEventListener('touchmove', boundTouchMove, { passive: false });
   }
@@ -494,14 +589,9 @@
     state.canvas.removeEventListener('touchmove', boundTouchMove);
   }
 
-  /**
-   * CRITICAL: Only prevent default when ACTIVELY drawing.
-   * This allows scrolling and pinch-zoom to work in draw mode.
-   */
   function handleTouchStart(e) {
     if (e.touches.length > 1) {
-      // Multi-touch = pinch zoom, always allow
-      return;
+      return;  // Multi-touch = pinch zoom, always allow
     }
     if (state.isActivelyDrawing) {
       e.preventDefault();
@@ -529,10 +619,10 @@
   function handlePointerDown(e) {
     if (isPalmTouch(e)) return;
 
-    // Get document coordinates directly from pageX/pageY
     const point = getDocumentPoint(e);
 
     if (state.currentTool === 'eraser') {
+      pushToUndoStack();  // v7.2: Save state before erasing
       eraseAtPoint(point);
       state.isActivelyDrawing = true;
       state.canvas.setPointerCapture(e.pointerId);
@@ -550,6 +640,7 @@
     // Selection tool
     if (state.currentTool === 'select') {
       if (state.selectionRect && isInsideRect(point, state.selectionRect)) {
+        pushToUndoStack();  // v7.2: Save state before moving
         state.isDraggingSelection = true;
         state.dragOffset = {
           x: point.x - state.selectionRect.x,
@@ -562,6 +653,7 @@
 
       const handle = getResizeHandle(point);
       if (handle) {
+        pushToUndoStack();  // v7.2: Save state before resizing
         state.isResizingSelection = true;
         state.resizeHandle = handle;
         state.originalBounds = { ...state.selectionRect };
@@ -578,8 +670,10 @@
       return;
     }
 
-    // Regular stroke
+    // Regular stroke - save state for undo
+    pushToUndoStack();  // v7.2: Save state before new stroke
     state.lastPointTime = performance.now();
+    state.lastPointerTime = performance.now();  // v7.2: Throttle init
     state.isActivelyDrawing = true;
 
     state.currentStroke = {
@@ -595,6 +689,14 @@
   function handlePointerMove(e) {
     if (isPalmTouch(e)) return;
 
+    // v7.2: Pointer event throttling (~120fps max)
+    const now = performance.now();
+    if (now - state.lastPointerTime < CONFIG.pointerThrottleMs) {
+      state.pendingPoint = e;
+      return;
+    }
+    state.lastPointerTime = now;
+
     const point = getDocumentPoint(e);
 
     if (state.currentTool === 'eraser' && e.buttons > 0) {
@@ -602,7 +704,7 @@
       return;
     }
 
-    // Ruler preview - needs full redraw for dashed line
+    // Ruler preview
     if (state.rulerEnabled && state.rulerStart && e.buttons > 0) {
       const snappedEnd = snapToAngle(state.rulerStart, point);
       redrawAllStrokes();
@@ -634,7 +736,6 @@
     if (!shouldAddPoint(point, lastPoint)) return;
 
     // Velocity factor
-    const now = performance.now();
     const timeDelta = (now - state.lastPointTime) / 1000;
     const velocityFactor = getVelocityFactor(lastPoint, point, timeDelta);
     state.lastPointTime = now;
@@ -642,12 +743,13 @@
     point.velocityFactor = velocityFactor;
     state.currentStroke.points.push(point);
 
-    // PERFORMANCE FIX (v7.1): Only draw the NEW segment, don't redraw everything!
+    // PERFORMANCE (v7.1): Only draw the NEW segment
     drawIncrementalSegment(state.currentStroke);
   }
 
   function handlePointerUp(e) {
     state.isActivelyDrawing = false;
+    state.pendingPoint = null;  // v7.2: Clear pending point
 
     // Selection tool finalization
     if (state.currentTool === 'select') {
@@ -682,6 +784,7 @@
       const dx = snappedEnd.x - state.rulerStart.x;
       const dy = snappedEnd.y - state.rulerStart.y;
       if (Math.hypot(dx, dy) > 5) {
+        pushToUndoStack();  // v7.2: Save state before ruler stroke
         const stroke = {
           tool: state.currentTool,
           color: state.currentColor,
@@ -702,7 +805,6 @@
     if (state.currentStroke && state.currentStroke.points.length > 1) {
       state.strokes.push(state.currentStroke);
       scheduleSave();
-      // Full redraw at end for clean final stroke with averaged pressure
       redrawAllStrokes();
     }
     state.currentStroke = null;
@@ -742,10 +844,6 @@
 
   // ========== Drawing Functions ==========
 
-  /**
-   * Draw a stroke segment (current stroke while drawing).
-   * Points are in DOCUMENT space - draw directly to canvas!
-   */
   function drawStrokeSegment(stroke) {
     const ctx = state.ctx;
     const points = stroke.points;
@@ -761,14 +859,12 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Line width - no zoom adjustment needed!
     const sizeMult = stroke.sizeMultiplier || 1;
     const lastPoint = points[len - 1];
     const velocityFactor = lastPoint.velocityFactor || 1;
     const baseWidth = tool.minWidth + (lastPoint.pressure * (tool.maxWidth - tool.minWidth));
     ctx.lineWidth = baseWidth * sizeMult * velocityFactor;
 
-    // Draw path directly in document coordinates
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
 
@@ -779,7 +875,6 @@
       if (i === 1) {
         ctx.lineTo(curr.x, curr.y);
       } else {
-        // Quadratic curve through midpoint for smoothness
         const mid = {
           x: (prev.x + curr.x) / 2,
           y: (prev.y + curr.y) / 2
@@ -794,7 +889,6 @@
 
   /**
    * PERFORMANCE (v7.1): Draw only the LAST segment of the current stroke.
-   * Called on every pointermove instead of redrawing everything.
    */
   function drawIncrementalSegment(stroke) {
     const ctx = state.ctx;
@@ -806,7 +900,6 @@
     const tool = CONFIG.tools[stroke.tool];
     const sizeMult = stroke.sizeMultiplier || 1;
 
-    // Get the last two points
     const prev = points[len - 2];
     const curr = points[len - 1];
     const velocityFactor = curr.velocityFactor || 1;
@@ -822,11 +915,9 @@
     ctx.beginPath();
 
     if (len === 2) {
-      // First segment: simple line
       ctx.moveTo(prev.x, prev.y);
       ctx.lineTo(curr.x, curr.y);
     } else {
-      // Use quadratic curve through midpoint for smoothness
       const prevPrev = points[len - 3];
       const mid1 = {
         x: (prevPrev.x + prev.x) / 2,
@@ -844,10 +935,6 @@
     ctx.restore();
   }
 
-  /**
-   * Draw a completed stroke (on redraw).
-   * Points are in DOCUMENT space - draw directly!
-   */
   function drawFullStroke(stroke) {
     const ctx = state.ctx;
     const points = stroke.points;
@@ -862,13 +949,11 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Average pressure for consistent width
     const avgPressure = points.reduce((sum, p) => sum + (p.pressure || 0.5), 0) / points.length;
     const sizeMult = stroke.sizeMultiplier || 1;
     const baseWidth = tool.minWidth + (avgPressure * (tool.maxWidth - tool.minWidth));
     ctx.lineWidth = baseWidth * sizeMult;
 
-    // Draw directly in document coordinates
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
 
@@ -895,10 +980,8 @@
     const ctx = state.ctx;
     const canvas = state.canvas;
 
-    // Clear entire canvas
     ctx.clearRect(0, 0, canvas.width / state.dpr, canvas.height / state.dpr);
 
-    // Draw all strokes
     for (const stroke of state.strokes) {
       drawFullStroke(stroke);
     }
