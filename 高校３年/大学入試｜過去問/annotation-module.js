@@ -1,18 +1,15 @@
 /**
- * Annotation Module v7 - Document-Space Canvas Architecture
+ * Annotation Module v7.1 - Performance Optimized
  *
- * COMPLETELY NEW APPROACH:
- * Instead of a fixed canvas fighting the browser's zoom/scroll,
- * the canvas IS PART OF THE DOCUMENT and zooms/scrolls naturally.
+ * ARCHITECTURE (same as v7):
+ * - Canvas uses position: absolute (part of document)
+ * - Strokes stored as raw document coordinates
+ * - Canvas zooms/scrolls with HTML naturally
  *
- * KEY ARCHITECTURE:
- * 1. Canvas uses position: absolute (not fixed)
- * 2. Canvas sized to full document dimensions
- * 3. Strokes stored as raw document coordinates (no transforms!)
- * 4. Canvas scrolls and zooms WITH the HTML naturally
- * 5. No Visual Viewport API needed for coordinates
- *
- * This is how PDF annotation apps work - one unified coordinate system.
+ * PERFORMANCE FIX (v7.1):
+ * - INCREMENTAL DRAWING: Only draw new segment, don't redraw everything
+ * - Full redraw only on: stroke complete, eraser, selection, view change
+ * - Huge performance boost on large documents
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
@@ -605,7 +602,7 @@
       return;
     }
 
-    // Ruler preview
+    // Ruler preview - needs full redraw for dashed line
     if (state.rulerEnabled && state.rulerStart && e.buttons > 0) {
       const snappedEnd = snapToAngle(state.rulerStart, point);
       redrawAllStrokes();
@@ -645,9 +642,8 @@
     point.velocityFactor = velocityFactor;
     state.currentStroke.points.push(point);
 
-    // Clear and redraw
-    redrawAllStrokes();
-    drawStrokeSegment(state.currentStroke);
+    // PERFORMANCE FIX (v7.1): Only draw the NEW segment, don't redraw everything!
+    drawIncrementalSegment(state.currentStroke);
   }
 
   function handlePointerUp(e) {
@@ -706,6 +702,8 @@
     if (state.currentStroke && state.currentStroke.points.length > 1) {
       state.strokes.push(state.currentStroke);
       scheduleSave();
+      // Full redraw at end for clean final stroke with averaged pressure
+      redrawAllStrokes();
     }
     state.currentStroke = null;
     state.lastPointTime = 0;
@@ -788,6 +786,58 @@
         };
         ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
       }
+    }
+
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /**
+   * PERFORMANCE (v7.1): Draw only the LAST segment of the current stroke.
+   * Called on every pointermove instead of redrawing everything.
+   */
+  function drawIncrementalSegment(stroke) {
+    const ctx = state.ctx;
+    const points = stroke.points;
+    const len = points.length;
+
+    if (len < 2) return;
+
+    const tool = CONFIG.tools[stroke.tool];
+    const sizeMult = stroke.sizeMultiplier || 1;
+
+    // Get the last two points
+    const prev = points[len - 2];
+    const curr = points[len - 1];
+    const velocityFactor = curr.velocityFactor || 1;
+    const baseWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
+
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = stroke.color;
+    ctx.globalAlpha = tool.opacity;
+    ctx.lineWidth = baseWidth * sizeMult * velocityFactor;
+
+    ctx.beginPath();
+
+    if (len === 2) {
+      // First segment: simple line
+      ctx.moveTo(prev.x, prev.y);
+      ctx.lineTo(curr.x, curr.y);
+    } else {
+      // Use quadratic curve through midpoint for smoothness
+      const prevPrev = points[len - 3];
+      const mid1 = {
+        x: (prevPrev.x + prev.x) / 2,
+        y: (prevPrev.y + prev.y) / 2
+      };
+      const mid2 = {
+        x: (prev.x + curr.x) / 2,
+        y: (prev.y + curr.y) / 2
+      };
+      ctx.moveTo(mid1.x, mid1.y);
+      ctx.quadraticCurveTo(prev.x, prev.y, mid2.x, mid2.y);
     }
 
     ctx.stroke();
@@ -1116,7 +1166,7 @@
   function getStorageKey() {
     const path = window.location.pathname;
     const filename = path.split('/').pop() || 'index';
-    return 'annotations-v7-' + filename;  // New key for v7 to avoid old data issues
+    return 'annotations-v7-' + filename;  // Same key as v7 (compatible)
   }
 
   async function saveAnnotations() {
