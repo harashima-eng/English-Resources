@@ -613,6 +613,9 @@
     point.velocityFactor = velocityFactor;
 
     state.currentStroke.points.push(point);
+
+    // Clear and redraw to prevent overlapping artifacts from varying line widths
+    redrawAllStrokes();
     drawStrokeSegment(state.currentStroke);
   }
 
