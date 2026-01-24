@@ -700,7 +700,12 @@
     const ctx = state.ctx;
     const points = stroke.points;
     const len = points.length;
-    const scrollY = Math.round(window.scrollY);  // Round for consistent rendering
+
+    // Get zoom parameters
+    const scale = window.visualViewport?.scale || 1;
+    const offsetX = window.visualViewport?.offsetLeft || 0;
+    const offsetY = window.visualViewport?.offsetTop || 0;
+    const scrollY = window.scrollY / scale;
 
     if (len < 2) return;
 
@@ -709,6 +714,11 @@
     const p2 = points[len - 1];
 
     ctx.save();
+
+    // Apply zoom scale for consistent rendering during drawing
+    ctx.scale(scale, scale);
+    ctx.translate(-offsetX / scale, -offsetY / scale);
+
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.strokeStyle = stroke.color;
