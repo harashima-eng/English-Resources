@@ -213,9 +213,9 @@
     if (!vv || vv.scale === 1) {
       // Reset to CSS defaults when not zoomed
       toolbar.style.transform = '';
-      toolbar.style.left = '';
+      toolbar.style.left = '24px';
       toolbar.style.top = '';
-      toolbar.style.right = '24px';
+      toolbar.style.right = '';
       toolbar.style.bottom = '24px';
       return;
     }
@@ -223,15 +223,15 @@
     // Maintain 24px visual padding at current zoom
     const padding = 24;
 
-    // Position at bottom-right of VISUAL viewport
-    toolbar.style.right = 'auto';
+    // Position at bottom-left of VISUAL viewport
+    toolbar.style.right = '';
     toolbar.style.bottom = 'auto';
-    toolbar.style.left = (vv.offsetLeft + vv.width - toolbar.offsetWidth - padding) + 'px';
+    toolbar.style.left = (vv.offsetLeft + padding) + 'px';
     toolbar.style.top = (vv.offsetTop + vv.height - toolbar.offsetHeight - padding) + 'px';
 
     // Counter-scale to maintain visual size
     toolbar.style.transform = `scale(${1 / vv.scale})`;
-    toolbar.style.transformOrigin = 'bottom right';
+    toolbar.style.transformOrigin = 'bottom left';
   }
 
   // ========== SVG Icons ==========
