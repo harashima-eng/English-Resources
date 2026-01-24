@@ -776,52 +776,46 @@
     const points = stroke.points;
     const len = points.length;
 
-    // Get zoom parameters
-    const scale = window.visualViewport?.scale || 1;
-    const offsetX = window.visualViewport?.offsetLeft || 0;
-    const offsetY = window.visualViewport?.offsetTop || 0;
-    const scrollY = window.scrollY / scale;
-
     if (len < 2) return;
 
     const tool = CONFIG.tools[stroke.tool];
+    const scale = window.visualViewport?.scale || 1;
 
     ctx.save();
-
-    // Apply zoom scale for consistent rendering during drawing
-    ctx.scale(scale, scale);
-    ctx.translate(-offsetX / scale, -offsetY / scale);
 
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Use latest point's width for consistent appearance
+    // Use latest point's width for consistent appearance, scaled for zoom
     const sizeMult = stroke.sizeMultiplier || 1;
     const lastPoint = points[len - 1];
     const velocityFactor = lastPoint.velocityFactor || 1;
     const baseWidth = tool.minWidth + (lastPoint.pressure * (tool.maxWidth - tool.minWidth));
-    ctx.lineWidth = baseWidth * sizeMult * velocityFactor;
+    ctx.lineWidth = baseWidth * sizeMult * velocityFactor * scale;
 
     // Draw FULL stroke as one continuous path (unified for pen and highlighter)
-    // This ensures segments connect smoothly without visible seams
+    // Convert document coordinates to screen coordinates for rendering
     ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y - scrollY);
+    const start = docToScreen(points[0].x, points[0].y);
+    ctx.moveTo(start.x, start.y);
 
     for (let i = 1; i < len; i++) {
       const prev = points[i - 1];
       const curr = points[i];
+      const prevScreen = docToScreen(prev.x, prev.y);
+      const currScreen = docToScreen(curr.x, curr.y);
 
       if (i === 1) {
-        ctx.lineTo(curr.x, curr.y - scrollY);
+        ctx.lineTo(currScreen.x, currScreen.y);
       } else {
         // Quadratic curve through midpoint for smoothness
         const mid = {
-          x: (prev.x + curr.x) / 2,
-          y: (prev.y + curr.y) / 2 - scrollY
+          x: (prevScreen.x + currScreen.x) / 2,
+          y: (prevScreen.y + currScreen.y) / 2
         };
-        ctx.quadraticCurveTo(prev.x, prev.y - scrollY, mid.x, mid.y);
+        ctx.quadraticCurveTo(prevScreen.x, prevScreen.y, mid.x, mid.y);
       }
     }
 
