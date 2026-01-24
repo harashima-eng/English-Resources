@@ -182,13 +182,18 @@
     // Track pinch-zoom on iPad using Visual Viewport API
     if (!window.visualViewport) return;
 
+    let viewportRAF = null;
     function handleViewportChange() {
-      const vv = window.visualViewport;
-      state.viewportScale = vv.scale;
-      state.viewportOffsetX = vv.offsetLeft;
-      state.viewportOffsetY = vv.offsetTop;
-      redrawAllStrokes();
-      repositionToolbar();  // Keep toolbar visible during pinch-zoom
+      if (viewportRAF) return;
+      viewportRAF = requestAnimationFrame(() => {
+        const vv = window.visualViewport;
+        state.viewportScale = vv.scale;
+        state.viewportOffsetX = vv.offsetLeft;
+        state.viewportOffsetY = vv.offsetTop;
+        redrawAllStrokes();
+        repositionToolbar();  // Keep toolbar visible during pinch-zoom
+        viewportRAF = null;
+      });
     }
 
     window.visualViewport.addEventListener('resize', handleViewportChange);
