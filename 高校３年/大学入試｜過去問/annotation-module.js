@@ -799,18 +799,25 @@
   function drawFullStroke(stroke) {
     const ctx = state.ctx;
     const points = stroke.points;
-    const scrollY = Math.round(window.scrollY);  // Round for consistent rendering
 
     if (points.length < 2) return;
 
-    // DEBUG: Log first point's Y transformation
-    const firstY = points[0].y;
-    const renderY = firstY - scrollY;
-    console.log('[drawFullStroke] storedY:', Math.round(firstY), 'scrollY:', scrollY, 'renderY:', Math.round(renderY));
+    // Get zoom parameters from Visual Viewport API
+    const scale = window.visualViewport?.scale || 1;
+    const offsetX = window.visualViewport?.offsetLeft || 0;
+    const offsetY = window.visualViewport?.offsetTop || 0;
+    const scrollY = window.scrollY / scale;  // Adjust scroll for zoom
 
     const tool = CONFIG.tools[stroke.tool];
 
     ctx.save();
+
+    // Apply zoom scale - strokes scale with the page when pinch-zooming
+    ctx.scale(scale, scale);
+
+    // Translate for viewport offset (where the visible area starts)
+    ctx.translate(-offsetX / scale, -offsetY / scale);
+
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.strokeStyle = stroke.color;
