@@ -34,7 +34,7 @@
     dpr: 1,
     sizeMultiplier: 1,  // Size: XS=0.3, S=0.6, M=1, L=1.5, XL=2
     rulerStart: null,   // Starting point for ruler tool
-    lastSmoothedPoint: null,  // For EMA smoothing between points
+    rulerEnabled: false,      // Ruler toggle (works with pen/highlighter)
     lastPointTime: 0,         // Timestamp for velocity calculation
     // Selection tool state
     selectionStart: null,
@@ -226,11 +226,11 @@
     eraserBtn.appendChild(createSVG('M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z', 20));
     tools.appendChild(eraserBtn);
 
-    // Ruler button
+    // Ruler toggle button (works with pen AND highlighter)
     const rulerBtn = document.createElement('button');
     rulerBtn.className = 'ann-btn';
-    rulerBtn.dataset.tool = 'ruler';
-    rulerBtn.title = 'Ruler (straight line, 45° snap)';
+    rulerBtn.dataset.toggle = 'ruler';
+    rulerBtn.title = 'Ruler toggle (straight line for pen/highlighter)';
     rulerBtn.appendChild(createSVG('M3 5v14h2V5H3zm4 0v14h1V5H7zm3 0v14h1V5h-1zm3 0v14h1V5h-1zm3 0v14h2V5h-2zm4 0v14h2V5h-2z', 20));
     tools.appendChild(rulerBtn);
 
@@ -333,7 +333,7 @@
     }
 
     toolbar.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-action], [data-tool], [data-color], [data-size]');
+      const btn = e.target.closest('[data-action], [data-tool], [data-toggle], [data-color], [data-size]');
       if (!btn) return;
 
       if (btn.dataset.action === 'toggle') {
