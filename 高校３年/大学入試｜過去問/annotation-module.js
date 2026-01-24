@@ -107,22 +107,22 @@
   }
 
   /**
-   * Convert DOCUMENT coordinates to SCREEN coordinates.
+   * Convert DOCUMENT coordinates to CANVAS coordinates.
    * Use this when RENDERING strokes to the canvas.
    *
    * @param {number} docX - x position in document space
    * @param {number} docY - y position in document space
-   * @returns {object} - { x, y } in screen space
+   * @returns {object} - { x, y } in canvas space
    */
-  function docToScreen(docX, docY) {
+  function docToCanvas(docX, docY) {
     const vv = window.visualViewport;
     const zoom = vv?.scale || 1;
     const offsetX = vv?.offsetLeft || 0;
     const offsetY = vv?.offsetTop || 0;
 
     return {
-      x: (docX - window.scrollX) * zoom + offsetX,
-      y: (docY - window.scrollY) * zoom + offsetY
+      x: ((docX - window.scrollX) * zoom) - offsetX,
+      y: ((docY - window.scrollY) * zoom) - offsetY
     };
   }
 
