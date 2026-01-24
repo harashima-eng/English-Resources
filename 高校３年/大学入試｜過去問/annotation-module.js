@@ -842,8 +842,8 @@
   }
 
   /**
-   * Draws a completed stroke for redraw/scroll.
-   * Uses the same unified approach as drawStrokeSegment() for consistency.
+   * Draws a completed stroke for redraw.
+   * With visual-viewport-space architecture, coordinates are used directly.
    */
   function drawFullStroke(stroke) {
     const ctx = state.ctx;
@@ -852,7 +852,6 @@
     if (points.length < 2) return;
 
     const tool = CONFIG.tools[stroke.tool];
-    const scale = window.visualViewport?.scale || 1;
 
     ctx.save();
 
@@ -861,7 +860,7 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Set lineWidth ONCE using average of all points, scaled for zoom
+    // Set lineWidth ONCE using average of all points
     // (Canvas applies lineWidth at stroke() time, not per-segment)
     const sizeMult = stroke.sizeMultiplier || 1;
     let totalWidth = 0;
@@ -870,28 +869,25 @@
       const bw = tool.minWidth + (p.pressure * (tool.maxWidth - tool.minWidth));
       totalWidth += bw * sizeMult * vf;
     }
-    ctx.lineWidth = (totalWidth / points.length) * scale;
+    ctx.lineWidth = totalWidth / points.length;
 
-    // Draw full stroke as one continuous path using screen coordinates
+    // Draw full stroke as one continuous path - use coordinates directly
     ctx.beginPath();
-    const start = docToScreen(points[0].x, points[0].y);
-    ctx.moveTo(start.x, start.y);
+    ctx.moveTo(points[0].x, points[0].y);
 
     for (let i = 1; i < points.length; i++) {
       const prev = points[i - 1];
       const curr = points[i];
-      const prevScreen = docToScreen(prev.x, prev.y);
-      const currScreen = docToScreen(curr.x, curr.y);
 
       if (i === 1) {
-        ctx.lineTo(currScreen.x, currScreen.y);
+        ctx.lineTo(curr.x, curr.y);
       } else {
         // Quadratic curve through midpoint for smoothness
         const mid = {
-          x: (prevScreen.x + currScreen.x) / 2,
-          y: (prevScreen.y + currScreen.y) / 2
+          x: (prev.x + curr.x) / 2,
+          y: (prev.y + curr.y) / 2
         };
-        ctx.quadraticCurveTo(prevScreen.x, prevScreen.y, mid.x, mid.y);
+        ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
       }
     }
 
