@@ -100,9 +100,10 @@
     const offsetX = vv?.offsetLeft || 0;
     const offsetY = vv?.offsetTop || 0;
 
+    // CORRECT ORDER: divide by zoom FIRST (offset is in CSS pixels, not visual viewport pixels)
     return {
-      x: (screenX + offsetX) / zoom + window.scrollX,
-      y: (screenY + offsetY) / zoom + window.scrollY
+      x: screenX / zoom + offsetX + window.scrollX,
+      y: screenY / zoom + offsetY + window.scrollY
     };
   }
 
@@ -120,9 +121,10 @@
     const offsetX = vv?.offsetLeft || 0;
     const offsetY = vv?.offsetTop || 0;
 
+    // CORRECT ORDER: subtract offset FIRST, then multiply by zoom
     return {
-      x: ((docX - window.scrollX) * zoom) - offsetX,
-      y: ((docY - window.scrollY) * zoom) - offsetY
+      x: (docX - window.scrollX - offsetX) * zoom,
+      y: (docY - window.scrollY - offsetY) * zoom
     };
   }
 
