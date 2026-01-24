@@ -1,15 +1,18 @@
 /**
- * Annotation Module v6 - GoodNotes-Style Document-Space Architecture
+ * Annotation Module v7 - Document-Space Canvas Architecture
  *
- * v6 FIXES (January 2026):
- * - Canvas positioned at visualViewport.offsetLeft/offsetTop (iOS Safari fix)
- * - Removed ALL zoom from coordinate transforms (clientX/Y are CSS pixels)
- * - Removed zoom from line width calculations
+ * COMPLETELY NEW APPROACH:
+ * Instead of a fixed canvas fighting the browser's zoom/scroll,
+ * the canvas IS PART OF THE DOCUMENT and zooms/scrolls naturally.
  *
- * Architecture:
- * - Strokes stored in DOCUMENT coordinates
- * - Canvas follows visual viewport position
- * - Scrolling/pinch-zoom works in draw mode (only blocks when actively drawing)
+ * KEY ARCHITECTURE:
+ * 1. Canvas uses position: absolute (not fixed)
+ * 2. Canvas sized to full document dimensions
+ * 3. Strokes stored as raw document coordinates (no transforms!)
+ * 4. Canvas scrolls and zooms WITH the HTML naturally
+ * 5. No Visual Viewport API needed for coordinates
+ *
+ * This is how PDF annotation apps work - one unified coordinate system.
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
@@ -29,13 +32,15 @@
     saveDebounce: 500,
     minPointDistance: 2,
     velocityWeight: 0.3,
-    maxVelocity: 1000
+    maxVelocity: 1000,
+    // Performance: max canvas height (prevents memory issues on very long pages)
+    maxCanvasHeight: 32000
   };
 
   // ========== State ==========
   let state = {
     isDrawMode: false,
-    isActivelyDrawing: false,  // TRUE only when pen/finger is down and drawing
+    isActivelyDrawing: false,
     currentTool: 'pen',
     currentColor: CONFIG.colors[0],
     strokes: [],
@@ -76,9 +81,7 @@
     initViewTracking();
     loadAnnotations();
     setupResizeHandler();
-    setupScrollHandler();
     setupViewChangeListener();
-    setupViewportHandler();
 
     // Initial render
     requestAnimationFrame(() => {
@@ -87,45 +90,40 @@
     });
   }
 
-  // ========== Coordinate Transform Functions ==========
+  // ========== Coordinate Functions ==========
 
   /**
-   * Convert SCREEN coordinates to DOCUMENT coordinates.
-   * Use this when CAPTURING points from pointer events.
-   *
-   * @param {number} screenX - clientX from pointer event
-   * @param {number} screenY - clientY from pointer event
-   * @returns {object} - { x, y } in document space
+   * Get document coordinates from a pointer event.
+   * Since canvas is part of document, we use pageX/pageY directly!
+   * No transforms needed - this is the beauty of document-space canvas.
    */
-  function screenToDoc(screenX, screenY) {
-    const vv = window.visualViewport;
-    const offsetX = vv?.offsetLeft || 0;
-    const offsetY = vv?.offsetTop || 0;
-
-    // NO ZOOM: clientX/Y are already in CSS pixels
+  function getDocumentPoint(e) {
     return {
-      x: screenX + offsetX + window.scrollX,
-      y: screenY + offsetY + window.scrollY
+      x: e.pageX,
+      y: e.pageY,
+      pressure: e.pressure || 0.5,
+      tiltX: e.tiltX || 0,
+      tiltY: e.tiltY || 0
     };
   }
 
   /**
-   * Convert DOCUMENT coordinates to CANVAS coordinates.
-   * Use this when RENDERING strokes to the canvas.
-   *
-   * @param {number} docX - x position in document space
-   * @param {number} docY - y position in document space
-   * @returns {object} - { x, y } in canvas space
+   * Convert document coordinates to canvas coordinates.
+   * With document-space canvas, this is just 1:1 mapping!
+   * The only adjustment is for the canvas offset within the document.
    */
   function docToCanvas(docX, docY) {
-    const vv = window.visualViewport;
-    const offsetX = vv?.offsetLeft || 0;
-    const offsetY = vv?.offsetTop || 0;
+    const rect = state.canvas.getBoundingClientRect();
+    const scrollX = window.scrollX || window.pageXOffset;
+    const scrollY = window.scrollY || window.pageYOffset;
 
-    // NO ZOOM: canvas follows visual viewport, so just subtract scroll and offset
+    // Canvas position in document space
+    const canvasDocX = rect.left + scrollX;
+    const canvasDocY = rect.top + scrollY;
+
     return {
-      x: docX - window.scrollX - offsetX,
-      y: docY - window.scrollY - offsetY
+      x: docX - canvasDocX,
+      y: docY - canvasDocY
     };
   }
 
@@ -144,7 +142,7 @@
     if (views.length === 0) return;
 
     const observer = new MutationObserver(() => {
-      if (state.currentStroke) return; // Don't switch during active drawing
+      if (state.currentStroke) return;
 
       try {
         const newViewId = getCurrentViewId();
@@ -168,15 +166,19 @@
   function createCanvas() {
     const canvas = document.createElement('canvas');
     canvas.id = 'annotation-canvas';
+
+    // CRITICAL: Canvas is PART OF DOCUMENT, not fixed overlay
     canvas.style.cssText = `
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       pointer-events: none;
       z-index: 9998;
-      touch-action: none;
     `;
-    document.body.appendChild(canvas);
+
+    // Insert at beginning of body so it's behind other fixed elements
+    document.body.insertBefore(canvas, document.body.firstChild);
+
     state.canvas = canvas;
     state.ctx = canvas.getContext('2d', { willReadFrequently: false });
 
@@ -185,89 +187,68 @@
 
   function resizeCanvas() {
     const canvas = state.canvas;
-    const vv = window.visualViewport;
     state.dpr = window.devicePixelRatio || 1;
 
-    // Canvas covers the entire visual viewport
-    const cssWidth = vv ? vv.width : window.innerWidth;
-    const cssHeight = vv ? vv.height : window.innerHeight;
+    // Get full document dimensions
+    const docWidth = Math.max(
+      document.body.scrollWidth,
+      document.body.offsetWidth,
+      document.documentElement.scrollWidth,
+      document.documentElement.offsetWidth,
+      document.documentElement.clientWidth
+    );
 
-    // High-DPI support: internal resolution = CSS size * DPR
-    canvas.width = cssWidth * state.dpr;
-    canvas.height = cssHeight * state.dpr;
-    canvas.style.width = cssWidth + 'px';
-    canvas.style.height = cssHeight + 'px';
+    let docHeight = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight,
+      document.documentElement.clientHeight
+    );
 
-    // Canvas follows visual viewport (iOS Safari position:fixed stays at LAYOUT viewport)
-    canvas.style.left = (vv?.offsetLeft || 0) + 'px';
-    canvas.style.top = (vv?.offsetTop || 0) + 'px';
+    // Cap height to prevent memory issues
+    if (docHeight > CONFIG.maxCanvasHeight) {
+      console.warn(`Document height ${docHeight}px exceeds max ${CONFIG.maxCanvasHeight}px. Capping canvas.`);
+      docHeight = CONFIG.maxCanvasHeight;
+    }
 
-    // Reset and scale context for DPR
+    // Set canvas size to match document
+    canvas.width = docWidth * state.dpr;
+    canvas.height = docHeight * state.dpr;
+    canvas.style.width = docWidth + 'px';
+    canvas.style.height = docHeight + 'px';
+
+    // Scale context for DPR
     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
     state.ctx.scale(state.dpr, state.dpr);
+
+    // Redraw after resize
+    redrawAllStrokes();
   }
 
   function setupResizeHandler() {
     let resizeTimeout;
+
+    // Resize on window resize
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         resizeCanvas();
-        redrawAllStrokes();
-      }, 100);
+      }, 200);
     });
-  }
 
-  function setupScrollHandler() {
-    let scrollRAF = null;
-    window.addEventListener('scroll', () => {
-      if (scrollRAF) return;
-      scrollRAF = requestAnimationFrame(() => {
-        redrawAllStrokes();
-        scrollRAF = null;
-      });
-    }, { passive: true });
-  }
-
-  function setupViewportHandler() {
-    if (!window.visualViewport) return;
-
-    let viewportRAF = null;
-    function handleViewportChange() {
-      if (viewportRAF) return;
-      viewportRAF = requestAnimationFrame(() => {
+    // Also check periodically for document height changes (dynamic content)
+    let lastHeight = 0;
+    setInterval(() => {
+      const currentHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      if (currentHeight !== lastHeight) {
+        lastHeight = currentHeight;
         resizeCanvas();
-        redrawAllStrokes();
-        repositionToolbar();
-        viewportRAF = null;
-      });
-    }
-
-    window.visualViewport.addEventListener('resize', handleViewportChange);
-    window.visualViewport.addEventListener('scroll', handleViewportChange);
-  }
-
-  function repositionToolbar() {
-    const toolbar = document.getElementById('annotation-toolbar');
-    if (!toolbar) return;
-
-    const vv = window.visualViewport;
-    if (!vv || vv.scale === 1) {
-      toolbar.style.transform = '';
-      toolbar.style.left = '24px';
-      toolbar.style.top = '';
-      toolbar.style.right = '';
-      toolbar.style.bottom = '24px';
-      return;
-    }
-
-    const padding = 24;
-    toolbar.style.right = '';
-    toolbar.style.bottom = 'auto';
-    toolbar.style.left = (vv.offsetLeft + padding) + 'px';
-    toolbar.style.top = (vv.offsetTop + vv.height - toolbar.offsetHeight - padding) + 'px';
-    toolbar.style.transform = `scale(${1 / vv.scale})`;
-    toolbar.style.transformOrigin = 'bottom left';
+      }
+    }, 1000);
   }
 
   // ========== SVG Icons ==========
@@ -329,7 +310,7 @@
     const rulerBtn = document.createElement('button');
     rulerBtn.className = 'ann-btn';
     rulerBtn.dataset.toggle = 'ruler';
-    rulerBtn.title = 'Ruler toggle (straight line for pen/highlighter)';
+    rulerBtn.title = 'Ruler toggle (straight lines)';
     rulerBtn.appendChild(createSVG('M3 5v14h2V5H3zm4 0v14h1V5H7zm3 0v14h1V5h-1zm3 0v14h1V5h-1zm3 0v14h2V5h-2zm4 0v14h2V5h-2z', 20));
     tools.appendChild(rulerBtn);
 
@@ -399,7 +380,6 @@
     document.body.appendChild(toolbar);
 
     setupToolbarEvents(toolbar);
-    repositionToolbar();
   }
 
   function setupToolbarEvents(toolbar) {
@@ -501,7 +481,7 @@
     state.canvas.addEventListener('pointerleave', boundPointerUp);
     state.canvas.addEventListener('pointercancel', boundPointerUp);
 
-    // Touch events for scroll control - CRITICAL for allowing scroll in draw mode
+    // Touch events for scroll control
     state.canvas.addEventListener('touchstart', boundTouchStart, { passive: false });
     state.canvas.addEventListener('touchmove', boundTouchMove, { passive: false });
   }
@@ -522,22 +502,19 @@
    * This allows scrolling and pinch-zoom to work in draw mode.
    */
   function handleTouchStart(e) {
-    // Multi-touch = pinch zoom, always allow
     if (e.touches.length > 1) {
+      // Multi-touch = pinch zoom, always allow
       return;
     }
-    // Single touch while actively drawing = prevent scroll
     if (state.isActivelyDrawing) {
       e.preventDefault();
     }
   }
 
   function handleTouchMove(e) {
-    // Only prevent scroll when actively drawing
     if (state.isActivelyDrawing) {
       e.preventDefault();
     }
-    // Otherwise, scroll/pinch happens naturally
   }
 
   // ========== Palm Rejection ==========
@@ -555,15 +532,8 @@
   function handlePointerDown(e) {
     if (isPalmTouch(e)) return;
 
-    // Convert screen coordinates to document coordinates
-    const docCoords = screenToDoc(e.clientX, e.clientY);
-    const point = {
-      x: docCoords.x,
-      y: docCoords.y,
-      pressure: e.pressure || 0.5,
-      tiltX: e.tiltX || 0,
-      tiltY: e.tiltY || 0
-    };
+    // Get document coordinates directly from pageX/pageY
+    const point = getDocumentPoint(e);
 
     if (state.currentTool === 'eraser') {
       eraseAtPoint(point);
@@ -628,15 +598,7 @@
   function handlePointerMove(e) {
     if (isPalmTouch(e)) return;
 
-    // Convert to document coordinates
-    const docCoords = screenToDoc(e.clientX, e.clientY);
-    const point = {
-      x: docCoords.x,
-      y: docCoords.y,
-      pressure: e.pressure || 0.5,
-      tiltX: e.tiltX || 0,
-      tiltY: e.tiltY || 0
-    };
+    const point = getDocumentPoint(e);
 
     if (state.currentTool === 'eraser' && e.buttons > 0) {
       eraseAtPoint(point);
@@ -674,7 +636,7 @@
     const lastPoint = state.currentStroke.points[state.currentStroke.points.length - 1];
     if (!shouldAddPoint(point, lastPoint)) return;
 
-    // Velocity factor for natural width variation
+    // Velocity factor
     const now = performance.now();
     const timeDelta = (now - state.lastPointTime) / 1000;
     const velocityFactor = getVelocityFactor(lastPoint, point, timeDelta);
@@ -708,8 +670,8 @@
         return;
       }
       if (state.selectionStart) {
-        const docCoords = screenToDoc(e.clientX, e.clientY);
-        finalizeSelection(docCoords);
+        const point = getDocumentPoint(e);
+        finalizeSelection(point);
         state.selectionStart = null;
         try { state.canvas.releasePointerCapture(e.pointerId); } catch (err) {}
         return;
@@ -718,8 +680,8 @@
 
     // Ruler finalization
     if (state.rulerEnabled && state.rulerStart) {
-      const docCoords = screenToDoc(e.clientX, e.clientY);
-      const snappedEnd = snapToAngle(state.rulerStart, docCoords);
+      const point = getDocumentPoint(e);
+      const snappedEnd = snapToAngle(state.rulerStart, point);
 
       const dx = snappedEnd.x - state.rulerStart.x;
       const dy = snappedEnd.y - state.rulerStart.y;
@@ -784,7 +746,7 @@
 
   /**
    * Draw a stroke segment (current stroke while drawing).
-   * Points are in DOCUMENT space, we convert to SCREEN space for rendering.
+   * Points are in DOCUMENT space - draw directly to canvas!
    */
   function drawStrokeSegment(stroke) {
     const ctx = state.ctx;
@@ -801,33 +763,30 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // NO ZOOM in line width - strokes scale naturally with content
+    // Line width - no zoom adjustment needed!
     const sizeMult = stroke.sizeMultiplier || 1;
     const lastPoint = points[len - 1];
     const velocityFactor = lastPoint.velocityFactor || 1;
     const baseWidth = tool.minWidth + (lastPoint.pressure * (tool.maxWidth - tool.minWidth));
     ctx.lineWidth = baseWidth * sizeMult * velocityFactor;
 
-    // Draw path - convert each point from document to screen space
+    // Draw path directly in document coordinates
     ctx.beginPath();
-    const firstScreen = docToCanvas(points[0].x, points[0].y);
-    ctx.moveTo(firstScreen.x, firstScreen.y);
+    ctx.moveTo(points[0].x, points[0].y);
 
     for (let i = 1; i < len; i++) {
       const prev = points[i - 1];
       const curr = points[i];
-      const prevScreen = docToCanvas(prev.x, prev.y);
-      const currScreen = docToCanvas(curr.x, curr.y);
 
       if (i === 1) {
-        ctx.lineTo(currScreen.x, currScreen.y);
+        ctx.lineTo(curr.x, curr.y);
       } else {
         // Quadratic curve through midpoint for smoothness
         const mid = {
-          x: (prevScreen.x + currScreen.x) / 2,
-          y: (prevScreen.y + currScreen.y) / 2
+          x: (prev.x + curr.x) / 2,
+          y: (prev.y + curr.y) / 2
         };
-        ctx.quadraticCurveTo(prevScreen.x, prevScreen.y, mid.x, mid.y);
+        ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
       }
     }
 
@@ -837,7 +796,7 @@
 
   /**
    * Draw a completed stroke (on redraw).
-   * Points are in DOCUMENT space, we convert to SCREEN space.
+   * Points are in DOCUMENT space - draw directly!
    */
   function drawFullStroke(stroke) {
     const ctx = state.ctx;
@@ -853,31 +812,28 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
-    // Use average pressure for consistent width — NO ZOOM
+    // Average pressure for consistent width
     const avgPressure = points.reduce((sum, p) => sum + (p.pressure || 0.5), 0) / points.length;
     const sizeMult = stroke.sizeMultiplier || 1;
     const baseWidth = tool.minWidth + (avgPressure * (tool.maxWidth - tool.minWidth));
     ctx.lineWidth = baseWidth * sizeMult;
 
-    // Draw in screen coordinates
+    // Draw directly in document coordinates
     ctx.beginPath();
-    const firstScreen = docToCanvas(points[0].x, points[0].y);
-    ctx.moveTo(firstScreen.x, firstScreen.y);
+    ctx.moveTo(points[0].x, points[0].y);
 
     for (let i = 1; i < points.length; i++) {
       const prev = points[i - 1];
       const curr = points[i];
-      const prevScreen = docToCanvas(prev.x, prev.y);
-      const currScreen = docToCanvas(curr.x, curr.y);
 
       if (i === 1) {
-        ctx.lineTo(currScreen.x, currScreen.y);
+        ctx.lineTo(curr.x, curr.y);
       } else {
         const mid = {
-          x: (prevScreen.x + currScreen.x) / 2,
-          y: (prevScreen.y + currScreen.y) / 2
+          x: (prev.x + curr.x) / 2,
+          y: (prev.y + curr.y) / 2
         };
-        ctx.quadraticCurveTo(prevScreen.x, prevScreen.y, mid.x, mid.y);
+        ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
       }
     }
 
@@ -887,8 +843,12 @@
 
   function redrawAllStrokes() {
     const ctx = state.ctx;
-    ctx.clearRect(0, 0, state.canvas.width / state.dpr, state.canvas.height / state.dpr);
+    const canvas = state.canvas;
 
+    // Clear entire canvas
+    ctx.clearRect(0, 0, canvas.width / state.dpr, canvas.height / state.dpr);
+
+    // Draw all strokes
     for (const stroke of state.strokes) {
       drawFullStroke(stroke);
     }
@@ -902,19 +862,16 @@
     const ctx = state.ctx;
     const tool = CONFIG.tools[state.currentTool];
 
-    const startScreen = docToCanvas(start.x, start.y);
-    const endScreen = docToCanvas(end.x, end.y);
-
     ctx.save();
     ctx.lineCap = 'round';
     ctx.strokeStyle = state.currentColor;
     ctx.globalAlpha = tool.opacity;
-    ctx.lineWidth = (tool.minWidth + tool.maxWidth) / 2 * state.sizeMultiplier;  // NO ZOOM
+    ctx.lineWidth = (tool.minWidth + tool.maxWidth) / 2 * state.sizeMultiplier;
     ctx.setLineDash([10, 5]);
 
     ctx.beginPath();
-    ctx.moveTo(startScreen.x, startScreen.y);
-    ctx.lineTo(endScreen.x, endScreen.y);
+    ctx.moveTo(start.x, start.y);
+    ctx.lineTo(end.x, end.y);
     ctx.stroke();
 
     ctx.restore();
@@ -1075,14 +1032,11 @@
   function drawSelectionPreview(start, end) {
     const ctx = state.ctx;
 
-    const startScreen = docToCanvas(start.x, start.y);
-    const endScreen = docToCanvas(end.x, end.y);
-
     const rect = {
-      x: Math.min(startScreen.x, endScreen.x),
-      y: Math.min(startScreen.y, endScreen.y),
-      w: Math.abs(endScreen.x - startScreen.x),
-      h: Math.abs(endScreen.y - startScreen.y)
+      x: Math.min(start.x, end.x),
+      y: Math.min(start.y, end.y),
+      w: Math.abs(end.x - start.x),
+      h: Math.abs(end.y - start.y)
     };
 
     ctx.save();
@@ -1104,31 +1058,21 @@
     const ctx = state.ctx;
     const rect = state.selectionRect;
 
-    // Convert document rect to screen rect
-    const topLeft = docToCanvas(rect.x, rect.y);
-    const bottomRight = docToCanvas(rect.x + rect.w, rect.y + rect.h);
-    const screenRect = {
-      x: topLeft.x,
-      y: topLeft.y,
-      w: bottomRight.x - topLeft.x,
-      h: bottomRight.y - topLeft.y
-    };
-
     ctx.save();
     ctx.strokeStyle = '#007AFF';
     ctx.lineWidth = 2;
     ctx.setLineDash([6, 4]);
-    ctx.strokeRect(screenRect.x, screenRect.y, screenRect.w, screenRect.h);
+    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
 
     ctx.setLineDash([]);
     ctx.fillStyle = '#007AFF';
     const handleSize = 12;
 
     const corners = [
-      [screenRect.x, screenRect.y],
-      [screenRect.x + screenRect.w, screenRect.y],
-      [screenRect.x, screenRect.y + screenRect.h],
-      [screenRect.x + screenRect.w, screenRect.y + screenRect.h]
+      [rect.x, rect.y],
+      [rect.x + rect.w, rect.y],
+      [rect.x, rect.y + rect.h],
+      [rect.x + rect.w, rect.y + rect.h]
     ];
 
     for (const [x, y] of corners) {
@@ -1139,14 +1083,14 @@
   }
 
   // ========== Eraser ==========
-  function eraseAtPoint(docPoint) {
+  function eraseAtPoint(point) {
     const radius = CONFIG.tools.eraser.radius;
     let erased = false;
 
     state.strokes = state.strokes.filter(stroke => {
       for (const p of stroke.points) {
-        const dx = p.x - docPoint.x;
-        const dy = p.y - docPoint.y;
+        const dx = p.x - point.x;
+        const dy = p.y - point.y;
         if (dx * dx + dy * dy < radius * radius) {
           erased = true;
           return false;
@@ -1172,7 +1116,7 @@
   function getStorageKey() {
     const path = window.location.pathname;
     const filename = path.split('/').pop() || 'index';
-    return 'annotations-' + filename;
+    return 'annotations-v7-' + filename;  // New key for v7 to avoid old data issues
   }
 
   async function saveAnnotations() {
