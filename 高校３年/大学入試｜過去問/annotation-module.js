@@ -137,23 +137,58 @@
 
   function resizeCanvas() {
     const canvas = state.canvas;
+    const vv = window.visualViewport;
     state.dpr = window.devicePixelRatio || 1;
 
-    // Get CSS dimensions
-    const cssWidth = window.innerWidth;
-    const cssHeight = window.innerHeight;
+    // Use visual viewport dimensions (what user actually sees)
+    const cssWidth = vv ? vv.width : window.innerWidth;
+    const cssHeight = vv ? vv.height : window.innerHeight;
 
     // Set internal resolution (device pixels) for crisp Retina rendering
     canvas.width = cssWidth * state.dpr;
     canvas.height = cssHeight * state.dpr;
 
-    // Set CSS size explicitly (not percentages) to match internal resolution
+    // Set CSS size explicitly to match internal resolution
     canvas.style.width = cssWidth + 'px';
     canvas.style.height = cssHeight + 'px';
 
-    // Scale context so drawing commands use CSS coordinates
+    // Reset and scale context so drawing commands use CSS coordinates
+    state.ctx.setTransform(1, 0, 0, 1, 0, 0);
     state.ctx.scale(state.dpr, state.dpr);
     redrawAllStrokes();
+  }
+
+  /**
+   * Position canvas at visual viewport top-left.
+   * This makes the canvas follow pinch-zoom/scroll so strokes stay on screen.
+   */
+  function repositionCanvas() {
+    const canvas = state.canvas;
+    const vv = window.visualViewport;
+
+    if (!vv) {
+      // Fallback for browsers without Visual Viewport API
+      canvas.style.left = '0px';
+      canvas.style.top = '0px';
+      resizeCanvas();
+      return;
+    }
+
+    // Position canvas at visual viewport top-left
+    canvas.style.left = vv.offsetLeft + 'px';
+    canvas.style.top = vv.offsetTop + 'px';
+
+    // Resize if dimensions changed significantly
+    const newWidth = vv.width;
+    const newHeight = vv.height;
+    const currentWidth = parseFloat(canvas.style.width) || 0;
+    const currentHeight = parseFloat(canvas.style.height) || 0;
+
+    if (Math.abs(newWidth - currentWidth) > 1 || Math.abs(newHeight - currentHeight) > 1) {
+      resizeCanvas();
+    } else {
+      redrawAllStrokes();
+    }
   }
 
   function setupResizeHandler() {
