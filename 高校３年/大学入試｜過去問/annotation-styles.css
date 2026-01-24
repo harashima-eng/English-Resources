@@ -226,7 +226,7 @@
 @media (max-width: 480px) {
   #annotation-toolbar {
     bottom: 16px;
-    right: 16px;
+    left: 16px;
   }
 
   .ann-tools {
