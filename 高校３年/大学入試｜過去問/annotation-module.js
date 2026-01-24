@@ -203,9 +203,9 @@
     canvas.style.width = cssWidth + 'px';
     canvas.style.height = cssHeight + 'px';
 
-    // Position canvas at visual viewport origin
-    canvas.style.left = (vv?.offsetLeft || 0) + 'px';
-    canvas.style.top = (vv?.offsetTop || 0) + 'px';
+    // Canvas stays at 0,0 - position:fixed already follows visual viewport on iOS
+    canvas.style.left = '0px';
+    canvas.style.top = '0px';
 
     // Reset and scale context for DPR
     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
