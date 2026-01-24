@@ -101,8 +101,8 @@
     const offsetY = vv?.offsetTop || 0;
 
     return {
-      x: (screenX - offsetX) / zoom + window.scrollX,
-      y: (screenY - offsetY) / zoom + window.scrollY
+      x: (screenX + offsetX) / zoom + window.scrollX,
+      y: (screenY + offsetY) / zoom + window.scrollY
     };
   }
 
