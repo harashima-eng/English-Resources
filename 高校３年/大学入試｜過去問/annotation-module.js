@@ -1133,35 +1133,24 @@
     const ctx = state.ctx;
     const rect = state.selectionRect;
 
-    // Convert all four corners from document to screen coordinates
-    const topLeft = docToScreen(rect.x, rect.y);
-    const bottomRight = docToScreen(rect.x + rect.w, rect.y + rect.h);
-
-    const screenRect = {
-      x: topLeft.x,
-      y: topLeft.y,
-      w: bottomRight.x - topLeft.x,
-      h: bottomRight.y - topLeft.y
-    };
-
     ctx.save();
 
-    // Dashed border - UI stays consistent size in screen space
+    // Dashed border
     ctx.strokeStyle = '#007AFF';
     ctx.lineWidth = 2;
     ctx.setLineDash([6, 4]);
-    ctx.strokeRect(screenRect.x, screenRect.y, screenRect.w, screenRect.h);
+    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
 
-    // Corner handles (solid squares) - consistent size in screen space
+    // Corner handles (solid squares)
     ctx.setLineDash([]);
     ctx.fillStyle = '#007AFF';
     const handleSize = 12;
 
     const corners = [
-      [screenRect.x, screenRect.y],
-      [screenRect.x + screenRect.w, screenRect.y],
-      [screenRect.x, screenRect.y + screenRect.h],
-      [screenRect.x + screenRect.w, screenRect.y + screenRect.h]
+      [rect.x, rect.y],
+      [rect.x + rect.w, rect.y],
+      [rect.x, rect.y + rect.h],
+      [rect.x + rect.w, rect.y + rect.h]
     ];
 
     for (const [x, y] of corners) {
