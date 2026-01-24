@@ -813,6 +813,10 @@
     }
   }
 
+  /**
+   * Draws a completed stroke for redraw/scroll.
+   * Uses the same unified approach as drawStrokeSegment() for consistency.
+   */
   function drawFullStroke(stroke) {
     const ctx = state.ctx;
     const points = stroke.points;
@@ -823,16 +827,12 @@
     const scale = window.visualViewport?.scale || 1;
     const offsetX = window.visualViewport?.offsetLeft || 0;
     const offsetY = window.visualViewport?.offsetTop || 0;
-    const scrollY = window.scrollY / scale;  // Adjust scroll for zoom
+    const scrollY = window.scrollY / scale;
 
     const tool = CONFIG.tools[stroke.tool];
 
     ctx.save();
-
-    // Apply zoom scale - strokes scale with the page when pinch-zooming
     ctx.scale(scale, scale);
-
-    // Translate for viewport offset (where the visible area starts)
     ctx.translate(-offsetX / scale, -offsetY / scale);
 
     ctx.lineCap = 'round';
@@ -840,54 +840,35 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
+    // Set lineWidth ONCE using average of all points
+    // (Canvas applies lineWidth at stroke() time, not per-segment)
+    const sizeMult = stroke.sizeMultiplier || 1;
+    let totalWidth = 0;
+    for (const p of points) {
+      const vf = p.velocityFactor || 1;
+      const bw = tool.minWidth + (p.pressure * (tool.maxWidth - tool.minWidth));
+      totalWidth += bw * sizeMult * vf;
+    }
+    ctx.lineWidth = totalWidth / points.length;
+
+    // Draw full stroke as one continuous path (same as drawStrokeSegment)
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y - scrollY);
 
-    const sizeMult = stroke.sizeMultiplier || 1;
-
     for (let i = 1; i < points.length; i++) {
-      const p1 = points[i];
-
-      const velocityFactor = p1.velocityFactor || 1;  // Fast strokes = thinner
-      const baseWidth = tool.minWidth + (p1.pressure * (tool.maxWidth - tool.minWidth));
-      const width = baseWidth * sizeMult * velocityFactor;
-      ctx.lineWidth = width;
+      const prev = points[i - 1];
+      const curr = points[i];
 
       if (i === 1) {
-        // First segment: simple line
-        ctx.lineTo(p1.x, p1.y - scrollY);
-      } else if (i === 2) {
-        // Second segment: quadratic Bézier
-        const p0 = points[i - 2];
-        const pPrev = points[i - 1];
-        const mid = { x: (pPrev.x + p1.x) / 2, y: (pPrev.y + p1.y) / 2 - scrollY };
-        ctx.quadraticCurveTo(pPrev.x, pPrev.y - scrollY, mid.x, mid.y);
+        ctx.lineTo(curr.x, curr.y - scrollY);
       } else {
-        // Catmull-Rom for 4+ points
-        const p0 = points[i - 3];
-        const pA = points[i - 2];
-        const pB = points[i - 1];
-        const p3 = p1;
-
-        // Catmull-Rom to Bézier conversion
-        const cp1 = {
-          x: pA.x + (pB.x - p0.x) / 6,
-          y: (pA.y + (pB.y - p0.y) / 6) - scrollY
+        // Quadratic curve through midpoint for smoothness
+        const mid = {
+          x: (prev.x + curr.x) / 2,
+          y: (prev.y + curr.y) / 2 - scrollY
         };
-        const cp2 = {
-          x: pB.x - (p3.x - pA.x) / 6,
-          y: (pB.y - (p3.y - pA.y) / 6) - scrollY
-        };
-
-        const mid = { x: (pA.x + pB.x) / 2, y: (pA.y + pB.y) / 2 - scrollY };
-        ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, mid.x, mid.y);
+        ctx.quadraticCurveTo(prev.x, prev.y - scrollY, mid.x, mid.y);
       }
-    }
-
-    // Draw final segment to last point
-    if (points.length >= 2) {
-      const last = points[points.length - 1];
-      ctx.lineTo(last.x, last.y - scrollY);
     }
 
     ctx.stroke();
