@@ -168,10 +168,13 @@
   }
 
   function setupScrollHandler() {
+    let scrollRAF = null;
     window.addEventListener('scroll', () => {
-      // DEBUG: Log scroll redraw
-      console.log('[Scroll] scrollY:', Math.round(window.scrollY), 'strokes:', state.strokes.length);
-      redrawAllStrokes();
+      if (scrollRAF) return;
+      scrollRAF = requestAnimationFrame(() => {
+        redrawAllStrokes();
+        scrollRAF = null;
+      });
     }, { passive: true });
   }
 
