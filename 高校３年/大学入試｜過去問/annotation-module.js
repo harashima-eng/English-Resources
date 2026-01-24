@@ -121,12 +121,9 @@
   function createCanvas() {
     const canvas = document.createElement('canvas');
     canvas.id = 'annotation-canvas';
+    // Position and size will be set by repositionCanvas()
     canvas.style.cssText = `
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       pointer-events: none;
       z-index: 9998;
       touch-action: none;
@@ -135,7 +132,7 @@
     state.canvas = canvas;
     state.ctx = canvas.getContext('2d', { willReadFrequently: false });
 
-    resizeCanvas();
+    repositionCanvas();
   }
 
   function resizeCanvas() {
