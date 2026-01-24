@@ -143,14 +143,14 @@
 }
 
 .ann-size {
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 2px solid transparent;
-  border-radius: 6px;
+  border-radius: 8px;
   background: rgba(0, 0, 0, 0.1);
   color: #333;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease;
