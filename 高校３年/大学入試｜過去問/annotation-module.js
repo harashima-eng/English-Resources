@@ -368,6 +368,10 @@
         state.sizeMultiplier = parseFloat(btn.dataset.size);
         toolbar.querySelectorAll('[data-size]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+      } else if (btn.dataset.toggle === 'ruler') {
+        // Toggle ruler mode on/off
+        state.rulerEnabled = !state.rulerEnabled;
+        btn.classList.toggle('active', state.rulerEnabled);
       }
     });
   }
@@ -448,8 +452,8 @@
       return;
     }
 
-    // Ruler: record start point only
-    if (state.currentTool === 'ruler') {
+    // Ruler toggle: if enabled with pen or highlighter, draw straight lines
+    if (state.rulerEnabled && (state.currentTool === 'pen' || state.currentTool === 'highlighter')) {
       state.rulerStart = point;
       state.canvas.setPointerCapture(e.pointerId);
       return;
@@ -510,8 +514,8 @@
       return;
     }
 
-    // Ruler: show preview line with angle snapping
-    if (state.currentTool === 'ruler' && state.rulerStart && e.buttons > 0) {
+    // Ruler toggle: show preview line with angle snapping
+    if (state.rulerEnabled && state.rulerStart && e.buttons > 0) {
       const snappedEnd = snapToAngle(state.rulerStart, point);
       redrawAllStrokes();
       drawRulerPreview(state.rulerStart, snappedEnd);
@@ -584,8 +588,8 @@
       }
     }
 
-    // Ruler: finalize the straight line
-    if (state.currentTool === 'ruler' && state.rulerStart) {
+    // Ruler toggle: finalize the straight line
+    if (state.rulerEnabled && state.rulerStart) {
       const point = getPoint(e);
       const snappedEnd = snapToAngle(state.rulerStart, point);
 
@@ -593,8 +597,9 @@
       const dx = snappedEnd.x - state.rulerStart.x;
       const dy = snappedEnd.y - state.rulerStart.y;
       if (Math.hypot(dx, dy) > 5) {
+        // Use current tool (pen or highlighter) for the stroke
         const stroke = {
-          tool: 'pen',
+          tool: state.currentTool,
           color: state.currentColor,
           sizeMultiplier: state.sizeMultiplier,
           points: [state.rulerStart, snappedEnd]
