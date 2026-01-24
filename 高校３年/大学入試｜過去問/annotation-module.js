@@ -697,20 +697,42 @@
     } catch (err) { /* ignore if not captured */ }
   }
 
-  function getPoint(e) {
-    // Get zoom scale and offset from Visual Viewport API
+  /**
+   * Convert screen coordinates to document coordinates.
+   * Screen = what user sees (visual viewport)
+   * Document = absolute position in the full document at scale=1
+   */
+  function screenToDoc(screenX, screenY) {
     const scale = window.visualViewport?.scale || 1;
     const offsetX = window.visualViewport?.offsetLeft || 0;
     const offsetY = window.visualViewport?.offsetTop || 0;
+    return {
+      x: screenX / scale + offsetX,
+      y: screenY / scale + offsetY + window.scrollY
+    };
+  }
 
-    // Convert screen coordinates to document coordinates accounting for pinch-zoom
-    // When zoomed in, we need to convert the pointer position back to unzoomed coordinates
-    const x = (e.clientX + offsetX) / scale;
-    const y = (e.clientY + offsetY + window.scrollY) / scale;
+  /**
+   * Convert document coordinates to screen coordinates.
+   * This is the inverse of screenToDoc().
+   */
+  function docToScreen(docX, docY) {
+    const scale = window.visualViewport?.scale || 1;
+    const offsetX = window.visualViewport?.offsetLeft || 0;
+    const offsetY = window.visualViewport?.offsetTop || 0;
+    return {
+      x: (docX - offsetX) * scale,
+      y: (docY - window.scrollY - offsetY) * scale
+    };
+  }
+
+  function getPoint(e) {
+    // Convert screen coordinates to document coordinates
+    const doc = screenToDoc(e.clientX, e.clientY);
 
     return {
-      x: x,
-      y: y,  // Store document-relative Y (unzoomed)
+      x: doc.x,
+      y: doc.y,  // Store document-relative Y
       pressure: e.pressure || 0.5,
       tiltX: e.tiltX || 0,
       tiltY: e.tiltY || 0
