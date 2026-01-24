@@ -355,6 +355,9 @@
     document.body.appendChild(toolbar);
 
     setupToolbarEvents(toolbar);
+
+    // Initial positioning (handles case where page loads while zoomed)
+    repositionToolbar();
   }
 
   function setupToolbarEvents(toolbar) {
