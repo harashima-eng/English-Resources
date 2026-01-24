@@ -1099,7 +1099,10 @@
 
   function drawSelectionPreview(start, end) {
     const ctx = state.ctx;
-    const scrollY = window.scrollY;
+    const scale = window.visualViewport?.scale || 1;
+    const offsetX = window.visualViewport?.offsetLeft || 0;
+    const offsetY = window.visualViewport?.offsetTop || 0;
+    const scrollY = window.scrollY / scale;
 
     const rect = {
       x: Math.min(start.x, end.x),
@@ -1109,9 +1112,12 @@
     };
 
     ctx.save();
+    ctx.scale(scale, scale);
+    ctx.translate(-offsetX / scale, -offsetY / scale);
+
     ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 4]);
+    ctx.lineWidth = 2 / scale;  // Keep UI elements consistent size
+    ctx.setLineDash([6 / scale, 4 / scale]);
     ctx.globalAlpha = 0.8;
     ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
 
