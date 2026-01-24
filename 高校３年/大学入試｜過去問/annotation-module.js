@@ -16,7 +16,6 @@
     colors: ['#1a1a1a', '#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa'],
     palmRejectRadius: 20,
     saveDebounce: 500,
-    smoothing: 0.3,
     minPointDistance: 2,    // Minimum pixels between points (jitter filter)
     velocityWeight: 0.3,    // How much velocity affects width (0-1)
     maxVelocity: 1000       // Pixels per second for minimum width
@@ -644,30 +643,7 @@
     };
   }
 
-  // ========== Smoothing Functions ==========
-  /**
-   * Apply Exponential Moving Average (EMA) smoothing to reduce jitter
-   * Uses CONFIG.smoothing as the alpha factor (lower = smoother, higher = more responsive)
-   */
-  function smoothPoint(rawPoint) {
-    if (!state.lastSmoothedPoint) {
-      state.lastSmoothedPoint = rawPoint;
-      return rawPoint;
-    }
-
-    const alpha = CONFIG.smoothing; // 0.3 = more smoothing
-    const smoothed = {
-      x: state.lastSmoothedPoint.x + alpha * (rawPoint.x - state.lastSmoothedPoint.x),
-      y: state.lastSmoothedPoint.y + alpha * (rawPoint.y - state.lastSmoothedPoint.y),
-      pressure: state.lastSmoothedPoint.pressure + alpha * (rawPoint.pressure - state.lastSmoothedPoint.pressure),
-      tiltX: rawPoint.tiltX,
-      tiltY: rawPoint.tiltY
-    };
-
-    state.lastSmoothedPoint = smoothed;
-    return smoothed;
-  }
-
+  // ========== Point Processing ==========
   /**
    * Check if a new point should be added (point decimation)
    * Skips points that are too close together to reduce jitter
