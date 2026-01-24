@@ -649,15 +649,19 @@
   }
 
   function getPoint(e) {
-    const rect = state.canvas.getBoundingClientRect();
-    const clientY = e.clientY - rect.top;
-    const scrollY = window.scrollY;
-    const docY = clientY + scrollY;
-    // DEBUG: Log coordinate calculation
-    console.log('[getPoint] clientY:', Math.round(clientY), 'scrollY:', Math.round(scrollY), 'docY:', Math.round(docY));
+    // Get zoom scale and offset from Visual Viewport API
+    const scale = window.visualViewport?.scale || 1;
+    const offsetX = window.visualViewport?.offsetLeft || 0;
+    const offsetY = window.visualViewport?.offsetTop || 0;
+
+    // Convert screen coordinates to document coordinates accounting for pinch-zoom
+    // When zoomed in, we need to convert the pointer position back to unzoomed coordinates
+    const x = (e.clientX + offsetX) / scale;
+    const y = (e.clientY + offsetY + window.scrollY) / scale;
+
     return {
-      x: e.clientX - rect.left,
-      y: docY,  // Store document-relative Y
+      x: x,
+      y: y,  // Store document-relative Y (unzoomed)
       pressure: e.pressure || 0.5,
       tiltX: e.tiltX || 0,
       tiltY: e.tiltY || 0
