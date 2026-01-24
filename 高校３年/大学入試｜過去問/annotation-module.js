@@ -175,6 +175,22 @@
     }, { passive: true });
   }
 
+  function setupViewportHandler() {
+    // Track pinch-zoom on iPad using Visual Viewport API
+    if (!window.visualViewport) return;
+
+    function handleViewportChange() {
+      const vv = window.visualViewport;
+      state.viewportScale = vv.scale;
+      state.viewportOffsetX = vv.offsetLeft;
+      state.viewportOffsetY = vv.offsetTop;
+      redrawAllStrokes();
+    }
+
+    window.visualViewport.addEventListener('resize', handleViewportChange);
+    window.visualViewport.addEventListener('scroll', handleViewportChange);
+  }
+
   // ========== SVG Icons ==========
   function createSVG(pathD, size = 24) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
