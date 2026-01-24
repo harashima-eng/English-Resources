@@ -490,8 +490,7 @@
       return;
     }
 
-    // Initialize smoothing state for new stroke
-    state.lastSmoothedPoint = point;
+    // Initialize time tracking for velocity calculation
     state.lastPointTime = performance.now();
 
     state.currentStroke = {
@@ -542,23 +541,20 @@
 
     if (!state.currentStroke) return;
 
-    // Apply EMA smoothing to reduce jitter
-    const smoothedPoint = smoothPoint(point);
-
-    // Point decimation: skip points too close together
+    // Point decimation: skip points too close together (reduces noise without adding lag)
     const lastPoint = state.currentStroke.points[state.currentStroke.points.length - 1];
-    if (!shouldAddPoint(smoothedPoint, lastPoint)) return;
+    if (!shouldAddPoint(point, lastPoint)) return;
 
     // Calculate velocity factor for natural width variation
     const now = performance.now();
     const timeDelta = (now - state.lastPointTime) / 1000; // Convert to seconds
-    const velocityFactor = getVelocityFactor(lastPoint, smoothedPoint, timeDelta);
+    const velocityFactor = getVelocityFactor(lastPoint, point, timeDelta);
     state.lastPointTime = now;
 
     // Add velocity factor to point for width calculation
-    smoothedPoint.velocityFactor = velocityFactor;
+    point.velocityFactor = velocityFactor;
 
-    state.currentStroke.points.push(smoothedPoint);
+    state.currentStroke.points.push(point);
     drawStrokeSegment(state.currentStroke);
   }
 
@@ -623,8 +619,7 @@
     }
     state.currentStroke = null;
 
-    // Reset smoothing state for next stroke
-    state.lastSmoothedPoint = null;
+    // Reset time tracking for next stroke
     state.lastPointTime = 0;
 
     // Release pointer capture to prevent stuck state
