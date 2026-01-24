@@ -1133,19 +1133,25 @@
 
     const ctx = state.ctx;
     const rect = state.selectionRect;
-    const scrollY = window.scrollY;
+    const scale = window.visualViewport?.scale || 1;
+    const offsetX = window.visualViewport?.offsetLeft || 0;
+    const offsetY = window.visualViewport?.offsetTop || 0;
+    const scrollY = window.scrollY / scale;
 
     ctx.save();
-    // Dashed border
+    ctx.scale(scale, scale);
+    ctx.translate(-offsetX / scale, -offsetY / scale);
+
+    // Dashed border - keep UI consistent size regardless of zoom
     ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 4]);
+    ctx.lineWidth = 2 / scale;
+    ctx.setLineDash([6 / scale, 4 / scale]);
     ctx.strokeRect(rect.x, rect.y - scrollY, rect.w, rect.h);
 
-    // Corner handles (solid squares)
+    // Corner handles (solid squares) - keep consistent size
     ctx.setLineDash([]);
     ctx.fillStyle = '#007AFF';
-    const handleSize = 12;
+    const handleSize = 12 / scale;
 
     const corners = [
       [rect.x, rect.y],
