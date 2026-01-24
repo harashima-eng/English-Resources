@@ -1,12 +1,15 @@
 /**
- * Annotation Module v3 - GoodNotes-Style Document-Space Architecture
+ * Annotation Module v6 - GoodNotes-Style Document-Space Architecture
  *
- * KEY CHANGES FROM v2:
- * 1. Strokes stored in DOCUMENT coordinates (not screen)
- * 2. Transforms applied when rendering (scale + translate)
- * 3. Scrolling works even in draw mode (only blocks when actively drawing)
- * 4. Strokes scale proportionally with pinch-zoom
- * 5. Strokes stay anchored to document position
+ * v6 FIXES (January 2026):
+ * - Canvas positioned at visualViewport.offsetLeft/offsetTop (iOS Safari fix)
+ * - Removed ALL zoom from coordinate transforms (clientX/Y are CSS pixels)
+ * - Removed zoom from line width calculations
+ *
+ * Architecture:
+ * - Strokes stored in DOCUMENT coordinates
+ * - Canvas follows visual viewport position
+ * - Scrolling/pinch-zoom works in draw mode (only blocks when actively drawing)
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
@@ -124,14 +127,6 @@
       x: docX - window.scrollX - offsetX,
       y: docY - window.scrollY - offsetY
     };
-  }
-
-  /**
-   * Get the current zoom level from Visual Viewport API
-   * @returns {number} - zoom scale (1 = no zoom)
-   */
-  function getZoom() {
-    return window.visualViewport?.scale || 1;
   }
 
   // ========== View Tracking ==========
@@ -1079,7 +1074,6 @@
 
   function drawSelectionPreview(start, end) {
     const ctx = state.ctx;
-    const zoom = getZoom();
 
     const startScreen = docToCanvas(start.x, start.y);
     const endScreen = docToCanvas(end.x, end.y);
