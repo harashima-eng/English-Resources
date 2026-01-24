@@ -138,9 +138,19 @@
     const canvas = state.canvas;
     state.dpr = window.devicePixelRatio || 1;
 
-    canvas.width = window.innerWidth * state.dpr;
-    canvas.height = window.innerHeight * state.dpr;
+    // Get CSS dimensions
+    const cssWidth = window.innerWidth;
+    const cssHeight = window.innerHeight;
 
+    // Set internal resolution (device pixels) for crisp Retina rendering
+    canvas.width = cssWidth * state.dpr;
+    canvas.height = cssHeight * state.dpr;
+
+    // Set CSS size explicitly (not percentages) to match internal resolution
+    canvas.style.width = cssWidth + 'px';
+    canvas.style.height = cssHeight + 'px';
+
+    // Scale context so drawing commands use CSS coordinates
     state.ctx.scale(state.dpr, state.dpr);
     redrawAllStrokes();
   }
