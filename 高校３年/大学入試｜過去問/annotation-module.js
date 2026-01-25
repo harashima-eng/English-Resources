@@ -173,20 +173,50 @@
     const vv = window.visualViewport;
     if (!vv) return;
 
-    state.activeCanvas.style.left = vv.offsetLeft + 'px';
-    state.activeCanvas.style.top = vv.offsetTop + 'px';
-    state.activeCanvas.style.width = vv.width + 'px';
-    state.activeCanvas.style.height = vv.height + 'px';
+    const scale = vv.scale || 1;
+    const isZoomed = scale > 1.01;
 
-    // Resize buffer if needed
-    const targetWidth = vv.width * state.dpr;
-    const targetHeight = vv.height * state.dpr;
+    state.useBackgroundForDrawing = isZoomed;
 
-    if (state.activeCanvas.width !== targetWidth || state.activeCanvas.height !== targetHeight) {
-      state.activeCanvas.width = targetWidth;
-      state.activeCanvas.height = targetHeight;
-      state.activeCtx.setTransform(1, 0, 0, 1, 0, 0);
-      state.activeCtx.scale(state.dpr, state.dpr);
+    if (isZoomed) {
+      // v7.5: When zoomed, switch active canvas to position:absolute
+      // This makes it zoom/scroll with the document like background canvas
+      state.activeCanvas.style.position = 'absolute';
+      state.activeCanvas.style.left = (window.scrollX + vv.offsetLeft) + 'px';
+      state.activeCanvas.style.top = (window.scrollY + vv.offsetTop) + 'px';
+
+      // Size matches what's visible (visual viewport size in document pixels)
+      const docWidth = vv.width / scale;
+      const docHeight = vv.height / scale;
+      state.activeCanvas.style.width = docWidth + 'px';
+      state.activeCanvas.style.height = docHeight + 'px';
+
+      const targetWidth = Math.round(docWidth * state.dpr);
+      const targetHeight = Math.round(docHeight * state.dpr);
+
+      if (state.activeCanvas.width !== targetWidth || state.activeCanvas.height !== targetHeight) {
+        state.activeCanvas.width = targetWidth;
+        state.activeCanvas.height = targetHeight;
+        state.activeCtx.setTransform(1, 0, 0, 1, 0, 0);
+        state.activeCtx.scale(state.dpr, state.dpr);
+      }
+    } else {
+      // Normal mode: position:fixed
+      state.activeCanvas.style.position = 'fixed';
+      state.activeCanvas.style.left = vv.offsetLeft + 'px';
+      state.activeCanvas.style.top = vv.offsetTop + 'px';
+      state.activeCanvas.style.width = vv.width + 'px';
+      state.activeCanvas.style.height = vv.height + 'px';
+
+      const targetWidth = Math.round(vv.width * state.dpr);
+      const targetHeight = Math.round(vv.height * state.dpr);
+
+      if (state.activeCanvas.width !== targetWidth || state.activeCanvas.height !== targetHeight) {
+        state.activeCanvas.width = targetWidth;
+        state.activeCanvas.height = targetHeight;
+        state.activeCtx.setTransform(1, 0, 0, 1, 0, 0);
+        state.activeCtx.scale(state.dpr, state.dpr);
+      }
     }
   }
 
