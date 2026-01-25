@@ -206,19 +206,21 @@
   }
 
   /**
-   * v7.4: Convert screen coordinates to document coordinates (for storage)
+   * v7.5: Convert screen coordinates to document coordinates (for storage)
+   * Accounts for zoom scale!
    */
-  function screenToDocument(point) {
+  function screenToDocument(screenPoint) {
     const vv = window.visualViewport;
-    const offsetX = vv ? vv.offsetLeft : 0;
-    const offsetY = vv ? vv.offsetTop : 0;
+    const scale = vv?.scale || 1;
+    const offsetX = vv?.offsetLeft || 0;
+    const offsetY = vv?.offsetTop || 0;
 
     return {
-      x: point.x + window.scrollX + offsetX,
-      y: point.y + window.scrollY + offsetY,
-      pressure: point.pressure,
-      tiltX: point.tiltX,
-      tiltY: point.tiltY
+      x: screenPoint.x / scale + offsetX + window.scrollX,
+      y: screenPoint.y / scale + offsetY + window.scrollY,
+      pressure: screenPoint.pressure,
+      tiltX: screenPoint.tiltX,
+      tiltY: screenPoint.tiltY
     };
   }
 
