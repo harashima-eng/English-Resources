@@ -225,16 +225,18 @@
   }
 
   /**
-   * v7.4: Convert document coordinates to screen coordinates (for active canvas drawing)
+   * v7.5: Convert document coordinates to active canvas screen coordinates.
+   * Used when drawing to active canvas during zoom fallback.
    */
-  function documentToScreen(point) {
+  function documentToScreen(docPoint) {
     const vv = window.visualViewport;
-    const offsetX = vv ? vv.offsetLeft : 0;
-    const offsetY = vv ? vv.offsetTop : 0;
+    const scale = vv?.scale || 1;
+    const offsetX = vv?.offsetLeft || 0;
+    const offsetY = vv?.offsetTop || 0;
 
     return {
-      x: point.x - window.scrollX - offsetX,
-      y: point.y - window.scrollY - offsetY
+      x: (docPoint.x - window.scrollX - offsetX) * scale,
+      y: (docPoint.y - window.scrollY - offsetY) * scale
     };
   }
 
