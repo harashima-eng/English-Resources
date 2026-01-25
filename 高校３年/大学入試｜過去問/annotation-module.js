@@ -1,15 +1,16 @@
 /**
- * Annotation Module v7.5 - Zoom-Safe + Full Quality
+ * Annotation Module v7.6 - CLEAN BUILD
  *
  * ARCHITECTURE:
- * - Background Canvas: position: absolute, full document, stores completed strokes
- * - Active Canvas: position: fixed, viewport-sized, for current stroke only (FAST!)
+ * - Single canvas, position: absolute (scrolls with document)
+ * - All coordinates use pageX/pageY (zoom-independent!)
+ * - Smooth quadratic curves for both live and completed strokes
  *
- * v7.5 FIXES:
- * - FULL DPR: No more pixel quality loss (removed 1.5 cap)
- * - ZOOM-SAFE: Drawing works correctly during pinch-zoom
- *   - Uses pageX/pageY for document coordinates (zoom-independent)
- *   - Active canvas scales with visual viewport
+ * PERFORMANCE:
+ * - Incremental drawing (only new segment during live drawing)
+ * - Path2D caching for completed strokes
+ * - Viewport culling (skip off-screen strokes)
+ * - getCoalescedEvents for Apple Pencil batching
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
@@ -27,12 +28,11 @@
     colors: ['#1a1a1a', '#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa'],
     palmRejectRadius: 20,
     saveDebounce: 500,
-    minPointDistance: 3,  // v7.5: Back to 3 for smoother lines
+    minPointDistance: 2,
     velocityWeight: 0.3,
     maxVelocity: 1000,
     maxCanvasHeight: 32000,
     maxHistorySize: 50,
-    // v7.5: NO DPR cap - full retina quality!
     useCoalescedEvents: true
   };
 
@@ -44,22 +44,17 @@
     currentColor: CONFIG.colors[0],
     strokes: [],
     currentStroke: null,
-    // v7.4: Dual-canvas architecture
-    backgroundCanvas: null,
-    activeCanvas: null,
-    bgCtx: null,
-    activeCtx: null,
+    canvas: null,
+    ctx: null,
     dpr: 1,
     sizeMultiplier: 1,
     rulerStart: null,
     rulerEnabled: false,
     lastPointTime: 0,
-    // v7.5: Zoom handling
-    useBackgroundForDrawing: false,  // When true, draw to bg canvas (during zoom)
     // Undo/Redo
     undoStack: [],
     redoStack: [],
-    // Performance (from v7.3)
+    // Performance
     pathCache: new Map(),
     viewportBounds: null,
     // Selection tool state
@@ -86,23 +81,25 @@
   }
 
   function setup() {
-    createCanvases();
-    createToolbar();
     initViewTracking();
-    loadAnnotations();
-    setupResizeHandler();
-    setupViewChangeListener();
+    createCanvas();
+    createToolbar();
     setupToolbarViewportHandler();
-    setupActiveCanvasViewportHandler();
+    setupViewChangeListener();
+    loadAnnotations();
 
-    requestAnimationFrame(() => {
-      resizeBackgroundCanvas();
-      resizeActiveCanvas();
-      redrawBackground();
-    });
+    window.addEventListener('resize', debounce(resizeCanvas, 200));
+    window.addEventListener('scroll', updateViewportBounds, { passive: true });
   }
 
-  // ========== Undo/Redo Functions ==========
+  // ========== Utility Functions ==========
+  function debounce(fn, ms) {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(this, args), ms);
+    };
+  }
 
   function cloneStrokes(strokes) {
     return strokes.map(stroke => ({
@@ -111,36 +108,7 @@
     }));
   }
 
-  function pushToUndoStack() {
-    state.undoStack.push(cloneStrokes(state.strokes));
-    if (state.undoStack.length > CONFIG.maxHistorySize) {
-      state.undoStack.shift();
-    }
-    state.redoStack = [];
-  }
-
-  function undo() {
-    if (state.undoStack.length === 0) return;
-    state.redoStack.push(cloneStrokes(state.strokes));
-    state.strokes = state.undoStack.pop();
-    state.strokesByView[state.currentViewId] = state.strokes;
-    invalidatePathCache();
-    redrawBackground();
-    saveAnnotations();
-  }
-
-  function redo() {
-    if (state.redoStack.length === 0) return;
-    state.undoStack.push(cloneStrokes(state.strokes));
-    state.strokes = state.redoStack.pop();
-    state.strokesByView[state.currentViewId] = state.strokes;
-    invalidatePathCache();
-    redrawBackground();
-    saveAnnotations();
-  }
-
   // ========== Toolbar Viewport Handler ==========
-
   function setupToolbarViewportHandler() {
     if (!window.visualViewport) return;
 
@@ -149,129 +117,20 @@
       if (!toolbar) return;
 
       const vv = window.visualViewport;
-      toolbar.style.left = (vv.offsetLeft + 24) + 'px';
+      toolbar.style.position = 'fixed';
+      toolbar.style.left = (vv.offsetLeft + 10) + 'px';
       toolbar.style.bottom = 'auto';
-      toolbar.style.top = (vv.offsetTop + vv.height - toolbar.offsetHeight - 24) + 'px';
+      toolbar.style.top = (vv.offsetTop + vv.height - toolbar.offsetHeight - 10) + 'px';
     }
 
     window.visualViewport.addEventListener('resize', repositionToolbar);
     window.visualViewport.addEventListener('scroll', repositionToolbar);
   }
 
-  // ========== v7.4: Active Canvas Viewport Handler ==========
-
-  function setupActiveCanvasViewportHandler() {
-    if (!window.visualViewport) return;
-
-    window.visualViewport.addEventListener('resize', repositionActiveCanvas);
-    window.visualViewport.addEventListener('scroll', repositionActiveCanvas);
-  }
-
-  function repositionActiveCanvas() {
-    if (!state.activeCanvas) return;
-
-    const vv = window.visualViewport;
-    if (!vv) return;
-
-    const scale = vv.scale || 1;
-    const isZoomed = scale > 1.01;
-
-    state.useBackgroundForDrawing = isZoomed;
-
-    if (isZoomed) {
-      // v7.5: When zoomed, switch active canvas to position:absolute
-      // This makes it zoom/scroll with the document like background canvas
-      state.activeCanvas.style.position = 'absolute';
-      state.activeCanvas.style.left = (window.scrollX + vv.offsetLeft) + 'px';
-      state.activeCanvas.style.top = (window.scrollY + vv.offsetTop) + 'px';
-
-      // Size matches what's visible (visual viewport size in document pixels)
-      const docWidth = vv.width / scale;
-      const docHeight = vv.height / scale;
-      state.activeCanvas.style.width = docWidth + 'px';
-      state.activeCanvas.style.height = docHeight + 'px';
-
-      const targetWidth = Math.round(docWidth * state.dpr);
-      const targetHeight = Math.round(docHeight * state.dpr);
-
-      if (state.activeCanvas.width !== targetWidth || state.activeCanvas.height !== targetHeight) {
-        state.activeCanvas.width = targetWidth;
-        state.activeCanvas.height = targetHeight;
-        state.activeCtx.setTransform(1, 0, 0, 1, 0, 0);
-        state.activeCtx.scale(state.dpr, state.dpr);
-      }
-    } else {
-      // Normal mode: position:fixed
-      state.activeCanvas.style.position = 'fixed';
-      state.activeCanvas.style.left = vv.offsetLeft + 'px';
-      state.activeCanvas.style.top = vv.offsetTop + 'px';
-      state.activeCanvas.style.width = vv.width + 'px';
-      state.activeCanvas.style.height = vv.height + 'px';
-
-      const targetWidth = Math.round(vv.width * state.dpr);
-      const targetHeight = Math.round(vv.height * state.dpr);
-
-      if (state.activeCanvas.width !== targetWidth || state.activeCanvas.height !== targetHeight) {
-        state.activeCanvas.width = targetWidth;
-        state.activeCanvas.height = targetHeight;
-        state.activeCtx.setTransform(1, 0, 0, 1, 0, 0);
-        state.activeCtx.scale(state.dpr, state.dpr);
-      }
-    }
-  }
-
-  // ========== Coordinate Functions ==========
-
+  // ========== Coordinate Function ==========
   /**
-   * v7.4: Get SCREEN coordinates from pointer event (for active canvas)
-   */
-  function getScreenPoint(e) {
-    return {
-      x: e.clientX,
-      y: e.clientY,
-      pressure: e.pressure || 0.5,
-      tiltX: e.tiltX || 0,
-      tiltY: e.tiltY || 0
-    };
-  }
-
-  /**
-   * v7.5: Convert screen coordinates to document coordinates (for storage)
-   * Accounts for zoom scale!
-   */
-  function screenToDocument(screenPoint) {
-    const vv = window.visualViewport;
-    const scale = vv?.scale || 1;
-    const offsetX = vv?.offsetLeft || 0;
-    const offsetY = vv?.offsetTop || 0;
-
-    return {
-      x: screenPoint.x / scale + offsetX + window.scrollX,
-      y: screenPoint.y / scale + offsetY + window.scrollY,
-      pressure: screenPoint.pressure,
-      tiltX: screenPoint.tiltX,
-      tiltY: screenPoint.tiltY
-    };
-  }
-
-  /**
-   * v7.5: Convert document coordinates to active canvas screen coordinates.
-   * Used when drawing to active canvas during zoom fallback.
-   */
-  function documentToScreen(docPoint) {
-    const vv = window.visualViewport;
-    const scale = vv?.scale || 1;
-    const offsetX = vv?.offsetLeft || 0;
-    const offsetY = vv?.offsetTop || 0;
-
-    return {
-      x: (docPoint.x - window.scrollX - offsetX) * scale,
-      y: (docPoint.y - window.scrollY - offsetY) * scale
-    };
-  }
-
-  /**
-   * Get document coordinates directly from pointer event (for background canvas ops)
+   * Get document coordinates from pointer event.
+   * pageX/pageY ALWAYS work correctly regardless of zoom level!
    */
   function getDocumentPoint(e) {
     return {
@@ -309,7 +168,7 @@
           state.undoStack = [];
           state.redoStack = [];
           invalidatePathCache();
-          redrawBackground();
+          redrawAllStrokes();
         }
       } catch (err) {
         console.error('View change error:', err);
@@ -321,44 +180,26 @@
     });
   }
 
-  // ========== v7.4: Dual Canvas Setup ==========
-
-  function createCanvases() {
-    // Background canvas: full document, position absolute
-    const bgCanvas = document.createElement('canvas');
-    bgCanvas.id = 'annotation-canvas-bg';
-    bgCanvas.style.cssText = `
+  // ========== Canvas Setup ==========
+  function createCanvas() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'annotation-canvas';
+    canvas.style.cssText = `
       position: absolute;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9997;
-    `;
-    document.body.insertBefore(bgCanvas, document.body.firstChild);
-    state.backgroundCanvas = bgCanvas;
-    state.bgCtx = bgCanvas.getContext('2d', { willReadFrequently: false });
-
-    // Active canvas: viewport-sized, position fixed (for live drawing)
-    const activeCanvas = document.createElement('canvas');
-    activeCanvas.id = 'annotation-canvas-active';
-    activeCanvas.style.cssText = `
-      position: fixed;
       top: 0;
       left: 0;
       pointer-events: none;
       z-index: 9998;
     `;
-    document.body.appendChild(activeCanvas);
-    state.activeCanvas = activeCanvas;
-    state.activeCtx = activeCanvas.getContext('2d', { willReadFrequently: false });
+    document.body.insertBefore(canvas, document.body.firstChild);
+    state.canvas = canvas;
+    state.ctx = canvas.getContext('2d', { willReadFrequently: false });
 
-    resizeBackgroundCanvas();
-    resizeActiveCanvas();
+    resizeCanvas();
   }
 
-  function resizeBackgroundCanvas() {
-    const canvas = state.backgroundCanvas;
-    // v7.5: Full DPR - no cap for best quality
+  function resizeCanvas() {
+    const canvas = state.canvas;
     state.dpr = window.devicePixelRatio || 1;
 
     const docWidth = Math.max(
@@ -386,29 +227,12 @@
     canvas.style.width = docWidth + 'px';
     canvas.style.height = docHeight + 'px';
 
-    state.bgCtx.setTransform(1, 0, 0, 1, 0, 0);
-    state.bgCtx.scale(state.dpr, state.dpr);
+    state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    state.ctx.scale(state.dpr, state.dpr);
 
-    state.pathCache.clear();
+    invalidatePathCache();
     updateViewportBounds();
-    redrawBackground();
-  }
-
-  function resizeActiveCanvas() {
-    const canvas = state.activeCanvas;
-    const vv = window.visualViewport;
-    const width = vv ? vv.width : window.innerWidth;
-    const height = vv ? vv.height : window.innerHeight;
-
-    canvas.width = width * state.dpr;
-    canvas.height = height * state.dpr;
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
-
-    state.activeCtx.setTransform(1, 0, 0, 1, 0, 0);
-    state.activeCtx.scale(state.dpr, state.dpr);
-
-    repositionActiveCanvas();
+    redrawAllStrokes();
   }
 
   function updateViewportBounds() {
@@ -434,59 +258,25 @@
   }
 
   function calculateStrokeBounds(stroke) {
-    if (stroke.bounds) return stroke.bounds;
+    if (!stroke.points || stroke.points.length === 0) return null;
 
     let minX = Infinity, minY = Infinity;
     let maxX = -Infinity, maxY = -Infinity;
 
     for (const p of stroke.points) {
-      minX = Math.min(minX, p.x);
-      minY = Math.min(minY, p.y);
-      maxX = Math.max(maxX, p.x);
-      maxY = Math.max(maxY, p.y);
+      if (p.x < minX) minX = p.x;
+      if (p.y < minY) minY = p.y;
+      if (p.x > maxX) maxX = p.x;
+      if (p.y > maxY) maxY = p.y;
     }
 
-    stroke.bounds = { minX, minY, maxX, maxY };
-    return stroke.bounds;
-  }
-
-  function setupResizeHandler() {
-    let resizeTimeout;
-
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        resizeBackgroundCanvas();
-        resizeActiveCanvas();
-      }, 200);
-    });
-
-    window.addEventListener('scroll', updateViewportBounds, { passive: true });
-
-    let lastHeight = 0;
-    setInterval(() => {
-      const currentHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight
-      );
-      if (currentHeight !== lastHeight) {
-        lastHeight = currentHeight;
-        resizeBackgroundCanvas();
-      }
-    }, 1000);
-  }
-
-  // ========== SVG Icons ==========
-  function createSVG(pathD, size = 24) {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('viewBox', '0 0 24 24');
-    svg.setAttribute('width', size);
-    svg.setAttribute('height', size);
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', pathD);
-    path.setAttribute('fill', 'currentColor');
-    svg.appendChild(path);
-    return svg;
+    const padding = 30;
+    return {
+      minX: minX - padding,
+      minY: minY - padding,
+      maxX: maxX + padding,
+      maxY: maxY + padding
+    };
   }
 
   // ========== Toolbar ==========
@@ -494,204 +284,266 @@
     const toolbar = document.createElement('div');
     toolbar.id = 'annotation-toolbar';
 
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'ann-btn ann-toggle';
-    toggleBtn.dataset.action = 'toggle';
-    toggleBtn.title = 'Toggle Draw Mode';
-    toggleBtn.appendChild(createSVG('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'));
-    toolbar.appendChild(toggleBtn);
+    // Create style element
+    const style = document.createElement('style');
+    style.textContent = `
+      #annotation-toolbar {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(30, 30, 30, 0.95);
+        border-radius: 12px;
+        padding: 8px;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        z-index: 10000;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        touch-action: none;
+      }
+      #annotation-toolbar .ann-toggle {
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 8px;
+        background: #4a4a4a;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      #annotation-toolbar .ann-toggle.active {
+        background: #007AFF;
+      }
+      #annotation-toolbar .ann-tools {
+        display: none;
+        gap: 6px;
+        align-items: center;
+      }
+      #annotation-toolbar .ann-btn {
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 8px;
+        background: #4a4a4a;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      #annotation-toolbar .ann-btn.active {
+        background: #007AFF;
+      }
+      #annotation-toolbar .ann-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+      #annotation-toolbar .ann-divider {
+        width: 1px;
+        height: 30px;
+        background: #555;
+        margin: 0 4px;
+      }
+      #annotation-toolbar .ann-color {
+        width: 32px;
+        height: 32px;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s, border-color 0.2s;
+      }
+      #annotation-toolbar .ann-color.active {
+        border-color: white;
+        transform: scale(1.15);
+      }
+      #annotation-toolbar .ann-size-slider {
+        width: 80px;
+        height: 6px;
+        -webkit-appearance: none;
+        background: #555;
+        border-radius: 3px;
+        outline: none;
+      }
+      #annotation-toolbar .ann-size-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    `;
+    toolbar.appendChild(style);
 
+    // Create toggle button
+    const toggle = document.createElement('button');
+    toggle.className = 'ann-toggle';
+    toggle.title = 'Toggle Draw Mode';
+    toggle.textContent = '\u270F\uFE0F';
+    toolbar.appendChild(toggle);
+
+    // Create tools container
     const tools = document.createElement('div');
     tools.className = 'ann-tools';
-    tools.style.display = 'none';
 
-    const penBtn = document.createElement('button');
-    penBtn.className = 'ann-btn active';
-    penBtn.dataset.tool = 'pen';
-    penBtn.title = 'Pen';
-    penBtn.appendChild(createSVG('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z', 20));
-    tools.appendChild(penBtn);
+    // Tool buttons
+    const toolButtons = [
+      { tool: 'pen', title: 'Pen', icon: '\uD83D\uDD8A\uFE0F' },
+      { tool: 'highlighter', title: 'Highlighter', icon: '\uD83D\uDD8D\uFE0F' },
+      { tool: 'eraser', title: 'Eraser', icon: '\uD83E\uDDFB' },
+      { tool: 'select', title: 'Select', icon: '\u2610' }
+    ];
 
-    const highlightBtn = document.createElement('button');
-    highlightBtn.className = 'ann-btn';
-    highlightBtn.dataset.tool = 'highlighter';
-    highlightBtn.title = 'Highlighter';
-    highlightBtn.appendChild(createSVG('M4 19h16v2H4v-2zm3-4h2v3H7v-3zm4-3h2v6h-2v-6zm4-3h2v9h-2V9zm4-3h2v12h-2V6z', 20));
-    tools.appendChild(highlightBtn);
+    toolButtons.forEach(({ tool, title, icon }) => {
+      const btn = document.createElement('button');
+      btn.className = 'ann-btn';
+      btn.dataset.tool = tool;
+      btn.title = title;
+      btn.textContent = icon;
+      tools.appendChild(btn);
+    });
 
-    const eraserBtn = document.createElement('button');
-    eraserBtn.className = 'ann-btn';
-    eraserBtn.dataset.tool = 'eraser';
-    eraserBtn.title = 'Eraser';
-    eraserBtn.appendChild(createSVG('M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z', 20));
-    tools.appendChild(eraserBtn);
+    tools.appendChild(createDivider());
 
+    // Ruler button
     const rulerBtn = document.createElement('button');
     rulerBtn.className = 'ann-btn';
-    rulerBtn.dataset.toggle = 'ruler';
-    rulerBtn.title = 'Ruler toggle (straight lines)';
-    rulerBtn.appendChild(createSVG('M3 5v14h2V5H3zm4 0v14h1V5H7zm3 0v14h1V5h-1zm3 0v14h1V5h-1zm3 0v14h2V5h-2zm4 0v14h2V5h-2z', 20));
+    rulerBtn.dataset.action = 'ruler';
+    rulerBtn.title = 'Ruler';
+    rulerBtn.textContent = '\uD83D\uDCCF';
     tools.appendChild(rulerBtn);
 
-    const selectBtn = document.createElement('button');
-    selectBtn.className = 'ann-btn';
-    selectBtn.dataset.tool = 'select';
-    selectBtn.title = 'Select & Move';
-    selectBtn.appendChild(createSVG('M3 3h8v2H5v6H3V3zm18 0v8h-2V5h-6V3h8zM3 13v8h8v-2H5v-6H3zm18 0v6h-6v2h8v-8h-2z', 20));
-    tools.appendChild(selectBtn);
+    tools.appendChild(createDivider());
 
-    const divider1 = document.createElement('div');
-    divider1.className = 'ann-divider';
-    tools.appendChild(divider1);
-
-    const colorsContainer = document.createElement('div');
-    colorsContainer.className = 'ann-colors';
-    CONFIG.colors.forEach((color, i) => {
-      const colorBtn = document.createElement('button');
-      colorBtn.className = 'ann-color' + (i === 0 ? ' active' : '');
-      colorBtn.dataset.color = color;
-      colorBtn.style.background = color;
-      colorsContainer.appendChild(colorBtn);
-    });
-    tools.appendChild(colorsContainer);
-
-    const divider2 = document.createElement('div');
-    divider2.className = 'ann-divider';
-    tools.appendChild(divider2);
-
-    const sizesContainer = document.createElement('div');
-    sizesContainer.className = 'ann-sizes';
-    const sizes = [
-      { label: 'XS', mult: 0.3 },
-      { label: 'S', mult: 0.6 },
-      { label: 'M', mult: 1 },
-      { label: 'L', mult: 1.5 },
-      { label: 'XL', mult: 2 }
-    ];
-    sizes.forEach((size, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'ann-size' + (i === 2 ? ' active' : '');
-      btn.dataset.size = size.mult;
-      btn.textContent = size.label;
-      sizesContainer.appendChild(btn);
-    });
-    tools.appendChild(sizesContainer);
-
-    const divider3 = document.createElement('div');
-    divider3.className = 'ann-divider';
-    tools.appendChild(divider3);
-
+    // Undo/Redo buttons
     const undoBtn = document.createElement('button');
     undoBtn.className = 'ann-btn';
     undoBtn.dataset.action = 'undo';
     undoBtn.title = 'Undo';
-    undoBtn.appendChild(createSVG('M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z', 20));
+    undoBtn.textContent = '\u21A9\uFE0F';
     tools.appendChild(undoBtn);
 
     const redoBtn = document.createElement('button');
     redoBtn.className = 'ann-btn';
     redoBtn.dataset.action = 'redo';
     redoBtn.title = 'Redo';
-    redoBtn.appendChild(createSVG('M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z', 20));
+    redoBtn.textContent = '\u21AA\uFE0F';
     tools.appendChild(redoBtn);
 
-    const divider4 = document.createElement('div');
-    divider4.className = 'ann-divider';
-    tools.appendChild(divider4);
+    tools.appendChild(createDivider());
 
+    // Color buttons
+    CONFIG.colors.forEach(color => {
+      const colorBtn = document.createElement('div');
+      colorBtn.className = 'ann-color';
+      colorBtn.dataset.color = color;
+      colorBtn.style.background = color;
+      tools.appendChild(colorBtn);
+    });
+
+    tools.appendChild(createDivider());
+
+    // Size slider
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.className = 'ann-size-slider';
+    slider.min = '0.5';
+    slider.max = '3';
+    slider.step = '0.1';
+    slider.value = '1';
+    tools.appendChild(slider);
+
+    tools.appendChild(createDivider());
+
+    // Clear button
     const clearBtn = document.createElement('button');
     clearBtn.className = 'ann-btn';
     clearBtn.dataset.action = 'clear';
-    clearBtn.title = 'Clear (hold 1.5s for ALL sections)';
-    clearBtn.appendChild(createSVG('M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z', 20));
+    clearBtn.title = 'Clear All';
+    clearBtn.textContent = '\uD83D\uDDD1\uFE0F';
     tools.appendChild(clearBtn);
 
     toolbar.appendChild(tools);
     document.body.appendChild(toolbar);
-
     setupToolbarEvents(toolbar);
+    updateToolbarState();
+  }
+
+  function createDivider() {
+    const div = document.createElement('div');
+    div.className = 'ann-divider';
+    return div;
   }
 
   function setupToolbarEvents(toolbar) {
-    let clearPressTimer = null;
-    let didLongPress = false;
-    const clearBtn = toolbar.querySelector('[data-action="clear"]');
+    const toggle = toolbar.querySelector('.ann-toggle');
+    toggle.addEventListener('click', toggleDrawMode);
 
-    if (clearBtn) {
-      clearBtn.addEventListener('pointerdown', () => {
-        didLongPress = false;
-        clearPressTimer = setTimeout(() => {
-          didLongPress = true;
-          if (confirm('Clear ALL annotations for ALL sections?')) {
-            pushToUndoStack();
-            state.strokes = [];
-            state.strokesByView = {};
-            localforage.removeItem(getStorageKey());
-            invalidatePathCache();
-            redrawBackground();
-          }
-        }, 1500);
-      });
-
-      clearBtn.addEventListener('pointerup', () => clearTimeout(clearPressTimer));
-      clearBtn.addEventListener('pointerleave', () => clearTimeout(clearPressTimer));
-    }
-
-    toolbar.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-action], [data-tool], [data-toggle], [data-color], [data-size]');
-      if (!btn) return;
-
-      if (btn.dataset.action === 'toggle') {
-        toggleDrawMode();
-      } else if (btn.dataset.action === 'clear') {
-        if (didLongPress) {
-          didLongPress = false;
-          return;
-        }
-        pushToUndoStack();
-        state.strokes = [];
-        state.strokesByView[state.currentViewId] = [];
-        invalidatePathCache();
-        redrawBackground();
-        saveAnnotations();
-      } else if (btn.dataset.action === 'undo') {
-        undo();
-      } else if (btn.dataset.action === 'redo') {
-        redo();
-      } else if (btn.dataset.tool) {
-        if (state.currentTool === 'select' && btn.dataset.tool !== 'select') {
-          state.selectionRect = null;
-          state.selectedStrokes = [];
-          state.selectionStart = null;
-          redrawBackground();
-        }
+    toolbar.querySelectorAll('.ann-btn[data-tool]').forEach(btn => {
+      btn.addEventListener('click', () => {
         state.currentTool = btn.dataset.tool;
-        toolbar.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      } else if (btn.dataset.color) {
-        state.currentColor = btn.dataset.color;
-        toolbar.querySelectorAll('[data-color]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      } else if (btn.dataset.size) {
-        state.sizeMultiplier = parseFloat(btn.dataset.size);
-        toolbar.querySelectorAll('[data-size]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      } else if (btn.dataset.toggle === 'ruler') {
-        state.rulerEnabled = !state.rulerEnabled;
-        btn.classList.toggle('active', state.rulerEnabled);
-      }
+        clearSelection();
+        updateToolbarState();
+      });
     });
+
+    toolbar.querySelectorAll('.ann-color').forEach(el => {
+      el.addEventListener('click', () => {
+        state.currentColor = el.dataset.color;
+        updateToolbarState();
+      });
+    });
+
+    toolbar.querySelector('.ann-size-slider').addEventListener('input', (e) => {
+      state.sizeMultiplier = parseFloat(e.target.value);
+    });
+
+    toolbar.querySelector('[data-action="ruler"]').addEventListener('click', () => {
+      state.rulerEnabled = !state.rulerEnabled;
+      updateToolbarState();
+    });
+
+    toolbar.querySelector('[data-action="undo"]').addEventListener('click', undo);
+    toolbar.querySelector('[data-action="redo"]').addEventListener('click', redo);
+    toolbar.querySelector('[data-action="clear"]').addEventListener('click', clearAllStrokes);
   }
 
-  // ========== Draw Mode ==========
+  function updateToolbarState() {
+    const toolbar = document.getElementById('annotation-toolbar');
+    if (!toolbar) return;
+
+    toolbar.querySelectorAll('.ann-btn[data-tool]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tool === state.currentTool);
+    });
+
+    toolbar.querySelectorAll('.ann-color').forEach(el => {
+      el.classList.toggle('active', el.dataset.color === state.currentColor);
+    });
+
+    toolbar.querySelector('[data-action="ruler"]').classList.toggle('active', state.rulerEnabled);
+
+    const undoBtn = toolbar.querySelector('[data-action="undo"]');
+    const redoBtn = toolbar.querySelector('[data-action="redo"]');
+    undoBtn.disabled = state.undoStack.length === 0;
+    redoBtn.disabled = state.redoStack.length === 0;
+  }
+
   function toggleDrawMode() {
     state.isDrawMode = !state.isDrawMode;
+
     const toolbar = document.getElementById('annotation-toolbar');
     const tools = toolbar.querySelector('.ann-tools');
     const toggle = toolbar.querySelector('.ann-toggle');
 
-    // v7.4: Enable pointer events on ACTIVE canvas (not background)
-    state.activeCanvas.style.pointerEvents = state.isDrawMode ? 'auto' : 'none';
+    state.canvas.style.pointerEvents = state.isDrawMode ? 'auto' : 'none';
     tools.style.display = state.isDrawMode ? 'flex' : 'none';
     toggle.classList.toggle('active', state.isDrawMode);
 
@@ -700,6 +552,36 @@
     } else {
       removeDrawingEvents();
     }
+  }
+
+  // ========== Undo/Redo ==========
+  function pushToUndoStack() {
+    state.undoStack.push(cloneStrokes(state.strokes));
+    if (state.undoStack.length > CONFIG.maxHistorySize) {
+      state.undoStack.shift();
+    }
+    state.redoStack = [];
+    updateToolbarState();
+  }
+
+  function undo() {
+    if (state.undoStack.length === 0) return;
+    state.redoStack.push(cloneStrokes(state.strokes));
+    state.strokes = state.undoStack.pop();
+    invalidatePathCache();
+    redrawAllStrokes();
+    scheduleSave();
+    updateToolbarState();
+  }
+
+  function redo() {
+    if (state.redoStack.length === 0) return;
+    state.undoStack.push(cloneStrokes(state.strokes));
+    state.strokes = state.redoStack.pop();
+    invalidatePathCache();
+    redrawAllStrokes();
+    scheduleSave();
+    updateToolbarState();
   }
 
   // ========== Drawing Events ==========
@@ -713,108 +595,117 @@
     boundTouchStart = handleTouchStart.bind(this);
     boundTouchMove = handleTouchMove.bind(this);
 
-    // v7.4: Events on ACTIVE canvas
-    state.activeCanvas.addEventListener('pointerdown', boundPointerDown);
-    state.activeCanvas.addEventListener('pointermove', boundPointerMove);
-    state.activeCanvas.addEventListener('pointerup', boundPointerUp);
-    state.activeCanvas.addEventListener('pointerleave', boundPointerUp);
-    state.activeCanvas.addEventListener('pointercancel', boundPointerUp);
+    state.canvas.addEventListener('pointerdown', boundPointerDown);
+    state.canvas.addEventListener('pointermove', boundPointerMove);
+    state.canvas.addEventListener('pointerup', boundPointerUp);
+    state.canvas.addEventListener('pointerleave', boundPointerUp);
+    state.canvas.addEventListener('pointercancel', boundPointerUp);
 
-    state.activeCanvas.addEventListener('touchstart', boundTouchStart, { passive: false });
-    state.activeCanvas.addEventListener('touchmove', boundTouchMove, { passive: false });
+    state.canvas.addEventListener('touchstart', boundTouchStart, { passive: false });
+    state.canvas.addEventListener('touchmove', boundTouchMove, { passive: false });
   }
 
   function removeDrawingEvents() {
-    state.activeCanvas.removeEventListener('pointerdown', boundPointerDown);
-    state.activeCanvas.removeEventListener('pointermove', boundPointerMove);
-    state.activeCanvas.removeEventListener('pointerup', boundPointerUp);
-    state.activeCanvas.removeEventListener('pointerleave', boundPointerUp);
-    state.activeCanvas.removeEventListener('pointercancel', boundPointerUp);
+    state.canvas.removeEventListener('pointerdown', boundPointerDown);
+    state.canvas.removeEventListener('pointermove', boundPointerMove);
+    state.canvas.removeEventListener('pointerup', boundPointerUp);
+    state.canvas.removeEventListener('pointerleave', boundPointerUp);
+    state.canvas.removeEventListener('pointercancel', boundPointerUp);
 
-    state.activeCanvas.removeEventListener('touchstart', boundTouchStart);
-    state.activeCanvas.removeEventListener('touchmove', boundTouchMove);
+    state.canvas.removeEventListener('touchstart', boundTouchStart);
+    state.canvas.removeEventListener('touchmove', boundTouchMove);
   }
 
   function handleTouchStart(e) {
     if (e.touches.length > 1) {
-      return;
-    }
-    if (state.isActivelyDrawing) {
-      e.preventDefault();
+      if (state.currentStroke) {
+        state.currentStroke = null;
+        redrawAllStrokes();
+      }
     }
   }
 
   function handleTouchMove(e) {
-    if (state.isActivelyDrawing) {
-      e.preventDefault();
+    if (e.touches.length > 1 && state.currentStroke) {
+      state.currentStroke = null;
+      redrawAllStrokes();
     }
   }
 
-  // ========== Palm Rejection ==========
   function isPalmTouch(e) {
-    if (e.radiusX > CONFIG.palmRejectRadius || e.radiusY > CONFIG.palmRejectRadius) {
-      return true;
-    }
-    if (e.pointerType === 'touch' && e.pressure === 0) {
-      return true;
+    if (e.pointerType === 'pen') return false;
+    if (e.pointerType === 'touch') {
+      const r = e.width && e.height ? Math.max(e.width, e.height) / 2 : 0;
+      return r > CONFIG.palmRejectRadius;
     }
     return false;
   }
 
-  // ========== Pointer Handlers ==========
+  function shouldAddPoint(point, lastPoint) {
+    const dx = point.x - lastPoint.x;
+    const dy = point.y - lastPoint.y;
+    return Math.hypot(dx, dy) >= CONFIG.minPointDistance;
+  }
+
+  function getVelocityFactor(prevPoint, currPoint, timeDelta) {
+    if (timeDelta === 0) return 1;
+    const dx = currPoint.x - prevPoint.x;
+    const dy = currPoint.y - prevPoint.y;
+    const distance = Math.hypot(dx, dy);
+    const velocity = distance / timeDelta;
+    const normalized = Math.min(velocity / CONFIG.maxVelocity, 1);
+    return 1 - (normalized * CONFIG.velocityWeight);
+  }
+
   function handlePointerDown(e) {
     if (isPalmTouch(e)) return;
 
-    // v7.4: Use screen coordinates for active canvas
-    const screenPoint = getScreenPoint(e);
-    const docPoint = screenToDocument(screenPoint);
+    const point = getDocumentPoint(e);
 
     if (state.currentTool === 'eraser') {
       pushToUndoStack();
-      eraseAtPoint(docPoint);
+      eraseAtPoint(point);
       state.isActivelyDrawing = true;
-      state.activeCanvas.setPointerCapture(e.pointerId);
+      state.canvas.setPointerCapture(e.pointerId);
       return;
     }
 
-    // Ruler mode
     if (state.rulerEnabled && (state.currentTool === 'pen' || state.currentTool === 'highlighter')) {
-      state.rulerStart = { screen: screenPoint, doc: docPoint };
+      state.rulerStart = point;
       state.isActivelyDrawing = true;
-      state.activeCanvas.setPointerCapture(e.pointerId);
+      state.canvas.setPointerCapture(e.pointerId);
       return;
     }
 
-    // Selection tool
     if (state.currentTool === 'select') {
-      if (state.selectionRect && isInsideRect(docPoint, state.selectionRect)) {
+      if (state.selectionRect && isInsideRect(point, state.selectionRect)) {
         pushToUndoStack();
         state.isDraggingSelection = true;
         state.dragOffset = {
-          x: docPoint.x - state.selectionRect.x,
-          y: docPoint.y - state.selectionRect.y
+          x: point.x - state.selectionRect.x,
+          y: point.y - state.selectionRect.y
         };
         state.isActivelyDrawing = true;
-        state.activeCanvas.setPointerCapture(e.pointerId);
+        state.canvas.setPointerCapture(e.pointerId);
         return;
       }
 
-      const handle = getResizeHandle(docPoint);
+      const handle = getResizeHandle(point);
       if (handle) {
         pushToUndoStack();
         state.isResizingSelection = true;
         state.resizeHandle = handle;
         state.originalBounds = { ...state.selectionRect };
         state.isActivelyDrawing = true;
-        state.activeCanvas.setPointerCapture(e.pointerId);
+        state.canvas.setPointerCapture(e.pointerId);
         return;
       }
 
-      state.selectionStart = docPoint;
+      state.selectionStart = point;
       state.selectedStrokes = [];
       state.selectionRect = null;
       state.isActivelyDrawing = true;
-      state.activeCanvas.setPointerCapture(e.pointerId);
+      state.canvas.setPointerCapture(e.pointerId);
       return;
     }
 
@@ -823,286 +714,182 @@
     state.lastPointTime = performance.now();
     state.isActivelyDrawing = true;
 
-    // v7.4: Store SCREEN coords during drawing for active canvas
     state.currentStroke = {
       tool: state.currentTool,
       color: state.currentColor,
       sizeMultiplier: state.sizeMultiplier,
-      points: [screenPoint],       // Screen coords for live drawing
-      docPoints: [docPoint]        // Doc coords for storage
+      points: [point]
     };
 
-    state.activeCanvas.setPointerCapture(e.pointerId);
-  }
-
-  function processPoint(e, forceProcess = false) {
-    const screenPoint = getScreenPoint(e);
-    const docPoint = screenToDocument(screenPoint);
-
-    if (!state.currentStroke) return;
-
-    const lastPoint = state.currentStroke.points[state.currentStroke.points.length - 1];
-    if (!forceProcess && !shouldAddPoint(screenPoint, lastPoint)) return;
-
-    state.currentStroke.points.push(screenPoint);
-    state.currentStroke.docPoints.push(docPoint);
-    return true;
+    state.canvas.setPointerCapture(e.pointerId);
   }
 
   function handlePointerMove(e) {
     if (isPalmTouch(e)) return;
 
-    const screenPoint = getScreenPoint(e);
-    const docPoint = screenToDocument(screenPoint);
+    const point = getDocumentPoint(e);
 
     if (state.currentTool === 'eraser' && e.buttons > 0) {
-      eraseAtPoint(docPoint);
+      eraseAtPoint(point);
       return;
     }
 
-    // Ruler preview
     if (state.rulerEnabled && state.rulerStart && e.buttons > 0) {
-      const snappedEnd = snapToAngle(state.rulerStart.screen, screenPoint);
-      clearActiveCanvas();
-      drawRulerPreviewOnActive(state.rulerStart.screen, snappedEnd);
+      const snappedEnd = snapToAngle(state.rulerStart, point);
+      redrawAllStrokes();
+      drawRulerPreview(state.rulerStart, snappedEnd);
       return;
     }
 
-    // Selection tool
     if (state.currentTool === 'select') {
       if (state.isDraggingSelection && e.buttons > 0) {
-        moveSelection(docPoint);
+        moveSelection(point);
         return;
       }
       if (state.isResizingSelection && e.buttons > 0) {
-        resizeSelection(docPoint);
+        resizeSelection(point);
         return;
       }
       if (state.selectionStart && e.buttons > 0) {
-        redrawBackground();
-        drawSelectionPreviewOnBackground(state.selectionStart, docPoint);
+        redrawAllStrokes();
+        drawSelectionPreview(state.selectionStart, point);
         return;
       }
     }
 
     if (!state.currentStroke) return;
 
-    // v7.4: Use getCoalescedEvents for smooth Apple Pencil input
+    // Process coalesced events for Apple Pencil
     let pointsAdded = 0;
 
     if (CONFIG.useCoalescedEvents && e.getCoalescedEvents) {
       const events = e.getCoalescedEvents();
       for (const coalescedEvent of events) {
-        if (processPoint(coalescedEvent)) {
+        const coalescedPoint = getDocumentPoint(coalescedEvent);
+        const lastPoint = state.currentStroke.points[state.currentStroke.points.length - 1];
+
+        if (shouldAddPoint(coalescedPoint, lastPoint)) {
+          const now = performance.now();
+          const timeDelta = (now - state.lastPointTime) / 1000;
+          coalescedPoint.velocityFactor = getVelocityFactor(lastPoint, coalescedPoint, timeDelta);
+          state.lastPointTime = now;
+          state.currentStroke.points.push(coalescedPoint);
           pointsAdded++;
         }
       }
     } else {
-      if (processPoint(e)) {
+      const lastPoint = state.currentStroke.points[state.currentStroke.points.length - 1];
+      if (shouldAddPoint(point, lastPoint)) {
+        const now = performance.now();
+        const timeDelta = (now - state.lastPointTime) / 1000;
+        point.velocityFactor = getVelocityFactor(lastPoint, point, timeDelta);
+        state.lastPointTime = now;
+        state.currentStroke.points.push(point);
         pointsAdded++;
       }
     }
 
-    // v7.4: Draw on ACTIVE canvas (small, fast!)
+    // v7.6: Incremental drawing with smooth curves
     if (pointsAdded > 0) {
-      drawIncrementalOnActive(state.currentStroke);
+      drawIncrementalStroke(state.currentStroke, pointsAdded);
     }
   }
 
   function handlePointerUp(e) {
     state.isActivelyDrawing = false;
 
-    // Selection tool finalization
     if (state.currentTool === 'select') {
       if (state.isDraggingSelection) {
         state.isDraggingSelection = false;
         invalidatePathCache();
         scheduleSave();
-        try { state.activeCanvas.releasePointerCapture(e.pointerId); } catch (err) {}
         return;
       }
       if (state.isResizingSelection) {
         state.isResizingSelection = false;
-        state.resizeHandle = null;
-        state.originalBounds = null;
         invalidatePathCache();
         scheduleSave();
-        try { state.activeCanvas.releasePointerCapture(e.pointerId); } catch (err) {}
         return;
       }
       if (state.selectionStart) {
-        const docPoint = screenToDocument(getScreenPoint(e));
-        finalizeSelection(docPoint);
+        const endPoint = getDocumentPoint(e);
+        finalizeSelection(state.selectionStart, endPoint);
         state.selectionStart = null;
-        try { state.activeCanvas.releasePointerCapture(e.pointerId); } catch (err) {}
         return;
       }
     }
 
-    // Ruler finalization
     if (state.rulerEnabled && state.rulerStart) {
-      const screenPoint = getScreenPoint(e);
-      const snappedScreenEnd = snapToAngle(state.rulerStart.screen, screenPoint);
-      const snappedDocEnd = screenToDocument(snappedScreenEnd);
-
-      const dx = snappedDocEnd.x - state.rulerStart.doc.x;
-      const dy = snappedDocEnd.y - state.rulerStart.doc.y;
-      if (Math.hypot(dx, dy) > 5) {
-        const stroke = {
-          tool: state.currentTool,
-          color: state.currentColor,
-          sizeMultiplier: state.sizeMultiplier,
-          points: [state.rulerStart.doc, snappedDocEnd]
-        };
-        calculateStrokeBounds(stroke);
-        state.strokes.push(stroke);
-        scheduleSave();
-      }
-
+      const endPoint = getDocumentPoint(e);
+      const snappedEnd = snapToAngle(state.rulerStart, endPoint);
+      createRulerStroke(state.rulerStart, snappedEnd);
       state.rulerStart = null;
-      clearActiveCanvas();
-      redrawBackground();
-      try { state.activeCanvas.releasePointerCapture(e.pointerId); } catch (err) {}
       return;
     }
 
-    // v7.4: Transfer stroke from active canvas to background
-    if (state.currentStroke && state.currentStroke.docPoints.length > 1) {
-      // Create final stroke with document coordinates
-      const finalStroke = {
-        tool: state.currentStroke.tool,
-        color: state.currentStroke.color,
-        sizeMultiplier: state.currentStroke.sizeMultiplier,
-        points: state.currentStroke.docPoints
-      };
-      calculateStrokeBounds(finalStroke);
-      state.strokes.push(finalStroke);
+    if (state.currentStroke && state.currentStroke.points.length > 1) {
+      state.currentStroke.bounds = calculateStrokeBounds(state.currentStroke);
+      state.strokes.push(state.currentStroke);
+      invalidatePathCache();
       scheduleSave();
-
-      // Clear active canvas and redraw background with new stroke
-      clearActiveCanvas();
-      redrawBackground();
     }
 
     state.currentStroke = null;
-    state.lastPointTime = 0;
-
-    try { state.activeCanvas.releasePointerCapture(e.pointerId); } catch (err) {}
+    redrawAllStrokes();
   }
 
-  // ========== Point Processing ==========
-  function shouldAddPoint(newPoint, lastPoint) {
-    if (!lastPoint) return true;
-    const dx = newPoint.x - lastPoint.x;
-    const dy = newPoint.y - lastPoint.y;
-    return Math.hypot(dx, dy) >= CONFIG.minPointDistance;
-  }
-
-  function snapToAngle(start, end) {
-    const dx = end.x - start.x;
-    const dy = end.y - start.y;
-    const angle = Math.atan2(dy, dx);
-    const snapAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4);
-    const distance = Math.hypot(dx, dy);
-    return {
-      x: start.x + Math.cos(snapAngle) * distance,
-      y: start.y + Math.sin(snapAngle) * distance,
-      pressure: end.pressure || 0.5
-    };
-  }
-
-  // ========== v7.4: Active Canvas Drawing ==========
-
-  function clearActiveCanvas() {
-    const ctx = state.activeCtx;
-    const canvas = state.activeCanvas;
-    ctx.clearRect(0, 0, canvas.width / state.dpr, canvas.height / state.dpr);
-  }
+  // ========== Drawing Functions ==========
 
   /**
-   * v7.5: Draw incremental segment - handles both normal and zoomed modes
+   * v7.6: Draw only the new segment(s) with smooth curves
    */
-  function drawIncrementalOnActive(stroke) {
-    // v7.5: When zoomed, draw to background canvas instead
-    if (state.useBackgroundForDrawing) {
-      drawIncrementalOnBackground(stroke);
-      return;
+  function drawIncrementalStroke(stroke, pointsAdded) {
+    const ctx = state.ctx;
+    const points = stroke.points;
+    const len = points.length;
+
+    if (len < 2) return;
+
+    const tool = CONFIG.tools[stroke.tool];
+    const sizeMult = stroke.sizeMultiplier || 1;
+
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = stroke.color;
+    ctx.globalAlpha = tool.opacity;
+
+    // Draw the new segments with quadratic curves
+    const startIdx = Math.max(0, len - pointsAdded - 1);
+
+    for (let i = startIdx + 1; i < len; i++) {
+      const prev = points[i - 1];
+      const curr = points[i];
+
+      const baseWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
+      const velocityMod = curr.velocityFactor || 1;
+      ctx.lineWidth = baseWidth * sizeMult * velocityMod;
+
+      ctx.beginPath();
+
+      if (i === 1) {
+        // First segment: simple line
+        ctx.moveTo(prev.x, prev.y);
+        ctx.lineTo(curr.x, curr.y);
+      } else {
+        // Use quadratic curve through midpoint for smoothness
+        const prevPrev = points[i - 2];
+        const mid1 = { x: (prevPrev.x + prev.x) / 2, y: (prevPrev.y + prev.y) / 2 };
+        const mid2 = { x: (prev.x + curr.x) / 2, y: (prev.y + curr.y) / 2 };
+
+        ctx.moveTo(mid1.x, mid1.y);
+        ctx.quadraticCurveTo(prev.x, prev.y, mid2.x, mid2.y);
+      }
+
+      ctx.stroke();
     }
 
-    const ctx = state.activeCtx;
-    const points = stroke.points;  // Screen coordinates
-    const len = points.length;
-
-    if (len < 2) return;
-
-    const tool = CONFIG.tools[stroke.tool];
-    const sizeMult = stroke.sizeMultiplier || 1;
-
-    const prev = points[len - 2];
-    const curr = points[len - 1];
-    const baseWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
-
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = stroke.color;
-    ctx.globalAlpha = tool.opacity;
-    ctx.lineWidth = baseWidth * sizeMult;
-
-    ctx.beginPath();
-    ctx.moveTo(prev.x, prev.y);
-    ctx.lineTo(curr.x, curr.y);
-    ctx.stroke();
+    ctx.globalAlpha = 1;
   }
-
-  /**
-   * v7.5: Draw incremental segment on BACKGROUND canvas (used during zoom)
-   */
-  function drawIncrementalOnBackground(stroke) {
-    const ctx = state.bgCtx;
-    const points = stroke.docPoints;  // Document coordinates
-    const len = points.length;
-
-    if (len < 2) return;
-
-    const tool = CONFIG.tools[stroke.tool];
-    const sizeMult = stroke.sizeMultiplier || 1;
-
-    const prev = points[len - 2];
-    const curr = points[len - 1];
-    const baseWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
-
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = stroke.color;
-    ctx.globalAlpha = tool.opacity;
-    ctx.lineWidth = baseWidth * sizeMult;
-
-    ctx.beginPath();
-    ctx.moveTo(prev.x, prev.y);
-    ctx.lineTo(curr.x, curr.y);
-    ctx.stroke();
-  }
-
-  function drawRulerPreviewOnActive(start, end) {
-    const ctx = state.activeCtx;
-    const tool = CONFIG.tools[state.currentTool];
-
-    ctx.save();
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = state.currentColor;
-    ctx.globalAlpha = tool.opacity;
-    ctx.lineWidth = (tool.minWidth + tool.maxWidth) / 2 * state.sizeMultiplier;
-    ctx.setLineDash([10, 5]);
-
-    ctx.beginPath();
-    ctx.moveTo(start.x, start.y);
-    ctx.lineTo(end.x, end.y);
-    ctx.stroke();
-
-    ctx.restore();
-  }
-
-  // ========== Background Canvas Drawing ==========
 
   function invalidatePathCache() {
     state.pathCache.clear();
@@ -1138,6 +925,10 @@
       }
     }
 
+    // End cap
+    const last = points[points.length - 1];
+    path.lineTo(last.x, last.y);
+
     state.pathCache.set(strokeId, {
       path: path,
       pointCount: points.length
@@ -1146,19 +937,17 @@
     return path;
   }
 
-  function drawFullStrokeOnBackground(stroke) {
-    const ctx = state.bgCtx;
-    const points = stroke.points;
+  function drawFullStroke(stroke) {
+    if (!stroke.bounds) {
+      stroke.bounds = calculateStrokeBounds(stroke);
+    }
 
-    if (points.length < 2) return;
-
-    calculateStrokeBounds(stroke);
     if (!isStrokeVisible(stroke)) return;
 
+    const ctx = state.ctx;
     const tool = CONFIG.tools[stroke.tool];
-
-    const avgPressure = points.reduce((sum, p) => sum + (p.pressure || 0.5), 0) / points.length;
     const sizeMult = stroke.sizeMultiplier || 1;
+    const avgPressure = stroke.points.reduce((a, p) => a + p.pressure, 0) / stroke.points.length;
     const baseWidth = tool.minWidth + (avgPressure * (tool.maxWidth - tool.minWidth));
 
     ctx.lineCap = 'round';
@@ -1169,258 +958,325 @@
 
     const path = getStrokePath(stroke);
     ctx.stroke(path);
+
+    ctx.globalAlpha = 1;
   }
 
-  function redrawBackground() {
-    const ctx = state.bgCtx;
-    const canvas = state.backgroundCanvas;
+  function redrawAllStrokes() {
+    const ctx = state.ctx;
+    ctx.clearRect(0, 0, state.canvas.width / state.dpr, state.canvas.height / state.dpr);
 
     updateViewportBounds();
 
-    ctx.clearRect(0, 0, canvas.width / state.dpr, canvas.height / state.dpr);
-
     for (const stroke of state.strokes) {
-      calculateStrokeBounds(stroke);
-      if (!isStrokeVisible(stroke)) continue;
-      drawFullStrokeOnBackground(stroke);
+      drawFullStroke(stroke);
     }
 
-    if (state.currentTool === 'select') {
-      drawSelectionBoxOnBackground();
+    if (state.currentStroke && state.currentStroke.points.length > 1) {
+      drawCurrentStroke(state.currentStroke);
+    }
+
+    if (state.selectionRect) {
+      drawSelectionBox();
     }
   }
 
-  function drawSelectionPreviewOnBackground(start, end) {
-    const ctx = state.bgCtx;
+  function drawCurrentStroke(stroke) {
+    const ctx = state.ctx;
+    const tool = CONFIG.tools[stroke.tool];
+    const sizeMult = stroke.sizeMultiplier || 1;
+    const points = stroke.points;
 
-    const rect = {
-      x: Math.min(start.x, end.x),
-      y: Math.min(start.y, end.y),
-      w: Math.abs(end.x - start.x),
-      h: Math.abs(end.y - start.y)
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = stroke.color;
+    ctx.globalAlpha = tool.opacity;
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const curr = points[i];
+      const baseWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
+      const velocityMod = curr.velocityFactor || 1;
+      ctx.lineWidth = baseWidth * sizeMult * velocityMod;
+
+      if (i === 1) {
+        ctx.lineTo(curr.x, curr.y);
+      } else {
+        const mid = { x: (prev.x + curr.x) / 2, y: (prev.y + curr.y) / 2 };
+        ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
+      }
+    }
+
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // ========== Ruler ==========
+  function snapToAngle(start, end) {
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const angle = Math.atan2(dy, dx);
+    const snapAngles = [0, Math.PI/6, Math.PI/4, Math.PI/3, Math.PI/2, 2*Math.PI/3, 3*Math.PI/4, 5*Math.PI/6, Math.PI];
+
+    let closest = snapAngles[0];
+    let minDiff = Math.abs(Math.abs(angle) - snapAngles[0]);
+
+    for (const snap of snapAngles) {
+      const diff = Math.abs(Math.abs(angle) - snap);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closest = snap;
+      }
+    }
+
+    const dist = Math.hypot(dx, dy);
+    const snappedAngle = angle >= 0 ? closest : -closest;
+
+    return {
+      x: start.x + Math.cos(snappedAngle) * dist,
+      y: start.y + Math.sin(snappedAngle) * dist,
+      pressure: end.pressure || 0.5
     };
+  }
+
+  function drawRulerPreview(start, end) {
+    const ctx = state.ctx;
+    const tool = CONFIG.tools[state.currentTool];
 
     ctx.save();
-    ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 4]);
-    ctx.globalAlpha = 0.8;
-    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = state.currentColor;
+    ctx.globalAlpha = tool.opacity;
+    ctx.lineWidth = (tool.minWidth + tool.maxWidth) / 2 * state.sizeMultiplier;
+    ctx.setLineDash([10, 5]);
 
-    ctx.fillStyle = 'rgba(0, 122, 255, 0.1)';
-    ctx.setLineDash([]);
-    ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y);
+    ctx.lineTo(end.x, end.y);
+    ctx.stroke();
+
     ctx.restore();
   }
 
-  function drawSelectionBoxOnBackground() {
-    if (!state.selectionRect || state.selectedStrokes.length === 0) return;
+  function createRulerStroke(start, end) {
+    const stroke = {
+      tool: state.currentTool,
+      color: state.currentColor,
+      sizeMultiplier: state.sizeMultiplier,
+      points: [
+        { ...start, pressure: 0.5 },
+        { ...end, pressure: 0.5 }
+      ]
+    };
+    stroke.bounds = calculateStrokeBounds(stroke);
+    state.strokes.push(stroke);
+    invalidatePathCache();
+    redrawAllStrokes();
+    scheduleSave();
+  }
 
-    const ctx = state.bgCtx;
-    const rect = state.selectionRect;
+  // ========== Eraser ==========
+  function eraseAtPoint(point) {
+    const radius = CONFIG.tools.eraser.radius * state.sizeMultiplier;
+    let erased = false;
 
-    ctx.save();
-    ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 4]);
-    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+    state.strokes = state.strokes.filter(stroke => {
+      const hit = stroke.points.some(p =>
+        Math.hypot(p.x - point.x, p.y - point.y) < radius
+      );
+      if (hit) erased = true;
+      return !hit;
+    });
 
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#007AFF';
-    const handleSize = 12;
-
-    const corners = [
-      [rect.x, rect.y],
-      [rect.x + rect.w, rect.y],
-      [rect.x, rect.y + rect.h],
-      [rect.x + rect.w, rect.y + rect.h]
-    ];
-
-    for (const [x, y] of corners) {
-      ctx.fillRect(x - handleSize / 2, y - handleSize / 2, handleSize, handleSize);
+    if (erased) {
+      invalidatePathCache();
+      redrawAllStrokes();
+      scheduleSave();
     }
-
-    ctx.restore();
   }
 
-  // ========== Selection Tool Functions ==========
+  // ========== Selection Tool ==========
   function isInsideRect(point, rect) {
-    return point.x >= rect.x && point.x <= rect.x + rect.w &&
-           point.y >= rect.y && point.y <= rect.y + rect.h;
-  }
-
-  function isStrokeInRect(stroke, rect) {
-    return stroke.points.some(p =>
-      p.x >= rect.x && p.x <= rect.x + rect.w &&
-      p.y >= rect.y && p.y <= rect.y + rect.h
-    );
-  }
-
-  function getStrokeBoundsForSelection(stroke) {
-    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-    for (const p of stroke.points) {
-      minX = Math.min(minX, p.x);
-      minY = Math.min(minY, p.y);
-      maxX = Math.max(maxX, p.x);
-      maxY = Math.max(maxY, p.y);
-    }
-    return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
+    return point.x >= rect.x && point.x <= rect.x + rect.width &&
+           point.y >= rect.y && point.y <= rect.y + rect.height;
   }
 
   function getResizeHandle(point) {
     if (!state.selectionRect) return null;
-    const rect = state.selectionRect;
+
+    const r = state.selectionRect;
     const handleSize = 20;
+    const handles = {
+      'nw': { x: r.x, y: r.y },
+      'ne': { x: r.x + r.width, y: r.y },
+      'sw': { x: r.x, y: r.y + r.height },
+      'se': { x: r.x + r.width, y: r.y + r.height }
+    };
 
-    const corners = [
-      { name: 'nw', x: rect.x, y: rect.y },
-      { name: 'ne', x: rect.x + rect.w, y: rect.y },
-      { name: 'sw', x: rect.x, y: rect.y + rect.h },
-      { name: 'se', x: rect.x + rect.w, y: rect.y + rect.h }
-    ];
-
-    for (const corner of corners) {
-      if (Math.abs(point.x - corner.x) < handleSize &&
-          Math.abs(point.y - corner.y) < handleSize) {
-        return corner.name;
+    for (const [name, pos] of Object.entries(handles)) {
+      if (Math.abs(point.x - pos.x) < handleSize && Math.abs(point.y - pos.y) < handleSize) {
+        return name;
       }
     }
     return null;
   }
 
-  function finalizeSelection(endPoint) {
+  function drawSelectionPreview(start, end) {
+    const ctx = state.ctx;
+    const x = Math.min(start.x, end.x);
+    const y = Math.min(start.y, end.y);
+    const w = Math.abs(end.x - start.x);
+    const h = Math.abs(end.y - start.y);
+
+    ctx.save();
+    ctx.strokeStyle = '#007AFF';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.strokeRect(x, y, w, h);
+    ctx.fillStyle = 'rgba(0, 122, 255, 0.1)';
+    ctx.fillRect(x, y, w, h);
+    ctx.restore();
+  }
+
+  function finalizeSelection(start, end) {
     const rect = {
-      x: Math.min(state.selectionStart.x, endPoint.x),
-      y: Math.min(state.selectionStart.y, endPoint.y),
-      w: Math.abs(endPoint.x - state.selectionStart.x),
-      h: Math.abs(endPoint.y - state.selectionStart.y)
+      x: Math.min(start.x, end.x),
+      y: Math.min(start.y, end.y),
+      width: Math.abs(end.x - start.x),
+      height: Math.abs(end.y - start.y)
     };
 
-    if (rect.w < 10 || rect.h < 10) {
-      state.selectionRect = null;
-      state.selectedStrokes = [];
-      redrawBackground();
+    if (rect.width < 10 || rect.height < 10) {
+      clearSelection();
+      redrawAllStrokes();
       return;
     }
 
-    state.selectedStrokes = state.strokes.filter(s => isStrokeInRect(s, rect));
+    state.selectedStrokes = state.strokes.filter(stroke =>
+      stroke.points.some(p => isInsideRect(p, rect))
+    );
 
     if (state.selectedStrokes.length > 0) {
-      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-      for (const stroke of state.selectedStrokes) {
-        const b = getStrokeBoundsForSelection(stroke);
-        minX = Math.min(minX, b.x);
-        minY = Math.min(minY, b.y);
-        maxX = Math.max(maxX, b.x + b.w);
-        maxY = Math.max(maxY, b.y + b.h);
-      }
-      const padding = 10;
-      state.selectionRect = {
-        x: minX - padding,
-        y: minY - padding,
-        w: (maxX - minX) + padding * 2,
-        h: (maxY - minY) + padding * 2
-      };
+      state.selectionRect = rect;
     } else {
       state.selectionRect = null;
     }
 
-    redrawBackground();
+    redrawAllStrokes();
   }
 
   function moveSelection(point) {
     const dx = point.x - state.dragOffset.x - state.selectionRect.x;
     const dy = point.y - state.dragOffset.y - state.selectionRect.y;
 
+    state.selectionRect.x += dx;
+    state.selectionRect.y += dy;
+
     for (const stroke of state.selectedStrokes) {
-      // Invalidate bounds cache
-      stroke.bounds = null;
       for (const p of stroke.points) {
         p.x += dx;
         p.y += dy;
       }
+      stroke.bounds = calculateStrokeBounds(stroke);
     }
 
-    state.selectionRect.x += dx;
-    state.selectionRect.y += dy;
-
-    redrawBackground();
+    redrawAllStrokes();
   }
 
   function resizeSelection(point) {
-    if (!state.originalBounds || !state.resizeHandle) return;
-
-    const orig = state.originalBounds;
-    let newRect = { ...state.selectionRect };
+    const o = state.originalBounds;
+    const r = state.selectionRect;
+    let scaleX = 1, scaleY = 1;
+    let newX = r.x, newY = r.y;
 
     switch (state.resizeHandle) {
       case 'se':
-        newRect.w = Math.max(20, point.x - orig.x);
-        newRect.h = Math.max(20, point.y - orig.y);
+        r.width = Math.max(20, point.x - r.x);
+        r.height = Math.max(20, point.y - r.y);
         break;
       case 'sw':
-        newRect.x = Math.min(point.x, orig.x + orig.w - 20);
-        newRect.w = orig.x + orig.w - newRect.x;
-        newRect.h = Math.max(20, point.y - orig.y);
+        r.width = Math.max(20, r.x + r.width - point.x);
+        r.height = Math.max(20, point.y - r.y);
+        newX = point.x;
         break;
       case 'ne':
-        newRect.w = Math.max(20, point.x - orig.x);
-        newRect.y = Math.min(point.y, orig.y + orig.h - 20);
-        newRect.h = orig.y + orig.h - newRect.y;
+        r.width = Math.max(20, point.x - r.x);
+        r.height = Math.max(20, r.y + r.height - point.y);
+        newY = point.y;
         break;
       case 'nw':
-        newRect.x = Math.min(point.x, orig.x + orig.w - 20);
-        newRect.y = Math.min(point.y, orig.y + orig.h - 20);
-        newRect.w = orig.x + orig.w - newRect.x;
-        newRect.h = orig.y + orig.h - newRect.y;
+        r.width = Math.max(20, r.x + r.width - point.x);
+        r.height = Math.max(20, r.y + r.height - point.y);
+        newX = point.x;
+        newY = point.y;
         break;
     }
 
-    const scaleX = newRect.w / orig.w;
-    const scaleY = newRect.h / orig.h;
+    scaleX = r.width / o.width;
+    scaleY = r.height / o.height;
+    r.x = newX;
+    r.y = newY;
 
     for (const stroke of state.selectedStrokes) {
-      stroke.bounds = null;  // Invalidate bounds
       for (const p of stroke.points) {
-        const relX = p.x - (orig.x + orig.w / 2);
-        const relY = p.y - (orig.y + orig.h / 2);
-        p.x = (newRect.x + newRect.w / 2) + relX * scaleX;
-        p.y = (newRect.y + newRect.h / 2) + relY * scaleY;
+        p.x = r.x + (p.x - o.x) * scaleX;
+        p.y = r.y + (p.y - o.y) * scaleY;
       }
+      stroke.bounds = calculateStrokeBounds(stroke);
     }
 
-    state.selectionRect = newRect;
-    state.originalBounds = { ...newRect };
-
-    redrawBackground();
+    redrawAllStrokes();
   }
 
-  // ========== Eraser ==========
-  function eraseAtPoint(point) {
-    const radius = CONFIG.tools.eraser.radius;
-    let erased = false;
+  function drawSelectionBox() {
+    const ctx = state.ctx;
+    const r = state.selectionRect;
 
-    state.strokes = state.strokes.filter(stroke => {
-      for (const p of stroke.points) {
-        const dx = p.x - point.x;
-        const dy = p.y - point.y;
-        if (dx * dx + dy * dy < radius * radius) {
-          erased = true;
-          return false;
-        }
-      }
-      return true;
-    });
+    ctx.save();
+    ctx.strokeStyle = '#007AFF';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([]);
+    ctx.strokeRect(r.x, r.y, r.width, r.height);
 
-    if (erased) {
-      invalidatePathCache();
-      redrawBackground();
-      scheduleSave();
+    // Draw resize handles
+    const handleSize = 10;
+    ctx.fillStyle = '#007AFF';
+    const handles = [
+      { x: r.x, y: r.y },
+      { x: r.x + r.width, y: r.y },
+      { x: r.x, y: r.y + r.height },
+      { x: r.x + r.width, y: r.y + r.height }
+    ];
+    for (const h of handles) {
+      ctx.fillRect(h.x - handleSize/2, h.y - handleSize/2, handleSize, handleSize);
     }
+
+    ctx.restore();
   }
 
-  // ========== Persistence ==========
-  let saveTimeout = null;
+  function clearSelection() {
+    state.selectionRect = null;
+    state.selectedStrokes = [];
+    state.isDraggingSelection = false;
+    state.isResizingSelection = false;
+  }
+
+  // ========== Clear All ==========
+  function clearAllStrokes() {
+    if (state.strokes.length === 0) return;
+    pushToUndoStack();
+    state.strokes = [];
+    clearSelection();
+    invalidatePathCache();
+    redrawAllStrokes();
+    scheduleSave();
+  }
+
+  // ========== Storage ==========
+  let saveTimeout;
 
   function scheduleSave() {
     clearTimeout(saveTimeout);
@@ -1429,40 +1285,56 @@
 
   function getStorageKey() {
     const path = window.location.pathname;
-    const filename = path.split('/').pop() || 'index';
-    return 'annotations-v7-' + filename;  // Same key as v7 (compatible)
+    const filename = path.substring(path.lastIndexOf('/') + 1) || 'default';
+    return `annotations-v7-${filename}`;
   }
 
-  async function saveAnnotations() {
-    const key = getStorageKey();
+  function saveAnnotations() {
     try {
       state.strokesByView[state.currentViewId] = state.strokes;
-      await localforage.setItem(key, state.strokesByView);
+
+      const data = {};
+      for (const [viewId, viewStrokes] of Object.entries(state.strokesByView)) {
+        if (viewStrokes.length > 0) {
+          data[viewId] = viewStrokes;
+        }
+      }
+
+      if (typeof localforage !== 'undefined') {
+        localforage.setItem(getStorageKey(), data);
+      } else {
+        localStorage.setItem(getStorageKey(), JSON.stringify(data));
+      }
     } catch (err) {
-      console.error('Failed to save annotations:', err);
+      console.error('Error saving annotations:', err);
     }
   }
 
   async function loadAnnotations() {
-    const key = getStorageKey();
     try {
-      const saved = await localforage.getItem(key);
+      let data;
+      if (typeof localforage !== 'undefined') {
+        data = await localforage.getItem(getStorageKey());
+      } else {
+        const stored = localStorage.getItem(getStorageKey());
+        data = stored ? JSON.parse(stored) : null;
+      }
 
-      if (saved && typeof saved === 'object') {
-        if (Array.isArray(saved)) {
-          state.strokesByView = { [state.currentViewId]: saved };
-          state.strokes = saved;
-        } else {
-          state.strokesByView = saved;
-          state.strokes = saved[state.currentViewId] || [];
+      if (data) {
+        state.strokesByView = data;
+        state.strokes = data[state.currentViewId] || [];
+
+        for (const stroke of state.strokes) {
+          stroke.bounds = calculateStrokeBounds(stroke);
         }
-        redrawBackground();
+
+        redrawAllStrokes();
       }
     } catch (err) {
-      console.error('Failed to load annotations:', err);
+      console.error('Error loading annotations:', err);
     }
   }
 
-  // ========== Start ==========
+  // Start
   init();
 })();
