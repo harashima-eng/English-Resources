@@ -1020,11 +1020,46 @@
   }
 
   /**
-   * v7.4: Draw incremental segment on ACTIVE canvas (FAST - small canvas!)
+   * v7.5: Draw incremental segment - handles both normal and zoomed modes
    */
   function drawIncrementalOnActive(stroke) {
+    // v7.5: When zoomed, draw to background canvas instead
+    if (state.useBackgroundForDrawing) {
+      drawIncrementalOnBackground(stroke);
+      return;
+    }
+
     const ctx = state.activeCtx;
     const points = stroke.points;  // Screen coordinates
+    const len = points.length;
+
+    if (len < 2) return;
+
+    const tool = CONFIG.tools[stroke.tool];
+    const sizeMult = stroke.sizeMultiplier || 1;
+
+    const prev = points[len - 2];
+    const curr = points[len - 1];
+    const baseWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
+
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = stroke.color;
+    ctx.globalAlpha = tool.opacity;
+    ctx.lineWidth = baseWidth * sizeMult;
+
+    ctx.beginPath();
+    ctx.moveTo(prev.x, prev.y);
+    ctx.lineTo(curr.x, curr.y);
+    ctx.stroke();
+  }
+
+  /**
+   * v7.5: Draw incremental segment on BACKGROUND canvas (used during zoom)
+   */
+  function drawIncrementalOnBackground(stroke) {
+    const ctx = state.bgCtx;
+    const points = stroke.docPoints;  // Document coordinates
     const len = points.length;
 
     if (len < 2) return;
