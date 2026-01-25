@@ -1,22 +1,15 @@
 /**
- * Annotation Module v7.4 - Dual-Canvas Architecture
+ * Annotation Module v7.5 - Zoom-Safe + Full Quality
  *
  * ARCHITECTURE:
  * - Background Canvas: position: absolute, full document, stores completed strokes
  * - Active Canvas: position: fixed, viewport-sized, for current stroke only (FAST!)
  *
- * During drawing, you're only touching a ~1024x768px canvas instead of ~1024x32000px.
- * Expected 10-30x performance improvement during active drawing.
- *
- * PERFORMANCE FEATURES (from v7.3):
- * - getCoalescedEvents() for Apple Pencil
- * - Path2D caching for completed strokes
- * - Viewport culling for off-screen strokes
- * - Lower DPR (1.5) for performance
- *
- * FEATURES (from v7.2):
- * - Undo/Redo with 50-step history
- * - Toolbar stays visible during pinch-zoom
+ * v7.5 FIXES:
+ * - FULL DPR: No more pixel quality loss (removed 1.5 cap)
+ * - ZOOM-SAFE: Drawing works correctly during pinch-zoom
+ *   - Uses pageX/pageY for document coordinates (zoom-independent)
+ *   - Active canvas scales with visual viewport
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
