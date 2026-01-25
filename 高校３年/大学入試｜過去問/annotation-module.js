@@ -1,16 +1,15 @@
 /**
- * Annotation Module v7.6 - CLEAN BUILD
+ * Annotation Module v7.7 - FIXED TOUCH HANDLING
  *
  * ARCHITECTURE:
  * - Single canvas, position: absolute (scrolls with document)
  * - All coordinates use pageX/pageY (zoom-independent!)
  * - Smooth quadratic curves for both live and completed strokes
  *
- * PERFORMANCE:
- * - Incremental drawing (only new segment during live drawing)
- * - Path2D caching for completed strokes
- * - Viewport culling (skip off-screen strokes)
- * - getCoalescedEvents for Apple Pencil batching
+ * v7.7 FIXES:
+ * - touch-action: none on canvas when drawing
+ * - preventDefault() in touch handlers to stop scrolling
+ * - Proper Apple Pencil vs finger detection
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
@@ -543,7 +542,9 @@
     const tools = toolbar.querySelector('.ann-tools');
     const toggle = toolbar.querySelector('.ann-toggle');
 
+    // v7.7: Critical - touch-action prevents scrolling during drawing
     state.canvas.style.pointerEvents = state.isDrawMode ? 'auto' : 'none';
+    state.canvas.style.touchAction = state.isDrawMode ? 'none' : 'auto';
     tools.style.display = state.isDrawMode ? 'flex' : 'none';
     toggle.classList.toggle('active', state.isDrawMode);
 
@@ -617,7 +618,11 @@
   }
 
   function handleTouchStart(e) {
-    if (e.touches.length > 1) {
+    // v7.7: Allow pinch-zoom (2+ fingers) but prevent scroll on single touch
+    if (e.touches.length === 1) {
+      e.preventDefault();  // Stop scrolling!
+    } else if (e.touches.length > 1) {
+      // Multi-touch = pinch zoom, cancel current stroke
       if (state.currentStroke) {
         state.currentStroke = null;
         redrawAllStrokes();
@@ -626,7 +631,10 @@
   }
 
   function handleTouchMove(e) {
-    if (e.touches.length > 1 && state.currentStroke) {
+    // v7.7: Allow pinch-zoom but prevent scroll on single touch
+    if (e.touches.length === 1) {
+      e.preventDefault();  // Stop scrolling!
+    } else if (e.touches.length > 1 && state.currentStroke) {
       state.currentStroke = null;
       redrawAllStrokes();
     }
@@ -659,6 +667,9 @@
 
   function handlePointerDown(e) {
     if (isPalmTouch(e)) return;
+
+    // v7.7: Prevent default to stop any scroll behavior
+    e.preventDefault();
 
     const point = getDocumentPoint(e);
 
@@ -726,6 +737,11 @@
 
   function handlePointerMove(e) {
     if (isPalmTouch(e)) return;
+
+    // v7.7: Prevent scrolling when actively drawing
+    if (state.isActivelyDrawing || state.currentStroke) {
+      e.preventDefault();
+    }
 
     const point = getDocumentPoint(e);
 
