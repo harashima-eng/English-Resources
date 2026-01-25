@@ -27,12 +27,12 @@
     colors: ['#1a1a1a', '#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa'],
     palmRejectRadius: 20,
     saveDebounce: 500,
-    minPointDistance: 4,
+    minPointDistance: 3,  // v7.5: Back to 3 for smoother lines
     velocityWeight: 0.3,
     maxVelocity: 1000,
     maxCanvasHeight: 32000,
     maxHistorySize: 50,
-    maxDPR: 1.5,
+    // v7.5: NO DPR cap - full retina quality!
     useCoalescedEvents: true
   };
 
