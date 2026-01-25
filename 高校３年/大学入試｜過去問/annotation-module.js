@@ -324,7 +324,8 @@
 
   function resizeBackgroundCanvas() {
     const canvas = state.backgroundCanvas;
-    state.dpr = Math.min(window.devicePixelRatio || 1, CONFIG.maxDPR);
+    // v7.5: Full DPR - no cap for best quality
+    state.dpr = window.devicePixelRatio || 1;
 
     const docWidth = Math.max(
       document.body.scrollWidth,
