@@ -54,6 +54,8 @@
     rulerStart: null,
     rulerEnabled: false,
     lastPointTime: 0,
+    // v7.5: Zoom handling
+    useBackgroundForDrawing: false,  // When true, draw to bg canvas (during zoom)
     // Undo/Redo
     undoStack: [],
     redoStack: [],
