@@ -64,8 +64,6 @@
     // Performance
     pathCache: new Map(),
     viewportBounds: null,
-    // v7.9: Track last drawn point index for incremental curve drawing
-    lastDrawnPointIndex: 0,
     // Selection tool state
     selectionStart: null,
     selectionRect: null,
