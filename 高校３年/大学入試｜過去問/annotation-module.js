@@ -1,12 +1,14 @@
 /**
- * Annotation Module v7.9 - SMOOTH CURVES + FIXED TOOLBAR
+ * Annotation Module v7.10 - TRULY SMOOTH CURVES
  *
  * ARCHITECTURE:
  * - Single canvas, position: absolute (scrolls with document)
  * - All coordinates use pageX/pageY (zoom-independent!)
  *
- * v7.9 FIXES:
- * - SMOOTH CURVES: Quadratic Bézier through midpoints (no more circle stamps)
+ * v7.10 FIX:
+ * - SMOOTH CURVES: Full redraw per frame (like GoodNotes/Apple Notes)
+ *   - One beginPath() + stroke() = one smooth curve
+ *   - Incremental drawing creates disconnected paths = choppy
  * - FIXED TOOLBAR: No CSS transform scaling (stays clickable during zoom)
  *
  * FEATURES:
