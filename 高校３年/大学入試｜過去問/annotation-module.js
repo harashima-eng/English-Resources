@@ -825,9 +825,10 @@
       }
     }
 
-    // v7.9: Incremental drawing with smooth quadratic curves
+    // v7.10: Full redraw for smooth curves
+    // This is what GoodNotes/Apple Notes do - one path = one smooth curve
     if (pointsAdded > 0) {
-      drawIncrementalCurve(state.currentStroke);
+      redrawAllStrokes();
     }
   }
 
