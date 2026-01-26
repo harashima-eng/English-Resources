@@ -1,17 +1,21 @@
 /**
- * Annotation Module v7.8 - SMOOTH LINES + ZOOM TOOLBAR + PERFORMANCE
+ * Annotation Module v7.9 - SMOOTH CURVES + FIXED TOOLBAR
  *
  * ARCHITECTURE:
  * - Single canvas, position: absolute (scrolls with document)
  * - All coordinates use pageX/pageY (zoom-independent!)
  *
- * v7.8 IMPROVEMENTS:
- * - SMOOTH LINES: Continuous path with circle stamps (no gaps)
- * - ZOOM TOOLBAR: Toolbar scales down during pinch-zoom
- * - PERFORMANCE: RAF batching, reduced context state changes
+ * v7.9 FIXES:
+ * - SMOOTH CURVES: Quadratic Bézier through midpoints (no more circle stamps)
+ * - FIXED TOOLBAR: No CSS transform scaling (stays clickable during zoom)
+ *
+ * FEATURES:
  * - Path2D caching for completed strokes
  * - Viewport culling (skip off-screen strokes)
  * - getCoalescedEvents for Apple Pencil batching
+ * - Velocity-based line width
+ * - Undo/redo (50 steps)
+ * - Per-view annotation storage
  *
  * Optimized for iPad + Apple Pencil with pressure sensitivity
  */
@@ -58,8 +62,8 @@
     // Performance
     pathCache: new Map(),
     viewportBounds: null,
-    rafId: null,           // v7.8: RAF batching
-    lastDrawnIndex: 0,     // v7.8: Track last drawn point for smooth lines
+    // v7.9: Track last drawn point index for incremental curve drawing
+    lastDrawnPointIndex: 0,
     // Selection tool state
     selectionStart: null,
     selectionRect: null,
@@ -112,6 +116,10 @@
   }
 
   // ========== Toolbar Viewport Handler ==========
+  /**
+   * v7.9: Fixed toolbar positioning - NO CSS transform scaling
+   * Toolbar stays at natural size but repositions to follow visual viewport
+   */
   function setupToolbarViewportHandler() {
     if (!window.visualViewport) return;
 
@@ -120,17 +128,15 @@
       if (!toolbar) return;
 
       const vv = window.visualViewport;
-      const scale = vv.scale || 1;
 
-      // v7.8: Scale toolbar inversely to zoom (shrinks when zoomed in)
-      const toolbarScale = Math.max(0.6, 1 / scale);  // Min 60% size
-
+      // v7.9: Just reposition, no scaling
+      // This keeps the toolbar clickable at its natural size
       toolbar.style.position = 'fixed';
       toolbar.style.left = (vv.offsetLeft + 10) + 'px';
+      toolbar.style.top = (vv.offsetTop + vv.height - toolbar.offsetHeight - 10) + 'px';
       toolbar.style.bottom = 'auto';
-      toolbar.style.top = (vv.offsetTop + vv.height - (toolbar.offsetHeight * toolbarScale) - 10) + 'px';
-      toolbar.style.transform = `scale(${toolbarScale})`;
-      toolbar.style.transformOrigin = 'bottom left';
+      // v7.9: Remove any transform that might have been set
+      toolbar.style.transform = 'none';
     }
 
     window.visualViewport.addEventListener('resize', repositionToolbar);
@@ -311,7 +317,7 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        touch-action: none;
+        touch-action: manipulation;
       }
       #annotation-toolbar .ann-toggle {
         width: 44px;
@@ -553,7 +559,7 @@
     const tools = toolbar.querySelector('.ann-tools');
     const toggle = toolbar.querySelector('.ann-toggle');
 
-    // v7.8: touch-action prevents scrolling during drawing
+    // touch-action prevents scrolling during drawing
     state.canvas.style.pointerEvents = state.isDrawMode ? 'auto' : 'none';
     state.canvas.style.touchAction = state.isDrawMode ? 'none' : 'auto';
     tools.style.display = state.isDrawMode ? 'flex' : 'none';
@@ -629,25 +635,26 @@
   }
 
   function handleTouchStart(e) {
-    // v7.8: Prevent scroll on single touch, allow pinch-zoom
+    // Prevent scroll on single touch, allow pinch-zoom
     if (e.touches.length === 1) {
       e.preventDefault();
     } else if (e.touches.length > 1) {
+      // Cancel current stroke on pinch
       if (state.currentStroke) {
         state.currentStroke = null;
-        state.lastDrawnIndex = 0;
+        state.lastDrawnPointIndex = 0;
         redrawAllStrokes();
       }
     }
   }
 
   function handleTouchMove(e) {
-    // v7.8: Prevent scroll on single touch
+    // Prevent scroll on single touch
     if (e.touches.length === 1) {
       e.preventDefault();
     } else if (e.touches.length > 1 && state.currentStroke) {
       state.currentStroke = null;
-      state.lastDrawnIndex = 0;
+      state.lastDrawnPointIndex = 0;
       redrawAllStrokes();
     }
   }
@@ -680,7 +687,7 @@
   function handlePointerDown(e) {
     if (isPalmTouch(e)) return;
 
-    // v7.8: Prevent default to stop scroll
+    // Prevent default to stop scroll
     e.preventDefault();
 
     const point = getDocumentPoint(e);
@@ -736,7 +743,7 @@
     pushToUndoStack();
     state.lastPointTime = performance.now();
     state.isActivelyDrawing = true;
-    state.lastDrawnIndex = 0;  // v7.8: Reset for new stroke
+    state.lastDrawnPointIndex = 0;  // Reset for new stroke
 
     state.currentStroke = {
       tool: state.currentTool,
@@ -751,7 +758,7 @@
   function handlePointerMove(e) {
     if (isPalmTouch(e)) return;
 
-    // v7.8: Prevent scroll while drawing
+    // Prevent scroll while drawing
     if (state.isActivelyDrawing || state.currentStroke) {
       e.preventDefault();
     }
@@ -818,9 +825,9 @@
       }
     }
 
-    // v7.8: Incremental drawing with smooth curves
+    // v7.9: Incremental drawing with smooth quadratic curves
     if (pointsAdded > 0) {
-      drawIncrementalStroke(state.currentStroke, pointsAdded);
+      drawIncrementalCurve(state.currentStroke);
     }
   }
 
@@ -864,16 +871,17 @@
     }
 
     state.currentStroke = null;
+    state.lastDrawnPointIndex = 0;
     redrawAllStrokes();
   }
 
   // ========== Drawing Functions ==========
 
   /**
-   * v7.8: Draw incremental stroke with smooth connections
-   * Uses filled circles at joints to eliminate gaps between segments
+   * v7.9: Draw incremental curve using quadratic Bézier through midpoints
+   * This produces smooth curves without the "sausage" effect of circle stamps
    */
-  function drawIncrementalStroke(stroke, pointsAdded) {
+  function drawIncrementalCurve(stroke) {
     const ctx = state.ctx;
     const points = stroke.points;
     const len = points.length;
@@ -886,36 +894,61 @@
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.strokeStyle = stroke.color;
-    ctx.fillStyle = stroke.color;  // v7.8: For circle stamps
     ctx.globalAlpha = tool.opacity;
 
-    // v7.8: Draw from last drawn index to current
-    const startIdx = Math.max(1, state.lastDrawnIndex);
+    // Calculate average line width for this stroke segment
+    const avgPressure = points.reduce((a, p) => a + p.pressure, 0) / len;
+    const baseWidth = tool.minWidth + (avgPressure * (tool.maxWidth - tool.minWidth));
+    ctx.lineWidth = baseWidth * sizeMult;
 
+    // v7.9: Draw smooth curve from last drawn point to current
+    // We need at least 2 points from where we left off
+    const startIdx = Math.max(1, state.lastDrawnPointIndex);
+
+    if (startIdx >= len) return;
+
+    ctx.beginPath();
+
+    // Move to the starting point
+    if (startIdx === 1) {
+      ctx.moveTo(points[0].x, points[0].y);
+    } else {
+      // Start from the midpoint of the last drawn segment
+      const prevPrev = points[startIdx - 2];
+      const prev = points[startIdx - 1];
+      const startMid = {
+        x: (prevPrev.x + prev.x) / 2,
+        y: (prevPrev.y + prev.y) / 2
+      };
+      ctx.moveTo(startMid.x, startMid.y);
+    }
+
+    // Draw quadratic curves through midpoints
     for (let i = startIdx; i < len; i++) {
       const prev = points[i - 1];
       const curr = points[i];
 
-      const prevWidth = tool.minWidth + (prev.pressure * (tool.maxWidth - tool.minWidth));
-      const currWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
-      const avgWidth = ((prevWidth + currWidth) / 2) * sizeMult;
-
-      ctx.lineWidth = avgWidth;
-
-      // Draw line segment
-      ctx.beginPath();
-      ctx.moveTo(prev.x, prev.y);
-      ctx.lineTo(curr.x, curr.y);
-      ctx.stroke();
-
-      // v7.8: Draw filled circle at current point to cover any gaps
-      ctx.beginPath();
-      ctx.arc(curr.x, curr.y, avgWidth / 2, 0, Math.PI * 2);
-      ctx.fill();
+      if (i === 1) {
+        // First segment: just line to
+        ctx.lineTo(curr.x, curr.y);
+      } else {
+        // Use quadratic curve through midpoint for smoothness
+        const mid = {
+          x: (prev.x + curr.x) / 2,
+          y: (prev.y + curr.y) / 2
+        };
+        ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
+      }
     }
 
-    // v7.8: Track last drawn index
-    state.lastDrawnIndex = len - 1;
+    // Draw line to the last point
+    const last = points[len - 1];
+    ctx.lineTo(last.x, last.y);
+
+    ctx.stroke();
+
+    // Update last drawn index
+    state.lastDrawnPointIndex = len - 1;
 
     ctx.globalAlpha = 1;
   }
@@ -1021,15 +1054,17 @@
     ctx.strokeStyle = stroke.color;
     ctx.globalAlpha = tool.opacity;
 
+    // Calculate average width
+    const avgPressure = points.reduce((a, p) => a + p.pressure, 0) / points.length;
+    const baseWidth = tool.minWidth + (avgPressure * (tool.maxWidth - tool.minWidth));
+    ctx.lineWidth = baseWidth * sizeMult;
+
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
 
     for (let i = 1; i < points.length; i++) {
       const prev = points[i - 1];
       const curr = points[i];
-      const baseWidth = tool.minWidth + (curr.pressure * (tool.maxWidth - tool.minWidth));
-      const velocityMod = curr.velocityFactor || 1;
-      ctx.lineWidth = baseWidth * sizeMult * velocityMod;
 
       if (i === 1) {
         ctx.lineTo(curr.x, curr.y);
@@ -1038,6 +1073,10 @@
         ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
       }
     }
+
+    // End cap
+    const last = points[points.length - 1];
+    ctx.lineTo(last.x, last.y);
 
     ctx.stroke();
     ctx.globalAlpha = 1;
