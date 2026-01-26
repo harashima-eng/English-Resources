@@ -642,7 +642,6 @@
       // Cancel current stroke on pinch
       if (state.currentStroke) {
         state.currentStroke = null;
-        state.lastDrawnPointIndex = 0;
         redrawAllStrokes();
       }
     }
@@ -654,7 +653,6 @@
       e.preventDefault();
     } else if (e.touches.length > 1 && state.currentStroke) {
       state.currentStroke = null;
-      state.lastDrawnPointIndex = 0;
       redrawAllStrokes();
     }
   }
@@ -743,7 +741,6 @@
     pushToUndoStack();
     state.lastPointTime = performance.now();
     state.isActivelyDrawing = true;
-    state.lastDrawnPointIndex = 0;  // Reset for new stroke
 
     state.currentStroke = {
       tool: state.currentTool,
@@ -872,7 +869,6 @@
     }
 
     state.currentStroke = null;
-    state.lastDrawnPointIndex = 0;
     redrawAllStrokes();
   }
 
