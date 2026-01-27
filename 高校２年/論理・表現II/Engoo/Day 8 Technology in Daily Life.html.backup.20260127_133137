@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Day 8: Technology in Daily Life</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+
+        :root{
+            --bg:#F8FAFA;
+            --card:#FFFFFF;
+            --card2:#F0F5F5;
+            --t1:#1A2E2E;
+            --t2:#4A6363;
+            --t3:#7A9494;
+            --border:#D1DEDE;
+            --shadow:0 1px 3px rgba(13,148,136,0.1);
+            --teal:#0D9488;
+            --teal-bg:#CCFBF1;
+            --coral:#E07A5F;
+            --coral-bg:#FEF0EC;
+            --green:#059669;
+            --green-bg:#D1FAE5;
+            --purple:#7C3AED;
+            --purple-bg:#EDE9FE;
+            --red:#DC2626;
+            --red-bg:#FEE2E2;
+            --orange:#EA580C;
+            --orange-bg:#FFF7ED;
+        }
+
+        .dark{
+            --bg:#0F1A1A;
+            --card:#1A2828;
+            --card2:#243333;
+            --t1:#E8F0F0;
+            --t2:#A8C0C0;
+            --t3:#6A8888;
+            --border:#2D4040;
+            --shadow:0 1px 3px rgba(0,0,0,0.3);
+            --teal:#2DD4BF;
+            --teal-bg:rgba(13,148,136,0.15);
+            --coral:#F4A68E;
+            --coral-bg:rgba(224,122,95,0.15);
+            --green:#34D399;
+            --green-bg:rgba(5,150,105,0.15);
+            --purple:#A78BFA;
+            --purple-bg:rgba(124,58,237,0.15);
+            --red:#F87171;
+            --red-bg:rgba(220,38,38,0.15);
+            --orange:#FB923C;
+            --orange-bg:rgba(234,88,12,0.15);
+        }
+
+        html{
+            scroll-behavior:smooth;
+            -webkit-text-size-adjust:100%;
+        }
+
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+            font-size:16px;
+            line-height:1.6;
+            background:var(--bg);
+            color:var(--t1);
+            padding:16px;
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+        }
+
+        .hdr{
+            max-width:900px;
+            margin:0 auto 20px;
+            background:var(--card);
+            border-radius:16px;
+            padding:20px;
+            border:1px solid var(--border);
+            box-shadow:var(--shadow);
+            contain:layout style;
+        }
+
+        .hdr-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:12px;
+            flex-wrap:wrap;
+            margin-bottom:16px;
+        }
+
+        .hdr h1{
+            font-size:26px;
+            font-weight:700;
+            letter-spacing:-0.3px;
+            color:var(--teal);
+        }
+
+        .hdr-sub{
+            font-size:14px;
+            color:var(--t2);
+            margin-top:4px;
+        }
+
+        .btns{
+            display:flex;
+            gap:8px;
+            flex-shrink:0;
+        }
+
+        .btn{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:8px 14px;
+            border-radius:20px;
+            border:none;
+            font-size:14px;
+            font-weight:600;
+            cursor:pointer;
+            transition:opacity .2s,transform .2s;
+            -webkit-tap-highlight-color:transparent;
+        }
+
+        .btn:active{opacity:.7;transform:scale(0.97)}
+        .btn-dark{background:var(--t1);color:var(--card)}
+        .btn-red{background:var(--red-bg);color:var(--red)}
+
+        .info{
+            background:var(--teal-bg);
+            border-radius:12px;
+            padding:14px;
+            font-size:14px;
+            line-height:1.6;
+        }
+
+        .info b{color:var(--teal)}
+
+        .deadline{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            margin-top:10px;
+            padding:6px 12px;
+            background:var(--red-bg);
+            color:var(--red);
+            border-radius:14px;
+            font-size:13px;
+            font-weight:600;
+        }
+
+        .note{
+            max-width:900px;
+            margin:0 auto 16px;
+            font-size:13px;
+            color:var(--t2);
+        }
+
+        .cards{
+            max-width:900px;
+            margin:0 auto;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .c{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:14px;
+            box-shadow:var(--shadow);
+            overflow:hidden;
+            contain:layout style;
+        }
+
+        .c-h{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:14px 16px;
+            cursor:pointer;
+            -webkit-tap-highlight-color:transparent;
+            user-select:none;
+        }
+
+        .c-h:hover{background:var(--card2)}
+
+        .badge{
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:14px;
+            font-weight:700;
+            flex-shrink:0;
+            background:var(--teal-bg);
+            color:var(--teal);
+        }
+
+        .badge.st{background:var(--green-bg);color:var(--green)}
+        .badge.sm{background:var(--purple-bg);color:var(--purple)}
+        .badge.hp{background:var(--orange-bg);color:var(--orange)}
+
+        .c-info{flex:1;min-width:0}
+        .c-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--teal)}
+        .c-ttl{font-size:15px;font-weight:600;margin-top:2px}
+        .c-jp{font-size:12px;color:var(--t2);margin-top:2px}
+
+        .pill{
+            display:inline-block;
+            padding:2px 8px;
+            border-radius:10px;
+            font-size:10px;
+            font-weight:600;
+            margin-top:6px;
+            background:var(--teal-bg);
+            color:var(--teal);
+        }
+
+        .chv{
+            font-size:14px;
+            color:var(--t3);
+            transition:transform .25s ease;
+            flex-shrink:0;
+        }
+
+        .c.open .chv{transform:rotate(90deg)}
+
+        .c-b{
+            display:grid;
+            grid-template-rows:0fr;
+            transition:grid-template-rows .3s ease;
+        }
+
+        .c.open .c-b{grid-template-rows:1fr}
+
+        .c-b-inner{
+            overflow:hidden;
+        }
+
+        .c-content{
+            padding:0 16px 16px;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .goal{
+            background:var(--teal-bg);
+            border-radius:10px;
+            padding:10px 12px;
+            font-size:13px;
+        }
+
+        .step{
+            background:var(--card2);
+            border-radius:10px;
+            padding:12px 14px;
+        }
+
+        .step-h{
+            font-size:11px;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:.05em;
+            color:var(--teal);
+            margin-bottom:8px;
+        }
+
+        .en{font-size:14px;font-weight:500;margin-bottom:2px}
+        .jp{font-size:12px;color:var(--t2)}
+        .sm{font-size:11px;color:var(--t3);margin-bottom:6px}
+
+        .ls{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:8px;
+            list-style:none;
+        }
+
+        .ls li{
+            background:var(--card);
+            border-radius:8px;
+            padding:10px 12px;
+            border:1px solid var(--border);
+        }
+
+        .voc{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:8px;
+        }
+
+        .voc-i{
+            background:var(--card);
+            border-radius:8px;
+            padding:8px 10px;
+            border:1px solid var(--border);
+        }
+
+        .voc-en{font-size:12px;font-weight:600}
+        .voc-jp{font-size:11px;color:var(--t2)}
+
+        .pat{
+            margin-top:10px;
+            padding:10px 12px;
+            background:var(--purple-bg);
+            border-radius:8px;
+            font-size:12px;
+        }
+
+        .pat code{
+            font-family:ui-monospace,monospace;
+            background:rgba(0,0,0,.05);
+            padding:1px 4px;
+            border-radius:3px;
+            font-size:11px;
+        }
+
+        .dark .pat code{background:rgba(255,255,255,.1)}
+
+        .tpl{
+            background:var(--card2);
+            border-radius:10px;
+            padding:14px;
+            font-size:13px;
+            line-height:1.9;
+        }
+
+        .blank{
+            display:inline-block;
+            min-width:80px;
+            border-bottom:2px solid var(--purple);
+            color:var(--purple);
+            font-style:italic;
+            text-align:center;
+            padding:0 2px;
+        }
+
+        .chk{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:8px;
+        }
+
+        .chk-i{
+            display:flex;
+            align-items:flex-start;
+            gap:8px;
+            background:var(--card);
+            border-radius:8px;
+            padding:10px 12px;
+            font-size:12px;
+            border:1px solid var(--border);
+        }
+
+        .chk-ic{
+            width:18px;
+            height:18px;
+            border-radius:50%;
+            background:var(--green);
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:10px;
+            flex-shrink:0;
+        }
+
+        .ftr{
+            max-width:900px;
+            margin:24px auto 0;
+            text-align:center;
+            font-size:12px;
+            color:var(--t2);
+            padding-top:16px;
+            border-top:1px solid var(--border);
+        }
+
+        .star{
+            display:inline-block;
+            color:var(--coral);
+            margin-left:4px;
+        }
+
+        @media(max-width:600px){
+            .ls,.voc,.chk{grid-template-columns:1fr}
+            .hdr h1{font-size:22px}
+            .btns{width:100%}
+            .btn{flex:1;justify-content:center}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            *{transition:none!important}
+        }
+    </style>
+</head>
+<body>
+
+<header class="hdr">
+    <div class="hdr-top">
+        <div>
+            <h1>Day 8: Technology in Daily Life</h1>
+            <p class="hdr-sub">日常生活におけるテクノロジーについて話す7つの会話フロー</p>
+        </div>
+        <div class="btns">
+            <button class="btn btn-red" id="closeAll">&#10005; Close All</button>
+            <button class="btn btn-dark" id="theme">&#127769; Dark</button>
+        </div>
+    </div>
+    <div class="info">
+        &#127891; <b>今日のゴール:</b> チューターに質問して、日常生活でのテクノロジーの使い方について情報を集める。その後、約100語のサマリーを書く。
+        <div class="deadline">&#9200; 締切: 今日 21:00</div>
+    </div>
+</header>
+
+<p class="note">&#128269; カードをタップして展開 → STEP 1〜5 の流れで会話してみよう。</p>
+
+<main class="cards">
+
+    <!-- START -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge st">&#9654;</div>
+            <div class="c-info">
+                <div class="c-lbl">CONVERSATION START</div>
+                <div class="c-ttl">会話を始める</div>
+                <div class="c-jp">まず挨拶して、今日のトピックを伝えよう</div>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：挨拶して、今日聞きたいことを伝える</div>
+            <div class="step">
+                <div class="step-h">&#128587; Say to your tutor</div>
+                <ul class="ls">
+                    <li><div class="en">"Hi! Today I'd like to ask you about technology in your daily life."</div><div class="jp">こんにちは！今日はあなたの日常生活におけるテクノロジーについて聞きたいです。</div></li>
+                    <li><div class="en">"Can I ask you some questions about the technology you use every day?"</div><div class="jp">毎日使っているテクノロジーについていくつか質問してもいいですか？</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q1 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q1</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT DAILY TECH</div>
+                <div class="c-ttl">What kinds of technology do you use every day?</div>
+                <div class="c-jp">毎日どんな種類のテクノロジーを使いますか？</div>
+                <span class="pill">Daily Tech</span>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：チューターが日常的に使うテクノロジーを聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"What kinds of technology do you use every day?"</div>
+                <div class="jp">毎日どんな種類のテクノロジーを使いますか？</div>
+                <p class="sm" style="margin-top:8px">他の聞き方：</p>
+                <ul class="ls">
+                    <li><div class="en">"What devices or gadgets do you use on a daily basis?"</div><div class="jp">日常的にどんな機器やガジェットを使いますか？</div></li>
+                    <li><div class="en">"Which tech products are part of your everyday routine?"</div><div class="jp">あなたの日常のルーティンにはどんなテクノロジー製品が含まれていますか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"I use my smartphone, laptop, and smartwatch every day."</div><div class="jp">毎日スマートフォン、ノートパソコン、スマートウォッチを使っています。</div></li>
+                    <li><div class="en">"Mostly my phone and tablet. I also use smart home devices."</div><div class="jp">主に携帯とタブレットです。スマートホーム機器も使っています。</div></li>
+                    <li><div class="en">"I rely on my computer for work, and my phone for communication."</div><div class="jp">仕事ではコンピューターに頼っていて、連絡には携帯を使います。</div></li>
+                    <li><div class="en">"I use many things - phone, earbuds, fitness tracker, robot vacuum."</div><div class="jp">たくさんのものを使います。携帯、イヤホン、フィットネストラッカー、ロボット掃除機まで。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <p class="sm">どれか一つでOK。短くていい。</p>
+                <ul class="ls">
+                    <li><div class="en">"I see. That's a lot of technology!"</div><div class="jp">なるほど。たくさんのテクノロジーを使っていますね！</div></li>
+                    <li><div class="en">"That's interesting. I use similar things too."</div><div class="jp">面白いですね。私も似たようなものを使っています。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, most high school students use smartphones and tablets. I use my phone to study English and watch videos."</div>
+                <div class="jp">日本では、ほとんどの高校生がスマートフォンとタブレットを使っています。私は携帯で英語を勉強したり、動画を見たりします。</div>
+                <div class="pat">&#128221; 型：<code>In Japan, most _____ use _____. I use _____ to _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"How does technology make your life easier?"</div>
+                <div class="jp">テクノロジーはどのようにあなたの生活を便利にしていますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128218; Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">smartphone</span><span class="voc-jp">スマートフォン</span></div>
+                    <div class="voc-i"><span class="voc-en">gadget</span><span class="voc-jp">ガジェット</span></div>
+                    <div class="voc-i"><span class="voc-en">device</span><span class="voc-jp">機器</span></div>
+                    <div class="voc-i"><span class="voc-en">daily basis</span><span class="voc-jp">毎日</span></div>
+                    <div class="voc-i"><span class="voc-en">rely on</span><span class="voc-jp">〜に頼る</span></div>
+                    <div class="voc-i"><span class="voc-en">smart home</span><span class="voc-jp">スマートホーム</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q2 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q2</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT BENEFITS</div>
+                <div class="c-ttl">How does technology make your life easier?</div>
+                <div class="c-jp">テクノロジーはどのようにあなたの生活を便利にしていますか？</div>
+                <span class="pill">Benefits</span>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：テクノロジーのメリットを聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"How does technology make your life easier?"</div>
+                <div class="jp">テクノロジーはどのようにあなたの生活を便利にしていますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"Technology saves me a lot of time. I can pay bills online."</div><div class="jp">テクノロジーのおかげで時間が節約できます。オンラインで請求書を払えます。</div></li>
+                    <li><div class="en">"It helps me stay connected with family abroad through video calls."</div><div class="jp">海外の家族とビデオ通話でつながりを保てます。</div></li>
+                    <li><div class="en">"I can learn anything online. I learned cooking from YouTube."</div><div class="jp">オンラインで何でも学べます。YouTubeで料理を学びました。</div></li>
+                    <li><div class="en">"Maps and translation apps are helpful when I travel."</div><div class="jp">旅行するとき、地図アプリと翻訳アプリが役立ちます。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That's really convenient!"</div><div class="jp">それは本当に便利ですね！</div></li>
+                    <li><div class="en">"I hadn't thought about that benefit."</div><div class="jp">そのメリットは考えたことがありませんでした。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, technology helps us a lot too. We use apps to check train schedules and make cashless payments."</div>
+                <div class="jp">日本でもテクノロジーはとても役立っています。電車の時刻確認やキャッシュレス決済にアプリを使います。</div>
+                <div class="pat">&#128221; 型：<code>In Japan, technology helps us _____. We use apps to _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"What problems have you encountered with technology?"</div>
+                <div class="jp">テクノロジーでどんな問題に遭遇したことがありますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128218; Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">save time</span><span class="voc-jp">時間を節約する</span></div>
+                    <div class="voc-i"><span class="voc-en">stay connected</span><span class="voc-jp">つながりを保つ</span></div>
+                    <div class="voc-i"><span class="voc-en">convenient</span><span class="voc-jp">便利な</span></div>
+                    <div class="voc-i"><span class="voc-en">cashless payment</span><span class="voc-jp">キャッシュレス決済</span></div>
+                    <div class="voc-i"><span class="voc-en">online shopping</span><span class="voc-jp">オンラインショッピング</span></div>
+                    <div class="voc-i"><span class="voc-en">improve</span><span class="voc-jp">改善する</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q3 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q3</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT PROBLEMS</div>
+                <div class="c-ttl">What problems have you encountered with technology?</div>
+                <div class="c-jp">テクノロジーでどんな問題に遭遇したことがありますか？</div>
+                <span class="pill">Problems</span>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：テクノロジーの問題点を聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"What problems have you encountered with technology?"</div>
+                <div class="jp">テクノロジーでどんな問題に遭遇したことがありますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"My phone battery dies quickly, especially when I use GPS."</div><div class="jp">携帯のバッテリーがすぐになくなります、特にGPSを使うとき。</div></li>
+                    <li><div class="en">"I've had my personal data leaked before. Now I'm careful about security."</div><div class="jp">以前、個人情報が流出したことがあります。今はセキュリティに気をつけています。</div></li>
+                    <li><div class="en">"Sometimes the internet connection is unstable during meetings."</div><div class="jp">時々インターネット接続が不安定で、会議に支障が出ます。</div></li>
+                    <li><div class="en">"Software updates often cause problems. Apps crash after updates."</div><div class="jp">ソフトウェアの更新がよく問題を起こします。更新後にアプリがクラッシュします。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That sounds frustrating."</div><div class="jp">それはイライラしますね。</div></li>
+                    <li><div class="en">"I've experienced something similar."</div><div class="jp">私も似たようなことを経験しました。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, many students have problems with too much screen time. Some worry about cyberbullying on social media."</div>
+                <div class="jp">日本では、多くの学生が長すぎる画面時間の問題を抱えています。SNSでのネットいじめを心配する人もいます。</div>
+                <div class="pat">&#128221; 型：<code>In Japan, many students have problems with _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"Could you live without your smartphone?"</div>
+                <div class="jp">スマートフォンなしで生活できますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128218; Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">battery dies</span><span class="voc-jp">バッテリーが切れる</span></div>
+                    <div class="voc-i"><span class="voc-en">data leak</span><span class="voc-jp">情報漏洩</span></div>
+                    <div class="voc-i"><span class="voc-en">unstable connection</span><span class="voc-jp">不安定な接続</span></div>
+                    <div class="voc-i"><span class="voc-en">software update</span><span class="voc-jp">ソフトウェア更新</span></div>
+                    <div class="voc-i"><span class="voc-en">screen time</span><span class="voc-jp">画面を見る時間</span></div>
+                    <div class="voc-i"><span class="voc-en">cyberbullying</span><span class="voc-jp">ネットいじめ</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q4 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q4</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT SMARTPHONE<span class="star">&#9733;</span></div>
+                <div class="c-ttl">Could you live without your smartphone? Why or why not?</div>
+                <div class="c-jp">スマートフォンなしで生活できますか？なぜそう思いますか？</div>
+                <span class="pill">Smartphone</span>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：スマートフォンへの依存度を聞き出す（&#9733;サマリーに必須！）</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"Could you live without your smartphone? Why or why not?"</div>
+                <div class="jp">スマートフォンなしで生活できますか？なぜそう思いますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"Honestly, no. I use it constantly for work, navigation, and communication."</div><div class="jp">正直言って、無理です。仕事、ナビゲーション、連絡に常に使っています。</div></li>
+                    <li><div class="en">"Maybe for a few days. But I'd miss music and social media."</div><div class="jp">数日間なら大丈夫かもしれません。でも音楽やSNSが恋しくなります。</div></li>
+                    <li><div class="en">"I think I could. Before smartphones, people lived just fine."</div><div class="jp">できると思います。スマートフォン以前、人々は問題なく生活していました。</div></li>
+                    <li><div class="en">"No way! I check my phone about 100 times a day."</div><div class="jp">絶対無理です！1日に100回くらい携帯をチェックします。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"I understand. Smartphones are really important now."</div><div class="jp">わかります。今やスマートフォンは本当に重要ですよね。</div></li>
+                    <li><div class="en">"That's an interesting way to think about it."</div><div class="jp">面白い考え方ですね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, many teenagers use their smartphones for more than 5 hours a day. I couldn't live without mine because I use it for studying and communication."</div>
+                <div class="jp">日本では、多くの十代の若者が1日5時間以上スマートフォンを使います。私も勉強や連絡に使うので、なしでは生活できないと思います。</div>
+                <div class="pat">&#128221; 型：<code>In Japan, many teenagers _____. I couldn't live without mine because _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"Has technology changed your daily routine?"</div>
+                <div class="jp">テクノロジーはあなたの日常のルーティンを変えましたか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128218; Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">dependent on</span><span class="voc-jp">〜に依存している</span></div>
+                    <div class="voc-i"><span class="voc-en">constantly</span><span class="voc-jp">絶えず</span></div>
+                    <div class="voc-i"><span class="voc-en">keep in touch</span><span class="voc-jp">連絡を取り続ける</span></div>
+                    <div class="voc-i"><span class="voc-en">give up</span><span class="voc-jp">あきらめる</span></div>
+                    <div class="voc-i"><span class="voc-en">extension</span><span class="voc-jp">延長</span></div>
+                    <div class="voc-i"><span class="voc-en">screen addiction</span><span class="voc-jp">スマホ依存</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q5 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q5</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT ROUTINE</div>
+                <div class="c-ttl">Has technology changed your daily routine?</div>
+                <div class="c-jp">テクノロジーはあなたの日常のルーティンを変えましたか？</div>
+                <span class="pill">Routine</span>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：テクノロジーによる生活の変化を聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"Has technology changed your daily routine?"</div>
+                <div class="jp">テクノロジーはあなたの日常のルーティンを変えましたか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"Definitely. I wake up to my phone alarm and check messages immediately."</div><div class="jp">間違いなく変わりました。携帯のアラームで起きて、すぐにメッセージをチェックします。</div></li>
+                    <li><div class="en">"Yes. I used to read newspapers, but now I get news from apps."</div><div class="jp">はい。以前は新聞を読んでいましたが、今はアプリからニュースを得ています。</div></li>
+                    <li><div class="en">"It has made me more productive. I manage my schedule efficiently."</div><div class="jp">より生産的になりました。スケジュールを効率的に管理できます。</div></li>
+                    <li><div class="en">"Unfortunately, yes. I stay up late looking at my phone."</div><div class="jp">残念ながら、はい。携帯を見て夜更かしします。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That's a big change from before."</div><div class="jp">それは以前から大きく変わりましたね。</div></li>
+                    <li><div class="en">"I think many people have the same experience."</div><div class="jp">多くの人が同じ経験をしていると思います。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, technology has changed how students study. We use online dictionaries instead of paper ones. I set reminders on my phone for homework."</div>
+                <div class="jp">日本では、テクノロジーが学生の勉強方法を変えました。紙の辞書の代わりにオンライン辞書を使います。私も宿題のリマインダーを携帯に設定しています。</div>
+                <div class="pat">&#128221; 型：<code>In Japan, technology has changed _____. We use _____ instead of _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"What app or device is most important to you?"</div>
+                <div class="jp">あなたにとって最も重要なアプリまたはデバイスは何ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128218; Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">daily routine</span><span class="voc-jp">日常のルーティン</span></div>
+                    <div class="voc-i"><span class="voc-en">productive</span><span class="voc-jp">生産的な</span></div>
+                    <div class="voc-i"><span class="voc-en">efficiently</span><span class="voc-jp">効率的に</span></div>
+                    <div class="voc-i"><span class="voc-en">stay up late</span><span class="voc-jp">夜更かしする</span></div>
+                    <div class="voc-i"><span class="voc-en">reminder</span><span class="voc-jp">リマインダー</span></div>
+                    <div class="voc-i"><span class="voc-en">habit</span><span class="voc-jp">習慣</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q6 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q6</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT IMPORTANCE</div>
+                <div class="c-ttl">What app or device is most important to you?</div>
+                <div class="c-jp">あなたにとって最も重要なアプリまたはデバイスは何ですか？</div>
+                <span class="pill">Important</span>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：最も大切なテクノロジーを聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"What app or device is most important to you?"</div>
+                <div class="jp">あなたにとって最も重要なアプリまたはデバイスは何ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"My calendar app. It keeps my whole life organized."</div><div class="jp">カレンダーアプリです。生活全体を整理してくれます。</div></li>
+                    <li><div class="en">"Probably my laptop. I need it for work, entertainment, and communication."</div><div class="jp">おそらくノートパソコンです。仕事、娯楽、コミュニケーション全部に必要です。</div></li>
+                    <li><div class="en">"My music streaming app. I listen while working and exercising."</div><div class="jp">音楽ストリーミングアプリです。仕事中や運動中に聴きます。</div></li>
+                    <li><div class="en">"A messaging app like LINE. It's how I stay connected with everyone."</div><div class="jp">LINEのようなメッセージアプリです。それでみんなとつながっています。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"I can understand why that's important to you."</div><div class="jp">なぜそれがあなたにとって大切なのかわかります。</div></li>
+                    <li><div class="en">"That's a good choice. I feel the same way."</div><div class="jp">いい選択ですね。私も同じように感じます。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, LINE is the most popular messaging app. For me, my English learning app is very important because I use it every day."</div>
+                <div class="jp">日本では、LINEが最も人気のあるメッセージアプリです。私にとっては、毎日使う英語学習アプリがとても大切です。</div>
+                <div class="pat">&#128221; 型：<code>In Japan, _____ is the most popular _____. For me, _____ is very important because _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — ASK AGAIN</div>
+                <div class="en">"Do you think people depend too much on technology?"</div>
+                <div class="jp">人々はテクノロジーに頼りすぎていると思いますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128218; Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">app</span><span class="voc-jp">アプリ</span></div>
+                    <div class="voc-i"><span class="voc-en">streaming service</span><span class="voc-jp">ストリーミングサービス</span></div>
+                    <div class="voc-i"><span class="voc-en">organized</span><span class="voc-jp">整理された</span></div>
+                    <div class="voc-i"><span class="voc-en">essential</span><span class="voc-jp">必要不可欠な</span></div>
+                    <div class="voc-i"><span class="voc-en">messaging app</span><span class="voc-jp">メッセージアプリ</span></div>
+                    <div class="voc-i"><span class="voc-en">value</span><span class="voc-jp">大切にする</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q7 -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge">Q7</div>
+            <div class="c-info">
+                <div class="c-lbl">ASK ABOUT OPINION<span class="star">&#9733;</span></div>
+                <div class="c-ttl">Do you think people depend too much on technology?</div>
+                <div class="c-jp">人々はテクノロジーに頼りすぎていると思いますか？</div>
+                <span class="pill">Opinion</span>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">&#127919; ゴール：テクノロジー依存についての意見を聞く（&#9733;サマリーに必須！）</div>
+            <div class="step">
+                <div class="step-h">Step 1 — ASK</div>
+                <div class="en">"Do you think people depend too much on technology?"</div>
+                <div class="jp">人々はテクノロジーに頼りすぎていると思いますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — LISTEN</div>
+                <ul class="ls">
+                    <li><div class="en">"Yes, I think so. Many people can't do simple things like reading a map without their phones."</div><div class="jp">はい、そう思います。携帯なしでは地図を読むような簡単なことができない人が多いです。</div></li>
+                    <li><div class="en">"To some extent. But technology also solves many problems, so it's a balance."</div><div class="jp">ある程度はそうです。でもテクノロジーは問題も解決するので、バランスの問題です。</div></li>
+                    <li><div class="en">"Not really. Technology is a tool. It depends on how we use it."</div><div class="jp">そうは思いません。テクノロジーは道具です。どう使うかによります。</div></li>
+                    <li><div class="en">"Definitely. I see people walking while staring at their phones. It's dangerous."</div><div class="jp">間違いなくそうです。携帯を見ながら歩く人を見かけます。危険です。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — REACT</div>
+                <ul class="ls">
+                    <li><div class="en">"That's a good point. I agree."</div><div class="jp">いい指摘ですね。同意します。</div></li>
+                    <li><div class="en">"I see your perspective. It's a complicated issue."</div><div class="jp">あなたの視点がわかります。複雑な問題ですね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — ADD</div>
+                <div class="en">"In Japan, some people think we rely too much on technology. Many young people can't write kanji by hand anymore. But technology also helps elderly people live independently."</div>
+                <div class="jp">日本では、テクノロジーに頼りすぎていると思う人もいます。手書きで漢字が書けない若者が多いです。でも、テクノロジーは高齢者が自立して生活するのも助けています。</div>
+                <div class="pat">&#128221; 型：<code>In Japan, some people think _____. But technology also _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128218; Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">depend on</span><span class="voc-jp">〜に頼る</span></div>
+                    <div class="voc-i"><span class="voc-en">over-dependence</span><span class="voc-jp">過度の依存</span></div>
+                    <div class="voc-i"><span class="voc-en">antisocial</span><span class="voc-jp">反社会的な</span></div>
+                    <div class="voc-i"><span class="voc-en">balance</span><span class="voc-jp">バランス</span></div>
+                    <div class="voc-i"><span class="voc-en">independently</span><span class="voc-jp">独立して</span></div>
+                    <div class="voc-i"><span class="voc-en">perspective</span><span class="voc-jp">視点</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- END -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge st">&#10003;</div>
+            <div class="c-info">
+                <div class="c-lbl">CONVERSATION END</div>
+                <div class="c-ttl">会話を終える</div>
+                <div class="c-jp">お礼を言って会話を終わろう</div>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">&#128591; Thank your tutor</div>
+                <ul class="ls">
+                    <li><div class="en">"Thank you so much! This was a very interesting conversation."</div><div class="jp">ありがとうございました！とても興味深い会話でした。</div></li>
+                    <li><div class="en">"I learned a lot about technology from you. Thank you!"</div><div class="jp">テクノロジーについてたくさん学びました。ありがとう！</div></li>
+                    <li><div class="en">"This will help me write my summary. Thanks!"</div><div class="jp">これでサマリーが書けます。ありがとう！</div></li>
+                    <li><div class="en">"Have a great day!"</div><div class="jp">良い一日を！</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge sm">&#9997;</div>
+            <div class="c-info">
+                <div class="c-lbl">HOMEWORK</div>
+                <div class="c-ttl">サマリーを書く（約100語）</div>
+                <div class="c-jp">会話で得た情報をまとめよう</div>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">&#9989; Requirements</div>
+                <div class="chk">
+                    <div class="chk-i"><span class="chk-ic">1</span><span><b>Tutor info + devices used</b>：チューターの名前と使用デバイス</span></div>
+                    <div class="chk-i"><span class="chk-ic">2</span><span><b>Benefits + Problems</b>：テクノロジーのメリットと問題点</span></div>
+                    <div class="chk-i"><span class="chk-ic">3</span><span><b>Most important + Opinion</b>：最も重要なもの＋依存についての意見</span></div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128228; 提出の流れ</div>
+                <div class="chk">
+                    <div class="chk-i"><span class="chk-ic">&#9312;</span><span>「手書き採点アシスタント」に提出</span></div>
+                    <div class="chk-i"><span class="chk-ic">&#9313;</span><span>フィードバックに基づいて修正</span></div>
+                    <div class="chk-i"><span class="chk-ic">&#9314;</span><span>Loilonoteに2つ提出（修正前・後）</span></div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-h">&#128221; Template</div>
+                <div class="tpl">The tutor, <span class="blank">[Name]</span>, told me about technology in their daily life. They use <span class="blank">[devices]</span> every day. Technology makes their life easier because <span class="blank">[benefits]</span>. However, they have also had problems such as <span class="blank">[problems]</span>. The most important app/device for them is <span class="blank">[app/device]</span> because <span class="blank">[reason]</span>. They think people <span class="blank">[do/don't]</span> depend too much on technology because <span class="blank">[opinion]</span>.</div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- HELP -->
+    <section class="c">
+        <div class="c-h">
+            <div class="badge hp">?</div>
+            <div class="c-info">
+                <div class="c-lbl">HELP</div>
+                <div class="c-ttl">聞き取れなかったとき</div>
+                <div class="c-jp">困ったときに使えるフレーズ</div>
+            </div>
+            <div class="chv">&#9654;</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">&#129300; When you don't understand</div>
+                <ul class="ls">
+                    <li><div class="en">"Could you say that again?"</div><div class="jp">もう一度言ってもらえますか？</div></li>
+                    <li><div class="en">"Could you speak more slowly?"</div><div class="jp">もう少しゆっくり話してもらえますか？</div></li>
+                    <li><div class="en">"What does [word] mean?"</div><div class="jp">[word]はどういう意味ですか？</div></li>
+                    <li><div class="en">"So you mean...?"</div><div class="jp">つまり...ということですか？</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+</main>
+
+<footer class="ftr">&#128066; Teacher tip: 「STEP 1＋STEP 3＋STEP 4だけでも十分」と伝えると、苦手な生徒も会話に入りやすくなります。</footer>
+
+<script>
+(function(){
+    'use strict';
+
+    var body, themeBtn, closeBtn, cards;
+
+    try {
+        body = document.body;
+        themeBtn = document.getElementById('theme');
+        closeBtn = document.getElementById('closeAll');
+        cards = document.querySelectorAll('.c');
+    } catch(e) {
+        console.error('DOM init failed:', e);
+        return;
+    }
+
+    function setTheme(dark) {
+        try {
+            body.classList.toggle('dark', dark);
+            themeBtn.textContent = dark ? '\u2600\uFE0F Light' : '\uD83C\uDF19 Dark';
+            localStorage.setItem('d8', dark ? '1' : '0');
+        } catch(e) {}
+    }
+
+    try {
+        if (localStorage.getItem('d8') === '1') setTheme(true);
+    } catch(e) {}
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+            setTheme(!body.classList.contains('dark'));
+        }, {passive: true});
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            try {
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i].classList.remove('open');
+                }
+            } catch(e) {}
+        }, {passive: true});
+    }
+
+    document.addEventListener('click', function(e) {
+        try {
+            var header = e.target.closest('.c-h');
+            if (header) {
+                var card = header.closest('.c');
+                if (card) {
+                    card.classList.toggle('open');
+                }
+            }
+        } catch(e) {}
+    }, {passive: true});
+
+})();
+</script>
+</body>
+</html>
