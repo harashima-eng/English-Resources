@@ -19,6 +19,7 @@
 --border:rgba(28,25,23,0.08);--border-visible:rgba(28,25,23,0.12);
 --accent:#0D9488;--accent-light:#f0fdfa;
 --folder-accent:#8B7355;--file-accent:#5A8F65;
+--grade1:#C28A2E;--grade2:#5B7A82;--grade3:#B85450;
 --shadow-sm:0 1px 2px rgba(61,67,64,0.05),0 4px 12px rgba(61,67,64,0.08);
 --shadow:0 2px 4px rgba(61,67,64,0.06),0 8px 24px rgba(61,67,64,0.12);
 --shadow-hover:0 4px 8px rgba(61,67,64,0.08),0 16px 40px rgba(61,67,64,0.16);
@@ -27,19 +28,30 @@
 --duration-fast:200ms;--duration-normal:300ms
 }
 html.dark{
---bg:#141312;--bg-warm:#1e1c1a;--card:rgba(36,34,32,0.95);
+--bg:#0f0e0d;--bg-warm:#1a1816;--card:rgba(36,34,32,0.92);
 --text:#F5F3F0;--text-secondary:#A3A09C;--text-muted:#666666;
 --border:rgba(255,255,255,0.06);--border-visible:rgba(255,255,255,0.10);
 --accent:#5BA8A0;--accent-light:rgba(91,168,160,0.12);
 --folder-accent:#A89070;--file-accent:#6BA876;
---shadow-sm:0 2px 8px rgba(0,0,0,0.35);
+--grade1:#D9A043;--grade2:#7A9AA3;--grade3:#D4807A;
+--shadow-sm:0 2px 8px rgba(0,0,0,0.4);
 --shadow:0 4px 20px rgba(0,0,0,0.5);
 --shadow-hover:0 8px 32px rgba(0,0,0,0.6)
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:0.01ms!important}}
 html{font-size:16px;-webkit-font-smoothing:antialiased}
-body{min-height:100vh;font-family:'Sora','Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+body{min-height:100vh;font-family:'Sora','Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;position:relative}
+.bg-glow{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 0.5s ease}
+html.dark .bg-glow{opacity:1}
+.bg-glow::before{content:'';position:absolute;top:-20%;left:-10%;width:50%;height:60%;background:radial-gradient(ellipse at center,rgba(217,160,67,0.12) 0%,transparent 70%);filter:blur(80px);animation:glowPulse1 8s ease-in-out infinite}
+.bg-glow::after{content:'';position:absolute;top:30%;right:-10%;width:45%;height:50%;background:radial-gradient(ellipse at center,rgba(122,154,163,0.10) 0%,transparent 70%);filter:blur(80px);animation:glowPulse2 10s ease-in-out infinite}
+.bg-glow-accent{position:fixed;bottom:-10%;left:30%;width:40%;height:45%;background:radial-gradient(ellipse at center,rgba(212,128,122,0.08) 0%,transparent 70%);filter:blur(80px);z-index:-1;pointer-events:none;opacity:0;transition:opacity 0.5s ease;animation:glowPulse3 12s ease-in-out infinite}
+html.dark .bg-glow-accent{opacity:1}
+@keyframes glowPulse1{0%,100%{transform:translate(0,0) scale(1);opacity:0.8}50%{transform:translate(5%,10%) scale(1.1);opacity:1}}
+@keyframes glowPulse2{0%,100%{transform:translate(0,0) scale(1);opacity:0.7}50%{transform:translate(-5%,-5%) scale(1.15);opacity:0.9}}
+@keyframes glowPulse3{0%,100%{transform:translate(0,0) scale(1);opacity:0.6}50%{transform:translate(10%,-10%) scale(1.2);opacity:0.8}}
 .header{position:sticky;top:0;z-index:100;padding:16px 24px;background:var(--bg-warm);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+html.dark .header{background:rgba(26,24,22,0.8)}
 .header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:16px}
 .header-icon{width:44px;height:44px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:white;box-shadow:var(--shadow-sm);flex-shrink:0}
 .header-content{flex:1;min-width:0}
@@ -104,6 +116,7 @@ footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);text-
 @media(max-width:600px){.header{padding:12px 16px}main{padding:24px 16px 60px}.hero{margin-bottom:32px}.section{margin-bottom:28px}.grid{gap:12px}.card{padding:14px 16px}.card-icon{width:40px;height:40px}.item{padding:12px 14px}.item-icon{width:32px;height:32px}.header-badge{display:none}}</style>
 </head>
 <body>
+<div class="bg-glow"></div><div class="bg-glow-accent"></div>
 <header class="header">
   <div class="header-inner">
     <div class="header-icon" style="background:linear-gradient(135deg,#5B7A82,#4A6A72)">2</div>
