@@ -904,7 +904,7 @@
     <!-- SUMMARY -->
     <section class="c">
         <div class="c-h">
-            <div class="badge sm">&#9997;</div>
+            <div class="badge smry">&#9997;</div>
             <div class="c-info">
                 <div class="c-lbl">HOMEWORK</div>
                 <div class="c-ttl">サマリーを書く（約100語）</div>
@@ -1019,6 +1019,16 @@
             }
         } catch(e) {}
     }, {passive: true});
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            var header = e.target.closest('.c-h');
+            if (header) {
+                e.preventDefault();
+                header.click();
+            }
+        }
+    });
 
 })();
 </script>
