@@ -48,6 +48,55 @@ Edit files locally → Auto-generates indexes → Pushes to GitHub → Live on w
 
 ---
 
+## Color System (Nordic Palette)
+
+### Grade Colors
+| Grade | Name | Primary | Dark |
+|-------|------|---------|------|
+| 高校１年 | Nordic rust | `#A05020` | `#8A4018` |
+| 高校２年 | Nordic fjord teal | `#7A9BA8` | `#6A8B98` |
+| 高校３年 | Nordic forest | `#337058` | `#2A5F4A` |
+
+### Single Source of Truth
+**ALL colors are controlled by `GRADE_COLORS` dict in the generator script.**
+
+```
+/usr/local/bin/english-resources-generate.py
+    └── GRADE_COLORS = {
+            '高校１年': (gradient, icon, '#A05020', '#8A4018'),
+            '高校２年': (gradient, icon, '#7A9BA8', '#6A8B98'),
+            '高校３年': (gradient, icon, '#337058', '#2A5F4A'),
+        }
+```
+
+### Critical Rule
+**ALL colored icons MUST use inline styles, NOT CSS classes.**
+
+```html
+<!-- CORRECT - inline style from GRADE_COLORS -->
+<div class="section-icon" style="background:linear-gradient(135deg,#7A9BA8,#6A8B98)">📁</div>
+
+<!-- WRONG - CSS class-based color -->
+<div class="section-icon folders">📁</div>
+```
+
+### Colored Elements (must use inline styles)
+- `.header-icon` - page header
+- `.section-icon` - folders/files section headers
+- `.card-icon` - folder cards
+- `.item-icon` - file items
+
+### Color Inheritance
+Grade colors are passed recursively through subfolders:
+```
+process_folder(depth=1) → extracts color from GRADE_COLORS
+    └── generate_folder_index(grade_color, grade_color_dark)
+        └── process_folder(depth=2, same colors)
+            └── ...all subfolders inherit the grade color
+```
+
+---
+
 ## How It Works
 
 ### 1. Auto-Sync (runs on Mac login)
