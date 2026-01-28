@@ -1,0 +1,2893 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>2021 東京理科大学 英語 | 2月3日 Ｂ方式 理工学部</title>
+
+  <!-- Premium Typography: Plus Jakarta Sans + Shippori Mincho -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+    /* ===== TETSUYA'S EDUCATIONAL HTML DESIGN SYSTEM ===== */
+    :root{
+      /* Background & Cards */
+      --bg:#F5F0E6;--bg-warm:#EDE8DE;--card:#FFFFFF;--surface:#fff;--elevated:#fff;
+      /* Text Hierarchy */
+      --text:#1C1917;--text-secondary:#57534E;--text-muted:#787572;
+      /* Legacy aliases */
+      --text2:var(--text-secondary);--text3:var(--text-muted);
+      /* Borders */
+      --border:rgba(28,25,23,.08);--border-visible:rgba(28,25,23,.12);
+      /* Accent */
+      --accent:#E85D3B;
+      /* Semantic colors - Nordic muted tones */
+      --blue:#0D9488;--purple:#5B7A82;--green:#4D7A56;--orange:#9A6E22;--red:#B85450;
+      /* Category Colors (Difficulty Levels) */
+      --cat-basic:#4D7A56;--cat-basic-light:#EDF5EF;
+      --cat-comm:#C28A2E;--cat-comm-light:#FBF6ED;
+      --cat-advanced:#7E5A9E;--cat-advanced-light:#F5F0F8;
+      /* Conjunction Type Colors (Nordic Teal Theme) */
+      --coord:#0D9488;--coord-light:#f0fdfa;
+      --subord:#5B7A82;--subord-light:#f5f7f8;
+      --correl:#7D8B75;--correl-light:#f6f7f5;
+      --adverb:#8B8178;--adverb-light:#f8f7f6;
+      /* Glass effect */
+      --glass:rgba(250,248,245,.85);--blur:8px;
+      /* Nordic Soft Glow Shadows */
+      --shadow-sm:0 1px 2px rgba(61,67,64,.05),0 4px 12px rgba(61,67,64,.08),inset 0 1px 0 rgba(255,255,255,.5);
+      --shadow:0 2px 4px rgba(61,67,64,.06),0 8px 24px rgba(61,67,64,.12),inset 0 1px 0 rgba(255,255,255,.6);
+      --shadow-lg:0 4px 8px rgba(61,67,64,.06),0 16px 48px rgba(61,67,64,.15),inset 0 2px 0 rgba(255,255,255,.7);
+      /* Easing and animation */
+      --ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+      --r:20px;--r-sm:12px;--r-full:100px;
+      /* Fluid typography */
+      --fs-base:clamp(15px,1.1vw,17px);--fs-qtext:clamp(17px,1.3vw,19px);
+      --font:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Noto Sans JP',sans-serif;
+      --font-serif:'Noto Serif JP','Yu Mincho',serif;
+      --anim-stagger:0.08s;
+      --anim-duration:0.5s;
+      --font-scale:1
+    }
+
+    /* ===== FONT SIZE SCALE ===== */
+    [data-font="xs"]{--font-scale:0.85}
+    [data-font="s"]{--font-scale:0.925}
+    [data-font="m"]{--font-scale:1}
+    [data-font="l"]{--font-scale:1.1}
+    [data-font="xl"]{--font-scale:1.2}
+
+    /* ===== DARK MODE ===== */
+    [data-theme="dark"]{
+      /* Background & Cards */
+      --bg:#141312;--bg-warm:#1e1c1a;--card:rgba(36,34,32,.92);--card-solid:#242220;--surface:#242220;--elevated:#2C2A28;
+      /* Text Hierarchy */
+      --text:#F5F3F0;--text-secondary:#A3A09C;--text-muted:#8A8A8A;
+      --text2:var(--text-secondary);--text3:var(--text-muted);
+      /* Borders */
+      --border:rgba(255,255,255,.06);--border-visible:rgba(255,255,255,.10);
+      /* Accent */
+      --accent:#F06A48;
+      /* Semantic colors - Lighter tones for dark mode */
+      --blue:#5BA8A0;--purple:#7A9AA3;--green:#6BA876;--orange:#D9A043;--red:#D4807A;
+      /* Category Colors (Dark) */
+      --cat-basic:#6BA876;--cat-basic-light:rgba(90,143,101,.15);
+      --cat-comm:#D9A043;--cat-comm-light:rgba(194,138,46,.15);
+      --cat-advanced:#9A72B8;--cat-advanced-light:rgba(126,90,158,.15);
+      /* Conjunction Type Colors (Dark) */
+      --coord:#5BA8A0;--coord-light:rgba(91,168,160,.12);
+      --subord:#7A9AA3;--subord-light:rgba(122,154,163,.12);
+      --correl:#95A58D;--correl-light:rgba(149,165,141,.12);
+      --adverb:#A39B93;--adverb-light:rgba(163,155,147,.12);
+      /* Glass effect */
+      --glass:rgba(15,14,13,.85);
+      /* Enhanced dark mode shadows */
+      --shadow-sm:0 2px 8px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.03),inset 0 1px 0 rgba(255,255,255,.05);
+      --shadow:0 4px 20px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.06);
+      --shadow-lg:0 12px 40px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05),inset 0 1px 0 rgba(255,255,255,.08)
+    }
+    [data-theme="dark"] body{background:var(--bg);color:var(--text);background-image:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(91,168,160,.06) 0%,transparent 50%),radial-gradient(ellipse 80% 60% at 20% 100%,rgba(139,129,120,.05) 0%,transparent 40%),radial-gradient(ellipse 60% 50% at 80% 80%,rgba(122,154,163,.04) 0%,transparent 40%),linear-gradient(135deg,#141312 0%,#1a1816 50%,#121110 100%);background-attachment:fixed}
+    [data-theme="dark"] .intro{background:var(--bg-warm)}
+    [data-theme="dark"] .ans-content{background:rgba(90,143,101,.08);border-color:rgba(90,143,101,.2);box-shadow:0 2px 8px rgba(0,0,0,.3),0 0 0 1px rgba(90,143,101,.1)}
+    [data-theme="dark"] .ans-body{background:rgba(90,143,101,.04)}
+    [data-theme="dark"] .q{border:1px solid var(--border-visible);box-shadow:var(--shadow-sm)}
+    [data-theme="dark"] .opt{border:1px solid var(--border-visible);box-shadow:var(--shadow-sm)}
+    [data-theme="dark"] .vocab-notes{background:rgba(13,148,136,.08)}
+    [data-theme="dark"] .btn-primary{background:var(--text);color:var(--bg)}
+    [data-theme="dark"] .btn-primary:hover{background:rgba(255,255,255,.85)}
+    [data-theme="dark"] .btn-secondary{border-color:var(--border-visible);color:var(--text)}
+    [data-theme="dark"] .btn-secondary:hover{background:var(--surface)}
+
+    /* ===== BASE ===== */
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    :fullscreen,:-webkit-full-screen{scroll-behavior:auto}
+    body{font:400 calc(15px * var(--font-scale))/1.6 var(--font);background:var(--bg);color:var(--text);transition:color .4s var(--ease)}
+
+    /* ===== INTRO SECTION ===== */
+    .intro{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(48px,10vh,100px) clamp(16px,4vw,48px);background:var(--bg-warm);position:relative}
+    .intro-label{font-size:clamp(11px,1.2vw,14px);font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:clamp(16px,3vh,32px)}
+    .intro-title{font-family:var(--font-serif);font-size:clamp(40px,8vw,120px);font-weight:400;line-height:1.1;letter-spacing:-.03em;margin-bottom:clamp(12px,2vh,20px);color:var(--text)}
+    .intro-subtitle{font-size:clamp(14px,1.5vw,20px);color:var(--text2);max-width:min(500px,85vw);margin-bottom:clamp(24px,4vh,48px)}
+    .intro-cta{display:flex;gap:clamp(12px,2vw,20px);flex-wrap:wrap;justify-content:center}
+    .btn-primary{padding:clamp(12px,2vw,18px) clamp(24px,3vw,36px);background:var(--text);color:var(--bg);border:none;border-radius:100px;font:600 clamp(13px,1.1vw,16px) var(--font);cursor:pointer;transition:background .3s ease}
+    .btn-primary:hover{background:rgba(0,0,0,.8)}
+    .btn-secondary{padding:clamp(12px,2vw,18px) clamp(24px,3vw,36px);background:transparent;color:var(--text);border:1px solid var(--border);border-radius:100px;font:600 clamp(13px,1.1vw,16px) var(--font);cursor:pointer;transition:background .3s ease,border-color .3s ease}
+    .btn-secondary:hover{background:var(--surface)}
+    .intro-stats{display:flex;gap:clamp(24px,4vw,56px);margin-top:clamp(32px,6vh,72px);flex-wrap:wrap;justify-content:center}
+    .intro-stat{text-align:center;min-width:80px}
+    .intro-stat b{display:block;font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--text);font-family:var(--font-serif)}
+    .intro-stat span{font-size:clamp(9px,1vw,12px);color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+
+    /* ===== LAYOUT - FLUID RESPONSIVE ===== */
+    .wrap{
+      /* Fluid width: 94% on mobile, scales up to 90% on desktop, caps at 1400px */
+      width:clamp(320px, 94%, 1400px);
+      max-width:min(90vw, 1400px);
+      margin:0 auto;
+      /* Fluid padding: smaller on mobile, larger on desktop */
+      padding:clamp(32px, 6vw, 80px) clamp(12px, 3vw, 32px) clamp(60px, 10vw, 120px);
+      transition:padding-top .3s var(--ease)
+    }
+    /* Push content down when font size bar is open */
+    body.font-bar-open .wrap{padding-top:calc(clamp(32px, 6vw, 80px) + 50px)}
+    /* Push content down when question bar is open */
+    body.question-bar-open .wrap{padding-top:calc(clamp(32px, 6vw, 80px) + 50px)}
+    
+    /* Large screens (MacBook 15"+, external monitors) */
+    @media(min-width:1200px){
+      .wrap{width:88%;max-width:1320px}
+    }
+    @media(min-width:1600px){
+      .wrap{width:85%;max-width:1500px}
+    }
+    @media(min-width:1920px){
+      .wrap{width:80%;max-width:1600px}
+    }
+
+    /* ===== NAVIGATION BAR ===== */
+    .nav-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--glass);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border-bottom:1px solid var(--border);padding:clamp(6px,1.2vw,12px) clamp(12px,2vw,24px);display:flex;gap:clamp(6px,1vw,12px);flex-wrap:wrap;justify-content:center;align-items:center;transform:translateY(-100%);transition:transform .3s var(--ease)}
+    .nav-bar.show{transform:translateY(0)}
+    :fullscreen .nav-bar,:-webkit-full-screen .nav-bar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+    @media(prefers-reduced-motion:reduce){.nav-bar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg-primary,var(--bg))}}
+    .nav-seg{display:flex;background:var(--elevated);border-radius:var(--r-sm);padding:3px;border:1px solid var(--border)}
+    .nav-seg button{padding:8px 14px;border:none;background:transparent;font:500 12px var(--font);color:var(--text2);border-radius:7px;cursor:pointer;transition:background .25s var(--ease),color .25s var(--ease)}
+    .nav-seg button.on{background:var(--blue);color:#fff}
+    .nav-seg button:not(.on):hover{background:rgba(255,255,255,.1);color:var(--text)}
+    .nav-label{padding:8px 12px;font:500 12px var(--font);color:var(--text2);opacity:0.5;letter-spacing:0.5px;user-select:none}
+    .nav-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border:none;border-radius:var(--r-sm);font:500 12px var(--font);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease);background:var(--elevated);color:var(--text);border:1px solid var(--border)}
+    .nav-btn:hover{background:var(--surface)}
+    .nav-btn:active{opacity:.8}
+
+    /* ===== FONT SIZE SUB-BAR ===== */
+    .font-subbar{display:none;width:100%;justify-content:center;align-items:center;gap:8px;padding:8px 12px;background:var(--surface);border-top:1px solid var(--border)}
+    .font-subbar.show{display:flex}
+    .font-subbar-label{font:500 12px var(--font);color:var(--text2)}
+    .font-btn{padding:6px 12px;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--elevated);font:600 11px var(--font);color:var(--text2);cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease)}
+    .font-btn:hover{background:var(--surface)}
+    .font-btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    /* ===== QUESTION SUB-BAR ===== */
+    .question-subbar{display:none;width:100%;justify-content:center;align-items:center;gap:8px;padding:8px 12px;background:var(--surface);border-top:1px solid var(--border)}
+    .question-subbar.show{display:flex}
+    .question-btn{padding:8px 14px;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--elevated);font:600 12px var(--font);color:var(--text2);cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease)}
+    .question-btn:hover{background:var(--surface)}
+    .question-btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    /* ===== VIEW SYSTEM ===== */
+    .view{display:none}
+    .view.active{display:block}
+
+    /* ===== SECTION HEADER ===== */
+    .sec-header{display:flex;align-items:center;gap:clamp(10px,1.5vw,18px);padding:clamp(14px,2vw,28px);margin-bottom:clamp(16px,2.5vw,24px);background:var(--surface);border-radius:var(--r);border:1px solid var(--border)}
+    .sec-num{width:clamp(32px,4vw,42px);height:clamp(32px,4vw,42px);background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:var(--r-sm);display:grid;place-items:center;font-weight:700;font-size:clamp(13px,1.2vw,16px)}
+    .sec-title{font-weight:600;font-size:clamp(14px,1.2vw,17px)}
+    .sec-tag{background:rgba(88,86,214,.1);color:var(--purple);padding:clamp(3px,0.5vw,5px) clamp(8px,1vw,12px);border-radius:var(--r-full);font-size:clamp(10px,0.9vw,12px);font-weight:600;margin-left:auto}
+
+    /* ===== PASSAGE TRANSLATIONS ===== */
+    .jp{display:block}
+    .passage-trans-page{background:var(--surface);border-radius:var(--r);margin-bottom:16px;padding:24px;border:1px solid var(--border)}
+    .passage-trans-page h2{font-size:calc(20px * var(--font-scale));font-weight:700;margin-bottom:20px;color:var(--text)}
+    .passage-item{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+    .passage-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .passage-item h3{font-size:calc(16px * var(--font-scale));font-weight:600;color:var(--blue);margin-bottom:12px}
+    .passage-jp{font-size:calc(14px * var(--font-scale));line-height:1.8;color:var(--text2)}
+    .passage-jp p{margin-bottom:12px}
+
+    /* ===== PASSAGE BLOCK ===== */
+    .passage{background:var(--elevated);border-left:3px solid var(--blue);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:clamp(14px,2.5vw,28px);margin-bottom:clamp(16px,2.5vw,24px);font-size:calc(clamp(13px,1.1vw,16px) * var(--font-scale));line-height:1.9}
+    .passage p{margin-bottom:clamp(12px,1.5vw,16px);text-align:justify}
+    .passage p:last-child{margin-bottom:0}
+    .blank{background:rgba(255,149,0,.15);color:var(--orange);padding:2px 8px;border-radius:4px;font-weight:600}
+    .ul{text-decoration:underline;text-decoration-color:var(--purple);text-underline-offset:3px}
+
+    /* ===== VOCABULARY ===== */
+    .vocab-notes{background:rgba(0,122,255,.05);border-radius:var(--r-sm);padding:14px;margin-bottom:20px;font-size:calc(13px * var(--font-scale))}
+    .vocab-notes b{color:var(--blue)}
+    .vocab-box{background:linear-gradient(135deg,rgba(0,122,255,.08),rgba(88,86,214,.08));border-radius:var(--r);padding:16px;margin-bottom:20px;display:none}
+    .vocab-box.show{display:block}
+    .vocab-title{font-weight:600;font-size:calc(14px * var(--font-scale));color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+    .vocab-item{background:var(--surface);border-radius:var(--r-sm);padding:10px 12px;font-size:calc(12px * var(--font-scale));border:1px solid var(--border)}
+    .vocab-en{font-weight:600;color:var(--text);margin-bottom:2px}
+    .vocab-ja{color:var(--text2);font-size:calc(11px * var(--font-scale))}
+
+    /* ===== QUESTION CARDS ===== */
+    .q{background:var(--elevated);border-radius:var(--r);padding:clamp(14px,2.5vw,28px);margin-bottom:clamp(12px,2vw,18px);border:1px solid var(--border);contain:layout style paint}
+    .q:last-child{margin-bottom:0}
+    .q-num{display:inline-block;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;padding:clamp(3px,0.5vw,5px) clamp(10px,1.5vw,16px);border-radius:var(--r-full);font-weight:600;font-size:clamp(11px,1vw,13px);margin-bottom:clamp(10px,1.5vw,16px)}
+    .q-text{font-size:calc(clamp(13px,1.2vw,16px) * var(--font-scale));line-height:1.7;margin-bottom:clamp(12px,1.5vw,16px)}
+    .q-text b{color:var(--purple)}
+
+    /* ===== OPTIONS (Grid Layout for Equal-Width Cards) ===== */
+    .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(6px,1vw,12px);margin-bottom:clamp(12px,1.5vw,16px)}
+    .opts.vertical{grid-template-columns:1fr}
+    .opt{background:var(--surface);border:1px solid rgba(0,0,0,.15);border-radius:var(--r-sm);padding:clamp(10px,1.2vw,14px) clamp(12px,1.5vw,18px);font-size:calc(clamp(12px,1vw,14px) * var(--font-scale));line-height:1.5;box-shadow:0 1px 3px rgba(0,0,0,.05);contain:layout style paint;display:flex;align-items:center}
+    .opt-label{color:var(--blue);font-weight:600;margin-right:clamp(6px,0.8vw,10px)}
+
+    /* ===== TRANSLATION QUESTIONS ===== */
+    .translation-q{background:var(--elevated);border-radius:var(--r);padding:20px;margin-bottom:14px;border-left:3px solid var(--purple)}
+    .translation-q .q-num{background:linear-gradient(135deg,var(--purple),var(--accent))}
+
+    /* ===== BUTTONS ===== */
+    .q-btns{display:flex;gap:8px}
+    .hint-btn,.ans-btn{padding:10px 16px;border:none;border-radius:var(--r-full);font:500 13px var(--font);cursor:pointer;transition:background .2s var(--ease)}
+    .hint-btn:active,.ans-btn:active{opacity:.8}
+    .hint-btn{background:rgba(255,149,0,.1);color:var(--orange);border:1px solid rgba(255,149,0,.2)}
+    .ans-btn{background:var(--green);color:#fff;transition:background .2s var(--ease)}
+    .ans-btn:hover{background:#4A7A55}
+
+    /* ===== EXPAND/COLLAPSE ALL BUTTONS ===== */
+    .bulk-actions{display:flex;gap:8px;margin-bottom:16px;padding:0 4px}
+    .expand-all-btn,.collapse-all-btn{padding:8px 14px;border:1px solid var(--border-visible);border-radius:var(--r-sm);background:var(--elevated);font:500 12px var(--font);color:var(--text2);cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease)}
+    .expand-all-btn:hover,.collapse-all-btn:hover{background:var(--surface);border-color:var(--blue)}
+    .expand-all-btn:active,.collapse-all-btn:active{opacity:.8}
+
+    /* ===== COLLAPSIBLE BOXES (No Animation - GPU Safe) ===== */
+    .hint-box,.ans-box{display:none;margin-top:14px}
+    .hint-box.show,.ans-box.show{display:block}
+
+    /* ===== ANSWER CONTENT ===== */
+    .hint-content{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.15);border-radius:var(--r-sm);padding:14px;font-size:calc(13px * var(--font-scale))}
+    .hint-content b{color:var(--orange)}
+    .ans-content{background:#FBFDFB;border:1px solid rgba(90,143,101,.18);border-radius:var(--r-sm);padding:0;font-size:calc(13px * var(--font-scale));line-height:1.75;overflow:hidden;box-shadow:0 1px 2px rgba(74,122,85,.04),0 4px 12px rgba(74,122,85,.08),0 0 0 1px rgba(90,143,101,.05)}
+    .ans-header{background:linear-gradient(135deg,#5A8F65 0%,#4A7A55 100%);color:#fff;padding:12px 16px;font-weight:600;font-size:calc(13px * var(--font-scale))}
+    .ans-body{padding:16px;background:#F7FAF8}
+    .ans-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+    .ans-section:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .ans-section-title{font-size:calc(12px * var(--font-scale));font-weight:600;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .correct{color:var(--green);font-weight:700;font-size:calc(18px * var(--font-scale));margin-bottom:4px}
+    .jp{color:var(--text2);font-size:calc(12px * var(--font-scale));margin-top:4px;padding-left:12px;border-left:2px solid var(--border)}
+    .ans-steps{margin:0;padding-left:0;list-style:none}
+    .ans-steps li{padding:8px 12px;background:rgba(0,122,255,.05);border-radius:var(--r-sm);margin-bottom:6px;font-size:calc(13px * var(--font-scale))}
+    .ans-steps li:last-child{margin-bottom:0}
+    .ans-choices{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;font-size:calc(13px * var(--font-scale))}
+    @media(max-width:500px){.ans-choices{grid-template-columns:1fr}}
+    .ans-choice{padding:10px 12px;background:var(--elevated);border-radius:var(--r-sm);border:1px solid var(--border);display:flex;gap:8px;align-items:baseline}
+    .ans-choice-label{font-weight:700;color:var(--blue);min-width:20px}
+    .ans-wrong{margin-top:12px}
+    .ans-wrong-item{padding:8px 12px;background:rgba(255,59,48,.05);border-radius:var(--r-sm);margin-bottom:6px;font-size:calc(12px * var(--font-scale))}
+    .ans-wrong-item:last-child{margin-bottom:0}
+    .ans-wrong-item b{color:var(--red)}
+    .wrong-ok{color:var(--green)}
+    .wrong-no{color:var(--red)}
+    /* Colorblind-safe indicators */
+    .wrong-ok::before{content:"O";display:inline-flex;justify-content:center;align-items:center;width:18px;height:18px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;font-weight:700;margin-right:6px}
+    .wrong-no::before{content:"X";display:inline-flex;justify-content:center;align-items:center;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:10px;font-weight:700;margin-right:6px}
+    .tip{background:rgba(255,149,0,.1);border-left:3px solid var(--orange);padding:10px 12px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-top:12px;font-size:calc(12px * var(--font-scale))}
+    .tip b{color:var(--orange)}
+
+    /* ===== TRANSLATION REVEAL SYSTEM ===== */
+    .hidden-until-reveal{display:none}
+    .q.revealed .hidden-until-reveal{display:block}
+    .q-text-jp{font-size:calc(13px * var(--font-scale));color:var(--text2);margin-top:8px;padding:10px 12px;background:rgba(109,129,150,.06);border-left:2px solid var(--blue);border-radius:0 var(--r-sm) var(--r-sm) 0;line-height:1.75}
+
+    /* Option translation - base styles */
+    .opt-jp{font-size:calc(12px * var(--font-scale));color:var(--text2);line-height:1.6}
+
+    /* SHORT CHOICES: horizontal layout (translation inline right) */
+    .opts:not(.vertical) .opt-jp{margin-left:auto;margin-top:0;padding-left:12px;width:auto;white-space:nowrap}
+
+    /* LONG CHOICES: stacked layout (translation below) */
+    .opts.vertical .opt{flex-wrap:wrap;align-items:flex-start}
+    .opts.vertical .opt-jp{flex-basis:100%;margin-top:6px;margin-left:0;padding-left:28px}
+
+    /* Correct answer highlight - hidden until toggle */
+    .q.revealed .opt.correct-opt{
+      border-left:4px solid var(--blue);
+      background:rgba(13,148,136,.06);
+      box-shadow:0 0 0 1px rgba(13,148,136,.15),0 4px 12px rgba(13,148,136,.12),0 8px 24px rgba(13,148,136,.08);
+      transform:translateY(-1px)
+    }
+    [data-theme="dark"] .q.revealed .opt.correct-opt{
+      background:rgba(45,212,191,.08);
+      box-shadow:0 0 0 1px rgba(45,212,191,.2),0 4px 16px rgba(45,212,191,.15),0 8px 32px rgba(45,212,191,.1)
+    }
+
+    .correct-compact{display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(90,143,101,.08);border-radius:var(--r-sm);border:1px solid rgba(90,143,101,.15)}
+    .correct-num{font-size:calc(24px * var(--font-scale));font-weight:700;color:var(--green);min-width:28px}
+    [data-theme="dark"] .q-text-jp{background:rgba(109,129,150,.12)}
+    [data-theme="dark"] .correct-compact{background:rgba(90,143,101,.15);border-color:rgba(90,143,101,.25)}
+
+    /* ===== TRUE/FALSE QUESTION ===== */
+    .tf-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin-bottom:10px;font-size:calc(14px * var(--font-scale));line-height:1.6;contain:layout style paint}
+    .tf-item:last-child{margin-bottom:14px}
+    .tf-num{display:inline-block;background:var(--blue);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:calc(12px * var(--font-scale));font-weight:600;margin-right:10px}
+    .tf-answer{display:none}
+
+    /* ===== T/F EXPLANATIONS ===== */
+    .tf-explanations{margin-top:16px}
+    .tf-explain{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;margin-bottom:12px}
+    .tf-explain:last-child{margin-bottom:0}
+    .tf-explain-header{font-size:calc(15px * var(--font-scale));font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+    .tf-explain-stmt{font-size:calc(13px * var(--font-scale));line-height:1.7;margin-bottom:6px;color:var(--text)}
+    .tf-explain-stmt-jp{font-size:calc(13px * var(--font-scale));line-height:1.7;margin-bottom:10px;color:var(--text2)}
+    .tf-explain-quote{font-size:calc(12px * var(--font-scale));line-height:1.7;padding:10px 12px;background:rgba(0,122,255,.04);border-left:3px solid var(--blue);border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:10px}
+    .tf-explain-quote b{color:var(--blue)}
+    .tf-explain-reason{font-size:calc(13px * var(--font-scale));line-height:1.8;padding:10px 12px;background:var(--bg-warm);border-radius:var(--r-sm)}
+    .tf-explain-reason b{color:var(--text)}
+
+    /* ===== FAB (Scroll to Top) ===== */
+    .fab{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:var(--blue);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.3);opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s var(--ease);z-index:1000}
+    .fab.show{opacity:1;visibility:visible}
+    .fab:active{opacity:.8}
+
+    /* Skip Link for Keyboard Navigation */
+    .skip-link{position:absolute;top:-100%;left:16px;padding:12px 20px;background:var(--blue);color:#fff;border-radius:var(--r-sm);font:600 13px var(--font);text-decoration:none;z-index:1000;transition:top .2s var(--ease)}
+    .skip-link:focus{top:16px}
+
+    /* ===== FOOTER ===== */
+    footer{text-align:center;padding:40px 20px;color:var(--text3);font-size:12px}
+
+    /* ===== RESPONSIVE - COMPREHENSIVE BREAKPOINTS ===== */
+    
+    /* === EXTRA LARGE (1400px+): MacBook 16", External Monitors === */
+    @media(min-width:1400px){
+      .intro{padding:100px 48px}
+      .intro-title{font-size:clamp(72px,8vw,120px)}
+      .intro-stats{gap:56px}
+      .intro-stat b{font-size:44px}
+      .sec-header{padding:24px 28px}
+      .q{padding:28px}
+      .opts{gap:12px}
+      .passage{padding:28px;font-size:calc(15px * var(--font-scale))}
+      .ans-body{padding:20px}
+    }
+    
+    /* === LARGE (1200px-1399px): MacBook 14"/15", Standard Desktop === */
+    @media(min-width:1200px) and (max-width:1399px){
+      .intro{padding:90px 40px}
+      .intro-title{font-size:clamp(64px,7vw,100px)}
+      .intro-stats{gap:48px}
+      .sec-header{padding:22px 24px}
+      .q{padding:24px}
+      .passage{padding:24px}
+    }
+    
+    /* === MEDIUM-LARGE (1024px-1199px): MacBook 13", iPad Pro Landscape === */
+    @media(min-width:1024px) and (max-width:1199px){
+      .intro{padding:80px 32px}
+      .intro-title{font-size:clamp(56px,8vw,88px)}
+      .intro-stats{gap:40px}
+      .sec-header{padding:20px 22px}
+      .q{padding:22px}
+    }
+    
+    /* === MEDIUM (769px-1023px): iPad Landscape, Small Laptops === */
+    @media(min-width:769px) and (max-width:1023px){
+      .intro{padding:70px 28px}
+      .intro-title{font-size:clamp(48px,9vw,72px)}
+      .intro-stats{gap:36px}
+      .sec-header{padding:18px 20px}
+      .q{padding:20px}
+      .opts{grid-template-columns:repeat(2,1fr);gap:10px}
+    }
+    
+    /* === TABLET (601px-768px): iPad Portrait, Large Phones Landscape === */
+    @media(min-width:601px) and (max-width:768px){
+      .intro{padding:60px 20px}
+      .intro-title{font-size:clamp(40px,10vw,64px)}
+      .intro-subtitle{font-size:16px}
+      .intro-stats{gap:28px;flex-wrap:wrap}
+      .intro-stat b{font-size:32px}
+      .sec-header{padding:16px 18px;flex-wrap:wrap;gap:10px}
+      .sec-tag{margin-left:0;margin-top:4px}
+      .q{padding:18px}
+      .opts{grid-template-columns:repeat(2,1fr);gap:8px}
+      .passage{padding:18px;font-size:calc(14px * var(--font-scale))}
+      .nav-bar{padding:8px 12px}
+      .nav-seg button{padding:6px 12px;font-size:11px}
+    }
+    
+    /* === MOBILE LARGE (481px-600px): iPhone Plus/Pro Max, Small Tablets === */
+    @media(min-width:481px) and (max-width:600px){
+      .intro{padding:50px 16px}
+      .intro-title{font-size:clamp(36px,11vw,52px)}
+      .intro-subtitle{font-size:15px;max-width:90%}
+      .intro-stats{gap:20px;flex-wrap:wrap}
+      .intro-stat b{font-size:28px}
+      .intro-cta{flex-direction:column;width:100%;max-width:280px}
+      .btn-primary,.btn-secondary{width:100%;text-align:center}
+      .sec-header{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:8px}
+      .sec-tag{margin-left:0}
+      .q{padding:16px}
+      .opts{grid-template-columns:1fr;gap:8px}
+      .passage{padding:16px;font-size:calc(13px * var(--font-scale));line-height:1.8}
+      .nav-bar{padding:8px 10px;gap:6px}
+      .nav-seg{width:100%;justify-content:center}
+      .nav-seg button{flex:1;padding:8px 10px;font-size:11px}
+      .nav-btn{padding:6px 10px;font-size:11px}
+    }
+    
+    /* === MOBILE STANDARD (376px-480px): iPhone Standard, Most Android === */
+    @media(min-width:376px) and (max-width:480px){
+      .intro{padding:40px 14px}
+      .intro-title{font-size:clamp(32px,12vw,44px)}
+      .intro-subtitle{font-size:14px;max-width:95%}
+      .intro-stats{gap:16px;flex-wrap:wrap;justify-content:center}
+      .intro-stat{min-width:80px}
+      .intro-stat b{font-size:24px}
+      .intro-stat span{font-size:10px}
+      .intro-cta{flex-direction:column;width:100%;padding:0 8px}
+      .btn-primary,.btn-secondary{width:100%;padding:14px 24px}
+      .sec-header{padding:12px 14px;flex-direction:column;align-items:flex-start;gap:6px}
+      .sec-num{width:32px;height:32px;font-size:13px}
+      .sec-title{font-size:14px}
+      .sec-tag{margin-left:0;font-size:10px;padding:3px 8px}
+      .q{padding:14px;margin-bottom:12px}
+      .q-num{padding:3px 12px;font-size:11px}
+      .q-text{font-size:calc(14px * var(--font-scale))}
+      .opts{grid-template-columns:1fr;gap:6px}
+      .opt{padding:10px 12px;font-size:calc(12px * var(--font-scale))}
+      .passage{padding:14px;font-size:calc(13px * var(--font-scale));line-height:1.75}
+      .ans-body{padding:12px}
+      .ans-choices{grid-template-columns:1fr}
+      .nav-bar{padding:6px 8px;gap:4px}
+      .nav-seg{width:100%}
+      .nav-seg button{flex:1;padding:7px 8px;font-size:10px}
+      .nav-btn{padding:6px 8px;font-size:10px}
+      .nav-label{padding:6px 8px;font-size:10px}
+      .fab{width:44px;height:44px;font-size:18px;bottom:16px;right:16px}
+    }
+    
+    /* === MOBILE SMALL (320px-375px): iPhone SE/Mini, Compact Phones === */
+    @media(max-width:375px){
+      .intro{padding:32px 12px}
+      .intro-label{font-size:11px;letter-spacing:.1em;margin-bottom:16px}
+      .intro-title{font-size:clamp(28px,13vw,38px)}
+      .intro-subtitle{font-size:13px;margin-bottom:24px}
+      .intro-stats{gap:12px;flex-wrap:wrap;justify-content:center}
+      .intro-stat{min-width:70px}
+      .intro-stat b{font-size:22px}
+      .intro-stat span{font-size:9px}
+      .intro-cta{flex-direction:column;width:100%;gap:10px}
+      .btn-primary,.btn-secondary{width:100%;padding:12px 20px;font-size:14px}
+      .sec-header{padding:10px 12px;flex-direction:column;align-items:flex-start;gap:6px}
+      .sec-num{width:28px;height:28px;font-size:12px}
+      .sec-title{font-size:13px}
+      .sec-tag{font-size:9px;padding:2px 6px}
+      .q{padding:12px;margin-bottom:10px}
+      .q-num{padding:3px 10px;font-size:10px;margin-bottom:10px}
+      .q-text{font-size:calc(13px * var(--font-scale));line-height:1.6;margin-bottom:10px}
+      .opts{grid-template-columns:1fr;gap:5px}
+      .opt{padding:9px 10px;font-size:calc(11px * var(--font-scale))}
+      .opt-label{font-size:11px;margin-right:6px}
+      .passage{padding:12px;font-size:calc(12px * var(--font-scale));line-height:1.7}
+      .vocab-grid{grid-template-columns:1fr}
+      .vocab-item{padding:8px 10px}
+      .vocab-en{font-size:calc(11px * var(--font-scale))}
+      .vocab-ja{font-size:calc(10px * var(--font-scale))}
+      .ans-btn,.hint-btn{padding:8px 12px;font-size:12px}
+      .q-btns{flex-wrap:wrap}
+      .ans-body{padding:10px}
+      .ans-section{padding-bottom:12px;margin-bottom:12px}
+      .ans-choices{grid-template-columns:1fr;gap:6px}
+      .ans-choice{padding:8px 10px;font-size:calc(12px * var(--font-scale))}
+      .ans-wrong-item{padding:6px 10px;font-size:calc(11px * var(--font-scale))}
+      .tip{padding:8px 10px;font-size:calc(11px * var(--font-scale))}
+      .correct{font-size:calc(16px * var(--font-scale))}
+      .jp{font-size:calc(11px * var(--font-scale))}
+      .nav-bar{padding:5px 6px;gap:3px}
+      .nav-seg{width:100%}
+      .nav-seg button{flex:1;padding:6px 6px;font-size:9px}
+      .nav-btn{padding:5px 7px;font-size:9px}
+      .nav-label{display:none}
+      .fab{width:40px;height:40px;font-size:16px;bottom:12px;right:12px}
+      footer{padding:24px 12px;font-size:11px}
+    }
+    
+    /* === LANDSCAPE OPTIMIZATIONS === */
+    @media(max-height:500px) and (orientation:landscape){
+      .intro{min-height:auto;padding:40px 24px}
+      .intro-title{font-size:clamp(32px,8vw,48px)}
+      .intro-stats{margin-top:24px}
+      .nav-bar{position:sticky}
+    }
+    
+    /* === HOVER-CAPABLE DEVICES (Desktop/Laptop) === */
+    @media(hover:hover) and (pointer:fine){
+      .opt{transition:background .2s var(--ease),border-color .2s var(--ease),transform .15s var(--ease)}
+      .opt:hover{background:var(--bg-warm);border-color:var(--blue);transform:translateY(-1px)}
+      .q{transition:box-shadow .2s var(--ease)}
+      .q:hover{box-shadow:var(--shadow)}
+    }
+    
+    /* === TOUCH DEVICES (Mobile/Tablet) === */
+    @media(hover:none) and (pointer:coarse){
+      .opt{-webkit-tap-highlight-color:transparent}
+      .opt:active{background:var(--bg-warm);border-color:var(--blue)}
+      .ans-btn:active,.hint-btn:active{transform:scale(0.98)}
+    }
+
+    /* ===== PREMIUM ENHANCEMENTS ===== */
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(109,129,150,.06) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 30%, rgba(88,86,214,.04) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 50% at 30% 80%, rgba(52,199,89,.03) 0%, transparent 50%),
+        var(--bg)
+    }
+    [data-theme="dark"] body::before{
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(109,129,150,.08) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 30%, rgba(88,86,214,.06) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 50% at 30% 80%, rgba(52,199,89,.04) 0%, transparent 50%),
+        var(--bg)
+    }
+
+    .nav-bar{
+      contain:layout paint;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px)
+    }
+
+    .view.active .sec-header,
+    .view.active .passage,
+    .view.active .vocab-notes,
+    .view.active .passage-trans-page,
+    .view.active .passage-item{
+      animation:fadeInUp var(--anim-duration) var(--ease) backwards
+    }
+    .view.active .sec-header{animation-delay:calc(var(--anim-stagger) * 1)}
+    .view.active .passage{animation-delay:calc(var(--anim-stagger) * 2)}
+    .view.active .vocab-notes{animation-delay:calc(var(--anim-stagger) * 3)}
+    .view.active .passage-trans-page{animation-delay:calc(var(--anim-stagger) * 1)}
+    .view.active .passage-item:nth-child(1){animation-delay:calc(var(--anim-stagger) * 2)}
+    .view.active .passage-item:nth-child(2){animation-delay:calc(var(--anim-stagger) * 3)}
+
+    @keyframes fadeInUp{
+      from{opacity:0;transform:translateY(16px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .intro .intro-label,
+    .intro .intro-title,
+    .intro .intro-subtitle,
+    .intro .intro-cta,
+    .intro .intro-stats{
+      animation:fadeInUp var(--anim-duration) var(--ease) backwards
+    }
+    .intro .intro-label{animation-delay:0.1s}
+    .intro .intro-title{animation-delay:0.2s}
+    .intro .intro-subtitle{animation-delay:0.3s}
+    .intro .intro-cta{animation-delay:0.4s}
+    .intro .intro-stats{animation-delay:0.5s}
+
+    .view{
+      opacity:0;
+      transition:opacity 0.25s var(--ease)
+    }
+    .view.active{
+      opacity:1
+    }
+
+    .btn-primary:hover{background:rgba(0,0,0,.8)}
+    .btn-primary:active{opacity:.8}
+    .btn-secondary:hover{background:var(--surface)}
+    .btn-secondary:active{opacity:.8}
+
+    .ans-btn{transition:background .2s var(--ease)}
+    .ans-btn:hover{background:rgba(52,199,89,.85)}
+    .ans-btn:active{opacity:.8}
+    .hint-btn{transition:background .2s var(--ease)}
+    .hint-btn:hover{background:rgba(255,149,0,.2)}
+    .hint-btn:active{opacity:.8}
+
+    .nav-seg button{transition:background .25s var(--ease),color .25s var(--ease)}
+    .nav-btn{transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+    .nav-btn:hover{background:rgba(0,0,0,.03)}
+
+    .fab{opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s var(--ease)}
+    .fab.show{opacity:1;visibility:visible}
+    .fab:hover{opacity:.9;box-shadow:0 8px 28px rgba(109,129,150,.5)}
+    .fab:active{opacity:0.8}
+
+    .vocab-box{
+      display:block;
+      max-height:0;
+      opacity:0;
+      overflow:hidden;
+      padding:0 16px;
+      margin-bottom:0;
+      transition:max-height 0.35s var(--ease),opacity 0.3s var(--ease),padding 0.3s var(--ease),margin-bottom 0.3s var(--ease)
+    }
+    .vocab-box.show{
+      max-height:2000px;
+      opacity:1;
+      padding:16px;
+      margin-bottom:20px
+    }
+
+    .intro-title{
+      font-family:var(--font-serif);
+      font-weight:500;
+      letter-spacing:-0.02em
+    }
+    .intro-stat b{
+      font-family:var(--font-serif);
+      font-weight:600
+    }
+    .sec-title{
+      font-family:var(--font);
+      font-weight:600;
+      letter-spacing:0.01em
+    }
+    .passage-item h3{
+      font-family:var(--font-serif);
+      font-weight:500
+    }
+    .correct{
+      font-family:var(--font);
+      font-weight:700
+    }
+
+    .passage-jp,
+    .jp,
+    .ans-body{
+      line-height:1.85
+    }
+
+    .opt{
+      transition:border-color 0.2s var(--ease),background 0.2s var(--ease)
+    }
+    .opt:focus-visible{
+      border-color:var(--blue);
+      background:rgba(109,129,150,.06);
+      outline:2px solid var(--blue);
+      outline-offset:2px
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:0.01ms !important
+      }
+      .view{transition:none}
+      .hint-box,.ans-box,.vocab-box{transition:none}
+      .nav-bar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+      body::before{display:none}
+    }
+
+    .sec-header{
+      box-shadow:0 2px 12px rgba(0,0,0,.04)
+    }
+    [data-theme="dark"] .sec-header{
+      box-shadow:0 2px 12px rgba(0,0,0,.2)
+    }
+
+    .ans-content{
+      box-shadow:0 2px 16px rgba(52,199,89,.08)
+    }
+    .ans-header{
+      letter-spacing:0.02em
+    }
+
+    .q{
+      box-shadow:0 1px 4px rgba(0,0,0,.03)
+    }
+    .translation-q{
+      box-shadow:0 1px 4px rgba(0,0,0,.03)
+    }
+    [data-theme="dark"] .q,
+    [data-theme="dark"] .translation-q{
+      box-shadow:none
+    }
+
+    /* ===== SPLIT VIEW MODE ===== */
+    :root{
+      --split-left-width:50%;
+      --split-min-width:20%
+    }
+
+    body.split-active .view.active{display:none}
+    body.split-active .split-container{display:flex}
+
+    .split-container{
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:10;
+      background:var(--bg)
+    }
+
+    .split-left{
+      width:var(--split-left-width,50%);
+      min-width:var(--split-min-width);
+      overflow-y:auto;
+      padding:clamp(12px,2vw,24px);
+      background:var(--bg);
+      contain:layout style paint
+    }
+
+    .split-right{
+      flex:1;
+      min-width:var(--split-min-width);
+      overflow-y:auto;
+      padding:clamp(12px,2vw,24px);
+      background:var(--bg);
+      contain:layout style paint
+    }
+
+    .split-resizer{
+      width:8px;
+      background:var(--border-visible);
+      cursor:col-resize;
+      flex-shrink:0;
+      transition:background 0.15s ease
+    }
+
+    .split-resizer:hover,
+    .split-resizer.dragging{
+      background:var(--blue)
+    }
+
+    .split-content{
+      max-width:none
+    }
+
+    .split-content .passage{
+      margin-bottom:20px
+    }
+
+    .split-content .q{
+      margin-bottom:16px
+    }
+
+    .split-left .sec-header{
+      padding:12px 16px;
+      margin-bottom:12px;
+      margin-top:40px
+    }
+
+    .split-right .bulk-actions{
+      padding:10px 0;
+      margin-bottom:12px;
+      margin-top:40px
+    }
+
+    body.question-bar-open .split-left .sec-header{
+      margin-top:90px
+    }
+
+    body.question-bar-open .split-right .bulk-actions{
+      margin-top:90px
+    }
+
+    #split-toggle{
+      min-width:60px;
+      text-align:center
+    }
+
+    #split-toggle[aria-pressed="true"]{
+      background:var(--blue);
+      color:#fff
+    }
+
+    @media(max-width:767px){
+      #split-toggle{display:none}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      .split-resizer{transition:none}
+    }
+  </style>
+</head>
+<body>
+<a href="#view-start" class="skip-link">メインコンテンツへスキップ</a>
+
+  <!-- ===== NAVIGATION BAR ===== -->
+  <nav class="nav-bar" role="navigation" aria-label="メインナビゲーション">
+    <button class="nav-btn on" id="home-btn" data-view="start" aria-current="page">Home</button>
+    <button class="nav-btn" id="question-toggle" aria-expanded="false">Question ▼</button>
+    <button class="nav-btn" id="split-toggle" aria-pressed="false">Single</button>
+    <button class="nav-btn" id="theme" aria-label="テーマ切り替え">🌙</button>
+
+    <div class="question-subbar" id="question-subbar" role="tablist">
+      <button class="question-btn" data-view="sec-1" role="tab">1</button>
+      <button class="question-btn" data-view="sec-2" role="tab">2</button>
+      <button class="question-btn" data-view="sec-3" role="tab">3</button>
+      <button class="question-btn" data-view="passages" role="tab">本文訳</button>
+      <button class="nav-btn" id="font-toggle" aria-label="文字サイズ">Aa</button>
+    </div>
+
+    <div class="font-subbar" id="font-subbar">
+      <span class="font-subbar-label">文字サイズ:</span>
+      <button class="font-btn" data-font="xs">XS</button>
+      <button class="font-btn" data-font="s">S</button>
+      <button class="font-btn on" data-font="m">M</button>
+      <button class="font-btn" data-font="l">L</button>
+      <button class="font-btn" data-font="xl">XL</button>
+    </div>
+  </nav>
+
+  <!-- ===== START VIEW ===== -->
+  <div class="view active" id="view-start" role="tabpanel">
+    <section class="intro">
+      <p class="intro-label">大学入試 完全解説</p>
+      <h1 class="intro-title">東京理科大学<br>理工学部</h1>
+      <p class="intro-subtitle">2021年度 2月3日 Ｂ方式 英語</p>
+      <div class="intro-cta">
+        <button class="btn-primary" onclick="document.querySelector('[data-view=sec-1]').click()">問題を見る</button>
+        <button class="btn-secondary" onclick="document.querySelector('[data-view=passages]').click()">本文訳</button>
+      </div>
+      <div class="intro-stats">
+        <div class="intro-stat"><b>3</b><span>大問</span></div>
+        <div class="intro-stat"><b>24</b><span>設問</span></div>
+        <div class="intro-stat"><b>60</b><span>分</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== PASSAGES VIEW ===== -->
+  <div class="view" id="view-passages" role="tabpanel">
+    <div class="wrap">
+      <section class="passage-trans-page">
+        <h2>📖 本文の日本語訳</h2>
+
+        <!-- PASSAGE 1 -->
+        <div class="passage-item">
+          <h3>【１】Growth Mindset（成長マインドセット）</h3>
+          <div class="passage-jp">
+            <p><b>[1]</b> 過去20年間で教育界において最も影響力のある現象の一つが「成長マインドセット」である。これは、知能、数学などの分野における能力、性格、創造的能力など、様々な能力について生徒が持つ信念を指す。成長マインドセットの提唱者は、これらの能力は学習と努力によって発達または「成長」させることができると信じている。対照的な見方が「固定マインドセット」である。これは、これらの能力は固定されており、変えることができないと仮定する。</p>
+            <p><b>[2]</b> 成長マインドセット対固定マインドセットの理論は、1998年にアメリカの心理学者キャロル・ドゥエックと外科医クラウディア・ミューラーによって初めて提唱された。これは彼らが主導した研究から生まれたもので、小学生が課題に取り組み、その後、知能などの既存の能力か、課題に注いだ努力かのいずれかを褒められた。研究者たちは、その後のより難しい課題において、生徒がどのように感じ、考え、行動したかを観察した。努力を褒められた生徒は、課題の解決策を見つけることに粘り強く取り組む傾向が高かった。また、改善方法についてのフィードバックを求める傾向も高かった。知能を褒められた生徒は、より難しい課題に粘り強く取り組んだり、他の生徒の課題の結果についてのフィードバックを求めたりする傾向が低かった。これらの発見は、固定マインドセットは成長マインドセットよりも学習に適さないという推論につながった。この考えは認知科学と行動科学において多くの支持を得ている。</p>
+            <p><b>[3]</b> 心理学者は、マインドセット―人々が持つ一連の仮定や方法、そしてこれらがどのように動機や行動に影響するか―という概念を1世紀以上にわたって研究してきた。成長マインドセットは、スタンフォード大学の心理学者アラン・バンデューラの1970年代の積極的な自己効力感の社会的学習理論にそのルーツがある。これは、特定の状況で成功したり、課題を達成したりする能力に対する個人の信念である。成長マインドセットはまた、1980年代から90年代の達成志向の研究のリブランディングでもある。ここでは、人々は結果を達成するために「習熟志向」（より多く学ぶという目標を持つ）または「遂行志向」（自分が知っていることを示すという目標を持つ）のいずれかを採用することができる。</p>
+            <p><b>[4]</b> 成長マインドセットの考えは、脳の可塑性（経験によって脳が変化する能力）の理論や、タスクポジティブおよびタスクネガティブ脳ネットワーク活動（目標指向の課題中に活性化する脳ネットワーク）と一致している。成長マインドセット対固定マインドセットの理論は、証拠によっても支持されている―その結果の予測と介入における影響の両方について。研究によると、生徒のマインドセットは数学と科学の成績、学力、試験への対処能力に影響を与える。成長マインドセットを持つ人々は感情的に対処する可能性が高く、一方、学習し成長する能力を持っていると自分自身を見ていない人々は心理的苦痛を受けやすい。しかし、この理論は普遍的な支持を受けていない。2016年の研究では、大学生の学業成績は成長マインドセットと関連していなかった。これは部分的には、理解のされ方によるものかもしれない。人々は異なる時点で異なるマインドセット―成長または固定―を特定の科目や課題に対して示すことがある。ドゥエックによれば、「実際には誰もが固定マインドセットと成長マインドセットの混合であり、その混合は経験とともに継続的に進化する。」これは、固定マインドセットと成長マインドセットの区別が連続体上にあることを示唆している。また、ある時点で人が採用するマインドセットは動的であり、文脈に依存することを示唆している。</p>
+            <p><b>[5]</b> この理論は、さまざまな教育プログラムで評価されてきた。2018年の分析では、生徒の成長マインドセットを高める介入が学業成績に影響を与えたかどうかを探った多くの研究をレビューした。成長マインドセットを教えることは、生徒の成果に最小限の影響しかなかったことがわかった。しかし、場合によっては、成長マインドセットを教えることは、社会経済的に低い背景を持つ生徒や、学業的にリスクのある生徒に効果的であった。2017年の研究では、成長マインドセットを教えることは生徒の成果に影響を与えなかったことがわかった。実際、この研究では固定マインドセットを持つ生徒がより高い成果を示した。人間の理解と学習プロセスの複雑さを考えると、否定的な結果は驚くべきことではない。ドゥエックと同僚たちは、学校の文脈と文化が、成長マインドセット介入から得られた成果が持続するかどうかに責任を持つ可能性があると指摘している。</p>
+            <p><b>[6]</b> 研究によると、教師と親の両方のマインドセットも生徒の成果に影響を与える。成長マインドセットを持つ教師に教えられた中等学校の科学の生徒は、固定マインドセットを持つ教師に教えられた生徒よりも高い成果を達成した。そして、2010年の研究では、小学生が自分の改善の可能性について持っていた認識は、教師が子供の学力についてどう思っていたかと関連していた。別の研究では、子供の識字能力について成長マインドセットを持ち、それに従って行動するよう親が教えられた場合、子供の成果が向上した。</p>
+            <p><b>[7]</b> マインドセット理論は、教育において両方とも考慮する必要がある2つの別々の現象を混同しているようである：知能などの人の実際の能力と、それについてどう考えるか。生徒はいつでも自分が知っていることを認識し、それを評価すべきである。彼らはまた、これが不十分かもしれないこと、それを拡張できること、そしてその方法を知る必要がある。教育者と親は、子供との対話が能力が固定されていることを暗示しないようにする必要がある。</p>
+          </div>
+        </div>
+
+        <!-- PASSAGE 2 -->
+        <div class="passage-item">
+          <h3>【２】研究レポートについての相談（会話文）</h3>
+          <div class="passage-jp">
+            <p><b>学生：</b> あの、すみません、松本先生。先生のオフィスアワーは明後日だとわかっているのですが、ちょっと助けていただけないかと思いまして。</p>
+            <p><b>教授：</b> いいですよ、佐藤さん。何について話したいですか？</p>
+            <p><b>学生：</b> ええと、今学期取り組んでいる研究レポートの書き方について、いくつか簡単な質問があります。</p>
+            <p><b>教授：</b> ああ、どんな質問ですか？これまでよくやっていると思いますよ。</p>
+            <p><b>学生：</b> はい、データは全部集まったので、今それをまとめ始めていて、グラフなどを準備しています。でも、ちょっと...これだけでは十分じゃないのではないかと心配で、レポートに他に何を入れたらいいかわからないんです。</p>
+            <p><b>教授：</b> 多くの学生から同じ悩みを聞きます。そうですね、授業で私が言ったことを覚えていますか？あなたは自分がやったことについての専門家です。言い換えれば、レポートに何を含めるべきかは、あなたが正確にわかっているのです。</p>
+            <p>だから、自分の研究についての一般的な知識を持っている人、例えば...お母さんに自分の研究を説明するとしたら何を言うかを考えてみてください。それが通常の経験則です。</p>
+            <p><b>学生：</b> わかりました。</p>
+            <p><b>教授：</b> あなたがその主題についてどれだけ知っているかということを私が言っても大丈夫だといいのですが。</p>
+            <p><b>学生：</b> うーん...今、何か頭に浮かんだのですが、また消えてしまいました。</p>
+            <p><b>教授：</b> 私にもよくあります。だから、私はよく小さなノートを持ち歩いて、思いついた質問やアイデアを書き留めています。例えば、先週歯医者に行ったとき、歯医者に聞きたいことを全部覚えていられないとわかっていたので、聞きたいことのリストを作りました。</p>
+            <p><b>学生：</b> いい考えですね。学期末で今とても忙しいので、最近かなり物忘れがひどくなっています。</p>
+            <p><b>教授：</b> わかりました。頑張ってください。最終版を提出する前に、下書きを見てほしければ、喜んで見ますよ。</p>
+            <p><b>学生：</b> わかりました。どうもありがとうございます。それでは、また近いうちに。</p>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 1 VIEW ===== -->
+  <div class="view" id="view-sec-1" role="tabpanel">
+    <main class="wrap">
+
+      <div class="sec-header">
+        <div class="sec-num">1</div>
+        <span class="sec-title">【１】長文読解：Growth Mindset（成長マインドセット）</span>
+        <span class="sec-tag">10問</span>
+      </div>
+
+      <!-- ENGLISH PASSAGE -->
+      <div class="passage" lang="en">
+        <p><b>[1]</b> One of the most influential phenomena in education over the last two decades has been that of the "growth mindset". This refers to the beliefs students have about various capacities such as their intelligence, their ability in areas such as maths, their personality and creative ability. Advocates of the growth mindset believe these capacities can be developed or "grown" through learning and effort. The alternative perspective is the "fixed mindset". This assumes these capacities are fixed and unable to be changed.</p>
+        <p><b>[2]</b> The theory of the growth versus fixed mindset was first proposed in 1998 by American psychologist Carol Dweck and surgeon Claudia Mueller. It grew out of studies they led, in which primary school children were engaged in a task, and then praised either for their existing capacities, such as intelligence, or the effort they invested in the task. Researchers monitored how the students felt, thought and behaved in subsequent more difficult tasks. The students who were praised for their effort were more likely to persist with finding a solution to the task. They were also more likely to seek feedback about how to improve. Those praised for their intelligence <span class="ul">(1)were less likely to persist with the more difficult tasks and to seek feedback on</span> how their peers did on the task. These findings led to the inference that a fixed mindset was less conducive to learning than a growth mindset. This notion has a lot of support in cognitive* and behavioral science.</p>
+        <p><b>[3]</b> Psychologists have been researching the notion of a mindset ― a set of assumptions or methods people have, and how these influence motivations or behavior ― for over a century. The growth mindset has its roots in Stanford University psychologist Alan Bandura's 1970s social learning theory of a positive self-efficacy*. This is a person's belief in their ability to succeed in specific situations or accomplish a task. The growth mindset is also a re-branding of the 1980-90s study of achievement orientation. Here, people can adopt either "<span class="blank">( 2－a )</span> orientation" (with the goal of learning more) or "<span class="blank">( 2－b )</span> orientation" (with the goal of showing what they know) to achieve an outcome.</p>
+        <p><b>[4]</b> The idea of the growth mindset is consistent with theories of brain plasticity (the brain's ability to change due to experience) and task-positive and task-negative brain network activity (brain networks that are activated during goal-orientated tasks). The growth versus fixed mindset theory is supported by evidence, too ― both for its predictions of outcomes and its impact in interventions. Studies show students' mindsets influence their maths and science outcomes, their academic ability and their ability to cope with exams. People with growth mindsets are more likely to cope emotionally, while those who don't view themselves as having the ability to learn and grow are more prone to psychological distress. But the theory has not received universal support. A 2016 study showed <span class="ul">(3)academic achievements of university students were not associated with their growth mindset</span>. This could, in part, be due to the way it is understood. People can show different mindsets at different times ― a growth or fixed ― towards a specific subject or task. According to Dweck, "Everyone is actually a mixture of fixed and growth mindsets, and that mixture continually evolves with experience." This suggests the fixed and growth mindsets distinction lies on a continuum*. It also suggests the mindset a person adopts at any one time is dynamic and depends on the context.</p>
+        <p><b>[5]</b> The theory has been evaluated in a range of teaching programs. A 2018 analysis reviewed a number of studies that explored whether <span class="ul">(4)interventions</span> that enhanced students' growth mindsets affected their academic achievements. It found teaching a growth mindset had minimal influence on student outcomes. <span class="blank">( 5 )</span>, in some cases, teaching a growth mindset was effective for students from low socio-economic backgrounds or those academically at risk. A 2017 study found teaching a growth mindset had no effect on student outcomes. In fact, the study found students with a fixed mindset showed higher outcomes. <span class="ul">(6)Given the complexity of human understanding and learning processes</span>, the negative findings are not surprising. Dweck and colleagues have noted that a school's context and culture can be responsible for whether the gains made from a growth mindset intervention are sustained.</p>
+        <p><b>[6]</b> Studies show the mindsets of both teachers and parents influence students' outcomes, too. Secondary science students taught by teachers with a growth mindset <span class="ul">(7)(1．outcomes 2．achieved 3．than 4．had 5．whose 6．higher 7．those 8．teachers)</span> a fixed mindset. And a 2010 study showed that <span class="ul">(8)the perceptions primary students had of their potential for improvement were associated with what their teachers thought of the children's academic ability</span>. In another study, children whose parents were taught to have a growth mindset about their children's literacy skills, and to act accordingly, had improved outcomes.</p>
+        <p><b>[7]</b> Mindset theory seems to conflate* two separate phenomena, both of which need to be considered in teaching: a person's actual capacity such as intelligence, and how they think about it. Students should be aware of what they know at any time and value it. They also need <span class="ul">(9)to know this may be insufficient, that it can be extended and how to do that</span>. Educators and parents need to ensure that their dialogue with their children does not imply that the capacity is fixed.</p>
+      </div>
+
+      <!-- VOCABULARY NOTES -->
+      <div class="vocab-notes">
+        <b>〔注〕</b> cognitive：認知的な、知識の獲得・理解・学習のプロセスに関連する / self-efficacy：自己効力感、様々な状況に対処する自分の能力への信念 / continuum：連続体、わずかな違いで変化する要素や項目の連続した系列 / conflate：混同する、2つ以上のものを組み合わせて1つの新しいものを形成する
+      </div>
+
+      <!-- VOCABULARY BOX -->
+      <div class="vocab-box">
+        <div class="vocab-title">📚 準１級・１級レベルの語彙リスト</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:12px">⭐ = 準１級レベル ｜ ⭐⭐ = １級レベル</p>
+        <div class="vocab-grid">
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ influential</div>
+            <div class="vocab-ja">影響力のある 💡 influence(影響)+ful→影響を与える</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ phenomena</div>
+            <div class="vocab-ja">現象（複数形）💡 phenomenonの複数形、ギリシャ語由来</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ advocate</div>
+            <div class="vocab-ja">提唱者、支持する 💡 ad-(~へ)+vocare(呼ぶ)→声を上げて支持</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ propose</div>
+            <div class="vocab-ja">提案する、提唱する 💡 pro-(前に)+pose(置く)→前に出す</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ subsequent</div>
+            <div class="vocab-ja">その後の 💡 sub-(下に)+sequi(従う)→後に続く</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ persist</div>
+            <div class="vocab-ja">粘り強く続ける 💡 per-(完全に)+sist(立つ)→立ち続ける</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ inference</div>
+            <div class="vocab-ja">推論 💡 infer(推論する)の名詞形</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ conducive</div>
+            <div class="vocab-ja">~に資する、助けとなる 💡 be conducive to~で「~に役立つ」</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ cognitive</div>
+            <div class="vocab-ja">認知の 💡 cogn-(知る)+ive→知ることに関する</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ accomplish</div>
+            <div class="vocab-ja">成し遂げる 💡 ac-(~へ)+complete→完全にする</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ orientation</div>
+            <div class="vocab-ja">方向性、志向 💡 orient(東、方向)+ation→方向付け</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ plasticity</div>
+            <div class="vocab-ja">可塑性 💡 plastic(形を変えられる)+ity→形を変える性質</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ intervention</div>
+            <div class="vocab-ja">介入、介入措置 💡 inter-(間に)+vene(来る)→間に入る</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ prone</div>
+            <div class="vocab-ja">~しがちな 💡 be prone to~で「~しやすい」</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ distress</div>
+            <div class="vocab-ja">苦悩、苦痛 💡 dis-(離れて)+stress→ストレスで苦しむ</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ universal</div>
+            <div class="vocab-ja">普遍的な 💡 uni-(一つの)+verse(回転)→全体に及ぶ</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ continuum</div>
+            <div class="vocab-ja">連続体 💡 continue(続く)のラテン語形</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ dynamic</div>
+            <div class="vocab-ja">動的な、変化する 💡 ⇔ static(静的な)</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ evaluate</div>
+            <div class="vocab-ja">評価する 💡 e-(外に)+value(価値)→価値を出す</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ enhance</div>
+            <div class="vocab-ja">高める、強化する 💡 en-(~にする)+hance(高い)→高くする</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ minimal</div>
+            <div class="vocab-ja">最小限の 💡 minimum(最小)の形容詞形</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ socio-economic</div>
+            <div class="vocab-ja">社会経済的な 💡 social+economicの複合語</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ complexity</div>
+            <div class="vocab-ja">複雑さ 💡 complex(複雑な)の名詞形</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ sustain</div>
+            <div class="vocab-ja">維持する 💡 sus-(下から)+tain(保つ)→支え続ける</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ perception</div>
+            <div class="vocab-ja">認識、知覚 💡 perceive(知覚する)の名詞形</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ literacy</div>
+            <div class="vocab-ja">読み書き能力 💡 liter-(文字)+acy→文字を使う能力</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ accordingly</div>
+            <div class="vocab-ja">それに応じて 💡 accord(一致)+ingly→一致するように</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐⭐ conflate</div>
+            <div class="vocab-ja">混同する 💡 con-(共に)+flate(吹く)→一緒に混ぜる</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ insufficient</div>
+            <div class="vocab-ja">不十分な 💡 in-(否定)+sufficient(十分な)</div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-en">⭐ imply</div>
+            <div class="vocab-ja">暗示する 💡 im-(中に)+ply(折る)→中に折り込む→含意する</div>
+          </div>
+        </div>
+      </div>
+      <button class="nav-btn" data-act="vocab" style="margin-bottom:16px" aria-label="単語リスト表示">📚 単語・熟語を表示</button>
+
+      <!-- BULK ACTIONS -->
+      <div class="bulk-actions">
+        <button class="expand-all-btn" data-act="expand-all">📖 すべて表示</button>
+        <button class="collapse-all-btn" data-act="collapse-all">📕 すべて閉じる</button>
+      </div>
+
+      <!-- QUESTION 1 -->
+      <div class="q">
+        <div class="q-num">(1)</div>
+        <div class="q-text" lang="en">Which of the items below is the closest in meaning to the underlined part (1) in the passage? Consider the context and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(1)の意味に最も近いものはどれか。文脈を考慮して答えなさい。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">showed a greater tendency to engage in demanding tasks and ask for a comment on</span><span class="opt-jp hidden-until-reveal">難しい課題に取り組み、～についてコメントを求める傾向が高かった</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">were more apt to make a considerable effort on hard tasks and look for help for</span><span class="opt-jp hidden-until-reveal">難しい課題にかなりの努力をし、～の助けを求める傾向があった</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">unwillingly approached less difficult tasks and were kept from listening to a lesson about</span><span class="opt-jp hidden-until-reveal">しぶしぶより簡単な課題に取り組み、～についての授業を聞くことを妨げられた</span></div>
+          <div class="opt correct-opt"><span class="opt-label">4</span><span class="opt-text">tended to be reluctant to carry out challenging tasks and get advice on</span><span class="opt-jp hidden-until-reveal">難しい課題を実行することに消極的で、～についてアドバイスを得る傾向があった</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">4</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 下線部 "were less likely to persist with the more difficult tasks and to seek feedback on" を分析</li>
+                    <li>② "less likely to persist" = 粘り強く取り組む可能性が低い = 消極的</li>
+                    <li>③ "seek feedback" = フィードバックを求める = アドバイスを得る</li>
+                    <li>④ 選択肢4の "reluctant"（消極的）と "get advice"（アドバイスを得る）が一致</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> "greater tendency"（より高い傾向）は "less likely"（可能性が低い）と矛盾</div>
+                    <div class="ans-wrong-item"><b>2:</b> "more apt"（より～しがち）は原文の否定的な意味と反対</div>
+                    <div class="ans-wrong-item"><b>3:</b> "less difficult tasks"（より簡単な課題）は原文の "more difficult tasks" と矛盾</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"be less likely to V" = Vする可能性が低い = Vすることに消極的。"reluctant"（消極的な）は重要な言い換え表現です。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 2 -->
+      <div class="q">
+        <div class="q-num">(2)</div>
+        <div class="q-text" lang="en">Which of the pairs below correctly fills in the blanks (2－a) and (2－b) in the passage? Consider the context and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">空欄(2-a)と(2-b)に入る正しい組み合わせはどれか。文脈を考慮して答えなさい。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">(2-a) a practice / (2-b) a stress</span><span class="opt-jp hidden-until-reveal">練習志向 / ストレス志向</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">(2-a) an intelligence / (2-b) an ability</span><span class="opt-jp hidden-until-reveal">知能志向 / 能力志向</span></div>
+          <div class="opt correct-opt"><span class="opt-label">3</span><span class="opt-text">(2-a) a mastery / (2-b) a performance</span><span class="opt-jp hidden-until-reveal">習熟志向 / 遂行志向</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">(2-a) a happiness / (2-b) a program</span><span class="opt-jp hidden-until-reveal">幸福志向 / プログラム志向</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">3</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 文脈を確認：(2-a)は「より多く学ぶ目標」、(2-b)は「知っていることを示す目標」と対比</li>
+                    <li>② "mastery"（習熟）= 学習・スキル向上に焦点 → 「より多く学ぶ」に一致</li>
+                    <li>③ "performance"（遂行・パフォーマンス）= 結果を見せることに焦点 → 「知っていることを示す」に一致</li>
+                    <li>④ これは心理学の「達成目標理論」の専門用語</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> "stress orientation"は心理学用語として存在せず、文脈にも合わない</div>
+                    <div class="ans-wrong-item"><b>2:</b> intelligence/abilityは能力そのもので、「学ぶ/見せる」という目標の対比と無関係</div>
+                    <div class="ans-wrong-item"><b>4:</b> happiness/programは達成志向の心理学概念として不適切</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>mastery orientation（習熟志向）とperformance orientation（遂行志向）は教育心理学の重要概念。成長マインドセット≒習熟志向、固定マインドセット≒遂行志向と関連します。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 3 -->
+      <div class="q">
+        <div class="q-num">(3)</div>
+        <div class="q-text" lang="en">How does the author interpret the findings of the 2016 study, which is shown in the underlined part (3) in the passage? Consider the context, choose one from the choices, and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(3)に示された2016年の研究結果を、著者はどのように解釈しているか。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">the university students with a fixed mindset performed as well in a subject as those with a growth mindset</span><span class="opt-jp hidden-until-reveal">固定マインドセットの大学生は成長マインドセットの学生と同等の成績だった</span></div>
+          <div class="opt correct-opt"><span class="opt-label">2</span><span class="opt-text">the mindset university students adopted, changed depending on the situation</span><span class="opt-jp hidden-until-reveal">大学生が採用するマインドセットは状況によって変化した</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">the results of the experiment relied on the university students' innate abilities</span><span class="opt-jp hidden-until-reveal">実験結果は大学生の生まれつきの能力に依存した</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">the mindset university students developed was exclusively affected by the learning experience</span><span class="opt-jp hidden-until-reveal">大学生が発達させたマインドセットは学習経験のみに影響された</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">2</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 下線部(3)の後の文脈を確認：「これは部分的には理解のされ方によるかもしれない」</li>
+                    <li>② 続く文：「人々は異なる時点で異なるマインドセットを示すことがある」</li>
+                    <li>③ Dweckの引用：「混合は経験とともに継続的に進化する」</li>
+                    <li>④ 著者の解釈：マインドセットは「状況に依存する動的なもの」という見方</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> 本文は「関連がなかった」と述べており、「同等の成績」という比較ではない</div>
+                    <div class="ans-wrong-item"><b>3:</b> "innate abilities"（生まれつきの能力）への言及は本文にない</div>
+                    <div class="ans-wrong-item"><b>4:</b> "exclusively"（のみ）は本文の「文脈に依存」という説明と矛盾</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>著者は研究結果の「解釈」を問われています。直後の説明（dynamic, depends on the context）が解釈の根拠となります。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 4 -->
+      <div class="q">
+        <div class="q-num">(4)</div>
+        <div class="q-text" lang="en">Which of the items below is the closest in meaning to the underlined part (4) in the passage? Consider the context, choose one from the choices, and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(4) "interventions" の意味に最も近いものはどれか。</div>
+        <div class="opts">
+          <div class="opt correct-opt"><span class="opt-label">1</span><span class="opt-text">educational measures</span><span class="opt-jp hidden-until-reveal">教育的措置</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">psychological issues</span><span class="opt-jp hidden-until-reveal">心理学的問題</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">scientific inventions</span><span class="opt-jp hidden-until-reveal">科学的発明</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">theoretical assumptions</span><span class="opt-jp hidden-until-reveal">理論的仮定</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">1</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "intervention" の基本義：「介入」「介入措置」</li>
+                    <li>② 文脈確認：「生徒の成長マインドセットを高めるinterventionsが学業成績に影響を与えたか」</li>
+                    <li>③ 教育プログラムの文脈で、生徒に働きかける「措置」「取り組み」の意味</li>
+                    <li>④ "educational measures"（教育的措置）が最も適切</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>2:</b> "issues"（問題）は介入・措置という積極的な行動を表さない</div>
+                    <div class="ans-wrong-item"><b>3:</b> "inventions"（発明）は教育的な働きかけとは異なる概念</div>
+                    <div class="ans-wrong-item"><b>4:</b> "assumptions"（仮定）は実践ではなく理論レベルの話</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"intervention" は医療・教育・心理学で「介入」「措置」の意味で使われます。生徒を対象にした「教育的介入」という文脈を押さえましょう。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 5 -->
+      <div class="q">
+        <div class="q-num">(5)</div>
+        <div class="q-text" lang="en">Which of the items below correctly fills in the blank (5) in the passage? Consider the context and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">空欄(5)に入る適切な語はどれか。文脈を考慮して答えなさい。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">Besides</span><span class="opt-jp hidden-until-reveal">その上（追加）</span></div>
+          <div class="opt correct-opt"><span class="opt-label">2</span><span class="opt-text">However</span><span class="opt-jp hidden-until-reveal">しかしながら（逆接）</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">Similarly</span><span class="opt-jp hidden-until-reveal">同様に（類似）</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">Therefore</span><span class="opt-jp hidden-until-reveal">したがって（結果）</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">2</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 前文：「成長マインドセットを教えることは生徒の成果に最小限の影響しかなかった」（否定的）</li>
+                    <li>② 後文：「場合によっては効果的であった」（肯定的）</li>
+                    <li>③ 前後が対照的 → 逆接の接続詞が必要</li>
+                    <li>④ "However"（しかしながら）が適切</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> Besides（追加）は同じ方向の情報を加える時に使う</div>
+                    <div class="ans-wrong-item"><b>3:</b> Similarly（類似）は前後が似た内容の時に使う</div>
+                    <div class="ans-wrong-item"><b>4:</b> Therefore（結果）は因果関係を示す時に使う</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>接続詞問題は前後の論理関係を確認！「効果なし」→「でも一部では効果あり」は典型的な逆接パターンです。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 6 -->
+      <div class="q">
+        <div class="q-num">(6)</div>
+        <div class="q-text" lang="en">Which of the items below is the closest in meaning to the underlined part (6) in the passage? Consider the context and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(6) "Given the complexity of human understanding and learning processes" の意味に最も近いものはどれか。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">Although we understand and learn things in a complicated way</span><span class="opt-jp hidden-until-reveal">私たちは複雑な方法で物事を理解し学ぶが</span></div>
+          <div class="opt correct-opt"><span class="opt-label">2</span><span class="opt-text">Considering that how we understand and learn things is not at all simple</span><span class="opt-jp hidden-until-reveal">人間の理解と学習の仕方が全く単純ではないことを考慮すると</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">If it were not for the elaborate mechanism of understanding and learning things</span><span class="opt-jp hidden-until-reveal">理解と学習の精巧なメカニズムがなければ</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">Unless we discover the mechanism of understanding and learning things</span><span class="opt-jp hidden-until-reveal">理解と学習のメカニズムを発見しない限り</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">2</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "Given ~" = 「～を考慮すると」「～を前提として」</li>
+                    <li>② "complexity" = 複雑さ = not simple</li>
+                    <li>③ 選択肢2の "Considering that" = "Given" の言い換え</li>
+                    <li>④ "not at all simple" = 複雑さの言い換え</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> "Although"（～だが）は譲歩で、"Given"（考慮すると）とは異なる</div>
+                    <div class="ans-wrong-item"><b>3:</b> "If it were not for"（もし～がなければ）は仮定法で意味が違う</div>
+                    <div class="ans-wrong-item"><b>4:</b> "Unless"（～しない限り）は条件を表し、「考慮」の意味がない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"Given ~" = "Considering ~" = "In view of ~"（～を考慮すると）は超頻出の言い換えパターン！</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 7 -->
+      <div class="q">
+        <div class="q-num">(7)</div>
+        <div class="q-text" lang="en">Rearrange the words in the underlined part (7) in the passage into the correct order. Consider the context and mark the numbers that come at the 1st, 4th and 6th places correctly on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(7)の語を正しい順序に並べ替え、1番目・4番目・6番目に来る番号を答えなさい。</div>
+        <div class="q-text">
+          <b>語群：</b>(1．outcomes 2．achieved 3．than 4．had 5．whose 6．higher 7．those 8．teachers)
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">1番目＝2、4番目＝3、6番目＝5</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 文の構造を確認：「成長マインドセットの教師に教えられた生徒は...固定マインドセットを持つ教師に教えられた生徒より高い成果を達成した」</li>
+                    <li>② "achieved higher outcomes"（より高い成果を達成した）が主節の動詞部分</li>
+                    <li>③ "than those"（～より）で比較対象を導入</li>
+                    <li>④ "whose teachers had a fixed mindset"（教師が固定マインドセットを持っていた）が関係詞節</li>
+                    <li>⑤ 完成文：achieved higher outcomes than those whose teachers had</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">📖 完成した英文</div>
+                  <div class="jp" style="font-size:14px;border-left:3px solid var(--blue)">
+                    Secondary science students taught by teachers with a growth mindset <b>achieved higher outcomes than those whose teachers had</b> a fixed mindset.<br><br>
+                    （成長マインドセットを持つ教師に教えられた中等学校の科学の生徒は、固定マインドセットを持つ教師に教えられた生徒より高い成果を達成した。）
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>比較構文の "those who/whose" は「～する人々」を指す代名詞。than those whose teachers had = 教師が～を持っていた人々より</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 8 -->
+      <div class="q">
+        <div class="q-num">(8)</div>
+        <div class="q-text" lang="en">In the underlined part (8) in the passage, the relative pronoun (which) is omitted. Choose the appropriate position where the relative pronoun can be inserted and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(8)では関係代名詞(which)が省略されている。whichを挿入できる適切な位置はどこか。</div>
+        <div class="q-text">
+          the perceptions <span class="blank">( 1 )</span> primary students had of <span class="blank">( 2 )</span> their potential for improvement <span class="blank">( 3 )</span> were associated with what their teachers thought of <span class="blank">( 4 )</span> the children's academic ability.
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">1</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 関係代名詞whichは先行詞の直後に置く</li>
+                    <li>② "the perceptions (which) primary students had of ~" = 「小学生が～について持っていた認識」</li>
+                    <li>③ "had"の目的語がwhich（= the perceptions）で、目的格の関係代名詞は省略可能</li>
+                    <li>④ 位置(1)がthe perceptionsの直後なので正解</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">📖 構文解析</div>
+                  <div class="jp" style="font-size:13px;border-left:3px solid var(--blue)">
+                    <b>the perceptions [which] primary students had of their potential for improvement</b><br>
+                    ↓<br>
+                    先行詞: the perceptions（認識）<br>
+                    関係詞節: primary students had [which] of their potential for improvement<br>
+                    ↓<br>
+                    = 小学生が自分の改善の可能性について持っていた認識
+                  </div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>2:</b> "had of which" は不自然な語順</div>
+                    <div class="ans-wrong-item"><b>3:</b> この位置ではwere以下が関係詞節になり、主語がなくなる</div>
+                    <div class="ans-wrong-item"><b>4:</b> "what their teachers thought of"の後にwhichを入れても文が成立しない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>目的格の関係代名詞は省略可能！"have a perception of ~"（～についての認識を持つ）の目的語perceptionが先行詞になっています。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 9 -->
+      <div class="q">
+        <div class="q-num">(9)</div>
+        <div class="q-text" lang="en">Which of the items below is the closest in meaning to the underlined part (9) in the passage? Consider the context and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(9)の意味に最も近いものはどれか。文脈を考慮して答えなさい。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">to be aware of the significance of what they have already achieved, and focus on the amount of knowledge they will acquire in the future</span><span class="opt-jp hidden-until-reveal">すでに達成したことの重要性を認識し、将来獲得する知識の量に焦点を当てる</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">to concentrate on what they know today, though they may be less conscious of what they will learn and how it may be learned</span><span class="opt-jp hidden-until-reveal">今日知っていることに集中するが、何を学ぶか・どう学ぶかにはあまり意識しない</span></div>
+          <div class="opt correct-opt"><span class="opt-label">3</span><span class="opt-text">to evaluate the knowledge they have now, to see what more they will be able to learn and the way it may be expanded on</span><span class="opt-jp hidden-until-reveal">今持っている知識を評価し、さらに何を学べるか・どのように拡張できるかを見る</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">to recognize it is worth acquiring extensive knowledge from now on and pay less attention to the value of their current knowledge</span><span class="opt-jp hidden-until-reveal">今後広範な知識を獲得する価値があると認識し、現在の知識の価値にはあまり注目しない</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">3</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 下線部の構造：「これが不十分かもしれないこと」＋「拡張できること」＋「その方法」の3点</li>
+                    <li>② "insufficient" = 不十分 → 「今の知識の評価」という意味を含む</li>
+                    <li>③ "extended" = 拡張される → 「さらに学べる」「拡張できる」</li>
+                    <li>④ "how to do that" = その方法 → 「どのように拡張できるか」</li>
+                    <li>⑤ 選択肢3がこれら全てをカバー</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> "already achieved"（すでに達成した）は下線部の「insufficient」（不十分）と矛盾</div>
+                    <div class="ans-wrong-item"><b>2:</b> "less conscious"（あまり意識しない）は下線部の積極的な姿勢と反対</div>
+                    <div class="ans-wrong-item"><b>4:</b> "pay less attention to current knowledge"（現在の知識に注目しない）は本文の「value it」と矛盾</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>前文の "be aware of what they know at any time and value it"（今知っていることを認識し評価する）+ 下線部（不十分かもしれないことと拡張方法を知る）= 選択肢3の内容</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 10 (T/F) -->
+      <div class="q">
+        <div class="q-num">(10) True or False</div>
+        <div class="q-text">本文の内容と合っていれば T、合っていなければ F を選びなさい。</div>
+
+        <div class="tf-item" lang="en">
+          <span class="tf-num">1</span>
+          The growth vs. fixed mindset theory emerged from the study examining junior high school students, who performed challenging tasks and evaluated their mindsets.
+          <span class="tf-answer">F</span>
+        </div>
+        <div class="tf-item" lang="en">
+          <span class="tf-num">2</span>
+          The pioneer researchers' studies reported that those who have fixed mindsets can learn more because of their inherent capacities.
+          <span class="tf-answer">F</span>
+        </div>
+        <div class="tf-item" lang="en">
+          <span class="tf-num">3</span>
+          The idea of mindset has been developed by incorporating diverse notions studied in academic fields for more than a hundred years.
+          <span class="tf-answer">T</span>
+        </div>
+        <div class="tf-item" lang="en">
+          <span class="tf-num">4</span>
+          Some studies showed that not only scores on academic subjects, but also coping skills for taking exams are affected by the belief students have about their abilities.
+          <span class="tf-answer">T</span>
+        </div>
+        <div class="tf-item" lang="en">
+          <span class="tf-num">5</span>
+          Based on the idea of the growth vs. fixed mindset, those who think they are incapable of learning and growing are more likely to manage their anxiety.
+          <span class="tf-answer">F</span>
+        </div>
+        <div class="tf-item" lang="en">
+          <span class="tf-num">6</span>
+          All studies have consistently found the advantage of having the growth mindset.
+          <span class="tf-answer">F</span>
+        </div>
+        <div class="tf-item" lang="en">
+          <span class="tf-num">7</span>
+          According to some researchers of a growth mindset, context and culture developed in a school can be irrelevant to students' improvements.
+          <span class="tf-answer">F</span>
+        </div>
+        <div class="tf-item" lang="en">
+          <span class="tf-num">8</span>
+          The author suggests that teachers and parents should avoid talking with children in such a way that leads them to believe their capacity remains static throughout their lives.
+          <span class="tf-answer">T</span>
+        </div>
+
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 解答</div>
+                  <div class="correct">1. F　2. F　3. T　4. T　5. F　6. F　7. F　8. T</div>
+                </div>
+                <div class="tf-explanations">
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>1. False ✗</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>The growth vs. fixed mindset theory emerged from the study examining junior high school students...</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>成長vs固定マインドセット理論は、中学生を対象とした研究から生まれた...</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第2段落）：</b>"It grew out of studies they led, in which <b>primary school children</b> were engaged in a task..."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文では「小学生(primary school children)」が対象とされており、選択肢の「中学生(junior high school students)」は誤り。</div>
+                  </div>
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>2. False ✗</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>The pioneer researchers' studies reported that those who have fixed mindsets can learn more because of their inherent capacities.</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>先駆的研究者の研究は、固定マインドセットを持つ人々は生まれつきの能力のためにより多く学べると報告した。</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第2段落）：</b>"These findings led to the inference that <b>a fixed mindset was less conducive to learning</b> than a growth mindset."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文では固定マインドセットは「学習に適さない(less conducive to learning)」と述べられており、「より多く学べる」は真逆。</div>
+                  </div>
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>3. True ✓</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>The idea of mindset has been developed by incorporating diverse notions studied in academic fields for more than a hundred years.</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>マインドセットの考えは、100年以上にわたって学術分野で研究されてきた多様な概念を取り入れて発展してきた。</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第3段落）：</b>"Psychologists have been researching the notion of a mindset... <b>for over a century</b>."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文は「1世紀以上(for over a century)」にわたる研究と、自己効力感理論(1970年代)や達成志向研究(1980-90年代)など多様な概念との関連を述べている。</div>
+                  </div>
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>4. True ✓</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>Some studies showed that not only scores on academic subjects, but also coping skills for taking exams are affected by the belief students have about their abilities.</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>いくつかの研究は、学業成績だけでなく、試験への対処スキルも生徒が自分の能力について持つ信念に影響されることを示した。</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第4段落）：</b>"Studies show students' mindsets influence their <b>maths and science outcomes</b>, their academic ability and their <b>ability to cope with exams</b>."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文は「数学・科学の成績」と「試験への対処能力(ability to cope with exams)」の両方がマインドセットに影響されると明記している。</div>
+                  </div>
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>5. False ✗</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>Based on the idea of the growth vs. fixed mindset, those who think they are incapable of learning and growing are more likely to manage their anxiety.</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>成長vs固定マインドセットの考えに基づくと、学習・成長できないと思う人々は不安をうまく管理できる傾向がある。</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第4段落）：</b>"those who don't view themselves as having the ability to learn and grow are <b>more prone to psychological distress</b>."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文では「心理的苦痛を受けやすい(more prone to psychological distress)」と述べており、「不安を管理できる」は正反対。</div>
+                  </div>
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>6. False ✗</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>All studies have consistently found the advantage of having the growth mindset.</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>全ての研究が一貫して成長マインドセットを持つことの利点を見出している。</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第4-5段落）：</b>"But the theory <b>has not received universal support</b>." / "A 2017 study found teaching a growth mindset had <b>no effect</b> on student outcomes."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文は「普遍的な支持を受けていない」「効果がなかった」研究も紹介しており、「全ての研究が一貫して」は誤り。</div>
+                  </div>
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>7. False ✗</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>According to some researchers of a growth mindset, context and culture developed in a school can be irrelevant to students' improvements.</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>成長マインドセットの研究者によると、学校で発達した文脈と文化は生徒の改善と無関係であり得る。</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第5段落）：</b>"Dweck and colleagues have noted that a school's context and culture <b>can be responsible for</b> whether the gains made from a growth mindset intervention are sustained."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文では文脈と文化が「責任を持つ可能性がある(can be responsible for)」と述べており、「無関係(irrelevant)」は正反対。</div>
+                  </div>
+
+                  <div class="tf-explain">
+                    <div class="tf-explain-header"><b>8. True ✓</b></div>
+                    <div class="tf-explain-stmt"><b>選択肢：</b>The author suggests that teachers and parents should avoid talking with children in such a way that leads them to believe their capacity remains static throughout their lives.</div>
+                    <div class="tf-explain-stmt-jp"><b>訳：</b>著者は、教師と親は子供に能力が一生固定されていると信じさせるような話し方を避けるべきだと示唆している。</div>
+                    <div class="tf-explain-quote"><b>本文根拠（第7段落）：</b>"Educators and parents need to ensure that their dialogue with their children <b>does not imply that the capacity is fixed</b>."</div>
+                    <div class="tf-explain-reason"><b>解説：</b>本文は「能力が固定されていることを暗示しないようにする必要がある」と述べており、選択肢の「static(静的)」は「fixed」の言い換え。</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== SECTION 2 VIEW ===== -->
+  <div class="view" id="view-sec-2" role="tabpanel">
+    <main class="wrap">
+      <div class="sec-header">
+        <div class="sec-num">2</div>
+        <span class="sec-title">【２】会話文：研究レポートについての相談</span>
+        <span class="sec-tag">6問</span>
+      </div>
+
+      <!-- DIALOGUE -->
+      <div class="passage" lang="en">
+        <p><b>Student:</b> Uh, excuse me, Professor Matsumoto, I know your office hours are the day after tomorrow, but I was wondering if you could give me a hand?</p>
+        <p><b>Professor:</b> Sure, Sato-san. What did you want to talk about?</p>
+        <p><b>Student:</b> Well, I have some quick questions about how to write a research report I am working on this semester.</p>
+        <p><b>Professor:</b> Oh, what kinds of questions do you have? I know you have been doing well so far.</p>
+        <p><b>Student:</b> Yes, I've got all my data, so I'm starting to summarize it now, preparing graphs and stuff. But I'm just . . . I'm afraid that it's not enough, but I <span class="ul">(1)(1．am 2．can 3．else 4．I 5．not 6．put 7．sure 8．what)</span> in my report.</p>
+        <p><b>Professor:</b> I hear the same troubles from many students. Let me see, don't you recall what I told you in my class? You are the expert on what you've done. In other words, you know exactly what you need to include in your report.</p>
+        <p>So, think <span class="ul">(2)(1．would 2．if 3．you 4．say 5．need 6．about 7．what 8．to)</span> you were going to explain your research to someone with general knowledge about your research, like . . . like to your mother. That's usually a rule of thumb.</p>
+        <p><b>Student:</b> OK. I've got it.</p>
+        <p><b>Professor:</b> I hope you are all right with my saying how much you know about the subject.</p>
+        <p><b>Student:</b> Hmm . . . <span class="ul">(3)Something just came into my mind and went away again.</span></p>
+        <p><b>Professor:</b> That happens to me a lot. So, I often carry a little notebook and write down questions or ideas that occur to me. For example, I went to the dental clinic last week and I knew I wouldn't remember everything I wanted to ask the dentist, so <span class="blank">( 4 )</span>.</p>
+        <p><b>Student:</b> That's a good idea. Since I'm so busy now at the end of the semester, <span class="ul">(5)I'm getting pretty forgetful these days.</span></p>
+        <p><b>Professor:</b> OK. Keep at it. <span class="ul">(6)I'd be happy to look over a draft before you hand in the final version, if you like.</span></p>
+        <p><b>Student:</b> OK. Thanks very much. Well, see you soon.</p>
+      </div>
+
+      <!-- BULK ACTIONS -->
+      <div class="bulk-actions">
+        <button class="expand-all-btn" data-act="expand-all">📖 すべて表示</button>
+        <button class="collapse-all-btn" data-act="collapse-all">📕 すべて閉じる</button>
+      </div>
+
+      <!-- QUESTION 1 -->
+      <div class="q">
+        <div class="q-num">(1)</div>
+        <div class="q-text" lang="en">Rearrange the words in the underlined part (1) in the passage into the correct order. Consider the context and mark the numbers correctly, from top to bottom, on your Answer Sheet.</div>
+        <div class="q-text">
+          <b>語群：</b>(1．am 2．can 3．else 4．I 5．not 6．put 7．sure 8．what)
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct">1-5-7-8-3-4-2-6</div>
+                  <div class="jp">am not sure what else I can put（他に何を入れられるかわからない）</div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 文脈確認：「十分じゃないかもしれないが、レポートに他に何を入れたらいいか...」</li>
+                    <li>② "I am not sure ~" = 「～かわからない」という基本構文</li>
+                    <li>③ "what else I can put" = 「他に何を入れられるか」（間接疑問文）</li>
+                    <li>④ 完成文：I am not sure what else I can put in my report</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">📖 完成した英文</div>
+                  <div class="jp" style="font-size:14px;border-left:3px solid var(--blue)">
+                    but I <b>am not sure what else I can put</b> in my report.<br><br>
+                    （でも、レポートに他に何を入れられるかわからないんです。）
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"be not sure + 間接疑問文" は「～かわからない」の頻出パターン。間接疑問文は「疑問詞 + S + V」の語順！</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 2 -->
+      <div class="q">
+        <div class="q-num">(2)</div>
+        <div class="q-text" lang="en">Rearrange the words in the underlined part (2) in the passage into the correct order. Consider the context and mark the numbers correctly, from top to bottom, on your Answer Sheet.</div>
+        <div class="q-text">
+          <b>語群：</b>(1．would 2．if 3．you 4．say 5．need 6．about 7．what 8．to)
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct">6-7-3-1-5-8-4-2</div>
+                  <div class="jp">about what you would need to say if（もし～なら何を言う必要があるかについて）</div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 文脈確認：「考えてみてください...あなたのお母さんに研究を説明するとしたら」</li>
+                    <li>② "think about ~" = 「～について考える」</li>
+                    <li>③ "what you would need to say" = 「何を言う必要があるか」（仮定法の帰結節）</li>
+                    <li>④ "if you were going to explain" = 「もし説明するとしたら」（仮定法の条件節）</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">📖 完成した英文</div>
+                  <div class="jp" style="font-size:14px;border-left:3px solid var(--blue)">
+                    So, think <b>about what you would need to say if</b> you were going to explain your research to someone...<br><br>
+                    （だから、もし誰かにあなたの研究を説明するとしたら何を言う必要があるかについて考えてみてください。）
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>仮定法の「if + 過去形, would + 動詞」パターン。"would need to say" が帰結節で、"if you were going to ~" が条件節です。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 3 -->
+      <div class="q">
+        <div class="q-num">(3)</div>
+        <div class="q-text" lang="en">Which of the items below is the closest in meaning to the underlined part (3) in the passage? Choose one from the choices and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(3) "Something just came into my mind and went away again" の意味に最も近いものはどれか。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">Someone gave me a good idea, but I don't agree with it.</span><span class="opt-jp hidden-until-reveal">誰かが良いアイデアをくれたが、同意しない</span></div>
+          <div class="opt correct-opt"><span class="opt-label">2</span><span class="opt-text">An idea occurred to me, but I couldn't keep it in my mind.</span><span class="opt-jp hidden-until-reveal">アイデアが浮かんだが、頭に留めておけなかった</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">Few people paid serious attention to my idea.</span><span class="opt-jp hidden-until-reveal">私のアイデアに真剣に注目した人はほとんどいなかった</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">People had very different ideas from mine.</span><span class="opt-jp hidden-until-reveal">人々は私とは非常に異なるアイデアを持っていた</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">2</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "came into my mind" = 「頭に浮かんだ」</li>
+                    <li>② "went away again" = 「また消えてしまった」</li>
+                    <li>③ 全体の意味：「何か思い浮かんだけど、また消えてしまった」= 忘れた</li>
+                    <li>④ 選択肢2の "occurred to me"（浮かんだ）+ "couldn't keep it"（留めておけなかった）が一致</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> "Someone gave me"（誰かがくれた）は "came into my mind"（頭に浮かんだ）と異なる</div>
+                    <div class="ans-wrong-item"><b>3:</b> 他の人々の反応についての言及はない</div>
+                    <div class="ans-wrong-item"><b>4:</b> 他の人々のアイデアとの比較はない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"come into one's mind" = "occur to someone" = 「頭に浮かぶ」。後続の教授のアドバイス（ノートに書く）とも文脈が合います。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 4 -->
+      <div class="q">
+        <div class="q-num">(4)</div>
+        <div class="q-text" lang="en">Which of the items below best fills in the blank (4) in the passage? Consider the context, choose one from the choices and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">空欄(4)に入る最も適切なものはどれか。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">I don't want to go to the dentist</span><span class="opt-jp hidden-until-reveal">歯医者に行きたくない</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">my dentist always asks me a lot of questions</span><span class="opt-jp hidden-until-reveal">歯医者はいつも私にたくさん質問する</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">I need someone to remember what I wanted to ask the dentist</span><span class="opt-jp hidden-until-reveal">歯医者に聞きたかったことを覚えてくれる人が必要だ</span></div>
+          <div class="opt correct-opt"><span class="opt-label">4</span><span class="opt-text">I made a list of things I wanted to ask the dentist</span><span class="opt-jp hidden-until-reveal">歯医者に聞きたいことのリストを作った</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">4</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 前文を確認：「ノートに質問やアイデアを書き留める」というアドバイス</li>
+                    <li>② 歯医者の例：「全部覚えていられないとわかっていたので...」</li>
+                    <li>③ "so" の後には具体的な対策が来るはず</li>
+                    <li>④ 「リストを作った」= ノートに書き留めるの具体例</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> 「行きたくない」は「ノートに書く」アドバイスと無関係</div>
+                    <div class="ans-wrong-item"><b>2:</b> 歯医者からの質問は話題ではない</div>
+                    <div class="ans-wrong-item"><b>3:</b> 「誰かに覚えてもらう」は自分でノートに書くアドバイスと矛盾</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>教授のアドバイス「ノートに書き留める」の具体例として、「リストを作った」が論理的に最適です。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 5 -->
+      <div class="q">
+        <div class="q-num">(5)</div>
+        <div class="q-text" lang="en">Which of the items below is the closest in meaning to the underlined part (5) in the passage? Choose one from the choices and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(5) "I'm getting pretty forgetful these days" の意味に最も近いものはどれか。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">I am unlikely to forget things</span><span class="opt-jp hidden-until-reveal">物事を忘れることはほとんどない</span></div>
+          <div class="opt correct-opt"><span class="opt-label">2</span><span class="opt-text">my memory often fails me</span><span class="opt-jp hidden-until-reveal">記憶がよく失敗する（よく忘れる）</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">I hardly ever forget things</span><span class="opt-jp hidden-until-reveal">物事を忘れることはめったにない</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">I keep my memory sharp</span><span class="opt-jp hidden-until-reveal">記憶を鋭く保っている</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">2</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "forgetful" = 「忘れっぽい」「物忘れがひどい」</li>
+                    <li>② "getting pretty forgetful" = 「かなり忘れっぽくなっている」</li>
+                    <li>③ 選択肢2 "my memory often fails me" = 「記憶がよく失敗する」= 忘れっぽい</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> "unlikely to forget"（忘れにくい）は "forgetful"（忘れやすい）と正反対</div>
+                    <div class="ans-wrong-item"><b>3:</b> "hardly ever forget"（めったに忘れない）も正反対</div>
+                    <div class="ans-wrong-item"><b>4:</b> "keep my memory sharp"（記憶を鋭く保つ）も正反対</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"forgetful" = 「忘れっぽい」。"my memory fails me" は「記憶が私を裏切る」→「思い出せない」という表現です。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 6 -->
+      <div class="q">
+        <div class="q-num">(6)</div>
+        <div class="q-text" lang="en">Which of the items below is the closest in meaning to the underlined part (6) in the passage? Choose one from the choices and mark the number on your Answer Sheet.</div>
+        <div class="q-text-jp hidden-until-reveal">下線部(6) "I'd be happy to look over a draft before you hand in the final version" の意味に最も近いものはどれか。</div>
+        <div class="opts vertical">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">I am willing to check your completed, well-written assignment only</span><span class="opt-jp hidden-until-reveal">完成した、よく書かれた課題のみを喜んで確認する</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">I am unwilling to see your assignment unfinished</span><span class="opt-jp hidden-until-reveal">未完成の課題を見るのは嫌だ</span></div>
+          <div class="opt correct-opt"><span class="opt-label">3</span><span class="opt-text">I am willing to read your incomplete assignment</span><span class="opt-jp hidden-until-reveal">未完成の課題を喜んで読む</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">I am unwilling to revise an unreadable assignment</span><span class="opt-jp hidden-until-reveal">読めない課題を修正するのは嫌だ</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">3</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "I'd be happy to ~" = 「喜んで～します」= willing to</li>
+                    <li>② "look over" = 「目を通す、確認する」</li>
+                    <li>③ "a draft before the final version" = 最終版前の下書き = 未完成のもの</li>
+                    <li>④ 「未完成の課題を喜んで見る」= 選択肢3</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> "completed"（完成した）は "draft"（下書き）と矛盾</div>
+                    <div class="ans-wrong-item"><b>2:</b> "unwilling"（嫌がる）は "I'd be happy"（喜んで）と正反対</div>
+                    <div class="ans-wrong-item"><b>4:</b> "unwilling"（嫌がる）は "I'd be happy"（喜んで）と正反対</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"I'd be happy to ~" は丁寧な申し出の表現で、"willing to ~"（喜んで～する）と同義。"draft"（下書き）= "incomplete"（未完成）の言い換えです。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== SECTION 3 VIEW ===== -->
+  <div class="view" id="view-sec-3" role="tabpanel">
+    <main class="wrap">
+      <div class="sec-header">
+        <div class="sec-num">3</div>
+        <span class="sec-title">【３】文法・語法</span>
+        <span class="sec-tag">8問</span>
+      </div>
+
+      <!-- BULK ACTIONS -->
+      <div class="bulk-actions">
+        <button class="expand-all-btn" data-act="expand-all">📖 すべて表示</button>
+        <button class="collapse-all-btn" data-act="collapse-all">📕 すべて閉じる</button>
+      </div>
+
+      <!-- QUESTION 1 -->
+      <div class="q">
+        <div class="q-num">(1)</div>
+        <div class="q-text" lang="en">As the government plans to <span class="blank">( 1 )</span> the consumption tax soon, people are rushing to buy many products.</div>
+        <div class="q-text-jp hidden-until-reveal">政府がまもなく消費税を（　）する計画なので、人々は多くの製品を急いで買っている。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">being raised</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">being risen</span></div>
+          <div class="opt correct-opt"><span class="opt-label">3</span><span class="opt-text">raise</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">rise</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">3</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "plan to V"（Vする計画）の後には動詞の原形が来る</li>
+                    <li>② 目的語 "the consumption tax" があるので他動詞が必要</li>
+                    <li>③ raise（他動詞）= ～を上げる / rise（自動詞）= 上がる</li>
+                    <li>④ 「税金を上げる」は他動詞の raise が正解</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> being raised は受動態の進行形で、plan to の後には不適切</div>
+                    <div class="ans-wrong-item"><b>2:</b> rise は自動詞なので受動態にできない（being risen は文法的に不可）</div>
+                    <div class="ans-wrong-item"><b>4:</b> rise は自動詞なので目的語を取れない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>raise（他動詞）vs rise（自動詞）は頻出！raise - raised - raised / rise - rose - risen</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 2 -->
+      <div class="q">
+        <div class="q-num">(2)</div>
+        <div class="q-text" lang="en">The day you suggested <span class="blank">( 2 )</span> fine with me, so I can attend the meeting.</div>
+        <div class="q-text-jp hidden-until-reveal">あなたが提案した日は私には都合が（　）ので、その会議に出席できます。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">are</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">keep</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">resembles</span></div>
+          <div class="opt correct-opt"><span class="opt-label">4</span><span class="opt-text">seems</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">4</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 主語は "The day you suggested"（単数）なので三人称単数の動詞が必要</li>
+                    <li>② 補語に形容詞 "fine" が来る → SVC構文</li>
+                    <li>③ "seem + 形容詞" = 「～のように思われる」でSVC構文成立</li>
+                    <li>④ seems fine with me = 「私には都合がよさそうだ」</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> are は複数形で、単数の "The day" と一致しない</div>
+                    <div class="ans-wrong-item"><b>2:</b> keep fine は「良い状態を保つ」で文脈に合わない</div>
+                    <div class="ans-wrong-item"><b>3:</b> resemble（～に似ている）は他動詞で目的語が必要、fine は形容詞</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"seem + 形容詞" は「～のように見える/思われる」。主語が単数の "The day" なので seems（三単現）になります。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 3 -->
+      <div class="q">
+        <div class="q-num">(3)</div>
+        <div class="q-text" lang="en">The newspaper <span class="blank">( 3 )</span> that firefighters saved a cat that had fallen into a hole.</div>
+        <div class="q-text-jp hidden-until-reveal">新聞は、消防士が穴に落ちた猫を救助したと（　）。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">discusses</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">refers</span></div>
+          <div class="opt correct-opt"><span class="opt-label">3</span><span class="opt-text">says</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">talks</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">3</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① that節を直接目的語に取れる動詞を探す</li>
+                    <li>② say that ~ = 「～と言っている/書いてある」で that節を取れる</li>
+                    <li>③ 新聞・記事を主語にした "The newspaper says that ~" は自然な表現</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> discuss は他動詞だが that節を直接取らない（discuss + 名詞）</div>
+                    <div class="ans-wrong-item"><b>2:</b> refer は自動詞で refer to ~ の形を取る（that節を直接取らない）</div>
+                    <div class="ans-wrong-item"><b>4:</b> talk は自動詞で talk about ~ の形を取る（that節を直接取らない）</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"say that ~" は新聞・本・記事などを主語にして「～と書いてある」の意味で使えます。talk/discuss/referは that節を直接取れません。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 4 -->
+      <div class="q">
+        <div class="q-num">(4)</div>
+        <div class="q-text" lang="en">I remember <span class="blank">( 4 )</span> this tourist resort with my parents five years ago.</div>
+        <div class="q-text-jp hidden-until-reveal">5年前に両親とこの観光地を訪れたことを覚えている。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">going</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">to go</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">to visit</span></div>
+          <div class="opt correct-opt"><span class="opt-label">4</span><span class="opt-text">visiting</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">4</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "five years ago"（5年前）= 過去の出来事</li>
+                    <li>② remember + Ving = 「（過去に）～したことを覚えている」</li>
+                    <li>③ remember + to V = 「（これから）～することを覚えている/忘れずに～する」</li>
+                    <li>④ 過去の出来事なので visiting（動名詞）が正解</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> going は「行くこと」で場所 "this tourist resort" への言及に不自然</div>
+                    <div class="ans-wrong-item"><b>2:</b> to go は未来の動作を表し、"five years ago" と矛盾</div>
+                    <div class="ans-wrong-item"><b>3:</b> to visit は未来の動作を表し、"five years ago" と矛盾</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>remember + Ving（過去の記憶）vs remember + to V（未来の予定）は超頻出！forget, regret, try なども同様のパターンがあります。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 5 -->
+      <div class="q">
+        <div class="q-num">(5)</div>
+        <div class="q-text" lang="en">He <span class="blank">( 5 )</span> for two hours at the station when his girlfriend came.</div>
+        <div class="q-text-jp hidden-until-reveal">彼女が来たとき、彼は駅で2時間待っていた。</div>
+        <div class="opts">
+          <div class="opt correct-opt"><span class="opt-label">1</span><span class="opt-text">had been waiting</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">has waited</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">is waiting</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">was waited</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">1</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "when his girlfriend came"（彼女が来た時）= 過去の基準点</li>
+                    <li>② "for two hours"（2時間）= 継続を表す期間</li>
+                    <li>③ 過去のある時点までの継続 → 過去完了進行形 "had been Ving"</li>
+                    <li>④ 「来た時点まで2時間ずっと待っていた」= had been waiting</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>2:</b> has waited（現在完了）は過去の came と時制が合わない</div>
+                    <div class="ans-wrong-item"><b>3:</b> is waiting（現在進行形）は過去の came と時制が合わない</div>
+                    <div class="ans-wrong-item"><b>4:</b> wait は自動詞なので受動態（was waited）にできない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>過去完了進行形 "had been Ving" は「過去のある時点まで～し続けていた」を表します。when節の過去形が基準点になります。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 6 -->
+      <div class="q">
+        <div class="q-num">(6)</div>
+        <div class="q-text" lang="en">One reason <span class="blank">( 6 )</span> Kenji likes his academic major is that it is directly related to his dream for the future.</div>
+        <div class="q-text-jp hidden-until-reveal">健二が自分の専攻を好きな理由の一つは、それが将来の夢に直接関係しているからだ。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">which</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">when</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">where</span></div>
+          <div class="opt correct-opt"><span class="opt-label">4</span><span class="opt-text">why</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">4</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 先行詞 "One reason"（理由）を確認</li>
+                    <li>② reason を修飾する関係副詞は why</li>
+                    <li>③ "the reason why S + V" = 「SがVする理由」</li>
+                    <li>④ One reason why Kenji likes ~ = 「健二が～を好きな理由の一つ」</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> which は「もの」を先行詞とし、reason とは合わない</div>
+                    <div class="ans-wrong-item"><b>2:</b> when は「時」を先行詞とし、reason とは合わない</div>
+                    <div class="ans-wrong-item"><b>3:</b> where は「場所」を先行詞とし、reason とは合わない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>関係副詞の先行詞パターン: the reason why / the place where / the time when / the way how（howは現代英語では省略されることが多い）</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 7 -->
+      <div class="q">
+        <div class="q-num">(7)</div>
+        <div class="q-text" lang="en">Don't let your dog be <span class="blank">( 7 )</span> to your neighbors. It is against the rules in this apartment building.</div>
+        <div class="q-text-jp hidden-until-reveal">あなたの犬が近所の人に迷惑をかけないようにしてください。このマンションのルールに反します。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">annoyed</span></div>
+          <div class="opt correct-opt"><span class="opt-label">2</span><span class="opt-text">annoying</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">feared</span></div>
+          <div class="opt"><span class="opt-label">4</span><span class="opt-text">fearing</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">2</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① "be + 形容詞 + to ~" の形で、犬が近所の人に与える影響を表す</li>
+                    <li>② annoying = 「迷惑をかける、イライラさせる」（能動的意味）</li>
+                    <li>③ annoyed = 「イライラしている」（受動的意味）</li>
+                    <li>④ 犬が近所に「迷惑をかける」→ annoying（現在分詞）が正解</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> annoyed は「イライラしている」で、犬が迷惑を受ける側になってしまう</div>
+                    <div class="ans-wrong-item"><b>3:</b> feared は「恐れられている」で文脈と合わない</div>
+                    <div class="ans-wrong-item"><b>4:</b> fearing は「恐れている」で犬が恐怖を感じる側になる</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>-ing形容詞 = 「～させる」（能動）、-ed形容詞 = 「～している」（受動）。boring/bored, exciting/excited なども同様です。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION 8 -->
+      <div class="q">
+        <div class="q-num">(8)</div>
+        <div class="q-text" lang="en"><span class="blank">( 8 )</span> the first one had numerous grammatical mistakes, the second essay submitted by the student was nearly perfect.</div>
+        <div class="q-text-jp hidden-until-reveal">最初のものには多くの文法ミスがあった（　）、その学生が提出した2番目のエッセイはほぼ完璧だった。</div>
+        <div class="opts">
+          <div class="opt"><span class="opt-label">1</span><span class="opt-text">Afterward</span></div>
+          <div class="opt"><span class="opt-label">2</span><span class="opt-text">Before</span></div>
+          <div class="opt"><span class="opt-label">3</span><span class="opt-text">Hence</span></div>
+          <div class="opt correct-opt"><span class="opt-label">4</span><span class="opt-text">While</span></div>
+        </div>
+        <div class="q-btns">
+          <button class="ans-btn" aria-expanded="false">解答を見る 💡</button>
+        </div>
+        <div class="ans-box">
+          <div class="ans-inner">
+            <div class="ans-content">
+              <div class="ans-header">💡 解答解説</div>
+              <div class="ans-body">
+                <div class="ans-section">
+                  <div class="ans-section-title">✅ 正解</div>
+                  <div class="correct-compact"><span class="correct-num">4</span></div>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">🎯 解き方ステップ</div>
+                  <ol class="ans-steps">
+                    <li>① 最初のエッセイ = 「多くの文法ミス」（悪い）</li>
+                    <li>② 2番目のエッセイ = 「ほぼ完璧」（良い）</li>
+                    <li>③ 対照的な内容 → 対比を表す接続詞が必要</li>
+                    <li>④ "While ~" = 「～である一方で」で対比を表現</li>
+                  </ol>
+                </div>
+                <div class="ans-section">
+                  <div class="ans-section-title">❌ 不正解の理由</div>
+                  <div class="ans-wrong">
+                    <div class="ans-wrong-item"><b>1:</b> Afterward（その後）は副詞で、節を導けない</div>
+                    <div class="ans-wrong-item"><b>2:</b> Before（～する前に）は時間関係を表し、対比の意味がない</div>
+                    <div class="ans-wrong-item"><b>3:</b> Hence（したがって）は結果を表し、対比ではない</div>
+                  </div>
+                </div>
+                <div class="tip"><b>💡 ポイント：</b>"While" は「～する間」の意味だけでなく、「～である一方で」と対比を表す接続詞としても使われます！</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== FLOATING ACTION BUTTON ===== -->
+  <button class="fab" id="fab" aria-label="ページトップへ戻る">↑</button>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    東京理科大学 理工学部 2021 完全解説 | 作成: Claude
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    const SCROLL_THRESHOLD = 400;
+    const STORAGE_KEYS = { theme: 'exam-theme' };
+    const $ = s => document.querySelector(s);
+    const $$ = s => [...document.querySelectorAll(s)];
+    const safe = fn => { try { fn(); } catch(e) { console.warn('[safe]', e); } };
+
+    // View Management with smooth transitions
+    const ViewToggle = {
+      transitioning: false,
+      handle(btn) {
+        if (!btn || btn.classList.contains('on') || this.transitioning) return;
+        this.transitioning = true;
+        const view = btn.dataset.view;
+        const currentView = $('.view.active');
+        const targetView = $(`#view-${view}`);
+
+        if (!targetView) { this.transitioning = false; return; }
+
+        // Update nav state immediately (including ARIA)
+        $$('[data-view]').forEach(b => {
+          b.classList.remove('on');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('on');
+        btn.setAttribute('aria-selected', 'true');
+
+        // Smooth transition: fade out current, fade in new
+        if (currentView && currentView !== targetView) {
+          currentView.style.opacity = '0';
+          setTimeout(() => {
+            currentView.classList.remove('active');
+            currentView.style.opacity = '';
+            targetView.classList.add('active');
+            window.scrollTo(0, 0);
+            this.transitioning = false;
+          }, 200);
+        } else {
+          targetView.classList.add('active');
+          window.scrollTo(0, 0);
+          this.transitioning = false;
+        }
+      }
+    };
+
+    // Answer Toggle
+    const AnswerToggle = {
+      busy: false,
+      handle(btn) {
+        if (!btn || this.busy) return;
+        this.busy = true;
+        const q = btn.closest('.q') || btn.closest('.translation-q');
+        const box = q?.querySelector('.ans-box');
+        if (!box) { this.busy = false; return; }
+        const isNowShowing = !box.classList.contains('show');
+        box.classList.toggle('show');
+        q.classList.toggle('revealed', isNowShowing);
+        btn.textContent = isNowShowing ? '解答を隠す' : '解答を見る 💡';
+        btn.setAttribute('aria-expanded', isNowShowing ? 'true' : 'false');
+        setTimeout(() => { this.busy = false; }, 280);
+      },
+      // Expand/collapse all answers in current section
+      expandAll(view) {
+        const questions = view?.querySelectorAll('.q, .translation-q') || [];
+        questions.forEach(q => {
+          const box = q.querySelector('.ans-box');
+          const btn = q.querySelector('.ans-btn');
+          if (box && !box.classList.contains('show')) {
+            box.classList.add('show');
+            q.classList.add('revealed');
+            if (btn) {
+              btn.textContent = '解答を隠す';
+              btn.setAttribute('aria-expanded', 'true');
+            }
+          }
+        });
+      },
+      collapseAll(view) {
+        const questions = view?.querySelectorAll('.q, .translation-q') || [];
+        questions.forEach(q => {
+          const box = q.querySelector('.ans-box');
+          const btn = q.querySelector('.ans-btn');
+          if (box && box.classList.contains('show')) {
+            box.classList.remove('show');
+            q.classList.remove('revealed');
+            if (btn) {
+              btn.textContent = '解答を見る 💡';
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      }
+    };
+
+    // Theme Toggle
+    const ThemeToggle = {
+      busy: false,
+      handle() {
+        if (this.busy) return;
+        this.busy = true;
+        const html = document.documentElement;
+        const isDark = html.dataset.theme === 'dark';
+        const newTheme = isDark ? 'light' : 'dark';
+        html.dataset.theme = newTheme;
+        const btn = $('#theme');
+        if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+        safe(() => localStorage.setItem(STORAGE_KEYS.theme, newTheme));
+        setTimeout(() => { this.busy = false; }, 400);
+      },
+      init() {
+        safe(() => {
+          const saved = localStorage.getItem(STORAGE_KEYS.theme);
+          if (saved === 'dark') {
+            document.documentElement.dataset.theme = 'dark';
+            const btn = $('#theme');
+            if (btn) btn.textContent = '☀️';
+          }
+        });
+      }
+    };
+
+    // Font Size Toggle
+    const FontToggle = {
+      init() {
+        safe(() => {
+          const saved = localStorage.getItem('font-size') || 'm';
+          this.apply(saved);
+        });
+      },
+      apply(size) {
+        document.documentElement.setAttribute('data-font', size);
+        $$('.font-btn').forEach(btn => {
+          btn.classList.toggle('on', btn.dataset.font === size);
+        });
+        safe(() => localStorage.setItem('font-size', size));
+      },
+      toggleBar() {
+        const bar = $('#font-subbar');
+        const btn = $('#font-toggle');
+        if (!bar || !btn) return;
+        const isShowing = bar.classList.toggle('show');
+        btn.textContent = isShowing ? 'Aa ▲' : 'Aa';
+        document.body.classList.toggle('font-bar-open', isShowing);
+      },
+      closeBar() {
+        const bar = $('#font-subbar');
+        const btn = $('#font-toggle');
+        if (!bar || !btn) return;
+        bar.classList.remove('show');
+        btn.textContent = 'Aa';
+        document.body.classList.remove('font-bar-open');
+      }
+    };
+
+    // Question Toggle
+    const QuestionToggle = {
+      isOpen: false,
+      toggleBar() {
+        const bar = $('#question-subbar');
+        const btn = $('#question-toggle');
+        if (!bar || !btn) return;
+        this.isOpen = !this.isOpen;
+        bar.classList.toggle('show', this.isOpen);
+        btn.textContent = this.isOpen ? 'Question ▲' : 'Question ▼';
+        btn.setAttribute('aria-expanded', this.isOpen);
+        document.body.classList.toggle('question-bar-open', this.isOpen);
+        if (!this.isOpen) { FontToggle.closeBar && FontToggle.closeBar(); }
+      },
+      close() {
+        if (!this.isOpen) return;
+        this.toggleBar();
+      },
+      updateActive(viewId) {
+        $$('.question-btn').forEach(btn => {
+          const isActive = btn.dataset.view === viewId;
+          btn.classList.toggle('on', isActive);
+        });
+        const homeBtn = $('#home-btn');
+        if (homeBtn) homeBtn.classList.toggle('on', viewId === 'start');
+      }
+    };
+
+    // Vocab Toggle
+    const VocabToggle = {
+      handle(btn) {
+        if (!btn) return;
+        const context = btn.closest('.view') || btn.closest('.split-left');
+        const vbox = context?.querySelector('.vocab-box');
+        if (vbox) vbox.classList.toggle('show');
+      }
+    };
+
+    // Nav Auto-Hide (hover/touch only, no scroll-based behavior)
+    const NavAutoHide = {
+      hideTimer: null,
+      navBar: null,
+      fontBar: null,
+      isHidden: false,
+      isInitial: true,
+      init() {
+        this.navBar = $('.nav-bar');
+        this.fontBar = $('#font-subbar');
+        if (!this.navBar) return;
+        // Show initially, then auto-hide (3s first time, 1.5s after)
+        this.navBar.classList.add('show');
+        this.startHideTimer();
+        // Show on mouse hover near top (desktop)
+        document.addEventListener('mousemove', (e) => {
+          if (e.clientY < 60) this.show();
+        });
+        // Start hide timer when mouse leaves nav
+        this.navBar.addEventListener('mouseleave', () => {
+          this.startHideTimer();
+        });
+        // Touch area for mobile - tap to show
+        let touchArea = document.createElement('div');
+        touchArea.style.cssText = 'position:fixed;top:0;left:0;right:0;height:30px;z-index:201;pointer-events:auto';
+        touchArea.addEventListener('touchstart', (e) => {
+          if (this.isHidden) {
+            e.preventDefault();
+            this.show();
+            this.startHideTimer();
+          }
+        }, { passive: false });
+        document.body.appendChild(touchArea);
+      },
+      show() {
+        clearTimeout(this.hideTimer);
+        this.navBar.classList.add('show');
+        this.isHidden = false;
+      },
+      hide() {
+        this.navBar.classList.remove('show');
+        this.fontBar?.classList.remove('show');
+        document.body.classList.remove('font-bar-open');
+        const fontBtn = $('#font-toggle');
+        if (fontBtn) fontBtn.textContent = 'Aa';
+        // Also close question-subbar
+        const questionBar = $('#question-subbar');
+        questionBar?.classList.remove('show');
+        QuestionToggle.isOpen = false;
+        document.body.classList.remove('question-bar-open');
+        this.isHidden = true;
+      },
+      startHideTimer() {
+        clearTimeout(this.hideTimer);
+        const delay = this.isInitial ? 3000 : 1500;
+        this.hideTimer = setTimeout(() => {
+          this.hide();
+          this.isInitial = false;
+        }, delay);
+      }
+    };
+
+    // FAB
+    const FAB = {
+      el: null,
+      init() {
+        this.el = $('#fab');
+        if (!this.el) return;
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              this.el.classList.toggle('show', scrollY > SCROLL_THRESHOLD);
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+        this.el.addEventListener('click', () => { scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+    };
+
+    // Split View
+    const SplitView = {
+      isActive: false,
+      leftWidth: 50,
+      container: null,
+      resizer: null,
+      leftPanel: null,
+      rightPanel: null,
+      currentSectionId: null,
+
+      init() {
+        this.createContainer();
+      },
+
+      createContainer() {
+        const container = document.createElement('div');
+        container.className = 'split-container';
+
+        const leftPanel = document.createElement('div');
+        leftPanel.className = 'split-left';
+
+        const resizer = document.createElement('div');
+        resizer.className = 'split-resizer';
+
+        const rightPanel = document.createElement('div');
+        rightPanel.className = 'split-right';
+
+        container.appendChild(leftPanel);
+        container.appendChild(resizer);
+        container.appendChild(rightPanel);
+        document.body.appendChild(container);
+
+        this.container = container;
+        this.leftPanel = leftPanel;
+        this.rightPanel = rightPanel;
+        this.resizer = resizer;
+
+        this.setupResizer();
+      },
+
+      setupResizer() {
+        let isResizing = false;
+
+        const startResize = (e) => {
+          isResizing = true;
+          this.resizer.classList.add('dragging');
+          document.body.style.cursor = 'col-resize';
+          document.body.style.userSelect = 'none';
+          e.preventDefault();
+        };
+
+        const doResize = (clientX) => {
+          if (!isResizing) return;
+          const containerRect = this.container.getBoundingClientRect();
+          const newLeftWidth = ((clientX - containerRect.left) / containerRect.width) * 100;
+          if (newLeftWidth >= 20 && newLeftWidth <= 80) {
+            this.leftWidth = newLeftWidth;
+            this.leftPanel.style.width = newLeftWidth + '%';
+          }
+        };
+
+        const stopResize = () => {
+          if (!isResizing) return;
+          isResizing = false;
+          this.resizer.classList.remove('dragging');
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+        };
+
+        // Mouse events
+        this.resizer.addEventListener('mousedown', startResize);
+        document.addEventListener('mousemove', (e) => doResize(e.clientX));
+        document.addEventListener('mouseup', stopResize);
+
+        // Touch events
+        this.resizer.addEventListener('touchstart', (e) => {
+          startResize(e);
+        }, { passive: false });
+        document.addEventListener('touchmove', (e) => {
+          if (isResizing && e.touches[0]) {
+            doResize(e.touches[0].clientX);
+          }
+        }, { passive: true });
+        document.addEventListener('touchend', stopResize);
+      },
+
+      toggle() {
+        const activeView = $('.view.active');
+        if (!activeView) return;
+
+        // Don't allow split on start or passages view
+        if (activeView.id === 'view-start' || activeView.id === 'view-passages') {
+          return;
+        }
+
+        this.isActive = !this.isActive;
+        const toggleBtn = $('#split-toggle');
+        if (toggleBtn) {
+          toggleBtn.setAttribute('aria-pressed', this.isActive ? 'true' : 'false');
+          toggleBtn.textContent = this.isActive ? 'Split' : 'Single';
+        }
+
+        if (this.isActive) {
+          this.activate(activeView);
+        } else {
+          this.deactivate();
+        }
+      },
+
+      activate(view) {
+        const passage = view.querySelector('.passage');
+        const questions = view.querySelectorAll('.q');
+
+        if (!passage || questions.length === 0) {
+          this.isActive = false;
+          const toggleBtn = $('#split-toggle');
+          if (toggleBtn) toggleBtn.setAttribute('aria-pressed', 'false');
+          return;
+        }
+
+        this.currentSectionId = view.id;
+
+        // Clear panels
+        this.leftPanel.textContent = '';
+        this.rightPanel.textContent = '';
+
+        // Left: sec-header + passage + vocab
+        const leftContent = document.createElement('div');
+        leftContent.className = 'split-content';
+
+        const secHeader = view.querySelector('.sec-header');
+        if (secHeader) leftContent.appendChild(secHeader.cloneNode(true));
+
+        leftContent.appendChild(passage.cloneNode(true));
+
+        const vocabNotes = view.querySelector('.vocab-notes');
+        if (vocabNotes) leftContent.appendChild(vocabNotes.cloneNode(true));
+
+        const vocabBox = view.querySelector('.vocab-box');
+        if (vocabBox) leftContent.appendChild(vocabBox.cloneNode(true));
+
+        const vocabBtn = view.querySelector('[data-act="vocab"]');
+        if (vocabBtn) leftContent.appendChild(vocabBtn.cloneNode(true));
+
+        this.leftPanel.appendChild(leftContent);
+
+        // Right: bulk-actions + questions
+        const rightContent = document.createElement('div');
+        rightContent.className = 'split-content';
+
+        const bulkActions = view.querySelector('.bulk-actions');
+        if (bulkActions) rightContent.appendChild(bulkActions.cloneNode(true));
+
+        questions.forEach(q => rightContent.appendChild(q.cloneNode(true)));
+        this.rightPanel.appendChild(rightContent);
+
+        // Reset panel width
+        this.leftPanel.style.width = this.leftWidth + '%';
+
+        // Activate split mode
+        document.body.classList.add('split-active');
+      },
+
+      deactivate() {
+        document.body.classList.remove('split-active');
+        this.currentSectionId = null;
+      },
+
+      // Handle view change while split is active
+      onViewChange(newViewId) {
+        if (!this.isActive) return;
+
+        // If switching to start or passages, deactivate split
+        if (newViewId === 'start' || newViewId === 'passages') {
+          this.isActive = false;
+          const toggleBtn = $('#split-toggle');
+          if (toggleBtn) {
+            toggleBtn.setAttribute('aria-pressed', 'false');
+            toggleBtn.textContent = 'Single';
+          }
+          this.deactivate();
+          return;
+        }
+
+        // Update split view content for new section
+        const newView = $('#view-' + newViewId);
+        if (newView) {
+          this.activate(newView);
+        }
+      }
+    };
+
+    // Keyboard Navigation for Tabs
+    document.addEventListener('keydown', e => {
+      const t = e.target;
+      if (t.matches('[data-view]')) {
+        const tabs = $$('[data-view]');
+        const idx = tabs.indexOf(t);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          tabs[(idx + 1) % tabs.length]?.focus();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          tabs[(idx - 1 + tabs.length) % tabs.length]?.focus();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          ViewToggle.handle(t);
+        }
+      }
+    });
+
+    // Global Event Delegation
+    document.addEventListener('click', e => {
+      const t = e.target;
+
+      // Home button
+      if (t.id === 'home-btn' || t.closest('#home-btn')) {
+        const btn = t.closest('#home-btn') || t;
+        ViewToggle.handle(btn);
+        SplitView.onViewChange('start');
+        QuestionToggle.close();
+        QuestionToggle.updateActive('start');
+        return;
+      }
+
+      // Question toggle
+      if (t.id === 'question-toggle' || t.closest('#question-toggle')) {
+        return QuestionToggle.toggleBar();
+      }
+
+      // Question buttons in sub-bar
+      if (t.classList.contains('question-btn')) {
+        ViewToggle.handle(t);
+        QuestionToggle.updateActive(t.dataset.view);
+        if (t.dataset.view) {
+          SplitView.onViewChange(t.dataset.view);
+        }
+        return;
+      }
+
+      // Other data-view buttons
+      const viewBtn = t.closest('[data-view]');
+      if (viewBtn && !t.classList.contains('question-btn') && t.id !== 'home-btn') {
+        ViewToggle.handle(viewBtn);
+        QuestionToggle.updateActive(viewBtn.dataset.view);
+        if (viewBtn.dataset.view) {
+          SplitView.onViewChange(viewBtn.dataset.view);
+        }
+        return;
+      }
+      if (t.id === 'split-toggle' || t.closest('#split-toggle')) return SplitView.toggle();
+      if (t.classList.contains('ans-btn')) return AnswerToggle.handle(t);
+      if (t.id === 'font-toggle') return FontToggle.toggleBar();
+      if (t.classList.contains('font-btn')) return FontToggle.apply(t.dataset.font);
+      if (t.id === 'theme' || t.closest('#theme')) return ThemeToggle.handle();
+      const actBtn = t.closest('[data-act]');
+      if (actBtn) {
+        const act = actBtn.dataset.act;
+        if (act === 'vocab') return VocabToggle.handle(actBtn);
+        if (act === 'expand-all') {
+          const context = actBtn.closest('.view') || actBtn.closest('.split-right');
+          return AnswerToggle.expandAll(context);
+        }
+        if (act === 'collapse-all') {
+          const context = actBtn.closest('.view') || actBtn.closest('.split-right');
+          return AnswerToggle.collapseAll(context);
+        }
+      }
+    });
+
+    // Init
+    function init() {
+      ThemeToggle.init();
+      FontToggle.init();
+      NavAutoHide.init();
+      FAB.init();
+      SplitView.init();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
