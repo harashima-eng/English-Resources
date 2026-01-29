@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DUALSCOPE Lesson 16 | 前置詞・名詞・冠詞・代名詞</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    /* Light mode (default) */
+    :root {
+      --color-primary: #0D9488;
+      --color-primary-light: #14B8A6;
+      --color-primary-dark: #0F766E;
+      --color-accent: #F59E0B;
+      --color-accent-light: #FCD34D;
+      --color-bg: #FAFAF9;
+      --color-surface: #FFFFFF;
+      --color-border: #E7E5E4;
+      --color-border-light: #F5F5F4;
+      --color-text: #1C1917;
+      --color-text-secondary: #57534E;
+      --color-text-muted: #A8A29E;
+      --color-success: #10B981;
+      --color-success-bg: #D1FAE5;
+      --color-highlight-bg: #CCFBF1;
+      --color-highlight-text: #0F766E;
+      --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.05);
+      --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.08);
+      --font-body: 'DM Sans', 'Noto Sans JP', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-full: 9999px;
+      /* Grammar card colors */
+      --grammar-bg: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      --grammar-border: rgba(245, 158, 11, 0.2);
+      --grammar-meaning: #92400E;
+      --grammar-note: #78350F;
+    }
+
+    /* Dark mode via class */
+    body.dark-mode {
+      --color-bg: #1C1917;
+      --color-surface: #292524;
+      --color-border: #44403C;
+      --color-border-light: #292524;
+      --color-text: #FAFAF9;
+      --color-text-secondary: #A8A29E;
+      --color-text-muted: #78716C;
+      --color-highlight-bg: #134E4A;
+      --color-highlight-text: #5EEAD4;
+      --color-success-bg: #064E3B;
+      --grammar-bg: linear-gradient(135deg, #451A03 0%, #78350F 100%);
+      --grammar-border: rgba(180, 83, 0, 0.4);
+      --grammar-meaning: #FDE68A;
+      --grammar-note: #FCD34D;
+    }
+
+    /* System preference fallback (when no manual selection) */
+    @media (prefers-color-scheme: dark) {
+      body:not(.light-mode):not(.dark-mode) {
+        --color-bg: #1C1917;
+        --color-surface: #292524;
+        --color-border: #44403C;
+        --color-border-light: #292524;
+        --color-text: #FAFAF9;
+        --color-text-secondary: #A8A29E;
+        --color-text-muted: #78716C;
+        --color-highlight-bg: #134E4A;
+        --color-highlight-text: #5EEAD4;
+        --color-success-bg: #064E3B;
+        --grammar-bg: linear-gradient(135deg, #451A03 0%, #78350F 100%);
+        --grammar-border: rgba(180, 83, 0, 0.4);
+        --grammar-meaning: #FDE68A;
+        --grammar-note: #FCD34D;
+      }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Header */
+    .header {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-lg) var(--space-md);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner { max-width: 800px; margin: 0 auto; }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-sm);
+    }
+    .lesson-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-primary);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+    .progress-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+    }
+    .progress-count {
+      font-weight: 600;
+      color: var(--color-primary);
+      font-family: var(--font-mono);
+    }
+    .header h1 { font-size: 1.25rem; font-weight: 700; }
+    .header-subtitle {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      margin-top: var(--space-xs);
+    }
+
+    /* Controls */
+    .controls {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-md);
+      position: sticky;
+      top: 100px;
+      z-index: 99;
+    }
+    .controls-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    /* Mode Selector */
+    .mode-selector {
+      display: flex;
+      gap: 2px;
+      background: var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: none;
+      border-radius: calc(var(--radius-sm) - 2px);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .mode-btn:hover { background: var(--color-border-light); }
+    .mode-btn.active {
+      background: var(--color-surface);
+      color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Control Buttons Row */
+    .control-row {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .control-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .control-btn:hover {
+      border-color: var(--color-primary-light);
+      color: var(--color-primary);
+      background: var(--color-highlight-bg);
+    }
+    .control-btn.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+    .control-btn svg { width: 16px; height: 16px; }
+
+    /* Main Content */
+    .main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-lg) var(--space-md) var(--space-2xl);
+    }
+    .sentence-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    /* Sentence Cards */
+    .sentence-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .sentence-card:hover {
+      border-color: var(--color-primary-light);
+      box-shadow: var(--shadow-md);
+    }
+    .sentence-card.practiced {
+      border-left: 4px solid var(--color-success);
+    }
+    .sentence-card.practiced .card-number {
+      background: var(--color-success);
+    }
+
+    /* Card Header */
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card-header:active { background: var(--color-border-light); }
+    .card-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      background: var(--color-primary);
+      color: white;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+    .card-number.special { background: var(--color-accent); }
+    .card-content { flex: 1; min-width: 0; }
+
+    /* Text Styles */
+    .english-text {
+      font-size: 1.125rem;
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+    .english-text .highlight {
+      background: var(--color-highlight-bg);
+      color: var(--color-highlight-text);
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .japanese-text {
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      color: var(--color-text);
+      padding: var(--space-md);
+      background: var(--color-border-light);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--color-primary);
+    }
+
+    /* Hidden Text Styles */
+    .text-hidden {
+      filter: blur(8px);
+      user-select: none;
+      transition: filter 0.3s ease;
+    }
+    .sentence-card.revealed .text-hidden {
+      filter: none;
+    }
+
+    /* Blank Word Styles */
+    .blank-word {
+      display: inline-block;
+      min-width: 60px;
+      padding: 2px 8px;
+      margin: 0 2px;
+      background: var(--color-border);
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 600;
+      color: transparent;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .blank-word::before {
+      content: '_____';
+      color: var(--color-text-muted);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .sentence-card.revealed .blank-word {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+    .sentence-card.revealed .blank-word::before {
+      content: none;
+    }
+
+    /* Tap hint */
+    .tap-hint {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
+    }
+    .tap-hint svg { width: 14px; height: 14px; }
+
+    /* Card Toggle Arrow */
+    .card-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-border-light);
+      color: var(--color-text-muted);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .sentence-card.revealed .card-toggle {
+      background: var(--color-primary);
+      color: white;
+      transform: rotate(180deg);
+    }
+    .card-toggle svg { width: 18px; height: 18px; }
+
+    /* Card Body */
+    .card-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+    .sentence-card.revealed .card-body {
+      grid-template-rows: 1fr;
+    }
+    .card-body-inner { overflow: hidden; }
+    .translation-section {
+      padding: 0 var(--space-lg) var(--space-lg);
+      padding-left: calc(var(--space-lg) + 40px + var(--space-md));
+    }
+
+    /* Grammar Card - Redesigned */
+    .grammar-card {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      background: var(--grammar-bg);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--grammar-border);
+      display: none;
+    }
+    body.show-grammar .grammar-card { display: block; }
+    .grammar-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xs);
+    }
+    .grammar-term-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--color-primary);
+      color: white;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+    }
+    .grammar-meaning {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--grammar-meaning);
+    }
+    .grammar-note {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--grammar-note);
+      margin-top: var(--space-xs);
+    }
+
+    /* Practice Button */
+    .practice-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      background: transparent;
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .practice-btn:hover {
+      border-color: var(--color-success);
+      color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+    .practice-btn.done {
+      border-style: solid;
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+    .practice-btn svg { width: 16px; height: 16px; }
+
+    /* Reset Section */
+    .reset-section {
+      margin-top: var(--space-2xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+    }
+    .reset-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-xl);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .reset-btn:hover {
+      border-color: #EF4444;
+      color: #EF4444;
+      background: #FEF2F2;
+    }
+    .reset-btn svg { width: 18px; height: 18px; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--color-text-muted);
+      font-size: 0.8125rem;
+    }
+
+    /* ========== RESPONSIVE BREAKPOINTS ========== */
+
+    /* Tablet (iPad portrait & landscape) */
+    @media (min-width: 641px) and (max-width: 1024px) {
+      .header-inner, .controls-inner, .main {
+        max-width: 720px;
+      }
+      .header {
+        padding: var(--space-lg) var(--space-lg);
+      }
+      .controls {
+        top: 95px;
+        padding: var(--space-md) var(--space-lg);
+      }
+      .mode-btn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.875rem;
+      }
+      .control-btn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.875rem;
+      }
+      .card-header {
+        padding: var(--space-lg);
+      }
+      .english-text {
+        font-size: 1.1875rem;
+      }
+      .japanese-text {
+        font-size: 1.0625rem;
+      }
+      .translation-section {
+        padding-left: calc(var(--space-lg) + 44px + var(--space-md));
+      }
+    }
+
+    /* Mobile (phones) */
+    @media (max-width: 640px) {
+      .header { padding: var(--space-md); }
+      .controls { top: 85px; }
+      .mode-btn { padding: var(--space-sm) var(--space-xs); font-size: 0.75rem; }
+      .control-btn { padding: var(--space-sm) 10px; font-size: 0.75rem; }
+      .card-header { padding: var(--space-md); gap: var(--space-sm); }
+      .card-number { min-width: 36px; height: 36px; font-size: 0.8125rem; }
+      .english-text { font-size: 1rem; }
+      .translation-section {
+        padding: 0 var(--space-md) var(--space-md);
+        padding-left: calc(var(--space-md) + 36px + var(--space-sm));
+      }
+      .japanese-text { font-size: 0.9375rem; padding: var(--space-sm) var(--space-md); }
+      .tap-hint { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-top">
+        <span class="lesson-badge">Lesson 16</span>
+        <div class="progress-indicator">
+          <span>練習済み:</span>
+          <span class="progress-count" id="progressCount">0 / 10</span>
+        </div>
+      </div>
+      <h1>前置詞・名詞・冠詞・代名詞</h1>
+      <p class="header-subtitle">DUALSCOPE English Grammar in 27 Stages</p>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="controls-inner">
+      <div class="mode-selector" id="modeSelector">
+        <button class="mode-btn active" data-mode="jp-to-en">日→英</button>
+        <button class="mode-btn" data-mode="en-to-jp">英→日</button>
+        <button class="mode-btn" data-mode="blank">穴埋め</button>
+        <button class="mode-btn" data-mode="all">すべて</button>
+      </div>
+      <div class="control-row">
+        <button class="control-btn" id="grammarBtn" onclick="toggleGrammar()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          文法
+        </button>
+        <button class="control-btn" id="themeBtn" onclick="toggleTheme()">
+          <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span id="themeLabel">ダーク</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="sentence-list" id="sentenceList"></div>
+
+    <div class="reset-section">
+      <button class="reset-btn" onclick="resetProgress()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        練習をリセット
+      </button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>駒込高校 2年3・4組 英語表現</p>
+  </footer>
+
+  <script>
+    // Sentence data with structured grammar
+    const sentences = [
+      {
+        number: "408",
+        english: "The clock on the wall was made in Italy.",
+        keywords: ["on", "in"],
+        japanese: "壁にかかっている時計はイタリア製だ。",
+        grammar: {
+          term: "on / in",
+          meaning: "接触 / 内部",
+          note: "on は「くっついている」イメージ。壁に接触して掛かっている状態。in は「中に」でイタリアという国の中で作られた。"
+        }
+      },
+      {
+        number: "435",
+        english: "I will be back by five.",
+        keywords: ["by"],
+        japanese: "5時までには戻ります。",
+        grammar: {
+          term: "by",
+          meaning: "～までに（期限）",
+          note: "by のそもそもの意味は「～のそば」。それを応用して、時間ギリギリまでに何かをする「期限」を表す。until（継続）との違いに注意。"
+        }
+      },
+      {
+        number: "492",
+        english: "In this area, we had a lot of rain last month.",
+        keywords: ["we"],
+        japanese: "この地域では、先月雨が多かった。",
+        grammar: {
+          term: "we",
+          meaning: "一般的な人々",
+          note: "この we は「私たち」ではなく、その地域で生活している人々全般を指す。特定の誰かではなく、漠然とした人々を表す用法。"
+        }
+      },
+      {
+        number: "496",
+        english: "A friend of mine invited me to this concert.",
+        keywords: ["of mine"],
+        japanese: "私のある友人がこのコンサートに招待してくれました。",
+        grammar: {
+          term: "of mine",
+          meaning: "私の～のうちの一人",
+          note: "a friend of my friends だと重複（redundant）になるので、所有代名詞 mine を使う。「私の友人たちの中の一人」というニュアンス。"
+        }
+      },
+      {
+        number: "497",
+        english: "May I introduce myself?",
+        keywords: ["myself"],
+        japanese: "自己紹介してもよろしいですか。",
+        grammar: {
+          term: "myself",
+          meaning: "～自身（再帰代名詞）",
+          note: "introduce の目的語が主語と同じ人物なので myself を使う。I introduce I は不可。herself, himself, themselves なども同様。"
+        }
+      },
+      {
+        number: "508",
+        english: "I left my umbrella somewhere. I have to buy one.",
+        keywords: ["one"],
+        japanese: "私は傘をどこかに置き忘れた。1本買わなければならない。",
+        grammar: {
+          term: "one",
+          meaning: "a + 名詞（不特定の一つ）",
+          note: "one = an umbrella。どの傘でもいいので「一本」買う必要がある。it だと「その傘」（置き忘れた傘）を指すことになり意味が変わる。"
+        }
+      },
+      {
+        number: "510",
+        english: "None of my friends know how to play chess.",
+        keywords: ["None"],
+        japanese: "私の友人のだれもチェスの遊び方を知らない。",
+        grammar: {
+          term: "none",
+          meaning: "ゼロ、一人もいない",
+          note: "none of + 複数名詞 = 「～の0人が」「～の0個が」。全否定を表す。動詞は単数・複数どちらも可だが、口語では複数形が多い。"
+        }
+      },
+      {
+        number: "515",
+        english: "Some of my friends are vegetarians.",
+        keywords: ["Some"],
+        japanese: "私の友人の中には菜食主義者もいる。",
+        grammar: {
+          term: "some",
+          meaning: "いくつかの、何人かの",
+          note: "「ぼんやりとある」「漠然とある」イメージ。はっきりしないけど4〜5人くらいいる感じ。数がはっきりしない時に使う。"
+        }
+      },
+      {
+        number: "518",
+        english: "You may take any book you want.",
+        keywords: ["any"],
+        japanese: "欲しい本をどれでも持って行っていいですよ。",
+        grammar: {
+          term: "any",
+          meaning: "どれでも、何でも",
+          note: "肯定文の any = 「選択肢を問わない」「なんでもOK」。any book = どんな本でも。anytime（いつでも）、anyone（誰でも）も同様。"
+        }
+      },
+      {
+        number: "★",
+        english: "I have to stay at home until eleven.",
+        keywords: ["until"],
+        japanese: "私は11時まで家にいなければなりません。",
+        grammar: {
+          term: "until",
+          meaning: "～まで（継続）",
+          note: "by との違いに注意！ until は「ある時まで動作・状態が継続する」。by は期限で「その時までに完了」。stay のような継続動詞と相性が良い。"
+        },
+        special: true
+      }
+    ];
+
+    // State
+    let practiced = new Set();
+    let showGrammar = false;
+    let currentMode = 'jp-to-en';
+    let darkMode = false;
+
+    // SVG icons
+    const svgChevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+    const svgTap = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>';
+    const svgCheck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+    const svgCircle = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle></svg>';
+
+    // Get hint text based on mode
+    function getHintText() {
+      switch (currentMode) {
+        case 'jp-to-en': return 'タップして日本語を表示';
+        case 'en-to-jp': return 'タップして英語を表示';
+        case 'blank': return 'タップして答えを表示';
+        case 'all': return '';
+        default: return '';
+      }
+    }
+
+    // Format English with highlights or blanks
+    function formatEnglish(sentence) {
+      let text = sentence.english;
+
+      if (currentMode === 'blank') {
+        sentence.keywords.forEach(keyword => {
+          const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+          text = text.replace(regex, `<span class="blank-word">${keyword}</span>`);
+        });
+      } else {
+        sentence.keywords.forEach(keyword => {
+          const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+          text = text.replace(regex, `<span class="highlight">${keyword}</span>`);
+        });
+      }
+
+      return text;
+    }
+
+    // Theme functions
+    function loadTheme() {
+      const saved = localStorage.getItem('dualscope-l16-theme');
+      if (saved) {
+        darkMode = saved === 'dark';
+      } else {
+        darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      applyTheme();
+    }
+
+    function toggleTheme() {
+      darkMode = !darkMode;
+      applyTheme();
+      localStorage.setItem('dualscope-l16-theme', darkMode ? 'dark' : 'light');
+    }
+
+    function applyTheme() {
+      document.body.classList.remove('light-mode', 'dark-mode');
+      document.body.classList.add(darkMode ? 'dark-mode' : 'light-mode');
+
+      // Update button icon and label
+      document.getElementById('sunIcon').style.display = darkMode ? 'none' : 'block';
+      document.getElementById('moonIcon').style.display = darkMode ? 'block' : 'none';
+      document.getElementById('themeLabel').textContent = darkMode ? 'ライト' : 'ダーク';
+    }
+
+    // Load state
+    function loadState() {
+      const saved = localStorage.getItem('dualscope-l16-practiced');
+      if (saved) {
+        try {
+          practiced = new Set(JSON.parse(saved));
+        } catch (e) {
+          practiced = new Set();
+        }
+      }
+      const grammarState = localStorage.getItem('dualscope-l16-grammar');
+      if (grammarState === 'true') {
+        showGrammar = true;
+        document.body.classList.add('show-grammar');
+        document.getElementById('grammarBtn').classList.add('active');
+      }
+      const savedMode = localStorage.getItem('dualscope-l16-mode');
+      if (savedMode) {
+        currentMode = savedMode;
+      }
+    }
+
+    // Save state
+    function saveState() {
+      localStorage.setItem('dualscope-l16-practiced', JSON.stringify([...practiced]));
+      localStorage.setItem('dualscope-l16-grammar', showGrammar);
+      localStorage.setItem('dualscope-l16-mode', currentMode);
+    }
+
+    // Update progress
+    function updateProgress() {
+      document.getElementById('progressCount').textContent = practiced.size + ' / ' + sentences.length;
+    }
+
+    // Toggle card reveal
+    function toggleCard(index) {
+      if (currentMode === 'all') return;
+      const card = document.querySelector('[data-index="' + index + '"]');
+      card.classList.toggle('revealed');
+    }
+
+    // Toggle practiced
+    function togglePracticed(index, event) {
+      event.stopPropagation();
+      const card = document.querySelector('[data-index="' + index + '"]');
+      const btn = card.querySelector('.practice-btn');
+
+      if (practiced.has(index)) {
+        practiced.delete(index);
+        card.classList.remove('practiced');
+        btn.classList.remove('done');
+        btn.innerHTML = svgCircle + ' 練習完了にする';
+      } else {
+        practiced.add(index);
+        card.classList.add('practiced');
+        btn.classList.add('done');
+        btn.innerHTML = svgCheck + ' 練習完了';
+      }
+
+      saveState();
+      updateProgress();
+    }
+
+    // Toggle grammar
+    function toggleGrammar() {
+      showGrammar = !showGrammar;
+      document.body.classList.toggle('show-grammar', showGrammar);
+      document.getElementById('grammarBtn').classList.toggle('active', showGrammar);
+      saveState();
+    }
+
+    // Change mode
+    function changeMode(mode) {
+      currentMode = mode;
+
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+
+      renderSentences();
+      saveState();
+    }
+
+    // Reset progress
+    function resetProgress() {
+      if (confirm('練習の記録をリセットしますか？')) {
+        practiced.clear();
+        renderSentences();
+        saveState();
+        updateProgress();
+      }
+    }
+
+    // Render sentences
+    function renderSentences() {
+      const container = document.getElementById('sentenceList');
+      container.innerHTML = '';
+
+      sentences.forEach((sentence, index) => {
+        const isPracticed = practiced.has(index);
+        const isRevealed = currentMode === 'all';
+
+        const card = document.createElement('div');
+        card.className = 'sentence-card' + (isPracticed ? ' practiced' : '') + (isRevealed ? ' revealed' : '');
+        card.setAttribute('data-index', index);
+
+        const hintText = getHintText();
+        const englishHidden = currentMode === 'en-to-jp' ? ' text-hidden' : '';
+        // Fixed: Japanese is visible in blank mode
+        const japaneseHidden = currentMode === 'jp-to-en' ? ' text-hidden' : '';
+
+        card.innerHTML = `
+          <div class="card-header" onclick="toggleCard(${index})">
+            <div class="card-number${sentence.special ? ' special' : ''}">${sentence.number}</div>
+            <div class="card-content">
+              <p class="english-text${englishHidden}">${formatEnglish(sentence)}</p>
+              <div class="japanese-text${japaneseHidden}" style="margin-top: var(--space-sm);">${sentence.japanese}</div>
+              ${hintText ? `<span class="tap-hint">${svgTap}${hintText}</span>` : ''}
+            </div>
+            ${currentMode !== 'all' ? `<div class="card-toggle">${svgChevron}</div>` : ''}
+          </div>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="translation-section">
+                <div class="grammar-card">
+                  <div class="grammar-header">
+                    <span class="grammar-term-badge">${sentence.grammar.term}</span>
+                    <span class="grammar-meaning">${sentence.grammar.meaning}</span>
+                  </div>
+                  <p class="grammar-note">${sentence.grammar.note}</p>
+                </div>
+                <button class="practice-btn${isPracticed ? ' done' : ''}" onclick="togglePracticed(${index}, event)">
+                  ${isPracticed ? svgCheck + ' 練習完了' : svgCircle + ' 練習完了にする'}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Initialize mode selector
+    function initModeSelector() {
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => changeMode(btn.dataset.mode));
+        btn.classList.toggle('active', btn.dataset.mode === currentMode);
+      });
+    }
+
+    // Initialize
+    loadTheme();
+    loadState();
+    initModeSelector();
+    renderSentences();
+    updateProgress();
+  </script>
+</body>
+</html>
