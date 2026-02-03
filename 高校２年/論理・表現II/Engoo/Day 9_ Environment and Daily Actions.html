@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Day 9: Environment and Daily Actions</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+
+        :root{
+            --bg:#F0EBE3;
+            --card:#FFFFFF;
+            --card2:#F5F3F0;
+            --t1:#2D3936;
+            --t2:#5A6B68;
+            --t3:#8A9896;
+            --border:#D8DDD9;
+            --shadow:0 2px 8px rgba(45,57,54,0.08);
+            --shadow-lg:0 4px 20px rgba(45,57,54,0.12);
+            --teal:#5D8A84;
+            --teal-light:#7AACA5;
+            --teal-bg:#EEF4F3;
+            --coral:#C4847A;
+            --coral-bg:#FDF4F2;
+            --green:#6B9B7A;
+            --green-bg:#F0F7F2;
+            --purple:#8B7A9B;
+            --purple-bg:#F5F2F7;
+            --red:#B86B6B;
+            --red-bg:#FDF2F2;
+            --orange:#C49055;
+            --orange-bg:#FDF8F0;
+            --radius:16px;
+            --radius-sm:10px;
+        }
+
+        .dark{
+            --bg:#1C1F1E;
+            --card:#252322;
+            --card2:#302D2B;
+            --t1:#E8EDEB;
+            --t2:#A8B5B2;
+            --t3:#6E7D7A;
+            --border:#3A4644;
+            --shadow:0 2px 8px rgba(0,0,0,0.25);
+            --shadow-lg:0 4px 20px rgba(0,0,0,0.35);
+            --teal:#7AACA5;
+            --teal-light:#8FC4BD;
+            --teal-bg:rgba(93,138,132,0.15);
+            --coral:#D9A099;
+            --coral-bg:rgba(196,132,122,0.12);
+            --green:#8BC49E;
+            --green-bg:rgba(107,155,122,0.12);
+            --purple:#A899B8;
+            --purple-bg:rgba(139,122,155,0.12);
+            --red:#D48B8B;
+            --red-bg:rgba(184,107,107,0.12);
+            --orange:#DAA870;
+            --orange-bg:rgba(196,144,85,0.12);
+        }
+
+        html{
+            scroll-behavior:smooth;
+            -webkit-text-size-adjust:100%;
+        }
+
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+            font-size:16px;
+            line-height:1.65;
+            background:var(--bg);
+            color:var(--t1);
+            padding:20px;
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+        }
+
+        /* Header */
+        .hdr{
+            max-width:900px;
+            margin:0 auto 24px;
+            background:var(--card);
+            border-radius:var(--radius);
+            padding:24px;
+            border:1px solid var(--border);
+            box-shadow:var(--shadow);
+            position:relative;
+            overflow:hidden;
+        }
+
+        .hdr::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:4px;
+            background:linear-gradient(90deg,var(--teal),var(--teal-light));
+        }
+
+        .hdr-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:16px;
+            flex-wrap:wrap;
+            margin-bottom:20px;
+        }
+
+        .hdr-title{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .hdr-icon{
+            width:48px;
+            height:48px;
+            border-radius:12px;
+            background:var(--teal-bg);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:24px;
+            flex-shrink:0;
+        }
+
+        .hdr h1{
+            font-size:24px;
+            font-weight:700;
+            letter-spacing:-0.3px;
+            color:var(--teal);
+            line-height:1.3;
+        }
+
+        .hdr-sub{
+            font-size:14px;
+            color:var(--t2);
+            margin-top:4px;
+        }
+
+        .btns{
+            display:flex;
+            gap:10px;
+            flex-shrink:0;
+        }
+
+        .btn{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:10px 16px;
+            border-radius:24px;
+            border:none;
+            font-size:14px;
+            font-weight:600;
+            cursor:pointer;
+            transition:all .2s ease;
+            -webkit-tap-highlight-color:transparent;
+        }
+
+        .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+        .btn:active{transform:translateY(0)}
+        .btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+        .btn-dark{background:var(--t1);color:var(--card)}
+        .btn-outline{background:transparent;color:var(--t2);border:1px solid var(--border)}
+        .btn-outline:hover{background:var(--card2);color:var(--t1)}
+
+        .info{
+            background:var(--teal-bg);
+            border-radius:var(--radius-sm);
+            padding:16px 18px;
+            font-size:14px;
+            line-height:1.7;
+            border-left:3px solid var(--teal);
+        }
+
+        .info b{color:var(--teal)}
+
+        .deadline{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            margin-top:12px;
+            padding:8px 14px;
+            background:var(--red-bg);
+            color:var(--red);
+            border-radius:20px;
+            font-size:13px;
+            font-weight:600;
+        }
+
+        .note{
+            max-width:900px;
+            margin:0 auto 20px;
+            font-size:13px;
+            color:var(--t2);
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .note-icon{
+            width:20px;
+            height:20px;
+            border-radius:50%;
+            background:var(--teal-bg);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:11px;
+            flex-shrink:0;
+        }
+
+        .cards{
+            max-width:900px;
+            margin:0 auto;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        /* Cards */
+        .c{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+            overflow:hidden;
+            transition:box-shadow .2s ease;
+        }
+
+        .c:hover{box-shadow:var(--shadow-lg)}
+
+        .c-h{
+            display:flex;
+            align-items:center;
+            gap:14px;
+            padding:16px 18px;
+            cursor:pointer;
+            -webkit-tap-highlight-color:transparent;
+            user-select:none;
+            transition:background .15s ease;
+        }
+
+        .c-h:hover{background:var(--card2)}
+        .c-h:focus-visible{outline:2px solid var(--teal);outline-offset:-2px;background:var(--card2)}
+
+        .badge{
+            width:40px;
+            height:40px;
+            border-radius:12px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:14px;
+            font-weight:700;
+            flex-shrink:0;
+            background:var(--teal-bg);
+            color:var(--teal);
+        }
+
+        .badge.st{background:var(--green-bg);color:var(--green)}
+        .badge.smry{background:var(--purple-bg);color:var(--purple)}
+        .badge.hp{background:var(--orange-bg);color:var(--orange)}
+
+        .c-info{flex:1;min-width:0}
+        .c-lbl{
+            font-size:10px;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:.8px;
+            color:var(--teal);
+            margin-bottom:4px;
+        }
+        .c-ttl{font-size:15px;font-weight:600}
+        .c-jp{font-size:12px;color:var(--t2);margin-top:3px}
+
+        .pill{
+            display:inline-block;
+            padding:3px 10px;
+            border-radius:12px;
+            font-size:10px;
+            font-weight:600;
+            margin-top:8px;
+            background:var(--teal-bg);
+            color:var(--teal);
+        }
+
+        .chv{
+            width:24px;
+            height:24px;
+            border-radius:6px;
+            background:var(--card2);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:12px;
+            color:var(--t3);
+            transition:all .25s ease;
+            flex-shrink:0;
+        }
+
+        .c.open .chv{
+            transform:rotate(90deg);
+            background:var(--teal-bg);
+            color:var(--teal);
+        }
+
+        .c-b{
+            display:grid;
+            grid-template-rows:0fr;
+            transition:grid-template-rows .3s ease;
+        }
+
+        .c.open .c-b{grid-template-rows:1fr}
+
+        .c-b-inner{overflow:hidden}
+
+        .c-content{
+            padding:0 18px 18px;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .goal{
+            background:var(--teal-bg);
+            border-radius:var(--radius-sm);
+            padding:12px 14px;
+            font-size:13px;
+            font-weight:500;
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .step{
+            background:var(--card2);
+            border-radius:var(--radius-sm);
+            padding:14px 16px;
+        }
+
+        .step-h{
+            font-size:11px;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:.6px;
+            color:var(--teal);
+            margin-bottom:10px;
+            display:flex;
+            align-items:center;
+            gap:6px;
+        }
+
+        .step-h::before{
+            content:'';
+            width:3px;
+            height:12px;
+            background:var(--teal);
+            border-radius:2px;
+        }
+
+        .en{font-size:14px;font-weight:500;margin-bottom:3px}
+        .jp{font-size:12px;color:var(--t2)}
+        .sm{font-size:11px;color:var(--t3);margin-bottom:8px}
+
+        .ls{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:10px;
+            list-style:none;
+        }
+
+        .ls li{
+            background:var(--card);
+            border-radius:var(--radius-sm);
+            padding:12px 14px;
+            border:1px solid var(--border);
+            transition:border-color .15s ease;
+        }
+
+        .ls li:hover{border-color:var(--teal)}
+
+        .voc{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:10px;
+        }
+
+        .voc-i{
+            background:var(--card);
+            border-radius:var(--radius-sm);
+            padding:10px 12px;
+            border:1px solid var(--border);
+            display:flex;
+            flex-direction:column;
+            gap:2px;
+        }
+
+        .voc-en{font-size:13px;font-weight:600;color:var(--t1)}
+        .voc-jp{font-size:11px;color:var(--t2)}
+
+        .pat{
+            margin-top:12px;
+            padding:12px 14px;
+            background:var(--purple-bg);
+            border-radius:var(--radius-sm);
+            font-size:12px;
+            border-left:3px solid var(--purple);
+        }
+
+        .pat code{
+            font-family:ui-monospace,SFMono-Regular,monospace;
+            background:rgba(139,122,155,.15);
+            padding:2px 6px;
+            border-radius:4px;
+            font-size:11px;
+            color:var(--purple);
+        }
+
+        .dark .pat code{background:rgba(168,153,184,.2)}
+
+        .tpl{
+            background:var(--card2);
+            border-radius:var(--radius-sm);
+            padding:16px 18px;
+            font-size:13px;
+            line-height:2;
+        }
+
+        .blank{
+            display:inline-block;
+            min-width:90px;
+            border-bottom:2px solid var(--purple);
+            color:var(--purple);
+            font-style:italic;
+            text-align:center;
+            padding:0 4px;
+        }
+
+        .chk{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:10px;
+        }
+
+        .chk-i{
+            display:flex;
+            align-items:flex-start;
+            gap:10px;
+            background:var(--card);
+            border-radius:var(--radius-sm);
+            padding:12px 14px;
+            font-size:12px;
+            border:1px solid var(--border);
+        }
+
+        .chk-ic{
+            width:20px;
+            height:20px;
+            border-radius:6px;
+            background:var(--green);
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:10px;
+            font-weight:700;
+            flex-shrink:0;
+        }
+
+        .ftr{
+            max-width:900px;
+            margin:28px auto 0;
+            text-align:center;
+            font-size:12px;
+            color:var(--t3);
+            padding-top:20px;
+            border-top:1px solid var(--border);
+        }
+
+        .star{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            width:16px;
+            height:16px;
+            background:var(--coral);
+            color:#fff;
+            border-radius:4px;
+            font-size:10px;
+            margin-left:6px;
+        }
+
+        @media(max-width:640px){
+            body{padding:16px}
+            .ls,.voc,.chk{grid-template-columns:1fr}
+            .hdr h1{font-size:20px}
+            .hdr-icon{width:40px;height:40px;font-size:20px}
+            .btns{width:100%;justify-content:stretch}
+            .btn{flex:1;justify-content:center}
+            .hdr-top{flex-direction:column}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            *{transition:none!important}
+        }
+    </style>
+</head>
+<body>
+
+<header class="hdr">
+    <div class="hdr-top">
+        <div class="hdr-title">
+            <div class="hdr-icon">🌿</div>
+            <div>
+                <h1>Day 9: Environment and Daily Actions</h1>
+                <p class="hdr-sub">環境問題と日常の行動について話す7つの会話フロー</p>
+            </div>
+        </div>
+        <div class="btns">
+            <button class="btn btn-outline" id="closeAll">Close All</button>
+            <button class="btn btn-dark" id="theme">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="info">
+        🎓 <b>今日のゴール:</b> チューターに質問して、環境問題と日常の行動について情報を集める。その後、約100語のサマリーを書く。
+        <div class="deadline">⏰ 締切: 今日 21:00</div>
+    </div>
+</header>
+
+<p class="note"><span class="note-icon">💡</span> カードをタップして展開 → STEP 1〜5 の流れで会話してみよう。</p>
+
+<main class="cards">
+
+    <!-- START -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge st">▶</div>
+            <div class="c-info">
+                <div class="c-lbl">Conversation Start</div>
+                <div class="c-ttl">会話を始める</div>
+                <div class="c-jp">まず挨拶して、今日のトピックを伝えよう</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：挨拶して、今日聞きたいことを伝える</div>
+            <div class="step">
+                <div class="step-h">Say to your tutor</div>
+                <ul class="ls">
+                    <li><div class="en">"Hi! Today I'd like to ask you about environmental problems and daily actions."</div><div class="jp">こんにちは！今日は環境問題と日常の行動についてお聞きしたいです。</div></li>
+                    <li><div class="en">"Can I ask you some questions about the environment in your country?"</div><div class="jp">あなたの国の環境についていくつか質問してもいいですか？</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q1 -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge">Q1</div>
+            <div class="c-info">
+                <div class="c-lbl">Ask About Environmental Problems<span class="star">★</span></div>
+                <div class="c-ttl">Are there any environmental problems in your country?</div>
+                <div class="c-jp">あなたの国や地域には環境問題がありますか？</div>
+                <span class="pill">Problems</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：チューターの国の環境問題を聞き出す（★サマリーに必須！）</div>
+            <div class="step">
+                <div class="step-h">Step 1 — Ask</div>
+                <div class="en">"Are there any environmental problems in your country or local area?"</div>
+                <div class="jp">あなたの国や地域には環境問題がありますか？</div>
+                <p class="sm" style="margin-top:10px">他の聞き方：</p>
+                <ul class="ls">
+                    <li><div class="en">"What environmental issues does your country face?"</div><div class="jp">あなたの国はどんな環境問題に直面していますか？</div></li>
+                    <li><div class="en">"Is pollution a big problem where you live?"</div><div class="jp">あなたの住んでいる場所では汚染は大きな問題ですか？</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — Listen</div>
+                <ul class="ls">
+                    <li><div class="en">"Yes, air pollution is a serious problem in my city. There's a lot of smog."</div><div class="jp">はい、私の街では大気汚染が深刻な問題です。スモッグがひどいです。</div></li>
+                    <li><div class="en">"We have issues with deforestation and losing wildlife habitats."</div><div class="jp">森林伐採と野生動物の生息地の喪失という問題があります。</div></li>
+                    <li><div class="en">"Water pollution is a concern. Some rivers are quite dirty."</div><div class="jp">水質汚染が懸念されています。とても汚い川もあります。</div></li>
+                    <li><div class="en">"Climate change is causing more extreme weather, like floods and droughts."</div><div class="jp">気候変動が洪水や干ばつなどの異常気象を引き起こしています。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — React</div>
+                <p class="sm">どれか一つでOK。短くていい。</p>
+                <ul class="ls">
+                    <li><div class="en">"That sounds serious."</div><div class="jp">それは深刻ですね。</div></li>
+                    <li><div class="en">"I didn't know that. Thank you for telling me."</div><div class="jp">知りませんでした。教えてくれてありがとう。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — Add</div>
+                <div class="en">"In Japan, we also have environmental problems. Air pollution in big cities is a concern, and we produce a lot of plastic waste."</div>
+                <div class="jp">日本にも環境問題があります。大都市の大気汚染が懸念されていて、プラスチックごみも大量に出ています。</div>
+                <div class="pat">📝 型：<code>In Japan, we also have _____. _____ is a concern.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — Ask Again</div>
+                <div class="en">"What do people do in daily life that affects the environment?"</div>
+                <div class="jp">日常生活で環境に影響を与えることって何がありますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">environmental problem</span><span class="voc-jp">環境問題</span></div>
+                    <div class="voc-i"><span class="voc-en">air pollution</span><span class="voc-jp">大気汚染</span></div>
+                    <div class="voc-i"><span class="voc-en">water pollution</span><span class="voc-jp">水質汚染</span></div>
+                    <div class="voc-i"><span class="voc-en">deforestation</span><span class="voc-jp">森林伐採</span></div>
+                    <div class="voc-i"><span class="voc-en">climate change</span><span class="voc-jp">気候変動</span></div>
+                    <div class="voc-i"><span class="voc-en">wildlife habitat</span><span class="voc-jp">野生動物の生息地</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q2 -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge">Q2</div>
+            <div class="c-info">
+                <div class="c-lbl">Ask About Daily Impact<span class="star">★</span></div>
+                <div class="c-ttl">What do people do in daily life that affects the environment?</div>
+                <div class="c-jp">日常生活で環境に影響を与えることは何ですか？</div>
+                <span class="pill">Daily Impact</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：環境に影響を与える日常の行動を聞き出す（★サマリーに必須！）</div>
+            <div class="step">
+                <div class="step-h">Step 1 — Ask</div>
+                <div class="en">"What do people do in daily life that affects the environment?"</div>
+                <div class="jp">日常生活で環境に影響を与えることは何ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — Listen</div>
+                <ul class="ls">
+                    <li><div class="en">"People drive cars everywhere instead of using public transportation."</div><div class="jp">公共交通機関を使う代わりに、どこでも車で移動します。</div></li>
+                    <li><div class="en">"Many people use single-use plastics like bags and straws every day."</div><div class="jp">毎日、レジ袋やストローなどの使い捨てプラスチックを使う人が多いです。</div></li>
+                    <li><div class="en">"Leaving lights and air conditioning on when not needed wastes energy."</div><div class="jp">必要ない時に電気やエアコンをつけっぱなしにするとエネルギーの無駄になります。</div></li>
+                    <li><div class="en">"Buying too much food and throwing it away creates a lot of waste."</div><div class="jp">食べ物を買いすぎて捨てると、大量のゴミが出ます。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — React</div>
+                <ul class="ls">
+                    <li><div class="en">"I see. Those are things we do without thinking."</div><div class="jp">なるほど。考えずにやってしまうことですね。</div></li>
+                    <li><div class="en">"That's a good point. Small actions add up."</div><div class="jp">いい指摘ですね。小さな行動も積み重なりますよね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — Add</div>
+                <div class="en">"In Japan, many people use convenience stores which create a lot of packaging waste. Also, some people leave the water running while brushing their teeth."</div>
+                <div class="jp">日本では、多くの人がコンビニを利用しますが、包装ごみがたくさん出ます。また、歯磨き中に水を出しっぱなしにする人もいます。</div>
+                <div class="pat">📝 型：<code>In Japan, many people _____. Also, some people _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — Ask Again</div>
+                <div class="en">"What do you personally do to protect the environment?"</div>
+                <div class="jp">あなた個人は環境を守るために何をしていますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">single-use plastic</span><span class="voc-jp">使い捨てプラスチック</span></div>
+                    <div class="voc-i"><span class="voc-en">public transportation</span><span class="voc-jp">公共交通機関</span></div>
+                    <div class="voc-i"><span class="voc-en">waste energy</span><span class="voc-jp">エネルギーを無駄にする</span></div>
+                    <div class="voc-i"><span class="voc-en">food waste</span><span class="voc-jp">食品廃棄物</span></div>
+                    <div class="voc-i"><span class="voc-en">packaging</span><span class="voc-jp">包装</span></div>
+                    <div class="voc-i"><span class="voc-en">carbon footprint</span><span class="voc-jp">カーボンフットプリント</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q3 -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge">Q3</div>
+            <div class="c-info">
+                <div class="c-lbl">Ask About Personal Actions</div>
+                <div class="c-ttl">What do you personally do to protect the environment?</div>
+                <div class="c-jp">あなた個人は環境を守るために何をしていますか？</div>
+                <span class="pill">Personal</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：チューター自身が行っている環境保護活動を聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — Ask</div>
+                <div class="en">"What do you personally do to protect the environment?"</div>
+                <div class="jp">あなた個人は環境を守るために何をしていますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — Listen</div>
+                <ul class="ls">
+                    <li><div class="en">"I always bring my own shopping bag and water bottle."</div><div class="jp">いつも自分の買い物袋と水筒を持ち歩いています。</div></li>
+                    <li><div class="en">"I try to take public transportation or ride my bicycle."</div><div class="jp">できるだけ公共交通機関を使うか自転車に乗るようにしています。</div></li>
+                    <li><div class="en">"I separate my garbage for recycling and composting."</div><div class="jp">リサイクルと堆肥化のためにゴミを分別しています。</div></li>
+                    <li><div class="en">"I turn off lights and unplug devices when I'm not using them."</div><div class="jp">使っていない時は電気を消して、コンセントを抜きます。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — React</div>
+                <ul class="ls">
+                    <li><div class="en">"Those are great habits!"</div><div class="jp">それは素晴らしい習慣ですね！</div></li>
+                    <li><div class="en">"I should try that too."</div><div class="jp">私もやってみるべきですね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — Add</div>
+                <div class="en">"In Japan, we have strict garbage separation rules. I always bring my eco-bag shopping and try to use less plastic."</div>
+                <div class="jp">日本には厳しいゴミ分別ルールがあります。私はいつもエコバッグを持って買い物に行き、プラスチックを減らすようにしています。</div>
+                <div class="pat">📝 型：<code>In Japan, we have _____. I always _____ and try to _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — Ask Again</div>
+                <div class="en">"What is one simple action people can take to help the environment?"</div>
+                <div class="jp">環境を助けるために人々ができる簡単な行動は何ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">eco-bag</span><span class="voc-jp">エコバッグ</span></div>
+                    <div class="voc-i"><span class="voc-en">reusable</span><span class="voc-jp">再利用可能な</span></div>
+                    <div class="voc-i"><span class="voc-en">recycle</span><span class="voc-jp">リサイクルする</span></div>
+                    <div class="voc-i"><span class="voc-en">compost</span><span class="voc-jp">堆肥（にする）</span></div>
+                    <div class="voc-i"><span class="voc-en">unplug</span><span class="voc-jp">コンセントを抜く</span></div>
+                    <div class="voc-i"><span class="voc-en">separate garbage</span><span class="voc-jp">ゴミを分別する</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q4 -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge">Q4</div>
+            <div class="c-info">
+                <div class="c-lbl">Ask About Simple Actions<span class="star">★</span></div>
+                <div class="c-ttl">What is one simple action people can take to help?</div>
+                <div class="c-jp">環境を助けるために人々ができる簡単な行動は何ですか？</div>
+                <span class="pill">Solutions</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：誰でもできる簡単な環境保護行動を聞き出す（★サマリーに必須！）</div>
+            <div class="step">
+                <div class="step-h">Step 1 — Ask</div>
+                <div class="en">"What is one simple action people can take to help the environment?"</div>
+                <div class="jp">環境を助けるために人々ができる簡単な行動は何ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — Listen</div>
+                <ul class="ls">
+                    <li><div class="en">"Reduce, reuse, recycle. Start with reducing what you buy."</div><div class="jp">リデュース、リユース、リサイクル。まず買う量を減らすことから始めましょう。</div></li>
+                    <li><div class="en">"Bring your own bag when shopping. It's easy and makes a difference."</div><div class="jp">買い物の時にマイバッグを持参すること。簡単だし、効果があります。</div></li>
+                    <li><div class="en">"Turn off the tap while brushing your teeth. It saves a lot of water."</div><div class="jp">歯磨き中に水を止めること。たくさんの水を節約できます。</div></li>
+                    <li><div class="en">"Choose products with less packaging or buy in bulk."</div><div class="jp">包装の少ない商品を選ぶか、まとめ買いをすること。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — React</div>
+                <ul class="ls">
+                    <li><div class="en">"That's something everyone can do easily."</div><div class="jp">それは誰でも簡単にできることですね。</div></li>
+                    <li><div class="en">"I agree. Small changes can make a big difference."</div><div class="jp">同意します。小さな変化が大きな違いを生みますよね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — Add</div>
+                <div class="en">"In Japan, many stores charge for plastic bags now, so most people bring their own. I think this is a simple but effective change."</div>
+                <div class="jp">日本では今、多くの店がレジ袋を有料化しているので、ほとんどの人がマイバッグを持参します。これはシンプルだけど効果的な変化だと思います。</div>
+                <div class="pat">📝 型：<code>In Japan, many stores _____. I think this is _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — Ask Again</div>
+                <div class="en">"Is trash a big problem in your area?"</div>
+                <div class="jp">あなたの地域ではゴミは大きな問題ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">reduce</span><span class="voc-jp">減らす</span></div>
+                    <div class="voc-i"><span class="voc-en">reuse</span><span class="voc-jp">再利用する</span></div>
+                    <div class="voc-i"><span class="voc-en">make a difference</span><span class="voc-jp">違いを生む</span></div>
+                    <div class="voc-i"><span class="voc-en">save water</span><span class="voc-jp">水を節約する</span></div>
+                    <div class="voc-i"><span class="voc-en">buy in bulk</span><span class="voc-jp">まとめ買いする</span></div>
+                    <div class="voc-i"><span class="voc-en">effective</span><span class="voc-jp">効果的な</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q5 -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge">Q5</div>
+            <div class="c-info">
+                <div class="c-lbl">Ask About Trash</div>
+                <div class="c-ttl">Is trash a big problem in your area?</div>
+                <div class="c-jp">あなたの地域ではゴミは大きな問題ですか？</div>
+                <span class="pill">Trash</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：ゴミ問題と収集方法について聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — Ask</div>
+                <div class="en">"Is trash a big problem in your area? How is trash collected?"</div>
+                <div class="jp">あなたの地域ではゴミは大きな問題ですか？ゴミはどのように収集されますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — Listen</div>
+                <ul class="ls">
+                    <li><div class="en">"Yes, there's often litter on the streets. People don't always use trash bins."</div><div class="jp">はい、道にゴミが落ちていることがよくあります。みんながゴミ箱を使うわけではありません。</div></li>
+                    <li><div class="en">"Trash trucks come twice a week. We have separate bins for different types."</div><div class="jp">ゴミ収集車が週2回来ます。種類ごとに別々のゴミ箱があります。</div></li>
+                    <li><div class="en">"Our city has good waste management, but illegal dumping is still an issue."</div><div class="jp">私たちの市はゴミ処理がしっかりしていますが、不法投棄はまだ問題です。</div></li>
+                    <li><div class="en">"We don't have a good recycling system, so most trash goes to landfills."</div><div class="jp">良いリサイクルシステムがないので、ほとんどのゴミは埋立地に行きます。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — React</div>
+                <ul class="ls">
+                    <li><div class="en">"That's interesting. It's quite different from Japan."</div><div class="jp">面白いですね。日本とはかなり違います。</div></li>
+                    <li><div class="en">"I see. Waste management is important for the environment."</div><div class="jp">なるほど。ゴミ処理は環境にとって大切ですね。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — Add</div>
+                <div class="en">"In Japan, we have very strict garbage separation rules. We separate into burnable, non-burnable, plastic, cans, bottles, and more. Collection days are different for each type."</div>
+                <div class="jp">日本には非常に厳しいゴミ分別ルールがあります。可燃、不燃、プラスチック、缶、ビンなどに分けます。種類ごとに収集日が異なります。</div>
+                <div class="pat">📝 型：<code>In Japan, we have _____. We separate into _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — Ask Again</div>
+                <div class="en">"Is plastic use common in your country?"</div>
+                <div class="jp">あなたの国ではプラスチックの使用は一般的ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">litter</span><span class="voc-jp">ポイ捨てのゴミ</span></div>
+                    <div class="voc-i"><span class="voc-en">trash bin</span><span class="voc-jp">ゴミ箱</span></div>
+                    <div class="voc-i"><span class="voc-en">waste management</span><span class="voc-jp">ゴミ処理</span></div>
+                    <div class="voc-i"><span class="voc-en">landfill</span><span class="voc-jp">埋立地</span></div>
+                    <div class="voc-i"><span class="voc-en">illegal dumping</span><span class="voc-jp">不法投棄</span></div>
+                    <div class="voc-i"><span class="voc-en">burnable/non-burnable</span><span class="voc-jp">可燃/不燃</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q6 -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge">Q6</div>
+            <div class="c-info">
+                <div class="c-lbl">Ask About Plastic</div>
+                <div class="c-ttl">Is plastic use common in your country?</div>
+                <div class="c-jp">あなたの国ではプラスチックの使用は一般的ですか？</div>
+                <span class="pill">Plastic</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：プラスチック使用の状況を聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — Ask</div>
+                <div class="en">"Is plastic use common in your country?"</div>
+                <div class="jp">あなたの国ではプラスチックの使用は一般的ですか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — Listen</div>
+                <ul class="ls">
+                    <li><div class="en">"Yes, unfortunately. Plastic bags and bottles are everywhere."</div><div class="jp">はい、残念ながら。レジ袋やペットボトルがどこにでもあります。</div></li>
+                    <li><div class="en">"It's getting better. Many restaurants have stopped using plastic straws."</div><div class="jp">良くなってきています。多くのレストランがプラスチックストローの使用をやめました。</div></li>
+                    <li><div class="en">"Plastic is still common, but people are becoming more aware of the problem."</div><div class="jp">プラスチックはまだ一般的ですが、人々は問題をより意識するようになっています。</div></li>
+                    <li><div class="en">"Our government recently banned single-use plastics in some areas."</div><div class="jp">政府が最近、一部の地域で使い捨てプラスチックを禁止しました。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — React</div>
+                <ul class="ls">
+                    <li><div class="en">"It's good that things are changing."</div><div class="jp">状況が変わってきているのはいいことですね。</div></li>
+                    <li><div class="en">"Japan has a similar situation."</div><div class="jp">日本も似たような状況です。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — Add</div>
+                <div class="en">"In Japan, plastic use is still very common, especially for packaging. However, since 2020, stores charge for plastic bags, which has helped reduce their use."</div>
+                <div class="jp">日本では、特に包装にプラスチックがまだとても多く使われています。しかし、2020年からレジ袋が有料化され、使用量が減りました。</div>
+                <div class="pat">📝 型：<code>In Japan, plastic use is _____. However, since _____, _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 5 — Ask Again</div>
+                <div class="en">"Are people becoming more environmentally aware?"</div>
+                <div class="jp">人々は環境への意識が高まっていますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">plastic bag</span><span class="voc-jp">レジ袋</span></div>
+                    <div class="voc-i"><span class="voc-en">plastic straw</span><span class="voc-jp">プラスチックストロー</span></div>
+                    <div class="voc-i"><span class="voc-en">ban</span><span class="voc-jp">禁止する</span></div>
+                    <div class="voc-i"><span class="voc-en">aware</span><span class="voc-jp">意識している</span></div>
+                    <div class="voc-i"><span class="voc-en">charge for</span><span class="voc-jp">〜を有料にする</span></div>
+                    <div class="voc-i"><span class="voc-en">reduce</span><span class="voc-jp">減らす</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- Q7 -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge">Q7</div>
+            <div class="c-info">
+                <div class="c-lbl">Ask About Awareness</div>
+                <div class="c-ttl">Are people becoming more environmentally aware?</div>
+                <div class="c-jp">人々は環境への意識が高まっていますか？</div>
+                <span class="pill">Awareness</span>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="goal">🎯 ゴール：環境意識の変化について聞き出す</div>
+            <div class="step">
+                <div class="step-h">Step 1 — Ask</div>
+                <div class="en">"Are people becoming more environmentally aware?"</div>
+                <div class="jp">人々は環境への意識が高まっていますか？</div>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 2 — Listen</div>
+                <ul class="ls">
+                    <li><div class="en">"Yes, especially young people. They care a lot about climate change."</div><div class="jp">はい、特に若者は。彼らは気候変動をとても気にかけています。</div></li>
+                    <li><div class="en">"Slowly. More people are recycling and using eco-friendly products."</div><div class="jp">ゆっくりですが。リサイクルしたり環境に優しい製品を使う人が増えています。</div></li>
+                    <li><div class="en">"Not really. Many people still don't think about environmental issues."</div><div class="jp">あまり。まだ多くの人が環境問題について考えていません。</div></li>
+                    <li><div class="en">"It depends. City people are more aware than those in rural areas."</div><div class="jp">場合によります。都市部の人の方が田舎の人より意識が高いです。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 3 — React</div>
+                <ul class="ls">
+                    <li><div class="en">"That's hopeful. Young people can make a difference."</div><div class="jp">希望が持てますね。若者は変化を起こせます。</div></li>
+                    <li><div class="en">"I think education is important for raising awareness."</div><div class="jp">意識を高めるには教育が大切だと思います。</div></li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-h">Step 4 — Add</div>
+                <div class="en">"In Japan, environmental awareness is growing, especially among students. We learn about SDGs at school and many young people are interested in sustainability."</div>
+                <div class="jp">日本では、特に学生の間で環境意識が高まっています。学校でSDGsについて学び、多くの若者がサステナビリティに関心を持っています。</div>
+                <div class="pat">📝 型：<code>In Japan, environmental awareness is _____. We learn about _____.</code></div>
+            </div>
+            <div class="step">
+                <div class="step-h">Vocabulary</div>
+                <div class="voc">
+                    <div class="voc-i"><span class="voc-en">environmentally aware</span><span class="voc-jp">環境意識がある</span></div>
+                    <div class="voc-i"><span class="voc-en">eco-friendly</span><span class="voc-jp">環境に優しい</span></div>
+                    <div class="voc-i"><span class="voc-en">SDGs</span><span class="voc-jp">持続可能な開発目標</span></div>
+                    <div class="voc-i"><span class="voc-en">sustainability</span><span class="voc-jp">持続可能性</span></div>
+                    <div class="voc-i"><span class="voc-en">raise awareness</span><span class="voc-jp">意識を高める</span></div>
+                    <div class="voc-i"><span class="voc-en">hopeful</span><span class="voc-jp">希望が持てる</span></div>
+                </div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- END -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge st">✓</div>
+            <div class="c-info">
+                <div class="c-lbl">Conversation End</div>
+                <div class="c-ttl">会話を終える</div>
+                <div class="c-jp">お礼を言って会話を終わろう</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">Thank your tutor</div>
+                <ul class="ls">
+                    <li><div class="en">"Thank you so much! I learned a lot about environmental issues."</div><div class="jp">ありがとうございました！環境問題についてたくさん学びました。</div></li>
+                    <li><div class="en">"This was a very informative conversation. Thank you!"</div><div class="jp">とても勉強になる会話でした。ありがとう！</div></li>
+                    <li><div class="en">"I'll use this information for my summary. Thanks!"</div><div class="jp">この情報をサマリーに使います。ありがとう！</div></li>
+                    <li><div class="en">"Have a great day! Let's both do our part for the environment."</div><div class="jp">良い一日を！お互い環境のためにできることをしましょう。</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge smry">✍</div>
+            <div class="c-info">
+                <div class="c-lbl">Homework</div>
+                <div class="c-ttl">サマリーを書く（約100語）</div>
+                <div class="c-jp">会話で得た情報をまとめよう</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">Requirements</div>
+                <div class="chk">
+                    <div class="chk-i"><span class="chk-ic">1</span><span><b>Environmental problems</b>：チューターの国の環境問題</span></div>
+                    <div class="chk-i"><span class="chk-ic">2</span><span><b>Daily actions</b>：環境に影響を与える日常の行動</span></div>
+                    <div class="chk-i"><span class="chk-ic">3</span><span><b>Simple actions</b>：人々ができる環境保護の行動</span></div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-h">提出の流れ</div>
+                <div class="chk">
+                    <div class="chk-i"><span class="chk-ic">①</span><span>「手書き採点アシスタント」に提出</span></div>
+                    <div class="chk-i"><span class="chk-ic">②</span><span>フィードバックに基づいて修正</span></div>
+                    <div class="chk-i"><span class="chk-ic">③</span><span>Loilonoteに2つ提出（修正前・後）</span></div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-h">Template</div>
+                <div class="tpl">The tutor, <span class="blank">[Name]</span>, talked about environmental problems and daily actions. In their country, <span class="blank">[environmental problem]</span> is a serious issue. In daily life, people <span class="blank">[daily actions that affect environment]</span>. To protect the environment, the tutor <span class="blank">[personal actions]</span>. They said one simple action people can take is <span class="blank">[simple action]</span>. This conversation taught me that small daily actions can make a big difference for our planet.</div>
+            </div>
+        </div></div></div>
+    </section>
+
+    <!-- HELP -->
+    <section class="c">
+        <div class="c-h" tabindex="0">
+            <div class="badge hp">?</div>
+            <div class="c-info">
+                <div class="c-lbl">Help</div>
+                <div class="c-ttl">聞き取れなかったとき</div>
+                <div class="c-jp">困ったときに使えるフレーズ</div>
+            </div>
+            <div class="chv">▶</div>
+        </div>
+        <div class="c-b"><div class="c-b-inner"><div class="c-content">
+            <div class="step">
+                <div class="step-h">When you don't understand</div>
+                <ul class="ls">
+                    <li><div class="en">"Could you say that again?"</div><div class="jp">もう一度言ってもらえますか？</div></li>
+                    <li><div class="en">"Could you speak more slowly?"</div><div class="jp">もう少しゆっくり話してもらえますか？</div></li>
+                    <li><div class="en">"What does [word] mean?"</div><div class="jp">[word]はどういう意味ですか？</div></li>
+                    <li><div class="en">"Can you give me an example?"</div><div class="jp">例を挙げてもらえますか？</div></li>
+                </ul>
+            </div>
+        </div></div></div>
+    </section>
+
+</main>
+
+<footer class="ftr">🌱 Teacher tip: 環境問題は生徒にとって身近なテーマ。日本との比較を促すと、より深い会話ができます。</footer>
+
+<script>
+(function(){
+    'use strict';
+
+    var body, themeBtn, closeBtn, cards;
+
+    try {
+        body = document.body;
+        themeBtn = document.getElementById('theme');
+        closeBtn = document.getElementById('closeAll');
+        cards = document.querySelectorAll('.c');
+    } catch(e) {
+        console.error('DOM init failed:', e);
+        return;
+    }
+
+    function setTheme(dark) {
+        try {
+            body.classList.toggle('dark', dark);
+            themeBtn.textContent = dark ? '☀️ Light' : '🌙 Dark';
+            localStorage.setItem('d9-env', dark ? '1' : '0');
+        } catch(e) {}
+    }
+
+    try {
+        if (localStorage.getItem('d9-env') === '1') setTheme(true);
+    } catch(e) {}
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+            setTheme(!body.classList.contains('dark'));
+        }, {passive: true});
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            try {
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i].classList.remove('open');
+                }
+            } catch(e) {}
+        }, {passive: true});
+    }
+
+    document.addEventListener('click', function(e) {
+        try {
+            var header = e.target.closest('.c-h');
+            if (header) {
+                var card = header.closest('.c');
+                if (card) {
+                    card.classList.toggle('open');
+                }
+            }
+        } catch(e) {}
+    }, {passive: true});
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            var header = e.target.closest('.c-h');
+            if (header) {
+                e.preventDefault();
+                header.click();
+            }
+        }
+    });
+
+})();
+</script>
+
+</body>
+</html>
