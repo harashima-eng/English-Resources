@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>17 形容詞・副詞・群動詞 | Adjectives, Adverbs & Phrasal Verbs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --bg-warm: #f5f3ef;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --text-muted: #999999;
+      --border: rgba(0,0,0,0.12);
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+      --radius: 20px;
+      --radius-sm: 12px;
+      /* Grammar type colors */
+      --adj: #e8725c;
+      --adj-light: #fef4f2;
+      --adv: #3d8bca;
+      --adv-light: #f0f7fc;
+      --phrasal: #5a9a6e;
+      --phrasal-light: #f3f9f5;
+      --quantity: #9b7fcf;
+      --quantity-light: #f8f5fc;
+      --accent: #e8725c;
+    }
+    [data-theme="dark"] {
+      --bg: #0d0d0d;
+      --bg-warm: #141414;
+      --card: #1a1a1a;
+      --text: #f5f5f5;
+      --text-secondary: #a0a0a0;
+      --text-muted: #666666;
+      --border: rgba(255,255,255,0.08);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+      --shadow: 0 4px 20px rgba(0,0,0,0.3);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
+      --adj-light: rgba(232,114,92,0.12);
+      --adv-light: rgba(61,139,202,0.12);
+      --phrasal-light: rgba(90,154,110,0.12);
+      --quantity-light: rgba(155,127,207,0.12);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    #intro, #overview, #study {
+      scroll-margin-top: 52px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(250, 249, 247, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    [data-theme="dark"] .top-nav {
+      background: rgba(13, 13, 13, 0.95);
+    }
+    .top-nav-logo {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: 15px;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+    .top-nav-center {
+      display: flex;
+      gap: 8px;
+    }
+    .top-nav-link {
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 100px;
+      transition: all 0.2s ease;
+    }
+    .top-nav-link:hover {
+      color: var(--text);
+      background: var(--bg-warm);
+    }
+    .top-nav-link.active {
+      color: var(--text);
+      background: var(--card);
+      box-shadow: var(--shadow-sm);
+    }
+    [data-theme="dark"] .top-nav-link:hover {
+      background: var(--card);
+    }
+    .top-nav-theme {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .top-nav-theme:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .intro {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      padding-top: 52px;
+    }
+    .intro-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-warm);
+      opacity: 0.5;
+    }
+    .intro-nav {
+      position: absolute;
+      top: 52px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      z-index: 10;
+    }
+    .intro-logo {
+      font-family: 'New York', 'Georgia', 'Noto Serif JP', serif;
+      font-size: 18px;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+    .intro-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .theme-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+    .theme-btn:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow);
+    }
+    .intro-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      z-index: 10;
+    }
+    .intro-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease-out 0.1s both;
+    }
+    .intro-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(42px, 9vw, 110px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    .intro-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .intro-subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin-bottom: 48px;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+    .intro-cta {
+      display: flex;
+      gap: 16px;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    .btn-primary {
+      padding: 16px 32px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    .btn-secondary {
+      padding: 16px 32px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--card);
+      border-color: transparent;
+      box-shadow: var(--shadow);
+    }
+    .intro-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .overview {
+      padding: 100px 48px;
+      background: var(--bg-warm);
+    }
+    .overview-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .overview-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .overview-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      perspective: 1000px;
+    }
+    @media (max-width: 1100px) {
+      .type-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .type-grid { grid-template-columns: 1fr; }
+      .overview { padding: 60px 24px; }
+      .intro-nav { padding: 20px 24px; }
+    }
+    .type-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      border-top: 4px solid var(--card-accent);
+      transition: box-shadow 0.3s ease;
+      animation: fadeIn 0.4s ease backwards;
+      transform-style: preserve-3d;
+    }
+    .type-card:nth-child(1) { animation-delay: 0s; }
+    .type-card:nth-child(2) { animation-delay: 0.08s; }
+    .type-card:nth-child(3) { animation-delay: 0.16s; }
+    .type-card:nth-child(4) { animation-delay: 0.24s; }
+    .type-card.adj { --card-accent: var(--adj); }
+    .type-card.adv { --card-accent: var(--adv); }
+    .type-card.phrasal { --card-accent: var(--phrasal); }
+    .type-card.quantity { --card-accent: var(--quantity); }
+    .type-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .adj .type-icon { background: var(--adj-light); }
+    .adv .type-icon { background: var(--adv-light); }
+    .phrasal .type-icon { background: var(--phrasal-light); }
+    .quantity .type-icon { background: var(--quantity-light); }
+    .type-name {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+    .type-name-jp {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .type-words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .type-word {
+      padding: 4px 10px;
+      background: var(--bg-warm);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    [data-theme="dark"] .type-word {
+      background: var(--bg);
+    }
+
+    .conj-section {
+      padding: 80px 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    @media (max-width: 600px) {
+      .conj-section { padding: 48px 20px; }
+    }
+    .conj-section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .conj-section-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    .conj-section.adj .conj-section-icon { background: var(--adj-light); }
+    .conj-section.adv .conj-section-icon { background: var(--adv-light); }
+    .conj-section.phrasal .conj-section-icon { background: var(--phrasal-light); }
+    .conj-section.quantity .conj-section-icon { background: var(--quantity-light); }
+    .conj-section-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 400;
+    }
+    .conj-section-title-jp {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    .conj-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      perspective: 1000px;
+    }
+    @media (max-width: 900px) {
+      .conj-grid { grid-template-columns: 1fr; }
+    }
+    .conj-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      position: relative;
+      border-left: 4px solid var(--card-accent);
+      transition: box-shadow 0.3s ease;
+      animation: fadeIn 0.4s ease backwards;
+      transform-style: preserve-3d;
+    }
+    .conj-card:nth-child(1) { animation-delay: 0s; }
+    .conj-card:nth-child(2) { animation-delay: 0.05s; }
+    .conj-card:nth-child(3) { animation-delay: 0.1s; }
+    .conj-card:nth-child(4) { animation-delay: 0.15s; }
+    .conj-card:nth-child(5) { animation-delay: 0.2s; }
+    .conj-card:nth-child(6) { animation-delay: 0.25s; }
+    .conj-section.adj .conj-card { --card-accent: var(--adj); }
+    .conj-section.adv .conj-card { --card-accent: var(--adv); }
+    .conj-section.phrasal .conj-card { --card-accent: var(--phrasal); }
+    .conj-section.quantity .conj-card { --card-accent: var(--quantity); }
+    .conj-card-word {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--card-accent);
+      margin-bottom: 4px;
+    }
+    .conj-card-meaning {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .conj-card-example {
+      margin-bottom: 16px;
+    }
+    .conj-card-example-en {
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .conj-card-example-en strong {
+      color: var(--card-accent);
+      font-weight: 700;
+    }
+    .conj-card-example-jp {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .conj-card-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      background: var(--bg-warm);
+      border-radius: var(--radius-sm);
+      margin-top: 16px;
+    }
+    [data-theme="dark"] .conj-card-tip {
+      background: var(--bg);
+    }
+    .conj-card-tip-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .conj-card-tip-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .study {
+      padding: 80px 48px 120px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (max-width: 600px) {
+      .study { padding: 40px 20px 80px; }
+    }
+    .study-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .study-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: 28px;
+    }
+    .study-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .view-toggle {
+      display: flex;
+      background: var(--bg-warm);
+      border-radius: 100px;
+      padding: 4px;
+    }
+    .view-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 100px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .view-btn.active {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+    .ctrl-btn {
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover {
+      border-color: var(--text);
+    }
+
+    .progress-wrap {
+      margin-bottom: 32px;
+    }
+    .progress-bar-bg {
+      height: 6px;
+      background: var(--bg-warm);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--adj), var(--phrasal));
+      border-radius: 100px;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    .search-wrap {
+      position: relative;
+      margin-bottom: 32px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 16px 20px 16px 52px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--card);
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--adj-light);
+    }
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .section {
+      background: var(--card);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 20px 28px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .section-arrow {
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+    .section-header.open .section-arrow {
+      transform: rotate(180deg);
+    }
+    .section-body {
+      display: none;
+    }
+    .section-body.open {
+      display: block;
+      border-top: 1px solid var(--border);
+      padding: 20px;
+    }
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .qcard {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .qcard-question, .qcard-buttons, .qcard-left, .qcard-right {
+      box-sizing: border-box;
+    }
+    .qcard-buttons, .toggle-btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .qcard-buttons {
+      padding: 0 24px 16px;
+    }
+    [data-view="dual"] .qcard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "question question"
+        "left right";
+    }
+    [data-view="dual"] .qcard-buttons {
+      display: none;
+    }
+    [data-view="dual"] .qcard-question {
+      grid-area: question;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    [data-view="dual"] .qcard-left {
+      grid-area: left;
+      padding: 24px;
+      border-right: 1px solid var(--border);
+    }
+    [data-view="dual"] .qcard-right {
+      grid-area: right;
+      padding: 24px;
+      background: var(--bg-warm);
+    }
+    [data-view="dual"] .collapsible {
+      display: none;
+    }
+    [data-view="dual"] .collapsible.open {
+      display: block;
+      margin-top: 16px;
+    }
+    [data-view="single"] .qcard {
+      display: block;
+    }
+    [data-view="single"] .qcard-buttons {
+      display: flex;
+    }
+    [data-view="single"] .toggle-btn-row {
+      display: none;
+    }
+    [data-view="single"] .qcard-question {
+      padding: 24px 24px 16px;
+    }
+    [data-view="single"] .qcard-left {
+      padding: 0 24px 0;
+      border-right: none;
+    }
+    [data-view="single"] .qcard-right {
+      padding: 0 24px 24px;
+      background: transparent;
+    }
+    [data-view="single"] .collapsible {
+      display: none;
+    }
+    [data-view="single"] .collapsible.open {
+      display: block;
+      margin-top: 16px;
+    }
+    @media (max-width: 800px) {
+      [data-view="dual"] .qcard {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "question"
+          "left"
+          "right";
+      }
+      [data-view="dual"] .qcard-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+    .qnum {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--adj-light);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+    .qtext {
+      font-size: 20px;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .choices, .scramble {
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 19px;
+    }
+    .qcard-question .choices:last-child,
+    .qcard-question .scramble:last-child {
+      margin-bottom: 0;
+    }
+    .choices {
+      background: var(--quantity-light);
+      border-left: 3px solid var(--quantity);
+    }
+    .scramble {
+      background: var(--adv-light);
+      border-left: 3px solid var(--adv);
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    .toggle-btn {
+      flex: 1;
+      min-width: 80px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .toggle-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    .toggle-btn:active {
+      transform: scale(0.98);
+    }
+    .toggle-btn.vocab { background: var(--quantity); color: white; }
+    .toggle-btn.hint { background: var(--adj); color: white; }
+    .toggle-btn.answer { background: var(--phrasal); color: white; }
+    .box {
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-size: 18px;
+      line-height: 1.7;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .vocab-box {
+      background: var(--quantity-light);
+      border-left: 3px solid var(--quantity);
+    }
+    .hint-box {
+      background: var(--adj-light);
+      border-left: 3px solid var(--adj);
+    }
+    .ans-box {
+      background: var(--phrasal-light);
+      border-left: 3px solid var(--phrasal);
+    }
+    .choice-explanations {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(90, 154, 110, 0.2);
+    }
+    .choice-exp {
+      padding: 6px 0;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+    .choice-exp.correct {
+      color: var(--phrasal);
+      font-weight: 600;
+    }
+    .choice-exp.wrong {
+      color: var(--text-secondary);
+    }
+    .vocab-item {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(155,127,207,0.15);
+    }
+    .vocab-item:last-child { border-bottom: none; }
+    .vocab-word {
+      font-weight: 700;
+      color: var(--quantity);
+      margin-right: 8px;
+    }
+    .box-label {
+      font-weight: 700;
+      font-size: 19px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .jp-text {
+      color: var(--text-secondary);
+      margin-top: 12px;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+    .grammar-ref {
+      background: var(--adv-light);
+      border-left: 3px solid var(--adv);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      margin-top: 12px;
+    }
+    .no-match { display: none !important; }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    .fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .collapsible.open {
+      animation: slideIn 0.2s ease;
+    }
+  </style>
+</head>
+<body data-view="single">
+
+  <nav class="top-nav" id="topNav">
+    <div class="top-nav-logo">DUAL SCOPE</div>
+    <div class="top-nav-center">
+      <a href="#intro" class="top-nav-link active" data-section="intro">Start</a>
+      <a href="#overview" class="top-nav-link" data-section="overview">Overview</a>
+      <a href="#study" class="top-nav-link" data-section="study">Questions</a>
+    </div>
+    <button class="top-nav-theme" onclick="toggleTheme()" title="Toggle theme">
+      <span class="theme-icon">☀️</span>
+    </button>
+  </nav>
+
+  <section class="intro" id="intro">
+    <div class="intro-bg"></div>
+    <div class="intro-hero">
+      <p class="intro-label">Lesson 17</p>
+      <h1 class="intro-title">形容詞・副詞・<em>群動詞</em></h1>
+      <p class="intro-subtitle">Master adjectives, adverbs and phrasal verbs in English.</p>
+      <div class="intro-cta">
+        <button class="btn-primary" onclick="scrollToStudy()">Start Learning</button>
+        <button class="btn-secondary" onclick="scrollToOverview()">Overview</button>
+      </div>
+    </div>
+    <div class="intro-scroll">
+      <span>SCROLL</span>
+      <span>↓</span>
+    </div>
+  </section>
+
+  <div id="overview">
+    <!-- Adjectives -->
+    <section class="conj-section adj">
+      <div class="conj-section-header">
+        <div class="conj-section-icon">🎨</div>
+        <div>
+          <h2 class="conj-section-title">Adjectives</h2>
+          <p class="conj-section-title-jp">形容詞</p>
+        </div>
+      </div>
+      <div class="conj-grid">
+        <div class="conj-card">
+          <div class="conj-card-word">限定用法と叙述用法</div>
+          <div class="conj-card-meaning">形容詞の2つの使い方</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">He is <strong>awake</strong>. (叙述のみ)</p>
+            <p class="conj-card-example-jp">彼は目を覚ましている。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">awake, asleep, alive などは叙述用法のみ。late, certain は用法で意味が変わる</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">形容詞の後置</div>
+          <div class="conj-card-meaning">名詞の後ろに置く形容詞</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">Those <strong>present</strong> at the party enjoyed it.</p>
+            <p class="conj-card-example-jp">パーティーに出席した人たちは楽しんだ。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">present（出席して）は叙述用法で後置。something strange のように不定代名詞も後置</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">数量形容詞</div>
+          <div class="conj-card-meaning">little, few, much, many</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">There is <strong>little</strong> difference.</p>
+            <p class="conj-card-example-jp">ほとんど違いがない。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">little/much は不可算、few/many は可算。a little/a few は肯定的、little/few は否定的</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">意味が変わる形容詞</div>
+          <div class="conj-card-meaning">late, certain など</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">My <strong>late</strong> mother loved cats.</p>
+            <p class="conj-card-example-jp">亡くなった母はネコが好きだった。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">late: 限定用法→亡くなった、叙述用法→遅刻した。certain: 限定用法→ある、叙述用法→確かな</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Adverbs -->
+    <section class="conj-section adv">
+      <div class="conj-section-header">
+        <div class="conj-section-icon">⏱️</div>
+        <div>
+          <h2 class="conj-section-title">Adverbs</h2>
+          <p class="conj-section-title-jp">副詞</p>
+        </div>
+      </div>
+      <div class="conj-grid">
+        <div class="conj-card">
+          <div class="conj-card-word">already / yet / still</div>
+          <div class="conj-card-meaning">もう / まだ / まだ</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">I haven't seen the movie <strong>yet</strong>.</p>
+            <p class="conj-card-example-jp">私はまだその映画を見ていない。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">already: 肯定文、yet: 否定文・疑問文、still: 継続を強調</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">ago / before</div>
+          <div class="conj-card-meaning">〜前に</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">She said she had seen him two days <strong>before</strong>.</p>
+            <p class="conj-card-example-jp">彼女は2日前に彼を見たと言った。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">ago: 現在を基準、before: 過去のある時点を基準</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">too / either</div>
+          <div class="conj-card-meaning">〜もまた</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">I won't join, <strong>either</strong>.</p>
+            <p class="conj-card-example-jp">私も参加しない。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">too: 肯定文で「〜もまた」、either: 否定文で「〜もまた（〜ない）」</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">abroad / overseas</div>
+          <div class="conj-card-meaning">海外へ</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">Many people study <strong>abroad</strong>.</p>
+            <p class="conj-card-example-jp">多くの人々が留学する。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">abroad は副詞なので前に前置詞をつけない（× to abroad）</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phrasal Verbs -->
+    <section class="conj-section phrasal">
+      <div class="conj-section-header">
+        <div class="conj-section-icon">🔗</div>
+        <div>
+          <h2 class="conj-section-title">Phrasal Verbs</h2>
+          <p class="conj-section-title-jp">群動詞</p>
+        </div>
+      </div>
+      <div class="conj-grid">
+        <div class="conj-card">
+          <div class="conj-card-word">動詞 + 前置詞</div>
+          <div class="conj-card-meaning">look into, account for など</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">The police <strong>looked into</strong> the case.</p>
+            <p class="conj-card-example-jp">警察はその事件を調べた。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">look into = investigate、account for = explain、stand for = represent</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">動詞 + 副詞</div>
+          <div class="conj-card-meaning">give up, put off など</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">Please <strong>give it up</strong>.</p>
+            <p class="conj-card-example-jp">それをやめてください。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">代名詞は動詞と副詞の間に置く: give it up（× give up it）</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">動詞 + 副詞 + 前置詞</div>
+          <div class="conj-card-meaning">put up with, look up to など</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">I can't <strong>put up with</strong> this noise.</p>
+            <p class="conj-card-example-jp">この騒音には我慢できない。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">put up with = endure、look up to = respect、do away with = abolish</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">make up for</div>
+          <div class="conj-card-meaning">〜の埋め合わせをする</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">Work hard to <strong>make up for</strong> your lack of experience.</p>
+            <p class="conj-card-example-jp">経験不足を埋め合わせるために熱心に働きなさい。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">make up for = compensate for（埋め合わせる）</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quantity Expressions -->
+    <section class="conj-section quantity">
+      <div class="conj-section-header">
+        <div class="conj-section-icon">📊</div>
+        <div>
+          <h2 class="conj-section-title">Quantity Expressions</h2>
+          <p class="conj-section-title-jp">数量表現</p>
+        </div>
+      </div>
+      <div class="conj-grid">
+        <div class="conj-card">
+          <div class="conj-card-word">quite a few</div>
+          <div class="conj-card-meaning">かなり多くの</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en"><strong>Quite a few</strong> people came.</p>
+            <p class="conj-card-example-jp">かなり多くの人が来た。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">quite a few = かなり多くの（肯定的）、a few = 少しの、few = ほとんど〜ない</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">almost all / most of</div>
+          <div class="conj-card-meaning">ほとんどの</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en"><strong>Almost all</strong> the students passed.</p>
+            <p class="conj-card-example-jp">ほとんどの学生が合格した。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">almost は副詞なので名詞を直接修飾できない。almost all または most of を使う</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">a large number of / amount of</div>
+          <div class="conj-card-meaning">多数の / 多量の</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">We need a large <strong>amount of</strong> money.</p>
+            <p class="conj-card-example-jp">私たちは多額のお金が必要だ。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">number of = 可算名詞、amount of = 不可算名詞</span>
+          </div>
+        </div>
+        <div class="conj-card">
+          <div class="conj-card-word">分数の表し方</div>
+          <div class="conj-card-meaning">two-thirds など</div>
+          <div class="conj-card-example">
+            <p class="conj-card-example-en">The country is <strong>two-thirds</strong> the size of Japan.</p>
+            <p class="conj-card-example-jp">その国は日本の3分の2の大きさだ。</p>
+          </div>
+          <div class="conj-card-tip">
+            <span class="conj-card-tip-icon">💡</span>
+            <span class="conj-card-tip-text">分数: 分子(基数)→分母(序数)。分子が2以上なら分母は複数形</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="study" id="study">
+    <div class="study-header">
+      <h2 class="study-title">Practice Questions</h2>
+      <div class="study-controls">
+        <div class="view-toggle">
+          <button class="view-btn active" data-view="single" onclick="setView('single')">Single</button>
+          <button class="view-btn" data-view="dual" onclick="setView('dual')">Split View</button>
+        </div>
+        <button class="ctrl-btn" onclick="openAll()">Open All</button>
+        <button class="ctrl-btn" onclick="closeAll()">Close All</button>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
+      <p class="progress-label" id="progressText">0 / 44 answers revealed</p>
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search questions, grammar, vocabulary..." oninput="debouncedSearch()">
+    </div>
+
+    <div id="content"></div>
+  </section>
+
+  <footer>DUAL SCOPE English Grammar — Lesson 17: 形容詞・副詞・群動詞</footer>
+
+  <button class="fab" onclick="scrollToTop()" title="Back to top">↑</button>
+
+<script>
+const grammarData = {
+  sections: [
+    {
+      title: "[1] 基本問題 1｜形容詞・副詞 (1)～(8)",
+      open: true,
+      questions: [
+        {
+          num: "(1)",
+          text: "I drank too much strong coffee, so I stayed (   ) last night.",
+          choices: "選択肢: awake, wake, woken",
+          vocab: [["strong coffee", "濃いコーヒー"],["stay awake", "目が覚めたままでいる"],["awake", "目が覚めて（叙述用法のみ）"]],
+          hint: ["「目が覚めたままでいる」という意味","stay + 補語の構文","叙述用法でのみ使う形容詞"],
+          answer: "awake",
+          translation: "私はあまりにたくさん濃いコーヒーを飲んだので、昨晩は眠れなかった",
+          explanation: "awakeは「目が覚めて」という意味で、叙述用法だけに使われる形容詞です。wakeは動詞。",
+          grammar: "awake = 叙述用法のみの形容詞（目が覚めて）"
+        },
+        {
+          num: "(2)",
+          text: "(   ) at the party were fascinated by her.",
+          choices: "選択肢: Those present, Present those, Those presenting",
+          vocab: [["those present", "出席している人々"],["be fascinated by", "～に魅了される"]],
+          hint: ["「出席している人々」という表現","those + 形容詞（後置）","Those who were present の省略形"],
+          answer: "Those present",
+          translation: "パーティーに出席した人たちは彼女のとりこになった",
+          explanation: "Those presentはThose who were presentと同じ意味で、presentは「出席している」という叙述用法です。",
+          grammar: "Those present = Those who were present"
+        },
+        {
+          num: "(3)",
+          text: "There is (   ) difference between the two.",
+          choices: "選択肢: little, a little, few",
+          vocab: [["difference", "違い、相違"],["little", "ほとんど〜ない"]],
+          hint: ["difference は不可算名詞","否定的な意味「ほとんどない」","little（不可算）vs few（可算）"],
+          answer: "little",
+          translation: "両者の間には、ごくわずかしか相違はない",
+          explanation: "抽象名詞のdifferenceを修飾するので、不可算名詞に使うlittleを選びます。",
+          grammar: "little + 不可算名詞 = ほとんど〜ない"
+        },
+        {
+          num: "(4)",
+          text: "There is (   ) strange about her.",
+          choices: "選択肢: something, anything, thing",
+          vocab: [["something strange", "何か奇妙なところ"],["strange", "奇妙な"]],
+          hint: ["不定代名詞を修飾する形容詞は後置","something + 形容詞","「どこか奇妙なところ」"],
+          answer: "something",
+          translation: "彼女にはどこか奇妙なところがある",
+          explanation: "不定代名詞somethingを修飾する形容詞はその直後に置かれます。",
+          grammar: "something + 形容詞（後置）"
+        },
+        {
+          num: "(5)",
+          text: "Mr. Ito was (   ) loved by all the students.",
+          choices: "選択肢: much, very, so",
+          vocab: [["be loved by", "～から愛される"],["much", "とても（過去分詞を修飾）"]],
+          hint: ["過去分詞を修飾する副詞","very は原則として過去分詞を修飾しない","much が過去分詞を修飾"],
+          answer: "much",
+          translation: "伊藤先生は全ての生徒からとても敬愛されていた",
+          explanation: "過去分詞(loved)を修飾するので、muchを選びます。",
+          grammar: "much + 過去分詞 = とても〜される"
+        },
+        {
+          num: "(6)",
+          text: "Many people go (   ) to study English.",
+          choices: "選択肢: abroad, to abroad, the abroad",
+          vocab: [["go abroad", "海外へ行く"],["abroad", "海外へ（副詞）"]],
+          hint: ["abroad は副詞","副詞なので前置詞は不要","× to abroad"],
+          answer: "abroad",
+          translation: "多くの人々が英語を勉強するために留学する",
+          explanation: "abroadは名詞ではなく副詞で「海外へ」の意味を表すので、前に前置詞をつけません。",
+          grammar: "abroad = 副詞（前置詞不要）"
+        },
+        {
+          num: "(7)",
+          text: "She said that she had witnessed an accident two days (   ).",
+          choices: "選択肢: before, ago, earlier",
+          vocab: [["witness", "目撃する"],["accident", "事故"],["before", "（過去の時点から）〜前に"]],
+          hint: ["過去のある時点を基準にして「〜前に」","ago は現在が基準","before は過去の時点が基準"],
+          answer: "before",
+          translation: "彼女は2日前に事故を目撃したと言った",
+          explanation: "過去のある時（「言った」時）を基準にして「その時から〜前に」を表す場合、beforeを使います。",
+          grammar: "before = 過去の時点から〜前に、ago = 現在から〜前に"
+        },
+        {
+          num: "(8)",
+          text: "I haven't seen that movie on DVD (   ).",
+          choices: "選択肢: yet, already, still",
+          vocab: [["haven't seen", "見ていない"],["yet", "まだ（否定文）"]],
+          hint: ["否定文で「まだ〜していない」","yet は否定文・疑問文で使う","already は肯定文"],
+          answer: "yet",
+          translation: "私はまだDVDでその映画を見ていない",
+          explanation: "否定文で「まだ（〜していない）」の意味を表す場合、yetを用います。",
+          grammar: "yet = 否定文・疑問文で「まだ」、already = 肯定文で「もう」"
+        }
+      ]
+    },
+    {
+      title: "[2] 基本問題 2｜群動詞 (1)～(9)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "Would you (   ) your absence from the meeting?<br>= Would you <u>explain</u> your absence from the meeting?",
+          choices: "選択肢: account for, look into, stand for",
+          vocab: [["account for", "〜を説明する"],["absence", "欠席"]],
+          hint: ["= explain","「〜を説明する」という意味の群動詞","account for = explain"],
+          answer: "account for",
+          translation: "会議にいなかったことを説明してくれませんか",
+          explanation: "account for 〜で「〜を説明する」(= explain)という意味があります。",
+          grammar: "account for = explain（〜を説明する）"
+        },
+        {
+          num: "(2)",
+          text: "The police started to (   ) the murder case.<br>= The police started to <u>investigate</u> the murder case.",
+          choices: "選択肢: look into, look after, look up to",
+          vocab: [["look into", "〜を調べる"],["murder case", "殺人事件"]],
+          hint: ["= investigate","「〜を調べる」という意味の群動詞","look into = investigate"],
+          answer: "look into",
+          translation: "警察はその殺人事件を調べ始めた",
+          explanation: "look into 〜で「〜を調べる」(= investigate)という意味があります。",
+          grammar: "look into = investigate（〜を調べる）"
+        },
+        {
+          num: "(3)",
+          text: "What does WHO (   )?<br>= What does WHO <u>represent</u>?",
+          choices: "選択肢: stand for, stand by, stand out",
+          vocab: [["stand for", "〜を表す"],["WHO", "世界保健機関"]],
+          hint: ["= represent","「〜を表す」という意味の群動詞","stand for = represent"],
+          answer: "stand for",
+          translation: "WHOは何を表していますか",
+          explanation: "stand for 〜で「〜を表す」(= represent)という意味があります。",
+          grammar: "stand for = represent（〜を表す）"
+        },
+        {
+          num: "(4)",
+          text: "You don't (   ) your father.<br>= You don't <u>resemble</u> your father.",
+          choices: "選択肢: take after, take in, take on",
+          vocab: [["take after", "〜に似ている"],["resemble", "〜に似ている"]],
+          hint: ["= resemble","「〜に似ている」という意味の群動詞","take after = resemble"],
+          answer: "take after",
+          translation: "あなたは父親に似ていませんね",
+          explanation: "take after 〜で「〜に似ている」(= resemble)という意味があります。通例、家族の年長者について使います。",
+          grammar: "take after = resemble（〜に似ている）"
+        },
+        {
+          num: "(5)",
+          text: "I couldn't (   ) what the foreigner was saying.<br>= I couldn't <u>understand</u> what the foreigner was saying.",
+          choices: "選択肢: make out, make up, make for",
+          vocab: [["make out", "〜を理解する"],["foreigner", "外国人"]],
+          hint: ["= understand","「〜を理解する」という意味の群動詞","make out = understand"],
+          answer: "make out",
+          translation: "私はその外国人が言っていることが理解できなかった",
+          explanation: "make out 〜で「〜を理解する」(= understand)という意味があります。通例、canを伴う否定文・疑問文で使われます。",
+          grammar: "make out = understand（〜を理解する）"
+        },
+        {
+          num: "(6)",
+          text: "We had to (   ) the game until tomorrow.<br>= We had to <u>postpone</u> the game until tomorrow.",
+          choices: "選択肢: put off, put on, put out",
+          vocab: [["put off", "〜を延期する"],["postpone", "延期する"]],
+          hint: ["= postpone","「〜を延期する」という意味の群動詞","put off = postpone"],
+          answer: "put off",
+          translation: "私たちはその試合を明日まで延期せざるをえなかった",
+          explanation: "put off 〜で「〜を延期する」(= postpone)という意味があります。",
+          grammar: "put off = postpone（〜を延期する）"
+        },
+        {
+          num: "(7)",
+          text: "How did that accident (   )?<br>= How did that accident <u>happen</u>?",
+          choices: "選択肢: come about, come across, come up",
+          vocab: [["come about", "起こる"],["accident", "事故"]],
+          hint: ["= happen","「起こる」という意味の群動詞","come about = happen"],
+          answer: "come about",
+          translation: "どんなふうにしてその事故は起きたのですか",
+          explanation: "come aboutで「起こる」(= happen)という意味があります。",
+          grammar: "come about = happen（起こる）"
+        },
+        {
+          num: "(8)",
+          text: "They (   ) him for his positive attitude.<br>= They <u>respect</u> him for his positive attitude.",
+          choices: "選択肢: look up to, look down on, look after",
+          vocab: [["look up to", "〜を尊敬する"],["positive attitude", "前向きな態度"]],
+          hint: ["= respect","「〜を尊敬する」という意味の群動詞","look up to = respect"],
+          answer: "look up to",
+          translation: "彼らは前向きな態度のため彼を尊敬している",
+          explanation: "look up to 〜で「〜を尊敬する」(= respect)という意味があります。",
+          grammar: "look up to = respect（〜を尊敬する）"
+        },
+        {
+          num: "(9)",
+          text: "I can't (   ) their bad manners.<br>= I can't <u>endure</u> their bad manners.",
+          choices: "選択肢: put up with, put on, put off",
+          vocab: [["put up with", "〜を我慢する"],["bad manners", "不作法"]],
+          hint: ["= endure","「〜を我慢する」という意味の群動詞","put up with = endure"],
+          answer: "put up with",
+          translation: "私は彼らの不作法には我慢できない",
+          explanation: "put up with 〜で「〜を我慢する」(= endure)という意味があります。",
+          grammar: "put up with = endure（〜を我慢する）"
+        }
+      ]
+    },
+    {
+      title: "[3] 基本問題 3｜誤り訂正 (1)～(5)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "If you don't join the plan, I won't join it, <u>too</u>.",
+          vocab: [["join the plan", "計画に参加する"],["either", "〜もまた（否定文）"]],
+          hint: ["否定文での「〜もまた」","too は肯定文で使う","either に変更"],
+          answer: "too → either",
+          translation: "あなたがその計画に参加しないなら、私も参加しないつもりだ",
+          explanation: "否定文なので、tooをeitherにします。not 〜 either は「〜もまた（…でない）」という意味です。",
+          grammar: "too = 肯定文、either = 否定文"
+        },
+        {
+          num: "(2)",
+          text: "<u>Almost</u> people agreed to his proposal.",
+          vocab: [["almost", "ほとんど（副詞）"],["agree to", "〜に同意する"],["proposal", "提案"]],
+          hint: ["almost は副詞","副詞は名詞を直接修飾できない","almost all または most of"],
+          answer: "Almost → Almost all [Most of]",
+          translation: "ほとんどの人が彼の提案に同意した",
+          explanation: "almostは副詞なので名詞を直接修飾できません。almost allまたはmost ofを使います。",
+          grammar: "almost（副詞）+ all、または most of + 名詞"
+        },
+        {
+          num: "(3)",
+          text: "We need a large <u>number</u> of money to carry out this project.",
+          vocab: [["a large amount of", "多量の"],["carry out", "実行する"]],
+          hint: ["money は不可算名詞","number は可算名詞に使う","amount は不可算名詞に使う"],
+          answer: "number → amount",
+          translation: "この企画を実行するには多額のお金が必要である",
+          explanation: "money は不可算名詞なので、a large amount of（多量の）を使います。a large number of は可算名詞に使います。",
+          grammar: "a large number of = 可算、a large amount of = 不可算"
+        },
+        {
+          num: "(4)",
+          text: "He scored a goal in the <u>later</u> half of the game.",
+          vocab: [["score a goal", "ゴールを決める"],["the latter half", "後半"]],
+          hint: ["「後半」の正しい表現","later vs latter","latter = 後の、後半の"],
+          answer: "later → latter",
+          translation: "彼は試合の後半に1点をあげた",
+          explanation: "latterは「後の、後半の」の意味で限定用法のみ。laterは「もっと遅い、後で」の意味です。",
+          grammar: "the latter half = 後半、later = もっと遅い/後で"
+        },
+        {
+          num: "(5)",
+          text: "Smoking is bad for your health, so you should <u>give up it</u>.",
+          vocab: [["smoking", "喫煙"],["give up", "やめる"]],
+          hint: ["動詞 + 副詞の群動詞","代名詞の位置に注意","give it up が正しい"],
+          answer: "give up it → give it up",
+          translation: "喫煙は健康によくないので、やめるべきです",
+          explanation: "他動詞 + 副詞の群動詞で目的語が代名詞の場合、他動詞 + 目的語 + 副詞の語順にします。",
+          grammar: "動詞 + 副詞 + 代名詞 → 動詞 + 代名詞 + 副詞"
+        }
+      ]
+    },
+    {
+      title: "[4] 基本問題 4｜和訳 (1)～(5)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "It is certain that she knows the fact.",
+          vocab: [["it is certain that", "〜ということは確かだ"],["fact", "事実"]],
+          translation: "彼女がその事実を知っているのは確かだ[間違いない]",
+          explanation: "certainは叙述用法では「確かだ」という意味を表します。It is certain that 〜で「〜ということは確かだ」。",
+          grammar: "It is certain that 〜 = 〜ということは確かだ",
+          answer: "（和訳問題）"
+        },
+        {
+          num: "(2)",
+          text: "Mr. Mori had to visit a certain place that day.",
+          vocab: [["certain", "ある（限定用法）"],["place", "場所"]],
+          translation: "森さんはその日ある場所を訪問しなければならなかった",
+          explanation: "certainは限定用法で使うと「ある、例の」という意味を表します。",
+          grammar: "a certain + 名詞 = ある〜（限定用法）",
+          answer: "（和訳問題）"
+        },
+        {
+          num: "(3)",
+          text: "Quite a few people took part in the festival.",
+          vocab: [["quite a few", "かなり多くの"],["take part in", "〜に参加する"],["festival", "祭り"]],
+          translation: "かなり多くの人々がその祭りに参加した",
+          explanation: "quite a fewは「かなり多くの〜」という肯定的な意味です。",
+          grammar: "quite a few = かなり多くの（肯定的）",
+          answer: "（和訳問題）"
+        },
+        {
+          num: "(4)",
+          text: "Work hard to make up for your lack of experience.",
+          vocab: [["make up for", "〜の埋め合わせをする"],["lack of", "〜の不足"]],
+          translation: "熱心に働いて経験不足を埋め合わせしなさい",
+          explanation: "make up forは「〜の埋め合わせをする」という意味の群動詞です。",
+          grammar: "make up for = 〜の埋め合わせをする",
+          answer: "（和訳問題）"
+        },
+        {
+          num: "(5)",
+          text: "Unfortunately, I couldn't see whales in Kochi.",
+          vocab: [["unfortunately", "運悪く"],["whale", "クジラ"]],
+          translation: "運悪く、私は高知でクジラを見ることができなかった",
+          explanation: "副詞unfortunatelyが文全体を修飾して「運悪く」の意味を表しています。",
+          grammar: "unfortunately = 運悪く（文修飾の副詞）",
+          answer: "（和訳問題）"
+        }
+      ]
+    },
+    {
+      title: "[5] 基本問題 5｜並べかえ (1)～(4)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "この差別的な法律は廃止されるべきだ。",
+          scramble: "This discriminatory law [ done, be, should, with, away ].",
+          vocab: [["discriminatory", "差別的な"],["do away with", "〜を廃止する"]],
+          hint: ["「〜を廃止する」= do away with","受動態にしても離さない","should be done away with"],
+          answer: "should be done away with",
+          translation: "この差別的な法律は廃止されるべきだ",
+          explanation: "do away with（〜を廃止する）は3語で1つの動詞とみなすので、受動態にしてもdoneとaway withは離しません。",
+          grammar: "do away with = abolish（廃止する）"
+        },
+        {
+          num: "(2)",
+          text: "あなたは自分自身を恥じる必要はない。",
+          vocab: [["be ashamed of", "〜を恥じている"],["yourself", "あなた自身"]],
+          scramble: "You [ ashamed, don't, feel, have to, of, yourself ].",
+          hint: ["「〜を恥じる」= be/feel ashamed of","don't have to = 〜する必要はない","ashamed は叙述用法のみ"],
+          answer: "don't have to feel ashamed of yourself",
+          translation: "あなたは自分自身を恥じる必要はない",
+          explanation: "ashamedは叙述用法だけに使われる形容詞。be/feel ashamed of 〜で「〜を恥じている」。",
+          grammar: "be/feel ashamed of 〜 = 〜を恥じている"
+        },
+        {
+          num: "(3)",
+          text: "彼女はりんごがいっぱい入ったかごを持っていた。",
+          scramble: "She was carrying a basket [ of, full, apples ].",
+          vocab: [["carry", "持っている"],["basket", "かご"],["full of", "〜でいっぱいの"]],
+          hint: ["「〜でいっぱいの」= full of","形容詞句が名詞を修飾→後置","a basket full of apples"],
+          answer: "full of apples",
+          translation: "彼女はりんごがいっぱい入ったかごを持っていた",
+          explanation: "形容詞が他の修飾語句を伴う場合は、修飾される名詞の後に置きます。",
+          grammar: "名詞 + 形容詞句（後置修飾）"
+        },
+        {
+          num: "(4)",
+          text: "彼女には対処しなければならない問題が多すぎた。",
+          scramble: "She [ too, had, many, that, she, problems, had to ] deal with.",
+          vocab: [["too many", "多すぎる"],["deal with", "〜に対処する"]],
+          hint: ["too many + 名詞","肯定文でも too, so, as の後は many が使える","関係代名詞 that"],
+          answer: "had too many problems that she had to",
+          translation: "彼女には対処しなければならない問題が多すぎた",
+          explanation: "肯定文でも so, too, as などの修飾語がつく場合はmanyが使われます。",
+          grammar: "too many + 可算名詞 = 〜が多すぎる"
+        }
+      ]
+    },
+    {
+      title: "[6] FOR COMMUNICATION (1)～(3)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "A: Is Ann here yet?<br>B: No. I think she is (   ) because of a traffic jam.",
+          choices: "a. still　b. already　c. yet　d. late",
+          vocab: [["yet", "もう（疑問文）"],["because of", "〜のために"],["traffic jam", "渋滞"]],
+          hint: ["肯定の疑問文の「もう」","still は「まだ、あいかわらず」","already も疑問文で使える"],
+          answer: "d. late",
+          translation: "A「アンはもうここに来ていますか」B「いいえ、渋滞で遅れているんじゃないかと思います」",
+          explanation: "文脈から「遅れている」という意味が適切。late（遅刻した）を選びます。",
+          grammar: "late = 遅刻した（叙述用法）",
+          choiceExplanations: {
+            "d. late": "○ 正解。「遅れている」という意味で文脈に合う。",
+            "a. still": "× 「まだ、あいかわらず」で継続を表す。文脈に合わない。",
+            "b. already": "× 「もう」で完了を表す。否定的な文脈には合わない。",
+            "c. yet": "× yet は否定文・疑問文で使い、ここでは文法的に不適切。"
+          }
+        },
+        {
+          num: "(2)",
+          text: "A: Why are you leaving so early?<br>B: (   ) in case.",
+          choices: "a. Already　b. Still　c. Almost　d. Just",
+          vocab: [["leave early", "早く出発する"],["just in case", "念のために"]],
+          hint: ["「念のために」という慣用表現","just + 副詞句","just in case = 念のために"],
+          answer: "d. Just",
+          translation: "A「どうしてそんなに早く出かけるの」B「いちおう用心のためさ」",
+          explanation: "just in caseは「いちおう念のために」という意味の慣用表現です。",
+          grammar: "just in case = 念のために",
+          choiceExplanations: {
+            "d. Just": "○ 正解。just in case = 念のために。",
+            "a. Already": "× already in case とは言わない。",
+            "b. Still": "× still in case とは言わない。",
+            "c. Almost": "× almost in case とは言わない。"
+          }
+        },
+        {
+          num: "(3)",
+          text: "A: Hello, this is Kenta. May I speak to Rin, please?<br>B: I'm sorry, you have the (   ) number.",
+          choices: "a. different　b. another　c. wrong　d. mistaken",
+          vocab: [["May I speak to", "〜をお願いします"],["wrong number", "間違い電話"]],
+          hint: ["「番号をお間違えです」という定型表現","You have the wrong number.","wrong = 間違った"],
+          answer: "c. wrong",
+          translation: "A「もしもし、ケンタと申しますが、リンさんをお願いします」B「電話番号をおまちがえではないでしょうか」",
+          explanation: "You have the wrong number.で「番号をおまちがえです」という定型表現です。",
+          grammar: "You have the wrong number. = 番号をお間違えです",
+          choiceExplanations: {
+            "c. wrong": "○ 正解。wrong number = 間違った番号。定型表現。",
+            "a. different": "× different は「別の」で、間違いのニュアンスがない。",
+            "b. another": "× another は不定冠詞 + other で、the とは使わない。",
+            "d. mistaken": "× mistaken は考えなどが「誤った」の意味。番号には使わない。"
+          }
+        }
+      ]
+    },
+    {
+      title: "[発展1] 語句選択 (1)～(8)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "Ten kilometers (   ) a long way if you have to walk.",
+          choices: "a. are　b. is　c. have　d. were",
+          vocab: [["kilometer", "キロメートル"],["a long way", "遠い道のり"]],
+          hint: ["距離・時間・金額は1つのまとまり","複数形でも単数扱い","Ten kilometers = 1つの距離"],
+          answer: "b. is",
+          translation: "10キロは、歩かなければならないとしたら、遠い道のりだ",
+          explanation: "距離・時間・金額を表す複数形の名詞でも、1つのまとまりととらえる場合は単数扱いです。",
+          grammar: "距離・時間・金額 = 1つのまとまり → 単数扱い",
+          choiceExplanations: {
+            "b. is": "○ 正解。距離を1つのまとまりとして単数扱い。",
+            "a. are": "× 複数扱いは不適切。",
+            "c. have": "× 文法的に不適切。",
+            "d. were": "× 時制も数も不適切。"
+          }
+        },
+        {
+          num: "(2)",
+          text: "My (   ) mother left us much jewelry when she passed away.",
+          choices: "a. later　b. late　c. lately　d. latest",
+          vocab: [["late", "亡くなった（限定用法）"],["pass away", "亡くなる"],["jewelry", "宝石類"]],
+          hint: ["限定用法で「亡くなった」","late の限定用法","my late mother = 亡くなった母"],
+          answer: "b. late",
+          translation: "私の亡くなった母は亡くなる時に、私たちに多くの宝石類を残してくれた",
+          explanation: "形容詞lateは限定用法では「亡くなった」、叙述用法では「遅刻した」という意味になります。",
+          grammar: "late: 限定用法 = 亡くなった、叙述用法 = 遅刻した",
+          choiceExplanations: {
+            "b. late": "○ 正解。限定用法で「亡くなった」の意味。",
+            "a. later": "× later は「もっと遅い」で、ここでは意味が合わない。",
+            "c. lately": "× lately は「最近」という副詞。",
+            "d. latest": "× latest は「最新の」の意味。"
+          }
+        },
+        {
+          num: "(3)",
+          text: "He is very famous in Europe, but his name is (   ) known in Japan.",
+          choices: "a. hard　b. nearly　c. near　d. hardly",
+          vocab: [["famous", "有名な"],["hardly", "ほとんど〜ない"]],
+          hint: ["「ほとんど〜ない」という否定的意味","hardly = ほとんど〜ない","hard（副詞）= 熱心に"],
+          answer: "d. hardly",
+          translation: "彼はヨーロッパではとても有名だが、彼の名前は日本ではほとんど知られていない",
+          explanation: "hardlyは「ほとんど〜ない」という程度を表す副詞です。hardは副詞では「熱心に」の意味。",
+          grammar: "hardly = ほとんど〜ない、hard = 熱心に",
+          choiceExplanations: {
+            "d. hardly": "○ 正解。「ほとんど〜ない」で文意に合う。",
+            "a. hard": "× 副詞の hard は「熱心に」の意味。",
+            "b. nearly": "× nearly は「もう少しで」の意味。",
+            "c. near": "× near は「近くに」の意味。"
+          }
+        },
+        {
+          num: "(4)",
+          text: "Some days there were as (   ) as three or four students in his lecture.",
+          choices: "a. little　b. small　c. less　d. few",
+          vocab: [["as few as", "わずか〜しか"],["lecture", "講義"]],
+          hint: ["「わずか〜しか」という驚き","as few as + 数","数が驚くほど少ない"],
+          answer: "d. few",
+          translation: "彼の講義にはわずか3～4人の学生しかいない日があった",
+          explanation: "as few as Aは「わずかAしか」という意味で、数が驚くほど少ないことを表します。",
+          grammar: "as few as + 数 = わずか〜しか",
+          choiceExplanations: {
+            "d. few": "○ 正解。as few as で数が少ないことを強調。",
+            "a. little": "× little は不可算名詞に使う。students は可算名詞。",
+            "b. small": "× as small as とは言わない（この文脈では）。",
+            "c. less": "× less は little の比較級。原級の構文には使わない。"
+          }
+        },
+        {
+          num: "(5)",
+          text: "(   ) everybody in my class attended the ceremony.",
+          choices: "a. Most　b. Almost　c. Mostly　d. The most",
+          vocab: [["almost", "ほとんど（副詞）"],["attend", "出席する"],["ceremony", "式典"]],
+          hint: ["almost は副詞で代名詞を修飾可能","almost everybody = ほぼ全員","副詞が代名詞を修飾"],
+          answer: "b. Almost",
+          translation: "私のクラスのほぼ全員が、その式典に出席した",
+          explanation: "almostは副詞ですが形容詞的な働きをし、代名詞のeverybodyを修飾できます。",
+          grammar: "almost + everybody/everyone = ほぼ全員",
+          choiceExplanations: {
+            "b. Almost": "○ 正解。almost everybody = ほぼ全員。",
+            "a. Most": "× Most everybody とは言わない（Most of everybody も不可）。",
+            "c. Mostly": "× Mostly は「たいてい、主に」の意味。",
+            "d. The most": "× The most everybody とは言わない。"
+          }
+        },
+        {
+          num: "(6)",
+          text: "It is not fair to take (   ) of others' weaknesses.",
+          choices: "a. account　b. care　c. part　d. advantage",
+          vocab: [["take advantage of", "〜につけこむ"],["weakness", "弱み"]],
+          hint: ["「〜につけこむ」という表現","take advantage of","他人の弱みを利用する"],
+          answer: "d. advantage",
+          translation: "他人の弱みにつけこむのは公正ではない",
+          explanation: "take advantage of 〜で「〜につけこむ、〜を利用する」という意味です。",
+          grammar: "take advantage of = 〜につけこむ、利用する",
+          choiceExplanations: {
+            "d. advantage": "○ 正解。take advantage of = 〜につけこむ。",
+            "a. account": "× take account of = 〜を考慮に入れる。",
+            "b. care": "× take care of = 〜の世話をする。",
+            "c. part": "× take part in = 〜に参加する。"
+          }
+        },
+        {
+          num: "(7)",
+          text: "Moving heavy things becomes (   ) easier with a lever.",
+          choices: "a. more　b. very　c. much　d. so",
+          vocab: [["lever", "てこ"],["much + 比較級", "ずっと〜"]],
+          hint: ["比較級を強調する副詞","much + 比較級","「ずっと楽になる」"],
+          answer: "c. much",
+          translation: "てこを使えば、重い荷を動かすのはもっとずっと楽になるよ",
+          explanation: "形容詞の比較級(easier)の意味を強めるにはmuchを使います。",
+          grammar: "much + 比較級 = ずっと〜",
+          choiceExplanations: {
+            "c. much": "○ 正解。比較級を強調する副詞。",
+            "a. more": "× more easier は二重比較級で誤り。",
+            "b. very": "× very は比較級を修飾しない（原級を修飾）。",
+            "d. so": "× so は原級を修飾する（so + 原級 + that）。"
+          }
+        },
+        {
+          num: "(8)",
+          text: "We have just been to the airport to (   ) our daughter (   ) to Chicago.",
+          choices: "a. see, off　b. see, on　c. take, off　d. take, on",
+          vocab: [["see off", "〜を見送る"],["airport", "空港"]],
+          hint: ["「〜を見送る」という群動詞","see 〜 off","空港で見送る"],
+          answer: "a. see, off",
+          translation: "私たちはシカゴへ行く娘を見送りにちょうど空港に行ってきたところだ",
+          explanation: "see 〜 offで「〜を見送る」という意味の群動詞です。",
+          grammar: "see 〜 off = 〜を見送る",
+          choiceExplanations: {
+            "a. see, off": "○ 正解。see off = 見送る。",
+            "b. see, on": "× see on という群動詞はない。",
+            "c. take, off": "× take off = 離陸する、脱ぐ。文脈に合わない。",
+            "d. take, on": "× take on = 引き受ける。文脈に合わない。"
+          }
+        }
+      ]
+    },
+    {
+      title: "[発展2] 誤り訂正 (1)～(3)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "The country I visited last year is <u>a. about</u> <u>b. two-third</u> <u>c. as</u> large <u>d. as</u> Japan.",
+          vocab: [["two-thirds", "3分の2"],["as large as", "〜と同じくらい大きい"]],
+          hint: ["分数の表し方","分子が2以上→分母は複数形","two-thirds が正しい"],
+          answer: "b. two-third → two-thirds",
+          translation: "昨年私が訪れた国は日本の3分の2の大きさだ",
+          explanation: "分数は分子(基数)→分母(序数)の順で読み、分子が2以上のときは分母は複数形になります。",
+          grammar: "分数: 分子 + 分母（分子が2以上なら分母は複数形）"
+        },
+        {
+          num: "(2)",
+          text: "Taking pictures inside the museum <u>a. is</u> <u>b. strict</u> <u>c. forbidden</u> <u>d. to visitors</u>.",
+          vocab: [["taking pictures", "写真撮影"],["strictly forbidden", "厳しく禁止されている"]],
+          hint: ["動詞を修飾するのは形容詞？副詞？","strictly = 厳しく（副詞）","is forbidden を修飾"],
+          answer: "b. strict → strictly",
+          translation: "美術館の中で写真撮影は厳しく禁じられている",
+          explanation: "is forbiddenという動詞の部分を修飾しているので、形容詞strictを副詞形strictlyにします。",
+          grammar: "動詞を修飾 → 副詞（strictly）"
+        },
+        {
+          num: "(3)",
+          text: "If you have a cell phone, <u>a. turn off it</u> <u>b. before</u> entering the classroom <u>c. so as not to</u> disturb <u>d. your classmates</u>.",
+          vocab: [["turn off", "電源を切る"],["so as not to", "〜しないように"],["disturb", "邪魔をする"]],
+          hint: ["動詞 + 副詞の群動詞","代名詞は間に入れる","turn it off が正しい"],
+          answer: "a. turn off it → turn it off",
+          translation: "もし携帯電話を持っているなら、クラスメートの邪魔にならないように、教室へ入る前に電源を切りなさい",
+          explanation: "他動詞 + 副詞の群動詞で目的語が代名詞の場合、他動詞 + 目的語 + 副詞の語順にします。",
+          grammar: "動詞 + 副詞 + 代名詞 → 動詞 + 代名詞 + 副詞"
+        }
+      ]
+    },
+    {
+      title: "[発展3] 英作文 (1)～(2)",
+      open: false,
+      questions: [
+        {
+          num: "(1)",
+          text: "彼がその医者に診てもらうことは必要だ。<br>It is (   ) he (   ) the doctor.",
+          vocab: [["necessary", "必要な"],["see a doctor", "医者に診てもらう"]],
+          hint: ["necessary は人を主語にできない","It is necessary that S (should) V","または for A to do"],
+          answer: "necessary that, (should) see [necessary for him to see]",
+          translation: "彼がその医者に診てもらうことは必要だ",
+          explanation: "形容詞necessaryは通例、人を主語にできないため、It is necessary that S (should) Vまたは It is necessary for A to doの形にします。",
+          grammar: "It is necessary that S (should) V / It is necessary for A to do"
+        },
+        {
+          num: "(2)",
+          text: "この家は私たちが住むには十分大きい。<br>This house is (      ).",
+          vocab: [["large enough", "十分大きい"],["enough for A to do", "Aが〜するのに十分"]],
+          hint: ["enough は形容詞・副詞の後ろに置く","形容詞 + enough + for A to do","live in の in を忘れずに"],
+          answer: "large[big] enough for us to live in",
+          translation: "この家は私たちが住むには十分大きい",
+          explanation: "副詞のenoughは修飾する形容詞・副詞の後ろに置きます。live in the houseのinも必要です。",
+          grammar: "形容詞 + enough + for A to do = Aが〜するのに十分"
+        }
+      ]
+    }
+  ]
+};
+
+function renderQuestion(q) {
+  let questionHtml = `<div class="qcard-question">
+    <span class="qnum">${q.num}</span>
+    <div class="qtext">${q.text}</div>`;
+  if (q.choices) questionHtml += `<div class="choices">${q.choices}</div>`;
+  if (q.scramble) questionHtml += `<div class="scramble">${q.scramble}</div>`;
+  questionHtml += `</div>`;
+
+  let btnHtml = `<div class="qcard-buttons">
+    <button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Words</button>`;
+  if (q.hint) btnHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button>`;
+  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button></div>`;
+
+  let leftHtml = `<div class="qcard-left">
+    <div class="toggle-btn-row">
+      <button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Words</button>`;
+  if (q.hint) leftHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button>`;
+  leftHtml += `</div>`;
+  if (q.vocab) {
+    leftHtml += `<div class="collapsible" data-type="vocab"><div class="box vocab-box">`;
+    q.vocab.forEach(v => leftHtml += `<div class="vocab-item"><span class="vocab-word">${v[0]}</span>${v[1]}</div>`);
+    leftHtml += `</div></div>`;
+  }
+  if (q.hint) {
+    leftHtml += `<div class="collapsible" data-type="hint"><div class="box hint-box"><span class="box-label">Solution</span>`;
+    q.hint.forEach(h => leftHtml += `<div>→ ${h}</div>`);
+    leftHtml += `</div></div>`;
+  }
+  leftHtml += `</div>`;
+
+  let rightHtml = `<div class="qcard-right">
+    <div class="toggle-btn-row">
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button>
+    </div>
+    <div class="collapsible" data-type="answer"><div class="box ans-box">
+      <span class="box-label">正解: ${q.answer}</span>`;
+  if (q.translation) rightHtml += `<div class="jp-text">${q.translation}</div>`;
+  if (q.explanation) rightHtml += `<div class="jp-text">${q.explanation}</div>`;
+  if (q.choiceExplanations) {
+    rightHtml += `<div class="choice-explanations">`;
+    for (const [choice, exp] of Object.entries(q.choiceExplanations)) {
+      const isCorrect = q.answer.includes(choice);
+      rightHtml += `<div class="choice-exp ${isCorrect ? 'correct' : 'wrong'}">${exp}</div>`;
+    }
+    rightHtml += `</div>`;
+  }
+  if (q.grammar) rightHtml += `<div class="grammar-ref">${q.grammar}</div>`;
+  rightHtml += `</div></div></div>`;
+
+  return `<div class="qcard">${questionHtml}${btnHtml}${leftHtml}${rightHtml}</div>`;
+}
+
+function renderSection(section, index) {
+  let html = `<div class="section" data-section="${index}">
+    <div class="section-header ${section.open ? 'open' : ''}" onclick="toggleSection(this)">
+      <span>${section.title}</span>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-body ${section.open ? 'open' : ''}">
+      <div class="questions-list">`;
+  section.questions.forEach(q => html += renderQuestion(q));
+  html += `</div></div></div>`;
+  return html;
+}
+
+function init() {
+  let html = '';
+  grammarData.sections.forEach((s, i) => html += renderSection(s, i));
+  document.getElementById('content').innerHTML = html;
+}
+
+function toggle(btn, type) {
+  const card = btn.closest('.qcard');
+  const block = card.querySelector(`.collapsible[data-type="${type}"]`);
+  if (block) {
+    block.classList.toggle('open');
+    updateProgress();
+  }
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function openAll() {
+  document.querySelectorAll('.section-header').forEach(h => {
+    h.classList.add('open');
+    h.nextElementSibling.classList.add('open');
+  });
+}
+
+function closeAll() {
+  document.querySelectorAll('.section-header').forEach(h => {
+    h.classList.remove('open');
+    h.nextElementSibling.classList.remove('open');
+    h.nextElementSibling.querySelectorAll('.collapsible').forEach(c => c.classList.remove('open'));
+  });
+  updateProgress();
+}
+
+function setView(view) {
+  document.body.setAttribute('data-view', view);
+  try { localStorage.setItem('viewMode', view); } catch(e) {}
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-view') === view);
+  });
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.collapsible[data-type="answer"]').length;
+  const revealed = document.querySelectorAll('.collapsible[data-type="answer"].open').length;
+  const pct = total > 0 ? Math.round((revealed / total) * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${revealed} / ${total} answers revealed`;
+}
+
+let searchTimeout = null;
+function debouncedSearch() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(handleSearch, 150);
+}
+
+function handleSearch() {
+  const query = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (!query) {
+    document.querySelectorAll('.qcard, .section').forEach(el => el.classList.remove('no-match'));
+    return;
+  }
+  grammarData.sections.forEach((section, si) => {
+    const sectionEl = document.querySelector(`[data-section="${si}"]`);
+    let hasMatch = false;
+    section.questions.forEach((q, qi) => {
+      const text = [q.text || '', q.choices || '', q.scramble || '', q.answer || '', q.translation || '', q.grammar || '', (q.vocab || []).flat().join(' '), (q.hint || []).join(' ')].join(' ').toLowerCase();
+      const cards = sectionEl.querySelectorAll('.qcard');
+      const card = cards[qi];
+      if (text.includes(query)) {
+        card.classList.remove('no-match');
+        hasMatch = true;
+      } else {
+        card.classList.add('no-match');
+      }
+    });
+    sectionEl.classList.toggle('no-match', !hasMatch);
+    if (hasMatch) {
+      sectionEl.querySelector('.section-header').classList.add('open');
+      sectionEl.querySelector('.section-body').classList.add('open');
+    }
+  });
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  try { localStorage.setItem('theme', isDark ? 'light' : 'dark'); } catch(e) {}
+  document.querySelector('.theme-icon').textContent = isDark ? '☀️' : '🌙';
+}
+
+function scrollToStudy() {
+  document.getElementById('study').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToOverview() {
+  document.getElementById('overview').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToSection(index) {
+  document.getElementById('study').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    const section = document.querySelector(`[data-section="${index}"]`);
+    section.querySelector('.section-header').classList.add('open');
+    section.querySelector('.section-body').classList.add('open');
+    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 500);
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function initCardAnimations() {}
+
+function init3DTilt() {}
+
+function initTypeCardTilt() {
+  const cards = document.querySelectorAll('.conj-card');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    let rafId = null;
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'box-shadow 0.3s ease';
+    });
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      targetX = (y - centerY) / 80;
+      targetY = (centerX - x) / 80;
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          currentX += (targetX - currentX) * 0.15;
+          currentY += (targetY - currentY) * 0.15;
+          card.style.transform = `perspective(1000px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(-3px)`;
+          card.style.boxShadow = 'var(--shadow-lg)';
+          rafId = null;
+        });
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease';
+      card.style.transform = '';
+      card.style.boxShadow = '';
+      currentX = 0;
+      currentY = 0;
+      targetX = 0;
+      targetY = 0;
+    });
+  });
+}
+
+function initNavHighlight() {
+  const sections = document.querySelectorAll('#intro, #overview, #study');
+  const navLinks = document.querySelectorAll('.top-nav-link');
+
+  if (!sections.length || !navLinks.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.dataset.section === sectionId);
+        });
+      }
+    });
+  }, {
+    rootMargin: '-20% 0px -70% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(section => observer.observe(section));
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  init();
+  initCardAnimations();
+  init3DTilt();
+  initTypeCardTilt();
+  initNavHighlight();
+  try {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.querySelector('.theme-icon').textContent = '🌙';
+    }
+    const savedView = localStorage.getItem('viewMode') || 'single';
+    setView(savedView);
+  } catch(e) {}
+  updateProgress();
+});
+</script>
+</body>
+</html>
