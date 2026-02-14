@@ -588,6 +588,7 @@
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
             examRef.update(updates);
             revealQuestion(getQEl(si, qi));
+            showAnswerBox(getQEl(si, qi));
           }
         };
         qGrid.appendChild(qBtn);
