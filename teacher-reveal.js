@@ -226,7 +226,7 @@
               var key = getQKey(secIdx, q.index);
               if (!state.revealed[key]) {
                 state.revealed[key] = true;
-                revealQuestion(q.el, true);
+                revealQuestion(q.el);
               }
             });
           }
@@ -256,7 +256,7 @@
             var key = getQKey(sec.index, q.index);
             if (!state.revealed[key]) {
               state.revealed[key] = true;
-              revealQuestion(q.el, true);
+              revealQuestion(q.el);
             }
           });
         });
@@ -402,7 +402,7 @@
           examIndex.sections[si].questions.forEach(function(q) {
             state.revealed[getQKey(si, q.index)] = true;
             updates['sections/' + si + '/questions/' + q.index + '/revealed'] = true;
-            revealQuestion(q.el, true);
+            revealQuestion(q.el);
           });
         }
         examRef.update(updates);
@@ -450,7 +450,7 @@
       examIndex.sections.forEach(function(sec) {
         sec.questions.forEach(function(q) {
           state.revealed[getQKey(sec.index, q.index)] = true;
-          revealQuestion(q.el, true);
+          revealQuestion(q.el);
         });
       });
       showToast('全解答を公開しました');
@@ -564,7 +564,7 @@
           sec.questions.forEach(function(q) {
             var key = getQKey(sec.index, q.index);
             state.revealed[key] = true;
-            revealQuestion(q.el, false);
+            revealQuestion(q.el);
           });
         });
         return;
@@ -582,7 +582,7 @@
               examIndex.sections[secIdx].questions.forEach(function(q) {
                 var key = getQKey(secIdx, q.index);
                 state.revealed[key] = true;
-                revealQuestion(q.el, false);
+                revealQuestion(q.el);
               });
             }
           } else if (sec.questions) {
