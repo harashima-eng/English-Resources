@@ -241,7 +241,7 @@
             state.revealed[key] = true;
             if (examIndex.sections[secIdx]) {
               var qInfo = examIndex.sections[secIdx].questions[parseInt(qi)];
-              if (qInfo) revealQuestion(qInfo.el, true);
+              if (qInfo) revealQuestion(qInfo.el);
             }
           });
         }
@@ -426,7 +426,7 @@
           updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
           examRef.update(updates);
           if (examIndex.sections[si] && examIndex.sections[si].questions[qi]) {
-            revealQuestion(examIndex.sections[si].questions[qi].el, true);
+            revealQuestion(examIndex.sections[si].questions[qi].el);
           }
         };
         btnsDiv.appendChild(qBtn);
@@ -592,7 +592,7 @@
                 state.revealed[key] = true;
                 if (examIndex.sections[secIdx]) {
                   var qInfo = examIndex.sections[secIdx].questions[parseInt(qi)];
-                  if (qInfo) revealQuestion(qInfo.el, false);
+                  if (qInfo) revealQuestion(qInfo.el);
                 }
               }
             });
