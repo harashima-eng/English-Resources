@@ -1,0 +1,57 @@
+[debug] [2026-02-14T06:07:06.668Z] ----------------------------------------------------------------------
+[debug] [2026-02-14T06:07:06.672Z] Command:       /usr/local/Cellar/node/25.3.0/bin/node /Users/slimtetto/.npm/_npx/7750544ccf494d8b/node_modules/.bin/firebase init database --project english-resources-reveal
+[debug] [2026-02-14T06:07:06.672Z] CLI Version:   15.6.0
+[debug] [2026-02-14T06:07:06.672Z] Platform:      darwin
+[debug] [2026-02-14T06:07:06.672Z] Node Version:  v25.3.0
+[debug] [2026-02-14T06:07:06.672Z] Time:          Sat Feb 14 2026 15:07:06 GMT+0900 (Japan Standard Time)
+[debug] [2026-02-14T06:07:06.672Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/slimtetto/Projects/English-Resources
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2026-02-14T06:07:07.454Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-14T06:07:07.455Z] > authorizing via signed-in user (harashima@komagome.ed.jp)
+[debug] [2026-02-14T06:07:07.456Z] Checked if tokens are valid: true, expires at: 1771050699862
+[debug] [2026-02-14T06:07:07.456Z] Checked if tokens are valid: true, expires at: 1771050699862
+[debug] [2026-02-14T06:07:07.457Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/english-resources-reveal [none]
+[debug] [2026-02-14T06:07:07.782Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/english-resources-reveal 200
+[debug] [2026-02-14T06:07:07.782Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/english-resources-reveal {"projectId":"english-resources-reveal","projectNumber":"141460166135","displayName":"english-resources-reveal ","name":"projects/english-resources-reveal","resources":{"hostingSite":"english-resources-reveal"},"state":"ACTIVE","etag":"1_6b1664fa-3a19-443e-98ac-fbbd1e4aa4bb"}
+[info] i  Using project english-resources-reveal (english-resources-reveal ) . 
+[info] 
+=== Database Setup
+[info] 
+[info] Firebase Realtime Database Security Rules allow you to define how your data should be
+[info] structured and when your data can be read from and written to.
+[info] 
+[info] i  database: ensuring required API firebasedatabase.googleapis.com is enabled... 
+[debug] [2026-02-14T06:07:07.823Z] Checked if tokens are valid: true, expires at: 1771050699862
+[debug] [2026-02-14T06:07:07.823Z] Checked if tokens are valid: true, expires at: 1771050699862
+[debug] [2026-02-14T06:07:07.823Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com [none]
+[debug] [2026-02-14T06:07:07.823Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com  x-goog-user-project=english-resources-reveal
+[debug] [2026-02-14T06:07:08.880Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com 200
+[debug] [2026-02-14T06:07:08.880Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com [omitted]
+[warn] ⚠  database: missing required API firebasedatabase.googleapis.com. Enabling now... 
+[debug] [2026-02-14T06:07:08.881Z] Checked if tokens are valid: true, expires at: 1771050699862
+[debug] [2026-02-14T06:07:08.881Z] Checked if tokens are valid: true, expires at: 1771050699862
+[debug] [2026-02-14T06:07:08.881Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com:enable [none]
+[debug] [2026-02-14T06:07:08.882Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com:enable  x-goog-user-project=english-resources-reveal
+[debug] [2026-02-14T06:07:09.208Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com:enable 200
+[debug] [2026-02-14T06:07:09.208Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/english-resources-reveal/services/firebasedatabase.googleapis.com:enable [omitted]
