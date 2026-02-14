@@ -200,6 +200,13 @@
     if (box) box.classList.remove('tr-answer-hidden');
   }
 
+  // Auto-open answer box (teacher side only)
+  function showAnswerBox(qEl) {
+    if (!qEl) return;
+    var box = getAnswerBox(qEl);
+    if (box) { box.classList.add('show'); box.classList.add('open'); }
+  }
+
   function unlockAll() {
     if (pattern.name === 'dualscope') {
       applyLocksToVisibleDOM(true);
