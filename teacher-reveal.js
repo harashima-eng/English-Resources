@@ -117,36 +117,16 @@
   // ── Student mode: lock/unlock ──
   function lockQuestion(qEl) {
     var btn = getAnswerBtn(qEl);
-    var hBtn = getHintBtn(qEl);
     var box = getAnswerBox(qEl);
-    var hBox = getHintBox(qEl);
     if (btn) btn.classList.add('tr-locked');
-    if (hBtn) hBtn.classList.add('tr-locked');
     if (box) { box.classList.remove('show'); box.classList.add('tr-answer-hidden'); }
-    if (hBox) { hBox.classList.remove('show'); hBox.classList.add('tr-answer-hidden'); }
   }
 
-  function revealQuestion(qEl, animate) {
+  function revealQuestion(qEl) {
     var btn = getAnswerBtn(qEl);
-    var hBtn = getHintBtn(qEl);
     var box = getAnswerBox(qEl);
-    var hBox = getHintBox(qEl);
     if (btn) btn.classList.remove('tr-locked');
-    if (hBtn) hBtn.classList.remove('tr-locked');
-    if (box) {
-      box.classList.remove('tr-answer-hidden');
-      box.classList.add('show');
-      if (animate) {
-        box.classList.add('tr-revealing');
-        setTimeout(function() { box.classList.remove('tr-revealing'); }, 500);
-      }
-    }
-    if (hBox) hBox.classList.remove('tr-answer-hidden');
-    if (btn) {
-      if (btn.textContent.indexOf('解答') > -1) btn.textContent = '解答を隠す';
-      else btn.textContent = 'Hide Answer';
-      btn.setAttribute('aria-expanded', 'true');
-    }
+    if (box) box.classList.remove('tr-answer-hidden');
   }
 
   function unlockAll() {
