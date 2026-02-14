@@ -133,13 +133,9 @@
     examIndex.sections.forEach(function(sec) {
       sec.questions.forEach(function(q) {
         var btn = getAnswerBtn(q.el);
-        var hBtn = getHintBtn(q.el);
         var box = getAnswerBox(q.el);
-        var hBox = getHintBox(q.el);
         if (btn) btn.classList.remove('tr-locked');
-        if (hBtn) hBtn.classList.remove('tr-locked');
         if (box) box.classList.remove('tr-answer-hidden');
-        if (hBox) hBox.classList.remove('tr-answer-hidden');
       });
     });
   }
@@ -158,8 +154,7 @@
     if (!state.sessionActive || state.isTeacher) return;
     var t = e.target;
     var isAnswerBtn = t.classList.contains('answer-btn') || t.classList.contains('ans-btn');
-    var isHintBtn = t.classList.contains('hint-btn');
-    if (!isAnswerBtn && !isHintBtn) return;
+    if (!isAnswerBtn) return;
 
     var qEl = t.closest(pattern.questionSel);
     if (!qEl) return;
