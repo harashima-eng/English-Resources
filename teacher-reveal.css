@@ -612,14 +612,12 @@ html.dark .tr-session-badge {
   }
 
   .tr-btn-q {
-    width: 32px;
-    height: 32px;
     font-size: 10px;
     border-radius: 8px;
   }
 
-  .tr-q-btns {
-    gap: 4px;
+  .tr-q-grid {
+    gap: 3px;
   }
 
   .tr-btn-primary,
