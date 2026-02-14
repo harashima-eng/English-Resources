@@ -50,6 +50,12 @@ html.dark .tr-login-btn:hover {
   background: rgba(41, 37, 36, 0.95);
 }
 
+/* ── Dualscope pages: move login/badge below auto-hide nav bar ── */
+body[data-view] .tr-login-btn,
+body[data-view] .tr-session-badge {
+  top: 72px;
+}
+
 /* ── Locked state (student answer buttons disabled) ── */
 .tr-locked {
   pointer-events: none !important;

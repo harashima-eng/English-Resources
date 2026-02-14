@@ -613,7 +613,9 @@
       examIndex.sections.forEach(function(sec) {
         sec.questions.forEach(function(q) {
           state.revealed[getQKey(sec.index, q.index)] = true;
-          revealQuestion(getQEl(sec.index, q.index));
+          var qEl = getQEl(sec.index, q.index);
+          revealQuestion(qEl);
+          showAnswerBox(qEl);
         });
       });
       showToast('全解答を公開しました');
