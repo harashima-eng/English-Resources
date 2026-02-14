@@ -1,11 +1,8 @@
 {
-  "folders": [],
-  "items": [],
   "settings": {
     "siteName": "English Resources",
     "siteIcon": "📚",
-    "siteColor": "#2997ff",
+    "siteColor": "#0D9488",
     "mainHtmlFile": "index.html"
-  },
-  "lastUpdated": "2026-02-14T13:37:12.298367"
+  }
 }
