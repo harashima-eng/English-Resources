@@ -273,6 +273,8 @@
       badgeEl = document.createElement('div');
       badgeEl.className = 'tr-session-badge';
       badgeEl.textContent = '授業モード';
+      badgeEl.style.cursor = 'pointer';
+      badgeEl.onclick = function() { teacherLogin(); };
       document.body.appendChild(badgeEl);
     }
     badgeEl.style.display = '';
