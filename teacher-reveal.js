@@ -555,6 +555,7 @@
             updates['sections/' + si + '/questions/' + q.index + '/revealed'] = true;
             var qEl = getQEl(si, q.index);
             revealQuestion(qEl);
+            showAnswerBox(qEl);
           });
         }
         examRef.update(updates);
