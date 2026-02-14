@@ -261,6 +261,15 @@ html.dark .tr-panel-info {
   margin-bottom: 10px;
 }
 
+/* Section header row — title + ALL inline */
+.tr-section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
 /* Section title — badge/tab treatment */
 .tr-section-title {
   display: inline-flex;
@@ -269,11 +278,15 @@ html.dark .tr-panel-info {
   font-weight: 700;
   letter-spacing: 0.02em;
   color: #57534E;
-  margin-bottom: 8px;
   padding: 3px 10px 3px 8px;
   background: rgba(120, 113, 108, 0.08);
   border-radius: 6px;
   line-height: 1.5;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 [data-theme="dark"] .tr-section-title,
 html.dark .tr-section-title {
@@ -282,12 +295,11 @@ html.dark .tr-section-title {
 }
 
 
-/* ── Question Button Grid ── */
-.tr-q-btns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-items: center;
+/* ── Question Button Grid — equal cells ── */
+.tr-q-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
 }
 
 
