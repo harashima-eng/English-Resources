@@ -159,7 +159,7 @@ bash /usr/local/bin/english-resources-backup.sh
 
 ### View backup log
 ```bash
-cat /tmp/english-resources-backup.log
+cat ~/.claude/logs/english-resources-backup.log
 ```
 
 ---
