@@ -421,14 +421,25 @@
         qBtn.textContent = 'Q' + (qi + 1);
         qBtn.onclick = function() {
           var key = getQKey(si, qi);
-          if (state.revealed[key]) return;
-          state.revealed[key] = true;
-          qBtn.classList.add('revealed');
           var updates = {};
-          updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
-          examRef.update(updates);
-          if (examIndex.sections[si] && examIndex.sections[si].questions[qi]) {
-            revealQuestion(examIndex.sections[si].questions[qi].el);
+          if (state.revealed[key]) {
+            // Un-reveal: re-lock this question
+            state.revealed[key] = false;
+            qBtn.classList.remove('revealed');
+            updates['sections/' + si + '/questions/' + qi + '/revealed'] = false;
+            examRef.update(updates);
+            if (examIndex.sections[si] && examIndex.sections[si].questions[qi]) {
+              lockQuestion(examIndex.sections[si].questions[qi].el);
+            }
+          } else {
+            // Reveal: unlock this question
+            state.revealed[key] = true;
+            qBtn.classList.add('revealed');
+            updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
+            examRef.update(updates);
+            if (examIndex.sections[si] && examIndex.sections[si].questions[qi]) {
+              revealQuestion(examIndex.sections[si].questions[qi].el);
+            }
           }
         };
         btnsDiv.appendChild(qBtn);
