@@ -36,7 +36,6 @@ Edit files locally → Auto-generates indexes → Pushes to GitHub → Live on w
 
 ### User Controls
 - **Light/Dark mode** - Toggle in header (light is default, preference saved)
-- **Grid/List view** - Toggle layout style (preference saved)
 - **Breadcrumb navigation** - Easy path navigation on subpages
 
 ### Other Features
