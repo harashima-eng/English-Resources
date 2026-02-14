@@ -1,0 +1,298 @@
+/* Teacher Reveal Module Styles */
+
+/* Login button in header area */
+.tr-login-btn {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 9999;
+  padding: 8px 16px;
+  border: 1px solid rgba(128,128,128,0.3);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font: 500 12px -apple-system, sans-serif;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.tr-login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+[data-theme="dark"] .tr-login-btn,
+html.dark .tr-login-btn {
+  background: rgba(40,38,36,0.9);
+  color: #eee;
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* Locked state for answer/hint buttons */
+.tr-locked {
+  pointer-events: none !important;
+  opacity: 0.35 !important;
+  filter: grayscale(0.5) !important;
+  cursor: not-allowed !important;
+  position: relative;
+}
+
+/* Locked answer boxes - completely hidden */
+.tr-answer-hidden {
+  display: none !important;
+}
+
+/* Teacher control panel */
+.tr-panel {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  width: 320px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  color: #1C1917;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+}
+[data-theme="dark"] .tr-panel,
+html.dark .tr-panel {
+  background: #242220;
+  color: #F5F3F0;
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.tr-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-weight: 600;
+  font-size: 14px;
+}
+[data-theme="dark"] .tr-panel-header,
+html.dark .tr-panel-header {
+  border-bottom-color: rgba(255,255,255,0.06);
+}
+
+.tr-panel-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(0,0,0,0.05);
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+.tr-panel-close:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.tr-panel-body {
+  padding: 12px 16px;
+}
+
+.tr-panel-section {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+[data-theme="dark"] .tr-panel-section,
+html.dark .tr-panel-section {
+  border-bottom-color: rgba(255,255,255,0.04);
+}
+.tr-panel-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.tr-panel-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.tr-panel-info {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* Section controls */
+.tr-section-group {
+  margin-bottom: 10px;
+}
+.tr-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.tr-q-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* Control buttons */
+.tr-btn {
+  padding: 6px 12px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background: #fff;
+  font: 500 12px -apple-system, sans-serif;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.tr-btn:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+}
+.tr-btn:active {
+  transform: scale(0.97);
+}
+[data-theme="dark"] .tr-btn,
+html.dark .tr-btn {
+  background: #333;
+  color: #eee;
+  border-color: rgba(255,255,255,0.1);
+}
+[data-theme="dark"] .tr-btn:hover,
+html.dark .tr-btn:hover {
+  background: #444;
+}
+
+.tr-btn-q {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+.tr-btn-q.revealed {
+  background: #0D9488;
+  color: #fff;
+  border-color: #0D9488;
+}
+
+.tr-btn-section {
+  font-size: 11px;
+  padding: 5px 10px;
+}
+.tr-btn-section.revealed {
+  background: #0D9488;
+  color: #fff;
+  border-color: #0D9488;
+}
+
+.tr-btn-primary {
+  background: #0D9488;
+  color: #fff;
+  border-color: #0D9488;
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tr-btn-primary:hover {
+  background: #0B7E73;
+}
+
+.tr-btn-danger {
+  background: #B85450;
+  color: #fff;
+  border-color: #B85450;
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tr-btn-danger:hover {
+  background: #A04845;
+}
+
+/* Reveal animation for answers */
+@keyframes trReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.tr-revealing {
+  animation: trReveal 0.4s ease-out forwards;
+}
+
+/* Toast notification */
+.tr-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 10001;
+  padding: 12px 24px;
+  background: rgba(28,25,23,0.9);
+  color: #fff;
+  border-radius: 12px;
+  font: 500 13px -apple-system, sans-serif;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.tr-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Session active indicator for students */
+.tr-session-badge {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 9999;
+  padding: 8px 14px;
+  background: #0D9488;
+  color: #fff;
+  border-radius: 100px;
+  font: 600 11px -apple-system, sans-serif;
+  box-shadow: 0 2px 12px rgba(13,148,136,0.4);
+  animation: trPulse 2s ease-in-out infinite;
+}
+@keyframes trPulse {
+  0%, 100% { box-shadow: 0 2px 12px rgba(13,148,136,0.4); }
+  50% { box-shadow: 0 2px 20px rgba(13,148,136,0.6); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .tr-panel {
+    width: calc(100% - 32px);
+    right: 16px;
+    bottom: 16px;
+    max-height: 50vh;
+  }
+}
