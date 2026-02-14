@@ -223,7 +223,6 @@ cat /tmp/english-resources-backup.log
 | Key | Values | Default |
 |-----|--------|---------|
 | `er-theme` | `light` / `dark` | `light` |
-| `er-view` | `grid` / `list` | `grid` |
 
 ---
 
