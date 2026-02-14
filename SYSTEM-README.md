@@ -22,7 +22,7 @@ Edit files locally → Auto-generates indexes → Pushes to GitHub → Live on w
 | **Sync Log** | `/tmp/english-resources-autosync.log` |
 | **Backup Script** | `/usr/local/bin/english-resources-backup.sh` |
 | **Backup Location** | `iCloud Drive/Backups/English-Resources/` |
-| **Backup Log** | `/tmp/english-resources-backup.log` |
+| **Backup Log** | `~/.claude/logs/english-resources-backup.log` |
 
 ---
 
