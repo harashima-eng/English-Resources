@@ -1,0 +1,9 @@
+var firebaseConfig = {
+  apiKey: "AIzaSyD-U-cS30gdz1D-p4KqoYRni9nQdnJZ_L0",
+  authDomain: "english-resources-reveal.firebaseapp.com",
+  databaseURL: "https://english-resources-reveal-default-rtdb.firebaseio.com",
+  projectId: "english-resources-reveal",
+  storageBucket: "english-resources-reveal.firebasestorage.app",
+  messagingSenderId: "141460166135",
+  appId: "1:141460166135:web:fae3691002f92c89ec0af2"
+};
