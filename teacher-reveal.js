@@ -2,7 +2,14 @@
    Real-time teacher-controlled answer reveal for exam practice sessions.
    When a teacher starts a session, student answer buttons are locked.
    The teacher reveals answers one-by-one via a floating control panel.
-   No active session = normal self-study mode (transparent). */
+   No active session = normal self-study mode (transparent).
+
+   Supported patterns:
+   - kogakuin: .q-item / .answer-btn / .answer-box
+   - chuo-aoyama: .q / .ans-btn / .ans-box / .sec[data-sec]
+   - hosei-tus: .q / .ans-btn / .ans-box / .view[id^="view-sec"]
+   - dualscope: .qcard / .toggle-btn.answer / .collapsible[data-type="answer"]
+     (dynamic rendering via grammarData, MutationObserver for re-apply) */
 
 (function() {
   'use strict';
@@ -64,6 +71,23 @@
         }
       };
     }
+    // Dualscope: grammarData-driven pages with .toggle-btn.answer
+    if (typeof grammarData !== 'undefined' && grammarData.sections) {
+      var isDynamic = !!document.getElementById('questionsList');
+      return {
+        name: 'dualscope',
+        questionSel: '.qcard',
+        answerBtnSel: '.toggle-btn.answer',
+        answerBoxSel: '.collapsible[data-type="answer"]',
+        hintBtnSel: '.toggle-btn.hint',
+        hintBoxSel: '.collapsible[data-type="hint"]',
+        sectionSel: isDynamic ? null : '.section',
+        isDynamic: isDynamic,
+        getSectionQuestions: function(secEl) {
+          return secEl ? secEl.querySelectorAll(this.questionSel) : [];
+        }
+      };
+    }
     return null;
   }
 
@@ -75,6 +99,20 @@
 
   function buildIndex() {
     examIndex.sections = [];
+
+    // Dualscope: build from grammarData (DOM elements are transient)
+    if (pattern.name === 'dualscope') {
+      grammarData.sections.forEach(function(sec, si) {
+        var questions = [];
+        sec.questions.forEach(function(q, qi) {
+          questions.push({ el: null, index: qi });
+        });
+        examIndex.sections.push({ el: null, index: si, title: sec.title, questions: questions });
+      });
+      return;
+    }
+
+    // Static patterns: build from DOM
     var sectionEls = document.querySelectorAll(pattern.sectionSel);
     if (sectionEls.length === 0) {
       var allQs = document.querySelectorAll(pattern.questionSel);
@@ -114,15 +152,48 @@
   function getAnswerBtn(qEl) { return qEl.querySelector(pattern.answerBtnSel); }
   function getHintBtn(qEl) { return qEl.querySelector(pattern.hintBtnSel); }
 
+  // Find a question's DOM element dynamically (needed for dualscope)
+  function findDOMQuestion(si, qi) {
+    if (pattern.name !== 'dualscope') {
+      return examIndex.sections[si] && examIndex.sections[si].questions[qi]
+        ? examIndex.sections[si].questions[qi].el : null;
+    }
+    if (pattern.isDynamic) {
+      // SPA-style: only current section is in the DOM
+      var currentSi = typeof NavState !== 'undefined' ? NavState.section : -1;
+      if (currentSi !== si) return null;
+      var container = document.getElementById('questionsList');
+      if (!container) return null;
+      var cards = container.querySelectorAll('.qcard');
+      return cards[qi] || null;
+    }
+    // All-at-once: find by section index then question index
+    var sections = document.querySelectorAll('.section');
+    if (!sections[si]) return null;
+    var cards = sections[si].querySelectorAll('.qcard');
+    return cards[qi] || null;
+  }
+
+  // Get the DOM element for a question (static ref or dynamic lookup)
+  function getQEl(si, qi) {
+    var sec = examIndex.sections[si];
+    if (!sec) return null;
+    var q = sec.questions[qi];
+    if (!q) return null;
+    return q.el || findDOMQuestion(si, qi);
+  }
+
   // ── Student mode: lock/unlock ──
   function lockQuestion(qEl) {
+    if (!qEl) return;
     var btn = getAnswerBtn(qEl);
     var box = getAnswerBox(qEl);
     if (btn) btn.classList.add('tr-locked');
-    if (box) { box.classList.remove('show'); box.classList.add('tr-answer-hidden'); }
+    if (box) { box.classList.remove('show'); box.classList.remove('open'); box.classList.add('tr-answer-hidden'); }
   }
 
   function revealQuestion(qEl) {
+    if (!qEl) return;
     var btn = getAnswerBtn(qEl);
     var box = getAnswerBox(qEl);
     if (btn) btn.classList.remove('tr-locked');
@@ -130,6 +201,10 @@
   }
 
   function unlockAll() {
+    if (pattern.name === 'dualscope') {
+      applyLocksToVisibleDOM(true);
+      return;
+    }
     examIndex.sections.forEach(function(sec) {
       sec.questions.forEach(function(q) {
         var btn = getAnswerBtn(q.el);
@@ -141,6 +216,10 @@
   }
 
   function lockAllQuestions() {
+    if (pattern.name === 'dualscope') {
+      applyLocksToVisibleDOM(false);
+      return;
+    }
     examIndex.sections.forEach(function(sec) {
       sec.questions.forEach(function(q) {
         var key = getQKey(sec.index, q.index);
@@ -149,22 +228,77 @@
     });
   }
 
+  // Apply lock state to all currently visible DOM questions (dualscope)
+  function applyLocksToVisibleDOM(unlockAll) {
+    if (pattern.isDynamic) {
+      var si = typeof NavState !== 'undefined' ? NavState.section : -1;
+      if (si < 0) return;
+      var container = document.getElementById('questionsList');
+      if (!container) return;
+      var cards = container.querySelectorAll('.qcard');
+      for (var qi = 0; qi < cards.length; qi++) {
+        if (unlockAll || state.revealed[getQKey(si, qi)]) {
+          revealQuestion(cards[qi]);
+        } else {
+          lockQuestion(cards[qi]);
+        }
+      }
+    } else {
+      var sections = document.querySelectorAll('.section');
+      for (var si = 0; si < sections.length; si++) {
+        var qCards = sections[si].querySelectorAll('.qcard');
+        for (var qi = 0; qi < qCards.length; qi++) {
+          if (unlockAll || state.revealed[getQKey(si, qi)]) {
+            revealQuestion(qCards[qi]);
+          } else {
+            lockQuestion(qCards[qi]);
+          }
+        }
+      }
+    }
+  }
+
   // ── Capture-phase click interceptor ──
   document.addEventListener('click', function(e) {
     if (!state.sessionActive || state.isTeacher) return;
     var t = e.target;
-    var isAnswerBtn = t.classList.contains('answer-btn') || t.classList.contains('ans-btn');
+    var isAnswerBtn = t.classList.contains('answer-btn') || t.classList.contains('ans-btn') ||
+      (t.classList.contains('toggle-btn') && t.classList.contains('answer'));
     if (!isAnswerBtn) return;
 
     var qEl = t.closest(pattern.questionSel);
     if (!qEl) return;
 
     var revealed = false;
-    examIndex.sections.forEach(function(sec) {
-      sec.questions.forEach(function(q) {
-        if (q.el === qEl && state.revealed[getQKey(sec.index, q.index)]) revealed = true;
+
+    if (pattern.name === 'dualscope') {
+      var si = -1, qi = -1;
+      if (pattern.isDynamic) {
+        si = typeof NavState !== 'undefined' ? NavState.section : -1;
+        var container = document.getElementById('questionsList');
+        if (container) {
+          var cards = container.querySelectorAll('.qcard');
+          for (var i = 0; i < cards.length; i++) {
+            if (cards[i] === qEl) { qi = i; break; }
+          }
+        }
+      } else {
+        var secEl = qEl.closest('.section');
+        if (secEl) {
+          var secs = document.querySelectorAll('.section');
+          for (var i = 0; i < secs.length; i++) if (secs[i] === secEl) { si = i; break; }
+          var sCards = secEl.querySelectorAll('.qcard');
+          for (var j = 0; j < sCards.length; j++) if (sCards[j] === qEl) { qi = j; break; }
+        }
+      }
+      if (si >= 0 && qi >= 0) revealed = !!state.revealed[getQKey(si, qi)];
+    } else {
+      examIndex.sections.forEach(function(sec) {
+        sec.questions.forEach(function(q) {
+          if (q.el === qEl && state.revealed[getQKey(sec.index, q.index)]) revealed = true;
+        });
       });
-    });
+    }
 
     if (!revealed) {
       e.stopImmediatePropagation();
@@ -226,7 +360,8 @@
               var key = getQKey(secIdx, q.index);
               if (!state.revealed[key]) {
                 state.revealed[key] = true;
-                revealQuestion(q.el);
+                var qEl = getQEl(secIdx, q.index);
+                revealQuestion(qEl);
               }
             });
           }
@@ -235,13 +370,18 @@
         if (sec.questions) {
           Object.keys(sec.questions).forEach(function(qi) {
             var qData = sec.questions[qi];
-            if (!qData || !qData.revealed) return;
-            var key = getQKey(secIdx, parseInt(qi));
-            if (state.revealed[key]) return;
-            state.revealed[key] = true;
-            if (examIndex.sections[secIdx]) {
-              var qInfo = examIndex.sections[secIdx].questions[parseInt(qi)];
-              if (qInfo) revealQuestion(qInfo.el);
+            var qIdx = parseInt(qi);
+            var key = getQKey(secIdx, qIdx);
+            if (qData && qData.revealed) {
+              if (state.revealed[key]) return;
+              state.revealed[key] = true;
+              var qEl = getQEl(secIdx, qIdx);
+              revealQuestion(qEl);
+            } else if (qData && !qData.revealed && state.revealed[key]) {
+              // Teacher re-locked this question
+              state.revealed[key] = false;
+              var qEl = getQEl(secIdx, qIdx);
+              lockQuestion(qEl);
             }
           });
         }
@@ -256,7 +396,8 @@
             var key = getQKey(sec.index, q.index);
             if (!state.revealed[key]) {
               state.revealed[key] = true;
-              revealQuestion(q.el);
+              var qEl = getQEl(sec.index, q.index);
+              revealQuestion(qEl);
             }
           });
         });
@@ -326,7 +467,6 @@
     buildPanelDOM(panelEl);
     document.body.appendChild(panelEl);
 
-    // Listen for session state to update button
     examRef.child('activeSession').on('value', function(snap) {
       updateSessionButton(!!snap.val());
     });
@@ -382,6 +522,8 @@
       if (sec.el) {
         var headerText = sec.el.textContent.trim().substring(0, 24);
         if (headerText) label = headerText;
+      } else if (sec.title) {
+        label = sec.title.substring(0, 28);
       }
       secTitle.textContent = label;
       headerRow.appendChild(secTitle);
@@ -404,7 +546,8 @@
           examIndex.sections[si].questions.forEach(function(q) {
             state.revealed[getQKey(si, q.index)] = true;
             updates['sections/' + si + '/questions/' + q.index + '/revealed'] = true;
-            revealQuestion(q.el);
+            var qEl = getQEl(si, q.index);
+            revealQuestion(qEl);
           });
         }
         examRef.update(updates);
@@ -431,17 +574,13 @@
             qBtn.classList.remove('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = false;
             examRef.update(updates);
-            if (examIndex.sections[si] && examIndex.sections[si].questions[qi]) {
-              lockQuestion(examIndex.sections[si].questions[qi].el);
-            }
+            lockQuestion(getQEl(si, qi));
           } else {
             state.revealed[key] = true;
             qBtn.classList.add('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
             examRef.update(updates);
-            if (examIndex.sections[si] && examIndex.sections[si].questions[qi]) {
-              revealQuestion(examIndex.sections[si].questions[qi].el);
-            }
+            revealQuestion(getQEl(si, qi));
           }
         };
         qGrid.appendChild(qBtn);
@@ -465,7 +604,7 @@
       examIndex.sections.forEach(function(sec) {
         sec.questions.forEach(function(q) {
           state.revealed[getQKey(sec.index, q.index)] = true;
-          revealQuestion(q.el);
+          revealQuestion(getQEl(sec.index, q.index));
         });
       });
       showToast('全解答を公開しました');
@@ -579,7 +718,7 @@
           sec.questions.forEach(function(q) {
             var key = getQKey(sec.index, q.index);
             state.revealed[key] = true;
-            revealQuestion(q.el);
+            revealQuestion(getQEl(sec.index, q.index));
           });
         });
         return;
@@ -597,7 +736,7 @@
               examIndex.sections[secIdx].questions.forEach(function(q) {
                 var key = getQKey(secIdx, q.index);
                 state.revealed[key] = true;
-                revealQuestion(q.el);
+                revealQuestion(getQEl(secIdx, q.index));
               });
             }
           } else if (sec.questions) {
@@ -605,10 +744,7 @@
               if (sec.questions[qi] && sec.questions[qi].revealed) {
                 var key = getQKey(secIdx, parseInt(qi));
                 state.revealed[key] = true;
-                if (examIndex.sections[secIdx]) {
-                  var qInfo = examIndex.sections[secIdx].questions[parseInt(qi)];
-                  if (qInfo) revealQuestion(qInfo.el);
-                }
+                revealQuestion(getQEl(secIdx, parseInt(qi)));
               }
             });
           }
@@ -617,12 +753,24 @@
     });
   }
 
+  // ── MutationObserver for dynamic question rendering (dualscope SPA) ──
+  function setupDynamicObserver() {
+    if (pattern.name !== 'dualscope' || !pattern.isDynamic) return;
+    var qListEl = document.getElementById('questionsList');
+    if (!qListEl) return;
+    new MutationObserver(function() {
+      if (!state.sessionActive || state.isTeacher) return;
+      applyLocksToVisibleDOM(false);
+    }).observe(qListEl, { childList: true });
+  }
+
   // ── Init ──
   function init() {
     createLoginButton();
     startStudentListener();
     restoreState();
     trackPresence();
+    setupDynamicObserver();
   }
 
   if (document.readyState === 'loading') {
