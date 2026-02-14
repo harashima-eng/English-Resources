@@ -1,240 +1,496 @@
-/* Teacher Reveal Module Styles */
+/* ================================================================
+   Teacher Reveal Module — Premium Nordic Glass UI
+   ================================================================
+   Floating control panel for real-time exam answer reveal.
+   Glass morphism + warm Nordic depth + satisfying reveal states.
+   ================================================================ */
 
-/* Login button in header area */
+/* ── Login button (top-right, pill shape) ── */
 .tr-login-btn {
   position: fixed;
   top: 12px;
   right: 16px;
   z-index: 9999;
-  padding: 8px 16px;
-  border: 1px solid rgba(128,128,128,0.3);
-  border-radius: 100px;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font: 500 12px -apple-system, sans-serif;
-  color: #333;
+  padding: 8px 18px;
+  border: 1px solid rgba(120, 113, 108, 0.2);
+  border-radius: 9999px;
+  background: rgba(255, 253, 250, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font: 500 12px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #44403C;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .tr-login-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  background: rgba(255, 253, 250, 0.95);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.tr-login-btn:active {
+  transform: translateY(0) scale(0.97);
 }
 [data-theme="dark"] .tr-login-btn,
 html.dark .tr-login-btn {
-  background: rgba(40,38,36,0.9);
-  color: #eee;
-  border-color: rgba(255,255,255,0.1);
+  background: rgba(41, 37, 36, 0.85);
+  color: #E7E5E4;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+[data-theme="dark"] .tr-login-btn:hover,
+html.dark .tr-login-btn:hover {
+  background: rgba(41, 37, 36, 0.95);
 }
 
-/* Locked state for answer/hint buttons */
+/* ── Locked state (student answer buttons disabled) ── */
 .tr-locked {
   pointer-events: none !important;
-  opacity: 0.35 !important;
-  filter: grayscale(0.5) !important;
+  opacity: 0.3 !important;
+  filter: grayscale(0.6) !important;
   cursor: not-allowed !important;
   position: relative;
 }
 
-/* Locked answer boxes - completely hidden */
+/* ── Hidden answers (display: none until teacher reveals) ── */
 .tr-answer-hidden {
   display: none !important;
 }
 
-/* Teacher control panel */
+
+/* ================================================================
+   CONTROL PANEL — Glass Morphism Container
+   ================================================================ */
 .tr-panel {
   position: fixed;
   bottom: 24px;
   right: 24px;
   z-index: 10000;
-  width: 320px;
+  width: 300px;
   max-height: 70vh;
-  overflow-y: auto;
-  background: #fff;
+  display: flex;
+  flex-direction: column;
+
+  /* Glass morphism — single backdrop-filter, safe */
+  background: rgba(255, 253, 250, 0.78);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  border: 1px solid rgba(168, 162, 158, 0.25);
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.03),
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.1),
+    0 24px 48px rgba(0, 0, 0, 0.06);
+
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
   font-size: 13px;
   color: #1C1917;
-  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+
+  /* Panel entrance */
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
 }
 [data-theme="dark"] .tr-panel,
 html.dark .tr-panel {
-  background: #242220;
-  color: #F5F3F0;
-  border-color: rgba(255,255,255,0.08);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  background: rgba(28, 25, 23, 0.82);
+  color: #F5F5F4;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 24px 48px rgba(0, 0, 0, 0.2);
 }
 
+
+/* ── Panel Header — Strong presence with accent line ── */
 .tr-panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  font-weight: 600;
-  font-size: 14px;
+  padding: 14px 16px 12px;
+  position: relative;
+  flex-shrink: 0;
 }
-[data-theme="dark"] .tr-panel-header,
-html.dark .tr-panel-header {
-  border-bottom-color: rgba(255,255,255,0.06);
+/* Accent gradient underline for header */
+.tr-panel-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 1.5px;
+  background: linear-gradient(90deg,
+    #0D9488 0%,
+    rgba(13, 148, 136, 0.3) 60%,
+    transparent 100%);
+  border-radius: 1px;
+}
+[data-theme="dark"] .tr-panel-header::after,
+html.dark .tr-panel-header::after {
+  background: linear-gradient(90deg,
+    #14B8A6 0%,
+    rgba(20, 184, 166, 0.3) 60%,
+    transparent 100%);
 }
 
+/* Header title text */
+.tr-panel-header > span:first-child {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0D9488;
+}
+[data-theme="dark"] .tr-panel-header > span:first-child,
+html.dark .tr-panel-header > span:first-child {
+  color: #14B8A6;
+}
+
+/* Close button */
 .tr-panel-close {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border: none;
-  background: rgba(0,0,0,0.05);
+  background: rgba(120, 113, 108, 0.08);
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: inherit;
+  color: #78716C;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 .tr-panel-close:hover {
-  background: rgba(0,0,0,0.1);
+  background: rgba(120, 113, 108, 0.15);
+  color: #44403C;
+  transform: scale(1.05);
+}
+.tr-panel-close:active {
+  transform: scale(0.92);
+}
+[data-theme="dark"] .tr-panel-close,
+html.dark .tr-panel-close {
+  background: rgba(255, 255, 255, 0.06);
+  color: #A8A29E;
+}
+[data-theme="dark"] .tr-panel-close:hover,
+html.dark .tr-panel-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #E7E5E4;
 }
 
+
+/* ── Panel Body — Scrollable content area ── */
 .tr-panel-body {
-  padding: 12px 16px;
+  padding: 12px 14px 14px;
+  overflow-y: auto;
+  flex: 1;
+
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120, 113, 108, 0.2) transparent;
+}
+.tr-panel-body::-webkit-scrollbar {
+  width: 4px;
+}
+.tr-panel-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tr-panel-body::-webkit-scrollbar-thumb {
+  background: rgba(120, 113, 108, 0.2);
+  border-radius: 4px;
+}
+.tr-panel-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 113, 108, 0.35);
 }
 
+
+/* ── Panel Section Dividers ── */
 .tr-panel-section {
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(0,0,0,0.04);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(168, 162, 158, 0.12);
 }
 [data-theme="dark"] .tr-panel-section,
 html.dark .tr-panel-section {
-  border-bottom-color: rgba(255,255,255,0.04);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 .tr-panel-section:last-child {
   border-bottom: none;
   margin-bottom: 0;
+  padding-bottom: 0;
 }
 
+/* ── Labels & Info ── */
 .tr-panel-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #999;
+  letter-spacing: 0.08em;
+  color: #A8A29E;
   margin-bottom: 8px;
 }
 
 .tr-panel-info {
   font-size: 12px;
-  color: #666;
+  color: #78716C;
   margin-bottom: 8px;
+  line-height: 1.5;
+}
+[data-theme="dark"] .tr-panel-info,
+html.dark .tr-panel-info {
+  color: #A8A29E;
 }
 
-/* Section controls */
+
+/* ================================================================
+   SECTION GROUPS — Badge-style section titles
+   ================================================================ */
 .tr-section-group {
   margin-bottom: 10px;
 }
+
+/* Section title — badge/tab treatment */
 .tr-section-title {
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #57534E;
+  margin-bottom: 8px;
+  padding: 3px 10px 3px 8px;
+  background: rgba(120, 113, 108, 0.08);
+  border-radius: 6px;
+  line-height: 1.5;
 }
+[data-theme="dark"] .tr-section-title,
+html.dark .tr-section-title {
+  color: #D6D3D1;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* ── Question Button Grid ── */
 .tr-q-btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 5px;
+  align-items: center;
 }
 
-/* Control buttons */
+
+/* ================================================================
+   BUTTONS — Base, Question, Section, Primary, Danger
+   ================================================================ */
+
+/* Base button reset */
 .tr-btn {
   padding: 6px 12px;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(168, 162, 158, 0.25);
   border-radius: 8px;
-  background: #fff;
-  font: 500 12px -apple-system, sans-serif;
-  color: #333;
+  background: rgba(255, 255, 255, 0.7);
+  font: 500 12px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #44403C;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  position: relative;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 .tr-btn:hover {
-  background: #f5f5f5;
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(168, 162, 158, 0.35);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 .tr-btn:active {
-  transform: scale(0.97);
+  transform: scale(0.95);
+  box-shadow: none;
 }
 [data-theme="dark"] .tr-btn,
 html.dark .tr-btn {
-  background: #333;
-  color: #eee;
-  border-color: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: #E7E5E4;
+  border-color: rgba(255, 255, 255, 0.08);
 }
 [data-theme="dark"] .tr-btn:hover,
 html.dark .tr-btn:hover {
-  background: #444;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
+
+/* ── Question Buttons (Q1, Q2, Q3...) ── */
 .tr-btn-q {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
+  border-radius: 10px;
+  letter-spacing: -0.01em;
 }
+
+/* Revealed state — satisfying teal with glow */
 .tr-btn-q.revealed {
-  background: #0D9488;
+  background: linear-gradient(135deg, #0D9488, #0F766E);
   color: #fff;
-  border-color: #0D9488;
+  border-color: transparent;
+  box-shadow:
+    0 1px 3px rgba(13, 148, 136, 0.25),
+    0 0 12px rgba(13, 148, 136, 0.15);
+  transform: translateY(0);
+}
+.tr-btn-q.revealed:hover {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+  box-shadow:
+    0 2px 6px rgba(13, 148, 136, 0.3),
+    0 0 16px rgba(13, 148, 136, 0.2);
+  transform: translateY(-1px);
+}
+[data-theme="dark"] .tr-btn-q.revealed,
+html.dark .tr-btn-q.revealed {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+  box-shadow:
+    0 1px 3px rgba(20, 184, 166, 0.3),
+    0 0 16px rgba(20, 184, 166, 0.15);
+}
+[data-theme="dark"] .tr-btn-q.revealed:hover,
+html.dark .tr-btn-q.revealed:hover {
+  background: linear-gradient(135deg, #2DD4BF, #14B8A6);
+  box-shadow:
+    0 2px 6px rgba(20, 184, 166, 0.35),
+    0 0 20px rgba(20, 184, 166, 0.2);
 }
 
+
+/* ── Section "All" Button ── */
 .tr-btn-section {
-  font-size: 11px;
-  padding: 5px 10px;
-}
-.tr-btn-section.revealed {
-  background: #0D9488;
-  color: #fff;
-  border-color: #0D9488;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: 8px;
 }
 
-.tr-btn-primary {
-  background: #0D9488;
+/* Section "All" revealed state */
+.tr-btn-section.revealed {
+  background: linear-gradient(135deg, #0D9488, #0F766E);
   color: #fff;
-  border-color: #0D9488;
+  border-color: transparent;
+  box-shadow: 0 1px 3px rgba(13, 148, 136, 0.2);
+}
+.tr-btn-section.revealed:hover {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.3);
+}
+[data-theme="dark"] .tr-btn-section.revealed,
+html.dark .tr-btn-section.revealed {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+}
+
+
+/* ── Primary (Start Session) — Teal gradient CTA ── */
+.tr-btn-primary {
+  background: linear-gradient(135deg, #0D9488, #0F766E);
+  color: #fff;
+  border: none;
   width: 100%;
-  padding: 10px;
+  padding: 11px 16px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 10px;
+  box-shadow:
+    0 1px 2px rgba(13, 148, 136, 0.2),
+    0 4px 12px rgba(13, 148, 136, 0.15);
 }
 .tr-btn-primary:hover {
-  background: #0B7E73;
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+  box-shadow:
+    0 2px 4px rgba(13, 148, 136, 0.25),
+    0 8px 20px rgba(13, 148, 136, 0.2);
+  transform: translateY(-1px);
+}
+.tr-btn-primary:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(13, 148, 136, 0.2);
+}
+[data-theme="dark"] .tr-btn-primary,
+html.dark .tr-btn-primary {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+  box-shadow:
+    0 1px 2px rgba(20, 184, 166, 0.25),
+    0 4px 12px rgba(20, 184, 166, 0.15);
+}
+[data-theme="dark"] .tr-btn-primary:hover,
+html.dark .tr-btn-primary:hover {
+  background: linear-gradient(135deg, #2DD4BF, #14B8A6);
 }
 
+
+/* ── Danger (End Session / Reveal All) — Warm rust-red ── */
 .tr-btn-danger {
-  background: #B85450;
+  background: linear-gradient(135deg, #B45309, #A3440C);
   color: #fff;
-  border-color: #B85450;
+  border: none;
   width: 100%;
-  padding: 10px;
+  padding: 11px 16px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 10px;
+  box-shadow:
+    0 1px 2px rgba(180, 83, 9, 0.2),
+    0 4px 12px rgba(180, 83, 9, 0.12);
 }
 .tr-btn-danger:hover {
-  background: #A04845;
+  background: linear-gradient(135deg, #D97706, #B45309);
+  box-shadow:
+    0 2px 4px rgba(180, 83, 9, 0.25),
+    0 8px 20px rgba(180, 83, 9, 0.18);
+  transform: translateY(-1px);
+}
+.tr-btn-danger:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(180, 83, 9, 0.2);
+}
+[data-theme="dark"] .tr-btn-danger,
+html.dark .tr-btn-danger {
+  background: linear-gradient(135deg, #D97706, #B45309);
+  box-shadow:
+    0 1px 2px rgba(217, 119, 6, 0.25),
+    0 4px 12px rgba(217, 119, 6, 0.15);
+}
+[data-theme="dark"] .tr-btn-danger:hover,
+html.dark .tr-btn-danger:hover {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
 }
 
-/* Reveal animation for answers */
+
+/* ================================================================
+   REVEAL ANIMATION — Smooth entrance for answers
+   ================================================================ */
 @keyframes trReveal {
   from {
     opacity: 0;
-    transform: translateY(-8px);
-    filter: blur(4px);
+    transform: translateY(-6px);
+    filter: blur(3px);
   }
   to {
     opacity: 1;
@@ -243,56 +499,155 @@ html.dark .tr-btn:hover {
   }
 }
 .tr-revealing {
-  animation: trReveal 0.4s ease-out forwards;
+  animation: trReveal 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
-/* Toast notification */
+
+/* ================================================================
+   TOAST — Bottom-center notification
+   ================================================================ */
 .tr-toast {
   position: fixed;
   bottom: 80px;
   left: 50%;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(12px);
   z-index: 10001;
-  padding: 12px 24px;
-  background: rgba(28,25,23,0.9);
-  color: #fff;
-  border-radius: 12px;
-  font: 500 13px -apple-system, sans-serif;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  padding: 10px 22px;
+  background: rgba(28, 25, 23, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #F5F5F4;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font: 500 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.15);
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
+  white-space: nowrap;
 }
 .tr-toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+[data-theme="dark"] .tr-toast,
+html.dark .tr-toast {
+  background: rgba(41, 37, 36, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+}
 
-/* Session active indicator for students */
+
+/* ================================================================
+   SESSION BADGE — Student-facing "class mode" indicator
+   ================================================================ */
 .tr-session-badge {
   position: fixed;
   top: 12px;
   right: 16px;
   z-index: 9999;
-  padding: 8px 14px;
-  background: #0D9488;
+  padding: 7px 14px;
+  background: linear-gradient(135deg, #0D9488, #0F766E);
   color: #fff;
-  border-radius: 100px;
-  font: 600 11px -apple-system, sans-serif;
-  box-shadow: 0 2px 12px rgba(13,148,136,0.4);
-  animation: trPulse 2s ease-in-out infinite;
+  border-radius: 9999px;
+  font: 700 11px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  letter-spacing: 0.03em;
+  box-shadow:
+    0 1px 3px rgba(13, 148, 136, 0.3),
+    0 4px 16px rgba(13, 148, 136, 0.2);
+  animation: trBadgePulse 2.5s ease-in-out infinite;
 }
-@keyframes trPulse {
-  0%, 100% { box-shadow: 0 2px 12px rgba(13,148,136,0.4); }
-  50% { box-shadow: 0 2px 20px rgba(13,148,136,0.6); }
+@keyframes trBadgePulse {
+  0%, 100% {
+    box-shadow:
+      0 1px 3px rgba(13, 148, 136, 0.3),
+      0 4px 16px rgba(13, 148, 136, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 1px 3px rgba(13, 148, 136, 0.4),
+      0 4px 24px rgba(13, 148, 136, 0.35);
+  }
+}
+[data-theme="dark"] .tr-session-badge,
+html.dark .tr-session-badge {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+  box-shadow:
+    0 1px 3px rgba(20, 184, 166, 0.35),
+    0 4px 16px rgba(20, 184, 166, 0.2);
 }
 
-/* Responsive */
+
+/* ================================================================
+   RESPONSIVE — Mobile (< 600px)
+   ================================================================ */
 @media (max-width: 600px) {
   .tr-panel {
-    width: calc(100% - 32px);
-    right: 16px;
-    bottom: 16px;
-    max-height: 50vh;
+    width: calc(100% - 24px);
+    right: 12px;
+    bottom: 12px;
+    max-height: 55vh;
+    border-radius: 14px;
+  }
+
+  .tr-panel-header {
+    padding: 12px 14px 10px;
+  }
+
+  .tr-panel-body {
+    padding: 10px 12px 12px;
+  }
+
+  .tr-btn-q {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+    border-radius: 8px;
+  }
+
+  .tr-q-btns {
+    gap: 4px;
+  }
+
+  .tr-btn-primary,
+  .tr-btn-danger {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .tr-toast {
+    bottom: 72px;
+    font-size: 12px;
+    padding: 9px 18px;
+    max-width: calc(100% - 48px);
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+
+/* ================================================================
+   REDUCED MOTION — Respect user preference
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .tr-panel,
+  .tr-btn,
+  .tr-btn-q,
+  .tr-btn-section,
+  .tr-btn-primary,
+  .tr-btn-danger,
+  .tr-panel-close,
+  .tr-login-btn,
+  .tr-toast {
+    transition-duration: 0.01ms !important;
+  }
+
+  .tr-revealing {
+    animation-duration: 0.01ms !important;
+  }
+
+  .tr-session-badge {
+    animation: none;
   }
 }
