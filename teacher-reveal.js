@@ -372,29 +372,29 @@
       var secDiv = document.createElement('div');
       secDiv.className = 'tr-panel-section tr-section-group';
 
+      // Section header row: title + ALL button inline
+      var headerRow = document.createElement('div');
+      headerRow.className = 'tr-section-header-row';
+
       var secTitle = document.createElement('div');
       secTitle.className = 'tr-section-title';
-      var label = 'Section ' + (si + 1);
+      var label = (si + 1) + '';
       if (sec.el) {
-        var headerText = sec.el.textContent.trim().substring(0, 30);
+        var headerText = sec.el.textContent.trim().substring(0, 24);
         if (headerText) label = headerText;
       }
       secTitle.textContent = label;
-      secDiv.appendChild(secTitle);
+      headerRow.appendChild(secTitle);
 
-      var btnsDiv = document.createElement('div');
-      btnsDiv.className = 'tr-q-btns';
-
-      // Section "All" button
       var allBtn = document.createElement('button');
       allBtn.className = 'tr-btn tr-btn-section';
       allBtn.dataset.section = si;
-      allBtn.textContent = 'All';
+      allBtn.textContent = 'ALL';
       allBtn.onclick = function() {
         if (state.sectionRevealed[si]) return;
         state.sectionRevealed[si] = true;
         allBtn.classList.add('revealed');
-        btnsDiv.querySelectorAll('.tr-btn-q').forEach(function(qb) {
+        qGrid.querySelectorAll('.tr-btn-q').forEach(function(qb) {
           qb.classList.add('revealed');
         });
 
@@ -410,9 +410,13 @@
         examRef.update(updates);
         showToast('セクション ' + (si + 1) + ' を公開しました');
       };
-      btnsDiv.appendChild(allBtn);
+      headerRow.appendChild(allBtn);
+      secDiv.appendChild(headerRow);
 
-      // Per-question buttons
+      // Q buttons in equal grid
+      var qGrid = document.createElement('div');
+      qGrid.className = 'tr-q-grid';
+
       sec.questions.forEach(function(q, qi) {
         var qBtn = document.createElement('button');
         qBtn.className = 'tr-btn tr-btn-q';
@@ -423,7 +427,6 @@
           var key = getQKey(si, qi);
           var updates = {};
           if (state.revealed[key]) {
-            // Un-reveal: re-lock this question
             state.revealed[key] = false;
             qBtn.classList.remove('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = false;
@@ -432,7 +435,6 @@
               lockQuestion(examIndex.sections[si].questions[qi].el);
             }
           } else {
-            // Reveal: unlock this question
             state.revealed[key] = true;
             qBtn.classList.add('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
@@ -442,10 +444,10 @@
             }
           }
         };
-        btnsDiv.appendChild(qBtn);
+        qGrid.appendChild(qBtn);
       });
 
-      secDiv.appendChild(btnsDiv);
+      secDiv.appendChild(qGrid);
       body.appendChild(secDiv);
     });
 
