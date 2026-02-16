@@ -2,6 +2,9 @@
 
 # Auto-sync script: watches for file changes, regenerates indexes, and pushes to GitHub
 
+# Ensure node/npx are available (LaunchAgent has minimal PATH)
+export PATH="/usr/local/bin:$PATH"
+
 REPO_DIR="/Users/slimtetto/Projects/English-Resources"
 cd "$REPO_DIR" || exit 1
 
@@ -56,3 +59,4 @@ echo "Watching for file changes..."
 
     sleep 3  # Cooldown: prevent cascading triggers from generated files
 done
+
