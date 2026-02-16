@@ -1655,17 +1655,17 @@ const grammarData = {
         {
           num: "(1)",
           text: "Ten kilometers (   ) a long way if you have to walk.",
-          choices: "a. are　b. is　c. have　d. were",
+          choices: "a. are　b. is　c. was　d. were",
           vocab: [["kilometer", "キロメートル"],["a long way", "遠い道のり"]],
-          hint: ["距離・時間・金額は1つのまとまり","複数形でも単数扱い","Ten kilometers = 1つの距離"],
+          hint: ["距離・時間・金額は1つのまとまり","複数形でも単数扱いになる場合がある","一般論なので時制は現在形"],
           answer: "b. is",
           translation: "10キロは、歩かなければならないとしたら、遠い道のりだ",
           explanation: "距離・時間・金額を表す複数形の名詞でも、1つのまとまりととらえる場合は単数扱いです。",
           grammar: "距離・時間・金額 = 1つのまとまり → 単数扱い",
           choiceExplanations: {
             "b. is": "○ 正解。距離を1つのまとまりとして単数扱い。",
-            "a. are": "× 複数扱いは不適切。",
-            "c. have": "× 文法的に不適切。",
+            "a. are": "× 複数扱いは不適切。距離は1つのまとまり。",
+            "c. was": "× 一般論なので過去形は不適切。",
             "d. were": "× 時制も数も不適切。"
           }
         },
