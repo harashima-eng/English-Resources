@@ -479,6 +479,7 @@
     panelEl.className = 'tr-panel';
     buildPanelDOM(panelEl);
     document.body.appendChild(panelEl);
+    document.body.classList.add('tr-panel-open');
 
     examRef.child('activeSession').on('value', function(snap) {
       updateSessionButton(!!snap.val());

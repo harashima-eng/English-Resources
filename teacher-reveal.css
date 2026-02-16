@@ -598,6 +598,17 @@ html.dark .tr-session-badge {
 
 
 /* ================================================================
+   PANEL-OPEN LAYOUT SHIFT — Push content left to avoid overlap
+   ================================================================ */
+@media (min-width: 1200px) {
+  body.tr-panel-open {
+    padding-right: 340px;
+    transition: padding-right 0.3s ease;
+  }
+}
+
+
+/* ================================================================
    RESPONSIVE — Mobile (< 600px)
    ================================================================ */
 @media (max-width: 600px) {
