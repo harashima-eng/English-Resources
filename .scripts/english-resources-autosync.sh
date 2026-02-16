@@ -38,6 +38,13 @@ echo "Watching for file changes..."
 
     if git push; then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] Pushed to GitHub successfully"
+
+        # Deploy to Firebase Hosting (keeps web.app in sync with GitHub Pages)
+        if /usr/local/bin/npx --yes firebase-tools deploy --only hosting --project english-resources-reveal 2>/dev/null; then
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Firebase Hosting deployed"
+        else
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Firebase Hosting deploy failed"
+        fi
     else
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push failed"
     fi
