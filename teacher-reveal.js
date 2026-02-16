@@ -469,17 +469,29 @@
     });
   }
 
+  // ── Content shift (avoid panel overlap) ──
+  function shiftContent(show) {
+    var el = document.querySelector('.main-content') || document.querySelector('main');
+    if (!el) el = document.body;
+    if (show && window.innerWidth >= 900) {
+      el.style.transition = 'padding-right 0.3s ease';
+      el.style.paddingRight = '340px';
+    } else {
+      el.style.paddingRight = '';
+    }
+  }
+
   // ── Teacher panel ──
   var panelEl = null;
 
   function showTeacherPanel() {
-    if (panelEl) { panelEl.style.display = ''; document.body.classList.add('tr-panel-open'); return; }
+    if (panelEl) { panelEl.style.display = ''; shiftContent(true); return; }
 
     panelEl = document.createElement('div');
     panelEl.className = 'tr-panel';
     buildPanelDOM(panelEl);
     document.body.appendChild(panelEl);
-    document.body.classList.add('tr-panel-open');
+    shiftContent(true);
 
     examRef.child('activeSession').on('value', function(snap) {
       updateSessionButton(!!snap.val());
@@ -497,7 +509,7 @@
     closeBtn.textContent = '\u00d7';
     closeBtn.onclick = function() {
       container.style.display = 'none';
-      document.body.classList.remove('tr-panel-open');
+      shiftContent(false);
       showReopenButton();
     };
     header.appendChild(title);
