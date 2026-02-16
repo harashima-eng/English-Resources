@@ -473,7 +473,7 @@
   var panelEl = null;
 
   function showTeacherPanel() {
-    if (panelEl) { panelEl.style.display = ''; return; }
+    if (panelEl) { panelEl.style.display = ''; document.body.classList.add('tr-panel-open'); return; }
 
     panelEl = document.createElement('div');
     panelEl.className = 'tr-panel';
@@ -497,6 +497,7 @@
     closeBtn.textContent = '\u00d7';
     closeBtn.onclick = function() {
       container.style.display = 'none';
+      document.body.classList.remove('tr-panel-open');
       showReopenButton();
     };
     header.appendChild(title);
