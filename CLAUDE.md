@@ -76,3 +76,22 @@ All colored icons use **inline styles** from GRADE_COLORS, NOT CSS classes.
 - `.DS_Store` files are gitignored and must not be committed
 - Auto-sync script handles git operations automatically
 - After editing scripts in `/usr/local/bin/`, also update copies in `.scripts/`
+
+## DUAL SCOPE Content Rules
+
+These apply to all lesson files in `高校２年/論理・表現II/Dual Scope/`.
+
+### The Golden Rule
+**Keep original question text exactly as the PDF source.** Never invent, rephrase, or reorganize questions. The textbook is the single source of truth.
+
+### Section Structure
+Sections must match the PDF ordering and numbering exactly. Never merge, split, reorder, or omit sections.
+
+### Vocab (Words button)
+Teach **non-answer** vocabulary in the sentence. Never include the answer word/phrase as a vocab entry.
+
+### Hints (Hint button)
+3 progressive thinking prompts that guide toward the grammar concept. **Never state the answer.**
+
+### Answer Section (Answer button)
+Write freely — this is hidden behind the Answer button. Include answer, translation, explanation, grammar pattern, and per-choice breakdowns where applicable.
