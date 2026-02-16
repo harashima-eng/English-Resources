@@ -7,10 +7,9 @@
     "ignore": [
       "firebase.json",
       "database.rules.json",
+      "CLAUDE.md",
       "**/.*",
-      "**/node_modules/**",
-      ".scripts/**",
-      "CLAUDE.md"
+      "**/node_modules/**"
     ],
     "headers": [
       {
