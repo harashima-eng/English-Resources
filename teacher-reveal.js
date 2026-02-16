@@ -662,6 +662,7 @@
       reopenBtn.onclick = function() {
         reopenBtn.style.display = 'none';
         if (panelEl) panelEl.style.display = '';
+        document.body.classList.add('tr-panel-open');
       };
       document.body.appendChild(reopenBtn);
     }
