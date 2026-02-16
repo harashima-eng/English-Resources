@@ -450,6 +450,12 @@
   function teacherLogin() {
     var provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then(function(result) {
+      var allowed = 'harashima@komagome.ed.jp';
+      if (result.user.email !== allowed) {
+        auth.signOut();
+        showToast('権限がありません');
+        return;
+      }
       state.isTeacher = true;
       state.teacherUid = result.user.uid;
       var loginBtn = document.querySelector('.tr-login-btn');
