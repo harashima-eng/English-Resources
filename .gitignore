@@ -18,3 +18,7 @@ Thumbs.db
 # Local
 .env
 .env.local
+
+# Firebase
+firebase-debug.log
+.firebase/
