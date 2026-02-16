@@ -6,8 +6,11 @@
     "public": ".",
     "ignore": [
       "firebase.json",
+      "database.rules.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      ".scripts/**",
+      "CLAUDE.md"
     ],
     "headers": [
       {
