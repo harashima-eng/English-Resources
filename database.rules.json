@@ -9,7 +9,7 @@
     "answers": {
       "$examId": {
         ".read": true,
-        ".write": true
+        ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
       }
     }
   }
