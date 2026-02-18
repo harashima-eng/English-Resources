@@ -2532,7 +2532,7 @@ const Router = {
 };
 
 // ===== RENDER FUNCTIONS =====
-function renderQuestion(q) {
+function renderQuestion(q, si, qi) {
   let questionHtml = `<div class="qcard-question">
     <span class="qnum">${q.num}</span>
     <div class="qtext">${q.text}</div>`;
@@ -2567,27 +2567,15 @@ function renderQuestion(q) {
       <button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button>
     </div>
     <div class="collapsible" data-type="answer"><div class="box ans-box">
-      <span class="box-label">&#27491;&#35299;: ${q.answer}</span>`;
-  if (q.translation) rightHtml += `<div class="jp-text">${q.translation}</div>`;
-  if (q.explanation) rightHtml += `<div class="jp-text">${q.explanation}</div>`;
-  if (q.choiceExplanations) {
-    rightHtml += `<div class="choice-explanations">`;
-    for (const [choice, exp] of Object.entries(q.choiceExplanations)) {
-      const isCorrect = q.answer.includes(choice);
-      rightHtml += `<div class="choice-exp ${isCorrect ? 'correct' : 'wrong'}">${exp}</div>`;
-    }
-    rightHtml += `</div>`;
-  }
-  if (q.grammar) rightHtml += `<div class="grammar-ref">${q.grammar}</div>`;
-  rightHtml += `</div></div></div>`;
+    </div></div></div>`;
 
-  return `<div class="qcard">${questionHtml}${btnHtml}${leftHtml}${rightHtml}</div>`;
+  return `<div class="qcard" data-si="${si}" data-qi="${qi}">${questionHtml}${btnHtml}${leftHtml}${rightHtml}</div>`;
 }
 
 function renderQuestions(sectionIndex) {
   const section = grammarData.sections[sectionIndex];
   const container = document.getElementById('questionsList');
-  container.innerHTML = section.questions.map(q => renderQuestion(q)).join('');
+  container.innerHTML = section.questions.map((q, qi) => renderQuestion(q, sectionIndex, qi)).join('');
 }
 
 // ===== CARD REVEAL ANIMATION =====
