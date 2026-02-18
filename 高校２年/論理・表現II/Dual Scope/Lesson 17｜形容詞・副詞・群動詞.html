@@ -63,7 +63,7 @@
       --text: #F5F3F0;
       --text-secondary: #A3A09C;
       --text-muted: #666666;
-      --accent: #5BA3D9;
+      --accent: #F08872;
       --border: rgba(255, 255, 255, 0.06);
       --border-visible: rgba(255, 255, 255, 0.10);
       /* Enhanced dark mode shadows - more visible on dark backgrounds */
@@ -84,14 +84,14 @@
       --cat-advanced: #9A72B8;
       --cat-advanced-light: rgba(126, 90, 158, 0.15);
 
-      --prep: #5BA3D9;         /* Muted blue for dark bg */
-      --prep-light: rgba(91, 163, 217, 0.12);
-      --noun: #6BAA7E;         /* Muted green for dark bg */
-      --noun-light: rgba(107, 170, 126, 0.12);
-      --article: #F08872;      /* Muted coral for dark bg */
-      --article-light: rgba(240, 136, 114, 0.12);
-      --pronoun: #B099DF;      /* Muted purple for dark bg */
-      --pronoun-light: rgba(176, 153, 223, 0.12);
+      --adj: #F08872;          /* Muted coral for dark bg */
+      --adj-light: rgba(240, 136, 114, 0.12);
+      --adv: #5BA3D9;          /* Muted blue for dark bg */
+      --adv-light: rgba(91, 163, 217, 0.12);
+      --phrasal: #6BAA7E;      /* Muted green for dark bg */
+      --phrasal-light: rgba(107, 170, 126, 0.12);
+      --quantity: #B099DF;     /* Muted purple for dark bg */
+      --quantity-light: rgba(176, 153, 223, 0.12);
     }
 
     * {
@@ -117,8 +117,8 @@
     [data-theme="dark"] body {
       background: var(--bg);
       background-image:
-        radial-gradient(ellipse 100% 80% at 50% 0%, rgba(91, 163, 217, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse 80% 60% at 20% 100%, rgba(155, 127, 207, 0.05) 0%, transparent 40%),
+        radial-gradient(ellipse 100% 80% at 50% 0%, rgba(240, 136, 114, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 20% 100%, rgba(176, 153, 223, 0.05) 0%, transparent 40%),
         radial-gradient(ellipse 60% 50% at 80% 80%, rgba(107, 170, 126, 0.04) 0%, transparent 40%),
         linear-gradient(135deg, #141312 0%, #1a1816 50%, #121110 100%);
       background-attachment: fixed;
