@@ -1833,113 +1833,43 @@ const grammarData = {
           text: "Watch your step, (   ) you'll fall down the stairs.",
           choices: "選択肢: and, or, but",
           vocab: [["watch your step", "足元に気をつける"],["fall down", "落ちる、転ぶ"],["stairs", "階段"]],
-          hint: ["文の構造を確認：命令文 + 接続詞 + 結果の文","「足元に気をつけて」→ 守らないとどうなる？","命令に従わなかった場合の否定的な結果を表す接続詞は？"],
-          answer: "or",
-          translation: "足元に気をつけてください，そうでないと階段から落ちますよ",
-          explanation: "orは「そうでないと」という意味で、前の命令を守らなかった場合の否定的な結果を示します。",
-          grammar: "命令文 + or = ～しなさい、さもないと…",
-          choiceExplanations: {
-            "or": "○ 正解。「命令文 + or」は「～しなさい、さもないと…」という警告を表す。",
-            "and": "× 「命令文 + and」は「～しなさい、そうすれば…」と肯定的な結果を表すので不適切。",
-            "but": "× butは前後を対比する接続詞で、命令文との構文では使わない。"
-          }
-        },
+          hint: ["文の構造を確認：命令文 + 接続詞 + 結果の文","「足元に気をつけて」→ 守らないとどうなる？","命令に従わなかった場合の否定的な結果を表す接続詞は？"]},
         {
           num: "(2)",
           text: "Hurry up, (   ) you'll be in time for school.",
           choices: "選択肢: and, or, but",
           vocab: [["hurry up", "急ぐ"],["in time for", "～に間に合って"]],
-          hint: ["文の構造を確認：命令文 + 接続詞 + 結果の文","「急ぎなさい」→ 従えばどうなる？","命令に従った場合の肯定的な結果を表す接続詞は？"],
-          answer: "and",
-          translation: "急ぎなさい，そうすれば学校に間に合うよ",
-          explanation: "andは前の命令を実行した場合の肯定的な結果を示します。",
-          grammar: "命令文 + and = ～しなさい、そうすれば…",
-          choiceExplanations: {
-            "and": "○ 正解。「命令文 + and」は「～しなさい、そうすれば…」と肯定的結果を表す。",
-            "or": "× 「命令文 + or」は否定的な結果（警告）を表すので、文意に合わない。",
-            "but": "× butは対比を表す接続詞で、この構文では使用しない。"
-          }
-        },
+          hint: ["文の構造を確認：命令文 + 接続詞 + 結果の文","「急ぎなさい」→ 従えばどうなる？","命令に従った場合の肯定的な結果を表す接続詞は？"]},
         {
           num: "(3)",
           text: "I stood still, (   ) I didn't know what to do.",
           choices: "選択肢: if, although, for",
           vocab: [["stand still", "じっと立っている"],["what to do", "何をすべきか"]],
-          hint: ["前の文と後の文の関係を考えよう","後の文が前の文の理由・原因を説明しているか？","補足的に理由を述べる等位接続詞を選ぼう"],
-          answer: "for",
-          translation: "私はじっと立っていた．というのはどうしたらいいかわからなかったからだ",
-          explanation: "forは直前に述べたことの原因・理由を追加的に述べる等位接続詞です。",
-          grammar: "for = というのは～だから（補足的な理由）",
-          choiceExplanations: {
-            "for": "○ 正解。forは補足的に理由を述べる等位接続詞。",
-            "if": "× ifは条件を表す接続詞で、理由を表すことはできない。",
-            "although": "× althoughは譲歩を表し、「～だけれども」という逆接の意味。"
-          }
-        },
+          hint: ["前の文と後の文の関係を考えよう","後の文が前の文の理由・原因を説明しているか？","補足的に理由を述べる等位接続詞を選ぼう"]},
         {
           num: "(4)",
           text: "(   ) you will succeed or not depends on your effort.",
           choices: "選択肢: That, If, Whether",
           vocab: [["succeed", "成功する"],["depend on", "～次第である"],["effort", "努力"]],
-          hint: ["文全体の構造を確認：（  ）節が主語になっている","「or not」が後ろにあることに注目","文頭で主語になれる接続詞はどれか考えよう"],
-          answer: "Whether",
-          translation: "あなたが成功するかどうかは努力次第だ",
-          explanation: "主語になり文頭にくる場合には、ifではなくwhetherを用います。",
-          grammar: "Whether S + V (or not) = Sが～かどうか",
-          choiceExplanations: {
-            "Whether": "○ 正解。文頭で主語になる場合はwhetherを使う。or notとも相性が良い。",
-            "That": "× that節は「～ということ」で、「～かどうか」の意味にはならない。",
-            "If": "× ifは文頭で主語になる節を導くことができない。"
-          }
-        },
+          hint: ["文全体の構造を確認：（  ）節が主語になっている","「or not」が後ろにあることに注目","文頭で主語になれる接続詞はどれか考えよう"]},
         {
           num: "(5)",
           text: "She succeeded even (   ) she was young.",
           choices: "選択肢: although, if, though",
           vocab: [["succeed", "成功する"],["young", "若い"]],
-          hint: ["前後の文の関係：「若い」のに「成功した」という対比","「even」という強調語に続く接続詞は何が自然か","3つの選択肢のうち、evenと結合できるのはどれ？"],
-          answer: "though",
-          translation: "彼女は若かったが，成功した",
-          explanation: "強調する場合はeven thoughとなり、even althoughとは言いません。",
-          grammar: "even though = ～だけれども（強調、実際の事実）",
-          choiceExplanations: {
-            "though": "○ 正解。even thoughで「～だけれども」と強調された譲歩を表す。",
-            "although": "× even althoughという表現は使わない。althoughはevenと結合しない。",
-            "if": "× even ifは「たとえ～でも」で仮定の譲歩。ここは事実なので不適切。"
-          }
-        },
+          hint: ["前後の文の関係：「若い」のに「成功した」という対比","「even」という強調語に続く接続詞は何が自然か","3つの選択肢のうち、evenと結合できるのはどれ？"]},
         {
           num: "(6)",
           text: "(   ) it grew darker, it snowed more and more.",
           choices: "選択肢: As, Because, Since",
           vocab: [["grow dark", "暗くなる"],["more and more", "ますます"],["snow", "雪が降る"]],
-          hint: ["主節に「more and more」という変化の表現がある","2つの変化が連動して進行している","比例・変化を表す接続詞を選ぼう"],
-          answer: "As",
-          translation: "暗くなるにつれて，ますます雪が降ってきた",
-          explanation: "as節には事態の経過を表す表現が、主節には比較級を伴う表現がくることが多いです。",
-          grammar: "As S + V, S' + V'（比較級） = ～するにつれて",
-          choiceExplanations: {
-            "As": "○ 正解。Asは「～するにつれて」と比例・変化を表す。比較級と相性が良い。",
-            "Because": "× Becauseは理由を表す。「暗くなったから雪が降った」は意味が不自然。",
-            "Since": "× Sinceは理由または時を表すが、比例の意味はない。"
-          }
-        },
+          hint: ["主節に「more and more」という変化の表現がある","2つの変化が連動して進行している","比例・変化を表す接続詞を選ぼう"]},
         {
           num: "(7)",
           text: "(   ) you start reading the book, you cannot stop it.",
           choices: "選択肢: Though, Whether, Once",
           vocab: [["start reading", "読み始める"],["cannot stop", "やめられない"]],
-          hint: ["「読み始める」と「やめられない」の関係は？","ある行動を開始した後、それが継続する状態","時と条件の両方の意味を持つ接続詞を選ぼう"],
-          answer: "Once",
-          translation: "その本はいったん読み始めたら，やめられない",
-          explanation: "接続詞のonceは「時」と「条件」の両方の意味を合わせもちます。",
-          grammar: "Once S + V = いったん～すると",
-          choiceExplanations: {
-            "Once": "○ 正解。「いったん～すると」という時と条件を表す接続詞。",
-            "Though": "× Thoughは「～だけれども」という譲歩で、文意に合わない。",
-            "Whether": "× Whetherは「～かどうか」で、ここでは意味が通らない。"
-          }
-        }
+          hint: ["「読み始める」と「やめられない」の関係は？","ある行動を開始した後、それが継続する状態","時と条件の両方の意味を持つ接続詞を選ぼう"]}
       ]
     },
     {
@@ -1950,47 +1880,27 @@ const grammarData = {
           num: "(1)",
           text: "アンジェラの手料理はおいしいし，健康にもよい．<br>Angela's homemade cooking is (   ) delicious (   ) healthy.",
           vocab: [["homemade", "手作りの"],["delicious", "おいしい"],["healthy", "健康的な"]],
-          hint: ["2つの形容詞が並列されている構造に注目","両方の性質を肯定している文","「AもBも」と2つを等しく強調する相関接続詞は？"],
-          answer: "both, and",
-          explanation: "2つの要素を等しく強調する表現です。",
-          grammar: "both A and B = AもBも"
-        },
+          hint: ["2つの形容詞が並列されている構造に注目","両方の性質を肯定している文","「AもBも」と2つを等しく強調する相関接続詞は？"]},
         {
           num: "(2)",
           text: "それは毒にも薬にもならない．<br>That will do (   ) harm (   ) good.",
           vocab: [["do harm", "害を及ぼす"],["do good", "役に立つ"]],
-          hint: ["日本語の意味：「毒にも薬にもならない」","harm も good も否定されている","2つの要素を両方打ち消す相関接続詞は？"],
-          answer: "neither, nor",
-          explanation: "AとBの両方を打ち消します。",
-          grammar: "neither A nor B = AもBも～ない"
-        },
+          hint: ["日本語の意味：「毒にも薬にもならない」","harm も good も否定されている","2つの要素を両方打ち消す相関接続詞は？"]},
         {
           num: "(3)",
           text: "彼女はネコ好きだという点で母親に似ている．<br>She takes after her mother (   ) (   ) she is fond of cats.",
           vocab: [["take after", "～に似ている"],["be fond of", "～が好き"]],
-          hint: ["「～という点で」と限定的な理由を述べている","特定の側面での類似性を示す表現","前置詞 + that で特定の理由を示す慣用句を考えよう"],
-          answer: "in that",
-          explanation: "接続詞thatが導く名詞節は通常、前置詞の目的語にはなりませんが、〈in that〉などは例外です。",
-          grammar: "in that = ～という点で"
-        },
+          hint: ["「～という点で」と限定的な理由を述べている","特定の側面での類似性を示す表現","前置詞 + that で特定の理由を示す慣用句を考えよう"]},
         {
           num: "(4)",
           text: "日本だけでなく他国もその決定を支持している．<br>Not (   ) Japan (   ) also other countries support the decision.",
           vocab: [["support", "支持する"],["decision", "決定"]],
-          hint: ["日本語の「～だけでなく…も」に注目","後者（other countries）に重点がある","Not __ A __ also B の構文を考えよう"],
-          answer: "only[just], but",
-          explanation: "Bに重点を置いた表現なので、主語になった場合、動詞はBに一致させます。",
-          grammar: "not only A but (also) B = AだけでなくBも"
-        },
+          hint: ["日本語の「～だけでなく…も」に注目","後者（other countries）に重点がある","Not __ A __ also B の構文を考えよう"]},
         {
           num: "(5)",
           text: "私たちが家に着くころには夕食ができているでしょう．<br>Dinner will be ready (   ) the (   ) we reach home.",
           vocab: [["be ready", "用意ができている"],["reach home", "家に着く"]],
-          hint: ["未来の時点での完了を表す文","「～するころには」という期限の表現","前置詞 + the + 名詞 の形で時の副詞節を作る表現は？"],
-          answer: "by, time",
-          explanation: "時を表す副詞節なので、節中では未来のことでも現在形で表すことに注意。",
-          grammar: "by the time S + V = ～するまでには"
-        }
+          hint: ["未来の時点での完了を表す文","「～するころには」という期限の表現","前置詞 + the + 名詞 の形で時の副詞節を作る表現は？"]}
       ]
     },
     {
@@ -2002,31 +1912,19 @@ const grammarData = {
           text: "アンも仲間に入れるように，英語で話しましょう．",
           scramble: "Let's talk in English [ Ann, so, join, can, that, us ].",
           vocab: [["join", "加わる"],["talk in English", "英語で話す"]],
-          hint: ["「Aが～できるように」という目的を表す構文","目的を示す接続詞 + 主語 + 助動詞の語順","日本語の「～できるように」を英語の構文に当てはめよう"],
-          answer: "so that Ann can join us",
-          explanation: "「Aが～できるように」〈目的〉は〈so that A can ～〉で表します。",
-          grammar: "so that S + can do = Sが～できるように"
-        },
+          hint: ["「Aが～できるように」という目的を表す構文","目的を示す接続詞 + 主語 + 助動詞の語順","日本語の「～できるように」を英語の構文に当てはめよう"]},
         {
           num: "(2)",
           text: "私をいら立たせたのは彼の言葉ではなく，彼の態度だった．",
           scramble: "It [ but, his attitude, his words, not, that, was ] irritated me.",
           vocab: [["irritate", "いら立たせる"],["attitude", "態度"]],
-          hint: ["「AではなくB」という対比","強調構文を使う","「not A but B」を強調構文に組み込む"],
-          answer: "was not his words but his attitude that",
-          explanation: "「AではなくてB」は〈not A but B〉で表します。強調構文と組み合わせています。",
-          grammar: "It is/was not A but B that ~ = …なのはAではなくBだ"
-        },
+          hint: ["「AではなくB」という対比","強調構文を使う","「not A but B」を強調構文に組み込む"]},
         {
           num: "(3)",
           text: "人はみな平等だという考えが頭に浮かんだ．",
           scramble: "The [ are, that, idea, occurred, all human beings, to me ] equal.",
           vocab: [["occur to", "～の頭に浮かぶ"],["human beings", "人間"],["equal", "平等な"]],
-          hint: ["「～という考え」— idea の内容を説明する節がある","that節が長い場合、名詞から離して後ろに置くことがある","主語 + 動詞 + 間接目的語 + that節 の語順を考えよう"],
-          answer: "idea occurred to me that all human beings are",
-          explanation: "thatが導く名詞節は主語のthe ideaの内容を説明し、同格の関係になっています。",
-          grammar: "The idea occurred to me that S + V = ～という考えが浮かんだ"
-        }
+          hint: ["「～という考え」— idea の内容を説明する節がある","that節が長い場合、名詞から離して後ろに置くことがある","主語 + 動詞 + 間接目的語 + that節 の語順を考えよう"]}
       ]
     },
     {
@@ -2036,39 +1934,19 @@ const grammarData = {
         {
           num: "(1)",
           text: "It is true that the doctor is over eighty, but he looks young.",
-          vocab: [["It is true that", "確かに～だ"],["over eighty", "80歳を過ぎて"],["look young", "若く見える"]],
-          translation: "確かにその医師は80歳を過ぎているが，若く見える．",
-          explanation: "〈It is true (that) ～ but …〉は「確かに～だが，しかし…」という〈譲歩〉の意味を表します。",
-          grammar: "It is true (that) ~ but ... = 確かに～だが、しかし…",
-          answer: "（和訳問題）"
-        },
+          vocab: [["It is true that", "確かに～だ"],["over eighty", "80歳を過ぎて"],["look young", "若く見える"]]},
         {
           num: "(2)",
           text: "As far as I can remember, his house is around here.",
-          vocab: [["as far as", "～する限り"],["around here", "このあたり"]],
-          translation: "私の覚えている限り，彼の家はこのあたりだ．",
-          explanation: "〈as far as ～〉は〈範囲・程度〉を示し、「～する限り」という意味を表します。",
-          grammar: "as far as S + V = Sが～する限り",
-          answer: "（和訳問題）"
-        },
+          vocab: [["as far as", "～する限り"],["around here", "このあたり"]]},
         {
           num: "(3)",
           text: "I was so tired that I couldn't continue to work any longer.",
-          vocab: [["so ... that", "とても…なので～"],["continue to work", "働き続ける"],["any longer", "もはや"]],
-          translation: "私はとても疲れていたので，もはや働き続けることができなかった．",
-          explanation: "〈so＋形容詞＋that ～〉の形で「とても…なので～」という〈結果〉の意味を表します。",
-          grammar: "so + 形容詞 + that S + V = とても…なので～",
-          answer: "（和訳問題）"
-        },
+          vocab: [["so ... that", "とても…なので～"],["continue to work", "働き続ける"],["any longer", "もはや"]]},
         {
           num: "(4)",
           text: "Since you know how hurt she was, you should apologize to her.",
-          vocab: [["since", "～なのだから"],["how hurt", "どんなに傷ついたか"],["apologize to", "～に謝る"]],
-          translation: "彼女がどんなに傷ついたか君は知っているのだから，彼女に謝るべきだ．",
-          explanation: "sinceは「～なのだから」と原因・理由について補足的に述べます。",
-          grammar: "Since S + V, S' should ... = Sが～なのだから、S'は…すべきだ",
-          answer: "（和訳問題）"
-        }
+          vocab: [["since", "～なのだから"],["how hurt", "どんなに傷ついたか"],["apologize to", "～に謝る"]]}
       ]
     },
     {
@@ -2080,51 +1958,31 @@ const grammarData = {
           scramble: "It [ be, his cat, will, gets, not, before, long ] well.",
           text: "彼のネコはまもなく元気になるでしょう",
           vocab: [["get well", "元気になる"],["long", "長い間"]],
-          hint: ["「まもなく～だろう」という近い未来を表す構文","否定 + 時間の長さ + 接続詞 の構造","時を表す副詞節では未来のことでも現在形を使う"],
-          answer: "will not be long before his cat gets",
-          explanation: "〈It will not be long before ～〉は「まもなく～だろう」という意味を表します。",
-          grammar: "It will not be long before S + V = まもなくSが～するだろう"
-        },
+          hint: ["「まもなく～だろう」という近い未来を表す構文","否定 + 時間の長さ + 接続詞 の構造","時を表す副詞節では未来のことでも現在形を使う"]},
         {
           num: "(2)",
           scramble: "It [ not, last night, that, the girl, until, was, was ] found safe.",
           text: "昨夜になって初めてその少女が無事に発見された",
           vocab: [["last night", "昨夜"],["be found safe", "無事に発見される"]],
-          hint: ["「～になって初めて」という強調表現","It was ... that の強調構文を使う","否定 + 時間表現 を強調構文に組み込む語順を考えよう"],
-          answer: "was not until last night that the girl was",
-          explanation: "〈It is not until...that ～〉は「…して初めて～する」という意味を表します。",
-          grammar: "It is/was not until ... that S + V = …して初めてSが～する"
-        },
+          hint: ["「～になって初めて」という強調表現","It was ... that の強調構文を使う","否定 + 時間表現 を強調構文に組み込む語順を考えよう"]},
         {
           num: "(3)",
           scramble: "He is [ he, to, wins, a champion, us, whether ] or loses the game.",
           text: "その試合に勝っても負けても彼は私たちにとってチャンピオンだ",
           vocab: [["champion", "チャンピオン"],["win/lose the game", "試合に勝つ/負ける"]],
-          hint: ["「勝っても負けても」という譲歩を表す構文","「AであろうとBであろうと」を表す接続詞","主節と副詞節の構造を整理しよう"],
-          answer: "a champion to us whether he wins",
-          explanation: "この〈whether A or B〉は副詞節を導き、「AであろうとBであろうと」という「譲歩」の意味を表します。",
-          grammar: "S + V whether A or B = AであろうとBであろうとSは～"
-        },
+          hint: ["「勝っても負けても」という譲歩を表す構文","「AであろうとBであろうと」を表す接続詞","主節と副詞節の構造を整理しよう"]},
         {
           num: "(4)",
           scramble: "It [ day, a, that, such, nice, was ] the park was full of people.",
           text: "とても天気のよい日だったので，公園は人でいっぱいだった",
           vocab: [["nice day", "良い天気の日"],["be full of", "～でいっぱいである"]],
-          hint: ["結果を表す構文（「～なので」）","名詞（day）を含む場合は so ではなく別の語を使う","__ a + 形容詞 + 名詞 + 結果の接続詞 の語順"],
-          answer: "was such a nice day that",
-          explanation: "〈such a＋形容詞＋名詞＋that～〉で「とても…なので～」の意味を表します。",
-          grammar: "such a/an + 形容詞 + 名詞 + that S + V = とても…なので～"
-        },
+          hint: ["結果を表す構文（「～なので」）","名詞（day）を含む場合は so ではなく別の語を使う","__ a + 形容詞 + 名詞 + 結果の接続詞 の語順"]},
         {
           num: "(5)",
           scramble: "I [ impossible, it, lose, that, think, this team, will ] the game.",
           text: "このチームが試合に負けることはありえないと思う",
           vocab: [["impossible", "不可能な"],["lose the game", "試合に負ける"]],
-          hint: ["第5文型（SVOC）の構造を考えよう","that節が長い場合、形式目的語を使うことがある","動詞 + 形式目的語 + 補語 + that節 の語順を組み立てよう"],
-          answer: "think it impossible that this team will lose",
-          explanation: "〈think＋it＋C＋that ～〉で「～ということをCと思う」という意味を表します。",
-          grammar: "S + think + it + C + that ~ = Sは～ということをCと思う"
-        }
+          hint: ["第5文型（SVOC）の構造を考えよう","that節が長い場合、形式目的語を使うことがある","動詞 + 形式目的語 + 補語 + that節 の語順を組み立てよう"]}
       ]
     },
     {
@@ -2136,52 +1994,19 @@ const grammarData = {
           text: "A：Do you know what Miki's secret is?<br>B：Yes. I don't want to tell it to you, (   ).",
           choices: "a. although　b. though　c. but　d. for",
           vocab: [["secret", "秘密"],["tell it to you", "あなたに教える"]],
-          hint: ["文末に単独で置かれている接続詞に注目","4つの選択肢のうち、文末で副詞的に使えるものは？","「でも」という譲歩を文末で表す用法を持つのはどれ？"],
-          answer: "b. though",
-          translation: "A「君はミキの秘密が何か知ってるの」B「うん．でも，君には教えたくないんだ」",
-          explanation: "「譲歩」を表す接続詞thoughが副詞として使われ、文末に置かれることがあります。",
-          grammar: "though（副詞用法）= でも、けれども（文末）",
-          choiceExplanations: {
-            "b. though": "○ 正解。thoughは副詞として文末に置け、「でも」という意味になる。",
-            "a. although": "× althoughは文末に置くことができない。接続詞としてのみ使用。",
-            "c. but": "× butは等位接続詞で、文末に単独で置くことはできない。",
-            "d. for": "× forは理由を表す接続詞で、文末には置けない。"
-          }
-        },
+          hint: ["文末に単独で置かれている接続詞に注目","4つの選択肢のうち、文末で副詞的に使えるものは？","「でも」という譲歩を文末で表す用法を持つのはどれ？"]},
         {
           num: "(2)",
           text: "A：What do you want to have as a pet?<br>B：I love dogs, (   ) my mother doesn't want to keep pets.",
           choices: "a. while　b. so　c. for　d. or",
           vocab: [["pet", "ペット"],["keep pets", "ペットを飼う"]],
-          hint: ["「犬が好き」と「母は飼いたくない」— 対比関係","「～なのに、一方では～」という意味を表す接続詞は？","対比・譲歩を表す従属接続詞を選ぼう"],
-          answer: "a. while",
-          translation: "A「ペットとして何を飼いたいの」B「僕は犬が大好きなんだけど，お母さんはペットを飼いたくないんだよ」",
-          explanation: "whileが「～なのに，一方では～」という「譲歩」の意味を表す場合があります。",
-          grammar: "while = ～なのに、一方では～",
-          choiceExplanations: {
-            "a. while": "○ 正解。whileは「～なのに」と対比・譲歩を表すことができる。",
-            "b. so": "× soは「だから」と結果を表す。前後の関係が逆になる。",
-            "c. for": "× forは理由を追加する接続詞。ここでは文意に合わない。",
-            "d. or": "× orは「または」で選択を表し、対比の意味にはならない。"
-          }
-        },
+          hint: ["「犬が好き」と「母は飼いたくない」— 対比関係","「～なのに、一方では～」という意味を表す接続詞は？","対比・譲歩を表す従属接続詞を選ぼう"]},
         {
           num: "(3)",
           text: "A：Jim, take an umbrella with you (   ) it rains.<br>B：All right. I will.",
           choices: "a. even if　b. if only　c. in case　d. so that",
           vocab: [["take an umbrella", "傘を持って行く"],["rain", "雨が降る"]],
-          hint: ["「傘を持っていけ」→ 雨への備え","まだ起きていない事態に備える表現","「～するといけないから」という予防の意味を持つ接続詞は？"],
-          answer: "c. in case",
-          translation: "A「ジム，雨が降るといけないから，傘を持って行ってね」B「わかった．そうするよ」",
-          explanation: "〈in case ～〉は「～するといけないから」の意味を表します。",
-          grammar: "in case S + V = Sが～するといけないから",
-          choiceExplanations: {
-            "c. in case": "○ 正解。「～するといけないから」と備えを表す。",
-            "a. even if": "× 「たとえ～でも」という仮定の譲歩で、文意に合わない。",
-            "b. if only": "× 「～さえすれば」という願望を表し、意味が異なる。",
-            "d. so that": "× 「～するために」という目的を表す。備えの意味にならない。"
-          }
-        }
+          hint: ["「傘を持っていけ」→ 雨への備え","まだ起きていない事態に備える表現","「～するといけないから」という予防の意味を持つ接続詞は？"]}
       ]
     },
     {
@@ -2193,120 +2018,43 @@ const grammarData = {
           text: "She will not sign the contract (   ) these conditions are met.【名城大】",
           choices: "a. in place of　b. instead of　c. despite　d. unless",
           vocab: [["sign the contract", "契約書にサインする"],["conditions are met", "条件が満たされる"]],
-          hint: ["否定文（will not）+ 条件の構造","「条件が満たされなければサインしない」","「もし～でないなら」を表す接続詞を選ぼう"],
-          answer: "d. unless",
-          translation: "これらの条件が満たされなければ，彼女は契約書にサインしないだろう",
-          explanation: "unlessは「もし～でないなら」「～でない限り」の意味を表します。",
-          grammar: "unless S + V = もし～でないなら",
-          choiceExplanations: {
-            "d. unless": "○ 正解。「～でない限り」という否定条件を表す接続詞。",
-            "a. in place of": "× 「～の代わりに」という前置詞句で、接続詞ではない。",
-            "b. instead of": "× 「～の代わりに」という前置詞句で、節を導けない。",
-            "c. despite": "× 「～にもかかわらず」という前置詞で、節を導けない。"
-          }
-        },
+          hint: ["否定文（will not）+ 条件の構造","「条件が満たされなければサインしない」","「もし～でないなら」を表す接続詞を選ぼう"]},
         {
           num: "(2)",
           text: "As (   ) as I know, he has never done such a terrible thing.【関西学院大】",
           choices: "a. soon　b. long　c. far　d. much",
           vocab: [["terrible", "ひどい"],["have never done", "一度もしたことがない"]],
-          hint: ["「～する限り」という範囲を表す慣用句","知識の範囲を示す表現","As __ as I know — 空所に入る語を考えよう"],
-          answer: "c. far",
-          translation: "私の知っている限り，彼はこのようなひどいことは決してしたことがない",
-          explanation: "〈as far as ～〉は〈範囲・程度〉を示し、「～する限り」という意味を表します。",
-          grammar: "as far as S + V = Sが～する限り",
-          choiceExplanations: {
-            "c. far": "○ 正解。as far as ～で「～する限り」と範囲を表す。",
-            "a. soon": "× as soon asは「～するとすぐに」で時を表し、範囲ではない。",
-            "b. long": "× as long asは「～する限り」だが、条件を表す。知識の範囲には不適切。",
-            "d. much": "× as much asは「～と同じくらい」で程度を表す。"
-          }
-        },
+          hint: ["「～する限り」という範囲を表す慣用句","知識の範囲を示す表現","As __ as I know — 空所に入る語を考えよう"]},
         {
           num: "(3)",
           text: "Please call me the (   ) you hear anything from the hospital.【自治医大】",
           choices: "a. minute　b. month　c. season　d. year",
           vocab: [["call", "電話する"],["hear from", "～から連絡をもらう"],["hospital", "病院"]],
-          hint: ["「連絡が来たらすぐに電話して」という即時性","the + 時間の名詞 が接続詞として機能する用法がある","最も短い時間単位を表す名詞はどれ？"],
-          answer: "a. minute",
-          translation: "病院から何かを聞いたらすぐに，私に電話してください",
-          explanation: "〈the minute ～〉で「～するとすぐに」の意味を表します。",
-          grammar: "the minute S + V = Sが～するとすぐに",
-          choiceExplanations: {
-            "a. minute": "○ 正解。the minuteは「～するとすぐに」という即時性を表す。",
-            "b. month": "× the monthという接続詞的用法はない。",
-            "c. season": "× the seasonという接続詞的用法はない。",
-            "d. year": "× the yearという接続詞的用法はない。"
-          }
-        },
+          hint: ["「連絡が来たらすぐに電話して」という即時性","the + 時間の名詞 が接続詞として機能する用法がある","最も短い時間単位を表す名詞はどれ？"]},
         {
           num: "(4)",
           text: "Don't touch my writing table; leave it (   ) it is.【中央大】",
           choices: "a. as　b. if　c. that　d. when",
           vocab: [["writing table", "書き物用テーブル"],["leave", "～のままにしておく"]],
-          hint: ["「さわらないで、そのままにして」という文意","「leave + O + 状態」で「Oを～の状態のままにする」","it __ it is で「そのまま」を表す接続詞は？"],
-          answer: "a. as",
-          translation: "私の書き物用テーブルをさわらないで．そのままにしておいて",
-          explanation: "「様態」を表す接続詞asは「～(する)ように」という意味を表します。",
-          grammar: "as S + V = Sが～するように / as it is = そのまま",
-          choiceExplanations: {
-            "a. as": "○ 正解。as it isで「そのまま」という様態を表すイディオム。",
-            "b. if": "× if it isは条件を表し、「そのまま」の意味にならない。",
-            "c. that": "× that it isという用法はこの文脈では不適切。",
-            "d. when": "× when it isは時を表し、様態の意味にならない。"
-          }
-        },
+          hint: ["「さわらないで、そのままにして」という文意","「leave + O + 状態」で「Oを～の状態のままにする」","it __ it is で「そのまま」を表す接続詞は？"]},
         {
           num: "(5)",
           text: "(   ) our teacher is ill, we shall have to study by ourselves.【成城大】",
           choices: "a. Even if　b. Though　c. Now that　d. However",
           vocab: [["be ill", "病気である"],["study by ourselves", "自習する"]],
-          hint: ["「先生が病気」は既知の事実として述べられている","既知の事実に基づく理由を述べる接続詞","「今や～なのだから」という現状を理由にする表現は？"],
-          answer: "c. Now that",
-          translation: "先生が病気なのだから，私たちは自習しなければならないだろう",
-          explanation: "〈now (that) ～〉は「(今やもう)～なので」の意味を表します。",
-          grammar: "now (that) S + V = ～なので",
-          choiceExplanations: {
-            "c. Now that": "○ 正解。「～なのだから」と既知の事実に基づく理由を表す。",
-            "a. Even if": "× 「たとえ～でも」と仮定の譲歩で、理由にならない。",
-            "b. Though": "× 「～だけれども」と譲歩で、因果関係を表さない。",
-            "d. However": "× 副詞で「しかしながら」。接続詞として節を導けない。"
-          }
-        },
+          hint: ["「先生が病気」は既知の事実として述べられている","既知の事実に基づく理由を述べる接続詞","「今や～なのだから」という現状を理由にする表現は？"]},
         {
           num: "(6)",
           text: "It won't be long (   ) we see each other again.【広島工業大】",
           choices: "a. before　b. after　c. when　d. soon",
           vocab: [["see each other", "お互いに会う"],["won't be long", "長くはかからない"]],
-          hint: ["「まもなく～だろう」という近い未来の表現","It won't be long __ の空所に入る接続詞","「長くはかからないうちに」→ 時を表す接続詞を選ぼう"],
-          answer: "a. before",
-          translation: "私たちはまもなくまたお互いに会うでしょう",
-          explanation: "〈It won't be long before ～〉は「まもなく～だろう」という意味を表します。",
-          grammar: "It won't be long before S + V = まもなくSが～するだろう",
-          choiceExplanations: {
-            "a. before": "○ 正解。It won't be long beforeで「まもなく～」のイディオム。",
-            "b. after": "× It won't be long afterという表現は使わない。",
-            "c. when": "× It won't be long whenという表現は使わない。",
-            "d. soon": "× soonは副詞で、ここでは接続詞が必要。"
-          }
-        },
+          hint: ["「まもなく～だろう」という近い未来の表現","It won't be long __ の空所に入る接続詞","「長くはかからないうちに」→ 時を表す接続詞を選ぼう"]},
         {
           num: "(7)",
           text: "I had hardly gone out of the house (   ) I heard a telephone ringing.【名城大】",
           choices: "a. if　b. since　c. than　d. when",
           vocab: [["go out of", "～から出る"],["hear ... ringing", "～が鳴るのが聞こえる"]],
-          hint: ["「hardly」という否定の副詞に注目","2つの動作がほぼ同時に起きている","hardly ... __ で「～するかしないうちに」を表す組み合わせは？"],
-          answer: "d. when",
-          translation: "私が家から出たとたんに，電話が鳴るのが聞こえた",
-          explanation: "〈hardly…when ～〉で「…するかしないうちに～」という意味を表します。",
-          grammar: "S + had hardly + 過去分詞 + when + 過去形 = ～するとすぐに…した",
-          choiceExplanations: {
-            "d. when": "○ 正解。hardly...whenで「～するかしないうちに」のイディオム。",
-            "a. if": "× hardly...ifという表現はない。",
-            "b. since": "× hardly...sinceという表現はない。",
-            "c. than": "× no sooner...thanと混同しないこと。hardlyにはwhenを使う。"
-          }
-        }
+          hint: ["「hardly」という否定の副詞に注目","2つの動作がほぼ同時に起きている","hardly ... __ で「～するかしないうちに」を表す組み合わせは？"]}
       ]
     },
     {
@@ -2317,32 +2065,17 @@ const grammarData = {
           num: "(1)",
           text: "John is <u>a. so</u> a good hairdresser <u>b. that</u> I always <u>c. have</u> my hair <u>d. cut</u> at his salon.【東京理科大】",
           vocab: [["hairdresser", "美容師"],["have my hair cut", "髪を切ってもらう"],["salon", "美容室"]],
-          hint: ["下線部のどれかが文法的に誤り","名詞（a good hairdresser）を修飾する語に注目","「とても～なので」を名詞ありで表す場合、soの代わりに何を使う？"],
-          answer: "a. so → such",
-          translation: "ジョンは非常に上手な美容師なので私はいつも彼の美容室で髪を切ってもらう",
-          explanation: "名詞がある場合は〈such a＋形容詞＋名詞＋that ～〉を使います。",
-          grammar: "such a/an + 形容詞 + 名詞 + that S + V"
-        },
+          hint: ["下線部のどれかが文法的に誤り","名詞（a good hairdresser）を修飾する語に注目","「とても～なので」を名詞ありで表す場合、soの代わりに何を使う？"]},
         {
           num: "(2)",
           text: "I'll <u>a. draw</u> a map <u>b. for</u> you <u>c. at case</u> you can't <u>d. find</u> our house.【札幌学院大】",
           vocab: [["draw a map", "地図を描く"],["find", "見つける"]],
-          hint: ["下線部のどれかが前置詞の誤り","「～するといけないから」という備えの表現","c の前置詞が正しいかチェックしよう"],
-          answer: "c. at case → in case",
-          translation: "私たちの家が見つからないといけないから，地図を描いてあげましょう",
-          explanation: "〈in case S＋V ～〉で「Sが～するといけないから」の意味を表します。",
-          grammar: "in case S + V = Sが～するといけないから"
-        },
+          hint: ["下線部のどれかが前置詞の誤り","「～するといけないから」という備えの表現","c の前置詞が正しいかチェックしよう"]},
         {
           num: "(3)",
           text: "<u>a. Though</u> he was tired after working <u>b. hard</u>, <u>c. but</u> he went to the <u>d. movies</u> with his friends.【東京薬科大】",
           vocab: [["tired", "疲れた"],["work hard", "一生懸命働く"],["go to the movies", "映画を見に行く"]],
-          hint: ["従属接続詞と等位接続詞の関係に注目","a と c、両方とも逆接の接続詞が使われている","1つの文に同じ意味の接続詞を2つ使えるか考えよう"],
-          answer: "c. but → 削除（heに変更）",
-          translation: "彼は一生懸命働いた後で疲れていたけれども，友人たちと映画を見に行った",
-          explanation: "thoughとbutを同時に使うことはできません。",
-          grammar: "though と but は同時に使えない"
-        }
+          hint: ["従属接続詞と等位接続詞の関係に注目","a と c、両方とも逆接の接続詞が使われている","1つの文に同じ意味の接続詞を2つ使えるか考えよう"]}
       ]
     },
     {
@@ -2353,20 +2086,12 @@ const grammarData = {
           num: "(1)",
           text: "困ったことに私は十分なお金を持っていません．【愛知工業大】<br>The trouble ___.",
           vocab: [["trouble", "困ったこと"],["enough money", "十分なお金"]],
-          hint: ["「困ったことに～だ」という表現","The trouble で始まる文を完成させる","名詞 + be動詞 + 接続詞 + 節 の構文を考えよう"],
-          answer: "is (that) I don't have enough money",
-          explanation: "「困ったことに～だ」は〈The trouble is (that) ～〉で表現できます。",
-          grammar: "The trouble is (that) S + V = 困ったことにSが～だ"
-        },
+          hint: ["「困ったことに～だ」という表現","The trouble で始まる文を完成させる","名詞 + be動詞 + 接続詞 + 節 の構文を考えよう"]},
         {
           num: "(2)",
           text: "私はこの音楽を聞くたびに，癒される気がする．",
           vocab: [["hear this music", "この音楽を聞く"],["feel comforted", "癒される気がする"]],
-          hint: ["「～するたびに」という繰り返しの表現","時を表す副詞節を導く接続詞的表現","「～するたびに」を表す複数の言い方を考えよう"],
-          answer: "Every[Each] time I hear this music, I feel comforted. / Whenever I hear this music, I feel comforted.",
-          explanation: "〈every [each] time ～〉は「～するたびに」という意味を表します。",
-          grammar: "every/each time S + V = Sが～するたびに"
-        }
+          hint: ["「～するたびに」という繰り返しの表現","時を表す副詞節を導く接続詞的表現","「～するたびに」を表す複数の言い方を考えよう"]}
       ]
     }
   ]
