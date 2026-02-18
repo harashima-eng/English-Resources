@@ -90,7 +90,8 @@
       keys.forEach(function(choice) {
         var expText = data.choiceExplanations[choice];
         var ceItem = document.createElement('div');
-        var isCorrect = data.answer && data.answer.indexOf(choice) !== -1;
+        var decodedChoice = choice.replace(/\uff0e/g, '.');
+        var isCorrect = data.answer && data.answer.indexOf(decodedChoice) !== -1;
         ceItem.className = 'choice-exp ' + (isCorrect ? 'correct' : 'wrong');
         ceItem.textContent = expText;
         ceDiv.appendChild(ceItem);
