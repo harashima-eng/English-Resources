@@ -434,7 +434,7 @@
 
     .home-title em {
       font-style: normal;
-      background: linear-gradient(135deg, var(--adj) 0%, var(--adv) 50%, var(--pronoun) 100%);
+      background: linear-gradient(135deg, var(--adj) 0%, var(--adv) 50%, var(--quantity) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -544,10 +544,10 @@
       flex-shrink: 0;
     }
 
-    .conj-section.prep .conj-section-icon { background: var(--adj-light); }
-    .conj-section.noun .conj-section-icon { background: var(--adv-light); }
-    .conj-section.article .conj-section-icon { background: var(--phrasal-light); }
-    .conj-section.pronoun .conj-section-icon { background: var(--pronoun-light); }
+    .conj-section.adj .conj-section-icon { background: var(--adj-light); }
+    .conj-section.adv .conj-section-icon { background: var(--adv-light); }
+    .conj-section.phrasal .conj-section-icon { background: var(--phrasal-light); }
+    .conj-section.quantity .conj-section-icon { background: var(--quantity-light); }
 
     .conj-section-title {
       font-family: 'New York', 'Georgia', serif;
@@ -594,10 +594,10 @@
     .conj-card:nth-child(7) { animation-delay: 0.3s; }
     .conj-card:nth-child(8) { animation-delay: 0.35s; }
 
-    .conj-section.prep .conj-card { --card-accent: var(--adj); }
-    .conj-section.noun .conj-card { --card-accent: var(--adv); }
-    .conj-section.article .conj-card { --card-accent: var(--article); }
-    .conj-section.pronoun .conj-card { --card-accent: var(--pronoun); }
+    .conj-section.adj .conj-card { --card-accent: var(--adj); }
+    .conj-section.adv .conj-card { --card-accent: var(--adv); }
+    .conj-section.phrasal .conj-card { --card-accent: var(--phrasal); }
+    .conj-section.quantity .conj-card { --card-accent: var(--quantity); }
 
     .conj-card-word {
       font-family: 'New York', 'Georgia', serif;
@@ -725,7 +725,7 @@
 
     .progress-bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--adj), var(--pronoun));
+      background: linear-gradient(90deg, var(--adj), var(--quantity));
       border-radius: 100px;
       width: 0%;
       transition: width 0.3s ease;
@@ -956,8 +956,8 @@
     }
 
     .choices {
-      background: var(--pronoun-light);
-      border-left: 3px solid var(--pronoun);
+      background: var(--quantity-light);
+      border-left: 3px solid var(--quantity);
     }
 
     .scramble {
@@ -994,7 +994,7 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .toggle-btn.vocab { background: var(--pronoun); color: white; }
+    .toggle-btn.vocab { background: var(--quantity); color: white; }
     .toggle-btn.hint { background: var(--adj); color: white; }
     .toggle-btn.answer { background: var(--adv); color: white; }
 
@@ -1024,7 +1024,7 @@
 
     .vocab-box {
       background: var(--card);
-      border-left: 3px solid var(--pronoun);
+      border-left: 3px solid var(--quantity);
     }
 
     .hint-box {
@@ -1091,7 +1091,7 @@
 
     .vocab-word {
       font-weight: 700;
-      color: var(--pronoun);
+      color: var(--quantity);
       margin-right: 8px;
     }
 
