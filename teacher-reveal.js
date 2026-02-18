@@ -746,6 +746,13 @@
       var data = snap.val();
       if (!data || !data.activeSession) return;
 
+      // Auto-expire sessions older than 4 hours
+      var sessionTime = new Date(data.activeSession).getTime();
+      if (Date.now() - sessionTime > 4 * 60 * 60 * 1000) {
+        examRef.update({ activeSession: null });
+        return;
+      }
+
       state.sessionActive = true;
       if (!state.isTeacher) {
         lockAllQuestions();
