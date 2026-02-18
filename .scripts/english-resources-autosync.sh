@@ -52,6 +52,23 @@ echo "Watching for file changes..."
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] Firebase Hosting deploy failed (exit $FIREBASE_EXIT):"
             echo "$FIREBASE_OUTPUT" | tail -20
         fi
+
+        # Run content validator if lesson files changed
+        if echo "$CHANGED" | grep -q "Dual Scope.*\.html"; then
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Running content validator..."
+            VALIDATE_OUTPUT=$(/usr/local/bin/python3 /usr/local/bin/english-resources-validate.py 2>&1)
+            VALIDATE_EXIT=$?
+            if [ $VALIDATE_EXIT -eq 0 ]; then
+                echo "[$(date '+%Y-%m-%d %H:%M:%S')] Content validation: all checks passed"
+            else
+                echo "[$(date '+%Y-%m-%d %H:%M:%S')] Content validation: issues found"
+                echo "$VALIDATE_OUTPUT" | grep -E "^  (🔴|🟡)" | head -10
+                HIGH_COUNT=$(echo "$VALIDATE_OUTPUT" | grep -c "🔴" || true)
+                if [ "$HIGH_COUNT" -gt 0 ]; then
+                    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ⚠ $HIGH_COUNT HIGH severity issues — check with: python3 /usr/local/bin/english-resources-validate.py"
+                fi
+            fi
+        fi
     else
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] Push failed"
     fi
@@ -59,4 +76,3 @@ echo "Watching for file changes..."
 
     sleep 3  # Cooldown: prevent cascading triggers from generated files
 done
-
