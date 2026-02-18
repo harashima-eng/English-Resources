@@ -2243,6 +2243,7 @@ const Router = {
 
     // Render questions
     renderQuestions(NavState.section);
+    if (window.prefetchAnswers) window.prefetchAnswers(NavState.section);
 
     // Initialize card reveal animations
     initCardReveal();

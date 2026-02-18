@@ -2228,6 +2228,7 @@ const Router = {
       sectionData.questions.length + ' questions';
 
     renderQuestions(NavState.section);
+    if (window.prefetchAnswers) window.prefetchAnswers(NavState.section);
     initCardReveal();
 
     const searchInput = document.getElementById('searchInput');
