@@ -194,7 +194,14 @@ grammarData.sections.forEach((sec, si) => {
     if (q.translation !== undefined) answerData.translation = q.translation;
     if (q.explanation !== undefined) answerData.explanation = q.explanation;
     if (q.grammar !== undefined) answerData.grammar = q.grammar;
-    if (q.choiceExplanations !== undefined) answerData.choiceExplanations = q.choiceExplanations;
+    if (q.choiceExplanations !== undefined) {
+      // Firebase keys can't contain dots - replace . with fullwidth period
+      const sanitized = {};
+      for (const [k, v] of Object.entries(q.choiceExplanations)) {
+        sanitized[k.replace(/\\./g, '\\uff0e')] = v;
+      }
+      answerData.choiceExplanations = sanitized;
+    }
     result[si][qi] = answerData;
   });
 });
