@@ -204,7 +204,14 @@
   function showAnswerBox(qEl) {
     if (!qEl) return;
     var box = getAnswerBox(qEl);
-    if (box) { box.classList.add('show'); box.classList.add('open'); }
+    if (box) {
+      box.classList.add('show');
+      box.classList.add('open');
+      // Trigger Firebase answer fetch if not yet loaded
+      if (!box.dataset.loaded && window.fetchAnswerForElement) {
+        window.fetchAnswerForElement(qEl);
+      }
+    }
   }
 
   function unlockAll() {
