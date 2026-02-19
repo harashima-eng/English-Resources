@@ -247,9 +247,10 @@ body {
   animation: cosmicRise 0.9s cubic-bezier(0.22,0.61,0.36,1) 2.0s both;
 }
 
-@keyframes textFadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes cosmicRise {
+  0% { opacity: 0; transform: translateY(24px); filter: blur(4px); }
+  50% { opacity: 0.6; transform: translateY(6px); filter: blur(1px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
 /* ── Progress Film Strip ── */
@@ -259,7 +260,7 @@ body {
   justify-content: center;
   gap: 14px;
   margin-top: 28px;
-  animation: textFadeUp 0.8s ease-out 1.6s both;
+  animation: cosmicRise 0.9s cubic-bezier(0.22,0.61,0.36,1) 2.4s both;
 }
 
 .film-track {
