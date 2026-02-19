@@ -216,7 +216,7 @@ body {
   color: var(--cream-dim);
   text-transform: uppercase;
   margin-bottom: 8px;
-  animation: textFadeUp 0.8s ease-out 1.2s both;
+  animation: cosmicRise 0.9s cubic-bezier(0.22,0.61,0.36,1) 1.6s both;
 }
 
 .cinema-header h1 {
@@ -228,12 +228,14 @@ body {
   line-height: 1.05;
   margin-bottom: 6px;
   text-shadow: 0 0 30px var(--gold-glow), 0 2px 0 var(--gold-dim);
-  animation: titleReveal 1s ease-out 1.0s both;
+  animation: titleMaterialize 1.4s cubic-bezier(0.22,0.61,0.36,1) 1.2s both;
 }
 
-@keyframes titleReveal {
-  from { opacity: 0; transform: scale(0.8); letter-spacing: 0.3em; }
-  to { opacity: 1; transform: scale(1); letter-spacing: 0.08em; }
+@keyframes titleMaterialize {
+  0% { opacity: 0; transform: scale(0.6) translateY(20px); letter-spacing: 0.5em; text-shadow: 0 0 60px var(--energy), 0 0 120px var(--cosmic); color: var(--energy); }
+  30% { opacity: 0.8; transform: scale(0.9) translateY(4px); letter-spacing: 0.15em; text-shadow: 0 0 40px var(--cosmic), 0 0 80px rgba(157,92,246,0.4); }
+  60% { opacity: 1; transform: scale(1.04) translateY(-2px); text-shadow: 0 0 30px var(--gold-glow), 0 0 60px rgba(212,166,68,0.3); color: var(--gold); }
+  100% { opacity: 1; transform: scale(1) translateY(0); letter-spacing: 0.08em; text-shadow: 0 0 30px var(--gold-glow), 0 2px 0 var(--gold-dim); color: var(--gold); }
 }
 
 .cinema-header .tagline {
@@ -242,7 +244,7 @@ body {
   font-size: 1.1rem;
   color: var(--cream-dim);
   margin-top: 4px;
-  animation: textFadeUp 0.8s ease-out 1.4s both;
+  animation: cosmicRise 0.9s cubic-bezier(0.22,0.61,0.36,1) 2.0s both;
 }
 
 @keyframes textFadeUp {
