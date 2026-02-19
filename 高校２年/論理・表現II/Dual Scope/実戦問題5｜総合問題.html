@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>実戦問題5 総合問題 | Practice Test 5</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Core palette - Nordic warm kinari */
+      --bg: #F5F0E6;
+      --bg-warm: #EDE8DE;
+      --card: #FFFFFF;
+      --text: #1C1917;
+      --text-secondary: #57534E;
+      --text-muted: #A3A09C;
+      --accent: #E85D3B;
+      --border: rgba(28, 25, 23, 0.08);
+      --border-visible: rgba(28, 25, 23, 0.12);
+      /* Enhanced Nordic shadows with soft inset glow */
+      --shadow-sm: 0 1px 2px rgba(61, 67, 64, 0.05),
+                   0 4px 12px rgba(61, 67, 64, 0.08),
+                   inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      --shadow: 0 2px 4px rgba(61, 67, 64, 0.06),
+                0 8px 24px rgba(61, 67, 64, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      --shadow-lg: 0 4px 8px rgba(61, 67, 64, 0.06),
+                   0 16px 48px rgba(61, 67, 64, 0.15),
+                   inset 0 2px 0 rgba(255, 255, 255, 0.7);
+      --radius: 20px;
+      --radius-sm: 12px;
+      /* Fluid typography */
+      --fs-qtext: clamp(17px, 1.3vw, 19px);
+      --fs-base: clamp(15px, 1.1vw, 17px);
+
+      /* Category Colors - 4 question types */
+      --cat-selection: #C28A2E;
+      --cat-selection-light: #FBF6ED;
+      --cat-completion: #5A8F65;
+      --cat-completion-light: #EDF5EF;
+      --cat-ordering: #7E5A9E;
+      --cat-ordering-light: #F5F0F8;
+      --cat-correction: #C75450;
+      --cat-correction-light: #FDF2F2;
+
+      /* Grammar topic colors for Overview cards */
+      --prep: #B87333;          /* Copper - Prepositions & Phrasal Verbs */
+      --prep-light: #FBF5ED;
+      --noun: #5A9A6E;          /* Green - Nouns, Articles & Pronouns */
+      --noun-light: #F3F9F5;
+      --adv: #7A6B8A;           /* Muted purple - Adverbs & Adjectives */
+      --adv-light: #F5F3F8;
+      --conj: #4A7FA5;          /* Steel blue - Conjunctions & Clauses */
+      --conj-light: #F0F5F9;
+    }
+
+    [data-theme="dark"] {
+      /* Gradient glassy background - gray-beige with depth */
+      --bg: #141312;
+      --bg-warm: #1e1c1a;
+      --card: rgba(36, 34, 32, 0.92);
+      --card-solid: #242220;
+      --text: #F5F3F0;
+      --text-secondary: #A3A09C;
+      --text-muted: #666666;
+      --accent: #F06A48;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-visible: rgba(255, 255, 255, 0.10);
+      /* Enhanced dark mode shadows - more visible on dark backgrounds */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35),
+                   0 0 0 1px rgba(255, 255, 255, 0.03),
+                   inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6),
+                   0 0 0 1px rgba(255, 255, 255, 0.05),
+                   inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+      --cat-selection: #D9A043;
+      --cat-selection-light: rgba(194, 138, 46, 0.15);
+      --cat-completion: #6BA876;
+      --cat-completion-light: rgba(90, 143, 101, 0.15);
+      --cat-ordering: #9A72B8;
+      --cat-ordering-light: rgba(126, 90, 158, 0.15);
+      --cat-correction: #D96B68;
+      --cat-correction-light: rgba(199, 84, 80, 0.15);
+
+      --prep: #D4965E;
+      --prep-light: rgba(184, 115, 51, 0.12);
+      --noun: #7AB88A;
+      --noun-light: rgba(90, 154, 110, 0.12);
+      --adv: #9A8BAA;
+      --adv-light: rgba(122, 107, 138, 0.12);
+      --conj: #6A9FBF;
+      --conj-light: rgba(74, 127, 165, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* Dark mode gradient glassy background */
+    [data-theme="dark"] body {
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 100% 80% at 50% 0%, rgba(194, 138, 46, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 20% 100%, rgba(184, 115, 51, 0.05) 0%, transparent 40%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(74, 127, 165, 0.04) 0%, transparent 40%),
+        linear-gradient(135deg, #141312 0%, #1a1816 50%, #121110 100%);
+      background-attachment: fixed;
+    }
+
+    /* ===== TOP NAVIGATION BAR - Auto-Hide with Glassmorphism ===== */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* Auto-hide: slide up when hidden */
+      transform: translateY(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      /* Glassmorphism effect */
+      background: rgba(250, 248, 245, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(28, 25, 23, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .top-nav.visible {
+      transform: translateY(0);
+    }
+
+    [data-theme="dark"] .top-nav {
+      background: rgba(15, 14, 13, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .top-nav-logo {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+    }
+
+    .top-nav-center {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-warm);
+      padding: 4px;
+      border-radius: 100px;
+    }
+
+    .top-nav-link {
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 100px;
+      transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+    }
+
+    .top-nav-link:hover {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .top-nav-link.active {
+      color: var(--text);
+      background: var(--card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .top-nav-right {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .view-toggle-nav {
+      display: flex;
+      background: var(--bg-warm);
+      border-radius: 100px;
+      padding: 4px;
+    }
+
+    .view-btn-nav {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 100px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .view-btn-nav.active {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .top-nav-theme {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .top-nav-theme:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ===== SUB NAVIGATION - Auto-Hide with Glassmorphism ===== */
+    .sub-nav {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      padding: 12px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      /* Auto-hide: slide up when hidden */
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s ease;
+      /* Glassmorphism effect */
+      background: rgba(250, 248, 245, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(28, 25, 23, 0.08);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .sub-nav.visible {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    [data-theme="dark"] .sub-nav {
+      background: rgba(15, 14, 13, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .sub-nav-categories {
+      display: flex;
+      gap: 8px;
+    }
+
+    .sub-nav-cat {
+      padding: 10px 24px;
+      border: 2px solid var(--border);
+      border-radius: 100px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      /* Simplified: reduced from 5 properties to 3 essential ones for better performance */
+      /* 簡略化: パフォーマンス向上のため5つのプロパティから3つの重要なものに削減 */
+      transition: background-color 0.2s ease,
+                  transform 0.2s ease,
+                  box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sub-nav-cat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .sub-nav-cat[data-cat="selection"] { --cat-color: var(--cat-selection); --cat-bg: var(--cat-selection-light); }
+    .sub-nav-cat[data-cat="completion"] { --cat-color: var(--cat-completion); --cat-bg: var(--cat-completion-light); }
+    .sub-nav-cat[data-cat="ordering"] { --cat-color: var(--cat-ordering); --cat-bg: var(--cat-ordering-light); }
+    .sub-nav-cat[data-cat="correction"] { --cat-color: var(--cat-correction); --cat-bg: var(--cat-correction-light); }
+
+    .sub-nav-cat:hover {
+      border-color: var(--cat-color);
+      color: var(--cat-color);
+      transform: translateY(-2px);
+    }
+
+    .sub-nav-cat.active {
+      border-color: var(--cat-color);
+      background: var(--cat-bg);
+      color: var(--cat-color);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .sub-nav-sections {
+      display: flex;
+      gap: 6px;
+    }
+
+    .sub-nav-section {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Space Grotesk', monospace;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sub-nav-section:hover {
+      border-color: var(--text);
+      color: var(--text);
+      transform: scale(1.08);
+    }
+
+    .sub-nav-section.active {
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ===== MAIN CONTENT AREA ===== */
+    .main-content {
+      padding-top: 60px;
+      min-height: 100vh;
+    }
+
+    .main-content.has-subnav {
+      padding-top: 152px;
+    }
+
+    /* ===== HOME VIEW ===== */
+    .view-home {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .home-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, var(--cat-selection-light) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, var(--cat-completion-light) 0%, transparent 40%),
+        radial-gradient(ellipse 50% 40% at 80% 70%, var(--cat-ordering-light) 0%, transparent 40%);
+      opacity: 0.6;
+    }
+
+    .home-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .home-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+
+    .home-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+
+    .home-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--prep) 0%, var(--noun) 50%, var(--adv) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .home-subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+
+    .home-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+
+    .btn-primary {
+      padding: 18px 40px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      padding: 18px 40px;
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--border);
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== OVERVIEW VIEW ===== */
+    .view-overview {
+      padding: 60px 48px 100px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .overview-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .overview-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .overview-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    /* Conjunction Reference Sections */
+    .conj-section {
+      margin-bottom: 80px;
+    }
+
+    .conj-section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .conj-section-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .conj-section.prep .conj-section-icon { background: var(--prep-light); }
+    .conj-section.noun .conj-section-icon { background: var(--noun-light); }
+    .conj-section.adv .conj-section-icon { background: var(--adv-light); }
+    .conj-section.conj .conj-section-icon { background: var(--conj-light); }
+
+    .conj-section-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 400;
+    }
+
+    .conj-section-title-jp {
+      font-family: 'Noto Serif JP', 'Yu Mincho', serif;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .conj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .conj-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-visible);
+      border-left: 4px solid var(--card-accent);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 0.4s ease backwards;
+      transform-style: preserve-3d;
+    }
+
+    .conj-card:hover {
+      transform: translateY(-4px) rotateX(2deg) rotateY(-1deg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .conj-card:nth-child(1) { animation-delay: 0s; }
+    .conj-card:nth-child(2) { animation-delay: 0.05s; }
+    .conj-card:nth-child(3) { animation-delay: 0.1s; }
+    .conj-card:nth-child(4) { animation-delay: 0.15s; }
+    .conj-card:nth-child(5) { animation-delay: 0.2s; }
+    .conj-card:nth-child(6) { animation-delay: 0.25s; }
+    .conj-card:nth-child(7) { animation-delay: 0.3s; }
+    .conj-card:nth-child(8) { animation-delay: 0.35s; }
+
+    .conj-section.prep .conj-card { --card-accent: var(--prep); }
+    .conj-section.noun .conj-card { --card-accent: var(--noun); }
+    .conj-section.adv .conj-card { --card-accent: var(--adv); }
+    .conj-section.conj .conj-card { --card-accent: var(--conj); }
+
+    .conj-card-word {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--card-accent);
+      margin-bottom: 4px;
+    }
+
+    .conj-card-meaning {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .conj-card-example {
+      margin-bottom: 16px;
+    }
+
+    .conj-card-example-en {
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+
+    .conj-card-example-en strong {
+      color: var(--card-accent);
+      font-weight: 700;
+    }
+
+    .conj-card-example-jp {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .conj-card-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      background: var(--bg-warm);
+      border-radius: var(--radius-sm);
+      margin-top: 16px;
+    }
+
+    [data-theme="dark"] .conj-card-tip {
+      background: var(--bg);
+    }
+
+    .conj-card-tip-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .conj-card-tip-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* ===== QUESTION VIEW ===== */
+    .view-question {
+      padding: 40px 48px 100px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .question-header {
+      margin-bottom: 32px;
+    }
+
+    .question-category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .question-category-badge.selection {
+      background: var(--cat-selection-light);
+      color: var(--cat-selection);
+    }
+
+    .question-category-badge.completion {
+      background: var(--cat-completion-light);
+      color: var(--cat-completion);
+    }
+
+    .question-category-badge.ordering {
+      background: var(--cat-ordering-light);
+      color: var(--cat-ordering);
+    }
+
+    .question-category-badge.correction {
+      background: var(--cat-correction-light);
+      color: var(--cat-correction);
+    }
+
+    .question-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .question-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    /* Progress */
+    .progress-wrap {
+      margin-bottom: 32px;
+    }
+
+    .progress-bar-bg {
+      height: 6px;
+      background: var(--bg-warm);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--prep), var(--noun));
+      border-radius: 100px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    /* Search */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 20px 16px 52px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--card);
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--prep-light);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    /* Questions List */
+    /* Performance: CSS containment limits repaints to this container */
+    /* パフォーマンス: CSS containmentで再描画をこのコンテナに限定 */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      contain: content;
+    }
+
+    /* Question Card */
+    /* Performance fix: removed staggered animations that cause GPU overload with many cards */
+    /* パフォーマンス修正: 多数のカードでGPU過負荷を引き起こすアニメーションを削除 */
+    .qcard {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-visible);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      /* Card reveal animation - starts hidden */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease,
+                  transform 0.5s ease,
+                  box-shadow 0.3s ease;
+    }
+
+    .qcard.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .qcard.visible:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Staggered reveal delays */
+    .qcard:nth-child(1) { transition-delay: 0s; }
+    .qcard:nth-child(2) { transition-delay: 0.05s; }
+    .qcard:nth-child(3) { transition-delay: 0.1s; }
+    .qcard:nth-child(4) { transition-delay: 0.15s; }
+    .qcard:nth-child(5) { transition-delay: 0.2s; }
+
+    /* Dark mode glassy cards with visible shadows */
+    [data-theme="dark"] .qcard {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-visible);
+      box-shadow: var(--shadow);
+      contain: layout style;
+    }
+
+    .qcard-question, .qcard-buttons, .qcard-left, .qcard-right {
+      box-sizing: border-box;
+    }
+
+    .qcard-buttons, .toggle-btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .qcard-buttons {
+      padding: 0 24px 20px;
+    }
+
+    /* Dual/Split view */
+    [data-view="dual"] .qcard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "question question"
+        "left right";
+    }
+
+    [data-view="dual"] .qcard-buttons {
+      display: none;
+    }
+
+    [data-view="dual"] .qcard-question {
+      grid-area: question;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    [data-view="dual"] .qcard-left {
+      grid-area: left;
+      padding: 24px;
+      border-right: 1px solid var(--border);
+    }
+
+    [data-view="dual"] .qcard-right {
+      grid-area: right;
+      padding: 24px;
+      background: var(--card);
+    }
+
+    [data-view="dual"] .collapsible {
+      display: none;
+    }
+
+    [data-view="dual"] .collapsible.open {
+      display: block;
+      margin-top: 16px;
+    }
+
+    /* Single view */
+    [data-view="single"] .qcard {
+      display: block;
+    }
+
+    [data-view="single"] .qcard-buttons {
+      display: flex;
+    }
+
+    [data-view="single"] .toggle-btn-row {
+      display: none;
+    }
+
+    [data-view="single"] .qcard-question {
+      padding: 24px 24px 16px;
+    }
+
+    [data-view="single"] .qcard-left {
+      padding: 0 24px 0;
+      border-right: none;
+    }
+
+    [data-view="single"] .qcard-right {
+      padding: 0 24px 24px;
+      background: transparent;
+    }
+
+    [data-view="single"] .collapsible {
+      display: none;
+    }
+
+    [data-view="single"] .collapsible.open {
+      display: block;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 800px) {
+      [data-view="dual"] .qcard {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "question"
+          "left"
+          "right";
+      }
+      [data-view="dual"] .qcard-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    .qnum {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--prep-light);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+
+    .qtext {
+      font-size: var(--fs-qtext);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .choices, .scramble {
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 17px;
+    }
+
+    .qcard-question .choices:last-child,
+    .qcard-question .scramble:last-child {
+      margin-bottom: 0;
+    }
+
+    .choices {
+      background: var(--adv-light);
+      border-left: 3px solid var(--adv);
+    }
+
+    .scramble {
+      background: var(--noun-light);
+      border-left: 3px solid var(--noun);
+      font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      min-width: 80px;
+      min-height: 44px;  /* Apple HIG touch target */
+      padding: 12px 24px;
+      border: none;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      /* Default shadow for elevated look */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12),
+                  0 4px 12px rgba(0, 0, 0, 0.08);
+      /* Spring effect transition */
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.2s ease,
+                  background-color 0.2s ease;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .toggle-btn:active {
+      transform: translateY(0) scale(0.96);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-btn.vocab { background: var(--adv); color: white; }
+    .toggle-btn.hint { background: var(--prep); color: white; }
+    .toggle-btn.answer { background: var(--conj); color: white; }
+
+    /* Mobile: larger touch targets */
+    @media (max-width: 768px) {
+      .toggle-btn {
+        min-height: 48px;
+        padding: 14px 28px;
+        font-size: 14px;
+      }
+    }
+
+    .box {
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-size: 17px;
+      line-height: 1.7;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .box:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: var(--border-visible);
+    }
+
+    .vocab-box {
+      background: var(--card);
+      border-left: 3px solid var(--adv);
+    }
+
+    .hint-box {
+      background: var(--card);
+      border-left: 3px solid var(--prep);
+    }
+
+    .hint-item {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(13, 148, 136, 0.15);
+    }
+
+    .hint-item:last-child {
+      border-bottom: none;
+    }
+
+    .ans-box {
+      background: var(--card);
+      border-left: 3px solid var(--conj);
+    }
+
+    /* Dark mode box styling */
+    [data-theme="dark"] .box {
+      background: var(--card);
+      border-color: var(--border-visible);
+      box-shadow: var(--shadow-sm);
+    }
+
+    [data-theme="dark"] .box:hover {
+      box-shadow: var(--shadow);
+    }
+
+    .choice-explanations {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(90, 154, 110, 0.2);
+    }
+
+    .choice-exp {
+      padding: 8px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(139, 129, 120, 0.12);
+    }
+
+    .choice-exp:last-child {
+      border-bottom: none;
+    }
+
+    .choice-exp.correct {
+      color: var(--conj);
+      font-weight: 600;
+    }
+
+    .choice-exp.wrong {
+      color: var(--text-secondary);
+    }
+
+    .vocab-item {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(155,127,207,0.15);
+    }
+
+    .vocab-item:last-child { border-bottom: none; }
+
+    .vocab-word {
+      font-weight: 700;
+      color: var(--adv);
+      margin-right: 8px;
+    }
+
+    .box-label {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .jp-text {
+      color: var(--text-secondary);
+      margin-top: 12px;
+      padding-bottom: 12px;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(139, 129, 120, 0.15);
+    }
+
+    .jp-text:last-child {
+      border-bottom: none;
+    }
+
+    .grammar-ref {
+      background: var(--noun-light);
+      border-left: 3px solid var(--noun);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      margin-top: 12px;
+    }
+
+    .no-match { display: none !important; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== VIEW VISIBILITY ===== */
+    .view-home,
+    .view-overview,
+    .view-question {
+      display: none;
+    }
+
+    .view-home.active { display: flex; }
+    .view-overview.active { display: block; }
+    .view-question.active { display: block; }
+
+    /* ===== CSS ANIMATIONS ===== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .collapsible.open {
+      animation: slideInSmooth 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes slideInSmooth {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Reduced motion support for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .conj-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .top-nav {
+        padding: 0 16px;
+        height: 56px;
+      }
+
+      .top-nav-logo {
+        font-size: 13px;
+      }
+
+      .top-nav-center {
+        display: none;
+      }
+
+      .top-nav-right {
+        gap: 6px;
+      }
+
+      .view-toggle-nav {
+        display: none;
+      }
+
+      .sub-nav {
+        padding: 12px 16px;
+        gap: 10px;
+      }
+
+      .sub-nav-categories {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .sub-nav-cat {
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+
+      .sub-nav-sections {
+        gap: 4px;
+      }
+
+      .sub-nav-section {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+      }
+
+      .main-content {
+        padding-top: 56px;
+      }
+
+      .main-content.has-subnav {
+        padding-top: 140px;
+      }
+
+      .view-home {
+        padding: 24px;
+      }
+
+      .home-title {
+        font-size: clamp(40px, 12vw, 80px);
+      }
+
+      .home-cta {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 16px 32px;
+      }
+
+      .view-overview,
+      .view-question {
+        padding: 32px 20px 80px;
+      }
+    }
+
+    /* Mobile nav drawer */
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--card);
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      .mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--card);
+        border-top: 1px solid var(--border);
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-around;
+        z-index: 1001;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      }
+
+      .mobile-nav-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 8px 16px;
+        border: none;
+        background: transparent;
+        color: var(--text-secondary);
+        font-size: 11px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        border-radius: 12px;
+        transition: color 0.2s ease, background-color 0.2s ease;
+      }
+
+      .mobile-nav-btn.active {
+        color: var(--accent);
+        background: var(--prep-light);
+      }
+
+      .mobile-nav-btn-icon {
+        font-size: 20px;
+      }
+
+      footer {
+        padding-bottom: 100px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-nav {
+        display: none;
+      }
+    }
+
+    /* ===== LARGE SCREEN OPTIMIZATION ===== */
+    @media (min-width: 1200px) {
+      .view-question {
+        max-width: 1100px;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      .view-question {
+        max-width: 1250px;
+        padding: 48px 56px 100px;
+      }
+      .view-overview {
+        max-width: 1500px;
+      }
+    }
+
+    @media (min-width: 1728px) {
+      .view-question {
+        max-width: 1400px;
+        padding: 56px 64px 100px;
+      }
+      .view-overview {
+        max-width: 1600px;
+      }
+      .qtext {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body data-view="single" data-exam-id="ds-practice5-comprehensive">
+
+  <!-- ===== TOP NAVIGATION BAR ===== -->
+  <nav class="top-nav" id="topNav">
+    <div class="top-nav-logo">DUAL SCOPE</div>
+    <div class="top-nav-center">
+      <button class="top-nav-link active" data-nav="home" onclick="Router.navigate('home')">Home</button>
+      <button class="top-nav-link" data-nav="overview" onclick="Router.navigate('overview')">Overview</button>
+      <button class="top-nav-link" data-nav="question" onclick="Router.navigate('question')">Question</button>
+    </div>
+    <div class="top-nav-right">
+      <div class="view-toggle-nav">
+        <button class="view-btn-nav active" data-view="single" onclick="setView('single')">Single</button>
+        <button class="view-btn-nav" data-view="dual" onclick="setView('dual')">Split</button>
+      </div>
+      <button class="top-nav-theme" onclick="toggleTheme()" title="Toggle theme">
+        <span class="theme-icon">&#9728;&#65039;</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== SUB NAVIGATION (Question view only) ===== -->
+  <nav class="sub-nav" id="subNav">
+    <div class="sub-nav-categories">
+      <button class="sub-nav-cat active" data-cat="selection" onclick="Router.setCategory('selection')">&#35486;&#21477;&#36984;&#25246;</button>
+      <button class="sub-nav-cat" data-cat="completion" onclick="Router.setCategory('completion')">&#21516;&#24847;&#25991;&#23436;&#25104;</button>
+      <button class="sub-nav-cat" data-cat="ordering" onclick="Router.setCategory('ordering')">&#20006;&#12409;&#12363;&#12360;</button>
+      <button class="sub-nav-cat" data-cat="correction" onclick="Router.setCategory('correction')">&#35492;&#12426;&#35330;&#27491;</button>
+    </div>
+    <div class="sub-nav-sections" id="sectionToggles"></div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content" id="mainContent">
+
+    <!-- HOME VIEW -->
+    <section class="view-home active" id="viewHome">
+      <div class="home-bg"></div>
+      <div class="home-content">
+        <p class="home-label">Practice Test 5</p>
+        <h1 class="home-title">&#32207;&#21512;&#21839;&#38988;</h1>
+        <p class="home-subtitle">Comprehensive review: prepositions, nouns, pronouns, adjectives, adverbs &amp; conjunctions.</p>
+        <div class="home-cta">
+          <button class="btn-primary" onclick="Router.navigate('question')">Start Practice</button>
+          <button class="btn-secondary" onclick="Router.navigate('overview')">Overview</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW VIEW -->
+    <section class="view-overview" id="viewOverview">
+      <div class="overview-header">
+        <p class="overview-label">Reference Guide</p>
+        <h2 class="overview-title">Grammar Topics Covered</h2>
+      </div>
+
+      <!-- Prepositions & Phrasal Verbs -->
+      <section class="conj-section prep">
+        <div class="conj-section-header">
+          <div class="conj-section-icon">&#129517;</div>
+          <div>
+            <h2 class="conj-section-title">Prepositions &amp; Phrasal Verbs</h2>
+            <p class="conj-section-title-jp">&#21069;&#32622;&#35422;&#12539;&#32676;&#21205;&#35422;</p>
+          </div>
+        </div>
+        <div class="conj-grid">
+          <div class="conj-card">
+            <div class="conj-card-word">be made into / of / from</div>
+            <div class="conj-card-meaning">&#65374;&#12395;&#21152;&#24037;&#12373;&#12428;&#12427; / &#65374;&#12391;&#12391;&#12365;&#12390;&#12356;&#12427; / &#65374;&#12363;&#12425;&#20316;&#12425;&#12428;&#12427;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">Strawberries are made <strong>into</strong> jam.</p>
+              <p class="conj-card-example-jp">&#12452;&#12481;&#12468;&#12399;&#12472;&#12515;&#12512;&#12395;&#21152;&#24037;&#12373;&#12428;&#12427;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">into=&#22793;&#21270;&#12289;of=&#26448;&#26009;&#12364;&#35211;&#12360;&#12427;&#12289;from=&#21407;&#26009;&#12364;&#35211;&#12360;&#12394;&#12356;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">over + noun</div>
+            <div class="conj-card-meaning">&#65374;&#12375;&#12394;&#12364;&#12425;&#65288;&#20184;&#24111;&#29366;&#27841;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">We discussed our plans <strong>over</strong> coffee.</p>
+              <p class="conj-card-example-jp">&#12467;&#12540;&#12498;&#12540;&#12434;&#39154;&#12415;&#12394;&#12364;&#12425;&#35336;&#30011;&#12434;&#35441;&#12375;&#21512;&#12387;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#12300;&#65374;&#12375;&#12394;&#12364;&#12425;&#12301;&#12392;&#12356;&#12358;&#20184;&#24111;&#29366;&#27841;&#12434;&#34920;&#12377;over&#12398;&#29992;&#27861;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">of + abstract noun</div>
+            <div class="conj-card-meaning">&#24418;&#23481;&#35422;&#21477;&#65288;of no use = useless&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">It was <strong>of</strong> no use to try to find him.</p>
+              <p class="conj-card-example-jp">&#24444;&#12434;&#35211;&#12388;&#12369;&#12424;&#12358;&#12392;&#12377;&#12427;&#12398;&#12399;&#12416;&#12384;&#12384;&#12387;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">of + &#25277;&#35937;&#21517;&#35422; = &#24418;&#23481;&#35422;&#12290;of use = useful, of importance = important</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">make up for</div>
+            <div class="conj-card-meaning">&#65374;&#12398;&#22475;&#12417;&#21512;&#12431;&#12379;&#12434;&#12377;&#12427;&#12289;&#35036;&#12358;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">I would like to <strong>make up for</strong> my lack of experience.</p>
+              <p class="conj-card-example-jp">&#32076;&#39443;&#19981;&#36275;&#12434;&#35036;&#12356;&#12383;&#12356;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#32676;&#21205;&#35422;&#12290;catch up with&#65288;&#36861;&#12356;&#12388;&#12367;&#65289;&#12289;look up to&#65288;&#23562;&#25964;&#12377;&#12427;&#65289;&#12418;&#37325;&#35201;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">be married to</div>
+            <div class="conj-card-meaning">&#65374;&#12392;&#32080;&#23130;&#12375;&#12390;&#12356;&#12427;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">Meg has been married <strong>to</strong> Mike for ten years.</p>
+              <p class="conj-card-example-jp">&#12513;&#12464;&#12399;&#12510;&#12452;&#12463;&#12392;&#32080;&#23130;&#12375;&#12390;10&#24180;&#12395;&#12394;&#12427;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#12300;&#65374;&#12392;&#12301;&#12395;&#24785;&#12431;&#12373;&#12428;&#12390;with&#12434;&#20351;&#12431;&#12394;&#12356;&#12290;&#21069;&#32622;&#35422;&#12399;to</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Nouns, Articles & Pronouns -->
+      <section class="conj-section noun">
+        <div class="conj-section-header">
+          <div class="conj-section-icon">&#128220;</div>
+          <div>
+            <h2 class="conj-section-title">Nouns, Articles &amp; Pronouns</h2>
+            <p class="conj-section-title-jp">&#21517;&#35422;&#12539;&#20896;&#35422;&#12539;&#20195;&#21517;&#35422;</p>
+          </div>
+        </div>
+        <div class="conj-grid">
+          <div class="conj-card">
+            <div class="conj-card-word">a fire / fire</div>
+            <div class="conj-card-meaning">&#28779;&#20107;&#65288;&#26222;&#36890;&#21517;&#35422;&#65289; / &#28779;&#65288;&#29289;&#36074;&#21517;&#35422;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">Last night there was <strong>a fire</strong> in my neighborhood.</p>
+              <p class="conj-card-example-jp">&#26152;&#22812;&#36817;&#25152;&#12391;&#28779;&#20107;&#12364;&#12354;&#12387;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#12300;&#28779;&#12301;&#12399;&#19981;&#21487;&#31639;&#12289;&#12300;&#28779;&#20107;&#12301;&#12399;&#20855;&#20307;&#30340;&#20107;&#35937;&#12394;&#12398;&#12391;&#21487;&#31639;&#21517;&#35422;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">the + body part</div>
+            <div class="conj-card-meaning">catch + &#20154; + by the + &#20307;&#12398;&#37096;&#20998;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">I caught her <strong>by the arm</strong>.</p>
+              <p class="conj-card-example-jp">&#31169;&#12399;&#24444;&#22899;&#12398;&#33109;&#12434;&#12388;&#12363;&#12435;&#12384;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#20307;&#12398;&#37096;&#20998;&#12395;&#12399;the&#12434;&#20351;&#12358;&#12290;by&#12391;&#12300;&#12388;&#12363;&#12416;&#37096;&#20998;&#12301;&#12434;&#31034;&#12377;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">another vs the other</div>
+            <div class="conj-card-meaning">&#12418;&#12358;1&#12388;&#65288;3&#12388;&#20197;&#19978;&#65289; / &#27531;&#12426;1&#12388;&#65288;2&#12388;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">This is one of them, and we will visit <strong>another</strong> tomorrow.</p>
+              <p class="conj-card-example-jp">&#12371;&#12428;&#12364;&#12381;&#12398;1&#12388;&#12391;&#12289;&#26126;&#26085;&#12418;&#12358;1&#12388;&#12434;&#35370;&#12428;&#12427;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">3&#12388;&#20197;&#19978;: one ... another&#12290;2&#12388;: one ... the other</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">neither of</div>
+            <div class="conj-card-meaning">2&#32773;&#12398;&#12393;&#12385;&#12425;&#12418;&#65374;&#12394;&#12356;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en"><strong>Neither</strong> of us had a key.</p>
+              <p class="conj-card-example-jp">&#31169;&#12383;&#12385;&#12398;&#12393;&#12385;&#12425;&#12418;&#37749;&#12434;&#25345;&#12387;&#12390;&#12356;&#12394;&#12363;&#12387;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">neither of A = A&#12398;&#12393;&#12385;&#12425;&#12418;&#65374;&#12394;&#12356;&#12290;&#21336;&#25968;&#25201;&#12356;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">some ... others</div>
+            <div class="conj-card-meaning">&#65374;&#12398;&#20154;&#12418;&#12356;&#12428;&#12400;&#12289;&#8230;&#12398;&#20154;&#12418;&#12356;&#12427;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en"><strong>Some</strong> like singing, and <strong>others</strong> don't.</p>
+              <p class="conj-card-example-jp">&#27468;&#12358;&#12398;&#12364;&#22909;&#12365;&#12394;&#20154;&#12418;&#12356;&#12428;&#12400;&#12289;&#12381;&#12358;&#12391;&#12394;&#12356;&#20154;&#12418;&#12356;&#12427;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">some &#65374;, (and) others ... &#12391;&#12300;&#65374;&#12418;&#12356;&#12428;&#12400;&#8230;&#12418;&#12356;&#12427;&#12301;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">furniture (uncountable)</div>
+            <div class="conj-card-meaning">&#23478;&#20855;&#65288;&#24120;&#12395;&#21336;&#25968;&#24418;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">She bought much <strong>furniture</strong>.</p>
+              <p class="conj-card-example-jp">&#24444;&#22899;&#12399;&#22810;&#12367;&#12398;&#23478;&#20855;&#12434;&#36023;&#12387;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#38598;&#21512;&#21517;&#35422;furniture&#12399;&#24120;&#12395;&#21336;&#25968;&#12290;many&#12391;&#12399;&#12394;&#12367;much/a lot of&#12434;&#20351;&#12358;</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Adverbs & Adjectives -->
+      <section class="conj-section adv">
+        <div class="conj-section-header">
+          <div class="conj-section-icon">&#128207;</div>
+          <div>
+            <h2 class="conj-section-title">Adverbs &amp; Adjectives</h2>
+            <p class="conj-section-title-jp">&#21103;&#35422;&#12539;&#24418;&#23481;&#35422;</p>
+          </div>
+        </div>
+        <div class="conj-grid">
+          <div class="conj-card">
+            <div class="conj-card-word">lately vs late</div>
+            <div class="conj-card-meaning">&#26368;&#36817; / &#36933;&#12367;&#12395;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">Mother has not been feeling well <strong>lately</strong>.</p>
+              <p class="conj-card-example-jp">&#26368;&#36817;&#12289;&#27597;&#12399;&#12378;&#12387;&#12392;&#20307;&#35519;&#12364;&#12424;&#12367;&#12394;&#12356;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">lately=&#26368;&#36817;&#65288;&#29694;&#22312;&#23436;&#20102;&#12392;&#20351;&#12358;&#65289;&#12289;late=&#36933;&#12367;&#12395;&#12289;later=&#24460;&#12391;&#12289;latter=&#24460;&#32773;&#12398;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">much / far + comparative</div>
+            <div class="conj-card-meaning">&#12378;&#12387;&#12392;&#65374;&#65288;&#27604;&#36611;&#32026;&#12398;&#24375;&#35519;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">Bob's computer is <strong>much</strong> more advanced than ours.</p>
+              <p class="conj-card-example-jp">&#12508;&#12502;&#12398;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12399;&#31169;&#12383;&#12385;&#12398;&#12418;&#12398;&#12424;&#12426;&#12378;&#12387;&#12392;&#39640;&#24615;&#33021;&#12384;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#27604;&#36611;&#32026;&#12398;&#24375;&#35519;&#12395;very&#12399;&#20351;&#12360;&#12394;&#12356;&#12290;much/far/a lot/even/still&#12434;&#20351;&#12358;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">two-week (hyphenated adj)</div>
+            <div class="conj-card-meaning">2&#36913;&#38291;&#12398;&#65288;&#12495;&#12452;&#12501;&#12531;&#24418;&#23481;&#35422;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">I got back from a <strong>two-week</strong> vacation.</p>
+              <p class="conj-card-example-jp">2&#36913;&#38291;&#12398;&#20241;&#26247;&#12363;&#12425;&#25147;&#12387;&#12390;&#12365;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#25968;&#35422;+&#21517;&#35422;&#12364;&#12495;&#12452;&#12501;&#12531;&#12391;&#12388;&#12394;&#12364;&#12427;&#12392;&#24418;&#23481;&#35422;&#12395;&#12290;&#21517;&#35422;&#12395;s&#12434;&#12388;&#12369;&#12394;&#12356;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">ago vs before</div>
+            <div class="conj-card-meaning">&#65374;&#21069;&#65288;&#29694;&#22312;&#22522;&#28310;&#65289; / &#65374;&#21069;&#12395;&#65288;&#36942;&#21435;&#22522;&#28310;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">She had already departed three hours <strong>before</strong>.</p>
+              <p class="conj-card-example-jp">&#24444;&#22899;&#12399;&#12377;&#12391;&#12395;3&#26178;&#38291;&#21069;&#12395;&#20986;&#30330;&#12375;&#12390;&#12356;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">ago&#12399;&#29694;&#22312;&#12363;&#12425;&#25968;&#12360;&#12427;&#12290;&#36942;&#21435;&#12398;&#12354;&#12427;&#26178;&#28857;&#22522;&#28310;&#12394;&#12425;before&#12434;&#20351;&#12358;</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Conjunctions & Clauses -->
+      <section class="conj-section conj">
+        <div class="conj-section-header">
+          <div class="conj-section-icon">&#128279;</div>
+          <div>
+            <h2 class="conj-section-title">Conjunctions &amp; Clauses</h2>
+            <p class="conj-section-title-jp">&#25509;&#32154;&#35422;&#12539;&#31680;</p>
+          </div>
+        </div>
+        <div class="conj-grid">
+          <div class="conj-card">
+            <div class="conj-card-word">now (that)</div>
+            <div class="conj-card-meaning">&#65288;&#20170;&#12420;&#12418;&#12358;&#65289;&#65374;&#12394;&#12398;&#12391;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en"><strong>Now that</strong> the holidays are over, we must go to school.</p>
+              <p class="conj-card-example-jp">&#12418;&#12358;&#20241;&#26085;&#12364;&#32066;&#12431;&#12387;&#12383;&#12398;&#12391;&#12289;&#23398;&#26657;&#12395;&#34892;&#12363;&#12394;&#12369;&#12428;&#12400;&#12394;&#12425;&#12394;&#12356;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">now&#12399;&#25509;&#32154;&#35422;&#30340;&#12395;&#20351;&#12360;&#12427;&#12290;&#12300;&#20170;&#12420;&#12418;&#12358;&#65374;&#12394;&#12398;&#12391;&#12301;&#12392;&#12356;&#12358;&#29702;&#30001;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">since (time)</div>
+            <div class="conj-card-meaning">&#65374;&#12375;&#12390;&#20197;&#26469;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">It's ages <strong>since</strong> I saw my old friends.</p>
+              <p class="conj-card-example-jp">&#26087;&#21451;&#12383;&#12385;&#12392;&#12399;&#20037;&#12375;&#12367;&#20250;&#12387;&#12390;&#12356;&#12394;&#12356;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">since&#31680;&#12399;&#36942;&#21435;&#24418;&#12289;&#20027;&#31680;&#12399;&#23436;&#20102;&#24418;&#12364;&#22522;&#26412;&#12290;&#32076;&#36942;&#34920;&#29694;&#12391;&#12399;&#29694;&#22312;&#24418;&#12418;&#21487;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">as far as</div>
+            <div class="conj-card-meaning">&#65374;&#12377;&#12427;&#38480;&#12426;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en"><strong>As far as</strong> I know, Yoko has studied German.</p>
+              <p class="conj-card-example-jp">&#31169;&#12398;&#30693;&#12427;&#38480;&#12426;&#12289;&#12520;&#12454;&#12467;&#12399;&#12489;&#12452;&#12484;&#35486;&#12434;&#21193;&#24375;&#12375;&#12390;&#12356;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">to my knowledge = as far as I know&#12290;&#31684;&#22258;&#12539;&#31243;&#24230;&#12434;&#34920;&#12377;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">no sooner ... than</div>
+            <div class="conj-card-meaning">&#65374;&#12377;&#12427;&#12392;&#12377;&#12368;&#12395;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en"><strong>No sooner</strong> had he arrived than it stopped raining.</p>
+              <p class="conj-card-example-jp">&#24444;&#12364;&#30528;&#12367;&#12392;&#12377;&#12368;&#12395;&#38632;&#12364;&#12420;&#12435;&#12384;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">No sooner&#12364;&#25991;&#38957;&#12395;&#26469;&#12427;&#12392;&#20498;&#32622;&#65288;had S + p.p.&#65289;&#12290;&#36942;&#21435;&#23436;&#20102;+&#36942;&#21435;&#24418;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">that (appositive clause)</div>
+            <div class="conj-card-meaning">&#65374;&#12392;&#12356;&#12358;&#65288;&#21516;&#26684;&#12398;that&#31680;&#65289;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en">The news <strong>that</strong> they had won made them proud.</p>
+              <p class="conj-card-example-jp">&#21213;&#12387;&#12383;&#12392;&#12356;&#12358;&#30693;&#12425;&#12379;&#12391;&#24444;&#12425;&#12399;&#35463;&#12426;&#12395;&#24605;&#12387;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">&#21516;&#26684;&#12398;that&#12399;&#21517;&#35422;&#12398;&#20869;&#23481;&#12434;&#35500;&#26126;&#12290;&#38306;&#20418;&#20195;&#21517;&#35422;which&#12392;&#12399;&#21029;&#29289;</span>
+            </div>
+          </div>
+          <div class="conj-card">
+            <div class="conj-card-word">It costs + to do</div>
+            <div class="conj-card-meaning">&#65374;&#12377;&#12427;&#12398;&#12395;&#65288;&#37329;&#38989;&#12364;&#65289;&#12363;&#12363;&#12427;</div>
+            <div class="conj-card-example">
+              <p class="conj-card-example-en"><strong>It cost</strong> me five thousand yen to have my shoes repaired.</p>
+              <p class="conj-card-example-jp">&#38772;&#12434;&#30452;&#12375;&#12390;&#12418;&#12425;&#12358;&#12398;&#12395;5,000&#20870;&#12363;&#12363;&#12387;&#12383;&#12290;</p>
+            </div>
+            <div class="conj-card-tip">
+              <span class="conj-card-tip-icon">&#128161;</span>
+              <span class="conj-card-tip-text">It costs (+&#20154;) + &#37329;&#38989; + to do&#12290;&#36942;&#21435;&#24418;&#12399;cost&#65288;&#22793;&#21270;&#12375;&#12394;&#12356;&#65289;</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- QUESTION VIEW -->
+    <section class="view-question" id="viewQuestion">
+      <div class="question-header">
+        <div class="question-category-badge selection" id="categoryBadge">
+          <span id="categoryIcon">&#128218;</span>
+          <span id="categoryName">&#22522;&#26412;&#21839;&#38988;</span>
+        </div>
+        <h2 class="question-title" id="sectionTitle">Loading...</h2>
+        <p class="question-subtitle" id="sectionSubtitle"></p>
+      </div>
+
+      <div class="progress-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10" aria-label="Study progress">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <p class="progress-label" id="progressText">0 / 0 answers revealed</p>
+      </div>
+
+      <div class="search-wrap" role="search">
+        <span class="search-icon" aria-hidden="true">&#128269;</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search questions, grammar, vocabulary..." oninput="debouncedSearch()" aria-label="Search questions, grammar, and vocabulary">
+      </div>
+
+      <div class="questions-list" id="questionsList"></div>
+    </section>
+
+  </main>
+
+  <!-- MOBILE NAVIGATION -->
+  <nav class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-btn active" data-nav="home" onclick="Router.navigate('home')">
+      <span class="mobile-nav-btn-icon">&#127968;</span>
+      <span>Home</span>
+    </button>
+    <button class="mobile-nav-btn" data-nav="overview" onclick="Router.navigate('overview')">
+      <span class="mobile-nav-btn-icon">&#128214;</span>
+      <span>Overview</span>
+    </button>
+    <button class="mobile-nav-btn" data-nav="question" onclick="Router.navigate('question')">
+      <span class="mobile-nav-btn-icon">&#10067;</span>
+      <span>Question</span>
+    </button>
+  </nav>
+
+  <footer>DUAL SCOPE English Grammar - &#23455;&#25126;&#21839;&#38988;5: &#32207;&#21512;&#21839;&#38988;</footer>
+
+<script>
+// ===== GRAMMAR DATA =====
+const grammarData = { sections: [
+    {
+      title: "[1] 語句選択｜(1)～(10)",
+      open: true,
+      questions: [
+        {
+          num: "(1)",
+          text: "Strawberries are made (　　) jam.",
+          choices: "a. into　　b. of　　c. from　　d. in",
+          vocab: [["strawberry", "イチゴ"], ["jam", "ジャム"]],
+          hint: ["イチゴが「ジャムになる」＝形が変わるということ", "原料が別の製品に変化する表現を考えよう", "be made ＋ 変化を表す前置詞 ＝ ？"],
+          answer: "a. into",
+          translation: "イチゴはジャムに（加工）される。",
+          explanation: "〈～ be made into ...〉で「～は…に（加工）される」の意味。into は「変化」を表す。",
+          grammar: "be made into ～ = ～に加工される（変化）/ be made of ～ = ～でできている（材質がわかる）/ be made from ～ = ～から作られる（材質がわからない）",
+          choiceExplanations: {
+            "a. into": "○ 正解。be made into ～ で「～に加工される」。原料→製品への変化を表す。",
+            "b. of": "× be made of ～ は「～でできている」（材質がわかる場合）。ここでは変化の方向を表す。",
+            "c. from": "× be made from ～ は「～から作られる」（材質がわからない場合）。ここでは変化先のjamが問題。",
+            "d. in": "× be made in ～ は「～で製造される」（場所）。文脈に合わない。"
+          }
+        },
+        {
+          num: "(2)",
+          text: "Mother has not been feeling well (　　).",
+          choices: "a. late　　b. lately　　c. later　　d. latter",
+          vocab: [["feeling well", "体調がよい"]],
+          hint: ["「最近ずっと～ない」という意味になる副詞は？", "現在完了進行形と一緒に使う「最近」の副詞を考えよう", "late（遅く）と形は似ているが意味が違う副詞"],
+          answer: "b. lately",
+          translation: "最近，母はずっと体調がよくない。",
+          explanation: "「最近」の意味を表す副詞は lately を使う。late は「遅くに」という意味。",
+          grammar: "lately = 最近（現在完了形とともに使う）/ late = 遅くに / later = 後で / latter = 後者の",
+          choiceExplanations: {
+            "a. late": "× late は「遅くに」という意味の副詞。「最近」の意味はない。",
+            "b. lately": "○ 正解。lately は「最近」の意味で、現在完了形とともに使う。",
+            "c. later": "× later は「後で、その後」の意味。",
+            "d. latter": "× latter は「後者の」の意味の形容詞。"
+          }
+        },
+        {
+          num: "(3)",
+          text: "She nearly fell and I caught her (　　).",
+          choices: "a. by an arm　　b. by the arm　　c. with an arm　　d. with the arm",
+          vocab: [["nearly", "もう少しで、危うく"], ["fell", "転んだ（fallの過去形）"], ["caught", "つかんだ（catchの過去形）"]],
+          hint: ["「人の体の一部をつかむ」の定型表現を考えよう", "catch ＋ 人 ＋ 前置詞 ＋ 冠詞 ＋ 体の部分", "体の部分には定冠詞を使う英語の慣用表現"],
+          answer: "b. by the arm",
+          translation: "彼女は転びかけ，私は彼女の腕をつかんだ。",
+          explanation: "〈catch＋人＋by the＋体の部分〉で「人の～をつかむ」の意味。",
+          grammar: "catch[take/seize/grab] ＋ 人 ＋ by the ＋ 体の部分 = 人の～をつかむ",
+          choiceExplanations: {
+            "a. by an arm": "× 体の部分には不定冠詞(an)ではなく定冠詞(the)を使う。",
+            "b. by the arm": "○ 正解。catch＋人＋by the＋体の部分で「人の～をつかむ」。",
+            "c. with an arm": "× with は「～を使って」の意味になり、文脈に合わない。",
+            "d. with the arm": "× with では「腕を使って」の意味になってしまう。"
+          }
+        },
+        {
+          num: "(4)",
+          text: "Last night there was (　　) in my neighborhood.",
+          choices: "a. fire　　b. a fire　　c. the fire　　d. some fire",
+          vocab: [["last night", "昨夜"], ["neighborhood", "近所、近隣"]],
+          hint: ["「火事があった」という具体的な出来事を表している", "fire が「火」（物質名詞）か「火事」（普通名詞）かを考えよう", "具体的な事象としての「火事」は数えられる名詞として扱われる"],
+          answer: "b. a fire",
+          translation: "昨夜近所で火事があった。",
+          explanation: "fire は「火」という意味では物質名詞で数えられない名詞だが、〈具体的な事象〉としての「火事」の意味では普通名詞として扱われる。",
+          grammar: "fire（物質名詞・不可算）= 火 / a fire（普通名詞・可算）= 火事",
+          choiceExplanations: {
+            "a. fire": "× 冠詞なしの fire は「火」（物質名詞）。ここでは具体的な「火事」を表す。",
+            "b. a fire": "○ 正解。「火事」は具体的事象なので、不定冠詞 a をつけて普通名詞として扱う。",
+            "c. the fire": "× the fire は「その（特定の）火事」。初出の情報なので the は不適切。",
+            "d. some fire": "× some fire は「いくらかの火」。具体的な「火事」の意味にならない。"
+          }
+        },
+        {
+          num: "(5)",
+          text: "I would like to (　　) up for my lack of experience with hard work.",
+          choices: "a. catch　　b. look　　c. make　　d. take",
+          vocab: [["lack", "不足、欠如"], ["experience", "経験"], ["hard work", "勤勉、努力"]],
+          hint: ["「～の埋め合わせをする」という群動詞を考えよう", "＿＿ up for ～ で「～を補う、～の埋め合わせをする」", "catch up, look up, take up はそれぞれ意味が違う"],
+          answer: "c. make",
+          translation: "私は経験不足を勤勉で補いたい。",
+          explanation: "群動詞〈make up for ～〉には「～の埋め合わせをする」という意味がある。",
+          grammar: "make up for ～ = ～の埋め合わせをする、～を補う",
+          choiceExplanations: {
+            "a. catch": "× catch up with ～ は「～に追いつく」の意味。",
+            "b. look": "× look up は「見上げる、調べる」の意味。",
+            "c. make": "○ 正解。make up for ～ で「～の埋め合わせをする」。",
+            "d. take": "× take up は「始める、占める」の意味。"
+          }
+        },
+        {
+          num: "(6)",
+          text: "We discussed our plans for a trip to Canada (　　) coffee.",
+          choices: "a. at　　b. for　　c. over　　d. with",
+          vocab: [["discussed", "話し合った"], ["trip", "旅行"]],
+          hint: ["「コーヒーを飲みながら」という付帯状況を表す", "「～しながら」という意味の前置詞を考えよう", "食事や飲み物を前に置いて何かをするイメージ"],
+          answer: "c. over",
+          translation: "私たちはコーヒーを飲みながら，カナダ旅行の計画を話し合った。",
+          explanation: "「～しながら」という〈付帯状況〉を表すには over を使う。",
+          grammar: "over coffee/lunch/dinner = コーヒー／昼食／夕食をとりながら（付帯状況）",
+          choiceExplanations: {
+            "a. at": "× at coffee は不自然な表現。",
+            "b. for": "× for coffee は「コーヒーのために」の意味になる。",
+            "c. over": "○ 正解。over ＋ 飲食物 で「～をとりながら」（付帯状況）。",
+            "d. with": "× with coffee は「コーヒー付きで」の意味で、「～しながら」にならない。"
+          }
+        },
+        {
+          num: "(7)",
+          text: "The concert hall was flooded with people. Therefore, it was (　　) no use to try to find him in the crowd.",
+          choices: "a. at　　b. for　　c. of　　d. with",
+          vocab: [["flooded", "あふれた"], ["therefore", "それゆえ"], ["crowd", "人混み"]],
+          hint: ["「むだである」という意味の慣用表現を考えよう", "＿＿ no use = useless と同じ意味になる", "〈前置詞＋抽象名詞〉＝形容詞 のパターン"],
+          answer: "c. of",
+          translation: "コンサートホールは人であふれていた。それで人混みの中で彼を見つけようとするのはむだだった。",
+          explanation: "〈of＋抽象名詞〉は形容詞句として用いられる。ここでは of no use = useless の意味。",
+          grammar: "of ＋ 抽象名詞 = 形容詞（of use = useful, of no use = useless, of value = valuable）",
+          choiceExplanations: {
+            "a. at": "× at no use は不自然。",
+            "b. for": "× for no use は「使い道がない」で文脈に合わない。",
+            "c. of": "○ 正解。of no use = useless（むだである）。〈of ＋ 抽象名詞〉＝形容詞。",
+            "d. with": "× with no use は不自然な表現。"
+          }
+        },
+        {
+          num: "(8)",
+          text: "There are three important museums in the city. This is one of them, and we will visit (　　) tomorrow.",
+          choices: "a. another　　b. other　　c. others　　d. the other",
+          vocab: [["museums", "博物館（複数形）"]],
+          hint: ["博物館は全部で3つ。そのうち1つがこれ。明日「もう1つ」を訪れる", "3つ以上のうち「別の1つ」を表す代名詞は？", "2つのうちの「残り1つ」と3つ以上の「別の1つ」は違う表現を使う"],
+          answer: "a. another",
+          translation: "その都市には3つの重要な博物館がある。これがその1つで，私たちは明日もう1つの博物館を訪れる。",
+          explanation: "3つ以上のものについて「1つは～，もう1つは…」と言う場合、〈one ～, (and) another ...〉を用いて表す。the other は2つのうち「残り1つ」を表すため不可。",
+          grammar: "one ... another ～ = 1つは…もう1つは～（3つ以上）/ one ... the other ～ = 1つは…残り1つは～（2つのみ）",
+          choiceExplanations: {
+            "a. another": "○ 正解。3つ以上あるうちの「もう1つ」を表す。one...another の形。",
+            "b. other": "× other は単独では代名詞として使えない（othersまたはthe otherの形）。",
+            "c. others": "× others は「複数の他のもの」。ここでは「もう1つ」なので不適切。",
+            "d. the other": "× the other は2つのうちの「残り1つ」。博物館は3つあるので不可。"
+          }
+        },
+        {
+          num: "(9)",
+          text: "Bill and I couldn't get into the house because (　　) of us had a key.",
+          choices: "a. both　　b. either　　c. none　　d. neither",
+          vocab: [["get into", "～に入る"]],
+          hint: ["「鍵を持っていなかった」から家に入れなかった", "Bill と I ＝ 2人。2人について「どちらも～ない」", "2者の否定を表す代名詞を考えよう"],
+          answer: "d. neither",
+          translation: "ビルと私はその家に入れなかった，というのもどちらも鍵をもっていなかったからだ。",
+          explanation: "2者について「Aのどちらも～ない」という意味を表すには、〈neither of A〉を用いる。",
+          grammar: "neither of A = Aのどちらも～ない（2者の全否定）/ either of A = Aのどちらか（2者の片方）",
+          choiceExplanations: {
+            "a. both": "× both of us had a key は「2人とも鍵を持っていた」。文脈と矛盾。",
+            "b. either": "× either of us had a key は「どちらかが鍵を持っていた」。入れないのと矛盾。",
+            "c. none": "× none は3者以上に使う。Bill and I は2人なので不可。",
+            "d. neither": "○ 正解。neither of us = 私たちのどちらも～ない。2者の全否定。"
+          }
+        },
+        {
+          num: "(10)",
+          text: "(　　) that the holidays are over, we must go to school again.",
+          choices: "a. As　　b. Because　　c. For　　d. Now",
+          vocab: [["holidays", "休日、休暇"]],
+          hint: ["「もう休日が終わったので」という理由を表す", "「今やもう～なので」という接続詞的な表現", "＿＿ that ～ で「～なので」（現在の状況に基づく理由）"],
+          answer: "d. Now",
+          translation: "もう休日が終わったので，私たちはまた学校に行かなければならない。",
+          explanation: "now は〈now (that) ～〉という形で接続詞的に用いられ，「（今やもう）～なので」という意味を表す。",
+          grammar: "now (that) ～ = （今やもう）～なので（現在の状況に基づく理由）",
+          choiceExplanations: {
+            "a. As": "× As that の形は不自然。as 単独なら「～なので」の意味になるが、that は不要。",
+            "b. Because": "× Because that の形は不自然。because 単独で使う。",
+            "c. For": "× For that の形は不自然。for は等位接続詞で文頭には置きにくい。",
+            "d. Now": "○ 正解。now (that) ～ で「今やもう～なので」。接続詞的用法。"
+          }
+        }
+      ]
+    },
+    {
+      title: "[2] 同意文完成｜(1)～(4)",
+      open: true,
+      questions: [
+        {
+          num: "(1)",
+          text: "He can't tell the difference between the two.<br>He can't tell one from (　　) (　　).",
+          vocab: [["tell the difference", "違いがわかる、区別する"], ["between the two", "2つの間の"]],
+          hint: ["「2つのうちの一方ともう一方」を表す代名詞を考えよう", "one ... ＿＿ ＿＿ ～ で「一方…他方～」", "2つのうち「残りの1つ」を表す定型表現"],
+          answer: "the other",
+          translation: "彼は2つの区別ができない。",
+          explanation: "〈tell the difference between the two〉は「2つの間の区別をする」という意味で、これは〈one...the other ～〉（「一方…他方～」）という不定代名詞の表現を用いて〈tell one from the other〉と言いかえることができる。",
+          grammar: "one ... the other ～ = 一方は…他方は～（2つの場合）/ tell A from B = AとBを区別する"
+        },
+        {
+          num: "(2)",
+          text: "I paid five thousand yen to have my shoes repaired.<br>(　　) cost (　　) five thousand yen to have my shoes repaired.",
+          vocab: [["paid", "支払った（payの過去形）"], ["have ... repaired", "～を修理してもらう"]],
+          hint: ["「～するのに…円かかった」という慣用表現", "主語に形式主語を使う構文を考えよう", "＿＿ costs（＋人）＋金額＋to do の形"],
+          answer: "It, me",
+          translation: "靴を直してもらうのに5,000円かかった。",
+          explanation: "〈It costs（＋人）＋金額＋to do〉は「（人が）～するのに…（金額）がかかる」という意味の慣用表現。過去形では cost → cost（不変化）。",
+          grammar: "It costs (人) ＋ 金額 ＋ to do = （人が）～するのに…かかる"
+        },
+        {
+          num: "(3)",
+          text: "I haven't seen my old friends for ages.<br>It's ages (　　) I (　　) my old friends.",
+          vocab: [["for ages", "長い間"], ["old friends", "旧友"]],
+          hint: ["「～して以来」という意味の接続詞を考えよう", "この接続詞が導く節には通常、過去形が来る", "It's ages ＿＿ ～ で「～してから長い時間が経っている」"],
+          answer: "since, saw",
+          translation: "旧友たちとは久しく会っていない。",
+          explanation: "「～して以来」の意味を表す接続詞は since を使う。since が導く節には過去形、主節には継続を表す完了形がくるのが普通だが、経過した年月について述べる表現では、主節に現在形が使われることもある。",
+          grammar: "It's ＋ 期間 ＋ since S ＋ V(過去形) = ～してから…の期間が経っている"
+        },
+        {
+          num: "(4)",
+          text: "To my knowledge, Yoko has studied German before.<br>(　　) (　　) (　　) I know, Yoko has studied German before.",
+          vocab: [["knowledge", "知識"], ["German", "ドイツ語"]],
+          hint: ["「私の知る限り」を別の表現で言いかえる", "to my knowledge = ＿＿ ＿＿ ＿＿ I know", "「～する限り」という意味の接続詞句を考えよう"],
+          answer: "As far as",
+          translation: "私の知る限り，ヨウコは以前ドイツ語を勉強していた。",
+          explanation: "〈to A's knowledge〉は「Aの知る限り」という意味で、これは〈as far as A know〉と言いかえることができる。",
+          grammar: "to one's knowledge = as far as one knows = ～の知る限り"
+        }
+      ]
+    },
+    {
+      title: "[3] 並べかえ｜(1)～(6)",
+      open: true,
+      questions: [
+        {
+          num: "(1)",
+          text: "彼が家に帰るとすぐに雨がやんだ。<br>No (　)(　)(　)(　)(　)(　)(　) stopped raining.",
+          scramble: "[ a. home　b. sooner　c. arrived　d. it　e. had　f. than　g. he ]",
+          vocab: [["stopped raining", "雨がやんだ"]],
+          hint: ["「～するとすぐに…した」を表す構文を考えよう", "No ＿＿ ... ＿＿ ～ の形。Noが文頭→倒置が起こる", "過去完了形と過去形の組み合わせに注目"],
+          answer: "b-e-g-c-a-f-d → No sooner had he arrived home than it stopped raining.",
+          translation: "彼が家に帰るとすぐに雨がやんだ。",
+          explanation: "〈no sooner...than ～〉で「…するかしないうちに～（した）、…するとすぐに～（した）」という意味になる。この構文では普通、…には過去完了形、～には過去形がくる。No soonerが文頭にきているため、倒置（had he arrived）の語順になっている。",
+          grammar: "No sooner had S V(p.p.) ... than S V(過去形) ～ = …するとすぐに～した（倒置）"
+        },
+        {
+          num: "(2)",
+          text: "かなり多くの若者が，その歌手に親しみを感じているらしい。<br>It seems that (　)(　)(　)(　)(　)(　)(　) the singer.",
+          scramble: "[ a. close　b. a few　c. young　d. people　e. feel　f. quite　g. to ]",
+          vocab: [["It seems that", "～らしい"], ["singer", "歌手"]],
+          hint: ["「かなり多くの～」という数量表現を考えよう", "「親しみを感じる」＝ feel ＿＿ ＿＿ ～", "quite ＋ a few ＝ 意外と多い意味になる"],
+          answer: "f-b-c-d-e-a-g → quite a few young people feel close to the singer.",
+          translation: "かなり多くの若者が，その歌手に親しみを感じているらしい。",
+          explanation: "〈quite a few ～〉は「かなり多くの～」という意味になり、数がかなり多いことを表す。feel close to ～ で「～に親しみを感じる」。",
+          grammar: "quite a few ＋ 名詞 = かなり多くの～ / feel close to ～ = ～に親しみを感じる"
+        },
+        {
+          num: "(3)",
+          text: "何か新しいことを始めるのに遅すぎるということはない。<br>It (　)(　)(　)(　)(　)(　).",
+          scramble: "[ a. to start　b. is　c. too late　d. new　e. never　f. something ]",
+          vocab: [],
+          hint: ["It is ＿＿ ... ＿＿ ＿＿ の形式主語構文", "否定を表す副詞はbe動詞の直後に置く", "-thing を修飾する形容詞は後ろから修飾する（something ＋ 形容詞）"],
+          answer: "b-e-c-a-f-d → It is never too late to start something new.",
+          translation: "何か新しいことを始めるのに遅すぎるということはない。",
+          explanation: "否定を表す副詞の never が be 動詞を修飾する場合は、be 動詞の直後に置く。また、-thing を修飾する語（new）は -thing の後に置く。",
+          grammar: "It is never too late to do ～ = ～するのに遅すぎることはない / something new（-thingの後に形容詞）"
+        },
+        {
+          num: "(4)",
+          text: "テーブルの上のものは，何でも自由に取って食べてください。<br>Please (　)(　)(　)(　)(　)(　) table.",
+          scramble: "[ a. the　b. yourself　c. to　d. anything　e. on　f. help ]",
+          vocab: [],
+          hint: ["「自由に取って食べる」という慣用表現を考えよう", "help ＿＿ ＿＿ ～ の形で「～を自由にとる」", "「テーブルの上の何でも」の語順を考えよう"],
+          answer: "f-b-c-d-e-a → Please help yourself to anything on the table.",
+          translation: "テーブルの上のものは，何でも自由に取って食べてください。",
+          explanation: "〈help oneself to ～〉は「～を自由に取って食べる（飲む、使う）」の意味になる。",
+          grammar: "help oneself to ～ = ～を自由に取って食べる（飲む、使う）"
+        },
+        {
+          num: "(5)",
+          text: "だれもが彼を好きになるのは彼がとても親切で誠実だからである。<br>The reason (　)(　)(　)(　)(　)(　) and honest.",
+          scramble: "[ a. is that　b. likes　c. he is　d. him　e. very kind　f. everyone ]",
+          vocab: [["honest", "誠実な、正直な"]],
+          hint: ["「～なのは…だからである」＝ The reason ～ is that ...", "The reason の後に関係副詞 why が省略されている", "everyone ＋ 動詞の三人称単数形"],
+          answer: "f-b-d-a-c-e → The reason everyone likes him is that he is very kind and honest.",
+          translation: "だれもが彼を好きになるのは彼がとても親切で誠実だからである。",
+          explanation: "「～なのは…だからである」は「～の理由は…ということである」と考え、〈The reason (why[that]) ～ is that ...〉で表せる。ここでは関係副詞の why が省略されている。",
+          grammar: "The reason (why) S V is that ... = ～なのは…だからである"
+        },
+        {
+          num: "(6)",
+          text: "歌うのが好きな人もいるし，そうでない人もいます。<br>Some (　)(　)(　)(　)(　).",
+          scramble: "[ a. singing　b. others　c. don't　d. and　e. like ]",
+          vocab: [],
+          hint: ["「～な人もいるし、…な人もいる」の定型表現", "some ～, (and) others ... の形", "「好きな人」と「好きでない人」の対比"],
+          answer: "e-a-d-b-c → Some like singing and others don't.",
+          translation: "歌うのが好きな人もいるし，そうでない人もいます。",
+          explanation: "「～の人もいるし、…の人もいる」は〈some ～, (and) others ...〉の形を使って表す。some は「何人か」という漠然とした数量を表し、others は「ほかの人たち」の意味。",
+          grammar: "some ～, (and) others ... = ～な人もいるし、…な人もいる"
+        }
+      ]
+    },
+    {
+      title: "[4] 誤り訂正｜(1)～(6)",
+      open: true,
+      questions: [
+        {
+          num: "(1)",
+          text: "<u>a. Bob's</u> new computer in the office is <u>b. very</u> more <u>c. advanced</u> than <u>d. ours</u>.",
+          vocab: [["advanced", "高性能な、先進的な"]],
+          hint: ["比較級を強める語に注目しよう", "more advanced は比較級。比較級の前に置ける強調語は？", "very は原級を強めるが、比較級にはどんな語を使う？"],
+          answer: "b. very → much [far]",
+          translation: "会社にあるボブの新しいコンピュータは私たちのものよりずっと高性能だ。",
+          explanation: "比較級の意味を強めるには、very ではなく much [far] などを使う。よって下線部 b を much [far] などにする。",
+          grammar: "比較級の強調: much / far / a lot / even / still ＋ 比較級（× very ＋ 比較級）"
+        },
+        {
+          num: "(2)",
+          text: "I am <u>a. frightfully</u> busy <u>b. because</u> I have just <u>c. got</u> back from a <u>d. two-weeks</u> vacation.",
+          vocab: [["frightfully", "恐ろしく、ものすごく"], ["vacation", "休暇"]],
+          hint: ["ハイフンでつないだ「数詞-名詞」が形容詞になるルールに注目", "数詞と名詞をハイフンでつなぐと形容詞になる。その場合の名詞の形は？", "形容詞として使うとき、名詞は単数形にする"],
+          answer: "d. two-weeks → two-week",
+          translation: "私は2週間の休暇から戻ってきたばかりなので恐ろしく忙しい。",
+          explanation: "数詞と名詞がハイフン（-）でつながると、年齢・時間・数量などを表す形容詞になる。名詞に s をつけないことに注意。",
+          grammar: "数詞-名詞（ハイフンつなぎ）= 形容詞：a two-week vacation, a ten-year-old boy（名詞は常に単数形）"
+        },
+        {
+          num: "(3)",
+          text: "<u>a. Although</u> the department store <u>b. was crowded with</u> <u>c. a lot of</u> customers, she bought <u>d. many furnitures</u>.",
+          vocab: [["department store", "デパート"], ["crowded with", "～で混雑した"], ["customers", "客"]],
+          hint: ["furniture という名詞の特殊な性質に注目", "furniture は集合名詞。可算名詞？不可算名詞？", "不可算名詞には many は使えない。量を表す表現を考えよう"],
+          answer: "d. many furnitures → much [a lot of] furniture",
+          translation: "そのデパートは多くの客で混雑していたが，彼女は多くの家具を買った。",
+          explanation: "集合名詞 furniture は常に単数形で単数扱いをして、a [an] はつけない。量の多さを表す場合は much [a lot of] furniture の形にする。",
+          grammar: "furniture（不可算名詞）= 家具。× furnitures, × many furniture → ○ much furniture, a lot of furniture"
+        },
+        {
+          num: "(4)",
+          text: "Meg <u>a. has been</u> married <u>b. with</u> Mike <u>c. for</u> ten years <u>d. now</u>.",
+          vocab: [],
+          hint: ["「～と結婚している」の正しい前置詞は？", "日本語の「～と」に惑わされないように注意", "be married ＿＿ ～ の定型表現"],
+          answer: "b. with → to",
+          translation: "メグはマイクと結婚して10年になる。",
+          explanation: "「～と結婚している」は〈be married to ～〉。「～と」に惑わされて with を使わない。",
+          grammar: "be married to ～ = ～と結婚している（× be married with）"
+        },
+        {
+          num: "(5)",
+          text: "The news <u>a. which</u> they <u>b. had won</u> the prize made them <u>c. very proud</u> of <u>d. themselves</u>.",
+          vocab: [["prize", "賞"]],
+          hint: ["The news と which 以下の関係を考えよう", "which の後の部分で The news は主語にも目的語にもなっていない", "「～という知らせ」＝ 名詞と同格の節を導く接続詞は？"],
+          answer: "a. which → that",
+          translation: "自分たちが賞を取ったという知らせを聞いて，彼らはとても誇りに思った。",
+          explanation: "that が名詞節を導く。that 以下は名詞（the news）と同格で、「～という知らせ」という意味になる。The news は which の後の部分（they had won the prize）の主語にも目的語にもならないことから、関係代名詞の働きを成さない。",
+          grammar: "the news that ～ = ～という知らせ（同格の that 節）※ 関係代名詞 which は不可"
+        },
+        {
+          num: "(6)",
+          text: "When he arrived <u>a. at</u> her house, he found <u>b. that</u> she <u>c. had</u> already departed three hours <u>d. ago</u>.",
+          vocab: [["arrived", "着いた"], ["departed", "出発した"]],
+          hint: ["過去のある時点を基準にして「～前に」と言うとき", "ago は現在を基準にした表現。過去の時点が基準の場合は？", "過去完了形（had departed）と一緒に使う「～前に」の副詞"],
+          answer: "d. ago → before",
+          translation: "彼が彼女の家に着いたとき，彼は彼女がすでに3時間前に出発していたことがわかった。",
+          explanation: "過去のある時を基準にして「その時から～前に」の意味を表す場合、ago ではなく before を用いる。",
+          grammar: "ago = 現在から～前に（過去形と使う）/ before = 過去の基準時点から～前に（過去完了形と使う）"
+        }
+      ]
+    }
+  ]
+};
+
+// ===== NAVIGATION STATE =====
+const NavState = {
+  view: 'home',
+  category: 'selection',
+  section: 0,
+  categoryMap: {
+    selection: [0],
+    completion: [1],
+    ordering: [2],
+    correction: [3]
+  }
+};
+
+// Category display info
+const categoryInfo = {
+  selection: { name: '語句選択', icon: '&#128218;', class: 'selection' },
+  completion: { name: '同意文完成', icon: '&#128172;', class: 'completion' },
+  ordering: { name: '並べかえ', icon: '&#128260;', class: 'ordering' },
+  correction: { name: '誤り訂正', icon: '&#128640;', class: 'correction' }
+};
+
+
+// ===== ROUTER =====
+const Router = {
+  navigate(view, category = null, section = null) {
+    NavState.view = view;
+
+    if (view === 'question') {
+      if (category) NavState.category = category;
+      if (section !== null) {
+        NavState.section = section;
+      } else {
+        // Default to first section of category
+        NavState.section = NavState.categoryMap[NavState.category][0];
+      }
+    }
+
+    this.updateHash();
+    this.render();
+  },
+
+  setCategory(category) {
+    NavState.category = category;
+    NavState.section = NavState.categoryMap[category][0];
+    this.updateHash();
+    this.render();
+  },
+
+  setSection(section) {
+    NavState.section = section;
+    this.updateHash();
+    this.render();
+  },
+
+  updateHash() {
+    let hash = '#' + NavState.view;
+    if (NavState.view === 'question') {
+      const localIndex = NavState.categoryMap[NavState.category].indexOf(NavState.section);
+      hash += '/' + NavState.category + '/' + (localIndex + 1);
+    }
+    history.pushState(null, '', hash);
+  },
+
+  parseHash() {
+    const hash = window.location.hash.slice(1) || 'home';
+    const parts = hash.split('/');
+
+    NavState.view = parts[0] || 'home';
+
+    if (NavState.view === 'question' && parts.length >= 3) {
+      NavState.category = parts[1] || 'selection';
+      const localIndex = parseInt(parts[2], 10) - 1 || 0;
+      const sections = NavState.categoryMap[NavState.category] || [0];
+      NavState.section = sections[Math.min(localIndex, sections.length - 1)] || 0;
+    }
+  },
+
+  render() {
+    // Update main nav
+    document.querySelectorAll('.top-nav-link').forEach(link => {
+      link.classList.toggle('active', link.dataset.nav === NavState.view);
+    });
+    document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.nav === NavState.view);
+    });
+
+    // Update views
+    document.querySelectorAll('.view-home, .view-overview, .view-question').forEach(view => {
+      view.classList.remove('active');
+    });
+
+    const mainContent = document.getElementById('mainContent');
+    const subNav = document.getElementById('subNav');
+
+    if (NavState.view === 'home') {
+      document.getElementById('viewHome').classList.add('active');
+      subNav.classList.remove('visible');
+      mainContent.classList.remove('has-subnav');
+    } else if (NavState.view === 'overview') {
+      document.getElementById('viewOverview').classList.add('active');
+      subNav.classList.remove('visible');
+      mainContent.classList.remove('has-subnav');
+      // Initialize tilt effect for overview cards
+      // Overview カードの傾きエフェクトを初期化
+      setTimeout(initTypeCardTilt, 100);
+    } else if (NavState.view === 'question') {
+      document.getElementById('viewQuestion').classList.add('active');
+      // Only show sub-nav if nav is visible (respects auto-hide state)
+      // ナビが表示中の場合のみサブナビを表示（自動非表示状態を尊重）
+      if (navVisible) {
+        subNav.classList.add('visible');
+      }
+      mainContent.classList.add('has-subnav');
+      this.renderQuestionView();
+    }
+
+    // Invalidate caches when switching views
+    invalidateCaches();
+  },
+
+  renderQuestionView() {
+    // Update sub-nav categories
+    document.querySelectorAll('.sub-nav-cat').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.cat === NavState.category);
+    });
+
+    // Render section toggles
+    const sections = NavState.categoryMap[NavState.category];
+    const togglesContainer = document.getElementById('sectionToggles');
+    togglesContainer.innerHTML = sections.map((sectionIndex, i) => {
+      const isActive = NavState.section === sectionIndex;
+      return `<button class="sub-nav-section ${isActive ? 'active' : ''}"
+                      onclick="Router.setSection(${sectionIndex})">${i + 1}</button>`;
+    }).join('');
+
+    // Update header
+    const info = categoryInfo[NavState.category];
+    const badge = document.getElementById('categoryBadge');
+    badge.className = 'question-category-badge ' + info.class;
+    document.getElementById('categoryIcon').innerHTML = info.icon;
+    document.getElementById('categoryName').textContent = info.name;
+
+    const sectionData = grammarData.sections[NavState.section];
+    document.getElementById('sectionTitle').textContent = sectionData.title;
+    document.getElementById('sectionSubtitle').textContent =
+      sectionData.questions.length + ' questions';
+
+    // Render questions
+    renderQuestions(NavState.section);
+
+    // Initialize card reveal animations
+    initCardReveal();
+
+    // Reset search
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+
+    // Update progress
+    updateProgress();
+  }
+};
+
+// ===== RENDER FUNCTIONS =====
+function renderQuestion(q) {
+  let questionHtml = `<div class="qcard-question">
+    <span class="qnum">${q.num}</span>
+    <div class="qtext">${q.text}</div>`;
+  if (q.choices) questionHtml += `<div class="choices">${q.choices}</div>`;
+  if (q.scramble) questionHtml += `<div class="scramble">${q.scramble}</div>`;
+  questionHtml += `</div>`;
+
+  let btnHtml = `<div class="qcard-buttons">
+    <button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Words</button>`;
+  if (q.hint) btnHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button>`;
+  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button></div>`;
+
+  let leftHtml = `<div class="qcard-left">
+    <div class="toggle-btn-row">
+      <button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Words</button>`;
+  if (q.hint) leftHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button>`;
+  leftHtml += `</div>`;
+  if (q.vocab) {
+    leftHtml += `<div class="collapsible" data-type="vocab"><div class="box vocab-box">`;
+    q.vocab.forEach(v => leftHtml += `<div class="vocab-item"><span class="vocab-word">${v[0]}</span>${v[1]}</div>`);
+    leftHtml += `</div></div>`;
+  }
+  if (q.hint) {
+    leftHtml += `<div class="collapsible" data-type="hint"><div class="box hint-box"><span class="box-label">Solution</span>`;
+    q.hint.forEach(h => leftHtml += `<div class="hint-item">&#8594; ${h}</div>`);
+    leftHtml += `</div></div>`;
+  }
+  leftHtml += `</div>`;
+
+  let rightHtml = `<div class="qcard-right">
+    <div class="toggle-btn-row">
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button>
+    </div>
+    <div class="collapsible" data-type="answer"><div class="box ans-box">
+      <span class="box-label">&#27491;&#35299;: ${q.answer}</span>`;
+  if (q.translation) rightHtml += `<div class="jp-text">${q.translation}</div>`;
+  if (q.explanation) rightHtml += `<div class="jp-text">${q.explanation}</div>`;
+  if (q.choiceExplanations) {
+    rightHtml += `<div class="choice-explanations">`;
+    for (const [choice, exp] of Object.entries(q.choiceExplanations)) {
+      const isCorrect = q.answer.includes(choice);
+      rightHtml += `<div class="choice-exp ${isCorrect ? 'correct' : 'wrong'}">${exp}</div>`;
+    }
+    rightHtml += `</div>`;
+  }
+  if (q.grammar) rightHtml += `<div class="grammar-ref">${q.grammar}</div>`;
+  rightHtml += `</div></div></div>`;
+
+  return `<div class="qcard">${questionHtml}${btnHtml}${leftHtml}${rightHtml}</div>`;
+}
+
+function renderQuestions(sectionIndex) {
+  const section = grammarData.sections[sectionIndex];
+  const container = document.getElementById('questionsList');
+  container.innerHTML = section.questions.map(q => renderQuestion(q)).join('');
+}
+
+// ===== CARD REVEAL ANIMATION =====
+// IntersectionObserver for smooth card reveal on scroll
+let revealObserver = null;
+
+function initCardReveal() {
+  // Disconnect previous observer if exists
+  if (revealObserver) {
+    revealObserver.disconnect();
+  }
+
+  // Check for reduced motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Skip animation for reduced motion - just make all cards visible
+    document.querySelectorAll('.qcard').forEach(card => {
+      card.classList.add('visible');
+    });
+    return;
+  }
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '50px',
+    threshold: 0.1
+  };
+
+  revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all question cards
+  document.querySelectorAll('.qcard').forEach(card => {
+    revealObserver.observe(card);
+  });
+}
+
+// ===== EVENT HANDLERS =====
+function toggle(btn, type) {
+  const card = btn.closest('.qcard');
+  const block = card.querySelector(`.collapsible[data-type="${type}"]`);
+  if (block) {
+    block.classList.toggle('open');
+    updateProgress();
+  }
+}
+
+function setView(view) {
+  document.body.setAttribute('data-view', view);
+  try { localStorage.setItem('viewMode', view); } catch(e) {}
+  document.querySelectorAll('.view-btn-nav').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-view') === view);
+  });
+}
+
+// ===== PROGRESS =====
+let progressBarEl = null;
+let progressTextEl = null;
+
+function updateProgress() {
+  if (!progressBarEl) progressBarEl = document.getElementById('progressBar');
+  if (!progressTextEl) progressTextEl = document.getElementById('progressText');
+
+  const total = document.querySelectorAll('.collapsible[data-type="answer"]').length;
+  const revealed = document.querySelectorAll('.collapsible[data-type="answer"].open').length;
+  const pct = total > 0 ? Math.round((revealed / total) * 100) : 0;
+
+  if (progressBarEl) progressBarEl.style.width = pct + '%';
+  if (progressTextEl) progressTextEl.textContent = `${revealed} / ${total} answers revealed`;
+}
+
+// ===== SEARCH =====
+let searchTimeout = null;
+let searchIndex = null;
+
+function invalidateCaches() {
+  searchIndex = null;
+  progressBarEl = null;
+  progressTextEl = null;
+}
+
+function buildSearchIndex() {
+  const section = grammarData.sections[NavState.section];
+  searchIndex = section.questions.map((q, qi) => ({
+    questionIndex: qi,
+    searchText: [
+      q.text || '',
+      q.choices || '',
+      q.scramble || '',
+      q.answer || '',
+      q.translation || '',
+      q.grammar || '',
+      (q.vocab || []).flat().join(' '),
+      (q.hint || []).join(' ')
+    ].join(' ').toLowerCase()
+  }));
+}
+
+function debouncedSearch() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(handleSearch, 150);
+}
+
+function handleSearch() {
+  const searchInput = document.getElementById('searchInput');
+  if (!searchIndex) buildSearchIndex();
+
+  const query = searchInput.value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.qcard');
+
+  if (!query) {
+    cards.forEach(card => card.classList.remove('no-match'));
+    return;
+  }
+
+  searchIndex.forEach((q, qi) => {
+    const card = cards[qi];
+    if (!card) return;
+    card.classList.toggle('no-match', !q.searchText.includes(query));
+  });
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  try { localStorage.setItem('theme', isDark ? 'light' : 'dark'); } catch(e) {}
+  document.querySelector('.theme-icon').innerHTML = isDark ? '&#9728;&#65039;' : '&#127769;';
+}
+
+// ===== TILT EFFECT FOR OVERVIEW CARDS =====
+// 3D傾きエフェクト - Overview カードにインタラクティブな動きを追加
+function initTypeCardTilt() {
+  const cards = document.querySelectorAll('.conj-card');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    let rafId = null;
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'box-shadow 0.3s ease';
+    });
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      targetX = (y - centerY) / 80;
+      targetY = (centerX - x) / 80;
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          currentX += (targetX - currentX) * 0.15;
+          currentY += (targetY - currentY) * 0.15;
+          card.style.transform = `perspective(1000px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(-3px)`;
+          card.style.boxShadow = 'var(--shadow-lg)';
+          rafId = null;
+        });
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease';
+      card.style.transform = '';
+      card.style.boxShadow = '';
+      currentX = 0;
+      currentY = 0;
+      targetX = 0;
+      targetY = 0;
+    });
+  });
+}
+
+// ===== AUTO-HIDE NAVIGATION =====
+// ナビゲーション自動非表示機能
+let navVisible = true;        // Start visible - 最初は表示
+let hideTimeout = null;
+let hasScrolled = false;      // Track if user has scrolled - スクロール検出用
+
+function showNav() {
+  clearTimeout(hideTimeout);
+  navVisible = true;
+  document.querySelector('.top-nav').classList.add('visible');
+  // Sub-nav only shows if in question view
+  if (NavState.view === 'question') {
+    document.getElementById('subNav').classList.add('visible');
+  }
+}
+
+function hideNav() {
+  hideTimeout = setTimeout(() => {
+    navVisible = false;
+    document.querySelector('.top-nav').classList.remove('visible');
+    document.getElementById('subNav').classList.remove('visible');
+  }, 300); // Small delay to prevent flickering
+}
+
+function initAutoHideNav() {
+  const topNav = document.querySelector('.top-nav');
+  const subNav = document.getElementById('subNav');
+
+  // Show nav on page load - ページ読み込み時に表示
+  showNav();
+
+  // First scroll detection - hide nav after first scroll
+  // 最初のスクロールでナビを隠す
+  window.addEventListener('scroll', () => {
+    if (!hasScrolled && window.scrollY > 50) {
+      hasScrolled = true;
+      hideNav();
+    }
+  }, { passive: true });
+
+  // PC: Mouse hover detection (only after first scroll)
+  // PC: マウスホバー検出（スクロール後のみ）
+  document.addEventListener('mousemove', (e) => {
+    if (!hasScrolled) return; // Don't hide until user has scrolled
+    if (e.clientY < 80) {
+      showNav();
+    } else if (e.clientY > 200 && navVisible) {
+      hideNav();
+    }
+  });
+
+  // Prevent hiding when hovering over nav itself
+  // ナビにホバー中は隠さない
+  topNav.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+  subNav.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+  topNav.addEventListener('mouseleave', () => {
+    if (hasScrolled) hideNav();
+  });
+  subNav.addEventListener('mouseleave', () => {
+    if (hasScrolled) hideNav();
+  });
+
+  // iPad/Touch: Tap detection at top
+  // iPad/タッチ: 画面上部タップで表示/非表示
+  document.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    if (touch.clientY < 100) {
+      if (navVisible && hasScrolled) {
+        hideNav();
+      } else {
+        showNav();
+      }
+    } else if (touch.clientY > 200 && navVisible && hasScrolled) {
+      // Tap elsewhere hides nav (only after first scroll)
+      hideNav();
+    }
+  }, { passive: true });
+}
+
+// ===== INIT =====
+window.addEventListener('DOMContentLoaded', () => {
+  // Load saved preferences
+  try {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.querySelector('.theme-icon').innerHTML = '&#127769;';
+    }
+    const savedView = localStorage.getItem('viewMode') || 'single';
+    setView(savedView);
+  } catch(e) {}
+
+  // Parse initial hash and render
+  Router.parseHash();
+  Router.render();
+
+  // Initialize auto-hide navigation
+  // ナビゲーション自動非表示を初期化
+  initAutoHideNav();
+});
+
+// Handle browser back/forward
+window.addEventListener('popstate', () => {
+  Router.parseHash();
+  Router.render();
+});
+</script>
+<link rel="stylesheet" href="../../../teacher-reveal.css">
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
+<script src="../../../firebase-config.js"></script>
+<script src="../../../answer-fetch.js"></script>
+<script src="../../../teacher-reveal.js"></script>
+</body>
+</html>
