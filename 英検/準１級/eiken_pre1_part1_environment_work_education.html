@@ -4,166 +4,271 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Part 1: Environment, Work & Education | Eiken Pre-1 Speaking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ── Design Tokens ── */
+/* ═══════════════════════════════════════════════════════════
+   ONCE UPON A TIME IN... EIKEN
+   Retro Hollywood / Tarantino Title Card Aesthetic
+   ═══════════════════════════════════════════════════════════ */
+
 :root {
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-jp: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-  --bg: #f8f9fb;
-  --surface: #ffffff;
-  --surface-hover: #f1f3f9;
-  --surface-alt: #f0f2f7;
-  --border: #e2e5ee;
-  --border-light: #eef0f5;
-  --text: #1a1d26;
-  --text-secondary: #5c6170;
-  --text-muted: #8b90a0;
-  --accent: #4f6df5;
-  --accent-soft: #eef1fe;
-  --accent-hover: #3d5be0;
-  --hint-bg: #fef9ec;
-  --hint-border: #e5c44b;
-  --hint-text: #8a6d14;
-  --answer-bg: #ecfdf5;
-  --answer-border: #34d399;
-  --answer-text: #065f46;
-  --jp-bg: #f0f4ff;
-  --jp-border: #6b83cf;
-  --tip-bg: #faf5ff;
-  --tip-border: #a78bfa;
-  --tip-text: #5b21b6;
-  --env-accent: #10b981;
-  --work-accent: #3b82f6;
-  --edu-accent: #8b5cf6;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-  --radius: 10px;
-  --radius-sm: 6px;
-  --transition: 0.2s ease;
+  --bg: #0d0a06;
+  --surface: #1a1510;
+  --surface-raised: #221d16;
+  --gold: #d4a644;
+  --gold-dim: #a07a2e;
+  --gold-glow: rgba(212,166,68,0.4);
+  --cream: #f5e6c8;
+  --cream-dim: #c4b89a;
+  --burnt: #e07030;
+  --burnt-dim: #a85220;
+  --hot-pink: #ff2d6b;
+  --hot-pink-glow: rgba(255,45,107,0.5);
+  --neon-blue: #00d4ff;
+  --film-strip: #2a2520;
+  --border: #3a3228;
+  --border-gold: rgba(212,166,68,0.3);
+  --env: #4ecdc4;
+  --work: #f7b731;
+  --edu: #fc5c65;
+  --font-display: 'Bebas Neue', 'Arial Black', sans-serif;
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-jp: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+  --font-mono: 'Courier New', monospace;
 }
 
-[data-theme="dark"] {
-  --bg: #0f1117;
-  --surface: #1a1d28;
-  --surface-hover: #22263a;
-  --surface-alt: #1e2130;
-  --border: #2a2e3e;
-  --border-light: #24283a;
-  --text: #e4e6ed;
-  --text-secondary: #9ea2b4;
-  --text-muted: #686d82;
-  --accent: #6b86f8;
-  --accent-soft: #1e2445;
-  --accent-hover: #8da0fa;
-  --hint-bg: #1f1c14;
-  --hint-border: #8a7530;
-  --hint-text: #d4b84a;
-  --answer-bg: #0d1f17;
-  --answer-border: #22885f;
-  --answer-text: #6ee7b7;
-  --jp-bg: #141828;
-  --jp-border: #4a5a9a;
-  --tip-bg: #1a1428;
-  --tip-border: #7c5cc4;
-  --tip-text: #c4a8ff;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+[data-theme="matinee"] {
+  --bg: #f5ead6;
+  --surface: #ede0c8;
+  --surface-raised: #e8d8b8;
+  --cream: #2a2218;
+  --cream-dim: #5a4e3a;
+  --border: #c4b89a;
+  --border-gold: rgba(160,122,46,0.4);
+  --film-strip: #d4c8aa;
 }
 
-/* ── Base ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ── Film Grain Overlay ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+  animation: grain 0.5s steps(4) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-5px, 5px); }
+  50% { transform: translate(5px, -5px); }
+  75% { transform: translate(-3px, -3px); }
+}
+
+/* ── Vignette ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+}
+
 body {
-  font-family: var(--font);
+  font-family: var(--font-body);
   background: var(--bg);
-  color: var(--text);
+  color: var(--cream);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Page Load: Fade from Black ── */
+.page-wrap {
+  animation: fadeFromBlack 1.8s ease-out;
+}
+
+@keyframes fadeFromBlack {
+  0% { opacity: 0; filter: brightness(0); }
+  40% { opacity: 0; filter: brightness(0); }
+  100% { opacity: 1; filter: brightness(1); }
 }
 
 /* ── Layout ── */
-.page { max-width: 800px; margin: 0 auto; padding: 24px 20px 80px; }
+.page { max-width: 860px; margin: 0 auto; padding: 0 20px 100px; }
 
-/* ── Header ── */
-.page-header {
+/* ═══════════════════════════════════════
+   MARQUEE HEADER — Cinema Title Card
+   ═══════════════════════════════════════ */
+.cinema-header {
   text-align: center;
-  padding: 48px 24px 40px;
-  margin-bottom: 32px;
+  padding: 60px 30px 50px;
+  margin-bottom: 40px;
+  position: relative;
+  border: 3px solid var(--gold);
+  border-radius: 4px;
+  background: var(--surface);
+  animation: headerSlideIn 1.2s ease-out 0.6s both;
 }
 
-.page-header .badge {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-soft);
-  padding: 4px 14px;
-  border-radius: 100px;
-  margin-bottom: 16px;
+@keyframes headerSlideIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.page-header h1 {
-  font-size: 1.75rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
-  margin-bottom: 8px;
+/* Marquee Lights — traveling dots around the border */
+.cinema-header::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px dashed var(--gold-dim);
+  border-radius: 6px;
+  animation: marqueeGlow 3s ease-in-out infinite;
 }
 
-.page-header .subtitle {
+@keyframes marqueeGlow {
+  0%, 100% { border-color: var(--gold-dim); box-shadow: 0 0 8px var(--gold-glow); }
+  50% { border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(212,166,68,0.15); }
+}
+
+/* Traveling light dots */
+.cinema-header::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 0 0 / 20px 20px repeat-x,
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 0 100% / 20px 20px repeat-x,
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 0 0 / 20px 20px repeat-y,
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 100% 0 / 20px 20px repeat-y;
+  animation: travelingLights 2s linear infinite;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes travelingLights {
+  from { background-position: 0 0, 20px 100%, 0 0, 100% 20px; }
+  to { background-position: 20px 0, 0 100%, 0 20px, 100% 0; }
+}
+
+.cinema-header .presents {
+  font-family: var(--font-display);
   font-size: 0.95rem;
-  color: var(--text-secondary);
+  letter-spacing: 0.35em;
+  color: var(--cream-dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  animation: textFadeUp 0.8s ease-out 1.2s both;
 }
 
-/* ── Progress ── */
-.progress-wrap {
+.cinema-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 4.5rem);
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 6px;
+  text-shadow: 0 0 30px var(--gold-glow), 0 2px 0 var(--gold-dim);
+  animation: titleReveal 1s ease-out 1.0s both;
+}
+
+@keyframes titleReveal {
+  from { opacity: 0; transform: scale(0.8); letter-spacing: 0.3em; }
+  to { opacity: 1; transform: scale(1); letter-spacing: 0.08em; }
+}
+
+.cinema-header .tagline {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--cream-dim);
+  margin-top: 4px;
+  animation: textFadeUp 0.8s ease-out 1.4s both;
+}
+
+@keyframes textFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Progress Film Strip ── */
+.film-progress {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 20px;
   justify-content: center;
+  gap: 14px;
+  margin-top: 28px;
+  animation: textFadeUp 0.8s ease-out 1.6s both;
 }
 
-.progress-track {
-  width: 180px;
-  height: 6px;
-  background: var(--border);
-  border-radius: 100px;
+.film-track {
+  position: relative;
+  width: 220px;
+  height: 24px;
+  background: var(--film-strip);
+  border-radius: 2px;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 
-.progress-fill {
+/* Sprocket holes */
+.film-track::before, .film-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  width: 100%;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--bg) 0 6px, transparent 6px 14px);
+  z-index: 2;
+}
+.film-track::after { top: auto; bottom: 2px; }
+
+.film-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 0%;
-  background: var(--accent);
-  border-radius: 100px;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--burnt));
+  transition: width 0.6s ease;
+  z-index: 1;
 }
 
-.progress-label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
+.film-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
 }
 
-/* ── Top Bar (theme toggle + nav) ── */
+/* ═══════════════════════════════════════
+   TOP BAR
+   ═══════════════════════════════════════ */
 .top-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background: color-mix(in srgb, var(--surface) 85%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-light);
+  background: rgba(13,10,6,0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
   padding: 0 20px;
 }
 
 .top-bar-inner {
-  max-width: 800px;
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -171,659 +276,733 @@ body {
   height: 48px;
 }
 
-.top-bar .back-link {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+.back-link {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--cream-dim);
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  text-transform: uppercase;
+  transition: color 0.2s;
 }
 
-.top-bar .back-link:hover { color: var(--accent); }
+.back-link:hover { color: var(--gold); }
 
 .theme-toggle {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   background: none;
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 6px 10px;
+  border-radius: 2px;
+  padding: 5px 14px;
   cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  transition: border-color var(--transition), color var(--transition);
+  color: var(--cream-dim);
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .theme-toggle:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 10px var(--gold-glow);
 }
 
-/* ── Nav (Table of Contents) ── */
-.toc-card {
+/* ═══════════════════════════════════════
+   TABLE OF CONTENTS — Chapter Select
+   ═══════════════════════════════════════ */
+.chapter-select {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 32px;
+  border-radius: 4px;
+  padding: 24px;
+  margin-bottom: 36px;
+  animation: textFadeUp 0.8s ease-out 1.8s both;
 }
 
-.toc-card h2 {
-  font-size: 0.8rem;
-  font-weight: 600;
+.chapter-select h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  margin-bottom: 12px;
+  color: var(--gold);
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
 }
 
-.toc-list {
+.chapter-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 6px;
 }
 
-.toc-item {
+.chapter-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--text);
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--cream);
   cursor: pointer;
-  transition: background var(--transition);
   text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
 }
 
-.toc-item:hover { background: var(--surface-hover); }
+.chapter-item:hover {
+  background: var(--surface-raised);
+  box-shadow: inset 3px 0 0 var(--gold);
+}
 
-.toc-item .dot {
-  width: 8px;
-  height: 8px;
+.chapter-item .reel {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  border: 2px solid;
   flex-shrink: 0;
 }
 
-.toc-item .check {
-  color: var(--env-accent);
-  font-size: 0.9rem;
+.chapter-item .chk {
+  margin-left: auto;
+  color: var(--gold);
   opacity: 0;
-  transition: opacity var(--transition);
+  transition: opacity 0.3s;
+  font-size: 0.85rem;
 }
 
-.toc-item.done .check { opacity: 1; }
+.chapter-item.done .chk { opacity: 1; }
 
-/* ── Section Intro Cards ── */
-.intro-card {
+/* ═══════════════════════════════════════
+   COLLAPSIBLE SECTIONS — Poster Cards
+   ═══════════════════════════════════════ */
+.poster-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 32px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.intro-card h2 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 12px;
+.poster-card:hover {
+  border-color: var(--border-gold);
 }
 
-.intro-card p {
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  margin-bottom: 12px;
+.poster-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.intro-card p:last-child { margin-bottom: 0; }
+.poster-header:hover { background: var(--surface-raised); }
 
-/* ── Formula Steps ── */
-.formula-steps {
-  display: grid;
-  gap: 8px;
-  margin-top: 16px;
+.poster-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
+
+.chevron {
+  width: 22px;
+  height: 22px;
+  color: var(--gold-dim);
+  transition: transform 0.35s ease, color 0.2s;
+  flex-shrink: 0;
+}
+
+.poster-card.open .chevron { transform: rotate(180deg); color: var(--gold); }
+
+.poster-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.poster-body-inner { padding: 0 22px 22px; }
+
+/* Formula steps */
+.formula-steps { display: grid; gap: 8px; margin-top: 14px; }
 
 .formula-step {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  padding: 12px 16px;
-  background: var(--surface-alt);
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface-raised);
+  border-left: 3px solid var(--gold);
+  border-radius: 2px;
 }
 
 .formula-step .num {
-  font-weight: 700;
-  color: var(--accent);
-  font-size: 0.85rem;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--gold);
   flex-shrink: 0;
-  width: 20px;
 }
 
-.formula-step .label { font-weight: 600; }
-.formula-step .desc { color: var(--text-secondary); }
+.formula-step .label { font-weight: 700; color: var(--cream); }
+.formula-step .desc { color: var(--cream-dim); }
 
-/* ── Filler Phrases ── */
+/* Filler chips */
 .filler-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 8px;
-  margin-top: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
 }
 
 .filler-chip {
-  padding: 10px 14px;
-  background: var(--surface-alt);
-  border-radius: var(--radius-sm);
-  font-size: 0.88rem;
+  padding: 14px 16px;
+  background: var(--surface-raised);
+  border-left: 3px solid var(--burnt);
+  border-radius: 2px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.filler-chip .en { font-weight: 600; display: block; }
-.filler-chip .jp { color: var(--text-muted); font-size: 0.82rem; font-family: var(--font-jp); }
+.filler-chip:hover {
+  transform: translateX(4px);
+  box-shadow: -3px 0 0 var(--hot-pink);
+  border-left-color: var(--hot-pink);
+}
 
-/* ── Category ── */
-.category { margin-bottom: 40px; }
+.filler-chip .en {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--cream);
+  margin-bottom: 2px;
+}
 
-.category-label {
-  display: inline-flex;
+.filler-chip .jp {
+  font-family: var(--font-jp);
+  font-size: 0.82rem;
+  color: var(--cream-dim);
+}
+
+/* ═══════════════════════════════════════
+   CATEGORY DIVIDERS — Film Strip
+   ═══════════════════════════════════════ */
+.category { margin-bottom: 44px; }
+
+.film-divider {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 4px 12px;
-  border-radius: 100px;
-  margin-bottom: 16px;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 10px 0;
 }
 
-.category-label.env { background: #ecfdf5; color: #047857; }
-.category-label.work { background: #eff6ff; color: #1d4ed8; }
-.category-label.edu { background: #f5f3ff; color: #6d28d9; }
+.film-divider::before, .film-divider::after {
+  content: '';
+  flex: 1;
+  height: 16px;
+  background: var(--film-strip);
+  border-radius: 2px;
+  /* sprocket pattern */
+  background-image: repeating-linear-gradient(90deg,
+    var(--bg) 0 5px, transparent 5px 12px);
+  background-size: 100% 4px;
+  background-position: 0 0, 0 100%;
+  background-repeat: repeat-x;
+}
 
-[data-theme="dark"] .category-label.env { background: #052e16; color: #6ee7b7; }
-[data-theme="dark"] .category-label.work { background: #172554; color: #93c5fd; }
-[data-theme="dark"] .category-label.edu { background: #1e1145; color: #c4b5fd; }
+.film-divider .cat-label {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 6px 20px;
+  border: 2px solid;
+  border-radius: 2px;
+}
 
-/* ── Question Card ── */
+.film-divider .cat-label.env { color: var(--env); border-color: var(--env); }
+.film-divider .cat-label.work { color: var(--work); border-color: var(--work); }
+.film-divider .cat-label.edu { color: var(--edu); border-color: var(--edu); }
+
+/* ═══════════════════════════════════════
+   QUESTION CARDS
+   ═══════════════════════════════════════ */
 .q-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 4px;
   margin-bottom: 12px;
   overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.4s;
+}
+
+.q-card:hover {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 20px rgba(212,166,68,0.08);
+}
+
+.q-card.open {
+  border-color: var(--gold);
+  box-shadow: 0 0 30px rgba(212,166,68,0.12), inset 0 0 60px rgba(212,166,68,0.02);
 }
 
 .q-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  cursor: pointer;
-  transition: background var(--transition);
   gap: 12px;
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.q-header:hover { background: var(--surface-hover); }
+.q-header:hover { background: var(--surface-raised); }
 
 .q-title {
-  font-size: 0.95rem;
-  font-weight: 600;
   flex: 1;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cream);
 }
 
 .q-title .num {
-  color: var(--text-muted);
-  margin-right: 6px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-right: 8px;
+  letter-spacing: 0.05em;
 }
 
-.q-difficulty {
+.q-diff {
+  font-family: var(--font-display);
   font-size: 0.72rem;
-  font-weight: 600;
-  padding: 2px 10px;
-  border-radius: 100px;
-  flex-shrink: 0;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.q-difficulty.basic { background: #ecfdf5; color: #047857; }
-.q-difficulty.intermediate { background: #fffbeb; color: #b45309; }
-.q-difficulty.advanced { background: #fef2f2; color: #b91c1c; }
-
-[data-theme="dark"] .q-difficulty.basic { background: #052e16; color: #6ee7b7; }
-[data-theme="dark"] .q-difficulty.intermediate { background: #1c1405; color: #fbbf24; }
-[data-theme="dark"] .q-difficulty.advanced { background: #2a0a0a; color: #fca5a5; }
-
-.q-chevron {
-  width: 20px;
-  height: 20px;
-  color: var(--text-muted);
-  transition: transform 0.25s ease;
+  padding: 3px 12px;
+  border-radius: 2px;
   flex-shrink: 0;
+  border: 1px solid;
 }
 
-.q-card.open .q-chevron { transform: rotate(180deg); }
+.q-diff.basic { color: var(--env); border-color: var(--env); }
+.q-diff.intermediate { color: var(--work); border-color: var(--work); }
+.q-diff.advanced { color: var(--edu); border-color: var(--edu); }
 
 .q-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
+  transition: max-height 0.4s ease;
 }
 
-.q-body-inner { padding: 0 20px 20px; }
+.q-body-inner { padding: 0 22px 22px; }
 
-/* ── Action Buttons ── */
+/* ═══════════════════════════════════════
+   ACTION BUTTONS — Neon Style
+   ═══════════════════════════════════════ */
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .btn {
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 8px 18px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 22px;
   border: none;
-  border-radius: 100px;
+  border-radius: 2px;
   cursor: pointer;
-  transition: opacity var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.3s;
 }
 
-.btn:hover { opacity: 0.85; }
-.btn:active { transform: scale(0.97); }
+.btn:active { transform: scale(0.96); }
 
+/* Neon Hint Button */
 .btn-hint {
-  background: var(--hint-bg);
-  color: var(--hint-text);
-  border: 1px solid var(--hint-border);
+  background: transparent;
+  color: var(--work);
+  border: 1px solid var(--work);
+  box-shadow: 0 0 8px rgba(247,183,49,0.2);
 }
 
+.btn-hint:hover {
+  box-shadow: 0 0 16px rgba(247,183,49,0.4), inset 0 0 16px rgba(247,183,49,0.05);
+  text-shadow: 0 0 8px var(--work);
+}
+
+/* Neon Answer Button */
 .btn-answer {
-  background: var(--accent);
-  color: #fff;
+  background: var(--hot-pink);
+  color: white;
+  box-shadow: 0 0 12px var(--hot-pink-glow);
+  animation: neonPulse 2.5s ease-in-out infinite;
 }
 
-.btn-answer-alt {
-  background: var(--surface-alt);
-  color: var(--text);
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 12px var(--hot-pink-glow); }
+  50% { box-shadow: 0 0 24px var(--hot-pink-glow), 0 0 48px rgba(255,45,107,0.2); }
+}
+
+.btn-answer:hover {
+  box-shadow: 0 0 30px var(--hot-pink-glow), 0 0 60px rgba(255,45,107,0.3);
+  transform: translateY(-2px);
+}
+
+/* Alt Answer Button */
+.btn-alt {
+  background: transparent;
+  color: var(--cream);
   border: 1px solid var(--border);
 }
 
-.btn.active {
-  opacity: 0.6;
+.btn-alt:hover {
+  border-color: var(--cream-dim);
+  box-shadow: 0 0 10px rgba(245,230,200,0.1);
 }
 
-/* ── Content Panels ── */
+.btn.active { opacity: 0.5; }
+
+/* ═══════════════════════════════════════
+   PANELS — Answer/Hint Content
+   ═══════════════════════════════════════ */
 .panel {
   display: none;
-  margin-top: 12px;
-  animation: panelIn 0.25s ease;
+  margin-top: 14px;
+  animation: panelReveal 0.4s ease-out;
 }
 
 .panel.visible { display: block; }
 
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(6px); }
+@keyframes panelReveal {
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hint Panel */
+/* ── Hint Panel ── */
 .hint-panel {
-  background: var(--hint-bg);
-  border: 1px solid var(--hint-border);
-  border-radius: var(--radius);
-  padding: 20px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--work);
+  border-radius: 2px;
+  padding: 22px;
 }
 
 .hint-panel h3 {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--hint-text);
-  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--work);
+  margin-bottom: 14px;
 }
 
-.hint-panel ul {
-  list-style: none;
-  padding: 0;
-}
+.hint-panel ul { list-style: none; padding: 0; }
 
 .hint-panel li {
   position: relative;
-  padding-left: 20px;
-  margin-bottom: 6px;
-  font-size: 0.88rem;
-  color: var(--text-secondary);
+  padding-left: 22px;
+  margin-bottom: 8px;
+  font-size: 0.92rem;
+  color: var(--cream-dim);
 }
 
 .hint-panel li::before {
-  content: '';
+  content: '\25B8';
   position: absolute;
   left: 0;
-  top: 10px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--hint-border);
+  color: var(--work);
 }
 
 .hint-panel .key-phrases {
-  margin-top: 14px;
+  margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid color-mix(in srgb, var(--hint-border) 40%, transparent);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--hint-text);
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--gold);
 }
 
 .hint-panel .key-phrases code {
-  background: color-mix(in srgb, var(--hint-border) 20%, transparent);
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-family: var(--font);
-  font-weight: 500;
+  font-family: var(--font-mono);
+  background: rgba(212,166,68,0.1);
+  border: 1px solid var(--border-gold);
+  padding: 1px 8px;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  color: var(--gold);
 }
 
-/* Answer Panel */
-.answer-panel {
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
+/* ── Answer Panel ── */
 .answer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
-@media (max-width: 640px) {
-  .answer-grid { grid-template-columns: 1fr; }
-}
+@media (max-width: 640px) { .answer-grid { grid-template-columns: 1fr; } }
 
 .model-answer {
-  background: var(--answer-bg);
-  border: 1px solid var(--answer-border);
-  border-radius: var(--radius);
-  padding: 18px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 2px;
+  padding: 20px;
 }
 
 .model-answer .side-label {
   display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--answer-text);
-  margin-bottom: 8px;
+  color: var(--gold);
+  margin-bottom: 10px;
 }
 
 .model-answer .en-text {
-  font-size: 0.92rem;
-  line-height: 1.8;
+  font-size: 0.95rem;
+  line-height: 1.85;
   font-style: italic;
-  color: var(--text);
+  color: var(--cream);
 }
 
 .jp-box {
-  background: var(--jp-bg);
-  border: 1px solid color-mix(in srgb, var(--jp-border) 30%, transparent);
-  border-radius: var(--radius);
-  padding: 18px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--burnt);
+  border-radius: 2px;
+  padding: 20px;
 }
 
 .jp-box .side-label {
   display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--jp-border);
-  margin-bottom: 8px;
+  color: var(--burnt);
+  margin-bottom: 10px;
 }
 
 .jp-box .jp-text {
-  font-size: 0.88rem;
-  line-height: 1.8;
   font-family: var(--font-jp);
-  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
 }
 
-/* Tips Panel */
-.tips-panel {
-  background: var(--tip-bg);
-  border: 1px solid color-mix(in srgb, var(--tip-border) 30%, transparent);
-  border-radius: var(--radius);
-  padding: 18px;
-}
-
-.tips-panel h3 {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--tip-text);
-  margin-bottom: 12px;
-}
-
-.tips-panel ul {
-  list-style: none;
-  padding: 0;
-}
-
-.tips-panel li {
-  margin-bottom: 10px;
-  font-size: 0.88rem;
-  line-height: 1.6;
-}
-
-.tips-panel li:last-child { margin-bottom: 0; }
-
-.tips-panel .phrase {
-  display: inline-block;
-  font-weight: 700;
-  color: var(--tip-text);
-  margin-right: 4px;
-}
-
-.tips-panel .explain {
-  color: var(--text-secondary);
-  font-family: var(--font-jp);
-}
-
-/* ── Collapsible Section ── */
-.collapsible {
-  background: var(--surface);
+/* ── Director's Notes (Tips) ── */
+.directors-notes {
+  background: var(--surface-raised);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 2px;
+  padding: 20px;
+  position: relative;
+}
+
+/* Clapperboard stripe at top */
+.directors-notes::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(135deg,
+    var(--hot-pink) 0 8px, var(--bg) 8px 16px);
+}
+
+.directors-notes h3 {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hot-pink);
+  margin-bottom: 14px;
+  margin-top: 4px;
+}
+
+.directors-notes ul { list-style: none; padding: 0; }
+
+.directors-notes li {
   margin-bottom: 12px;
-  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  padding-left: 4px;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
 }
 
-.collapsible-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  cursor: pointer;
-  transition: background var(--transition);
+.directors-notes li:last-child { margin-bottom: 0; }
+
+.directors-notes .phrase {
+  font-weight: 700;
+  color: var(--hot-pink);
+  font-style: italic;
 }
 
-.collapsible-header:hover { background: var(--surface-hover); }
-
-.collapsible-header h2 {
-  font-size: 0.95rem;
-  font-weight: 600;
+.directors-notes .explain {
+  color: var(--cream-dim);
+  font-family: var(--font-jp);
+  font-size: 0.85rem;
 }
 
-.collapsible-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease;
-}
-
-.collapsible-body-inner { padding: 0 20px 20px; }
-
-.collapsible.open .q-chevron { transform: rotate(180deg); }
-
-/* ── Back to Top ── */
+/* ═══════════════════════════════════════
+   BACK TO TOP — Film Reel
+   ═══════════════════════════════════════ */
 .back-top {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 40px;
-  height: 40px;
+  bottom: 28px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-md);
-  color: var(--text-secondary);
-  font-size: 1rem;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  font-size: 1.2rem;
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition), transform var(--transition);
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 12px var(--gold-glow);
 }
 
-.back-top.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
+.back-top.visible { opacity: 1; pointer-events: auto; }
 
 .back-top:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-  color: var(--accent);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 0 24px var(--gold-glow);
 }
 
-/* ── Responsive ── */
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
 @media (max-width: 640px) {
-  .page { padding: 16px 14px 60px; }
-  .page-header { padding: 40px 16px 32px; }
-  .page-header h1 { font-size: 1.4rem; }
+  .page { padding: 0 14px 80px; }
+  .cinema-header { padding: 44px 20px 36px; }
+  .cinema-header h1 { font-size: 2.2rem; }
   .filler-grid { grid-template-columns: 1fr; }
-  .toc-list { grid-template-columns: 1fr; }
+  .chapter-list { grid-template-columns: 1fr; }
+  .film-divider::before, .film-divider::after { display: none; }
 }
 
-/* ── Print ── */
 @media print {
   .top-bar, .back-top, .actions { display: none; }
-  .q-body, .collapsible-body { max-height: none !important; }
+  .q-body, .poster-body { max-height: none !important; }
   .panel { display: block !important; }
-  body { background: white; }
+  body { background: white; color: #1a1a1a; }
+  body::before, body::after { display: none; }
 }
 </style>
 </head>
 <body>
 
+<div class="page-wrap">
+
 <!-- Top Bar -->
 <div class="top-bar">
   <div class="top-bar-inner">
-    <a href="index.html" class="back-link">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-      Back
-    </a>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <span class="theme-icon">Dark</span>
+    <a href="index.html" class="back-link">&larr; Back</a>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="theme-label">Matinee</span>
     </button>
   </div>
 </div>
 
-<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
 
 <div class="page">
 
-  <!-- Header -->
-  <header class="page-header">
-    <span class="badge">Eiken Pre-1 Speaking</span>
-    <h1>Part 1: Environment, Work & Education</h1>
-    <p class="subtitle">7 practice questions with model answers at the 準1級 level</p>
-    <div class="progress-wrap">
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-label" id="progressLabel">0 / 7</span>
+  <!-- ═══════════ CINEMA HEADER ═══════════ -->
+  <header class="cinema-header">
+    <div class="presents">Eiken Pre-1 Speaking Presents</div>
+    <h1>Once Upon a Time in... Eiken</h1>
+    <div class="tagline">Part 1 &mdash; Environment, Work & Education</div>
+    <div class="film-progress">
+      <div class="film-track"><div class="film-fill" id="progressFill"></div></div>
+      <span class="film-label" id="progressLabel">0 / 7</span>
     </div>
   </header>
 
-  <!-- Table of Contents -->
-  <nav class="toc-card">
-    <h2>Contents</h2>
-    <div class="toc-list">
-      <a class="toc-item" onclick="scrollTo('#formula')">
-        <span>The Winning Formula</span>
-        <span class="check">&#10003;</span>
+  <!-- ═══════════ CHAPTER SELECT ═══════════ -->
+  <nav class="chapter-select">
+    <h2>Chapter Select</h2>
+    <div class="chapter-list">
+      <a class="chapter-item" onclick="scrollTo('#formula')">
+        <span class="reel" style="border-color:var(--gold)"></span>
+        <span>The Formula</span>
+        <span class="chk">&#10003;</span>
       </a>
-      <a class="toc-item" onclick="scrollTo('#fillers')">
+      <a class="chapter-item" onclick="scrollTo('#fillers')">
+        <span class="reel" style="border-color:var(--burnt)"></span>
         <span>Filler Phrases</span>
-        <span class="check">&#10003;</span>
+        <span class="chk">&#10003;</span>
       </a>
-      <a class="toc-item" onclick="scrollTo('#sec-env')">
-        <span style="display:flex;align-items:center;gap:6px"><span class="dot" style="background:var(--env-accent)"></span>Environment (3)</span>
-        <span class="check">&#10003;</span>
+      <a class="chapter-item" onclick="scrollTo('#sec-env')">
+        <span class="reel" style="border-color:var(--env)"></span>
+        <span>Environment (3)</span>
+        <span class="chk">&#10003;</span>
       </a>
-      <a class="toc-item" onclick="scrollTo('#sec-work')">
-        <span style="display:flex;align-items:center;gap:6px"><span class="dot" style="background:var(--work-accent)"></span>Work (2)</span>
-        <span class="check">&#10003;</span>
+      <a class="chapter-item" onclick="scrollTo('#sec-work')">
+        <span class="reel" style="border-color:var(--work)"></span>
+        <span>Work (2)</span>
+        <span class="chk">&#10003;</span>
       </a>
-      <a class="toc-item" onclick="scrollTo('#sec-edu')">
-        <span style="display:flex;align-items:center;gap:6px"><span class="dot" style="background:var(--edu-accent)"></span>Education (2)</span>
-        <span class="check">&#10003;</span>
+      <a class="chapter-item" onclick="scrollTo('#sec-edu')">
+        <span class="reel" style="border-color:var(--edu)"></span>
+        <span>Education (2)</span>
+        <span class="chk">&#10003;</span>
       </a>
     </div>
   </nav>
 
-  <!-- Winning Formula -->
-  <section id="formula" class="collapsible open">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-      <h2>The Winning Formula (40-45 seconds)</h2>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  <!-- ═══════════ WINNING FORMULA ═══════════ -->
+  <section id="formula" class="poster-card open">
+    <div class="poster-header" onclick="toggleCollapsible(this)">
+      <h2>The Winning Formula (40-45 Sec)</h2>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
     </div>
-    <div class="collapsible-body">
-      <div class="collapsible-body-inner">
-        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:16px">
+    <div class="poster-body">
+      <div class="poster-body-inner">
+        <p style="color:var(--cream-dim);margin-bottom:16px">
           Follow this structure for every question. Examiners expect a clear opinion, two supported reasons, and a conclusion.
         </p>
         <div class="formula-steps">
-          <div class="formula-step">
-            <span class="num">1</span>
-            <div><span class="label">Opinion</span> <span class="desc">- State your position clearly (5 sec)</span></div>
-          </div>
-          <div class="formula-step">
-            <span class="num">2</span>
-            <div><span class="label">Reason 1 + Example</span> <span class="desc">- First supporting point with concrete detail (15-20 sec)</span></div>
-          </div>
-          <div class="formula-step">
-            <span class="num">3</span>
-            <div><span class="label">Reason 2 + Example</span> <span class="desc">- Second supporting point with evidence (15-20 sec)</span></div>
-          </div>
-          <div class="formula-step">
-            <span class="num">4</span>
-            <div><span class="label">Conclusion</span> <span class="desc">- Restate your position with conviction (5 sec)</span></div>
-          </div>
+          <div class="formula-step"><span class="num">1</span><div><span class="label">Opinion</span> <span class="desc">&mdash; State your position clearly (5 sec)</span></div></div>
+          <div class="formula-step"><span class="num">2</span><div><span class="label">Reason 1 + Example</span> <span class="desc">&mdash; First supporting point with concrete detail (15-20 sec)</span></div></div>
+          <div class="formula-step"><span class="num">3</span><div><span class="label">Reason 2 + Example</span> <span class="desc">&mdash; Second supporting point with evidence (15-20 sec)</span></div></div>
+          <div class="formula-step"><span class="num">4</span><div><span class="label">Conclusion</span> <span class="desc">&mdash; Restate your position with conviction (5 sec)</span></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Filler Phrases -->
-  <section id="fillers" class="collapsible">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-      <h2>Filler Phrases</h2>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  <!-- ═══════════ FILLER PHRASES ═══════════ -->
+  <section id="fillers" class="poster-card">
+    <div class="poster-header" onclick="toggleCollapsible(this)">
+      <h2>Filler Phrases &mdash; Buy Time</h2>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
     </div>
-    <div class="collapsible-body">
-      <div class="collapsible-body-inner">
-        <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:12px">
-          Silence is penalized. Use these phrases naturally to buy thinking time.
-        </p>
+    <div class="poster-body">
+      <div class="poster-body-inner">
+        <p style="color:var(--cream-dim);margin-bottom:14px">Silence is penalized. Use these phrases naturally to buy thinking time.</p>
         <div class="filler-grid">
           <div class="filler-chip"><span class="en">That's an interesting question...</span><span class="jp">面白い質問ですね</span></div>
           <div class="filler-chip"><span class="en">Let me think about that for a moment...</span><span class="jp">少し考えさせてください</span></div>
@@ -840,23 +1019,22 @@ body {
   <!-- ENVIRONMENT QUESTIONS                       -->
   <!-- ═══════════════════════════════════════════ -->
   <section id="sec-env" class="category">
-    <div class="category-label env">Environment &mdash; 3 Questions</div>
+    <div class="film-divider"><span class="cat-label env">Environment &mdash; 3 Questions</span></div>
 
     <!-- ENV Q1 -->
     <div class="q-card" data-q="1">
       <div class="q-header" onclick="toggleQ(this)">
         <div class="q-title"><span class="num">Q1</span> Should plastic bags be banned in all stores?</div>
-        <span class="q-difficulty intermediate">Intermediate</span>
-        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="q-body"><div class="q-body-inner">
         <div class="actions">
           <button class="btn btn-hint" onclick="togglePanel(event,'hint-e1')">Hint</button>
           <button class="btn btn-answer" onclick="togglePanel(event,'ans-e1')">Model Answer</button>
         </div>
-
         <div id="hint-e1" class="panel hint-panel">
-          <h3>Think about it first</h3>
+          <h3>Think About It First</h3>
           <ul>
             <li>What environmental damage do plastic bags cause? Think about oceans and wildlife.</li>
             <li>How long do they persist in the environment? Consider the decomposition timeline.</li>
@@ -865,8 +1043,7 @@ body {
           </ul>
           <div class="key-phrases">Key vocab: <code>disposable</code> <code>marine ecosystem</code> <code>decompose</code> <code>phase out</code> <code>viable alternative</code></div>
         </div>
-
-        <div id="ans-e1" class="panel answer-panel">
+        <div id="ans-e1" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">Model Answer</span>
@@ -877,8 +1054,8 @@ body {
               <p class="jp-text">使い捨てのビニール袋はすべての小売店で段階的に廃止すべきだと強く信じています。まず第一に、海洋生態系に深刻な脅威をもたらしています。毎年何百万トンものプラスチック廃棄物が海に流れ込み、野生生物を絡め取り、食物連鎖を汚染しています。さらに、ビニール袋は分解に数百年かかるため、私たちが今日捨てたものは何世代にもわたって残り続けます。禁止は買い物客に不便だという意見もありますが、再利用可能な袋は手頃で実用的な代替品であり、ほとんどの消費者が最小限の努力で採用できます。これらの理由から、包括的な禁止は正当であるだけでなく、遅すぎるくらいです。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"phase out"</span> <span class="explain">段階的に廃止する -- "ban" より政策的で洗練された表現。準1級で差がつく語彙</span></li>
               <li><span class="phrase">"pose a threat to"</span> <span class="explain">〜に脅威をもたらす -- 問題の深刻さを伝える定番コロケーション</span></li>
@@ -895,18 +1072,17 @@ body {
     <div class="q-card" data-q="2">
       <div class="q-header" onclick="toggleQ(this)">
         <div class="q-title"><span class="num">Q2</span> Is it the government's responsibility to protect the environment?</div>
-        <span class="q-difficulty advanced">Advanced</span>
-        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="q-diff advanced">Advanced</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="q-body"><div class="q-body-inner">
         <div class="actions">
           <button class="btn btn-hint" onclick="togglePanel(event,'hint-e2')">Hint</button>
           <button class="btn btn-answer" onclick="togglePanel(event,'ans-e2-yes')">Answer (Yes)</button>
-          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-e2-no')">Answer (No)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-e2-no')">Answer (No)</button>
         </div>
-
         <div id="hint-e2" class="panel hint-panel">
-          <h3>Consider both sides</h3>
+          <h3>Consider Both Sides</h3>
           <ul>
             <li><strong>Yes side:</strong> Environmental crises are systemic -- can individuals regulate industrial emissions or enforce compliance?</li>
             <li><strong>No side:</strong> If citizens wait for legislation, does personal accountability disappear?</li>
@@ -914,8 +1090,7 @@ body {
           </ul>
           <div class="key-phrases">Key vocab: <code>enforce regulations</code> <code>systemic</code> <code>hold accountable</code> <code>grassroots</code> <code>collective responsibility</code></div>
         </div>
-
-        <div id="ans-e2-yes" class="panel answer-panel">
+        <div id="ans-e2-yes" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">Yes</span>
@@ -926,8 +1101,8 @@ body {
               <p class="jp-text">政府が環境保護の主な責任を負っていると思います。気候変動や産業汚染などの環境危機は、個人だけでは対処できない構造的な問題です。政府は企業への規制を強制し、排出基準を設定し、再生可能エネルギー研究に資金を配分する権限を持っています。さらに、法的枠組みがなければ、企業は利益より持続可能性を優先する動機がほとんどありません。したがって、個人の努力も重要ですが、意義ある環境保護の進展のための構造的条件を作るのは、最終的には政府の義務です。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"bears primary responsibility"</span> <span class="explain">主な責任を負う -- "is responsible" より格調が高い。bear = 責任を担う</span></li>
               <li><span class="phrase">"systemic problems"</span> <span class="explain">構造的な問題 -- 個人では解決不可能な規模の問題であることを強調</span></li>
@@ -937,8 +1112,7 @@ body {
             </ul>
           </div>
         </div>
-
-        <div id="ans-e2-no" class="panel answer-panel">
+        <div id="ans-e2-no" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">No</span>
@@ -949,8 +1123,8 @@ body {
               <p class="jp-text">政府が重要な役割を果たすことは認めますが、環境保護はいかなる単一の機関をも超えた集団的責任だと考えます。草の根運動や個人のライフスタイルの変化――消費を減らす、持続可能な製品を選ぶ、地域の環境保全活動を支援するなど――は、ボトムアップで大きな変化を推進できます。さらに、政府の行動だけに頼ることは、市民の間に危険な安心感を生み出します。歴史を見ると、最も影響力のあった環境改革の中には、トップダウンの政策ではなく市民からの圧力から生まれたものもあります。このような理由から、すべての負担を政府に負わせるよりも、責任を共有する方がはるかに効果的だと思います。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"collective responsibility"</span> <span class="explain">集団的責任 -- 責任を分散させる議論の中核概念</span></li>
               <li><span class="phrase">"drive change from the bottom up"</span> <span class="explain">ボトムアップで変化を推進する -- grassroots活動の力を表現</span></li>
@@ -967,17 +1141,16 @@ body {
     <div class="q-card" data-q="3">
       <div class="q-header" onclick="toggleQ(this)">
         <div class="q-title"><span class="num">Q3</span> Should companies pay more for pollution?</div>
-        <span class="q-difficulty intermediate">Intermediate</span>
-        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="q-body"><div class="q-body-inner">
         <div class="actions">
           <button class="btn btn-hint" onclick="togglePanel(event,'hint-e3')">Hint</button>
           <button class="btn btn-answer" onclick="togglePanel(event,'ans-e3')">Model Answer</button>
         </div>
-
         <div id="hint-e3" class="panel hint-panel">
-          <h3>Think about it first</h3>
+          <h3>Think About It First</h3>
           <ul>
             <li>Who generates the most pollution -- individual consumers or large-scale manufacturers?</li>
             <li>If polluting is cheap, what incentive exists for companies to adopt cleaner methods?</li>
@@ -986,8 +1159,7 @@ body {
           </ul>
           <div class="key-phrases">Key vocab: <code>carbon tax</code> <code>polluter pays principle</code> <code>incentivize</code> <code>externalities</code> <code>green technology</code></div>
         </div>
-
-        <div id="ans-e3" class="panel answer-panel">
+        <div id="ans-e3" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">Model Answer</span>
@@ -998,8 +1170,8 @@ body {
               <p class="jp-text">企業は汚染に対してより高い経済的罰則を受けるべきだと強く賛成します。現在の制度では、多くの企業が環境被害を事業活動の許容範囲内のコストとして扱い、事実上、清掃の負担を納税者に転嫁しています。より厳格な炭素税を導入し「汚染者負担の原則」を適用すれば、企業はよりクリーンな生産方法への投資と持続可能な慣行の採用にインセンティブを持つでしょう。さらに、これらの料金から得られる収入は環境修復プロジェクトの資金に充てることができます。究極的には、汚染を高くつくものにすることが、グリーン経済への移行を加速する最も実践的な方法の一つです。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"face higher financial penalties"</span> <span class="explain">より高い経済的罰則を受ける -- "pay more" を格上げした準1級レベルの表現</span></li>
               <li><span class="phrase">"an acceptable cost of doing business"</span> <span class="explain">事業活動の許容コスト -- 企業の考え方を批判的に描写</span></li>
@@ -1017,24 +1189,23 @@ body {
   <!-- WORK QUESTIONS                              -->
   <!-- ═══════════════════════════════════════════ -->
   <section id="sec-work" class="category">
-    <div class="category-label work">Work & Employment &mdash; 2 Questions</div>
+    <div class="film-divider"><span class="cat-label work">Work & Employment &mdash; 2 Questions</span></div>
 
     <!-- WORK Q1 -->
     <div class="q-card" data-q="4">
       <div class="q-header" onclick="toggleQ(this)">
         <div class="q-title"><span class="num">Q4</span> Is working from home better than working in an office?</div>
-        <span class="q-difficulty intermediate">Intermediate</span>
-        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="q-body"><div class="q-body-inner">
         <div class="actions">
           <button class="btn btn-hint" onclick="togglePanel(event,'hint-w1')">Hint</button>
           <button class="btn btn-answer" onclick="togglePanel(event,'ans-w1-yes')">Answer (Yes)</button>
-          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-w1-no')">Answer (No)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-w1-no')">Answer (No)</button>
         </div>
-
         <div id="hint-w1" class="panel hint-panel">
-          <h3>Consider both sides</h3>
+          <h3>Consider Both Sides</h3>
           <ul>
             <li><strong>Yes side:</strong> How much time is lost commuting? What does schedule autonomy mean for productivity?</li>
             <li><strong>No side:</strong> What happens to teamwork and mentoring without physical proximity? Can everyone maintain discipline at home?</li>
@@ -1042,8 +1213,7 @@ body {
           </ul>
           <div class="key-phrases">Key vocab: <code>autonomy</code> <code>work-life balance</code> <code>in-person collaboration</code> <code>blurred boundaries</code> <code>hybrid model</code></div>
         </div>
-
-        <div id="ans-w1-yes" class="panel answer-panel">
+        <div id="ans-w1-yes" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">Yes</span>
@@ -1054,8 +1224,8 @@ body {
               <p class="jp-text">在宅勤務は従来のオフィスモデルよりも大きな利点があると思います。まず、毎日の通勤をなくすことで、従業員はかなりの時間とエネルギーを節約でき、それを生産的な仕事や個人の幸福に振り向けることができます。さらに、リモートワークは個人にスケジュールに対するより大きな自律性を与え、最も集中できる時間帯に働くことを可能にします。研究は一貫して、柔軟性を享受する従業員の方が仕事の満足度が高く、燃え尽き症候群の割合が低いことを示しています。孤立のリスクを指摘する批判もありますが、現代のコミュニケーションツールはその懸念を大きく解消しています。全体的に見て、リモートワークはより健全で効率的な職業生活の組織方法だと言えます。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"eliminating the daily commute"</span> <span class="explain">毎日の通勤をなくす -- "saving commuting time" より具体的で力強い</span></li>
               <li><span class="phrase">"grants individuals greater autonomy"</span> <span class="explain">個人により大きな自律性を与える -- autonomy は準1級頻出の重要語</span></li>
@@ -1065,8 +1235,7 @@ body {
             </ul>
           </div>
         </div>
-
-        <div id="ans-w1-no" class="panel answer-panel">
+        <div id="ans-w1-no" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">No</span>
@@ -1077,8 +1246,8 @@ body {
               <p class="jp-text">ほとんどの人にとって、オフィスでの勤務の方が効果的な形態であると思います。対面での協力は自発的なアイデアの共有とより強いチームの結束を育みますが、これらは画面越しでは再現が困難です。加えて、自宅と職場の物理的な分離は明確な境界線を確立し、従業員が仕事モードと私的モードの間を精神的に切り替えるのに役立ちます。多くのリモートワーカーが、境界線の曖昧さが過労やオフモードへの切り替えの困難さにつながると報告しています。リモートワークが特定の役割に適していることは認めますが、オフィスの構造化された環境は一般的に、より良い集中力、説明責任、そして専門的成長を促進します。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"fosters spontaneous idea-sharing"</span> <span class="explain">自発的なアイデアの共有を育む -- foster は「育てる」。計画的ではない自然な交流</span></li>
               <li><span class="phrase">"team cohesion"</span> <span class="explain">チームの結束力 -- "teamwork" より学術的で準1級向きの表現</span></li>
@@ -1095,17 +1264,16 @@ body {
     <div class="q-card" data-q="5">
       <div class="q-header" onclick="toggleQ(this)">
         <div class="q-title"><span class="num">Q5</span> Should companies provide flexible working hours?</div>
-        <span class="q-difficulty intermediate">Intermediate</span>
-        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="q-body"><div class="q-body-inner">
         <div class="actions">
           <button class="btn btn-hint" onclick="togglePanel(event,'hint-w2')">Hint</button>
           <button class="btn btn-answer" onclick="togglePanel(event,'ans-w2')">Model Answer</button>
         </div>
-
         <div id="hint-w2" class="panel hint-panel">
-          <h3>Think about it first</h3>
+          <h3>Think About It First</h3>
           <ul>
             <li>How do rigid 9-to-5 schedules affect employees with childcare or eldercare duties?</li>
             <li>Does everyone perform best at the same hours? Think about early birds vs. night owls.</li>
@@ -1114,8 +1282,7 @@ body {
           </ul>
           <div class="key-phrases">Key vocab: <code>accommodate</code> <code>peak performance hours</code> <code>employee retention</code> <code>work-life integration</code> <code>morale</code></div>
         </div>
-
-        <div id="ans-w2" class="panel answer-panel">
+        <div id="ans-w2" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">Model Answer</span>
@@ -1126,8 +1293,8 @@ body {
               <p class="jp-text">企業は可能な限り柔軟な勤務形態を提供すべきだと強く思います。硬直的なスケジュールは今日の労働力の多様なニーズに対応できません。例えば、育児の責任を持つ従業員は厳格な9時から5時の勤務体制に従うのに苦労することがよくあります。さらに、産業心理学の研究によると、人々には異なる最高パフォーマンスの時間帯があり、その時間帯に働くことを許可すれば自然と生産性が向上します。柔軟性を取り入れる企業は従業員の定着率の向上と士気の向上も見る傾向があり、これは長期的なコスト削減につながります。運営上の理由で固定時間が必要な業界もありますが、柔軟性への全般的な傾向は有益かつ不可避です。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"wherever feasible"</span> <span class="explain">実現可能なところではどこでも -- 現実的な条件を付ける知的な表現</span></li>
               <li><span class="phrase">"fail to accommodate"</span> <span class="explain">〜に対応できない -- 制度の欠陥を指摘する際の定番フレーズ</span></li>
@@ -1145,24 +1312,23 @@ body {
   <!-- EDUCATION QUESTIONS                         -->
   <!-- ═══════════════════════════════════════════ -->
   <section id="sec-edu" class="category">
-    <div class="category-label edu">Education &mdash; 2 Questions</div>
+    <div class="film-divider"><span class="cat-label edu">Education &mdash; 2 Questions</span></div>
 
     <!-- EDU Q1 -->
     <div class="q-card" data-q="6">
       <div class="q-header" onclick="toggleQ(this)">
         <div class="q-title"><span class="num">Q6</span> Should universities be free for all students?</div>
-        <span class="q-difficulty advanced">Advanced</span>
-        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="q-diff advanced">Advanced</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="q-body"><div class="q-body-inner">
         <div class="actions">
           <button class="btn btn-hint" onclick="togglePanel(event,'hint-d1')">Hint</button>
           <button class="btn btn-answer" onclick="togglePanel(event,'ans-d1-yes')">Answer (Yes)</button>
-          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-d1-no')">Answer (No)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-d1-no')">Answer (No)</button>
         </div>
-
         <div id="hint-d1" class="panel hint-panel">
-          <h3>Consider both sides</h3>
+          <h3>Consider Both Sides</h3>
           <ul>
             <li><strong>Yes side:</strong> How does tuition debt limit career choices for graduates? What about students from disadvantaged backgrounds?</li>
             <li><strong>No side:</strong> Who pays for "free" education? How might overcrowding affect quality? Are targeted scholarships a better solution?</li>
@@ -1170,8 +1336,7 @@ body {
           </ul>
           <div class="key-phrases">Key vocab: <code>socioeconomic barrier</code> <code>meritocracy</code> <code>taxpayer burden</code> <code>means-tested scholarships</code> <code>dilute quality</code></div>
         </div>
-
-        <div id="ans-d1-yes" class="panel answer-panel">
+        <div id="ans-d1-yes" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">Yes</span>
@@ -1182,8 +1347,8 @@ body {
               <p class="jp-text">大学教育は授業料無料であるべきだと固く信じています。多くの国では、高額な授業料が社会経済的障壁となり、恵まれない背景を持つ優秀な学生が高等教育にアクセスすることを妨げています。これは不平等を世代を超えて固定化します。大学教育の無償化は、成功が経済的事情ではなく能力と努力によって決まる真の実力主義社会に近づくことを意味します。ドイツやノルウェーなどの国々は、公的資金による高等教育が高い学術水準を維持しながらアクセスを劇的に拡大できることを実証しています。より教育を受けた市民からの高い税収という長期的な投資収益率は、初期コストを十分に正当化します。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"socioeconomic barriers"</span> <span class="explain">社会経済的障壁 -- 教育格差を議論する際の中核概念。準1級の論述で差がつく</span></li>
               <li><span class="phrase">"perpetuates inequality"</span> <span class="explain">不平等を固定化する -- perpetuate = 永続させる。社会問題の根深さを表現</span></li>
@@ -1193,8 +1358,7 @@ body {
             </ul>
           </div>
         </div>
-
-        <div id="ans-d1-no" class="panel answer-panel">
+        <div id="ans-d1-no" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">No</span>
@@ -1205,8 +1369,8 @@ body {
               <p class="jp-text">大学無償化という考えは魅力的に聞こえますが、最も実践的または公平なアプローチだとは思いません。すべての大学を無料にすることは、大学に通わない人々を含む納税者に莫大な経済的負担を課すことになります。さらに、入学が無制限になれば、教育機関は過密状態になり、教育の質が薄まる可能性があります。所得に応じた奨学金や収入連動型のローン返済計画など、より的を絞った解決策の方が、社会全体に持続不可能なコストを生じさせることなく、本当に必要な人々に経済的支援が届くことを保証できるでしょう。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"equitable approach"</span> <span class="explain">公平なアプローチ -- "fair" より学術的。equity（公正）の形容詞形</span></li>
               <li><span class="phrase">"diluting the quality"</span> <span class="explain">質を薄める -- dilute は液体を薄めるイメージ。比喩的に質の低下を表現</span></li>
@@ -1223,18 +1387,17 @@ body {
     <div class="q-card" data-q="7">
       <div class="q-header" onclick="toggleQ(this)">
         <div class="q-title"><span class="num">Q7</span> Is online education as effective as traditional classroom learning?</div>
-        <span class="q-difficulty intermediate">Intermediate</span>
-        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="q-body"><div class="q-body-inner">
         <div class="actions">
           <button class="btn btn-hint" onclick="togglePanel(event,'hint-d2')">Hint</button>
           <button class="btn btn-answer" onclick="togglePanel(event,'ans-d2-yes')">Answer (Yes)</button>
-          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-d2-no')">Answer (No)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-d2-no')">Answer (No)</button>
         </div>
-
         <div id="hint-d2" class="panel hint-panel">
-          <h3>Consider both sides</h3>
+          <h3>Consider Both Sides</h3>
           <ul>
             <li><strong>Yes side:</strong> How do features like on-demand replay, adaptive pacing, and global access benefit learners?</li>
             <li><strong>No side:</strong> What is lost without real-time peer interaction, structured environments, and teacher presence?</li>
@@ -1242,8 +1405,7 @@ body {
           </ul>
           <div class="key-phrases">Key vocab: <code>self-paced learning</code> <code>digital divide</code> <code>peer interaction</code> <code>self-discipline</code> <code>pedagogical approach</code></div>
         </div>
-
-        <div id="ans-d2-yes" class="panel answer-panel">
+        <div id="ans-d2-yes" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">Yes</span>
@@ -1254,8 +1416,8 @@ body {
               <p class="jp-text">オンライン教育は、従来の教室での学習に匹敵し、いくつかの分野では凌駕できるレベルにまで成熟したと思います。自分のペースで進めるプラットフォームでは、学生は複雑な教材を必要な回数だけ繰り返し確認できますが、これはライブ講義の環境では不可能です。さらに、オンライン教育は地理的な場所に関係なく、世界トップクラスの講師や教育機関へのアクセスを民主化します。パンデミックは、適切なインフラとよく設計されたカリキュラムがあれば、デジタル学習が有意義な成果を提供できることを実証しました。もちろん一定の自己規律が必要ですが、そのスキルを身につけること自体が現代の労働力への貴重な準備です。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"has matured to the point where"</span> <span class="explain">〜できるレベルにまで成熟した -- 進歩や発展を表す洗練された構文</span></li>
               <li><span class="phrase">"democratizes access to"</span> <span class="explain">〜へのアクセスを民主化する -- 教育の平等化を力強く表現する動詞</span></li>
@@ -1265,8 +1427,7 @@ body {
             </ul>
           </div>
         </div>
-
-        <div id="ans-d2-no" class="panel answer-panel">
+        <div id="ans-d2-no" class="panel">
           <div class="answer-grid">
             <div class="model-answer">
               <span class="side-label">No</span>
@@ -1277,8 +1438,8 @@ body {
               <p class="jp-text">オンライン教育は大幅に改善されましたが、教室での経験を完全に置き換えることはできないと思います。従来の学習環境は、非同期のフォーラムでは再現できない方法で批判的思考を育むリアルタイムの仲間との交流や共同討論を提供します。さらに、多くの学生は構造化されていない環境で成功するために必要な自己規律を欠いており、オンラインプログラムでの中退率の高さにつながっています。デジタルデバイド（情報格差）もまた重大な懸念です。信頼できるインターネット接続や静かな学習空間を持たない学生は組織的に不利な立場に置かれます。実験科学や舞台芸術など、実践的な練習が必要な科目では、教室は依然として不可欠です。</p>
             </div>
           </div>
-          <div class="tips-panel">
-            <h3>Key Phrases</h3>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
             <ul>
               <li><span class="phrase">"asynchronous forums"</span> <span class="explain">非同期のフォーラム -- リアルタイムではないオンライン上の議論スペース。対比の技法で教室の利点を際立たせる</span></li>
               <li><span class="phrase">"higher dropout rates"</span> <span class="explain">より高い中退率 -- 統計的根拠を示唆することで議論に重みを加える</span></li>
@@ -1293,6 +1454,7 @@ body {
   </section>
 
 </div>
+</div>
 
 <script>
 const PART = 'part1';
@@ -1301,31 +1463,30 @@ const answered = new Set(JSON.parse(localStorage.getItem('eiken-' + PART) || '[]
 
 /* ── Theme ── */
 function toggleTheme() {
-  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-  document.documentElement.setAttribute('data-theme', dark ? '' : 'dark');
-  document.querySelector('.theme-icon').textContent = dark ? 'Dark' : 'Light';
-  localStorage.setItem('eiken-theme', dark ? '' : 'dark');
+  const isMatinee = document.documentElement.getAttribute('data-theme') === 'matinee';
+  document.documentElement.setAttribute('data-theme', isMatinee ? '' : 'matinee');
+  document.querySelector('.theme-label').textContent = isMatinee ? 'Matinee' : 'Evening';
+  localStorage.setItem('eiken-theme-hollywood', isMatinee ? '' : 'matinee');
 }
 
 (function initTheme() {
-  const saved = localStorage.getItem('eiken-theme');
-  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    const icon = document.querySelector('.theme-icon');
-    if (icon) icon.textContent = 'Light';
+  const saved = localStorage.getItem('eiken-theme-hollywood');
+  if (saved === 'matinee') {
+    document.documentElement.setAttribute('data-theme', 'matinee');
+    const lbl = document.querySelector('.theme-label');
+    if (lbl) lbl.textContent = 'Evening';
   }
 })();
 
-/* ── Collapsible sections ── */
+/* ── Collapsible (poster cards) ── */
 function toggleCollapsible(header) {
-  const section = header.parentElement;
+  const card = header.parentElement;
   const body = header.nextElementSibling;
-  section.classList.toggle('open');
-  body.style.maxHeight = section.classList.contains('open') ? body.scrollHeight + 'px' : '0';
+  card.classList.toggle('open');
+  body.style.maxHeight = card.classList.contains('open') ? body.scrollHeight + 'px' : '0';
 }
 
-// Init open sections
-document.querySelectorAll('.collapsible.open .collapsible-body').forEach(b => {
+document.querySelectorAll('.poster-card.open .poster-body').forEach(b => {
   b.style.maxHeight = b.scrollHeight + 'px';
 });
 
@@ -1337,7 +1498,7 @@ function toggleQ(header) {
   body.style.maxHeight = card.classList.contains('open') ? body.scrollHeight + 'px' : '0';
 }
 
-/* ── Panels (hint/answer) ── */
+/* ── Panels ── */
 function togglePanel(e, id) {
   e.stopPropagation();
   const panel = document.getElementById(id);
@@ -1347,11 +1508,9 @@ function togglePanel(e, id) {
   panel.classList.toggle('visible');
   btn.classList.toggle('active');
 
-  // Re-calc parent max-height
   const qBody = panel.closest('.q-body');
   if (qBody) requestAnimationFrame(() => { qBody.style.maxHeight = qBody.scrollHeight + 'px'; });
 
-  // Track progress
   if (!isVisible && !id.startsWith('hint-')) {
     const card = panel.closest('.q-card');
     if (card) {
@@ -1372,7 +1531,7 @@ function updateProgress() {
 }
 updateProgress();
 
-/* ── Scroll nav ── */
+/* ── Scroll ── */
 function scrollTo(sel) {
   const el = document.querySelector(sel);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
