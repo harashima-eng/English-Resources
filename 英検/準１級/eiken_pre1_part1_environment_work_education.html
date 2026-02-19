@@ -366,7 +366,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 24px;
-  animation: textFadeUp 0.8s ease-out 1.8s both;
+  animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 2.8s both;
   box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
@@ -439,7 +439,8 @@ body {
 }
 
 .poster-card:hover {
-  border-color: var(--border-gold);
+  border-color: var(--cosmic);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 16px rgba(157,92,246,0.12);
 }
 
 .poster-header {
@@ -537,6 +538,20 @@ body {
   font-size: 0.82rem;
   color: var(--cream-dim);
 }
+
+/* ── Staggered Card Rise ── */
+@keyframes cardRise {
+  0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+  60% { opacity: 0.8; transform: translateY(-4px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Staggered entrance for poster cards and categories */
+.poster-card:nth-child(2) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.0s both; }
+.poster-card:nth-child(3) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.15s both; }
+.category:nth-of-type(1) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.3s both; }
+.category:nth-of-type(2) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.45s both; }
+.category:nth-of-type(3) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.6s both; }
 
 /* ═══════════════════════════════════════
    BENTO GRID LAYOUT
@@ -643,14 +658,14 @@ body {
 }
 
 .q-card:hover {
-  border-color: var(--gold-dim);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 20px rgba(212,166,68,0.08);
+  border-color: var(--cosmic);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 20px rgba(157,92,246,0.15);
 }
 
 .q-card.open {
   grid-column: 1 / -1;
   border-color: var(--gold);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(212,166,68,0.12), inset 0 0 60px rgba(212,166,68,0.02);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), var(--shadow-gold), inset 0 0 60px rgba(157,92,246,0.03);
 }
 
 .q-header {
@@ -741,21 +756,21 @@ body {
   text-shadow: 0 0 8px var(--work);
 }
 
-/* Neon Answer Button */
+/* Cosmic Answer Button */
 .btn-answer {
-  background: var(--hot-pink);
+  background: linear-gradient(135deg, var(--hot-pink), var(--cosmic));
   color: white;
-  box-shadow: 0 0 12px var(--hot-pink-glow);
-  animation: neonPulse 2.5s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(255,63,172,0.4), 0 0 4px rgba(157,92,246,0.3);
+  animation: cosmicPulse 3s ease-in-out infinite;
 }
 
-@keyframes neonPulse {
-  0%, 100% { box-shadow: 0 0 12px var(--hot-pink-glow); }
-  50% { box-shadow: 0 0 24px var(--hot-pink-glow), 0 0 48px rgba(255,45,107,0.2); }
+@keyframes cosmicPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(255,63,172,0.4), 0 0 4px rgba(157,92,246,0.3); }
+  50% { box-shadow: 0 0 24px rgba(255,63,172,0.5), 0 0 48px rgba(157,92,246,0.25), 0 0 8px rgba(0,207,255,0.2); }
 }
 
 .btn-answer:hover {
-  box-shadow: 0 0 30px var(--hot-pink-glow), 0 0 60px rgba(255,45,107,0.3);
+  box-shadow: 0 0 30px rgba(255,63,172,0.5), 0 0 60px rgba(157,92,246,0.3), 0 0 12px rgba(0,207,255,0.3);
   transform: translateY(-2px);
 }
 
