@@ -28,7 +28,7 @@
   --hot-pink-glow: rgba(255,45,107,0.5);
   --neon-blue: #00d4ff;
   --film-strip: #2a2520;
-  --border: #3a3228;
+  --border: #443a2e;
   --border-gold: rgba(212,166,68,0.3);
   --env: #4ecdc4;
   --work: #f7b731;
@@ -86,7 +86,8 @@ body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--cream);
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -727,18 +728,30 @@ body {
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px solid var(--border);
-  font-size: 0.88rem;
-  color: var(--gold);
+  font-size: 0.95rem;
+  color: var(--cream-dim);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
 }
 
 .hint-panel .key-phrases code {
-  font-family: var(--font-mono);
-  background: rgba(212,166,68,0.1);
-  border: 1px solid var(--border-gold);
-  padding: 1px 8px;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(212,166,68,0.12);
+  border: 1px solid var(--gold-dim);
+  padding: 4px 12px;
   border-radius: 2px;
-  font-size: 0.85rem;
   color: var(--gold);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.hint-panel .key-phrases code:hover {
+  background: rgba(212,166,68,0.2);
+  box-shadow: 0 0 10px var(--gold-glow);
 }
 
 /* ── Answer Panel ── */
@@ -770,8 +783,8 @@ body {
 }
 
 .model-answer .en-text {
-  font-size: 0.95rem;
-  line-height: 1.85;
+  font-size: 1.05rem;
+  line-height: 1.9;
   font-style: normal;
   color: var(--cream);
 }
