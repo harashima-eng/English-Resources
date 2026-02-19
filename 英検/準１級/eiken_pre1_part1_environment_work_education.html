@@ -72,34 +72,52 @@
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ── Film Grain Overlay ── */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px;
-  animation: grain 0.5s steps(4) infinite;
-}
-
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(-5px, 5px); }
-  50% { transform: translate(5px, -5px); }
-  75% { transform: translate(-3px, -3px); }
-}
-
-/* ── Vignette ── */
+/* ── Cosmic Vignette ── */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 9998;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(12,10,18,0.7) 100%);
+}
+
+/* ── Starfield ── */
+.starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  perspective: 600px;
+}
+
+.star {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  border-radius: 50%;
+  animation:
+    star-warp 1.2s var(--d, 0s) cubic-bezier(0.25,0.46,0.45,0.94) both,
+    star-twinkle var(--dur, 5s) calc(var(--d, 0s) + 1.4s) ease-in-out infinite;
+}
+
+.star--sm { width: 2px; height: 2px; background: #fff; box-shadow: 0 0 2px rgba(255,255,255,0.6); }
+.star--md { width: 3px; height: 3px; background: #c8d8ff; box-shadow: 0 0 4px 1px rgba(180,210,255,0.5); }
+.star--lg { width: 4px; height: 4px; background: #e0f0ff; box-shadow: 0 0 6px 2px rgba(150,200,255,0.7), 0 0 12px 3px rgba(100,160,255,0.3); }
+
+@keyframes star-warp {
+  0% { opacity: 0; transform: scale(0.05); }
+  20% { opacity: 0; }
+  40% { opacity: 1; transform: scale(0.4); }
+  80% { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 0.7; transform: scale(1); }
+}
+
+@keyframes star-twinkle {
+  0% { opacity: 0.7; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.7; }
 }
 
 body {
