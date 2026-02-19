@@ -28,8 +28,8 @@
   --hot-pink-glow: rgba(255,45,107,0.5);
   --neon-blue: #00d4ff;
   --film-strip: #2a2520;
-  --border: #443a2e;
-  --border-gold: rgba(212,166,68,0.3);
+  --border: #554a3a;
+  --border-gold: rgba(212,166,68,0.35);
   --env: #4ecdc4;
   --work: #f7b731;
   --edu: #fc5c65;
@@ -41,11 +41,11 @@
 
 [data-theme="matinee"] {
   --bg: #f5ead6;
-  --surface: #ede0c8;
-  --surface-raised: #e8d8b8;
+  --surface: #e8dcc4;
+  --surface-raised: #ddd0b4;
   --cream: #2a2218;
   --cream-dim: #5a4e3a;
-  --border: #c4b89a;
+  --border: #bfb396;
   --border-gold: rgba(160,122,46,0.4);
   --film-strip: #d4c8aa;
 }
@@ -256,20 +256,18 @@ body {
    TOP BAR
    ═══════════════════════════════════════ */
 .top-bar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 100;
   background: rgba(13,10,6,0.9);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
-  padding: 0 20px;
+  padding: 0 clamp(20px, 3vw, 48px);
 }
 
 .top-bar-inner {
-  max-width: 860px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
