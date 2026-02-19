@@ -911,6 +911,35 @@ body {
    RESPONSIVE
    ═══════════════════════════════════════ */
 
+/* ── Large screens (1400px+) ── */
+@media (min-width: 1400px) {
+  .page { max-width: 960px; }
+  body { font-size: 1.1rem; }
+  .cinema-header { padding: 70px 40px 60px; }
+  .cinema-header h1 { font-size: clamp(3.2rem, 5vw, 5rem); }
+  .q-header { padding: 22px 28px; }
+  .q-title { font-size: 1.1rem; }
+  .model-answer .en-text { font-size: 1.1rem; }
+  .directors-notes li { font-size: 1.05rem; }
+  .formula-step { padding: 16px 22px; }
+}
+
+/* ── Extra-large screens (1800px+) ── */
+@media (min-width: 1800px) {
+  .page { max-width: 1040px; }
+  body { font-size: 1.15rem; }
+  .cinema-header h1 { font-size: 5rem; }
+  .q-header { padding: 24px 30px; }
+  .q-title { font-size: 1.15rem; }
+  .q-body-inner { padding: 0 30px 30px; }
+  .model-answer { padding: 26px; }
+  .model-answer .en-text { font-size: 1.15rem; }
+  .jp-box { padding: 26px; }
+  .directors-notes { padding: 26px; }
+  .directors-notes li { font-size: 1.1rem; }
+  .hint-panel { padding: 26px; }
+}
+
 /* ── Tablet ── */
 @media (max-width: 768px) {
   .page { padding: 0 16px 90px; }
