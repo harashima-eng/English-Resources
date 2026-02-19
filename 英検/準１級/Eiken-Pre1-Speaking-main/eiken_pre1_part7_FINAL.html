@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英検準1級 スピーキング対策ガイド - PART 7</title>
+    
+    <meta property="og:title" content="英検準1級 スピーキング Part 7 対策ガイド - 総合復習">
+    <meta property="og:description" content="英検準1級スピーキングPart 7の完全対策！総合復習・両論併記で15題を徹底練習。Yes/No両方の視点でクリティカルシンキングを鍛える。">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #667eea; --secondary: #764ba2; --accent: #f5576c;
+            --success: #20c997; --warning: #ffd93d; --bg-light: #f8f9fa;
+            --text-dark: #495057; --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: clamp(12px, 3vw, 20px); line-height: 1.6; min-height: 100vh;
+        }
+        body.dark-mode { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+        .container {
+            max-width: 1200px; margin: 0 auto; background: white;
+            border-radius: clamp(12px, 2vw, 20px); box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        body.dark-mode .container { background: #0f3460; color: #e8e8e8; }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, var(--accent) 100%);
+            color: white; padding: clamp(20px, 4vw, 30px) clamp(20px, 5vw, 40px);
+            text-align: center; position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .header h1 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem); text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px; letter-spacing: -0.02em;
+        }
+        .header p { font-size: clamp(0.85rem, 2vw, 1rem); opacity: 0.95; }
+        .header.minimized { padding: 15px clamp(20px, 5vw, 40px); }
+        .header.minimized h1, .header.minimized p, .header.minimized .progress-container { display: none; }
+        .header-toggle-btn {
+            position: absolute; top: 15px; left: 15px;
+            background: rgba(255,255,255,0.2); border: none; border-radius: 50%;
+            width: clamp(36px, 8vw, 40px); height: clamp(36px, 8vw, 40px);
+            font-size: clamp(1rem, 2.5vw, 1.2rem); cursor: pointer;
+            transition: var(--transition); color: white; z-index: 101;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .header-toggle-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+        .header-toggle-btn:active { transform: scale(0.95); }
+        .header.minimized .header-toggle-btn { transform: rotate(180deg); }
+        .progress-container {
+            background: rgba(255,255,255,0.2); border-radius: 10px;
+            height: 10px; margin-top: 15px; overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            height: 100%; background: linear-gradient(90deg, var(--success) 0%, var(--warning) 100%);
+            border-radius: 10px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(32, 201, 151, 0.3);
+        }
+        .dark-mode-toggle {
+            position: fixed; top: clamp(15px, 3vw, 20px); right: clamp(15px, 3vw, 20px);
+            background: rgba(255,255,255,0.9); border: none; border-radius: 50%;
+            width: clamp(45px, 10vw, 55px); height: clamp(45px, 10vw, 55px);
+            font-size: clamp(1.3rem, 3vw, 1.6rem); cursor: pointer;
+            transition: var(--transition); z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .dark-mode-toggle:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .dark-mode-toggle:active { transform: scale(0.95); }
+        body.dark-mode .dark-mode-toggle { background: rgba(255,255,255,0.1); color: #ffd93d; }
+        .content { padding: clamp(20px, 4vw, 40px); }
+        .collapsible-section {
+            margin-bottom: 25px; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: var(--transition);
+        }
+        .collapsible-section:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+        .section-header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: clamp(18px, 3vw, 25px); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: var(--transition); gap: 15px;
+        }
+        body.dark-mode .section-header { background: linear-gradient(135deg, #1e3a5f 0%, #4a1942 100%); }
+        .section-header:hover { opacity: 0.95; transform: translateX(3px); }
+        .section-header:active { transform: translateX(0); }
+        .section-header h2 {
+            color: #087f5b; font-size: clamp(1.1rem, 3vw, 1.5rem);
+            flex: 1; word-break: break-word;
+        }
+        body.dark-mode .section-header h2 { color: #20c997; }
+        .section-toggle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0;
+        }
+        .section-header.active .section-toggle { transform: rotate(180deg); }
+        .section-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: white;
+        }
+        body.dark-mode .section-content { background: #1a2332; }
+        .section-content.active { max-height: 40000px; padding: clamp(20px, 4vw, 30px); }
+        .filler-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-left: 6px solid #20c997; padding: clamp(20px, 4vw, 25px);
+            border-radius: 12px; margin-bottom: 30px;
+        }
+        body.dark-mode .filler-section { background: linear-gradient(135deg, #1e3a5f 0%, #4a1942 100%); }
+        .filler-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: clamp(12px, 2vw, 15px); margin-top: 15px;
+        }
+        .filler-card {
+            background: var(--bg-light); padding: clamp(15px, 3vw, 18px);
+            border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: var(--transition); border-left: 4px solid transparent;
+        }
+        body.dark-mode .filler-card { background: rgba(255,255,255,0.05); }
+        .filler-card:hover {
+            transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            border-left-color: var(--success);
+        }
+        .filler-card strong {
+            color: var(--success); display: block; margin-bottom: 8px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        .filler-card .jp {
+            color: #666; font-size: clamp(0.85rem, 1.8vw, 0.95rem); line-height: 1.5;
+        }
+        body.dark-mode .filler-card .jp { color: #adb5bd; }
+        .question-collapsible {
+            margin-bottom: 20px; border-radius: 12px; overflow: hidden;
+            border: 2px solid #e9ecef; box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+        body.dark-mode .question-collapsible { border-color: #2c3e50; }
+        .question-collapsible:hover {
+            border-color: var(--primary); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        .question-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: clamp(15px, 3vw, 20px); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: var(--transition); gap: 12px;
+        }
+        body.dark-mode .question-header { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); }
+        .question-header:hover { background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%); }
+        body.dark-mode .question-header:hover { background: linear-gradient(135deg, #34495e 0%, #3d566e 100%); }
+        .question-title {
+            font-weight: 600; color: var(--text-dark);
+            font-size: clamp(0.95rem, 2.2vw, 1.1rem); flex: 1; word-break: break-word;
+        }
+        body.dark-mode .question-title { color: #e8e8e8; }
+        .question-toggle {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--primary); flex-shrink: 0;
+        }
+        .question-header.active .question-toggle { transform: rotate(180deg); }
+        .question-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: white;
+        }
+        body.dark-mode .question-content { background: #1a2332; }
+        .question-content.active { max-height: 7000px; padding: clamp(18px, 3vw, 25px); }
+        .hint-section { margin-bottom: 20px; }
+        .hint-btn {
+            background: linear-gradient(135deg, var(--warning) 0%, #ffb347 100%);
+            color: #495057; border: none;
+            padding: clamp(10px, 2vw, 12px) clamp(18px, 3vw, 24px);
+            border-radius: 8px; cursor: pointer; font-weight: 600;
+            transition: var(--transition); box-shadow: 0 3px 10px rgba(255, 217, 61, 0.3);
+            font-size: clamp(0.9rem, 2vw, 1rem); width: 100%; max-width: 220px;
+        }
+        .hint-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 217, 61, 0.4); }
+        .hint-btn:active { transform: translateY(0); }
+        .hint-content {
+            display: none; background: #fff9e6; border-left: 4px solid var(--warning);
+            padding: clamp(15px, 3vw, 20px); margin-top: 15px; border-radius: 8px;
+            animation: slideDown 0.4s ease;
+        }
+        body.dark-mode .hint-content { background: rgba(255, 217, 61, 0.1); color: #e8e8e8; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hint-content ul { padding-left: 20px; margin-top: 10px; }
+        .hint-content li {
+            margin-bottom: 8px; line-height: 1.6; font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        .answer-container {
+            display: grid; grid-template-columns: 1fr;
+            gap: clamp(12px, 2vw, 15px); margin-bottom: 15px;
+        }
+        @media (min-width: 768px) {
+            .answer-container { grid-template-columns: 1fr 1fr; }
+        }
+        .model-answer, .jp-translation {
+            background: var(--bg-light); padding: clamp(15px, 3vw, 20px);
+            border-radius: 10px; line-height: 1.7; font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        body.dark-mode .model-answer, body.dark-mode .jp-translation { background: rgba(255,255,255,0.05); }
+        .model-answer { border-left: 4px solid var(--success); }
+        .jp-translation { border-left: 4px solid var(--accent); }
+        .jp-translation strong { color: var(--accent); font-size: clamp(0.95rem, 2.1vw, 1.05rem); }
+        .notable-phrases {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%);
+            border-left: 4px solid #ff9800; padding: clamp(15px, 3vw, 18px);
+            border-radius: 8px; margin-top: 15px;
+        }
+        body.dark-mode .notable-phrases { background: rgba(255, 152, 0, 0.1); border-left-color: #ffb74d; }
+        .notable-phrases h5 {
+            color: #e65100; margin-bottom: 12px; font-size: clamp(0.95rem, 2vw, 1.05rem);
+        }
+        body.dark-mode .notable-phrases h5 { color: #ffb74d; }
+        .phrase-item {
+            margin-bottom: 8px; padding: 8px 12px;
+            background: rgba(255,255,255,0.6); border-radius: 6px;
+            font-size: clamp(0.85rem, 1.9vw, 0.95rem);
+        }
+        body.dark-mode .phrase-item { background: rgba(255,255,255,0.05); }
+        .phrase-item strong { color: #d84315; }
+        body.dark-mode .phrase-item strong { color: #ff9800; }
+        .show-answer-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white; border: none;
+            padding: clamp(12px, 2.5vw, 15px) clamp(25px, 4vw, 35px);
+            border-radius: 10px; cursor: pointer; font-weight: 600;
+            transition: var(--transition); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            margin-bottom: 20px; font-size: clamp(0.95rem, 2vw, 1.05rem);
+            width: 100%; max-width: 280px;
+        }
+        .show-answer-btn:hover {
+            transform: translateY(-3px); box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+        .show-answer-btn:active { transform: translateY(0); }
+        .answer-section { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .footer {
+            text-align: center; padding: clamp(20px, 4vw, 30px);
+            background: var(--bg-light); color: var(--text-dark);
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+        }
+        body.dark-mode .footer { background: #0a1929; color: #adb5bd; }
+        .footer strong { color: var(--accent); }
+        @media (max-width: 480px) {
+            body { padding: 8px; }
+            .container { border-radius: 12px; }
+            .content { padding: 15px; }
+            .collapsible-section { margin-bottom: 18px; }
+            .question-collapsible { margin-bottom: 15px; }
+            .filler-grid { grid-template-columns: 1fr; }
+            .show-answer-btn, .hint-btn { max-width: 100%; }
+        }
+        @media (hover: none) and (pointer: coarse) {
+            .section-header, .question-header { padding: 20px; }
+            .show-answer-btn, .hint-btn, .dark-mode-toggle, .header-toggle-btn {
+                min-height: 44px; min-width: 44px;
+            }
+        }
+        html { scroll-behavior: smooth; }
+        *:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+    </style>
+</head>
+<body>
+
+<div style="display: none;" id="artifact-metadata">
+    <h1>英検準1級 スピーキング Part 7 対策ガイド - 総合復習</h1>
+    <p>英検準1級スピーキングPart 7の完全対策！総合復習・両論併記で15題を徹底練習。Yes/No両方の視点でクリティカルシンキングを鍛える。</p>
+</div>
+
+<button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+<div class="container">
+    <div class="header" id="mainHeader">
+        <button class="header-toggle-btn" onclick="toggleHeader()">▼</button>
+        <h1>🎯 英検準1級 スピーキング Part 7</h1>
+        <p>総合復習 - 両論併記で批判的思考力を鍛える</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div class="content">
+        
+        <div id="fillers" class="collapsible-section">
+            <div class="section-header active" onclick="toggleSection(this)">
+                <h2>💬 会話のつなぎフレーズ (考える時間を稼ぐ！)</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content active">
+                <div class="filler-section">
+                    <p><strong>💡 これらのフレーズで自然に考える時間を作ろう！</strong></p>
+                    <div class="filler-grid">
+                        <div class="filler-card">
+                            <strong>1. "That depends on..."</strong>
+                            <div class="jp">「それは…次第ですね」</div>
+                        </div>
+                        <div class="filler-card">
+                            <strong>2. "Let me clarify my thoughts..."</strong>
+                            <div class="jp">「考えを整理させてください…」</div>
+                        </div>
+                        <div class="filler-card">
+                            <strong>3. "Generally speaking..."</strong>
+                            <div class="jp">「一般的に言うと…」</div>
+                        </div>
+                        <div class="filler-card">
+                            <strong>4. "I'd like to point out that..."</strong>
+                            <div class="jp">「指摘したいのは…」</div>
+                        </div>
+                        <div class="filler-card">
+                            <strong>5. "To put it simply..."</strong>
+                            <div class="jp">「簡単に言うと…」</div>
+                        </div>
+                        <div class="filler-card">
+                            <strong>6. "From different angles..."</strong>
+                            <div class="jp">「様々な角度から見ると…」</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- NO.2 SECTION (3 questions) -->
+        <div id="no2" class="collapsible-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📝 No.2 予想問題 (3題)</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content">
+
+                <!-- Q1 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q1: Are infectious diseases becoming a bigger problem today?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>New pandemics emerging (COVID-19 example)</li>
+                                        <li>Global travel spreads diseases faster</li>
+                                        <li>Antibiotic-resistant bacteria increasing</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Vaccine technology has advanced dramatically</li>
+                                        <li>Better sanitation than in the past</li>
+                                        <li>WHO and global monitoring systems strengthened</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, I think so. Global travel makes diseases spread faster than before. We've seen this with COVID-19, which became a pandemic within months."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、そう思います。国際的な移動により、病気は以前より早く広がります。COVID-19で見たように、数ヶ月でパンデミックになりました。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>spread faster</strong> - より早く広がる</div>
+                                    <div class="phrase-item"><strong>became a pandemic</strong> - パンデミックになった</div>
+                                    <div class="phrase-item"><strong>within months</strong> - 数ヶ月以内に</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not necessarily. Modern medicine has advanced significantly with vaccines and treatments. We can now respond to outbreaks much faster than in the past."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「必ずしもそうではありません。現代医学はワクチンや治療法で大幅に進歩しました。過去よりもはるかに速く流行に対応できます。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>not necessarily</strong> - 必ずしも〜ではない</div>
+                                    <div class="phrase-item"><strong>advanced significantly</strong> - 大幅に進歩した</div>
+                                    <div class="phrase-item"><strong>respond to outbreaks</strong> - 流行に対応する</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q2: Do you think high school tuition should be free for all students?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Equal opportunity is foundation of democracy</li>
+                                        <li>Breaks the cycle of poverty</li>
+                                        <li>Develops future talented workforce</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Difficult to secure funding (tax increase needed)</li>
+                                        <li>May lower education quality</li>
+                                        <li>Scholarship system more efficient</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, definitely. Free education gives everyone equal opportunities to learn. It helps reduce the gap between rich and poor families in society."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、絶対に。無償教育は全ての人に平等な学習機会を与えます。社会における富裕層と貧困層の格差を減らすのに役立ちます。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>equal opportunities</strong> - 平等な機会</div>
+                                    <div class="phrase-item"><strong>reduce the gap</strong> - 格差を減らす</div>
+                                    <div class="phrase-item"><strong>rich and poor families</strong> - 富裕層と貧困層</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not necessarily. Free education requires huge government funding, which means higher taxes. A scholarship system for students who need help would be more efficient."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「必ずしもそうではありません。無償教育には莫大な政府資金が必要で、増税を意味します。支援が必要な学生向けの奨学金制度の方が効率的でしょう。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>huge government funding</strong> - 莫大な政府資金</div>
+                                    <div class="phrase-item"><strong>higher taxes</strong> - 増税</div>
+                                    <div class="phrase-item"><strong>scholarship system</strong> - 奨学金制度</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q3: Do you think it is good for people to spend time on social media?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Stay connected with friends and family</li>
+                                        <li>Convenient for news and information gathering</li>
+                                        <li>Business and self-expression opportunities</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Risk of social media addiction</li>
+                                        <li>Negative effects on mental health</li>
+                                        <li>Real-life relationships become weaker</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, in moderation. Social media helps people stay connected with friends and family. It's also useful for getting news and information quickly."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、適度であれば。ソーシャルメディアは友人や家族とつながるのに役立ちます。ニュースや情報を素早く得るのにも便利です。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>in moderation</strong> - 適度に、ほどほどに</div>
+                                    <div class="phrase-item"><strong>stay connected with</strong> - 〜とつながり続ける</div>
+                                    <div class="phrase-item"><strong>get news quickly</strong> - 素早くニュースを得る</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not really. People often spend too much time scrolling, which affects their mental health. Face-to-face interaction is much more valuable for relationships."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「あまりそうは思いません。人々はスクロールに時間をかけすぎ、精神的健康に影響します。対面でのやり取りの方が人間関係にはるかに価値があります。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>spend too much time</strong> - 時間をかけすぎる</div>
+                                    <div class="phrase-item"><strong>affects mental health</strong> - 精神的健康に影響する</div>
+                                    <div class="phrase-item"><strong>face-to-face interaction</strong> - 対面でのやり取り</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- NO.3 SECTION (3 questions) -->
+        <div id="no3" class="collapsible-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📝 No.3 予想問題 (3題)</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content">
+
+                <!-- Q1 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q1: Do you think it is safe to trust online reviews when choosing a service?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Get real customer experiences and opinions</li>
+                                        <li>Can compare multiple reviews from different sources</li>
+                                        <li>Helps judge service quality beforehand</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Fake reviews and paid promotions exist</li>
+                                        <li>Personal subjective opinions may be biased</li>
+                                        <li>Companies can manipulate reviews</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, generally. Online reviews give us real customer experiences. Reading multiple reviews from different sources helps us make informed decisions."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、一般的には。オンラインレビューは実際の顧客体験を提供します。複数の情報源からレビューを読むことで、情報に基づいた決定ができます。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>real customer experiences</strong> - 実際の顧客体験</div>
+                                    <div class="phrase-item"><strong>from different sources</strong> - 複数の情報源から</div>
+                                    <div class="phrase-item"><strong>make informed decisions</strong> - 情報に基づいた決定をする</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not entirely. Many reviews are fake or biased. Companies sometimes pay for positive reviews, so it's hard to know what's genuine."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「完全にはそうではありません。多くのレビューは偽物か偏っています。企業は時々肯定的なレビューに料金を払うため、何が本物か見分けるのは困難です。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>not entirely</strong> - 完全には〜ではない</div>
+                                    <div class="phrase-item"><strong>fake or biased</strong> - 偽物または偏っている</div>
+                                    <div class="phrase-item"><strong>what's genuine</strong> - 何が本物か</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q2: Do you think that new technology, such as AI, will make our lives better?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Automates repetitive tasks for efficiency</li>
+                                        <li>Innovation in medical and educational fields</li>
+                                        <li>Creates new jobs and industries</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Risk of mass unemployment</li>
+                                        <li>Privacy invasion concerns</li>
+                                        <li>Human relationships becoming weaker</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, I think so. AI can handle repetitive tasks efficiently. This allows humans to focus on more creative and meaningful work."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、そう思います。AIは反復的な作業を効率的に処理できます。これにより人間はより創造的で有意義な仕事に集中できます。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>handle repetitive tasks</strong> - 反復作業を処理する</div>
+                                    <div class="phrase-item"><strong>allows humans to focus on</strong> - 人間が〜に集中できる</div>
+                                    <div class="phrase-item"><strong>meaningful work</strong> - 有意義な仕事</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not necessarily. AI might eliminate many jobs without creating enough new ones. It could also invade our privacy and make us too dependent on technology."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「必ずしもそうではありません。AIは十分な新しい仕事を生み出さずに多くの仕事を奪う可能性があります。プライバシーを侵害し、技術への依存度を高めすぎる恐れもあります。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>eliminate jobs</strong> - 仕事を奪う</div>
+                                    <div class="phrase-item"><strong>invade our privacy</strong> - プライバシーを侵害する</div>
+                                    <div class="phrase-item"><strong>too dependent on</strong> - 〜に依存しすぎる</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q3: Do you think that reading helps young people develop a strong character?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Exposure to diverse perspectives and values</li>
+                                        <li>Develops empathy and imagination</li>
+                                        <li>Improves critical thinking skills</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Real-life experiences more important for character</li>
+                                        <li>Reading alone is insufficient</li>
+                                        <li>Social relationships and sports equally important</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, absolutely. Reading exposes young people to different perspectives and ideas. It helps them develop empathy and critical thinking skills."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、絶対に。読書は若者を異なる視点やアイデアに触れさせます。共感力と批判的思考力を育てるのに役立ちます。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>exposes to</strong> - 〜に触れさせる</div>
+                                    <div class="phrase-item"><strong>different perspectives</strong> - 異なる視点</div>
+                                    <div class="phrase-item"><strong>critical thinking skills</strong> - 批判的思考力</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not by itself. Character develops through real-life experiences and relationships. Reading is helpful, but activities like sports and teamwork are equally important."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「それだけでは不十分です。人格は実生活の経験や人間関係を通じて発達します。読書は役立ちますが、スポーツやチームワークも同様に重要です。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>not by itself</strong> - それだけでは不十分</div>
+                                    <div class="phrase-item"><strong>real-life experiences</strong> - 実生活の経験</div>
+                                    <div class="phrase-item"><strong>equally important</strong> - 同様に重要</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- NO.4 SECTION (3 questions) -->
+        <div id="no4" class="collapsible-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📝 No.4 予想問題 (3題)</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content">
+
+                <!-- Q1 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q1: Should the government do more to increase the birth rate in Japan?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Serious labor shortage due to declining birth rate</li>
+                                        <li>Social security system sustainability</li>
+                                        <li>Necessary to maintain economic growth</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Should respect individual freedom of choice</li>
+                                        <li>Other solutions like immigration exist</li>
+                                        <li>Population decline also reduces environmental burden</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, definitely. The government should provide better childcare support and financial assistance. Making it easier to balance work and family would encourage more people to have children."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、絶対に。政府はより良い育児支援と経済的援助を提供すべきです。仕事と家庭の両立を容易にすれば、より多くの人が子どもを持つことを奨励されるでしょう。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>childcare support</strong> - 育児支援</div>
+                                    <div class="phrase-item"><strong>financial assistance</strong> - 経済的援助</div>
+                                    <div class="phrase-item"><strong>balance work and family</strong> - 仕事と家庭を両立する</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not necessarily. Having children is a personal choice that shouldn't be pressured. The government should focus on immigration and automation instead."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「必ずしもそうではありません。子どもを持つことは個人的な選択であり、圧力をかけるべきではありません。政府は移民と自動化に焦点を当てるべきです。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>personal choice</strong> - 個人的な選択</div>
+                                    <div class="phrase-item"><strong>shouldn't be pressured</strong> - 圧力をかけるべきでない</div>
+                                    <div class="phrase-item"><strong>focus on</strong> - 〜に焦点を当てる</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q2: Should the Japanese government accept more immigrants from developing countries?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Immediate solution to labor shortage</li>
+                                        <li>Cultural diversity promotes innovation</li>
+                                        <li>Necessary to maintain international competitiveness</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Difficulty of social integration (language and cultural barriers)</li>
+                                        <li>Security concerns</li>
+                                        <li>May reduce employment opportunities for Japanese</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, I think so. Accepting more immigrants can solve the labor shortage problem. It would also bring cultural diversity and new perspectives to Japanese society."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、そう思います。より多くの移民を受け入れることで労働力不足の問題を解決できます。また、文化的多様性と新しい視点を日本社会にもたらすでしょう。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>labor shortage problem</strong> - 労働力不足の問題</div>
+                                    <div class="phrase-item"><strong>cultural diversity</strong> - 文化的多様性</div>
+                                    <div class="phrase-item"><strong>new perspectives</strong> - 新しい視点</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not necessarily. Japan needs to address integration challenges first. Language barriers and cultural differences could create social problems if not managed properly."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「必ずしもそうではありません。日本はまず統合の課題に対処する必要があります。言語の壁と文化的相違は、適切に管理されなければ社会問題を生む可能性があります。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>integration challenges</strong> - 統合の課題</div>
+                                    <div class="phrase-item"><strong>language barriers</strong> - 言語の壁</div>
+                                    <div class="phrase-item"><strong>if not managed properly</strong> - 適切に管理されなければ</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-collapsible">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <div class="question-title">Q3: Do people today rely too much on their mobile devices such as smartphones?</div>
+                        <span class="question-toggle">▼</span>
+                    </div>
+                    <div class="question-content">
+                        
+                        <div class="hint-section">
+                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
+                            <div class="hint-content">
+                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
+                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Decrease in face-to-face communication</li>
+                                        <li>Addiction and negative effects on mental health</li>
+                                        <li>Declining memory and concentration ability</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
+                                    <ul style="margin-top: 10px;">
+                                        <li>Convenient and efficient tool</li>
+                                        <li>Democratization of information access</li>
+                                        <li>Natural flow of the times</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
+                        
+                        <div class="answer-section">
+                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
+                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Yes, I think so. Many people constantly check their phones, even during conversations. This reduces face-to-face interaction and can harm relationships."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「はい、そう思います。多くの人が会話中でも常に携帯電話を確認します。これは対面での交流を減らし、人間関係を損なう可能性があります。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>constantly check</strong> - 常に確認する</div>
+                                    <div class="phrase-item"><strong>reduces face-to-face interaction</strong> - 対面での交流を減らす</div>
+                                    <div class="phrase-item"><strong>harm relationships</strong> - 人間関係を損なう</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
+                                <div class="answer-container">
+                                    <div class="model-answer">
+                                        "Not necessarily. Smartphones are essential tools for modern life. They help us stay connected and access information instantly, which improves productivity."
+                                    </div>
+                                    <div class="jp-translation">
+                                        <strong>🇯🇵 日本語訳:</strong><br>
+                                        「必ずしもそうではありません。スマートフォンは現代生活に不可欠なツールです。つながりを保ち、即座に情報にアクセスでき、生産性を向上させます。」
+                                    </div>
+                                </div>
+                                <div class="notable-phrases">
+                                    <h5>📌 Notable Phrases & Words:</h5>
+                                    <div class="phrase-item"><strong>essential tools</strong> - 不可欠なツール</div>
+                                    <div class="phrase-item"><strong>stay connected</strong> - つながりを保つ</div>
+                                    <div class="phrase-item"><strong>improves productivity</strong> - 生産性を向上させる</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>🎓 <strong>英検準1級スピーキング Part 7 対策ガイド</strong></p>
+        <p>Teacher: <strong>Harashima</strong> │ 総合復習・両論併記 - 全9題完全収録</p>
+    </div>
+</div>
+
+<script>
+    let totalQuestions = 9;
+    let answeredQuestions = 0;
+
+    function updateProgress() {
+        const percentage = (answeredQuestions / totalQuestions) * 100;
+        document.getElementById('progressBar').style.width = percentage + '%';
+    }
+
+    function toggleSection(element) {
+        element.classList.toggle('active');
+        const content = element.nextElementSibling;
+        content.classList.toggle('active');
+    }
+
+    function toggleQuestion(element) {
+        element.classList.toggle('active');
+        const content = element.nextElementSibling;
+        content.classList.toggle('active');
+    }
+
+    function toggleHint(button) {
+        const hintContent = button.nextElementSibling;
+        if (hintContent.style.display === 'none' || hintContent.style.display === '') {
+            hintContent.style.display = 'block';
+            button.textContent = '🔒 Hide Hints';
+        } else {
+            hintContent.style.display = 'none';
+            button.textContent = '💡 Show Hints';
+        }
+    }
+
+    function toggleAnswer(button) {
+        const answerSection = button.nextElementSibling;
+        if (answerSection.style.display === 'none' || answerSection.style.display === '') {
+            answerSection.style.display = 'block';
+            button.textContent = '🔒 Hide Answers';
+            answeredQuestions++;
+            updateProgress();
+        } else {
+            answerSection.style.display = 'none';
+            button.textContent = '📖 Show Both Perspectives';
+            answeredQuestions--;
+            updateProgress();
+        }
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const button = document.querySelector('.dark-mode-toggle');
+        button.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+
+    function toggleHeader() {
+        const header = document.getElementById('mainHeader');
+        header.classList.toggle('minimized');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.dark-mode-toggle').textContent = '☀️';
+        }
+    });
+</script>
+
+</body>
+</html>

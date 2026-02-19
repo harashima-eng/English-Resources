@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英検準1級 スピーキング対策ガイド - PART 4</title>
+    
+    <!-- Open Graph / Social Media Preview Tags -->
+    <meta property="og:title" content="英検準1級 スピーキング Part 4 対策ガイド - 政治・メディア・健康">
+    <meta property="og:description" content="英検準1級スピーキングPart 4の完全対策！政治・メディア・健康分野の実践問題7題とモデルアンサー。ヒント機能付き、40-45秒で答える練習の決定版。">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f5576c;
+            --success: #20c997;
+            --warning: #ffd93d;
+            --bg-light: #f8f9fa;
+            --text-dark: #495057;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .container {
+            background: #0f3460;
+            color: #e8e8e8;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, var(--accent) 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .header.minimized {
+            padding: 15px 40px;
+        }
+
+        .header.minimized h1,
+        .header.minimized p,
+        .header.minimized .progress-container {
+            display: none;
+        }
+
+        .header-toggle-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+            z-index: 101;
+        }
+
+        .header-toggle-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .header.minimized .header-toggle-btn {
+            transform: rotate(180deg);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin: 15px 0 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--success), #51cf66);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.95em;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 200;
+            backdrop-filter: blur(10px);
+        }
+
+        .dark-mode-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px 30px;
+            margin: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #2196f3;
+        }
+
+        body.dark-mode .toc {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-left-color: #64b5f6;
+        }
+
+        .toc h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        body.dark-mode .toc h3 {
+            color: #64b5f6;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .toc-link {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .toc-link {
+            background: rgba(255,255,255,0.08);
+            color: #e8e8e8;
+        }
+
+        .toc-link:hover {
+            background: #f5f5f5;
+            transform: translateX(5px);
+        }
+
+        body.dark-mode .toc-link:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        .toc-check {
+            color: var(--success);
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Content */
+        .content {
+            padding: 20px;
+        }
+
+        /* Feature Box */
+        .feature-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 5px solid #ff9800;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        body.dark-mode .feature-box {
+            background: linear-gradient(135deg, #4a3800 0%, #6a5200 100%);
+        }
+
+        .feature-box h2 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .feature-box h2 {
+            color: #ffb74d;
+        }
+
+        /* Collapsible Sections */
+        .collapsible-section {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, var(--secondary) 100%);
+            color: white;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f8e 100%);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.3em;
+        }
+
+        .section-toggle {
+            font-size: 1.3em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .section-toggle {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section-content.active {
+            max-height: 3000px;
+            padding: 20px;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        body.dark-mode .formula-box {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .formula-step {
+            background: linear-gradient(135deg, #d3f9d8 0%, #b2f2bb 100%);
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .formula-step {
+            background: linear-gradient(135deg, #0a3a0a 0%, #1a5a1a 100%);
+            color: #b2f2bb;
+        }
+
+        /* Filler Section */
+        .filler-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        body.dark-mode .filler-section {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .filler-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filler-card {
+            background: linear-gradient(135deg, #fff3bf 0%, #ffe082 100%);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--warning);
+            transition: var(--transition);
+        }
+
+        body.dark-mode .filler-card {
+            background: linear-gradient(135deg, #4a4a00 0%, #6a6a00 100%);
+        }
+
+        .filler-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .filler-card strong {
+            display: block;
+            color: #d68910;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        body.dark-mode .filler-card strong {
+            color: #ffd93d;
+        }
+
+        .filler-card .jp {
+            color: #7a5c00;
+            font-size: 0.9em;
+        }
+
+        body.dark-mode .filler-card .jp {
+            color: #ffe082;
+        }
+
+        /* Category Sections */
+        .category {
+            margin: 30px 0;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid #2196f3;
+        }
+
+        body.dark-mode .category-header {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-left-color: #64b5f6;
+        }
+
+        .category-header h2 {
+            color: #1565c0;
+            margin: 0;
+        }
+
+        body.dark-mode .category-header h2 {
+            color: #64b5f6;
+        }
+
+        /* Question Collapsible */
+        .question-collapsible {
+            margin: 15px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        body.dark-mode .question-collapsible {
+            border-left-color: #64b5f6;
+        }
+
+        .question-header {
+            background: var(--bg-light);
+            padding: 20px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .question-header {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .question-header:hover {
+            background: #e9ecef;
+        }
+
+        body.dark-mode .question-header:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .question-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin: 0;
+            flex: 1;
+        }
+
+        body.dark-mode .question-title {
+            color: #e8e8e8;
+        }
+
+        .question-toggle {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 20px;
+        }
+
+        .question-header.active .question-toggle {
+            transform: rotate(180deg);
+        }
+
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .question-content.active {
+            max-height: 5000px;
+            padding: 30px;
+        }
+
+        .question-block {
+            background: white;
+        }
+
+        body.dark-mode .question-block {
+            background: transparent;
+        }
+
+        /* Difficulty Badges */
+        .difficulty {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .basic {
+            background: #c3fae8;
+            color: #087f5b;
+        }
+
+        .intermediate {
+            background: #ffe066;
+            color: #7a5c00;
+        }
+
+        .advanced {
+            background: #ffc9c9;
+            color: #c92a2a;
+        }
+
+        /* Buttons */
+        .show-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 10px 8px 10px 0;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .show-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .show-btn.active {
+            background: linear-gradient(135deg, #20c997 0%, #087f5b 100%);
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, #ffd93d 0%, #ff6b6b 100%);
+        }
+
+        .hint-btn:hover {
+            box-shadow: 0 6px 15px rgba(255, 217, 61, 0.4);
+        }
+
+        /* Answer Sections */
+        .answer-section {
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .answer-section {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .answer-section.hidden {
+            display: none;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #fff3bf 0%, #ffe082 100%);
+            border-left: 5px solid #ffd93d;
+        }
+
+        body.dark-mode .hint-box {
+            background: linear-gradient(135deg, #4a4a00 0%, #6a6a00 100%);
+        }
+
+        .hint-box h4 {
+            color: #d68910;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .hint-box h4 {
+            color: #ffd93d;
+        }
+
+        .hint-content {
+            color: #495057;
+        }
+
+        body.dark-mode .hint-content {
+            color: #e8e8e8;
+        }
+
+        .hint-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+
+        /* Side-by-side answer layout */
+        .answer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .answer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .model-answer {
+            background: linear-gradient(135deg, #d3f9d8 0%, #b2f2bb 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .model-answer {
+            background: linear-gradient(135deg, #0a3a0a 0%, #1a5a1a 100%);
+            color: #e8e8e8;
+        }
+
+        .jp-translation {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #2196f3;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .jp-translation {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: #e8e8e8;
+        }
+
+        /* Tips Section */
+        .tips {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #ff9800;
+            margin-top: 15px;
+        }
+
+        body.dark-mode .tips {
+            background: linear-gradient(135deg, #4a3800 0%, #6a5200 100%);
+        }
+
+        .tips h4 {
+            color: #e65100;
+            margin-bottom: 12px;
+        }
+
+        body.dark-mode .tips h4 {
+            color: #ffb74d;
+        }
+
+        .tips ul {
+            margin-left: 20px;
+            line-height: 2;
+        }
+
+        .tips li {
+            margin: 8px 0;
+            color: #495057;
+        }
+
+        body.dark-mode .tips li {
+            color: #e8e8e8;
+        }
+
+        .tips strong {
+            color: #d84315;
+        }
+
+        body.dark-mode .tips strong {
+            color: #ff9800;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 150;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .dark-mode-toggle,
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hidden metadata for artifact preview (not visible to users) -->
+<div style="display: none;" id="artifact-metadata">
+    <h1>英検準1級 スピーキング Part 4 対策ガイド - 政治・メディア・健康</h1>
+    <p>英検準1級スピーキングPart 4の完全対策！政治・メディア・健康分野の実践問題7題とモデルアンサー。ヒント機能付き、40-45秒で答える練習の決定版。</p>
+</div>
+
+<button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+<button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <button class="header-toggle-btn" onclick="toggleHeader()" title="Hide/Show Header">▲</button>
+        <h1>🎬 英検準1級 スピーキング対策ガイド - PART 4</h1>
+        <p>Politics & Society, Media & Culture, Health & Lifestyle</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Progress: 0/7 questions completed</div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h3>📚 Quick Navigation</h3>
+        <div class="toc-grid">
+            <a class="toc-link" onclick="scrollToSection('formula')">
+                <span>🎯 Winning Formula</span>
+                <span class="toc-check">✔</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('fillers')">
+                <span>🗣️ Filler Phrases</span>
+                <span class="toc-check">✔</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('politics')">
+                <span>🏛️ Politics & Society (3Q)</span>
+                <span class="toc-check">✔</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('media')">
+                <span>📺 Media & Culture (2Q)</span>
+                <span class="toc-check">✔</span>
+            </a>
+            <a class="toc-link" onclick="scrollToSection('health')">
+                <span>💪 Health & Lifestyle (2Q)</span>
+                <span class="toc-check">✔</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Feature Box -->
+        <div class="feature-box">
+            <h2>💡 NEW FEATURE: HINT SYSTEM!</h2>
+            <p>
+                各質問に<strong>「Show Hint」ボタン</strong>を追加!<br>
+                まずヒントを見て自分で答えを考える → その後モデルアンサーで確認!<br>
+                これで本番と同じ練習ができる! 🔥
+            </p>
+        </div>
+
+        <!-- Formula Section -->
+        <div id="formula" class="collapsible-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🎯 THE WINNING FORMULA (40-45秒)</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content active">
+                <div class="formula-box">
+                    <div class="formula-step">1️⃣ OPINION (5秒) - はっきりした立場</div>
+                    <div class="formula-step">2️⃣ REASON 1 + EXAMPLE (15-20秒) - 理由と具体例</div>
+                    <div class="formula-step">3️⃣ REASON 2 + EXAMPLE (15-20秒) - もう一つの理由と例</div>
+                    <div class="formula-step">4️⃣ CONCLUSION (5秒) - まとめ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filler Phrases Section -->
+        <div id="fillers" class="collapsible-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🗣️ FILLER PHRASES - 考える時間を稼ぐ!</h2>
+                <span class="section-toggle">▼</span>
+            </div>
+            <div class="section-content active">
+                <div class="filler-section">
+                    <p style="color: #087f5b; font-weight: 600; margin-bottom: 15px;">⚡ 沈黙は減点!これらのフレーズで自然に考える時間を作れ!</p>
+                    <div class="filler-grid">
+                        <div class="filler-card">
+                            <strong>That's a tough question...</strong>
+                            <span class="jp">「それは難しい質問ですね…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>Let me consider this...</strong>
+                            <span class="jp">「これを考えさせてください…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>I believe...</strong>
+                            <span class="jp">「私は思います…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>As far as I know...</strong>
+                            <span class="jp">「私の知る限りでは…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>What I mean is...</strong>
+                            <span class="jp">「つまり…」</span>
+                        </div>
+                        <div class="filler-card">
+                            <strong>It seems to me that...</strong>
+                            <span class="jp">「私には〜のように思えます…」</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POLITICS & SOCIETY SECTION -->
+        <div id="politics" class="category">
+            <div class="category-header">
+                <h2>🏛️ POLITICS & SOCIETY QUESTIONS (3 Questions)</h2>
+            </div>
+
+            <!-- Q1: Young people and politics -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q1: Do you think that young people today do enough to contribute to politics?
+                        <span class="difficulty advanced">⭐⭐ Advanced</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="1">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-pol1')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('pol1-yes')">Show Answer (YES)</button>
+                        <button class="show-btn" onclick="toggle('pol1-no')">Show Answer (NO)</button>
+
+                        <div id="hint-pol1" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - 若者の政治参加を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YESの視点:</strong>
+                                <ul>
+                                    <li>📌 Do young people use social media for political causes?</li>
+                                    <li>📌 What about protests or volunteer work?</li>
+                                    <li>📌 How are they raising awareness?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NOの視点:</strong>
+                                <ul>
+                                    <li>📌 What's the voter turnout like for young people?</li>
+                                    <li>📌 Do they stay informed about political issues?</li>
+                                    <li>📌 What more could they do?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "voter turnout", "raise awareness", "stay informed", "political activism", "make their voices heard"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="pol1-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES SIDE:</strong><br>
+                                    "I believe young people are doing more than ever before. They use social media to raise awareness about important issues like climate change. Furthermore, many participate in protests and volunteer for political campaigns. So I'd say they're making their voices heard in new and powerful ways."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「若者はこれまで以上に行動していると思います。気候変動などの重要な問題について、ソーシャルメディアで意識を高めています。さらに、多くの人が抗議活動に参加したり、政治キャンペーンでボランティアをしたりしています。だから、新しくて強力な方法で声を上げていると言えます。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"more than ever before"</strong> - 「これまで以上に」。歴史的比較で変化を強調</li>
+                                    <li><strong>"raise awareness"</strong> - 「意識を高める」。政治活動の基本表現</li>
+                                    <li><strong>"participate in protests"</strong> - 「抗議活動に参加する」。具体的な行動を示す</li>
+                                    <li><strong>"make their voices heard"</strong> - 「声を上げる」。政治参加の本質を表現</li>
+                                    <li><strong>"in new and powerful ways"</strong> - 「新しくて強力な方法で」。現代的アプローチを強調</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pol1-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO SIDE:</strong><br>
+                                    "I don't think so. Voter turnout among young people is still very low in most countries. Additionally, many don't stay informed about political issues that affect their future. So there's definitely room for improvement in youth political engagement."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「そうは思いません。ほとんどの国で若者の投票率は依然として非常に低いです。さらに、多くの人が自分たちの未来に影響する政治問題について情報を得ていません。だから若者の政治参加には改善の余地が確実にあります。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"voter turnout"</strong> - 「投票率」。政治参加を測る重要指標</li>
+                                    <li><strong>"stay informed"</strong> - 「情報を得続ける」。継続的な関心を示す</li>
+                                    <li><strong>"issues that affect their future"</strong> - 「未来に影響する問題」。当事者意識を強調</li>
+                                    <li><strong>"room for improvement"</strong> - 「改善の余地」。建設的な批判表現</li>
+                                    <li><strong>"youth political engagement"</strong> - 「若者の政治参加」。議論の核心用語</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2: Government access to private communications -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q2: Do you think the government should have access to individuals' private communications for security purposes?
+                        <span class="difficulty advanced">⭐⭐ Advanced</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="2">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-pol2')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('pol2-yes')">Show Answer (YES)</button>
+                        <button class="show-btn" onclick="toggle('pol2-no')">Show Answer (NO)</button>
+
+                        <div id="hint-pol2" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - プライバシーと安全のバランス!</h4>
+                            <div class="hint-content">
+                                <strong>YESの視点:</strong>
+                                <ul>
+                                    <li>📌 What security threats exist? (terrorism, organized crime)</li>
+                                    <li>📌 How can monitoring prevent attacks?</li>
+                                    <li>📌 Is some privacy loss worth public safety?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NOの視点:</strong>
+                                <ul>
+                                    <li>📌 Why is privacy a fundamental right?</li>
+                                    <li>📌 What happens when government power is abused?</li>
+                                    <li>📌 Are there better ways to ensure security?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "national security", "invasion of privacy", "fundamental right", "abuse of power", "balance between"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="pol2-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES SIDE:</strong><br>
+                                    "I believe it's necessary in some cases. National security threats like terrorism are real, and monitoring communications can help prevent attacks. Of course, there should be strict oversight to prevent abuse. So with proper regulations, this access can save lives."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「一部のケースでは必要だと思います。テロのような国家安全保障上の脅威は現実のものであり、通信を監視することで攻撃を防ぐことができます。もちろん、濫用を防ぐために厳格な監視が必要です。だから適切な規制があれば、このアクセスは命を救うことができます。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"national security threats"</strong> - 「国家安全保障上の脅威」。重大性を強調</li>
+                                    <li><strong>"prevent attacks"</strong> - 「攻撃を防ぐ」。監視の目的を明確化</li>
+                                    <li><strong>"strict oversight"</strong> - 「厳格な監視」。チェック機能の重要性</li>
+                                    <li><strong>"prevent abuse"</strong> - 「濫用を防ぐ」。懸念への対処を示す</li>
+                                    <li><strong>"save lives"</strong> - 「命を救う」。最終的な正当化理由</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pol2-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO SIDE:</strong><br>
+                                    "No, I think privacy is a fundamental right that shouldn't be violated. History shows that governments can abuse such power for political purposes. Moreover, there are better ways to ensure security without invading everyone's privacy. So this practice is too dangerous for democracy."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「いいえ、プライバシーは侵害されるべきでない基本的権利だと思います。歴史は、政府がそのような権力を政治的目的で濫用できることを示しています。さらに、すべての人のプライバシーを侵害せずに安全を確保する、より良い方法があります。だからこの慣行は民主主義にとって危険すぎます。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"fundamental right"</strong> - 「基本的権利」。プライバシーの重要性を最大化</li>
+                                    <li><strong>"shouldn't be violated"</strong> - 「侵害されるべきでない」。強い否定表現</li>
+                                    <li><strong>"abuse such power"</strong> - 「そのような権力を濫用する」。懸念の核心</li>
+                                    <li><strong>"invading everyone's privacy"</strong> - 「すべての人のプライバシーを侵害」。範囲の広さを強調</li>
+                                    <li><strong>"dangerous for democracy"</strong> - 「民主主義にとって危険」。より大きな文脈で問題を位置づけ</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3: Immigration laws -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q3: Should the government introduce stricter immigration laws for people immigrating to Japan?
+                        <span class="difficulty advanced">⭐⭐ Advanced</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="3">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-pol3')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('pol3-yes')">Show Answer (YES)</button>
+                        <button class="show-btn" onclick="toggle('pol3-no')">Show Answer (NO)</button>
+
+                        <div id="hint-pol3" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - 移民政策の是非を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YESの視点:</strong>
+                                <ul>
+                                    <li>📌 What concerns exist? (security, job competition)</li>
+                                    <li>📌 How can stricter laws protect citizens?</li>
+                                    <li>📌 What about maintaining cultural identity?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NOの視点:</strong>
+                                <ul>
+                                    <li>📌 Why does Japan need immigration? (aging society, labor shortage)</li>
+                                    <li>📌 What benefits do immigrants bring?</li>
+                                    <li>📌 Is strictness the right approach?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "aging society", "labor shortage", "cultural diversity", "security concerns", "economic contribution"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="pol3-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES SIDE:</strong><br>
+                                    "I think stricter laws could be beneficial. They would help ensure that immigrants can properly integrate into Japanese society. Additionally, careful screening can address legitimate security concerns. So a more controlled immigration system makes sense."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「より厳格な法律は有益だと思います。移民が日本社会に適切に統合できることを保証するのに役立ちます。さらに、慎重な審査は正当な安全保障上の懸念に対処できます。だから、より管理された移民システムは理にかなっています。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"could be beneficial"</strong> - 「有益である可能性」。控えめな主張</li>
+                                    <li><strong>"properly integrate"</strong> - 「適切に統合する」。社会的調和の重要性</li>
+                                    <li><strong>"legitimate security concerns"</strong> - 「正当な安全保障上の懸念」。現実的な心配を認める</li>
+                                    <li><strong>"careful screening"</strong> - 「慎重な審査」。厳格さの具体的方法</li>
+                                    <li><strong>"makes sense"</strong> - 「理にかなっている」。論理的な結論</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pol3-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO SIDE:</strong><br>
+                                    "No, I don't think so. Japan faces a serious labor shortage due to its aging society, and immigrants can fill crucial gaps in the workforce. Moreover, cultural diversity enriches society and boosts innovation. So Japan should welcome immigrants, not restrict them further."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「いいえ、そうは思いません。日本は高齢化社会により深刻な労働力不足に直面しており、移民は労働力の重要なギャップを埋めることができます。さらに、文化的多様性は社会を豊かにし、イノベーションを促進します。だから日本は移民をさらに制限するのではなく、歓迎すべきです。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"labor shortage"</strong> - 「労働力不足」。日本の現実的課題</li>
+                                    <li><strong>"aging society"</strong> - 「高齢化社会」。背景にある人口動態問題</li>
+                                    <li><strong>"fill crucial gaps"</strong> - 「重要なギャップを埋める」。移民の貢献</li>
+                                    <li><strong>"cultural diversity enriches"</strong> - 「文化的多様性が豊かにする」。ポジティブな側面</li>
+                                    <li><strong>"boosts innovation"</strong> - 「イノベーションを促進」。経済的利点</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MEDIA & CULTURE SECTION -->
+        <div id="media" class="category">
+            <div class="category-header">
+                <h2>📺 MEDIA & CULTURE QUESTIONS (2 Questions)</h2>
+            </div>
+
+            <!-- Q4: Celebrity behavior -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q4: Do you think that the behavior of celebrities in public places sets a good example for citizens?
+                        <span class="difficulty intermediate">⭐ Intermediate</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="4">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-med1')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('med1-yes')">Show Answer (YES)</button>
+                        <button class="show-btn" onclick="toggle('med1-no')">Show Answer (NO)</button>
+
+                        <div id="hint-med1" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - 有名人の影響力を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>YESの視点:</strong>
+                                <ul>
+                                    <li>📌 Which celebrities are positive role models?</li>
+                                    <li>📌 What good causes do they support?</li>
+                                    <li>📌 How do they inspire people?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NOの視点:</strong>
+                                <ul>
+                                    <li>📌 What bad behaviors do some celebrities show?</li>
+                                    <li>📌 How does media focus on scandals?</li>
+                                    <li>📌 Why shouldn't we rely on celebrities as role models?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "role model", "positive influence", "set an example", "negative behavior", "media attention"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="med1-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES SIDE:</strong><br>
+                                    "Many celebrities do set positive examples. They often use their influence to support important causes like environmental protection and education. Moreover, their charitable work inspires ordinary people to help others. So celebrities can definitely be good role models for society."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「多くの有名人は良い手本を示しています。環境保護や教育などの重要な活動を支援するために影響力を使っています。さらに、慈善活動は一般の人々に他者を助けるよう促します。だから有名人は確実に社会の良いロールモデルになれます。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"set positive examples"</strong> - 「良い手本を示す」。肯定的な影響</li>
+                                    <li><strong>"use their influence"</strong> - 「影響力を使う」。有名人の力の活用</li>
+                                    <li><strong>"support important causes"</strong> - 「重要な活動を支援」。社会貢献</li>
+                                    <li><strong>"charitable work"</strong> - 「慈善活動」。具体的な良い行動</li>
+                                    <li><strong>"inspire ordinary people"</strong> - 「一般の人々に促す」。波及効果</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="med1-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO SIDE:</strong><br>
+                                    "I don't think so. Many celebrities are involved in scandals and show irresponsible behavior. The media constantly reports on their mistakes, which can negatively influence young people. So we shouldn't rely on celebrities as role models for society."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「そうは思いません。多くの有名人がスキャンダルに巻き込まれ、無責任な行動を示しています。メディアは常に彼らの過ちを報道し、それが若者に悪影響を与える可能性があります。だから有名人を社会のロールモデルとして頼るべきではありません。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"involved in scandals"</strong> - 「スキャンダルに巻き込まれる」。問題行動</li>
+                                    <li><strong>"irresponsible behavior"</strong> - 「無責任な行動」。否定的な側面</li>
+                                    <li><strong>"constantly reports"</strong> - 「常に報道する」。メディアの役割</li>
+                                    <li><strong>"negatively influence"</strong> - 「悪影響を与える」。マイナスの効果</li>
+                                    <li><strong>"shouldn't rely on"</strong> - 「頼るべきでない」。依存への警告</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q5: Social media -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q5: Do you think it is good for people to spend time on social media?
+                        <span class="difficulty intermediate">⭐ Intermediate</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="5">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-med2')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('med2-yes')">Show Answer (YES)</button>
+                        <button class="show-btn" onclick="toggle('med2-no')">Show Answer (NO)</button>
+
+                        <div id="hint-med2" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - SNSの良い面と悪い面!</h4>
+                            <div class="hint-content">
+                                <strong>YESの視点:</strong>
+                                <ul>
+                                    <li>📌 How does social media help people connect?</li>
+                                    <li>📌 What information can we access?</li>
+                                    <li>📌 How do people share experiences?</li>
+                                </ul>
+                                <strong style="margin-top: 15px; display: block;">NOの視点:</strong>
+                                <ul>
+                                    <li>📌 What are the mental health impacts?</li>
+                                    <li>📌 How does it waste time?</li>
+                                    <li>📌 What about misinformation and fake news?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "stay connected", "spread of information", "waste time", "mental health", "addiction"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="med2-yes" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>✅ YES SIDE:</strong><br>
+                                    "I think social media can be beneficial. It helps people stay connected with friends and family around the world. Additionally, it provides quick access to news and information. So when used responsibly, social media is a valuable tool for communication."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「ソーシャルメディアは有益だと思います。世界中の友人や家族とつながり続けるのに役立ちます。さらに、ニュースや情報へのすばやいアクセスを提供します。だから責任を持って使えば、ソーシャルメディアはコミュニケーションの貴重なツールです。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"can be beneficial"</strong> - 「有益である可能性」。バランスの取れた表現</li>
+                                    <li><strong>"stay connected"</strong> - 「つながり続ける」。SNSの基本機能</li>
+                                    <li><strong>"quick access to"</strong> - 「すばやいアクセス」。情報取得の利便性</li>
+                                    <li><strong>"when used responsibly"</strong> - 「責任を持って使えば」。条件付きの肯定</li>
+                                    <li><strong>"valuable tool"</strong> - 「貴重なツール」。実用的な価値</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="med2-no" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    <strong>❌ NO SIDE:</strong><br>
+                                    "I don't think it's entirely good. Social media can become addictive and waste a lot of time. Furthermore, it often causes mental health issues like anxiety and depression. So people should limit their social media use for better well-being."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「完全に良いとは思いません。ソーシャルメディアは中毒性があり、多くの時間を浪費する可能性があります。さらに、不安やうつ病のようなメンタルヘルスの問題を引き起こすことがよくあります。だから人々はより良い健康のためにソーシャルメディアの使用を制限すべきです。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"not entirely good"</strong> - 「完全に良いわけではない」。部分的否定</li>
+                                    <li><strong>"become addictive"</strong> - 「中毒性がある」。依存の危険性</li>
+                                    <li><strong>"waste a lot of time"</strong> - 「多くの時間を浪費」。非生産性</li>
+                                    <li><strong>"mental health issues"</strong> - 「メンタルヘルスの問題」。心理的影響</li>
+                                    <li><strong>"for better well-being"</strong> - 「より良い健康のため」。制限の目的</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HEALTH & LIFESTYLE SECTION -->
+        <div id="health" class="category">
+            <div class="category-header">
+                <h2>💪 HEALTH & LIFESTYLE QUESTIONS (2 Questions)</h2>
+            </div>
+
+            <!-- Q6: Smoking ban -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q6: Do you think that the government should ban smoking in all restaurants?
+                        <span class="difficulty intermediate">⭐ Intermediate</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="6">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-hea1')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('hea1')">Show Model Answer</button>
+
+                        <div id="hint-hea1" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - 禁煙の是非を考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>構造のヒント:</strong>
+                                <ul>
+                                    <li>📌 Opinion: Should smoking be banned in restaurants? (YES)</li>
+                                    <li>📌 Reason 1: How does secondhand smoke affect others?</li>
+                                    <li>📌 Reason 2: What about restaurant workers' health?</li>
+                                    <li>📌 Conclusion: Is a ban necessary?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "secondhand smoke", "health risks", "protect workers", "public health", "necessary measure"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="hea1" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    "Yes, I strongly support a complete smoking ban. Secondhand smoke poses serious health risks to non-smokers, especially in enclosed spaces. Moreover, restaurant workers shouldn't be exposed to smoke all day. So banning smoking protects public health and is a necessary measure."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、完全禁煙を強く支持します。副流煙は特に密閉空間で非喫煙者に深刻な健康リスクをもたらします。さらに、レストランの従業員は一日中煙にさらされるべきではありません。だから禁煙は公衆衛生を守り、必要な措置です。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"strongly support"</strong> - 「強く支持する」。明確な立場表明</li>
+                                    <li><strong>"secondhand smoke"</strong> - 「副流煙」。受動喫煙の専門用語</li>
+                                    <li><strong>"poses serious health risks"</strong> - 「深刻な健康リスクをもたらす」。危険性の強調</li>
+                                    <li><strong>"enclosed spaces"</strong> - 「密閉空間」。リスクが高まる環境</li>
+                                    <li><strong>"public health"</strong> - 「公衆衛生」。社会全体の健康</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q7: Working hours -->
+            <div class="question-collapsible">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div class="question-title">
+                        Q7: Should the number of weekly working hours in Japan be decreased?
+                        <span class="difficulty intermediate">⭐ Intermediate</span>
+                    </div>
+                    <span class="question-toggle">▼</span>
+                </div>
+                <div class="question-content">
+                    <div class="question-block" data-question="7">
+                        <button class="show-btn hint-btn" onclick="toggle('hint-hea2')">💡 Show Hint</button>
+                        <button class="show-btn" onclick="toggle('hea2')">Show Model Answer</button>
+
+                        <div id="hint-hea2" class="answer-section hint-box hidden">
+                            <h4>💡 HINT - ワークライフバランスを考えよう!</h4>
+                            <div class="hint-content">
+                                <strong>構造のヒント:</strong>
+                                <ul>
+                                    <li>📌 Opinion: Should working hours be reduced? (YES)</li>
+                                    <li>📌 Reason 1: What health problems come from overwork?</li>
+                                    <li>📌 Reason 2: How does this affect family time?</li>
+                                    <li>📌 Conclusion: Why is reduction important?</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
+                                    🎯 Key phrases: "overwork", "work-life balance", "mental health", "quality of life", "productivity"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="hea2" class="answer-section hidden">
+                            <div class="answer-container">
+                                <div class="model-answer">
+                                    "Yes, definitely. Many Japanese workers suffer from health problems due to excessive overtime. Shorter working hours would improve work-life balance and allow people more time with their families. So reducing working hours is essential for workers' well-being and quality of life."
+                                </div>
+                                <div class="jp-translation">
+                                    <strong>🇯🇵 日本語訳:</strong><br>
+                                    「はい、絶対にそうすべきです。多くの日本人労働者は過度な残業により健康問題に苦しんでいます。労働時間の短縮はワークライフバランスを改善し、家族と過ごす時間を増やします。だから労働時間の削減は労働者の幸福と生活の質に不可欠です。」
+                                </div>
+                            </div>
+                            <div class="tips">
+                                <h4>💡 EXPANDED TIPS:</h4>
+                                <ul>
+                                    <li><strong>"suffer from health problems"</strong> - 「健康問題に苦しむ」。過労の影響</li>
+                                    <li><strong>"excessive overtime"</strong> - 「過度な残業」。日本の働き方の問題</li>
+                                    <li><strong>"work-life balance"</strong> - 「ワークライフバランス」。現代的な働き方のキーワード</li>
+                                    <li><strong>"quality of life"</strong> - 「生活の質」。単なる健康以上の概念</li>
+                                    <li><strong>"essential for"</strong> - 「〜に不可欠」。重要性の最大化</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+        document.querySelector('.dark-mode-toggle').textContent = isDark ? '☀️' : '🌙';
+    }
+
+    // Load dark mode preference
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.dark-mode-toggle').textContent = '☀️';
+    }
+
+    // Header Toggle
+    function toggleHeader() {
+        document.querySelector('.header').classList.toggle('minimized');
+    }
+
+    // Section Toggle
+    function toggleSection(element) {
+        element.classList.toggle('active');
+        const content = element.nextElementSibling;
+        content.classList.toggle('active');
+    }
+
+    // Question Toggle
+    function toggleQuestion(element) {
+        element.classList.toggle('active');
+        const content = element.parentElement.querySelector('.question-content');
+        content.classList.toggle('active');
+    }
+
+    // Show/Hide Answer
+    function toggle(id) {
+        const element = document.getElementById(id);
+        const button = event.target;
+        
+        if (element.classList.contains('hidden')) {
+            element.classList.remove('hidden');
+            button.classList.add('active');
+            
+            // Update progress
+            const questionBlock = element.closest('.question-block');
+            if (questionBlock && !questionBlock.classList.contains('completed')) {
+                questionBlock.classList.add('completed');
+                updateProgress();
+            }
+        } else {
+            element.classList.add('hidden');
+            button.classList.remove('active');
+        }
+    }
+
+    // Progress Tracking
+    function updateProgress() {
+        const total = document.querySelectorAll('.question-block').length;
+        const completed = document.querySelectorAll('.question-block.completed').length;
+        const percentage = (completed / total) * 100;
+        
+        document.getElementById('progressBar').style.width = percentage + '%';
+        document.getElementById('progressText').textContent = `Progress: ${completed}/${total} questions completed`;
+    }
+
+    // Scroll Functions
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
