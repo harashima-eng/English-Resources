@@ -772,6 +772,7 @@ body {
 .model-answer .en-text {
   font-size: 0.95rem;
   line-height: 1.85;
+  font-style: normal;
   color: var(--cream);
 }
 
@@ -1531,7 +1532,7 @@ function updateProgress() {
 updateProgress();
 
 /* ── Scroll ── */
-function scrollTo(sel) {
+function navTo(sel) {
   const el = document.querySelector(sel);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
