@@ -1,0 +1,2503 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>EIKEN Pre-1 – Simple Phrase Bank + Reasons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f4f4f8;
+      --bg-card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.1);
+      --border: #e5e7eb;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+    }
+    body.dark {
+      --bg: #020617;
+      --bg-card: #020617;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --accent-soft: rgba(96, 165, 250, 0.18);
+      --border: #1e293b;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top left, #e0f2fe, transparent 55%),
+        radial-gradient(circle at bottom right, #fee2e2, transparent 55%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .title-block h1 {
+      font-size: 1.7rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .title-block p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    body.dark .chip {
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .mode-toggle {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.02);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .mode-toggle span {
+      font-size: 1rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.02);
+      color: var(--muted);
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(37, 99, 235, 0.4);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    @media (min-width: 900px) {
+      main {
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.15fr);
+      }
+    }
+
+    .topic-card {
+      background: linear-gradient(
+          135deg,
+          rgba(148, 163, 184, 0.05),
+          transparent 55%
+        ),
+        var(--bg-card);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topic-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+
+    .topic-tag span {
+      font-size: 0.8rem;
+    }
+
+    .topic-header {
+      margin-bottom: 6px;
+    }
+
+    .topic-header h2 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .topic-header p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .pair-block {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+    }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .label-row strong {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .english {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1px;
+    }
+
+    .japanese {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .pair-group-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-top: 6px;
+      margin-bottom: 3px;
+    }
+
+    .topic-card::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 90px;
+      height: 90px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.18), transparent);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title-block">
+        <h1>EIKEN Pre-1 – Simple Speaking Phrase Bank + Reasons</h1>
+        <p>
+          1 main sentence + paraphrase + reason + paraphrase of reason（全部日英対応）  
+        </p>
+        <div class="chip">
+          <span>🎤</span> 面接対策 / Eiken Pre-1 Speaking
+        </div>
+      </div>
+      <div class="controls">
+        <button class="mode-toggle" id="modeToggle">
+          <span>🌙</span><span id="modeLabel">Dark mode</span>
+        </button>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="environment">Environment</button>
+          <button class="filter-btn" data-filter="education">Education</button>
+          <button class="filter-btn" data-filter="work">Work & Economy</button>
+          <button class="filter-btn" data-filter="technology">Technology</button>
+          <button class="filter-btn" data-filter="society">Society & Culture</button>
+          <button class="filter-btn" data-filter="health">Health</button>
+          <button class="filter-btn" data-filter="law">Crime & Law</button>
+          <button class="filter-btn" data-filter="international">International</button>
+          <button class="filter-btn" data-filter="media">Media</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="cards">
+
+      <!-- 1. ENVIRONMENT -->
+      <!-- Climate change -->
+      <section class="topic-card" data-category="environment">
+        <div class="topic-tag"><span>🌏</span><span>Environment / Climate change</span></div>
+        <div class="topic-header">
+          <h2>Climate change（気候変動）</h2>
+          <p>Global warming / 気候変動</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            More people agree we need stronger action to slow climate change.
+          </p>
+          <p class="japanese">
+            気候変動の進行を遅らせるためには、より強い対策が必要だと考える人が増えています。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Many people now believe tougher measures are necessary to fight climate change.
+          </p>
+          <p class="japanese">
+            気候変動と戦うには、もっと厳しい対策が必要だと考える人が多くなっています。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because current efforts are not enough to stop temperatures from rising.
+          </p>
+          <p class="japanese">
+            今の対策だけでは、気温の上昇を止めるには不十分だからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since what we are doing now is too weak to control global warming.
+          </p>
+          <p class="japanese">
+            現在の取り組みでは、地球温暖化を十分に抑えられないからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Recycling -->
+      <section class="topic-card" data-category="environment">
+        <div class="topic-tag"><span>♻️</span><span>Environment / Recycling</span></div>
+        <div class="topic-header">
+          <h2>Recycling（リサイクル）</h2>
+          <p>Waste / リサイクル</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Recycling reduces waste and protects natural resources.
+          </p>
+          <p class="japanese">
+            リサイクルはごみを減らし、自然の資源を守ることにつながります。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Recycling helps cut down trash and saves important materials.
+          </p>
+          <p class="japanese">
+            リサイクルを行うことで、ごみの量を減らし、大切な資源を節約できます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because using recycled items means we do not need to take as many new materials from nature.
+          </p>
+          <p class="japanese">
+            リサイクル製品を使えば、自然から新しい資源をそれほど多く取らなくてよくなるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since recycling lowers the amount of fresh resources we must remove from the environment.
+          </p>
+          <p class="japanese">
+            リサイクルは、環境から新たに取り出さなければならない資源の量を減らしてくれるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Pollution -->
+      <section class="topic-card" data-category="environment">
+        <div class="topic-tag"><span>😷</span><span>Environment / Pollution</span></div>
+        <div class="topic-header">
+          <h2>Pollution（汚染）</h2>
+          <p>Air / Water / 汚染</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Pollution is getting worse and affecting people’s health.
+          </p>
+          <p class="japanese">
+            汚染が悪化しており、人々の健康に影響を与えています。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Growing pollution is starting to harm human health.
+          </p>
+          <p class="japanese">
+            進む汚染によって、人間の健康が害され始めています。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because dirty air and water can cause respiratory problems and other diseases.
+          </p>
+          <p class="japanese">
+            汚れた空気や水は、呼吸器の病気などさまざまな病気の原因になるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since polluted environments lead to more illnesses and weaker bodies.
+          </p>
+          <p class="japanese">
+            汚染された環境では、病気が増え、人の体も弱くなってしまうからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Energy issues -->
+      <section class="topic-card" data-category="environment">
+        <div class="topic-tag"><span>⚡</span><span>Environment / Energy issues</span></div>
+        <div class="topic-header">
+          <h2>Energy issues（エネルギー問題）</h2>
+          <p>Renewables / エネルギー問題</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            We should invest more in renewable energy for a cleaner future.
+          </p>
+          <p class="japanese">
+            よりクリーンな未来のために、再生可能エネルギーへの投資を増やすべきです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Putting more money into renewable energy can create a cleaner society.
+          </p>
+          <p class="japanese">
+            再生可能エネルギーにもっと資金を使うことで、より清潔な社会を作ることができます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because fossil fuels are limited and produce a lot of pollution.
+          </p>
+          <p class="japanese">
+            化石燃料には限りがあり、たくさんの汚染を生み出してしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since traditional energy sources both run out and damage the environment.
+          </p>
+          <p class="japanese">
+            従来型のエネルギーは、いずれ枯渇するうえに、環境も傷つけてしまうからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Natural disasters -->
+      <section class="topic-card" data-category="environment">
+        <div class="topic-tag"><span>🌊</span><span>Environment / Natural disasters</span></div>
+        <div class="topic-header">
+          <h2>Natural disasters（自然災害）</h2>
+          <p>Earthquakes / Tsunamis / 自然災害</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Natural disasters are increasing, so preparation is essential.
+          </p>
+          <p class="japanese">
+            自然災害が増えているため、防災の準備は欠かせません。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            As disasters happen more often, being prepared has become necessary.
+          </p>
+          <p class="japanese">
+            災害が以前よりも頻繁に起こるようになっているので、備えておくことが必要になっています。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because early preparation can reduce damage and save many lives.
+          </p>
+          <p class="japanese">
+            事前に準備しておけば、被害を小さくし、多くの命を救うことができるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since planning ahead helps people escape safely and recover more quickly.
+          </p>
+          <p class="japanese">
+            あらかじめ備えておくことで、安全に避難し、その後の復旧も早めることができるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. EDUCATION -->
+      <!-- Online learning -->
+      <section class="topic-card" data-category="education">
+        <div class="topic-tag"><span>💻</span><span>Education / Online learning</span></div>
+        <div class="topic-header">
+          <h2>Online learning（オンライン学習）</h2>
+          <p>Remote classes / オンライン学習</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Online learning is convenient but many students need more support.
+          </p>
+          <p class="japanese">
+            オンライン学習は便利ですが、多くの生徒がより多くのサポートを必要としています。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Online classes are helpful, but students often struggle without enough guidance.
+          </p>
+          <p class="japanese">
+            オンライン授業は役に立ちますが、十分な指導がないと生徒は困ってしまうことが多いです。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because it is harder to ask questions and get quick feedback through a screen.
+          </p>
+          <p class="japanese">
+            画面越しの授業では、質問をしたり素早くフィードバックをもらったりすることが難しいからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since students cannot easily get immediate help when they do not understand something.
+          </p>
+          <p class="japanese">
+            分からないところがあっても、その場で先生にすぐ助けてもらいにくいからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- School rules -->
+      <section class="topic-card" data-category="education">
+        <div class="topic-tag"><span>📏</span><span>Education / School rules</span></div>
+        <div class="topic-header">
+          <h2>School rules（校則）</h2>
+          <p>Discipline / 校則</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            School rules should protect students, not restrict them too much.
+          </p>
+          <p class="japanese">
+            校則は生徒を守るためのものであり、必要以上に生徒をしばるべきではありません。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Rules at school should keep students safe without being overly strict.
+          </p>
+          <p class="japanese">
+            学校のルールは生徒の安全を守るためのもので、あまりに厳しすぎてはいけません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because too many strict rules can limit students’ individuality and growth.
+          </p>
+          <p class="japanese">
+            ルールが厳しすぎると、生徒の個性や成長の機会を奪ってしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since excessive control may stop students from thinking and acting for themselves.
+          </p>
+          <p class="japanese">
+            管理しすぎることで、生徒が自分で考えて行動する力を育てにくくなるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Exams & testing -->
+      <section class="topic-card" data-category="education">
+        <div class="topic-tag"><span>📝</span><span>Education / Exams</span></div>
+        <div class="topic-header">
+          <h2>Exams & testing（試験）</h2>
+          <p>Tests / 試験</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Exams are useful but do not always show real ability.
+          </p>
+          <p class="japanese">
+            試験は役に立ちますが、生徒の本当の実力をいつも正確に示すわけではありません。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Tests can help measure skills, but they are not always accurate.
+          </p>
+          <p class="japanese">
+            試験は能力を測るのに役立ちますが、必ずしも正確とは限りません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because some students get nervous in exams and cannot show their true level.
+          </p>
+          <p class="japanese">
+            試験の場では緊張してしまい、本来の力を発揮できない生徒もいるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since test conditions do not always match real-life situations where people use their skills.
+          </p>
+          <p class="japanese">
+            試験の環境は、実際に能力を使う場面とは違うことが多いからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Bullying -->
+      <section class="topic-card" data-category="education">
+        <div class="topic-tag"><span>🚫</span><span>Education / Bullying</span></div>
+        <div class="topic-header">
+          <h2>Bullying（いじめ）</h2>
+          <p>School life / いじめ</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Schools need better programs to prevent bullying.
+          </p>
+          <p class="japanese">
+            学校はいじめを防ぐために、より良い取り組みを行う必要があります。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            More effective anti-bullying programs are necessary in schools.
+          </p>
+          <p class="japanese">
+            学校には、より効果的ないじめ防止プログラムが必要です。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because bullying can seriously damage students’ mental health and school life.
+          </p>
+          <p class="japanese">
+            いじめは生徒の心の健康や学校生活を深く傷つけてしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since victims may lose confidence, skip school, or even think about hurting themselves.
+          </p>
+          <p class="japanese">
+            いじめられた生徒は、自信を失ったり、不登校になったり、最悪の場合は自分を傷つけることまで考えてしまうからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Curriculum -->
+      <section class="topic-card" data-category="education">
+        <div class="topic-tag"><span>📚</span><span>Education / Curriculum</span></div>
+        <div class="topic-header">
+          <h2>Curriculum（カリキュラム）</h2>
+          <p>Subjects / カリキュラム</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            The curriculum should match modern society’s needs.
+          </p>
+          <p class="japanese">
+            カリキュラムは、現代社会のニーズに合ったものであるべきです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            School programs must be updated to fit today’s required skills.
+          </p>
+          <p class="japanese">
+            学校の教育内容は、今求められているスキルに合わせて更新されなければなりません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because students will face new technologies and global problems in the future.
+          </p>
+          <p class="japanese">
+            生徒たちは将来、新しい技術や地球規模の問題に向き合うことになるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since education should prepare young people for real challenges in modern society.
+          </p>
+          <p class="japanese">
+            教育は、現代社会で実際に直面する課題に対応できるよう若者を育てるものだからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Equal access to education -->
+      <section class="topic-card" data-category="education">
+        <div class="topic-tag"><span>⚖️</span><span>Education / Equal access</span></div>
+        <div class="topic-header">
+          <h2>Equal access to education（教育機会の平等）</h2>
+          <p>Fairness / 教育機会の平等</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Every child should have equal access to quality education.
+          </p>
+          <p class="japanese">
+            すべての子どもが、質の高い教育を平等に受けられるべきです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            All children deserve the chance to receive a good education.
+          </p>
+          <p class="japanese">
+            どの子どもにも、よい教育を受ける機会が与えられるべきです。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because unfair differences in education can create a large gap between rich and poor.
+          </p>
+          <p class="japanese">
+            教育の機会に不公平があると、裕福な人とそうでない人の差が大きくなってしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since equal education helps give everyone a more similar starting point in life.
+          </p>
+          <p class="japanese">
+            教育を平等にすることで、人生のスタートラインをある程度そろえることができるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. WORK & ECONOMY -->
+      <!-- Overwork & work-life balance -->
+      <section class="topic-card" data-category="work">
+        <div class="topic-tag"><span>⏰</span><span>Work / Overwork</span></div>
+        <div class="topic-header">
+          <h2>Overwork & work-life balance（働きすぎ・ワークライフバランス）</h2>
+          <p>Stress / 働きすぎ・ワークライフバランス</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Many workers suffer because they lack work-life balance.
+          </p>
+          <p class="japanese">
+            ワークライフバランスが取れていないため、多くの労働者が苦しんでいます。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Without a healthy balance, workers face serious stress.
+          </p>
+          <p class="japanese">
+            仕事と生活のバランスが悪いと、労働者は大きなストレスを抱えることになります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because long working hours leave little time for rest, family, or hobbies.
+          </p>
+          <p class="japanese">
+            長時間労働が続くと、休息や家族との時間、趣味の時間がほとんど取れなくなるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since people cannot recharge properly, both their health and relationships may suffer.
+          </p>
+          <p class="japanese">
+            十分にリフレッシュできないため、心身の健康だけでなく、人間関係にも悪影響が出てしまうからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Automation & AI -->
+      <section class="topic-card" data-category="work">
+        <div class="topic-tag"><span>🤖</span><span>Work / Automation & AI</span></div>
+        <div class="topic-header">
+          <h2>Automation & AI（自動化とAI）</h2>
+          <p>Robots / 自動化とAI</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            AI will replace some jobs, so retraining is necessary.
+          </p>
+          <p class="japanese">
+            AIが一部の仕事を奪う可能性があるため、再教育が必要です。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Automation may remove some jobs, making retraining important.
+          </p>
+          <p class="japanese">
+            自動化によって仕事が減るかもしれないので、学び直しが重要になります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because workers will need new skills that machines cannot easily copy.
+          </p>
+          <p class="japanese">
+            労働者は、機械には簡単に真似できない新しいスキルを身につける必要があるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since people must learn different abilities to stay employable in an AI-driven world.
+          </p>
+          <p class="japanese">
+            AIが広がる社会で仕事を続けるには、別の能力を学び直さなければならないからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Globalization -->
+      <section class="topic-card" data-category="work">
+        <div class="topic-tag"><span>🌐</span><span>Work / Globalization</span></div>
+        <div class="topic-header">
+          <h2>Globalization（グローバル化）</h2>
+          <p>World trade / グローバル化</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Globalization connects countries but increases competition.
+          </p>
+          <p class="japanese">
+            グローバル化は国同士をつなぎますが、同時に競争も激しくします。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            While globalization brings nations closer, it also intensifies rivalry.
+          </p>
+          <p class="japanese">
+            グローバル化は国々の距離を縮めますが、企業や人々の競争をより厳しいものにもします。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because companies and workers must compete with people from all over the world.
+          </p>
+          <p class="japanese">
+            企業や労働者は、世界中の人々と競争しなければならなくなるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since open markets mean more choices but also stronger rivals from abroad.
+          </p>
+          <p class="japanese">
+            市場が開かれることで選択肢は増えますが、海外からのライバルも一段と強くなるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Employment issues -->
+      <section class="topic-card" data-category="work">
+        <div class="topic-tag"><span>💼</span><span>Work / Employment</span></div>
+        <div class="topic-header">
+          <h2>Employment issues（雇用問題）</h2>
+          <p>Jobs / 雇用問題</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Governments should help create stable jobs.
+          </p>
+          <p class="japanese">
+            政府は、安定した雇用を生み出すことを支援すべきです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            The government needs to support the creation of reliable employment.
+          </p>
+          <p class="japanese">
+            政府は、安心して働ける仕事づくりを支える必要があります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because unstable jobs make it hard for people to plan their future lives.
+          </p>
+          <p class="japanese">
+            雇用が不安定だと、人々は将来の生活設計を立てにくくなるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since people need steady income to feel secure and support their families.
+          </p>
+          <p class="japanese">
+            家族を支え、安心して暮らすためには、安定した収入が必要だからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 4. TECHNOLOGY -->
+      <!-- Smartphones -->
+      <section class="topic-card" data-category="technology">
+        <div class="topic-tag"><span>📱</span><span>Tech / Smartphones</span></div>
+        <div class="topic-header">
+          <h2>Smartphones（スマートフォン）</h2>
+          <p>Devices / スマートフォン</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Smartphones are useful but overuse harms health.
+          </p>
+          <p class="japanese">
+            スマートフォンは便利ですが、使いすぎると健康に悪影響を与えます。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Phones are helpful tools, but using them too much can be unhealthy.
+          </p>
+          <p class="japanese">
+            スマホは役に立つ道具ですが、長時間使いすぎると体や心に良くありません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because long screen time can cause eye strain, poor sleep, and stress.
+          </p>
+          <p class="japanese">
+            画面を長く見続けると、目の疲れや睡眠不足、ストレスの原因になるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since too much smartphone use hurts our eyes, our sleep quality, and our mental health.
+          </p>
+          <p class="japanese">
+            スマホを使いすぎると、目だけでなく、睡眠の質やメンタルヘルスにも悪影響が出るからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Social media -->
+      <section class="topic-card" data-category="technology">
+        <div class="topic-tag"><span>💬</span><span>Tech / Social media</span></div>
+        <div class="topic-header">
+          <h2>Social media（ソーシャルメディア）</h2>
+          <p>SNS / ソーシャルメディア</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Social media spreads misinformation easily.
+          </p>
+          <p class="japanese">
+            ソーシャルメディアでは、誤った情報が簡単に広まってしまいます。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            False information can travel quickly on social networks.
+          </p>
+          <p class="japanese">
+            SNS上では、間違った情報がすぐに多くの人に広がってしまいます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because people often share posts without checking if they are true.
+          </p>
+          <p class="japanese">
+            人々は、その情報が本当に正しいかどうかを確かめずに投稿を拡散してしまうことが多いからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since users may trust eye-catching messages and forward them without careful thinking.
+          </p>
+          <p class="japanese">
+            派手なメッセージを見て、よく考えずに信じてシェアしてしまう人が多いからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- AI -->
+      <section class="topic-card" data-category="technology">
+        <div class="topic-tag"><span>🧠</span><span>Tech / AI</span></div>
+        <div class="topic-header">
+          <h2>AI（人工知能）</h2>
+          <p>Artificial intelligence / 人工知能</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            AI improves life but needs safety rules.
+          </p>
+          <p class="japanese">
+            AIは私たちの生活を便利にしますが、安全に使うためのルールが必要です。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            AI offers benefits, but guidelines are needed to ensure safe use.
+          </p>
+          <p class="japanese">
+            AIには多くの利点がありますが、安全に利用するための指針が求められます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because powerful technology can cause harm if people use it in the wrong way.
+          </p>
+          <p class="japanese">
+            強力な技術は、使い方を誤ると人々に被害を与える可能性があるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since clear rules are needed to prevent misuse and protect ordinary users.
+          </p>
+          <p class="japanese">
+            誤用を防ぎ、一般の人々を守るためには、分かりやすいルールが必要だからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Cybersecurity -->
+      <section class="topic-card" data-category="technology">
+        <div class="topic-tag"><span>🔐</span><span>Tech / Cybersecurity</span></div>
+        <div class="topic-header">
+          <h2>Cybersecurity（サイバーセキュリティ）</h2>
+          <p>Online safety / サイバーセキュリティ</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            As services go online, strong cybersecurity is essential.
+          </p>
+          <p class="japanese">
+            さまざまなサービスがオンライン化する中で、強力なサイバーセキュリティは欠かせません。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            More online services mean better digital protection is required.
+          </p>
+          <p class="japanese">
+            オンラインサービスが増えるほど、より高いレベルのデジタルな安全対策が必要になります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because hackers can steal data or attack systems if security is weak.
+          </p>
+          <p class="japanese">
+            セキュリティが弱いと、ハッカーにデータを盗まれたり、システムを攻撃されたりするおそれがあるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since protecting networks properly helps prevent information leaks and service stops.
+          </p>
+          <p class="japanese">
+            ネットワークをしっかり守ることで、情報漏えいやサービス停止などのトラブルを防げるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Privacy -->
+      <section class="topic-card" data-category="technology">
+        <div class="topic-tag"><span>🕵️</span><span>Tech / Privacy</span></div>
+        <div class="topic-header">
+          <h2>Privacy（プライバシー）</h2>
+          <p>Personal data / プライバシー</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            People worry about how companies use their data.
+          </p>
+          <p class="japanese">
+            人々は、企業が自分たちのデータをどのように利用しているのかを心配しています。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            There is growing concern about businesses handling personal information.
+          </p>
+          <p class="japanese">
+            企業による個人情報の扱いについて、懸念が高まっています。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because leaked or misused data can lead to fraud, stalking, or other serious problems.
+          </p>
+          <p class="japanese">
+            データが漏れたり悪用されたりすると、詐欺やストーカー被害など深刻な問題につながるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since personal information in the wrong hands can put people’s safety and money at risk.
+          </p>
+          <p class="japanese">
+            個人情報が悪意のある人の手に渡ると、人々の安全やお金が危険にさらされてしまうからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 5. SOCIETY & CULTURE -->
+      <!-- Gender issues -->
+      <section class="topic-card" data-category="society">
+        <div class="topic-tag"><span>🚻</span><span>Society / Gender</span></div>
+        <div class="topic-header">
+          <h2>Gender issues（ジェンダー問題）</h2>
+          <p>Equality / ジェンダー問題</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Society needs fair opportunities for all genders.
+          </p>
+          <p class="japanese">
+            社会は、すべての性別に対して公平な機会を用意する必要があります。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Equal chances for every gender are necessary in modern society.
+          </p>
+          <p class="japanese">
+            現代社会では、どの性別であっても平等なチャンスが与えられるべきです。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because discrimination wastes people’s talent and creates unfair barriers.
+          </p>
+          <p class="japanese">
+            差別があると、人の才能が活かされず、不公平な壁ができてしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since everyone should be judged by their ability, not by gender.
+          </p>
+          <p class="japanese">
+            人は性別ではなく、能力や努力で評価されるべきだからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Traditional culture -->
+      <section class="topic-card" data-category="society">
+        <div class="topic-tag"><span>🏯</span><span>Society / Traditional culture</span></div>
+        <div class="topic-header">
+          <h2>Traditional culture（伝統文化）</h2>
+          <p>Heritage / 伝統文化</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            We should protect traditional culture while accepting new ideas.
+          </p>
+          <p class="japanese">
+            新しい考え方を受け入れつつも、伝統文化を守っていくべきです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            It is important to preserve traditions even as we embrace innovation.
+          </p>
+          <p class="japanese">
+            新しいものを取り入れても、伝統を大切に守ることが重要です。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because traditional culture is a key part of a country’s identity.
+          </p>
+          <p class="japanese">
+            伝統文化は、その国らしさやアイデンティティを形作る大切な要素だからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since losing traditions can make people feel disconnected from their roots.
+          </p>
+          <p class="japanese">
+            伝統が失われると、人々が自分のルーツや文化とのつながりを感じにくくなるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Global culture -->
+      <section class="topic-card" data-category="society">
+        <div class="topic-tag"><span>🤝</span><span>Society / Global culture</span></div>
+        <div class="topic-header">
+          <h2>Global culture（グローバル文化）</h2>
+          <p>Exchange / グローバル文化</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Mixed cultures help people learn from each other.
+          </p>
+          <p class="japanese">
+            さまざまな文化が混ざり合うことで、人々はお互いから学びやすくなります。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Cultural exchange makes it easier for people to understand one another.
+          </p>
+          <p class="japanese">
+            文化交流によって、人々は互いを理解しやすくなります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because meeting different customs and ideas can break stereotypes and prejudice.
+          </p>
+          <p class="japanese">
+            異なる習慣や考え方に触れることで、思い込みや偏見をなくすきっかけになるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since sharing cultures helps people see the world from new perspectives.
+          </p>
+          <p class="japanese">
+            文化を分かち合うことで、世界を新しい視点から見ることができるようになるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Immigration -->
+      <section class="topic-card" data-category="society">
+        <div class="topic-tag"><span>🧳</span><span>Society / Immigration</span></div>
+        <div class="topic-header">
+          <h2>Immigration（移民）</h2>
+          <p>Movement / 移民</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Immigration can solve labor shortages if managed well.
+          </p>
+          <p class="japanese">
+            適切に受け入れを行えば、移民は労働力不足の解決につながります。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Properly controlled immigration can help fill workforce gaps.
+          </p>
+          <p class="japanese">
+            きちんと管理された移民政策は、人手不足を補う助けになります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because some countries have aging populations and not enough young workers.
+          </p>
+          <p class="japanese">
+            高齢化が進み、若い労働者が足りない国もあるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since foreign workers can support industries that lack local staff.
+          </p>
+          <p class="japanese">
+            地元の人手が足りない産業を、外国人労働者が支えることができるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 6. HEALTH & MEDICINE -->
+      <!-- Lifestyle diseases -->
+      <section class="topic-card" data-category="health">
+        <div class="topic-tag"><span>🥗</span><span>Health / Lifestyle diseases</span></div>
+        <div class="topic-header">
+          <h2>Lifestyle diseases（生活習慣病）</h2>
+          <p>Habits / 生活習慣病</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Healthy habits prevent lifestyle diseases.
+          </p>
+          <p class="japanese">
+            健康的な生活習慣は、生活習慣病の予防につながります。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Better daily habits can stop many lifestyle-related illnesses.
+          </p>
+          <p class="japanese">
+            日々の生活習慣を改善することで、多くの生活習慣病を防ぐことができます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because diet, exercise, and sleep directly affect our body’s condition.
+          </p>
+          <p class="japanese">
+            食事や運動、睡眠などは、体の状態に直接影響するからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since small choices in daily life can either protect our health or slowly damage it.
+          </p>
+          <p class="japanese">
+            日々の小さな選択が、健康を守ることにも、少しずつ害することにもつながるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Mental health -->
+      <section class="topic-card" data-category="health">
+        <div class="topic-tag"><span>🧩</span><span>Health / Mental health</span></div>
+        <div class="topic-header">
+          <h2>Mental health（メンタルヘルス）</h2>
+          <p>Mind / メンタルヘルス</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            People now understand mental health is important.
+          </p>
+          <p class="japanese">
+            今では、多くの人がメンタルヘルスの重要性を理解しています。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Awareness of mental health has been growing.
+          </p>
+          <p class="japanese">
+            メンタルヘルスに対する意識は高まりつつあります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because stress and depression can affect school, work, and relationships.
+          </p>
+          <p class="japanese">
+            ストレスやうつは、学校生活や仕事、人間関係に大きな影響を与えるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since mental problems can be just as serious as physical illnesses.
+          </p>
+          <p class="japanese">
+            心の不調は、体の病気と同じくらい深刻な場合があるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Aging society -->
+      <section class="topic-card" data-category="health">
+        <div class="topic-tag"><span>👵</span><span>Health / Aging society</span></div>
+        <div class="topic-header">
+          <h2>Aging society（高齢化社会）</h2>
+          <p>Seniors / 高齢化社会</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            An aging society needs more support for seniors.
+          </p>
+          <p class="japanese">
+            高齢化社会では、高齢者への支援をもっと増やす必要があります。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            As the population ages, elderly care becomes essential.
+          </p>
+          <p class="japanese">
+            人口が高齢化するにつれて、高齢者のケアは欠かせないものになります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because older people often need medical help, nursing care, and social support.
+          </p>
+          <p class="japanese">
+            高齢者は、医療や介護、社会的な支えを必要とすることが多いからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since without proper support, many seniors may feel isolated or struggle in daily life.
+          </p>
+          <p class="japanese">
+            十分な支援がなければ、多くの高齢者が孤立したり、日常生活に困ったりしてしまうからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Medical technology -->
+      <section class="topic-card" data-category="health">
+        <div class="topic-tag"><span>🧪</span><span>Health / Medical technology</span></div>
+        <div class="topic-header">
+          <h2>Medical technology（医療技術）</h2>
+          <p>Innovation / 医療技術</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            New medical technology saves lives but is expensive.
+          </p>
+          <p class="japanese">
+            新しい医療技術は命を救うことができますが、費用が高くなることも多いです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Advanced medical tools help people but often cost a lot.
+          </p>
+          <p class="japanese">
+            高度な医療機器は人々の役に立ちますが、非常に高額な場合が少なくありません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because research, development, and special equipment require a large amount of money.
+          </p>
+          <p class="japanese">
+            研究開発や特別な機器の導入には、多くの費用がかかるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since high-tech treatments are expensive to create and maintain in hospitals.
+          </p>
+          <p class="japanese">
+            病院で高度な治療を行うには、導入にも維持にもお金がかかるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 7. CRIME & LAW -->
+      <!-- Laws & regulations -->
+      <section class="topic-card" data-category="law">
+        <div class="topic-tag"><span>📜</span><span>Law / Laws & regulations</span></div>
+        <div class="topic-header">
+          <h2>Laws & regulations（法律・規制）</h2>
+          <p>Rules / 法律・規制</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Clear laws protect people and maintain order.
+          </p>
+          <p class="japanese">
+            分かりやすい法律は、人々を守り、社会の秩序を保つことに役立ちます。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Strong, easy-to-understand laws are necessary to keep society safe.
+          </p>
+          <p class="japanese">
+            社会の安全を守るためには、分かりやすくてしっかりした法律が必要です。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because people need to know what is allowed and what is not.
+          </p>
+          <p class="japanese">
+            人々は、何が許されていて、何が禁止されているのかを知る必要があるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since unclear laws can cause confusion and unfair judgments.
+          </p>
+          <p class="japanese">
+            あいまいな法律だと、人々が混乱し、不公平な判断につながるおそれがあるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Surveillance -->
+      <section class="topic-card" data-category="law">
+        <div class="topic-tag"><span>📹</span><span>Law / Surveillance</span></div>
+        <div class="topic-header">
+          <h2>Surveillance（監視）</h2>
+          <p>Cameras / 監視</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Surveillance improves safety but raises privacy concerns.
+          </p>
+          <p class="japanese">
+            監視カメラなどは安全性を高めますが、プライバシーの問題も引き起こします。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Monitoring systems can increase security but threaten privacy.
+          </p>
+          <p class="japanese">
+            監視システムは治安を良くする一方で、人々のプライバシーを脅かす可能性もあります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because constant recording may make people feel watched in their daily lives.
+          </p>
+          <p class="japanese">
+            常に録画されていると、人々は日常生活の中でも監視されていると感じてしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since too much surveillance can reduce the sense of freedom in public spaces.
+          </p>
+          <p class="japanese">
+            監視が行き過ぎると、人々が公共の場でも自由さを感じにくくなるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Juvenile crime -->
+      <section class="topic-card" data-category="law">
+        <div class="topic-tag"><span>🧒</span><span>Law / Juvenile crime</span></div>
+        <div class="topic-header">
+          <h2>Juvenile crime（少年犯罪）</h2>
+          <p>Youth / 少年犯罪</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            We need programs to stop young people from turning to crime.
+          </p>
+          <p class="japanese">
+            若者が犯罪に走らないようにするためのプログラムが必要です。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Better support is needed to prevent youth crime.
+          </p>
+          <p class="japanese">
+            少年犯罪を防ぐためには、若者へのより良い支援が求められます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because early guidance can help young people choose safer paths.
+          </p>
+          <p class="japanese">
+            早い段階で適切な指導を行えば、若者がより安全な道を選びやすくなるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since giving support at the right time can prevent lifelong criminal behavior.
+          </p>
+          <p class="japanese">
+            適切なタイミングで支援を行うことで、その後の人生で犯罪に関わることを防ぎやすくなるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 8. INTERNATIONAL ISSUES -->
+      <!-- War & conflict -->
+      <section class="topic-card" data-category="international">
+        <div class="topic-tag"><span>⚔️</span><span>International / War & conflict</span></div>
+        <div class="topic-header">
+          <h2>War & conflict（戦争・紛争）</h2>
+          <p>Peace / 戦争・紛争</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            War destroys lives, so peaceful solutions are needed.
+          </p>
+          <p class="japanese">
+            戦争は多くの命を奪うため、平和的な解決策が必要です。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Because war causes suffering, peaceful approaches are essential.
+          </p>
+          <p class="japanese">
+            戦争は大きな苦しみをもたらすので、平和的なやり方が欠かせません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because conflicts lead to deaths, injuries, and the destruction of communities.
+          </p>
+          <p class="japanese">
+            紛争は多くの死傷者を出し、地域社会を破壊してしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since war leaves deep scars that can last for generations.
+          </p>
+          <p class="japanese">
+            戦争による傷は、何世代にもわたって残ることがあるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Refugees -->
+      <section class="topic-card" data-category="international">
+        <div class="topic-tag"><span>🏚️</span><span>International / Refugees</span></div>
+        <div class="topic-header">
+          <h2>Refugees（難民）</h2>
+          <p>Protection / 難民</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Refugees need support to rebuild their lives.
+          </p>
+          <p class="japanese">
+            難民の人々が生活を立て直せるよう、支援が必要です。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            People fleeing conflict require help to start over safely.
+          </p>
+          <p class="japanese">
+            紛争から逃れてきた人たちが、安全に新しい生活を始めるための支援が求められます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because they often lose their homes, jobs, and family members.
+          </p>
+          <p class="japanese">
+            難民の人々は、家や仕事、家族など、多くのものを失っていることが多いからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since starting again in a new country is very hard without support.
+          </p>
+          <p class="japanese">
+            支援がなければ、見知らぬ国で一から生活をやり直すことは非常に困難だからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Human rights -->
+      <section class="topic-card" data-category="international">
+        <div class="topic-tag"><span>🕊️</span><span>International / Human rights</span></div>
+        <div class="topic-header">
+          <h2>Human rights（人権）</h2>
+          <p>Rights / 人権</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Protecting human rights should be a priority.
+          </p>
+          <p class="japanese">
+            人権を守ることは、最優先で取り組むべき課題です。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Every nation must focus on defending human rights.
+          </p>
+          <p class="japanese">
+            すべての国が、人権を守ることに力を入れなければなりません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because when rights are ignored, people can be abused or silenced.
+          </p>
+          <p class="japanese">
+            人権が無視されると、人々が不当に扱われたり、声を上げられなくなったりするからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since basic freedoms are necessary for a fair and peaceful society.
+          </p>
+          <p class="japanese">
+            公正で平和な社会をつくるには、基本的な自由が守られていることが欠かせないからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- International cooperation -->
+      <section class="topic-card" data-category="international">
+        <div class="topic-tag"><span>🌎</span><span>International / Cooperation</span></div>
+        <div class="topic-header">
+          <h2>International cooperation（国際協力）</h2>
+          <p>Working together / 国際協力</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Cooperation is essential to solve global problems.
+          </p>
+          <p class="japanese">
+            世界的な問題を解決するためには、国同士の協力が欠かせません。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Countries must work together to handle worldwide issues.
+          </p>
+          <p class="japanese">
+            各国が協力して行動しなければ、地球規模の問題には対応できません。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because challenges like climate change and pandemics cross national borders.
+          </p>
+          <p class="japanese">
+            気候変動やパンデミックのような課題は、国境を簡単にこえて広がるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since no single country can solve global problems alone.
+          </p>
+          <p class="japanese">
+            どんな国でも、一国だけで地球規模の問題を解決することはできないからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- 9. MEDIA & COMMUNICATION -->
+      <!-- Fake news -->
+      <section class="topic-card" data-category="media">
+        <div class="topic-tag"><span>⚠️</span><span>Media / Fake news</span></div>
+        <div class="topic-header">
+          <h2>Fake news（フェイクニュース）</h2>
+          <p>Misinformation / フェイクニュース</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Fake news spreads quickly, so media literacy is needed.
+          </p>
+          <p class="japanese">
+            フェイクニュースはすぐに広がってしまうため、メディアリテラシーが必要です。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Because false news travels fast, people need better critical thinking.
+          </p>
+          <p class="japanese">
+            誤ったニュースはあっという間に広がるので、人々には情報を見抜く力が求められます。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because believing fake news can lead to panic, hate, or bad decisions.
+          </p>
+          <p class="japanese">
+            フェイクニュースを信じてしまうと、パニックや憎しみ、間違った判断につながることがあるからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since checking information carefully helps protect society from confusion.
+          </p>
+          <p class="japanese">
+            情報をよく確かめることで、社会全体が混乱から守られるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Advertising -->
+      <section class="topic-card" data-category="media">
+        <div class="topic-tag"><span>📺</span><span>Media / Advertising</span></div>
+        <div class="topic-header">
+          <h2>Advertising（広告）</h2>
+          <p>Commercials / 広告</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Advertising influences people more than they realize.
+          </p>
+          <p class="japanese">
+            広告は、人々が気づいている以上に行動や考え方に影響を与えています。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            Ads often affect our decisions without us noticing.
+          </p>
+          <p class="japanese">
+            私たちは自覚していなくても、広告によって選択が左右されることがよくあります。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because repeated messages can shape our image of products and lifestyles.
+          </p>
+          <p class="japanese">
+            同じようなメッセージを何度も見聞きすることで、商品や生活スタイルに対するイメージがつくられていくからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since advertising can make us feel we “need” things that are not actually necessary.
+          </p>
+          <p class="japanese">
+            広告によって、本当は必要でないものまで「必要だ」と感じてしまうことがあるからです。
+          </p>
+        </div>
+      </section>
+
+      <!-- Mass media influence -->
+      <section class="topic-card" data-category="media">
+        <div class="topic-tag"><span>📰</span><span>Media / Mass media influence</span></div>
+        <div class="topic-header">
+          <h2>Mass media influence（マスメディアの影響）</h2>
+          <p>TV / News / マスメディアの影響</p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Main → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Main</strong><span>メイン文</span>
+          </div>
+          <p class="english">
+            Mass media strongly shapes public opinion.
+          </p>
+          <p class="japanese">
+            マスメディアは、人々の意見や考え方に大きな影響を与えます。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Main)</strong><span>言い換え</span>
+          </div>
+          <p class="english">
+            The media has huge power over how society thinks.
+          </p>
+          <p class="japanese">
+            メディアは、社会全体がどのように物事を考えるかに強い影響力を持っています。
+          </p>
+        </div>
+
+        <div class="pair-block">
+          <div class="pair-group-title">Reason → Paraphrase</div>
+
+          <div class="label-row">
+            <strong>Reason</strong><span>理由</span>
+          </div>
+          <p class="english">
+            Because the stories and angles shown on TV and online shape what people notice.
+          </p>
+          <p class="japanese">
+            テレビやネットでどのニュースがどのように取り上げられるかによって、人々が何に注目するかが決まってしまうからです。
+          </p>
+
+          <div class="label-row">
+            <strong>Paraphrase (Reason)</strong><span>理由の言い換え</span>
+          </div>
+          <p class="english">
+            Since repeated coverage can make some issues seem more important than others.
+          </p>
+          <p class="japanese">
+            何度も報道されることで、ある問題が他の問題よりも重要だと感じさせられることがあるからです。
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Dark mode toggle
+    const modeToggle = document.getElementById("modeToggle");
+    const modeLabel = document.getElementById("modeLabel");
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    if (prefersDark) {
+      document.body.classList.add("dark");
+      modeLabel.textContent = "Light mode";
+      modeToggle.firstElementChild.textContent = "☀️";
+    }
+
+    modeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      modeLabel.textContent = isDark ? "Light mode" : "Dark mode";
+      modeToggle.firstElementChild.textContent = isDark ? "☀️" : "🌙";
+    });
+
+    // Category filter
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".topic-card");
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.dataset.filter;
+        filterButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        cards.forEach((card) => {
+          const cat = card.dataset.category;
+          if (filter === "all" || filter === cat) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
