@@ -104,7 +104,7 @@ body {
 }
 
 /* ── Layout ── */
-.page { max-width: 860px; margin: 0 auto; padding: 0 20px 100px; }
+.page { max-width: 1400px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 48px) 100px; }
 
 /* ═══════════════════════════════════════
    MARQUEE HEADER — Cinema Title Card
@@ -382,11 +382,10 @@ body {
 .poster-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  margin-bottom: 14px;
+  border-radius: 6px;
   overflow: hidden;
   transition: border-color 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
 .poster-card:hover {
