@@ -86,7 +86,7 @@ body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--cream);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -1643,7 +1643,13 @@ function toggleQ(header) {
   const card = header.parentElement;
   const body = header.nextElementSibling;
   card.classList.toggle('open');
-  body.style.maxHeight = card.classList.contains('open') ? body.scrollHeight + 'px' : '0';
+  if (card.classList.contains('open')) {
+    requestAnimationFrame(() => {
+      body.style.maxHeight = body.scrollHeight + 'px';
+    });
+  } else {
+    body.style.maxHeight = '0';
+  }
 }
 
 /* ── Panels ── */
