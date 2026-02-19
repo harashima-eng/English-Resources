@@ -1,1498 +1,1394 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>英検準1級 スピーキング対策ガイド - PART 1</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f5576c;
-            --success: #20c997;
-            --warning: #ffd93d;
-            --bg-light: #f8f9fa;
-            --text-dark: #495057;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        body.dark-mode .container {
-            background: #0f3460;
-            color: #e8e8e8;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #f093fb 0%, var(--accent) 100%);
-            color: white;
-            padding: 30px 40px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 20px 20px 0 0;
-        }
-
-        .header h1 {
-            font-size: 2.2em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            margin-bottom: 10px;
-        }
-
-        .header.minimized {
-            padding: 15px 40px;
-        }
-
-        .header.minimized h1,
-        .header.minimized p,
-        .header.minimized .progress-container {
-            display: none;
-        }
-
-        .header-toggle-btn {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: var(--transition);
-            color: white;
-            z-index: 101;
-        }
-
-        .header-toggle-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-
-        .header.minimized .header-toggle-btn {
-            transform: rotate(180deg);
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            background: rgba(255,255,255,0.2);
-            height: 8px;
-            border-radius: 10px;
-            margin-top: 15px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            background: white;
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 10px;
-        }
-
-        .progress-text {
-            font-size: 0.9em;
-            margin-top: 8px;
-            opacity: 0.9;
-        }
-
-        /* Dark Mode Toggle */
-        .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 200;
-            background: rgba(255,255,255,0.9);
-            border: none;
-            border-radius: 50px;
-            padding: 12px 20px;
-            cursor: pointer;
-            font-size: 1.1em;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: var(--transition);
-        }
-
-        body.dark-mode .dark-mode-toggle {
-            background: rgba(0,0,0,0.8);
-            color: white;
-        }
-
-        .dark-mode-toggle:hover {
-            transform: scale(1.05);
-        }
-
-        /* Table of Contents */
-        .toc {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            padding: 25px;
-            border-radius: 10px;
-            margin: 30px 40px;
-        }
-
-        body.dark-mode .toc {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-        }
-
-        .toc h3 {
-            color: #1565c0;
-            margin-bottom: 15px;
-            font-size: 1.4em;
-        }
-
-        body.dark-mode .toc h3 {
-            color: #64b5f6;
-        }
-
-        .toc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .toc-link {
-            background: white;
-            padding: 12px 15px;
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-
-        body.dark-mode .toc-link {
-            background: rgba(255,255,255,0.1);
-            color: #e8e8e8;
-        }
-
-        .toc-link:hover {
-            transform: translateX(5px);
-            background: var(--primary);
-            color: white;
-        }
-
-        .toc-check {
-            opacity: 0;
-            transition: var(--transition);
-            font-size: 1.2em;
-        }
-
-        .toc-link.completed .toc-check {
-            opacity: 1;
-            color: var(--success);
-        }
-
-        /* Content Area */
-        .content {
-            padding: 40px;
-        }
-
-        /* Feature Box */
-        .feature-box {
-            background: linear-gradient(135deg, #ffd93d 0%, #ff6b6b 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .feature-box h2 {
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-
-        .feature-box p {
-            font-size: 1.2em;
-            line-height: 1.8;
-        }
-
-        /* Collapsible Sections */
-        .collapsible-section {
-            margin: 30px 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .section-header {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 20px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        body.dark-mode .section-header {
-            background: linear-gradient(135deg, #1e3a5f 0%, #4a1942 100%);
-        }
-
-        .section-header:hover {
-            opacity: 0.9;
-        }
-
-        .section-header h2 {
-            color: #087f5b;
-            font-size: 1.5em;
-        }
-
-        body.dark-mode .section-header h2 {
-            color: #20c997;
-        }
-
-        .section-toggle {
-            font-size: 1.5em;
-            transition: transform 0.3s ease;
-        }
-
-        .section-header.active .section-toggle {
-            transform: rotate(180deg);
-        }
-
-        .section-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-            background: white;
-        }
-
-        body.dark-mode .section-content {
-            background: #1a2332;
-        }
-
-        .section-content.active {
-            max-height: 10000px;
-            padding: 25px;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-left: 6px solid #ff6b6b;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-
-        .formula-step {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            font-weight: 600;
-            color: #495057;
-        }
-
-        body.dark-mode .formula-step {
-            background: rgba(255,255,255,0.05);
-        }
-
-        /* Filler Section */
-        .filler-section {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-left: 6px solid #20c997;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-
-        .filler-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .filler-card {
-            background: var(--bg-light);
-            padding: 18px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: var(--transition);
-            border-left: 4px solid transparent;
-        }
-
-        body.dark-mode .filler-card {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .filler-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border-left-color: var(--success);
-        }
-
-        .filler-card strong {
-            color: #0ca678;
-            font-size: 1.05em;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        body.dark-mode .filler-card strong {
-            color: #20c997;
-        }
-
-        .filler-card .jp {
-            color: #868e96;
-            font-size: 0.95em;
-            line-height: 1.4;
-        }
-
-        body.dark-mode .filler-card .jp {
-            color: #b0b0b0;
-        }
-
-        /* Category Header */
-        .category {
-            margin-bottom: 40px;
-        }
-
-        .category-header {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 40px 0 20px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .category-header h2 {
-            font-size: 1.8em;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-        }
-
-        /* Question Collapsible */
-        .question-collapsible {
-            margin: 25px 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--primary);
-        }
-
-        body.dark-mode .question-collapsible {
-            border-left-color: #64b5f6;
-        }
-
-        .question-header {
-            background: var(--bg-light);
-            padding: 20px 30px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        body.dark-mode .question-header {
-            background: rgba(255,255,255,0.03);
-        }
-
-        .question-header:hover {
-            background: #e9ecef;
-        }
-
-        body.dark-mode .question-header:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .question-title {
-            font-size: 1.35em;
-            font-weight: bold;
-            color: var(--text-dark);
-            line-height: 1.4;
-            margin: 0;
-            flex: 1;
-        }
-
-        body.dark-mode .question-title {
-            color: #e8e8e8;
-        }
-
-        .question-toggle {
-            font-size: 1.5em;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-            margin-left: 20px;
-        }
-
-        .question-header.active .question-toggle {
-            transform: rotate(180deg);
-        }
-
-        .question-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .question-content.active {
-            max-height: 5000px;
-            padding: 30px;
-        }
-
-        .question-block {
-            background: white;
-        }
-
-        body.dark-mode .question-block {
-            background: transparent;
-        }
-
-        /* Difficulty Badges */
-        .difficulty {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: bold;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        .basic {
-            background: #c3fae8;
-            color: #087f5b;
-        }
-
-        .intermediate {
-            background: #ffe066;
-            color: #7a5c00;
-        }
-
-        .advanced {
-            background: #ffc9c9;
-            color: #c92a2a;
-        }
-
-        /* Buttons */
-        .show-btn {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            margin: 10px 8px 10px 0;
-            transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
-        }
-
-        .show-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .show-btn.active {
-            background: linear-gradient(135deg, #20c997 0%, #087f5b 100%);
-        }
-
-        .hint-btn {
-            background: linear-gradient(135deg, #ffd93d 0%, #ff6b6b 100%);
-        }
-
-        .hint-btn:hover {
-            box-shadow: 0 6px 15px rgba(255, 217, 61, 0.4);
-        }
-
-        /* Answer Sections */
-        .answer-section {
-            margin-top: 20px;
-            padding: 25px;
-            border-radius: 10px;
-            background: #f8f9fa;
-            transition: var(--transition);
-        }
-
-        body.dark-mode .answer-section {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .answer-section.hidden {
-            display: none;
-        }
-
-        .hint-box {
-            background: linear-gradient(135deg, #fff3bf 0%, #ffe082 100%);
-            border-left: 5px solid #ffd93d;
-        }
-
-        body.dark-mode .hint-box {
-            background: linear-gradient(135deg, #4a4a00 0%, #6a6a00 100%);
-        }
-
-        .hint-box h4 {
-            color: #d68910;
-            margin-bottom: 15px;
-        }
-
-        body.dark-mode .hint-box h4 {
-            color: #ffd93d;
-        }
-
-        .hint-content {
-            color: #495057;
-        }
-
-        body.dark-mode .hint-content {
-            color: #e8e8e8;
-        }
-
-        .hint-content ul {
-            margin-left: 20px;
-            margin-top: 10px;
-            line-height: 1.8;
-        }
-
-        /* Side-by-side answer layout */
-        .answer-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .answer-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .model-answer {
-            background: linear-gradient(135deg, #d3f9d8 0%, #b2f2bb 100%);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid var(--success);
-            font-size: 1.05em;
-            line-height: 1.8;
-        }
-
-        body.dark-mode .model-answer {
-            background: linear-gradient(135deg, #0a3a0a 0%, #0d4d0d 100%);
-        }
-
-        .jp-translation {
-            background: #e3f2fd;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid #1565c0;
-        }
-
-        body.dark-mode .jp-translation {
-            background: rgba(21, 101, 192, 0.1);
-        }
-
-        .tips {
-            background: #f3e5f5;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid #6a1b9a;
-        }
-
-        body.dark-mode .tips {
-            background: rgba(106, 27, 154, 0.1);
-        }
-
-        .tips h4 {
-            color: #6a1b9a;
-            margin-bottom: 10px;
-        }
-
-        body.dark-mode .tips h4 {
-            color: #ba68c8;
-        }
-
-        .tips ul {
-            margin-left: 20px;
-            line-height: 1.8;
-        }
-
-        .tips li {
-            margin: 8px 0;
-        }
-
-        /* Back to Top */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            font-size: 1.5em;
-            cursor: pointer;
-            opacity: 0;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 150;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            .header { padding: 20px; }
-            .header h1 { font-size: 1.8em; }
-            .content { padding: 20px; }
-            .toc { margin: 20px; padding: 20px; }
-            .question-title { font-size: 1.2em; }
-            .show-btn { padding: 12px 24px; font-size: 0.95em; margin: 8px 4px; }
-            .filler-grid { grid-template-columns: 1fr; }
-            .toc-grid { grid-template-columns: 1fr; }
-            .dark-mode-toggle { top: 10px; right: 10px; padding: 10px 15px; font-size: 1em; }
-        }
-
-        @media print {
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; }
-            .dark-mode-toggle, .back-to-top, .show-btn { display: none; }
-            .answer-section { display: block !important; }
-            .section-content { max-height: none !important; padding: 20px !important; }
-            .question-content { max-height: none !important; padding: 20px !important; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 1: Environment, Work & Education | Eiken Pre-1 Speaking</title>
+<style>
+/* ── Design Tokens ── */
+:root {
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-jp: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --surface-hover: #f1f3f9;
+  --surface-alt: #f0f2f7;
+  --border: #e2e5ee;
+  --border-light: #eef0f5;
+  --text: #1a1d26;
+  --text-secondary: #5c6170;
+  --text-muted: #8b90a0;
+  --accent: #4f6df5;
+  --accent-soft: #eef1fe;
+  --accent-hover: #3d5be0;
+  --hint-bg: #fef9ec;
+  --hint-border: #e5c44b;
+  --hint-text: #8a6d14;
+  --answer-bg: #ecfdf5;
+  --answer-border: #34d399;
+  --answer-text: #065f46;
+  --jp-bg: #f0f4ff;
+  --jp-border: #6b83cf;
+  --tip-bg: #faf5ff;
+  --tip-border: #a78bfa;
+  --tip-text: #5b21b6;
+  --env-accent: #10b981;
+  --work-accent: #3b82f6;
+  --edu-accent: #8b5cf6;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --transition: 0.2s ease;
+}
+
+[data-theme="dark"] {
+  --bg: #0f1117;
+  --surface: #1a1d28;
+  --surface-hover: #22263a;
+  --surface-alt: #1e2130;
+  --border: #2a2e3e;
+  --border-light: #24283a;
+  --text: #e4e6ed;
+  --text-secondary: #9ea2b4;
+  --text-muted: #686d82;
+  --accent: #6b86f8;
+  --accent-soft: #1e2445;
+  --accent-hover: #8da0fa;
+  --hint-bg: #1f1c14;
+  --hint-border: #8a7530;
+  --hint-text: #d4b84a;
+  --answer-bg: #0d1f17;
+  --answer-border: #22885f;
+  --answer-text: #6ee7b7;
+  --jp-bg: #141828;
+  --jp-border: #4a5a9a;
+  --tip-bg: #1a1428;
+  --tip-border: #7c5cc4;
+  --tip-text: #c4a8ff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* ── Base ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.page { max-width: 800px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── Header ── */
+.page-header {
+  text-align: center;
+  padding: 48px 24px 40px;
+  margin-bottom: 32px;
+}
+
+.page-header .badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 4px 14px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+.page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.page-header .subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ── Progress ── */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.progress-track {
+  width: 180px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.progress-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Top Bar (theme toggle + nav) ── */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
+  padding: 0 20px;
+}
+
+.top-bar-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+}
+
+.top-bar .back-link {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.top-bar .back-link:hover { color: var(--accent); }
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Nav (Table of Contents) ── */
+.toc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 32px;
+}
+
+.toc-card h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.toc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 6px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  transition: background var(--transition);
+  text-decoration: none;
+}
+
+.toc-item:hover { background: var(--surface-hover); }
+
+.toc-item .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.toc-item .check {
+  color: var(--env-accent);
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.toc-item.done .check { opacity: 1; }
+
+/* ── Section Intro Cards ── */
+.intro-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.intro-card h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.intro-card p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin-bottom: 12px;
+}
+
+.intro-card p:last-child { margin-bottom: 0; }
+
+/* ── Formula Steps ── */
+.formula-steps {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.formula-step {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+.formula-step .num {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.formula-step .label { font-weight: 600; }
+.formula-step .desc { color: var(--text-secondary); }
+
+/* ── Filler Phrases ── */
+.filler-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.filler-chip {
+  padding: 10px 14px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+
+.filler-chip .en { font-weight: 600; display: block; }
+.filler-chip .jp { color: var(--text-muted); font-size: 0.82rem; font-family: var(--font-jp); }
+
+/* ── Category ── */
+.category { margin-bottom: 40px; }
+
+.category-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+.category-label.env { background: #ecfdf5; color: #047857; }
+.category-label.work { background: #eff6ff; color: #1d4ed8; }
+.category-label.edu { background: #f5f3ff; color: #6d28d9; }
+
+[data-theme="dark"] .category-label.env { background: #052e16; color: #6ee7b7; }
+[data-theme="dark"] .category-label.work { background: #172554; color: #93c5fd; }
+[data-theme="dark"] .category-label.edu { background: #1e1145; color: #c4b5fd; }
+
+/* ── Question Card ── */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background var(--transition);
+  gap: 12px;
+}
+
+.q-header:hover { background: var(--surface-hover); }
+
+.q-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.q-title .num {
+  color: var(--text-muted);
+  margin-right: 6px;
+}
+
+.q-difficulty {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 100px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.q-difficulty.basic { background: #ecfdf5; color: #047857; }
+.q-difficulty.intermediate { background: #fffbeb; color: #b45309; }
+.q-difficulty.advanced { background: #fef2f2; color: #b91c1c; }
+
+[data-theme="dark"] .q-difficulty.basic { background: #052e16; color: #6ee7b7; }
+[data-theme="dark"] .q-difficulty.intermediate { background: #1c1405; color: #fbbf24; }
+[data-theme="dark"] .q-difficulty.advanced { background: #2a0a0a; color: #fca5a5; }
+
+.q-chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.q-card.open .q-chevron { transform: rotate(180deg); }
+
+.q-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.q-body-inner { padding: 0 20px 20px; }
+
+/* ── Action Buttons ── */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btn {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.btn:hover { opacity: 0.85; }
+.btn:active { transform: scale(0.97); }
+
+.btn-hint {
+  background: var(--hint-bg);
+  color: var(--hint-text);
+  border: 1px solid var(--hint-border);
+}
+
+.btn-answer {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-answer-alt {
+  background: var(--surface-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn.active {
+  opacity: 0.6;
+}
+
+/* ── Content Panels ── */
+.panel {
+  display: none;
+  margin-top: 12px;
+  animation: panelIn 0.25s ease;
+}
+
+.panel.visible { display: block; }
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hint Panel */
+.hint-panel {
+  background: var(--hint-bg);
+  border: 1px solid var(--hint-border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.hint-panel h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--hint-text);
+  margin-bottom: 12px;
+}
+
+.hint-panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.hint-panel li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.hint-panel li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hint-border);
+}
+
+.hint-panel .key-phrases {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--hint-border) 40%, transparent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--hint-text);
+}
+
+.hint-panel .key-phrases code {
+  background: color-mix(in srgb, var(--hint-border) 20%, transparent);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: var(--font);
+  font-weight: 500;
+}
+
+/* Answer Panel */
+.answer-panel {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 640px) {
+  .answer-grid { grid-template-columns: 1fr; }
+}
+
+.model-answer {
+  background: var(--answer-bg);
+  border: 1px solid var(--answer-border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.model-answer .side-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--answer-text);
+  margin-bottom: 8px;
+}
+
+.model-answer .en-text {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  font-style: italic;
+  color: var(--text);
+}
+
+.jp-box {
+  background: var(--jp-bg);
+  border: 1px solid color-mix(in srgb, var(--jp-border) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.jp-box .side-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--jp-border);
+  margin-bottom: 8px;
+}
+
+.jp-box .jp-text {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  font-family: var(--font-jp);
+  color: var(--text-secondary);
+}
+
+/* Tips Panel */
+.tips-panel {
+  background: var(--tip-bg);
+  border: 1px solid color-mix(in srgb, var(--tip-border) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.tips-panel h3 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tip-text);
+  margin-bottom: 12px;
+}
+
+.tips-panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tips-panel li {
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.tips-panel li:last-child { margin-bottom: 0; }
+
+.tips-panel .phrase {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--tip-text);
+  margin-right: 4px;
+}
+
+.tips-panel .explain {
+  color: var(--text-secondary);
+  font-family: var(--font-jp);
+}
+
+/* ── Collapsible Section ── */
+.collapsible {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.collapsible-header:hover { background: var(--surface-hover); }
+
+.collapsible-header h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.collapsible-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.collapsible-body-inner { padding: 0 20px 20px; }
+
+.collapsible.open .q-chevron { transform: rotate(180deg); }
+
+/* ── Back to Top ── */
+.back-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.back-top:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .page { padding: 16px 14px 60px; }
+  .page-header { padding: 40px 16px 32px; }
+  .page-header h1 { font-size: 1.4rem; }
+  .filler-grid { grid-template-columns: 1fr; }
+  .toc-list { grid-template-columns: 1fr; }
+}
+
+/* ── Print ── */
+@media print {
+  .top-bar, .back-top, .actions { display: none; }
+  .q-body, .collapsible-body { max-height: none !important; }
+  .panel { display: block !important; }
+  body { background: white; }
+}
+</style>
 </head>
 <body>
 
-<button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
-<button class="back-to-top" onclick="scrollToTop()">↑</button>
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Back
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <span class="theme-icon">Dark</span>
+    </button>
+  </div>
+</div>
 
-<div class="container">
-    <!-- Header -->
-    <div class="header">
-        <button class="header-toggle-btn" onclick="toggleHeader()" title="Hide/Show Header">▲</button>
-        <h1>🎬 英検準1級 スピーキング対策ガイド - PART 1</h1>
-        <p>Environment, Work & Education Topics</p>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<div class="page">
+
+  <!-- Header -->
+  <header class="page-header">
+    <span class="badge">Eiken Pre-1 Speaking</span>
+    <h1>Part 1: Environment, Work & Education</h1>
+    <p class="subtitle">7 practice questions with model answers at the 準1級 level</p>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-label" id="progressLabel">0 / 7</span>
+    </div>
+  </header>
+
+  <!-- Table of Contents -->
+  <nav class="toc-card">
+    <h2>Contents</h2>
+    <div class="toc-list">
+      <a class="toc-item" onclick="scrollTo('#formula')">
+        <span>The Winning Formula</span>
+        <span class="check">&#10003;</span>
+      </a>
+      <a class="toc-item" onclick="scrollTo('#fillers')">
+        <span>Filler Phrases</span>
+        <span class="check">&#10003;</span>
+      </a>
+      <a class="toc-item" onclick="scrollTo('#sec-env')">
+        <span style="display:flex;align-items:center;gap:6px"><span class="dot" style="background:var(--env-accent)"></span>Environment (3)</span>
+        <span class="check">&#10003;</span>
+      </a>
+      <a class="toc-item" onclick="scrollTo('#sec-work')">
+        <span style="display:flex;align-items:center;gap:6px"><span class="dot" style="background:var(--work-accent)"></span>Work (2)</span>
+        <span class="check">&#10003;</span>
+      </a>
+      <a class="toc-item" onclick="scrollTo('#sec-edu')">
+        <span style="display:flex;align-items:center;gap:6px"><span class="dot" style="background:var(--edu-accent)"></span>Education (2)</span>
+        <span class="check">&#10003;</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Winning Formula -->
+  <section id="formula" class="collapsible open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>The Winning Formula (40-45 seconds)</h2>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-body-inner">
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:16px">
+          Follow this structure for every question. Examiners expect a clear opinion, two supported reasons, and a conclusion.
+        </p>
+        <div class="formula-steps">
+          <div class="formula-step">
+            <span class="num">1</span>
+            <div><span class="label">Opinion</span> <span class="desc">- State your position clearly (5 sec)</span></div>
+          </div>
+          <div class="formula-step">
+            <span class="num">2</span>
+            <div><span class="label">Reason 1 + Example</span> <span class="desc">- First supporting point with concrete detail (15-20 sec)</span></div>
+          </div>
+          <div class="formula-step">
+            <span class="num">3</span>
+            <div><span class="label">Reason 2 + Example</span> <span class="desc">- Second supporting point with evidence (15-20 sec)</span></div>
+          </div>
+          <div class="formula-step">
+            <span class="num">4</span>
+            <div><span class="label">Conclusion</span> <span class="desc">- Restate your position with conviction (5 sec)</span></div>
+          </div>
         </div>
-        <div class="progress-text" id="progressText">Progress: 0/7 questions completed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filler Phrases -->
+  <section id="fillers" class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>Filler Phrases</h2>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-body-inner">
+        <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:12px">
+          Silence is penalized. Use these phrases naturally to buy thinking time.
+        </p>
+        <div class="filler-grid">
+          <div class="filler-chip"><span class="en">That's an interesting question...</span><span class="jp">面白い質問ですね</span></div>
+          <div class="filler-chip"><span class="en">Let me think about that for a moment...</span><span class="jp">少し考えさせてください</span></div>
+          <div class="filler-chip"><span class="en">Well, from my perspective...</span><span class="jp">私の見方からすると</span></div>
+          <div class="filler-chip"><span class="en">That's a difficult question, but...</span><span class="jp">難しい質問ですが</span></div>
+          <div class="filler-chip"><span class="en">I haven't thought about it deeply, but...</span><span class="jp">深く考えたことはないですが</span></div>
+          <div class="filler-chip"><span class="en">If I had to choose, I'd say...</span><span class="jp">選ぶとしたら</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- ENVIRONMENT QUESTIONS                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="sec-env" class="category">
+    <div class="category-label env">Environment &mdash; 3 Questions</div>
+
+    <!-- ENV Q1 -->
+    <div class="q-card" data-q="1">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q1</span> Should plastic bags be banned in all stores?</div>
+        <span class="q-difficulty intermediate">Intermediate</span>
+        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-e1')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-e1')">Model Answer</button>
+        </div>
+
+        <div id="hint-e1" class="panel hint-panel">
+          <h3>Think about it first</h3>
+          <ul>
+            <li>What environmental damage do plastic bags cause? Think about oceans and wildlife.</li>
+            <li>How long do they persist in the environment? Consider the decomposition timeline.</li>
+            <li>Are reusable alternatives genuinely practical for everyday shoppers?</li>
+            <li>Conclusion: Weigh environmental urgency against consumer convenience.</li>
+          </ul>
+          <div class="key-phrases">Key vocab: <code>disposable</code> <code>marine ecosystem</code> <code>decompose</code> <code>phase out</code> <code>viable alternative</code></div>
+        </div>
+
+        <div id="ans-e1" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Model Answer</span>
+              <p class="en-text">"I firmly believe that disposable plastic bags should be phased out of all retail stores. First and foremost, they pose a severe threat to marine ecosystems -- millions of tons of plastic waste end up in the ocean each year, entangling wildlife and contaminating the food chain. On top of that, plastic bags take several hundred years to decompose, which means the ones we discard today will outlast multiple generations. While some argue that bans inconvenience shoppers, reusable bags are an affordable and practical alternative that most consumers can adopt with minimal effort. For these reasons, a comprehensive ban is not only justified but long overdue."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">使い捨てのビニール袋はすべての小売店で段階的に廃止すべきだと強く信じています。まず第一に、海洋生態系に深刻な脅威をもたらしています。毎年何百万トンものプラスチック廃棄物が海に流れ込み、野生生物を絡め取り、食物連鎖を汚染しています。さらに、ビニール袋は分解に数百年かかるため、私たちが今日捨てたものは何世代にもわたって残り続けます。禁止は買い物客に不便だという意見もありますが、再利用可能な袋は手頃で実用的な代替品であり、ほとんどの消費者が最小限の努力で採用できます。これらの理由から、包括的な禁止は正当であるだけでなく、遅すぎるくらいです。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"phase out"</span> <span class="explain">段階的に廃止する -- "ban" より政策的で洗練された表現。準1級で差がつく語彙</span></li>
+              <li><span class="phrase">"pose a threat to"</span> <span class="explain">〜に脅威をもたらす -- 問題の深刻さを伝える定番コロケーション</span></li>
+              <li><span class="phrase">"marine ecosystem"</span> <span class="explain">海洋生態系 -- "ocean animals" より学術的。環境トピックの必須ワード</span></li>
+              <li><span class="phrase">"contaminating the food chain"</span> <span class="explain">食物連鎖を汚染する -- 影響の連鎖を具体的に示すことで説得力が増す</span></li>
+              <li><span class="phrase">"long overdue"</span> <span class="explain">遅すぎるくらいだ -- 結論を力強く締める表現。"necessary" より印象的</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
     </div>
 
-    <!-- Table of Contents -->
-    <div class="toc">
-        <h3>📚 Quick Navigation</h3>
-        <div class="toc-grid">
-            <a class="toc-link" onclick="scrollToSection('formula')">
-                <span>🎯 Winning Formula</span>
-                <span class="toc-check">✓</span>
-            </a>
-            <a class="toc-link" onclick="scrollToSection('fillers')">
-                <span>🗣️ Filler Phrases</span>
-                <span class="toc-check">✓</span>
-            </a>
-            <a class="toc-link" onclick="scrollToSection('environment')">
-                <span>🌍 Environment (3Q)</span>
-                <span class="toc-check">✓</span>
-            </a>
-            <a class="toc-link" onclick="scrollToSection('work')">
-                <span>💼 Work (2Q)</span>
-                <span class="toc-check">✓</span>
-            </a>
-            <a class="toc-link" onclick="scrollToSection('education')">
-                <span>🎓 Education (2Q)</span>
-                <span class="toc-check">✓</span>
-            </a>
+    <!-- ENV Q2 -->
+    <div class="q-card" data-q="2">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q2</span> Is it the government's responsibility to protect the environment?</div>
+        <span class="q-difficulty advanced">Advanced</span>
+        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-e2')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-e2-yes')">Answer (Yes)</button>
+          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-e2-no')">Answer (No)</button>
         </div>
+
+        <div id="hint-e2" class="panel hint-panel">
+          <h3>Consider both sides</h3>
+          <ul>
+            <li><strong>Yes side:</strong> Environmental crises are systemic -- can individuals regulate industrial emissions or enforce compliance?</li>
+            <li><strong>No side:</strong> If citizens wait for legislation, does personal accountability disappear?</li>
+            <li>Think about what only governments can do vs. what grassroots movements achieve.</li>
+          </ul>
+          <div class="key-phrases">Key vocab: <code>enforce regulations</code> <code>systemic</code> <code>hold accountable</code> <code>grassroots</code> <code>collective responsibility</code></div>
+        </div>
+
+        <div id="ans-e2-yes" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"I believe the government bears primary responsibility for environmental protection. Environmental crises such as climate change and industrial pollution are systemic problems that no individual can tackle alone. Governments have the authority to enforce regulations on corporations, set emission standards, and allocate funding for renewable energy research. Moreover, without legislative frameworks, companies have little incentive to prioritize sustainability over profit. Therefore, while individual efforts matter, it is ultimately the government's duty to create the structural conditions for meaningful environmental progress."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">政府が環境保護の主な責任を負っていると思います。気候変動や産業汚染などの環境危機は、個人だけでは対処できない構造的な問題です。政府は企業への規制を強制し、排出基準を設定し、再生可能エネルギー研究に資金を配分する権限を持っています。さらに、法的枠組みがなければ、企業は利益より持続可能性を優先する動機がほとんどありません。したがって、個人の努力も重要ですが、意義ある環境保護の進展のための構造的条件を作るのは、最終的には政府の義務です。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"bears primary responsibility"</span> <span class="explain">主な責任を負う -- "is responsible" より格調が高い。bear = 責任を担う</span></li>
+              <li><span class="phrase">"systemic problems"</span> <span class="explain">構造的な問題 -- 個人では解決不可能な規模の問題であることを強調</span></li>
+              <li><span class="phrase">"enforce regulations on"</span> <span class="explain">〜に対して規制を強制する -- 政府固有の権限を具体的に示す</span></li>
+              <li><span class="phrase">"allocate funding for"</span> <span class="explain">〜に資金を配分する -- 予算措置という政府ならではの手段</span></li>
+              <li><span class="phrase">"have little incentive to"</span> <span class="explain">〜する動機がほとんどない -- 企業行動の現実を冷静に指摘する表現</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="ans-e2-no" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"While governments play an important role, I believe environmental protection is a collective responsibility that extends beyond any single institution. Grassroots movements and individual lifestyle changes -- such as reducing consumption, choosing sustainable products, and supporting local conservation efforts -- can drive significant change from the bottom up. Furthermore, relying solely on government action creates a dangerous sense of complacency among citizens. History shows that some of the most impactful environmental reforms originated from public pressure rather than top-down policy. For this reason, I think shared responsibility is far more effective than placing the entire burden on the government."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">政府が重要な役割を果たすことは認めますが、環境保護はいかなる単一の機関をも超えた集団的責任だと考えます。草の根運動や個人のライフスタイルの変化――消費を減らす、持続可能な製品を選ぶ、地域の環境保全活動を支援するなど――は、ボトムアップで大きな変化を推進できます。さらに、政府の行動だけに頼ることは、市民の間に危険な安心感を生み出します。歴史を見ると、最も影響力のあった環境改革の中には、トップダウンの政策ではなく市民からの圧力から生まれたものもあります。このような理由から、すべての負担を政府に負わせるよりも、責任を共有する方がはるかに効果的だと思います。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"collective responsibility"</span> <span class="explain">集団的責任 -- 責任を分散させる議論の中核概念</span></li>
+              <li><span class="phrase">"drive change from the bottom up"</span> <span class="explain">ボトムアップで変化を推進する -- grassroots活動の力を表現</span></li>
+              <li><span class="phrase">"sense of complacency"</span> <span class="explain">安心感・自己満足 -- 他者に依存する危険性を指摘する洗練された表現</span></li>
+              <li><span class="phrase">"originated from public pressure"</span> <span class="explain">市民の圧力から生まれた -- 歴史的事実を根拠にする説得技法</span></li>
+              <li><span class="phrase">"placing the entire burden on"</span> <span class="explain">すべての負担を〜に負わせる -- 偏った責任配分への反論</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
     </div>
 
-    <div class="content">
-        <!-- Feature Box -->
-        <div class="feature-box">
-            <h2>💡 NEW FEATURE: HINT SYSTEM!</h2>
-            <p>
-                各質問に<strong>「Show Hint」ボタン</strong>を追加！<br>
-                まずヒントを見て自分で答えを考える → その後モデルアンサーで確認!<br>
-                これで本番と同じ練習ができる! 🔥
-            </p>
+    <!-- ENV Q3 -->
+    <div class="q-card" data-q="3">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q3</span> Should companies pay more for pollution?</div>
+        <span class="q-difficulty intermediate">Intermediate</span>
+        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-e3')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-e3')">Model Answer</button>
         </div>
 
-        <!-- Formula Section -->
-        <div id="formula" class="collapsible-section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>🎯 THE WINNING FORMULA (40-45秒)</h2>
-                <span class="section-toggle">▼</span>
-            </div>
-            <div class="section-content active">
-                <div class="formula-box">
-                    <div class="formula-step">1️⃣ OPINION (5秒) - はっきりした立場</div>
-                    <div class="formula-step">2️⃣ REASON 1 + EXAMPLE (15-20秒) - 理由と具体例</div>
-                    <div class="formula-step">3️⃣ REASON 2 + EXAMPLE (15-20秒) - もう一つの理由と例</div>
-                    <div class="formula-step">4️⃣ CONCLUSION (5秒) - まとめ</div>
-                </div>
-            </div>
+        <div id="hint-e3" class="panel hint-panel">
+          <h3>Think about it first</h3>
+          <ul>
+            <li>Who generates the most pollution -- individual consumers or large-scale manufacturers?</li>
+            <li>If polluting is cheap, what incentive exists for companies to adopt cleaner methods?</li>
+            <li>Consider the "polluter pays" principle -- is it fair to pass cleanup costs to taxpayers?</li>
+            <li>How might higher fees drive innovation in green technology?</li>
+          </ul>
+          <div class="key-phrases">Key vocab: <code>carbon tax</code> <code>polluter pays principle</code> <code>incentivize</code> <code>externalities</code> <code>green technology</code></div>
         </div>
 
-        <!-- Filler Phrases Section -->
-        <div id="fillers" class="collapsible-section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>🗣️ FILLER PHRASES - 考える時間を稼ぐ!</h2>
-                <span class="section-toggle">▼</span>
+        <div id="ans-e3" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Model Answer</span>
+              <p class="en-text">"I strongly agree that companies should face higher financial penalties for pollution. Under the current system, many corporations treat environmental damage as an acceptable cost of doing business, effectively passing the burden of cleanup onto taxpayers. Implementing a stricter carbon tax and applying the 'polluter pays' principle would incentivize firms to invest in cleaner production methods and adopt sustainable practices. In addition, the revenue generated from these fees could fund environmental restoration projects. Ultimately, making pollution expensive is one of the most practical ways to accelerate the transition to a greener economy."</p>
             </div>
-            <div class="section-content active">
-                <div class="filler-section">
-                    <p style="color: #087f5b; font-weight: 600; margin-bottom: 15px;">⚡ 沈黙は減点!これらのフレーズで自然に考える時間を作れ!</p>
-                    <div class="filler-grid">
-                        <div class="filler-card">
-                            <strong>That's an interesting question...</strong>
-                            <span class="jp">「面白い質問ですね…」</span>
-                        </div>
-                        <div class="filler-card">
-                            <strong>Let me think about that...</strong>
-                            <span class="jp">「考えさせてください…」</span>
-                        </div>
-                        <div class="filler-card">
-                            <strong>Well, I'd say that...</strong>
-                            <span class="jp">「そうですね…」</span>
-                        </div>
-                        <div class="filler-card">
-                            <strong>You know...</strong>
-                            <span class="jp">「ほら…」</span>
-                        </div>
-                        <div class="filler-card">
-                            <strong>To be honest...</strong>
-                            <span class="jp">「正直に言うと…」</span>
-                        </div>
-                        <div class="filler-card">
-                            <strong>How can I put this...</strong>
-                            <span class="jp">「どう言えばいいか…」</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">企業は汚染に対してより高い経済的罰則を受けるべきだと強く賛成します。現在の制度では、多くの企業が環境被害を事業活動の許容範囲内のコストとして扱い、事実上、清掃の負担を納税者に転嫁しています。より厳格な炭素税を導入し「汚染者負担の原則」を適用すれば、企業はよりクリーンな生産方法への投資と持続可能な慣行の採用にインセンティブを持つでしょう。さらに、これらの料金から得られる収入は環境修復プロジェクトの資金に充てることができます。究極的には、汚染を高くつくものにすることが、グリーン経済への移行を加速する最も実践的な方法の一つです。</p>
             </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"face higher financial penalties"</span> <span class="explain">より高い経済的罰則を受ける -- "pay more" を格上げした準1級レベルの表現</span></li>
+              <li><span class="phrase">"an acceptable cost of doing business"</span> <span class="explain">事業活動の許容コスト -- 企業の考え方を批判的に描写</span></li>
+              <li><span class="phrase">"the 'polluter pays' principle"</span> <span class="explain">汚染者負担の原則 -- 環境経済学の基本概念。面接で使えると印象的</span></li>
+              <li><span class="phrase">"incentivize firms to"</span> <span class="explain">企業に〜するインセンティブを与える -- "encourage" より政策的で洗練された語彙</span></li>
+              <li><span class="phrase">"accelerate the transition to"</span> <span class="explain">〜への移行を加速する -- 変化のスピード感を伝える力強い表現</span></li>
+            </ul>
+          </div>
         </div>
-
-        <!-- ENVIRONMENT SECTION -->
-        <div id="environment" class="category">
-            <div class="category-header">
-                <h2>🌍 ENVIRONMENT QUESTIONS (3 Questions)</h2>
-            </div>
-
-            <!-- Q1: Plastic bags -->
-            <div class="question-collapsible">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div class="question-title">
-                        Q1: Should plastic bags be banned in all stores?
-                        <span class="difficulty intermediate">⭐ Intermediate</span>
-                    </div>
-                    <span class="question-toggle">▼</span>
-                </div>
-                <div class="question-content">
-                    <div class="question-block" data-question="1">
-                        <button class="show-btn hint-btn" onclick="toggle('hint-env1')">💡 Show Hint</button>
-                        <button class="show-btn" onclick="toggle('env1')">Show Model Answer</button>
-
-                        <div id="hint-env1" class="answer-section hint-box hidden">
-                            <h4>💡 HINT - まず自分で考えてみよう!</h4>
-                            <div class="hint-content">
-                                <strong>構造のヒント:</strong>
-                                <ul>
-                                    <li>📌 Opinion: Do you think plastic bags should be banned? (YES/NO)</li>
-                                    <li>📌 Reason 1: What damage do plastic bags cause? (ocean, animals)</li>
-                                    <li>📌 Reason 2: How long do they take to decompose? (hundreds of years)</li>
-                                    <li>📌 Conclusion: Is banning necessary for the future?</li>
-                                </ul>
-                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
-                                    🎯 Key phrases: "cause damage", "harm marine life", "take ... years", "necessary for"
-                                </p>
-                            </div>
-                        </div>
-
-                        <div id="env1" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    "I strongly believe that plastic bags should be banned. They cause serious environmental damage and harm marine life. On top of that, they take hundreds of years to decompose. So banning them is necessary for our planet's future."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「私はビニール袋を禁止すべきだと強く思います。深刻な環境破壊を引き起こし、海洋生物に害を与えます。さらに、分解されるまでに何百年もかかります。だから禁止することは地球の未来のために必要です。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"I strongly believe"</strong> - 強い意見を示す最初の一言。"I think"より強力</li>
-                                    <li><strong>"cause damage"</strong> - 「損害を引き起こす」という因果関係を示す基本表現</li>
-                                    <li><strong>"harm marine life"</strong> - 「海洋生物に害を与える」。具体的な被害者を示すことで説得力UP</li>
-                                    <li><strong>"On top of that"</strong> - 「さらに」。2つ目の理由につなげる便利表現</li>
-                                    <li><strong>"hundreds of years"</strong> - 具体的な数字で時間の長さを強調</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Q2: Government responsibility -->
-            <div class="question-collapsible">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div class="question-title">
-                        Q2: Is it the government's responsibility to protect the environment?
-                        <span class="difficulty advanced">⭐⭐ Advanced</span>
-                    </div>
-                    <span class="question-toggle">▼</span>
-                </div>
-                <div class="question-content">
-                    <div class="question-block" data-question="2">
-                        <button class="show-btn hint-btn" onclick="toggle('hint-env2')">💡 Show Hint</button>
-                        <button class="show-btn" onclick="toggle('env2-yes')">Show Answer (YES)</button>
-                        <button class="show-btn" onclick="toggle('env2-no')">Show Answer (NO)</button>
-
-                        <div id="hint-env2" class="answer-section hint-box hidden">
-                            <h4>💡 HINT - 両方の立場を考えてみよう!</h4>
-                            <div class="hint-content">
-                                <strong>YES側のヒント:</strong>
-                                <ul>
-                                    <li>📌 Why are environmental problems "too big" for individuals?</li>
-                                    <li>📌 What can only governments do? (regulate factories, enforce laws)</li>
-                                    <li>📌 結論: Why is government action essential?</li>
-                                </ul>
-                                <strong style="margin-top: 15px; display: block;">NO側のヒント:</strong>
-                                <ul>
-                                    <li>📌 Is it ONLY the government's job?</li>
-                                    <li>📌 What can individuals do? (recycle, reduce waste)</li>
-                                    <li>📌 What happens if people only rely on government?</li>
-                                </ul>
-                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
-                                    🎯 Key phrases: "too big for", "only...can", "essential" / "everyone's responsibility", "make a difference", "rely on"
-                                </p>
-                            </div>
-                        </div>
-
-                        <div id="env2-yes" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>✅ YES SIDE:</strong><br>
-                                    "Yes, I believe it's the government's responsibility. Environmental problems are too big for individuals to solve alone. Only governments can regulate factories and enforce laws. So government action is essential for real environmental protection."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「はい、政府の責任だと思います。環境問題は個人だけでは解決できないほど大きすぎます。工場を規制し法律を施行できるのは政府だけです。だから本当の環境保護には政府の行動が不可欠です。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"too big for..."</strong> - 「〜には大きすぎる」。個人の限界を示す比較表現</li>
-                                    <li><strong>"only governments"</strong> - "only"で限定して政府の特別な権限を強調</li>
-                                    <li><strong>"regulate"</strong> - 「規制する」。政府の役割を示す重要動詞</li>
-                                    <li><strong>"enforce laws"</strong> - 「法律を施行する」。政府の権力を具体的に表現</li>
-                                    <li><strong>"essential"</strong> - "important"より強い「不可欠な」という意味</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div id="env2-no" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>❌ NO SIDE:</strong><br>
-                                    "I think it's everyone's responsibility, not just the government's. Individual actions like recycling and reducing waste make a real difference. Furthermore, if we only rely on the government, people won't change their behavior. So both citizens and government need to work together."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「政府だけでなく、みんなの責任だと思います。リサイクルやゴミを減らすなどの個人の行動が本当に変化を生みます。さらに、政府だけに頼っていたら、人々は行動を変えません。だから市民と政府の両方が協力する必要があります。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"everyone's responsibility"</strong> - 「みんなの責任」。責任を広げる表現</li>
-                                    <li><strong>"not just..."</strong> - 「〜だけでなく」。限定を否定して範囲を広げる</li>
-                                    <li><strong>"make a real difference"</strong> - 「本当に変化を生む」。個人の行動の重要性を強調</li>
-                                    <li><strong>"rely on"</strong> - 「〜に頼る」。依存関係を示す基本動詞</li>
-                                    <li><strong>"work together"</strong> - 「協力する」。協調の必要性を示す</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Q3: Companies pay for pollution -->
-            <div class="question-collapsible">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div class="question-title">
-                        Q3: Should companies pay more for pollution?
-                        <span class="difficulty intermediate">⭐ Intermediate</span>
-                    </div>
-                    <span class="question-toggle">▼</span>
-                </div>
-                <div class="question-content">
-                    <div class="question-block" data-question="3">
-                        <button class="show-btn hint-btn" onclick="toggle('hint-env3')">💡 Show Hint</button>
-                        <button class="show-btn" onclick="toggle('env3')">Show Model Answer</button>
-
-                        <div id="hint-env3" class="answer-section hint-box hidden">
-                            <h4>💡 HINT - 企業の責任を考えよう!</h4>
-                            <div class="hint-content">
-                                <strong>構造のヒント:</strong>
-                                <ul>
-                                    <li>📌 Opinion: Should polluting companies pay more? (YES)</li>
-                                    <li>📌 Reason 1: Who's causing most pollution? (large factories)</li>
-                                    <li>📌 Reason 2: What would higher costs encourage? (cleaner technology)</li>
-                                    <li>📌 Conclusion: Why is this fair?</li>
-                                </ul>
-                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
-                                    🎯 Key phrases: "responsible for", "major source", "encourage", "invest in", "fair"
-                                </p>
-                            </div>
-                        </div>
-
-                        <div id="env3" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    "Yes, I believe companies should pay more for pollution. Large factories are responsible for most environmental damage, so they should bear the costs. Moreover, higher fees would encourage companies to invest in cleaner technology. So this approach is both fair and effective."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「はい、企業は汚染に対してもっと支払うべきだと思います。大きな工場はほとんどの環境破壊の責任があるので、コストを負担すべきです。さらに、高い料金は企業がクリーンな技術に投資することを促すでしょう。だからこのアプローチは公平で効果的です。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"responsible for"</strong> - 「〜の責任がある」。責任の所在を明確にする表現</li>
-                                    <li><strong>"bear the costs"</strong> - 「コストを負担する」。経済的責任を示す</li>
-                                    <li><strong>"encourage...to"</strong> - 「〜するよう促す」。行動変化を期待する表現</li>
-                                    <li><strong>"invest in"</strong> - 「〜に投資する」。資金投入を意味する</li>
-                                    <li><strong>"fair and effective"</strong> - 「公平で効果的」。2つの利点を並べて説得力UP</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- WORK SECTION -->
-        <div id="work" class="category">
-            <div class="category-header">
-                <h2>💼 WORK & EMPLOYMENT QUESTIONS (2 Questions)</h2>
-            </div>
-
-            <!-- Work Q1: Working from home -->
-            <div class="question-collapsible">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div class="question-title">
-                        Q1: Is working from home better than working in an office?
-                        <span class="difficulty intermediate">⭐ Intermediate</span>
-                    </div>
-                    <span class="question-toggle">▼</span>
-                </div>
-                <div class="question-content">
-                    <div class="question-block" data-question="4">
-                        <button class="show-btn hint-btn" onclick="toggle('hint-work1')">💡 Show Hint</button>
-                        <button class="show-btn" onclick="toggle('work1-yes')">Show Answer (YES)</button>
-                        <button class="show-btn" onclick="toggle('work1-no')">Show Answer (NO)</button>
-
-                        <div id="hint-work1" class="answer-section hint-box hidden">
-                            <h4>💡 HINT - 在宅勤務のメリット・デメリットを考えよう!</h4>
-                            <div class="hint-content">
-                                <strong>YES側のヒント (在宅勤務が良い):</strong>
-                                <ul>
-                                    <li>📌 What time is saved by not commuting? (通勤時間)</li>
-                                    <li>📌 What flexibility does it provide? (flexible schedule)</li>
-                                    <li>📌 結論: Why is this better for work-life balance?</li>
-                                </ul>
-                                <strong style="margin-top: 15px; display: block;">NO側のヒント (オフィスが良い):</strong>
-                                <ul>
-                                    <li>📌 What's lost without face-to-face interaction? (collaboration)</li>
-                                    <li>📌 What home distractions exist? (家族、家事)</li>
-                                    <li>📌 結論: Why is separation important?</li>
-                                </ul>
-                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
-                                    🎯 Key phrases: "save time", "flexible", "work-life balance" / "face-to-face", "collaboration", "distractions", "separate"
-                                </p>
-                            </div>
-                        </div>
-
-                        <div id="work1-yes" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>✅ YES (在宅勤務が良い):</strong><br>
-                                    "I believe working from home is better. It saves commuting time, which can be used more productively. Additionally, it provides flexibility to balance work and personal life. So remote work improves both efficiency and quality of life."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「在宅勤務の方が良いと思います。通勤時間が節約でき、より生産的に使えます。さらに、仕事と私生活のバランスを取る柔軟性を提供します。だからリモートワークは効率と生活の質の両方を改善します。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"saves commuting time"</strong> - 「通勤時間を節約する」。在宅勤務の最大のメリット</li>
-                                    <li><strong>"used more productively"</strong> - 「より生産的に使える」。時間の有効活用</li>
-                                    <li><strong>"flexibility"</strong> - 「柔軟性」。在宅勤務の重要な利点</li>
-                                    <li><strong>"balance work and personal life"</strong> - 「仕事と私生活のバランスを取る」。ワークライフバランス</li>
-                                    <li><strong>"quality of life"</strong> - 「生活の質」。全体的な幸福度を示す</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div id="work1-no" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>❌ NO (オフィスが良い):</strong><br>
-                                    "I think working in an office is better. Face-to-face interaction improves collaboration and team communication. Furthermore, working at home has too many distractions. So having a separate workspace helps maintain focus and productivity."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「オフィスで働く方が良いと思います。対面でのやり取りは協力とチームコミュニケーションを改善します。さらに、自宅で働くことには気を散らすものが多すぎます。だから別の職場を持つことは集中力と生産性を維持するのに役立ちます。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"face-to-face interaction"</strong> - 「対面でのやり取り」。オフィスの重要な利点</li>
-                                    <li><strong>"improves collaboration"</strong> - 「協力を改善する」。チームワークの向上</li>
-                                    <li><strong>"distractions"</strong> - 「気を散らすもの」。在宅勤務のデメリット</li>
-                                    <li><strong>"separate workspace"</strong> - 「別の職場」。仕事と私生活の分離</li>
-                                    <li><strong>"maintain focus"</strong> - 「集中を維持する」。生産性の鍵</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Work Q2: Flexible working hours -->
-            <div class="question-collapsible">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div class="question-title">
-                        Q2: Should companies provide flexible working hours?
-                        <span class="difficulty basic">⭐ Basic</span>
-                    </div>
-                    <span class="question-toggle">▼</span>
-                </div>
-                <div class="question-content">
-                    <div class="question-block" data-question="5">
-                        <button class="show-btn hint-btn" onclick="toggle('hint-work2')">💡 Show Hint</button>
-                        <button class="show-btn" onclick="toggle('work2')">Show Model Answer</button>
-
-                        <div id="hint-work2" class="answer-section hint-box hidden">
-                            <h4>💡 HINT - フレックスタイムの利点を考えよう!</h4>
-                            <div class="hint-content">
-                                <strong>構造のヒント:</strong>
-                                <ul>
-                                    <li>📌 Opinion: Should companies offer flexible hours? (YES)</li>
-                                    <li>📌 Reason 1: How does it help employees? (family responsibilities)</li>
-                                    <li>📌 Reason 2: What about productivity? (work when most productive)</li>
-                                    <li>📌 Conclusion: Why is flexibility important?</li>
-                                </ul>
-                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
-                                    🎯 Key phrases: "accommodate", "family responsibilities", "most productive", "flexibility", "employee satisfaction"
-                                </p>
-                            </div>
-                        </div>
-
-                        <div id="work2" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    "Yes, companies should provide flexible working hours. This accommodates employees with family responsibilities or personal needs. Moreover, people can work during their most productive hours. So flexibility increases both employee satisfaction and work quality."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「はい、企業はフレキシブルな勤務時間を提供すべきです。これは家族の責任や個人的なニーズを持つ従業員に対応します。さらに、人々は最も生産的な時間帯に働けます。だから柔軟性は従業員の満足度と仕事の質の両方を高めます。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"accommodate"</strong> - 「〜に対応する、便宜を図る」。柔軟な対応を示す</li>
-                                    <li><strong>"family responsibilities"</strong> - 「家族の責任」。育児や介護など</li>
-                                    <li><strong>"personal needs"</strong> - 「個人的なニーズ」。個人の事情</li>
-                                    <li><strong>"most productive hours"</strong> - 「最も生産的な時間帯」。人によって異なる</li>
-                                    <li><strong>"employee satisfaction"</strong> - 「従業員の満足度」。会社の成功の鍵</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- EDUCATION SECTION -->
-        <div id="education" class="category">
-            <div class="category-header">
-                <h2>🎓 EDUCATION QUESTIONS (2 Questions)</h2>
-            </div>
-
-            <!-- Education Q1: Free university -->
-            <div class="question-collapsible">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div class="question-title">
-                        Q1: Should universities be free for all students?
-                        <span class="difficulty advanced">⭐⭐ Advanced</span>
-                    </div>
-                    <span class="question-toggle">▼</span>
-                </div>
-                <div class="question-content">
-                    <div class="question-block" data-question="6">
-                        <button class="show-btn hint-btn" onclick="toggle('hint-edu1')">💡 Show Hint</button>
-                        <button class="show-btn" onclick="toggle('edu1-yes')">Show Answer (YES)</button>
-                        <button class="show-btn" onclick="toggle('edu1-no')">Show Answer (NO)</button>
-
-                        <div id="hint-edu1" class="answer-section hint-box hidden">
-                            <h4>💡 HINT - 大学無償化の是非を考えよう!</h4>
-                            <div class="hint-content">
-                                <strong>YES側のヒント (無償化すべき):</strong>
-                                <ul>
-                                    <li>📌 Who can't afford university now? (low-income families)</li>
-                                    <li>📌 What does education equality mean? (equal opportunity)</li>
-                                    <li>📌 結論: How does this benefit society?</li>
-                                </ul>
-                                <strong style="margin-top: 15px; display: block;">NO側のヒント (無償化すべきでない):</strong>
-                                <ul>
-                                    <li>📌 Where would the money come from? (taxpayers)</li>
-                                    <li>📌 What about quality? (too many students, lower quality)</li>
-                                    <li>📌 結論: What's a better alternative? (scholarships)</li>
-                                </ul>
-                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
-                                    🎯 Key phrases: "equal opportunity", "benefit society" / "taxpayers", "burden", "lower quality", "scholarships"
-                                </p>
-                            </div>
-                        </div>
-
-                        <div id="edu1-yes" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>✅ YES (無償化すべき):</strong><br>
-                                    "Yes, I believe universities should be free. Many talented students from low-income families cannot afford higher education. Furthermore, free education would create equal opportunities for all. So this investment would benefit society by producing more educated citizens."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「はい、大学は無料であるべきだと思います。低所得家庭の多くの才能ある学生が高等教育を受けられません。さらに、無料の教育はすべての人に平等な機会を生み出すでしょう。だからこの投資はより多くの教育を受けた市民を生み出すことで社会に利益をもたらすでしょう。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"talented students"</strong> - 「才能ある学生」。能力があっても経済的に困難な人</li>
-                                    <li><strong>"low-income families"</strong> - 「低所得家庭」。経済格差の問題</li>
-                                    <li><strong>"equal opportunities"</strong> - 「平等な機会」。教育の機会均等</li>
-                                    <li><strong>"benefit society"</strong> - 「社会に利益をもたらす」。社会全体の利点</li>
-                                    <li><strong>"educated citizens"</strong> - 「教育を受けた市民」。社会の発展に貢献</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div id="edu1-no" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>❌ NO (無償化すべきでない):</strong><br>
-                                    "I don't think all universities should be free. This would place a huge burden on taxpayers. Additionally, it might lower education quality if too many students enroll. So instead, we should expand scholarship programs for those who truly need help."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「すべての大学が無料であるべきだとは思いません。これは納税者に大きな負担をかけるでしょう。さらに、あまりにも多くの学生が入学すると教育の質が下がるかもしれません。だから代わりに、本当に助けが必要な人のために奨学金プログラムを拡大すべきです。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"place a burden on"</strong> - 「〜に負担をかける」。コストの問題</li>
-                                    <li><strong>"taxpayers"</strong> - 「納税者」。費用を負担する人々</li>
-                                    <li><strong>"lower education quality"</strong> - 「教育の質を下げる」。質の低下への懸念</li>
-                                    <li><strong>"expand scholarship programs"</strong> - 「奨学金プログラムを拡大する」。代替案の提示</li>
-                                    <li><strong>"truly need help"</strong> - 「本当に助けが必要」。支援の対象を明確化</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Education Q2: Online vs Traditional -->
-            <div class="question-collapsible">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div class="question-title">
-                        Q2: Is online education as effective as traditional classroom learning?
-                        <span class="difficulty intermediate">⭐ Intermediate</span>
-                    </div>
-                    <span class="question-toggle">▼</span>
-                </div>
-                <div class="question-content">
-                    <div class="question-block" data-question="7">
-                        <button class="show-btn hint-btn" onclick="toggle('hint-edu2')">💡 Show Hint</button>
-                        <button class="show-btn" onclick="toggle('edu2-yes')">Show Answer (YES)</button>
-                        <button class="show-btn" onclick="toggle('edu2-no')">Show Answer (NO)</button>
-
-                        <div id="hint-edu2" class="answer-section hint-box hidden">
-                            <h4>💡 HINT - オンライン教育の効果を考えよう!</h4>
-                            <div class="hint-content">
-                                <strong>YES側のヒント (同じくらい効果的):</strong>
-                                <ul>
-                                    <li>📌 What flexibility does online learning provide? (study anytime)</li>
-                                    <li>📌 What resources are available? (videos, materials)</li>
-                                    <li>📌 結論: Why can it be just as good?</li>
-                                </ul>
-                                <strong style="margin-top: 15px; display: block;">NO側のヒント (従来型が良い):</strong>
-                                <ul>
-                                    <li>📌 What's missing in online learning? (interaction, discussion)</li>
-                                    <li>📌 What about motivation? (hard to stay focused)</li>
-                                    <li>📌 結論: Why is classroom better?</li>
-                                </ul>
-                                <p style="margin-top: 15px; font-weight: 600; color: #d68910;">
-                                    🎯 Key phrases: "flexibility", "access to resources" / "lack of interaction", "stay focused", "classroom environment"
-                                </p>
-                            </div>
-                        </div>
-
-                        <div id="edu2-yes" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>✅ YES (同じくらい効果的):</strong><br>
-                                    "I think online education can be just as effective. Students can learn at their own pace and review materials anytime. Plus, modern technology provides excellent resources like videos and interactive content. So with proper design, online learning works very well."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「オンライン教育は同じくらい効果的だと思います。学生は自分のペースで学び、いつでも教材を復習できます。さらに、現代の技術はビデオやインタラクティブなコンテンツなどの優れたリソースを提供します。だから適切に設計されれば、オンライン学習は非常にうまく機能します。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"at their own pace"</strong> - 「自分のペースで」。個別学習の利点</li>
-                                    <li><strong>"review materials"</strong> - 「教材を復習する」。繰り返し学習可能</li>
-                                    <li><strong>"modern technology"</strong> - 「現代の技術」。テクノロジーの進歩</li>
-                                    <li><strong>"interactive content"</strong> - 「インタラクティブなコンテンツ」。双方向的な学習</li>
-                                    <li><strong>"with proper design"</strong> - 「適切に設計されれば」。条件を示す</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div id="edu2-no" class="answer-section hidden">
-                            <div class="answer-container">
-                                <div class="model-answer">
-                                    <strong>❌ NO (従来型が良い):</strong><br>
-                                    "I believe traditional classroom learning is more effective. Students miss out on valuable face-to-face interaction and class discussions online. Furthermore, many students find it hard to stay focused at home. So the classroom environment provides better learning conditions."
-                                </div>
-                                <div class="jp-translation">
-                                    <strong>🇯🇵 日本語訳:</strong><br>
-                                    「従来の教室での学習の方がより効果的だと思います。学生はオンラインでは貴重な対面でのやり取りやクラスディスカッションを逃します。さらに、多くの学生が自宅で集中し続けることは難しいと感じています。だから教室環境はより良い学習条件を提供します。」
-                                </div>
-                            </div>
-                            <div class="tips">
-                                <h4>💡 EXPANDED TIPS:</h4>
-                                <ul>
-                                    <li><strong>"miss out on"</strong> - 「〜を逃す、得られない」。何かを失うことを示す</li>
-                                    <li><strong>"valuable interaction"</strong> - 「貴重なやり取り」。対面の重要性</li>
-                                    <li><strong>"class discussions"</strong> - 「クラスディスカッション」。対話型学習</li>
-                                    <li><strong>"stay focused"</strong> - 「集中し続ける」。注意力の維持</li>
-                                    <li><strong>"learning conditions"</strong> - 「学習条件」。学習環境全体</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      </div></div>
     </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- WORK QUESTIONS                              -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="sec-work" class="category">
+    <div class="category-label work">Work & Employment &mdash; 2 Questions</div>
+
+    <!-- WORK Q1 -->
+    <div class="q-card" data-q="4">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q4</span> Is working from home better than working in an office?</div>
+        <span class="q-difficulty intermediate">Intermediate</span>
+        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-w1')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-w1-yes')">Answer (Yes)</button>
+          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-w1-no')">Answer (No)</button>
+        </div>
+
+        <div id="hint-w1" class="panel hint-panel">
+          <h3>Consider both sides</h3>
+          <ul>
+            <li><strong>Yes side:</strong> How much time is lost commuting? What does schedule autonomy mean for productivity?</li>
+            <li><strong>No side:</strong> What happens to teamwork and mentoring without physical proximity? Can everyone maintain discipline at home?</li>
+            <li>Think about how the pandemic reshaped attitudes toward remote work.</li>
+          </ul>
+          <div class="key-phrases">Key vocab: <code>autonomy</code> <code>work-life balance</code> <code>in-person collaboration</code> <code>blurred boundaries</code> <code>hybrid model</code></div>
+        </div>
+
+        <div id="ans-w1-yes" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"I believe working from home offers significant advantages over the traditional office model. To begin with, eliminating the daily commute saves employees considerable time and energy, which can be redirected toward productive work or personal well-being. Beyond that, remote work grants individuals greater autonomy over their schedules, allowing them to work during their most focused hours. Research consistently shows that employees who enjoy flexibility report higher job satisfaction and lower burnout rates. While critics point to the risk of isolation, modern communication tools have largely addressed that concern. On balance, remote work represents a healthier and more efficient way of organizing professional life."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">在宅勤務は従来のオフィスモデルよりも大きな利点があると思います。まず、毎日の通勤をなくすことで、従業員はかなりの時間とエネルギーを節約でき、それを生産的な仕事や個人の幸福に振り向けることができます。さらに、リモートワークは個人にスケジュールに対するより大きな自律性を与え、最も集中できる時間帯に働くことを可能にします。研究は一貫して、柔軟性を享受する従業員の方が仕事の満足度が高く、燃え尽き症候群の割合が低いことを示しています。孤立のリスクを指摘する批判もありますが、現代のコミュニケーションツールはその懸念を大きく解消しています。全体的に見て、リモートワークはより健全で効率的な職業生活の組織方法だと言えます。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"eliminating the daily commute"</span> <span class="explain">毎日の通勤をなくす -- "saving commuting time" より具体的で力強い</span></li>
+              <li><span class="phrase">"grants individuals greater autonomy"</span> <span class="explain">個人により大きな自律性を与える -- autonomy は準1級頻出の重要語</span></li>
+              <li><span class="phrase">"lower burnout rates"</span> <span class="explain">燃え尽き症候群の割合が低い -- 現代の働き方の議論で使える実践的フレーズ</span></li>
+              <li><span class="phrase">"on balance"</span> <span class="explain">全体的に見て -- 結論で両面を考慮した上での判断を示す上級表現</span></li>
+              <li><span class="phrase">"redirected toward"</span> <span class="explain">〜に振り向ける -- リソースの再配分を表す洗練された動詞</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="ans-w1-no" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"I believe working in an office remains the more effective arrangement for most people. In-person collaboration fosters spontaneous idea-sharing and stronger team cohesion, both of which are difficult to replicate through a screen. Additionally, the physical separation between home and workplace establishes clear boundaries that help employees mentally switch between professional and personal modes. Many remote workers report that blurred boundaries lead to overwork and difficulty disconnecting. While remote work suits certain roles, the structured environment of an office generally promotes better focus, accountability, and professional development."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">ほとんどの人にとって、オフィスでの勤務の方が効果的な形態であると思います。対面での協力は自発的なアイデアの共有とより強いチームの結束を育みますが、これらは画面越しでは再現が困難です。加えて、自宅と職場の物理的な分離は明確な境界線を確立し、従業員が仕事モードと私的モードの間を精神的に切り替えるのに役立ちます。多くのリモートワーカーが、境界線の曖昧さが過労やオフモードへの切り替えの困難さにつながると報告しています。リモートワークが特定の役割に適していることは認めますが、オフィスの構造化された環境は一般的に、より良い集中力、説明責任、そして専門的成長を促進します。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"fosters spontaneous idea-sharing"</span> <span class="explain">自発的なアイデアの共有を育む -- foster は「育てる」。計画的ではない自然な交流</span></li>
+              <li><span class="phrase">"team cohesion"</span> <span class="explain">チームの結束力 -- "teamwork" より学術的で準1級向きの表現</span></li>
+              <li><span class="phrase">"blurred boundaries"</span> <span class="explain">曖昧な境界線 -- 在宅勤務の問題を端的に表す重要コロケーション</span></li>
+              <li><span class="phrase">"difficulty disconnecting"</span> <span class="explain">切り替えの困難さ -- 現代の労働問題を議論する際の実用フレーズ</span></li>
+              <li><span class="phrase">"accountability"</span> <span class="explain">説明責任 -- ビジネス英語の重要語。管理体制の文脈で頻出</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- WORK Q2 -->
+    <div class="q-card" data-q="5">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q5</span> Should companies provide flexible working hours?</div>
+        <span class="q-difficulty intermediate">Intermediate</span>
+        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-w2')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-w2')">Model Answer</button>
+        </div>
+
+        <div id="hint-w2" class="panel hint-panel">
+          <h3>Think about it first</h3>
+          <ul>
+            <li>How do rigid 9-to-5 schedules affect employees with childcare or eldercare duties?</li>
+            <li>Does everyone perform best at the same hours? Think about early birds vs. night owls.</li>
+            <li>What impact does schedule flexibility have on employee retention and morale?</li>
+            <li>Are there industries where flexibility is impractical? (e.g., hospitals, manufacturing)</li>
+          </ul>
+          <div class="key-phrases">Key vocab: <code>accommodate</code> <code>peak performance hours</code> <code>employee retention</code> <code>work-life integration</code> <code>morale</code></div>
+        </div>
+
+        <div id="ans-w2" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Model Answer</span>
+              <p class="en-text">"I strongly believe that companies should offer flexible working arrangements wherever feasible. Rigid schedules fail to accommodate the diverse needs of today's workforce -- employees with childcare responsibilities, for instance, often struggle to conform to a strict nine-to-five routine. Furthermore, research in occupational psychology suggests that people have different peak performance windows; allowing them to work during those periods naturally boosts productivity. Companies that embrace flexibility also tend to see improved employee retention and higher morale, which translates into long-term cost savings. While some industries require fixed hours for operational reasons, the general trend toward flexibility is both beneficial and inevitable."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">企業は可能な限り柔軟な勤務形態を提供すべきだと強く思います。硬直的なスケジュールは今日の労働力の多様なニーズに対応できません。例えば、育児の責任を持つ従業員は厳格な9時から5時の勤務体制に従うのに苦労することがよくあります。さらに、産業心理学の研究によると、人々には異なる最高パフォーマンスの時間帯があり、その時間帯に働くことを許可すれば自然と生産性が向上します。柔軟性を取り入れる企業は従業員の定着率の向上と士気の向上も見る傾向があり、これは長期的なコスト削減につながります。運営上の理由で固定時間が必要な業界もありますが、柔軟性への全般的な傾向は有益かつ不可避です。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"wherever feasible"</span> <span class="explain">実現可能なところではどこでも -- 現実的な条件を付ける知的な表現</span></li>
+              <li><span class="phrase">"fail to accommodate"</span> <span class="explain">〜に対応できない -- 制度の欠陥を指摘する際の定番フレーズ</span></li>
+              <li><span class="phrase">"peak performance windows"</span> <span class="explain">最高パフォーマンスの時間帯 -- 科学的根拠に基づいた議論を展開</span></li>
+              <li><span class="phrase">"employee retention"</span> <span class="explain">従業員の定着率 -- ビジネスの文脈で非常に重要な概念</span></li>
+              <li><span class="phrase">"beneficial and inevitable"</span> <span class="explain">有益かつ不可避 -- 結論を二つの形容詞で力強くまとめる技法</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- EDUCATION QUESTIONS                         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="sec-edu" class="category">
+    <div class="category-label edu">Education &mdash; 2 Questions</div>
+
+    <!-- EDU Q1 -->
+    <div class="q-card" data-q="6">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q6</span> Should universities be free for all students?</div>
+        <span class="q-difficulty advanced">Advanced</span>
+        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-d1')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-d1-yes')">Answer (Yes)</button>
+          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-d1-no')">Answer (No)</button>
+        </div>
+
+        <div id="hint-d1" class="panel hint-panel">
+          <h3>Consider both sides</h3>
+          <ul>
+            <li><strong>Yes side:</strong> How does tuition debt limit career choices for graduates? What about students from disadvantaged backgrounds?</li>
+            <li><strong>No side:</strong> Who pays for "free" education? How might overcrowding affect quality? Are targeted scholarships a better solution?</li>
+            <li>Look at countries with free university (Germany, Norway) vs. those without -- what trade-offs exist?</li>
+          </ul>
+          <div class="key-phrases">Key vocab: <code>socioeconomic barrier</code> <code>meritocracy</code> <code>taxpayer burden</code> <code>means-tested scholarships</code> <code>dilute quality</code></div>
+        </div>
+
+        <div id="ans-d1-yes" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"I firmly believe that university education should be tuition-free. In many countries, high tuition fees create socioeconomic barriers that prevent talented students from disadvantaged backgrounds from accessing higher education. This perpetuates inequality across generations. Free university education would move us closer to a genuine meritocracy where success is determined by ability and effort rather than financial circumstances. Countries like Germany and Norway have demonstrated that publicly funded higher education can maintain high academic standards while dramatically expanding access. The long-term return on investment -- through higher tax revenues from better-educated citizens -- more than justifies the initial cost."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">大学教育は授業料無料であるべきだと固く信じています。多くの国では、高額な授業料が社会経済的障壁となり、恵まれない背景を持つ優秀な学生が高等教育にアクセスすることを妨げています。これは不平等を世代を超えて固定化します。大学教育の無償化は、成功が経済的事情ではなく能力と努力によって決まる真の実力主義社会に近づくことを意味します。ドイツやノルウェーなどの国々は、公的資金による高等教育が高い学術水準を維持しながらアクセスを劇的に拡大できることを実証しています。より教育を受けた市民からの高い税収という長期的な投資収益率は、初期コストを十分に正当化します。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"socioeconomic barriers"</span> <span class="explain">社会経済的障壁 -- 教育格差を議論する際の中核概念。準1級の論述で差がつく</span></li>
+              <li><span class="phrase">"perpetuates inequality"</span> <span class="explain">不平等を固定化する -- perpetuate = 永続させる。社会問題の根深さを表現</span></li>
+              <li><span class="phrase">"genuine meritocracy"</span> <span class="explain">真の実力主義 -- 理想的な社会制度として提示する際に効果的</span></li>
+              <li><span class="phrase">"return on investment"</span> <span class="explain">投資収益率 -- 教育を「投資」として捉える経済的視点の導入</span></li>
+              <li><span class="phrase">"more than justifies"</span> <span class="explain">十分に正当化する -- "more than" が「余りあるほど」を強調する修辞的技法</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="ans-d1-no" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"While the idea of free university sounds appealing, I don't think it is the most practical or equitable approach. Making all universities free would place an enormous financial burden on taxpayers, including those who never attend university themselves. Furthermore, if admission becomes unrestricted, institutions may become overcrowded, potentially diluting the quality of education. A more targeted solution, such as means-tested scholarships and income-based loan repayment plans, would ensure that financial support reaches those who genuinely need it without creating unsustainable costs for society as a whole."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">大学無償化という考えは魅力的に聞こえますが、最も実践的または公平なアプローチだとは思いません。すべての大学を無料にすることは、大学に通わない人々を含む納税者に莫大な経済的負担を課すことになります。さらに、入学が無制限になれば、教育機関は過密状態になり、教育の質が薄まる可能性があります。所得に応じた奨学金や収入連動型のローン返済計画など、より的を絞った解決策の方が、社会全体に持続不可能なコストを生じさせることなく、本当に必要な人々に経済的支援が届くことを保証できるでしょう。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"equitable approach"</span> <span class="explain">公平なアプローチ -- "fair" より学術的。equity（公正）の形容詞形</span></li>
+              <li><span class="phrase">"diluting the quality"</span> <span class="explain">質を薄める -- dilute は液体を薄めるイメージ。比喩的に質の低下を表現</span></li>
+              <li><span class="phrase">"means-tested scholarships"</span> <span class="explain">所得審査付き奨学金 -- 具体的な代替案を提示することで議論に説得力を加える</span></li>
+              <li><span class="phrase">"income-based loan repayment"</span> <span class="explain">収入連動型ローン返済 -- 現実的な政策提案として非常に効果的</span></li>
+              <li><span class="phrase">"unsustainable costs"</span> <span class="explain">持続不可能なコスト -- 長期的な財政への影響を指摘する重要表現</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- EDU Q2 -->
+    <div class="q-card" data-q="7">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q7</span> Is online education as effective as traditional classroom learning?</div>
+        <span class="q-difficulty intermediate">Intermediate</span>
+        <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-d2')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-d2-yes')">Answer (Yes)</button>
+          <button class="btn btn-answer-alt" onclick="togglePanel(event,'ans-d2-no')">Answer (No)</button>
+        </div>
+
+        <div id="hint-d2" class="panel hint-panel">
+          <h3>Consider both sides</h3>
+          <ul>
+            <li><strong>Yes side:</strong> How do features like on-demand replay, adaptive pacing, and global access benefit learners?</li>
+            <li><strong>No side:</strong> What is lost without real-time peer interaction, structured environments, and teacher presence?</li>
+            <li>Consider whether effectiveness depends on the subject matter (e.g., lab-based science vs. lecture-based humanities).</li>
+          </ul>
+          <div class="key-phrases">Key vocab: <code>self-paced learning</code> <code>digital divide</code> <code>peer interaction</code> <code>self-discipline</code> <code>pedagogical approach</code></div>
+        </div>
+
+        <div id="ans-d2-yes" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"I believe that online education has matured to the point where it can match -- and in some areas surpass -- traditional classroom learning. Self-paced platforms allow students to revisit complex material as many times as needed, which is simply not possible in a live lecture setting. Furthermore, online education democratizes access to world-class instructors and institutions regardless of geographic location. The pandemic demonstrated that with adequate infrastructure and well-designed curricula, digital learning can deliver meaningful outcomes. Of course, it requires a degree of self-discipline, but developing that skill is itself valuable preparation for the modern workforce."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">オンライン教育は、従来の教室での学習に匹敵し、いくつかの分野では凌駕できるレベルにまで成熟したと思います。自分のペースで進めるプラットフォームでは、学生は複雑な教材を必要な回数だけ繰り返し確認できますが、これはライブ講義の環境では不可能です。さらに、オンライン教育は地理的な場所に関係なく、世界トップクラスの講師や教育機関へのアクセスを民主化します。パンデミックは、適切なインフラとよく設計されたカリキュラムがあれば、デジタル学習が有意義な成果を提供できることを実証しました。もちろん一定の自己規律が必要ですが、そのスキルを身につけること自体が現代の労働力への貴重な準備です。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"has matured to the point where"</span> <span class="explain">〜できるレベルにまで成熟した -- 進歩や発展を表す洗練された構文</span></li>
+              <li><span class="phrase">"democratizes access to"</span> <span class="explain">〜へのアクセスを民主化する -- 教育の平等化を力強く表現する動詞</span></li>
+              <li><span class="phrase">"with adequate infrastructure"</span> <span class="explain">適切なインフラがあれば -- 条件を明示することで議論の現実性を高める</span></li>
+              <li><span class="phrase">"deliver meaningful outcomes"</span> <span class="explain">有意義な成果を提供する -- "work well" の準1級版。結果を具体的に表現</span></li>
+              <li><span class="phrase">"a degree of self-discipline"</span> <span class="explain">一定の自己規律 -- 反論を先取りして認める (concession) の技法</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="ans-d2-no" class="panel answer-panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"While online education has improved significantly, I don't believe it can fully replace the classroom experience. Traditional learning environments offer real-time peer interaction and collaborative discussion that foster critical thinking in ways that asynchronous forums cannot replicate. Moreover, many students lack the self-discipline required to succeed in unstructured settings, leading to higher dropout rates in online programs. The digital divide is another critical concern -- students without reliable internet access or quiet study spaces are systematically disadvantaged. For subjects that require hands-on practice, such as laboratory sciences or performing arts, the classroom remains indispensable."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">オンライン教育は大幅に改善されましたが、教室での経験を完全に置き換えることはできないと思います。従来の学習環境は、非同期のフォーラムでは再現できない方法で批判的思考を育むリアルタイムの仲間との交流や共同討論を提供します。さらに、多くの学生は構造化されていない環境で成功するために必要な自己規律を欠いており、オンラインプログラムでの中退率の高さにつながっています。デジタルデバイド（情報格差）もまた重大な懸念です。信頼できるインターネット接続や静かな学習空間を持たない学生は組織的に不利な立場に置かれます。実験科学や舞台芸術など、実践的な練習が必要な科目では、教室は依然として不可欠です。</p>
+            </div>
+          </div>
+          <div class="tips-panel">
+            <h3>Key Phrases</h3>
+            <ul>
+              <li><span class="phrase">"asynchronous forums"</span> <span class="explain">非同期のフォーラム -- リアルタイムではないオンライン上の議論スペース。対比の技法で教室の利点を際立たせる</span></li>
+              <li><span class="phrase">"higher dropout rates"</span> <span class="explain">より高い中退率 -- 統計的根拠を示唆することで議論に重みを加える</span></li>
+              <li><span class="phrase">"the digital divide"</span> <span class="explain">デジタルデバイド（情報格差） -- 準1級の社会問題トピックで頻出の重要概念</span></li>
+              <li><span class="phrase">"systematically disadvantaged"</span> <span class="explain">組織的に不利な立場に置かれる -- 構造的な不公平を指摘する学術的表現</span></li>
+              <li><span class="phrase">"remains indispensable"</span> <span class="explain">依然として不可欠である -- 結論を断定的に述べる力強いフレーズ</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
 </div>
 
 <script>
-// Global Variables
-const partName = 'part1';
-let answeredQuestions = new Set();
-const totalQuestions = 7;
+const PART = 'part1';
+const TOTAL_Q = 7;
+const answered = new Set(JSON.parse(localStorage.getItem('eiken-' + PART) || '[]'));
 
-// Toggle Section
-function toggleSection(header) {
-    const content = header.nextElementSibling;
-    header.classList.toggle('active');
-    content.classList.toggle('active');
+/* ── Theme ── */
+function toggleTheme() {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', dark ? '' : 'dark');
+  document.querySelector('.theme-icon').textContent = dark ? 'Dark' : 'Light';
+  localStorage.setItem('eiken-theme', dark ? '' : 'dark');
 }
 
-// Toggle Question
-function toggleQuestion(header) {
-    const content = header.nextElementSibling;
-    header.classList.toggle('active');
-    content.classList.toggle('active');
+(function initTheme() {
+  const saved = localStorage.getItem('eiken-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    const icon = document.querySelector('.theme-icon');
+    if (icon) icon.textContent = 'Light';
+  }
+})();
+
+/* ── Collapsible sections ── */
+function toggleCollapsible(header) {
+  const section = header.parentElement;
+  const body = header.nextElementSibling;
+  section.classList.toggle('open');
+  body.style.maxHeight = section.classList.contains('open') ? body.scrollHeight + 'px' : '0';
 }
 
-// Toggle Answer/Hint
-function toggle(id) {
-    const element = document.getElementById(id);
-    const btn = event.target;
-    
-    if (element.classList.contains('hidden')) {
-        element.classList.remove('hidden');
-        btn.classList.add('active');
-        
-        // Update button text
-        if (id.startsWith('hint-')) {
-            btn.textContent = '💡 Hide Hint';
-        } else {
-            btn.textContent = btn.textContent.replace('Show', 'Hide');
-        }
-        
-        // Mark question as answered
-        const questionBlock = element.closest('.question-block');
-        if (questionBlock) {
-            const questionNum = questionBlock.dataset.question;
-            markQuestionAnswered(questionNum);
-        }
-        
-    } else {
-        element.classList.add('hidden');
-        btn.classList.remove('active');
-        
-        // Reset button text
-        if (id.startsWith('hint-')) {
-            btn.textContent = '💡 Show Hint';
-        } else {
-            btn.textContent = btn.textContent.replace('Hide', 'Show');
-        }
+// Init open sections
+document.querySelectorAll('.collapsible.open .collapsible-body').forEach(b => {
+  b.style.maxHeight = b.scrollHeight + 'px';
+});
+
+/* ── Question cards ── */
+function toggleQ(header) {
+  const card = header.parentElement;
+  const body = header.nextElementSibling;
+  card.classList.toggle('open');
+  body.style.maxHeight = card.classList.contains('open') ? body.scrollHeight + 'px' : '0';
+}
+
+/* ── Panels (hint/answer) ── */
+function togglePanel(e, id) {
+  e.stopPropagation();
+  const panel = document.getElementById(id);
+  const btn = e.target;
+  const isVisible = panel.classList.contains('visible');
+
+  panel.classList.toggle('visible');
+  btn.classList.toggle('active');
+
+  // Re-calc parent max-height
+  const qBody = panel.closest('.q-body');
+  if (qBody) requestAnimationFrame(() => { qBody.style.maxHeight = qBody.scrollHeight + 'px'; });
+
+  // Track progress
+  if (!isVisible && !id.startsWith('hint-')) {
+    const card = panel.closest('.q-card');
+    if (card) {
+      const q = card.dataset.q;
+      answered.add(q);
+      localStorage.setItem('eiken-' + PART, JSON.stringify([...answered]));
+      updateProgress();
     }
+  }
 }
 
-// Mark Question as Answered
-function markQuestionAnswered(questionNum) {
-    answeredQuestions.add(questionNum);
-    updateProgress();
-    saveProgress();
-}
-
-// Update Progress Bar
+/* ── Progress ── */
 function updateProgress() {
-    const progress = (answeredQuestions.size / totalQuestions) * 100;
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    
-    if (progressBar) progressBar.style.width = progress + '%';
-    if (progressText) progressText.textContent = 
-        `Progress: ${answeredQuestions.size}/${totalQuestions} questions completed`;
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  if (fill) fill.style.width = (answered.size / TOTAL_Q * 100) + '%';
+  if (label) label.textContent = answered.size + ' / ' + TOTAL_Q;
+}
+updateProgress();
+
+/* ── Scroll nav ── */
+function scrollTo(sel) {
+  const el = document.querySelector(sel);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Save Progress to LocalStorage
-function saveProgress() {
-    const data = {
-        answeredQuestions: Array.from(answeredQuestions),
-        timestamp: new Date().toISOString()
-    };
-    localStorage.setItem('eiken-' + partName + '-progress', JSON.stringify(data));
-}
+/* ── Back to top ── */
+window.addEventListener('scroll', () => {
+  const btn = document.querySelector('.back-top');
+  if (btn) btn.classList.toggle('visible', scrollY > 400);
+}, { passive: true });
 
-// Load Progress from LocalStorage
-function loadProgress() {
-    const saved = localStorage.getItem('eiken-' + partName + '-progress');
-    if (saved) {
-        try {
-            const data = JSON.parse(saved);
-            answeredQuestions = new Set(data.answeredQuestions);
-            updateProgress();
-        } catch (e) {
-            console.error('Error loading progress:', e);
-        }
-    }
-}
-
-// Dark Mode Toggle
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const btn = document.querySelector('.dark-mode-toggle');
-    btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-    localStorage.setItem('eiken-' + partName + '-darkMode', 
-        document.body.classList.contains('dark-mode'));
-}
-
-// Load Dark Mode Preference
-function loadDarkMode() {
-    if (localStorage.getItem('eiken-' + partName + '-darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        const btn = document.querySelector('.dark-mode-toggle');
-        if (btn) btn.textContent = '☀️';
-    }
-}
-
-// Scroll to Section
-function scrollToSection(targetId) {
-    const target = document.getElementById(targetId);
-    if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-}
-
-// Scroll to Top
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Show/Hide Back to Top Button
-window.addEventListener('scroll', function() {
-    const backToTop = document.querySelector('.back-to-top');
-    if (backToTop) {
-        if (window.scrollY > 300) {
-            backToTop.classList.add('visible');
-        } else {
-            backToTop.classList.remove('visible');
-        }
-    }
-});
-
-// Toggle Header Minimize
-function toggleHeader() {
-    const header = document.querySelector('.header');
-    header.classList.toggle('minimized');
-}
-
-// Keyboard Shortcuts
-document.addEventListener('keydown', function(e) {
-    if ((e.key === 'd' || e.key === 'D') && !e.target.matches('input, textarea')) {
-        toggleDarkMode();
-    }
-    if ((e.key === 't' || e.key === 'T') && !e.target.matches('input, textarea')) {
-        scrollToTop();
-    }
-});
-
-// Initialize on Page Load
-window.addEventListener('DOMContentLoaded', function() {
-    loadDarkMode();
-    loadProgress();
+/* ── Keyboard shortcuts ── */
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input,textarea')) return;
+  if (e.key === 'd') toggleTheme();
+  if (e.key === 't') window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 </script>
 
