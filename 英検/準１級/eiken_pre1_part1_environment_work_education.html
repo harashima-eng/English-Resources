@@ -892,13 +892,105 @@ body {
 /* ═══════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════ */
-@media (max-width: 640px) {
-  .page { padding: 0 14px 80px; }
-  .cinema-header { padding: 44px 20px 36px; }
-  .cinema-header h1 { font-size: 2.2rem; }
-  .filler-grid { grid-template-columns: 1fr; }
+
+/* ── Tablet ── */
+@media (max-width: 768px) {
+  .page { padding: 0 16px 90px; }
+  .cinema-header { padding: 50px 24px 42px; }
+  .cinema-header h1 { font-size: 2.8rem; }
+  .filler-grid { grid-template-columns: 1fr 1fr; }
+  .chapter-list { grid-template-columns: 1fr 1fr; }
+  .answer-grid { grid-template-columns: 1fr; }
+  .q-header { padding: 16px 18px; }
+  .q-body-inner { padding: 0 18px 18px; }
+  .poster-header { padding: 16px 18px; }
+  .poster-body-inner { padding: 0 18px 18px; }
+  .formula-step { padding: 12px 14px; gap: 10px; }
+  .hint-panel { padding: 18px; }
+  .directors-notes { padding: 18px; }
+  .back-top { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .page { padding: 0 12px 80px; }
+  .cinema-header { padding: 36px 16px 28px; margin-bottom: 28px; }
+  .cinema-header h1 { font-size: 2rem; letter-spacing: 0.04em; }
+  .cinema-header .presents { font-size: 0.8rem; letter-spacing: 0.25em; }
+  .cinema-header .tagline { font-size: 0.95rem; }
+
+  /* Film progress — stack label below bar */
+  .film-progress { flex-direction: column; gap: 8px; }
+  .film-track { width: 100%; max-width: 240px; }
+
+  /* Chapter select */
+  .chapter-select { padding: 16px; }
+  .chapter-select h2 { font-size: 0.95rem; }
   .chapter-list { grid-template-columns: 1fr; }
+  .chapter-item { padding: 8px 12px; font-size: 0.88rem; }
+
+  /* Film dividers — hide sprocket bars, keep label */
   .film-divider::before, .film-divider::after { display: none; }
+  .film-divider { justify-content: center; }
+  .film-divider .cat-label { font-size: 0.9rem; padding: 5px 16px; }
+
+  /* Poster/collapsible sections */
+  .poster-header { padding: 14px 14px; }
+  .poster-header h2 { font-size: 1rem; }
+  .poster-body-inner { padding: 0 14px 14px; }
+  .filler-grid { grid-template-columns: 1fr; }
+  .filler-chip { padding: 12px 14px; }
+
+  /* Question cards — stack title and badge vertically */
+  .q-header {
+    flex-wrap: wrap;
+    padding: 14px 14px;
+    gap: 8px;
+  }
+  .q-title {
+    flex-basis: calc(100% - 34px); /* full width minus chevron */
+    font-size: 0.93rem;
+  }
+  .q-diff {
+    order: 3;
+    font-size: 0.68rem;
+    padding: 2px 10px;
+  }
+  .chevron { order: 2; width: 20px; height: 20px; }
+  .q-body-inner { padding: 0 14px 14px; }
+
+  /* Formula steps — stack num above text on very small */
+  .formula-step { padding: 10px 12px; gap: 8px; flex-wrap: wrap; }
+  .formula-step .num { font-size: 1.2rem; }
+
+  /* Action buttons — full width on mobile */
+  .actions { flex-direction: column; }
+  .btn { text-align: center; padding: 12px 18px; font-size: 0.82rem; }
+
+  /* Answer panels */
+  .model-answer { padding: 16px; }
+  .model-answer .en-text { font-size: 0.9rem; line-height: 1.75; }
+  .jp-box { padding: 16px; }
+  .jp-box .jp-text { font-size: 0.85rem; }
+  .directors-notes { padding: 14px; }
+  .directors-notes li { font-size: 0.85rem; }
+
+  /* Hint panel */
+  .hint-panel { padding: 16px; }
+  .hint-panel li { font-size: 0.88rem; }
+  .hint-panel .key-phrases code { font-size: 0.8rem; padding: 1px 6px; }
+
+  /* Top bar */
+  .top-bar-inner { height: 44px; }
+  .back-link { font-size: 0.82rem; }
+  .theme-toggle { font-size: 0.78rem; padding: 4px 10px; }
+
+  /* Back to top — smaller, closer to edge */
+  .back-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
+
+  /* Marquee lights — tighten for small screens */
+  .cinema-header::before { inset: -5px; }
+  .cinema-header::after { inset: -8px; }
 }
 
 @media print {
