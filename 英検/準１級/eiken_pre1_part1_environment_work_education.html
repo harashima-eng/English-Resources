@@ -313,11 +313,10 @@ body {
 .chapter-select {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 24px;
-  margin-bottom: 36px;
   animation: textFadeUp 0.8s ease-out 1.8s both;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
 .chapter-select h2 {
@@ -536,21 +535,21 @@ body {
 .q-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  margin-bottom: 12px;
+  border-radius: 6px;
   overflow: hidden;
   transition: border-color 0.3s, box-shadow 0.4s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,166,68,0.06);
 }
 
 .q-card:hover {
   border-color: var(--gold-dim);
-  box-shadow: 0 0 20px rgba(212,166,68,0.08);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 20px rgba(212,166,68,0.08);
 }
 
 .q-card.open {
+  grid-column: 1 / -1;
   border-color: var(--gold);
-  box-shadow: 0 0 30px rgba(212,166,68,0.12), inset 0 0 60px rgba(212,166,68,0.02);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(212,166,68,0.12), inset 0 0 60px rgba(212,166,68,0.02);
 }
 
 .q-header {
