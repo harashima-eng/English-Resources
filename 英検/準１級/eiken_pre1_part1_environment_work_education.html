@@ -488,9 +488,59 @@ body {
 }
 
 /* ═══════════════════════════════════════
+   BENTO GRID LAYOUT
+   ═══════════════════════════════════════ */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .bento-grid .chapter-select { grid-column: 1 / -1; }
+  .bento-grid .category { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1024px) {
+  .bento-grid { gap: 24px; }
+}
+
+@media (min-width: 1400px) {
+  .bento-grid { gap: 28px; }
+}
+
+/* Q-card grid within categories */
+.q-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .q-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .q-card-grid { gap: 20px; }
+}
+
+@media (min-width: 1400px) {
+  .q-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+}
+
+/* ═══════════════════════════════════════
    CATEGORY DIVIDERS — Film Strip
    ═══════════════════════════════════════ */
-.category { margin-bottom: 44px; }
+.category { margin-bottom: 0; }
 
 .film-divider {
   display: flex;
