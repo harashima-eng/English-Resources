@@ -1778,11 +1778,20 @@ function toggleCollapsible(header) {
   const card = header.parentElement;
   const body = header.nextElementSibling;
   card.classList.toggle('open');
-  body.style.maxHeight = card.classList.contains('open') ? body.scrollHeight + 'px' : '0';
+  if (card.classList.contains('open')) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function handler() {
+      body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', handler);
+    });
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; });
+  }
 }
 
 document.querySelectorAll('.poster-card.open .poster-body').forEach(b => {
-  b.style.maxHeight = b.scrollHeight + 'px';
+  b.style.maxHeight = 'none';
 });
 
 /* ── Question cards ── */
