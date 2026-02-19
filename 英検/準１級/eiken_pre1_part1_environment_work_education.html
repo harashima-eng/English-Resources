@@ -487,7 +487,7 @@ body {
 .poster-body-inner { padding: 0 22px 22px; }
 
 /* Formula steps */
-.formula-steps { display: grid; gap: 8px; margin-top: 14px; }
+.formula-steps { display: grid; gap: 8px; margin-top: 14px; grid-auto-rows: 1fr; }
 
 .formula-step {
   display: flex;
@@ -515,6 +515,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 10px;
   margin-top: 14px;
+  grid-auto-rows: 1fr;
 }
 
 .filler-chip {
