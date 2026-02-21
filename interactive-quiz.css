@@ -1010,6 +1010,7 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   align-items: center;
   gap: 10px;
   background: linear-gradient(135deg, #fff8e1, #fff3c4);
+  color: #5d4037;
   border: 1px solid #ffd54f;
   border-radius: 12px;
   padding: 12px 20px;
@@ -1070,6 +1071,7 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   }
   .iq-toast {
     background: linear-gradient(135deg, #3a3520, #332d18);
+    color: #ffe0b2;
     border-color: #8d6e00;
   }
 }
