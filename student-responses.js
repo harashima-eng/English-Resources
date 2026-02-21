@@ -1,0 +1,205 @@
+/* Student Responses Module
+   Real-time aggregated student response display for teacher sessions.
+   Students select answers on their phones during a teacher session;
+   teacher sees live distribution (e.g., "A: 3, B: 12, C: 2").
+
+   Architecture:
+   - interactive-quiz.js dispatches 'iq:answer-selected' CustomEvents
+   - This module writes selections to Firebase
+   - Teacher panel shows aggregated bar charts per question
+
+   Requires: firebase-app-compat.js, firebase-database-compat.js, firebase-config.js
+   Must be loaded AFTER interactive-quiz.js and teacher-reveal.js */
+
+(function() {
+  'use strict';
+
+  var examId = document.body && document.body.dataset.examId;
+  if (!examId) return;
+
+  if (typeof firebase === 'undefined' || !window.firebaseConfig) return;
+  if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+  var db = firebase.database();
+
+  // ── Device ID (persistent per device) ──
+  var DEVICE_KEY = 'iq-device-id';
+  var deviceId = localStorage.getItem(DEVICE_KEY);
+  if (!deviceId) {
+    deviceId = 'dev-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+    localStorage.setItem(DEVICE_KEY, deviceId);
+  }
+
+  var responsesRef = db.ref('responses/' + examId);
+  var isTeacher = false;
+  var listeners = {};
+  var aggregateDisplays = {};
+
+  // ── Student Side: Write responses to Firebase ──
+  document.addEventListener('iq:answer-selected', function(e) {
+    if (isTeacher) return;
+    var d = e.detail;
+    var key = d.si + '-' + d.qi;
+
+    responsesRef.child(key).child(deviceId).set({
+      answer: d.answer,
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    });
+  });
+
+  // ── Teacher Side: Listen and aggregate ──
+  function startListening(si, qi) {
+    var key = si + '-' + qi;
+    if (listeners[key]) return;
+
+    listeners[key] = responsesRef.child(key).on('value', function(snap) {
+      var responses = snap.val();
+      if (!responses) {
+        updateDisplay(key, {}, 0);
+        return;
+      }
+
+      var counts = {};
+      var total = 0;
+      Object.keys(responses).forEach(function(devId) {
+        var answer = responses[devId].answer;
+        if (!counts[answer]) counts[answer] = 0;
+        counts[answer]++;
+        total++;
+      });
+
+      updateDisplay(key, counts, total);
+    });
+  }
+
+  function updateDisplay(key, counts, total) {
+    var display = aggregateDisplays[key];
+    if (!display) return;
+
+    display.textContent = '';
+    if (total === 0) {
+      display.style.display = 'none';
+      return;
+    }
+
+    display.style.display = '';
+
+    var totalLabel = document.createElement('div');
+    totalLabel.className = 'sr-total';
+    totalLabel.textContent = total + ' responses';
+    display.appendChild(totalLabel);
+
+    var answers = Object.keys(counts).sort();
+    answers.forEach(function(answer) {
+      var bar = document.createElement('div');
+      bar.className = 'sr-bar';
+
+      var label = document.createElement('span');
+      label.className = 'sr-label';
+      label.textContent = answer.toUpperCase();
+
+      var track = document.createElement('div');
+      track.className = 'sr-fill-track';
+      var fill = document.createElement('div');
+      fill.className = 'sr-fill';
+      var pct = total > 0 ? (counts[answer] / total * 100) : 0;
+      fill.style.width = pct + '%';
+      track.appendChild(fill);
+
+      var count = document.createElement('span');
+      count.className = 'sr-count';
+      count.textContent = counts[answer];
+
+      bar.appendChild(label);
+      bar.appendChild(track);
+      bar.appendChild(count);
+      display.appendChild(bar);
+    });
+  }
+
+  // ── Inject response displays into teacher panel ──
+  function injectIntoPanel() {
+    var sectionGroups = document.querySelectorAll('.tr-section-group');
+    sectionGroups.forEach(function(secDiv) {
+      var qGrid = secDiv.querySelector('.tr-q-grid');
+      if (!qGrid) return;
+
+      var qBtns = qGrid.querySelectorAll('.tr-btn-q[data-section][data-question]');
+      if (qBtns.length === 0) return;
+
+      var si = parseInt(qBtns[0].dataset.section);
+
+      var responseArea = document.createElement('div');
+      responseArea.className = 'sr-section-responses';
+      responseArea.style.display = 'none';
+      secDiv.appendChild(responseArea);
+
+      qBtns.forEach(function(btn) {
+        var qi = parseInt(btn.dataset.question);
+        var key = si + '-' + qi;
+
+        var display = document.createElement('div');
+        display.className = 'sr-question-display';
+        display.dataset.key = key;
+        display.style.display = 'none';
+        responseArea.appendChild(display);
+        aggregateDisplays[key] = display;
+
+        startListening(si, qi);
+      });
+
+      // Show response area when any question has responses
+      var observer = new MutationObserver(function() {
+        var hasVisible = responseArea.querySelector('.sr-question-display[style*="display: block"], .sr-question-display:not([style*="display: none"])');
+        var displays = responseArea.querySelectorAll('.sr-question-display');
+        var anyShown = false;
+        displays.forEach(function(d) {
+          if (d.style.display !== 'none' && d.children.length > 0) anyShown = true;
+        });
+        responseArea.style.display = anyShown ? '' : 'none';
+      });
+      observer.observe(responseArea, { childList: true, subtree: true, attributes: true });
+    });
+  }
+
+  // ── Cleanup ──
+  function detachAllListeners() {
+    Object.keys(listeners).forEach(function(key) {
+      responsesRef.child(key).off('value', listeners[key]);
+    });
+    listeners = {};
+    aggregateDisplays = {};
+  }
+
+  // ── Session lifecycle ──
+  document.addEventListener('tr:session-start', function() {
+    // Re-inject if panel was rebuilt
+    setTimeout(function() {
+      if (isTeacher && Object.keys(aggregateDisplays).length === 0) {
+        injectIntoPanel();
+      }
+    }, 300);
+  });
+
+  document.addEventListener('tr:session-end', function() {
+    responsesRef.remove();
+    detachAllListeners();
+  });
+
+  // ── Init: Watch for teacher panel creation ──
+  function init() {
+    var panelCheck = new MutationObserver(function() {
+      if (document.querySelector('.tr-panel') && !isTeacher) {
+        isTeacher = true;
+        panelCheck.disconnect();
+        setTimeout(injectIntoPanel, 200);
+      }
+    });
+    panelCheck.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
