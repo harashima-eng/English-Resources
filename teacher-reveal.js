@@ -488,6 +488,29 @@
     }
   }
 
+  // ── Collapse / Expand ──
+  var collapsedTabEl = null;
+
+  function collapsePanel() {
+    if (!panelEl) return;
+    panelEl.style.display = 'none';
+    shiftContent(false);
+    if (!collapsedTabEl) {
+      collapsedTabEl = document.createElement('button');
+      collapsedTabEl.className = 'tr-collapsed-tab';
+      collapsedTabEl.textContent = '\u25B6';  // ▶
+      collapsedTabEl.title = 'Expand Teacher Control';
+      collapsedTabEl.onclick = function() { expandPanel(); };
+      document.body.appendChild(collapsedTabEl);
+    }
+    collapsedTabEl.style.display = '';
+  }
+
+  function expandPanel() {
+    if (collapsedTabEl) collapsedTabEl.style.display = 'none';
+    if (panelEl) { panelEl.style.display = ''; shiftContent(true); }
+  }
+
   // ── Teacher panel ──
   var panelEl = null;
 
@@ -511,6 +534,16 @@
     header.className = 'tr-panel-header';
     var title = document.createElement('span');
     title.textContent = 'Teacher Control';
+    var btnGroup = document.createElement('div');
+    btnGroup.style.display = 'flex';
+    btnGroup.style.alignItems = 'center';
+
+    var collapseBtn = document.createElement('button');
+    collapseBtn.className = 'tr-panel-collapse-btn';
+    collapseBtn.textContent = '\u25C0';  // ◀
+    collapseBtn.title = 'Collapse panel';
+    collapseBtn.onclick = function() { collapsePanel(); };
+
     var closeBtn = document.createElement('button');
     closeBtn.className = 'tr-panel-close';
     closeBtn.textContent = '\u00d7';
@@ -519,8 +552,11 @@
       shiftContent(false);
       showReopenButton();
     };
+
+    btnGroup.appendChild(collapseBtn);
+    btnGroup.appendChild(closeBtn);
     header.appendChild(title);
-    header.appendChild(closeBtn);
+    header.appendChild(btnGroup);
     container.appendChild(header);
 
     // Body
