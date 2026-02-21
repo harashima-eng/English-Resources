@@ -186,6 +186,7 @@
         });
         btn.classList.add('selected');
         selected = opt;
+        if (window.UISound) UISound.play('click');
         if (!iqSessionActive) checkBtn.disabled = false;
       };
       choicesDiv.appendChild(btn);
@@ -201,6 +202,7 @@
     checkBtn.onclick = function() {
       if (!selected) return;
       var isCorrect = selected === q.correctAnswer;
+      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
 
@@ -246,6 +248,7 @@
         });
         btn.classList.add('selected');
         selectedLetter = item.letter;
+        if (window.UISound) UISound.play('click');
         if (!iqSessionActive) checkBtn.disabled = false;
       };
       choicesDiv.appendChild(btn);
@@ -261,6 +264,7 @@
     checkBtn.onclick = function() {
       if (!selectedLetter) return;
       var isCorrect = selectedLetter === q.correctAnswer;
+      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
 
