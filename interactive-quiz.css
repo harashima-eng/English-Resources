@@ -398,7 +398,7 @@ html.dark .iq-score-bar {
   border: 1.5px solid rgba(120, 113, 108, 0.2);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.7);
-  font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 500 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   transition: border-color 0.15s ease;
 }
@@ -525,7 +525,7 @@ html.dark .iq-fillin-input.wrong {
   border: 1.5px solid rgba(120, 113, 108, 0.2);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.7);
-  font: 500 14px/1.5 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 500 15px/1.5 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   resize: vertical;
   transition: border-color 0.15s ease;
@@ -557,7 +557,7 @@ html.dark .iq-compose-input:focus {
   border-radius: 8px;
   background: rgba(13, 148, 136, 0.06);
   border-left: 3px solid #0D9488;
-  font: 500 14px/1.5 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 500 15px/1.5 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
 }
 [data-theme="dark"] .iq-compose-reveal,
