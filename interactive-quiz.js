@@ -107,7 +107,14 @@
   function parseScrambleWords(scrambleStr) {
     var match = scrambleStr.match(/\[\s*(.+?)\s*\]/);
     if (!match) return [];
-    return match[1].split(',').map(function(w) { return w.trim(); });
+    var inside = match[1];
+    // Comma-separated: [ word1, word2, word3 ]
+    if (inside.indexOf(',') !== -1) {
+      return inside.split(',').map(function(w) { return w.trim(); }).filter(Boolean);
+    }
+    // Labeled format: [ a. word1　b. word2　c. word3 ]
+    var parts = inside.split(/[\s\u3000]*[a-z]\.[\s\u3000]*/);
+    return parts.map(function(w) { return w.trim(); }).filter(Boolean);
   }
 
   function matchesCorrectText(typed, correctText) {
