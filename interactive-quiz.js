@@ -1032,8 +1032,160 @@
     cards.forEach(function(card) { card.style.display = ''; });
   }
 
+  // ── Gamification UI ──
+  function updateStreakDisplay() {
+    if (!streakEl) return;
+    if (streak === 0) {
+      streakEl.style.display = 'none';
+      streakEl.textContent = '';
+      return;
+    }
+    streakEl.style.display = '';
+    streakEl.textContent = '\uD83D\uDD25 ' + streak;
+
+    // Milestone pulse at 3, 5, 10
+    if (streak === 3 || streak === 5 || streak === 10) {
+      streakEl.classList.remove('iq-streak-pulse');
+      void streakEl.offsetWidth;  // reflow to restart animation
+      streakEl.classList.add('iq-streak-pulse');
+    }
+  }
+
+  function getSectionQuestionCount(si) {
+    var sec = grammarData.sections[si];
+    if (!sec) return 0;
+    var count = 0;
+    sec.questions.forEach(function(q) {
+      if (q.type && (q.correctAnswer || q.correctText)) count++;
+    });
+    return count;
+  }
+
+  function checkAchievements(si) {
+    var newBadges = [];
+
+    if (score.correct >= 1 && badges.indexOf('first-blood') === -1)
+      newBadges.push('first-blood');
+    if (streak >= 3 && badges.indexOf('streak-3') === -1)
+      newBadges.push('streak-3');
+    if (streak >= 5 && badges.indexOf('streak-5') === -1)
+      newBadges.push('streak-5');
+    if (streak >= 10 && badges.indexOf('streak-10') === -1)
+      newBadges.push('streak-10');
+
+    // Perfect section: all questions in section answered correctly
+    if (si !== undefined && sectionScores[si]) {
+      var sectionTotal = getSectionQuestionCount(si);
+      if (sectionTotal > 0 && sectionScores[si].correct === sectionTotal
+          && sectionScores[si].total === sectionTotal
+          && badges.indexOf('perfect-section') === -1) {
+        newBadges.push('perfect-section');
+      }
+    }
+
+    // Lesson complete: all questions answered
+    if (score.answered === score.total && badges.indexOf('lesson-complete') === -1)
+      newBadges.push('lesson-complete');
+
+    // Lesson master: all correct
+    if (score.correct === score.total && score.answered === score.total
+        && badges.indexOf('lesson-master') === -1)
+      newBadges.push('lesson-master');
+
+    newBadges.forEach(function(id) {
+      badges.push(id);
+      showBadgeToast(id);
+    });
+  }
+
+  function findBadge(id) {
+    for (var i = 0; i < BADGES.length; i++) {
+      if (BADGES[i].id === id) return BADGES[i];
+    }
+    return null;
+  }
+
+  function showBadgeToast(id) {
+    var badge = findBadge(id);
+    if (!badge) return;
+
+    var toast = document.createElement('div');
+    toast.className = 'iq-toast';
+    toast.innerHTML = '<span class="iq-toast-icon">' + badge.icon + '</span>' +
+      '<span class="iq-toast-text"><strong>' + badge.name + '</strong><br>' + badge.desc + '</span>';
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        toast.classList.add('iq-toast-show');
+      });
+    });
+
+    setTimeout(function() {
+      toast.classList.remove('iq-toast-show');
+      toast.classList.add('iq-toast-hide');
+      setTimeout(function() { toast.remove(); }, 400);
+    }, 3000);
+  }
+
+  function toggleBadgePanel() {
+    if (badgePanelEl) {
+      badgePanelEl.remove();
+      badgePanelEl = null;
+      return;
+    }
+
+    badgePanelEl = document.createElement('div');
+    badgePanelEl.className = 'iq-badge-panel';
+
+    var header = document.createElement('div');
+    header.className = 'iq-badge-header';
+    header.innerHTML = '<span>\uD83C\uDFC6 Achievements</span>' +
+      '<span class="iq-badge-count">' + badges.length + ' / ' + BADGES.length + '</span>';
+    badgePanelEl.appendChild(header);
+
+    var grid = document.createElement('div');
+    grid.className = 'iq-badge-grid';
+
+    BADGES.forEach(function(badge) {
+      var earned = badges.indexOf(badge.id) !== -1;
+      var card = document.createElement('div');
+      card.className = 'iq-badge-card' + (earned ? ' iq-badge-earned' : '');
+
+      var icon = document.createElement('div');
+      icon.className = 'iq-badge-icon';
+      icon.textContent = earned ? badge.icon : '\uD83D\uDD12';
+
+      var name = document.createElement('div');
+      name.className = 'iq-badge-name';
+      name.textContent = earned ? badge.name : '???';
+
+      var desc = document.createElement('div');
+      desc.className = 'iq-badge-desc';
+      desc.textContent = earned ? badge.desc : '';
+
+      card.appendChild(icon);
+      card.appendChild(name);
+      card.appendChild(desc);
+      grid.appendChild(card);
+    });
+
+    badgePanelEl.appendChild(grid);
+
+    // Close button
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'iq-badge-close';
+    closeBtn.textContent = '\u2715';
+    closeBtn.onclick = function() { toggleBadgePanel(); };
+    badgePanelEl.appendChild(closeBtn);
+
+    document.body.appendChild(badgePanelEl);
+  }
+
   // ── Init ──
   function init() {
+    loadProgress();
     detectExistingSession();
     createScoreTracker();
     setupTeacherRevealListeners();
