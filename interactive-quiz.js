@@ -403,6 +403,64 @@
     zone.appendChild(checkBtn);
   }
 
+  // ── Correction UI (single-underline error — type the fix) ──
+  function buildCorrectionUI(zone, q, si, qi, cardEl) {
+    var qtext = cardEl.querySelector('.qtext');
+    if (!qtext) return;
+
+    var underline = qtext.querySelector('u');
+    if (underline) underline.classList.add('iq-error-highlight');
+    var errorWord = underline ? underline.textContent.trim() : '';
+
+    var hint = document.createElement('div');
+    hint.className = 'iq-scramble-label';
+    hint.textContent = 'Type the correct form for the underlined word';
+    zone.appendChild(hint);
+
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'iq-correction-input';
+    input.placeholder = errorWord + ' → ...';
+    input.oninput = function() {
+      if (!iqSessionActive) checkBtn.disabled = !input.value.trim();
+    };
+    zone.appendChild(input);
+
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'iq-check-btn';
+    checkBtn.textContent = 'Check';
+    checkBtn.disabled = true;
+    if (iqSessionActive) checkBtn.style.display = 'none';
+    checkBtn.onclick = function() {
+      var typed = input.value.trim();
+      if (!typed) return;
+      var isCorrect = typed.toLowerCase() === q.correctText.toLowerCase();
+      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
+
+      input.disabled = true;
+      zone.classList.add('locked');
+      checkBtn.style.display = 'none';
+
+      if (underline) underline.classList.add(isCorrect ? 'correct' : 'wrong');
+
+      var msg = isCorrect
+        ? 'Correct! ' + errorWord + ' → ' + q.correctText
+        : 'Incorrect. The correct form is: ' + q.correctText;
+      zone.appendChild(createFeedback(isCorrect, msg));
+
+      if (!isCorrect) {
+        var answer = document.createElement('div');
+        answer.className = 'iq-correction-answer';
+        answer.textContent = q.correctText;
+        input.parentNode.insertBefore(answer, input.nextSibling);
+      }
+
+      answeredKeys[getQKey(si, qi)] = true;
+      addScore(isCorrect);
+    };
+    zone.appendChild(checkBtn);
+  }
+
   // ── Scramble UI ──
   function buildScrambleUI(zone, q, si, qi) {
     var words = parseScrambleWords(q.scramble);
@@ -513,12 +571,13 @@
       if (answeredKeys[key] && !card.dataset.iqEnhanced) {
         card.dataset.iqEnhanced = 'true';
         var q = getQuestionData(parseInt(card.dataset.si), parseInt(card.dataset.qi));
-        if (!q || !q.type || !q.correctAnswer) return;
+        if (!q || !q.type || (!q.correctAnswer && !q.correctText)) return;
         var questionDiv = card.querySelector('.qcard-question');
         if (!questionDiv) return;
         var zone = document.createElement('div');
         zone.className = 'iq-zone locked';
-        zone.appendChild(createFeedback(true, 'Answered. Correct answer: ' + q.correctAnswer));
+        var displayAnswer = q.correctAnswer || q.correctText;
+        zone.appendChild(createFeedback(true, 'Answered. Correct answer: ' + displayAnswer));
         questionDiv.appendChild(zone);
       }
     });
@@ -569,6 +628,7 @@
       var corrInput = zone.querySelector('.iq-correction-input');
       var hasSelection = zone.querySelector('.iq-choice.selected') ||
                          (errorSelected && (!corrInput || corrInput.value.trim())) ||
+                         (corrInput && corrInput.value.trim() && !errorSelected) ||
                          zone.querySelector('.iq-answer-zone.has-items');
 
       var checkBtn = zone.querySelector('.iq-check-btn');
