@@ -1,0 +1,400 @@
+/* ================================================================
+   Interactive Quiz Module — Nordic Glass Theme
+   ================================================================
+   Adds interactive answering to grammarData-driven lesson pages.
+   Supports: pair, choice, error, scramble question types.
+   ================================================================ */
+
+/* ── Interactive zone injected below question text ── */
+.iq-zone {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(120, 113, 108, 0.04);
+  border: 1px solid var(--border, rgba(28, 25, 23, 0.08));
+}
+[data-theme="dark"] .iq-zone,
+html.dark .iq-zone {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+
+/* ── Choice / Pair buttons ── */
+.iq-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.iq-choice {
+  padding: 8px 16px;
+  border: 1.5px solid rgba(120, 113, 108, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text, #1C1917);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+.iq-choice:hover {
+  border-color: rgba(120, 113, 108, 0.35);
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.iq-choice:active {
+  transform: scale(0.97);
+}
+[data-theme="dark"] .iq-choice,
+html.dark .iq-choice {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text, #F5F3F0);
+}
+[data-theme="dark"] .iq-choice:hover,
+html.dark .iq-choice:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Selected state */
+.iq-choice.selected {
+  border-color: #0D9488;
+  background: rgba(13, 148, 136, 0.08);
+  box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.15);
+}
+[data-theme="dark"] .iq-choice.selected,
+html.dark .iq-choice.selected {
+  border-color: #14B8A6;
+  background: rgba(20, 184, 166, 0.12);
+}
+
+/* Correct answer */
+.iq-choice.correct {
+  border-color: #16A34A;
+  background: rgba(22, 163, 74, 0.1);
+  color: #16A34A;
+  pointer-events: none;
+}
+[data-theme="dark"] .iq-choice.correct,
+html.dark .iq-choice.correct {
+  border-color: #22C55E;
+  background: rgba(34, 197, 94, 0.12);
+  color: #22C55E;
+}
+
+/* Wrong answer */
+.iq-choice.wrong {
+  border-color: #DC2626;
+  background: rgba(220, 38, 38, 0.08);
+  color: #DC2626;
+  pointer-events: none;
+}
+[data-theme="dark"] .iq-choice.wrong,
+html.dark .iq-choice.wrong {
+  border-color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+
+/* Dimmed (non-selected wrong choices after check) */
+.iq-choice.dimmed {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+
+/* ── Error correction — clickable underlines ── */
+.iq-error-option {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+.iq-error-option:hover {
+  background: rgba(13, 148, 136, 0.1);
+}
+.iq-error-option.selected {
+  background: rgba(13, 148, 136, 0.15);
+  outline: 2px solid #0D9488;
+  outline-offset: 1px;
+}
+.iq-error-option.correct {
+  background: rgba(22, 163, 74, 0.12);
+  outline: 2px solid #16A34A;
+  outline-offset: 1px;
+}
+.iq-error-option.wrong {
+  background: rgba(220, 38, 38, 0.1);
+  outline: 2px solid #DC2626;
+  outline-offset: 1px;
+}
+
+
+/* ── Scramble chips ── */
+.iq-scramble-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 40px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(120, 113, 108, 0.06);
+  margin-bottom: 8px;
+}
+
+.iq-answer-zone {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px dashed rgba(120, 113, 108, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+  margin-bottom: 8px;
+}
+[data-theme="dark"] .iq-answer-zone,
+html.dark .iq-answer-zone {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.iq-answer-zone.has-items {
+  border-style: solid;
+  border-color: rgba(13, 148, 136, 0.3);
+}
+
+.iq-chip {
+  padding: 6px 14px;
+  border: 1.5px solid rgba(120, 113, 108, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  font: 500 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text, #1C1917);
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+.iq-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.iq-chip:active {
+  transform: scale(0.95);
+}
+[data-theme="dark"] .iq-chip,
+html.dark .iq-chip {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text, #F5F3F0);
+}
+
+.iq-chip.placed {
+  background: rgba(13, 148, 136, 0.1);
+  border-color: rgba(13, 148, 136, 0.3);
+}
+[data-theme="dark"] .iq-chip.placed,
+html.dark .iq-chip.placed {
+  background: rgba(20, 184, 166, 0.12);
+  border-color: rgba(20, 184, 166, 0.3);
+}
+
+.iq-chip.hidden {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.iq-scramble-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted, #A3A09C);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+
+/* ── Check button ── */
+.iq-check-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0D9488, #0F766E);
+  color: #fff;
+  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 1px 4px rgba(13, 148, 136, 0.2);
+}
+.iq-check-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+}
+.iq-check-btn:active {
+  transform: scale(0.97);
+}
+.iq-check-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+[data-theme="dark"] .iq-check-btn,
+html.dark .iq-check-btn {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+}
+
+
+/* ── Feedback banner ── */
+.iq-feedback {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font: 500 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  animation: iqFadeIn 0.25s ease;
+}
+
+.iq-feedback.correct {
+  background: rgba(22, 163, 74, 0.08);
+  color: #16A34A;
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+[data-theme="dark"] .iq-feedback.correct,
+html.dark .iq-feedback.correct {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22C55E;
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.iq-feedback.incorrect {
+  background: rgba(220, 38, 38, 0.06);
+  color: #DC2626;
+  border: 1px solid rgba(220, 38, 38, 0.15);
+}
+[data-theme="dark"] .iq-feedback.incorrect,
+html.dark .iq-feedback.incorrect {
+  background: rgba(239, 68, 68, 0.08);
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+@keyframes iqFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── Score tracker (bottom-left floating) ── */
+.iq-score {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9998;
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: rgba(255, 253, 250, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(168, 162, 158, 0.2);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+[data-theme="dark"] .iq-score,
+html.dark .iq-score {
+  background: rgba(28, 25, 23, 0.88);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.iq-score-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text, #1C1917);
+}
+
+.iq-score-num {
+  color: #0D9488;
+}
+[data-theme="dark"] .iq-score-num,
+html.dark .iq-score-num {
+  color: #14B8A6;
+}
+
+.iq-score-bar {
+  width: 80px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(120, 113, 108, 0.12);
+  overflow: hidden;
+}
+[data-theme="dark"] .iq-score-bar,
+html.dark .iq-score-bar {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.iq-score-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #0D9488, #14B8A6);
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  width: 0%;
+}
+
+
+/* ── Locked state (answered, no more interaction) ── */
+.iq-zone.locked .iq-choice,
+.iq-zone.locked .iq-chip,
+.iq-zone.locked .iq-check-btn {
+  pointer-events: none;
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .iq-score {
+    bottom: 12px;
+    left: 12px;
+    padding: 8px 14px;
+    gap: 8px;
+  }
+  .iq-score-text { font-size: 12px; }
+  .iq-score-bar { width: 60px; }
+
+  .iq-choice {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+  .iq-chip {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .iq-choice,
+  .iq-chip,
+  .iq-check-btn,
+  .iq-score,
+  .iq-score-fill {
+    transition-duration: 0.01ms !important;
+  }
+  .iq-feedback {
+    animation-duration: 0.01ms !important;
+  }
+}
