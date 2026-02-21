@@ -96,9 +96,21 @@
     reviewBtnEl.style.display = 'none';
     reviewBtnEl.onclick = function() { toggleReviewMode(); };
 
+    streakEl = document.createElement('span');
+    streakEl.className = 'iq-streak';
+    streakEl.style.display = 'none';
+
+    trophyBtnEl = document.createElement('button');
+    trophyBtnEl.className = 'iq-trophy-btn';
+    trophyBtnEl.textContent = '\uD83C\uDFC6';
+    trophyBtnEl.title = 'Achievements';
+    trophyBtnEl.onclick = function() { toggleBadgePanel(); };
+
     scoreEl.appendChild(scoreTextEl);
     scoreEl.appendChild(barEl);
+    scoreEl.appendChild(streakEl);
     scoreEl.appendChild(reviewBtnEl);
+    scoreEl.appendChild(trophyBtnEl);
     document.body.appendChild(scoreEl);
   }
 
