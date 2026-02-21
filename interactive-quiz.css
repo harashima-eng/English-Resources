@@ -2,7 +2,7 @@
    Interactive Quiz Module — Nordic Glass Theme
    ================================================================
    Adds interactive answering to grammarData-driven lesson pages.
-   Supports: pair, choice, error, scramble question types.
+   Supports: pair, choice, error, scramble, correction, fillin question types.
    ================================================================ */
 
 /* ── Interactive zone injected below question text ── */
