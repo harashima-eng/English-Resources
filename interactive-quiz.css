@@ -172,7 +172,7 @@ html.dark .iq-answer-zone {
   border: 1.5px solid rgba(120, 113, 108, 0.2);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.8);
-  font: 500 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   cursor: pointer;
   transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
@@ -230,7 +230,7 @@ html.dark .iq-chip.placed {
   border-radius: 10px;
   background: linear-gradient(135deg, #0D9488, #0F766E);
   color: #fff;
-  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
   box-shadow: 0 1px 4px rgba(13, 148, 136, 0.2);
@@ -259,7 +259,7 @@ html.dark .iq-check-btn {
   margin-top: 8px;
   padding: 8px 12px;
   border-radius: 8px;
-  font: 500 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   animation: iqFadeIn 0.25s ease;
 }
 
@@ -425,7 +425,7 @@ html.dark .iq-correction-input:focus {
 
 .iq-correction-answer {
   margin-top: 4px;
-  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: #16A34A;
 }
 [data-theme="dark"] .iq-correction-answer,
@@ -577,7 +577,7 @@ html.dark .iq-compose-reveal {
   padding: 8px 16px;
   border: none;
   border-radius: 10px;
-  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: #fff;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
