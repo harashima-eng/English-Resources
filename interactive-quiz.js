@@ -368,7 +368,7 @@
 
       if (hasTextReq && correctionInput) {
         var typed = correctionInput.value.trim();
-        textCorrect = typed.toLowerCase() === q.correctText.toLowerCase();
+        textCorrect = matchesCorrectText(typed, q.correctText);
         correctionInput.disabled = true;
       }
 
@@ -392,7 +392,7 @@
       if (isCorrect) {
         msg = 'Correct!';
       } else if (selectionCorrect && !textCorrect) {
-        msg = 'You found the error! The correct form is: ' + q.correctText;
+        msg = 'You found the error! The correct form is: ' + displayCorrectText(q.correctText);
       } else {
         msg = 'Incorrect. The error is in part ' + q.correctAnswer + '.';
       }
@@ -401,7 +401,7 @@
       if (hasTextReq && !textCorrect) {
         var answer = document.createElement('div');
         answer.className = 'iq-correction-answer';
-        answer.textContent = q.correctText;
+        answer.textContent = displayCorrectText(q.correctText);
         correctionInput.parentNode.insertBefore(answer, correctionInput.nextSibling);
       }
 
@@ -442,7 +442,7 @@
     checkBtn.onclick = function() {
       var typed = input.value.trim();
       if (!typed) return;
-      var isCorrect = typed.toLowerCase() === q.correctText.toLowerCase();
+      var isCorrect = matchesCorrectText(typed, q.correctText);
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
 
       input.disabled = true;
@@ -451,15 +451,16 @@
 
       if (underline) underline.classList.add(isCorrect ? 'correct' : 'wrong');
 
+      var display = displayCorrectText(q.correctText);
       var msg = isCorrect
-        ? 'Correct! ' + errorWord + ' → ' + q.correctText
-        : 'Incorrect. The correct form is: ' + q.correctText;
+        ? 'Correct! ' + errorWord + ' → ' + display
+        : 'Incorrect. The correct form is: ' + display;
       zone.appendChild(createFeedback(isCorrect, msg));
 
       if (!isCorrect) {
         var answer = document.createElement('div');
         answer.className = 'iq-correction-answer';
-        answer.textContent = q.correctText;
+        answer.textContent = display;
         input.parentNode.insertBefore(answer, input.nextSibling);
       }
 
