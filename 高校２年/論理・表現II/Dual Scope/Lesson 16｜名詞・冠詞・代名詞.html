@@ -1923,27 +1923,27 @@ const grammarData = {
       open: false,
       questions: [
         {
-          num: "(1)",
+          num: "(1)", type: "fillin", correctAnswer: ["slice", "of", "cups", "of"],
           text: "彼は朝食にパン1枚とコーヒー2杯をとった。<br>He had a (   ) (   ) bread and two (   ) (   ) coffee for breakfast.",
           vocab: [["had", "have（食べる・とる）の過去形"], ["bread", "パン（不可算名詞）"], ["coffee", "コーヒー（不可算名詞）"], ["breakfast", "朝食"]],
           hint: ["bread も coffee も不可算名詞 — 数えるには？", "パン「1枚」は a ___ of bread（薄く切った1切れ）", "コーヒー「2杯」は two ___ of coffee"]},
         {
-          num: "(2)",
+          num: "(2)", type: "fillin", correctAnswer: ["in", "in"],
           text: "太陽は東から昇り西に沈む。<br>The sun rises (   ) the east and sets (   ) the west.",
           vocab: [["sun", "太陽"], ["rise", "昇る"], ["set", "沈む"], ["east", "東"], ["west", "西"]],
           hint: ["「東に」「西に」— 方角を表す前置詞は？", "in the east で「東に（東の方に）」", "方角には in を使う（at でも to でもなく）"]},
         {
-          num: "(3)",
+          num: "(3)", type: "fillin", correctAnswer: ["church", "by", "bus"],
           text: "祖母はたいていバスで礼拝に行きます。<br>My grandmother usually goes to (   ) (   ) (   ).",
           vocab: [["grandmother", "祖母"], ["usually", "たいてい"]],
           hint: ["「礼拝に行く」= go to church — 冠詞はつける？", "go to school, go to bed のように「本来の目的」で行く場合は無冠詞", "「バスで」= by bus — 交通手段も無冠詞"]},
         {
-          num: "(4)",
+          num: "(4)", type: "fillin", correctAnswer: ["in", "itself"],
           text: "あなたの理論自体は間違っていない。<br>Your theory is not wrong (   ) (   ).",
           vocab: [["theory", "理論"], ["wrong", "間違っている"]],
           hint: ["「～自体は」を英語でどう表現する？", "in itself で「それ自体は」という慣用表現", "再帰代名詞を使った慣用句"]},
         {
-          num: "(5)",
+          num: "(5)", type: "fillin", correctAnswer: ["Some", "others"],
           text: "UFOの存在を信じる人もいれば、信じない人もいる。<br>(   ) people believe in UFOs, but (   ) don't.",
           vocab: [["believe in", "～の存在を信じる"], ["UFO", "未確認飛行物体"]],
           hint: ["「ある人々は...別の人々は」のパターン", "不特定の一部を表す語と、残りの一部を表す語", "some ... others のペアを思い出そう"]}
@@ -1954,19 +1954,19 @@ const grammarData = {
       open: false,
       questions: [
         {
-          num: "(1)",
+          num: "(1)", type: "scramble", correctAnswer: "data was of no value to",
           text: "そのデータは私たちにとってはまったく価値のないものだった。",
           scramble: "The [ to, of, was, value, no, data ] us.",
           vocab: [["data", "データ"], ["value", "価値"], ["of no value", "価値がない"]],
           hint: ["「価値がない」= of no value という表現", "be of + 名詞 で性質・価値を表す（= be + 形容詞）", "to us は「私たちにとって」— 文末に置く"]},
         {
-          num: "(2)",
+          num: "(2)", type: "scramble", correctAnswer: "have I seen so beautiful a sunset",
           text: "こんなに美しい日没は今までに見たことがなかった。",
           scramble: "Never [ a, beautiful, have, I, seen, so, sunset ].",
           vocab: [["never", "一度も～ない"], ["sunset", "日没、夕焼け"], ["seen", "see（見る）の過去分詞"]],
           hint: ["Never で文が始まる → 何が起きる？", "否定語が文頭に来ると倒置が起きる（疑問文の語順）", "「so + 形容詞 + a + 名詞」の語順にも注意"]},
         {
-          num: "(3)",
+          num: "(3)", type: "scramble", correctAnswer: "take it for granted that you are",
           text: "あなたが戦争に反対するのは当然のことだと思う。",
           scramble: "I [ are, for, granted, it, take, that, you ] against war.",
           vocab: [["take ... for granted", "～を当然のことと思う"], ["against", "～に反対して"], ["war", "戦争"]],
