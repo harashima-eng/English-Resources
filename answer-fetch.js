@@ -132,6 +132,12 @@
     var ansBox = collapsible.querySelector('.ans-box');
     if (!ansBox) return;
 
+    // If inline answers already rendered, skip Firebase fetch
+    if (ansBox.children.length > 0) {
+      collapsible.dataset.loaded = 'true';
+      return;
+    }
+
     // Check cache first
     if (cache[si] && cache[si][qi]) {
       renderAnswer(ansBox, cache[si][qi]);
