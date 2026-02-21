@@ -159,6 +159,9 @@
       case 'scramble':
         buildScrambleUI(zone, q, si, qi);
         break;
+      case 'correction':
+        buildCorrectionUI(zone, q, si, qi, cardEl);
+        break;
       default:
         return;
     }
