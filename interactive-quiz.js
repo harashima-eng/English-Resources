@@ -1173,6 +1173,27 @@
 
     badgePanelEl.appendChild(grid);
 
+    // Reset button
+    var resetBtn = document.createElement('button');
+    resetBtn.className = 'iq-badge-reset';
+    resetBtn.textContent = 'Reset Progress';
+    resetBtn.onclick = function() {
+      streak = 0;
+      bestStreak = 0;
+      badges = [];
+      sectionScores = {};
+      score.correct = 0;
+      score.answered = 0;
+      answeredKeys = {};
+      saveProgress();
+      toggleBadgePanel();
+      updateScoreText();
+      updateScoreBar();
+      updateStreakDisplay();
+      if (reviewBtnEl) reviewBtnEl.style.display = 'none';
+    };
+    badgePanelEl.appendChild(resetBtn);
+
     // Close button
     var closeBtn = document.createElement('button');
     closeBtn.className = 'iq-badge-close';
