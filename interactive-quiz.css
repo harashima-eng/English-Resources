@@ -517,6 +517,93 @@ html.dark .iq-fillin-input.wrong {
 }
 
 
+/* ── Compose (free-form writing with self-evaluation) ── */
+.iq-compose-input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid rgba(120, 113, 108, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  font: 500 14px/1.5 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text, #1C1917);
+  resize: vertical;
+  transition: border-color 0.15s ease;
+}
+.iq-compose-input:focus {
+  outline: none;
+  border-color: #0D9488;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.1);
+}
+.iq-compose-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+[data-theme="dark"] .iq-compose-input,
+html.dark .iq-compose-input {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text, #F5F3F0);
+}
+[data-theme="dark"] .iq-compose-input:focus,
+html.dark .iq-compose-input:focus {
+  border-color: #14B8A6;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.15);
+}
+
+.iq-compose-reveal {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(13, 148, 136, 0.06);
+  border-left: 3px solid #0D9488;
+  font: 500 14px/1.5 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text, #1C1917);
+}
+[data-theme="dark"] .iq-compose-reveal,
+html.dark .iq-compose-reveal {
+  background: rgba(20, 184, 166, 0.08);
+  border-left-color: #14B8A6;
+  color: var(--text, #F5F3F0);
+}
+
+.iq-self-eval {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.iq-eval-btn {
+  flex: 1 1 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.iq-eval-btn:hover {
+  transform: translateY(-1px);
+}
+.iq-eval-btn:active {
+  transform: scale(0.97);
+}
+.iq-eval-btn.right {
+  background: linear-gradient(135deg, #16A34A, #15803D);
+  box-shadow: 0 1px 4px rgba(22, 163, 74, 0.2);
+}
+.iq-eval-btn.right:hover {
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+}
+.iq-eval-btn.wrong {
+  background: linear-gradient(135deg, #DC2626, #B91C1C);
+  box-shadow: 0 1px 4px rgba(220, 38, 38, 0.2);
+}
+.iq-eval-btn.wrong:hover {
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+
 /* ── Scramble sentence frame (prefix/suffix around answer zone) ── */
 .iq-scramble-frame {
   display: flex;
