@@ -2,7 +2,13 @@
    Adds interactive answering to grammarData-driven lesson pages.
    Enhances existing .qcard DOM elements with input UI and feedback.
    Supports: pair, choice, error, scramble question types.
-   Non-interactive types (translate, compose) are left untouched. */
+   Non-interactive types (translate, compose) are left untouched.
+
+   Teacher Reveal integration:
+   Listens for CustomEvents from teacher-reveal.js:
+   - tr:session-start  → hide Check buttons (students can still select)
+   - tr:session-end    → show Check buttons for unanswered questions
+   - tr:question-revealed → auto-trigger feedback for that question */
 
 (function() {
   'use strict';
@@ -21,6 +27,7 @@
   // ── State ──
   var score = { correct: 0, answered: 0, total: totalInteractive };
   var answeredKeys = {};  // "si-qi" → true
+  var iqSessionActive = false;
 
   // ── Score tracker DOM ──
   var scoreEl = null;
@@ -77,9 +84,8 @@
     return sec ? sec.questions[qi] : null;
   }
 
-  // Parse choices string "a. foo　b. bar　c. baz" into [{letter:"a", text:"foo"}, ...]
   function parseChoices(choicesStr) {
-    var items = choicesStr.split(/\u3000|\t/);  // split on fullwidth space or tab
+    var items = choicesStr.split(/\u3000|\t/);
     var result = [];
     items.forEach(function(item) {
       item = item.trim();
@@ -92,21 +98,18 @@
     return result;
   }
 
-  // Parse pair options from text like "( awake, wake )"
   function parsePairOptions(text) {
     var match = text.match(/\(\s*([^,]+),\s*([^)]+)\s*\)/);
     if (!match) return null;
     return [match[1].trim(), match[2].trim()];
   }
 
-  // Parse scramble words from "[ word1, word2, word3 ]"
   function parseScrambleWords(scrambleStr) {
     var match = scrambleStr.match(/\[\s*(.+?)\s*\]/);
     if (!match) return [];
     return match[1].split(',').map(function(w) { return w.trim(); });
   }
 
-  // Shuffle array (Fisher-Yates)
   function shuffle(arr) {
     var a = arr.slice();
     for (var i = a.length - 1; i > 0; i--) {
@@ -116,7 +119,6 @@
     return a;
   }
 
-  // Create feedback element
   function createFeedback(isCorrect, message) {
     var el = document.createElement('div');
     el.className = 'iq-feedback ' + (isCorrect ? 'correct' : 'incorrect');
@@ -130,7 +132,6 @@
     var qi = parseInt(cardEl.dataset.qi);
     var key = getQKey(si, qi);
 
-    // Skip if already enhanced or already answered
     if (cardEl.dataset.iqEnhanced || answeredKeys[key]) return;
     cardEl.dataset.iqEnhanced = 'true';
 
@@ -142,6 +143,8 @@
 
     var zone = document.createElement('div');
     zone.className = 'iq-zone';
+    zone.dataset.si = si;
+    zone.dataset.qi = qi;
 
     switch (q.type) {
       case 'pair':
@@ -183,7 +186,7 @@
         });
         btn.classList.add('selected');
         selected = opt;
-        checkBtn.disabled = false;
+        if (!iqSessionActive) checkBtn.disabled = false;
       };
       choicesDiv.appendChild(btn);
     });
@@ -194,7 +197,9 @@
     checkBtn.className = 'iq-check-btn';
     checkBtn.textContent = 'Check';
     checkBtn.disabled = true;
+    if (iqSessionActive) checkBtn.style.display = 'none';
     checkBtn.onclick = function() {
+      if (!selected) return;
       var isCorrect = selected === q.correctAnswer;
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
@@ -241,7 +246,7 @@
         });
         btn.classList.add('selected');
         selectedLetter = item.letter;
-        checkBtn.disabled = false;
+        if (!iqSessionActive) checkBtn.disabled = false;
       };
       choicesDiv.appendChild(btn);
     });
@@ -252,7 +257,9 @@
     checkBtn.className = 'iq-check-btn';
     checkBtn.textContent = 'Check';
     checkBtn.disabled = true;
+    if (iqSessionActive) checkBtn.style.display = 'none';
     checkBtn.onclick = function() {
+      if (!selectedLetter) return;
       var isCorrect = selectedLetter === q.correctAnswer;
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
@@ -281,13 +288,11 @@
 
   // ── Error UI ──
   function buildErrorUI(zone, q, si, qi, cardEl) {
-    // Error questions have labeled underlines: <u>a. word</u>, <u>b. word</u>, etc.
-    // Make them clickable in the qtext
     var qtext = cardEl.querySelector('.qtext');
     if (!qtext) return;
 
     var underlines = qtext.querySelectorAll('u');
-    if (underlines.length < 2) return;  // need multiple options
+    if (underlines.length < 2) return;
 
     var selectedLabel = null;
 
@@ -304,11 +309,10 @@
         underlines.forEach(function(uu) { uu.classList.remove('selected'); });
         u.classList.add('selected');
         selectedLabel = label;
-        checkBtn.disabled = false;
+        if (!iqSessionActive) checkBtn.disabled = false;
       };
     });
 
-    // Only add a check button (no choices div needed — the underlines ARE the choices)
     var hint = document.createElement('div');
     hint.className = 'iq-scramble-label';
     hint.textContent = 'Click the underlined part with an error';
@@ -318,7 +322,9 @@
     checkBtn.className = 'iq-check-btn';
     checkBtn.textContent = 'Check';
     checkBtn.disabled = true;
+    if (iqSessionActive) checkBtn.style.display = 'none';
     checkBtn.onclick = function() {
+      if (!selectedLabel) return;
       var isCorrect = selectedLabel === q.correctAnswer;
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
@@ -349,15 +355,13 @@
     if (words.length === 0) return;
 
     var shuffled = shuffle(words);
-    var placed = [];  // words placed in answer zone (in order)
+    var placed = [];
 
-    // Label
     var poolLabel = document.createElement('div');
     poolLabel.className = 'iq-scramble-label';
     poolLabel.textContent = 'Available words:';
     zone.appendChild(poolLabel);
 
-    // Word pool
     var poolDiv = document.createElement('div');
     poolDiv.className = 'iq-scramble-pool';
 
@@ -373,20 +377,18 @@
         chip.classList.add('hidden');
         placed.push({ word: word, poolIdx: idx });
         renderAnswerZone();
-        checkBtn.disabled = placed.length === 0;
+        if (!iqSessionActive) checkBtn.disabled = placed.length === 0;
       };
       poolDiv.appendChild(chip);
       poolChips.push(chip);
     });
     zone.appendChild(poolDiv);
 
-    // Answer zone label
     var ansLabel = document.createElement('div');
     ansLabel.className = 'iq-scramble-label';
     ansLabel.textContent = 'Your answer:';
     zone.appendChild(ansLabel);
 
-    // Answer zone
     var ansDiv = document.createElement('div');
     ansDiv.className = 'iq-answer-zone';
     zone.appendChild(ansDiv);
@@ -400,21 +402,20 @@
         chip.textContent = item.word;
         chip.onclick = function() {
           if (zone.classList.contains('locked')) return;
-          // Return to pool
           poolChips[item.poolIdx].classList.remove('hidden');
           placed.splice(i, 1);
           renderAnswerZone();
-          checkBtn.disabled = placed.length === 0;
+          if (!iqSessionActive) checkBtn.disabled = placed.length === 0;
         };
         ansDiv.appendChild(chip);
       });
     }
 
-    // Check button
     var checkBtn = document.createElement('button');
     checkBtn.className = 'iq-check-btn';
     checkBtn.textContent = 'Check';
     checkBtn.disabled = true;
+    if (iqSessionActive) checkBtn.style.display = 'none';
     checkBtn.onclick = function() {
       var studentAnswer = placed.map(function(p) { return p.word; }).join(' ');
       var isCorrect = studentAnswer.toLowerCase() === q.correctAnswer.toLowerCase();
@@ -448,14 +449,12 @@
   }
 
   // ── Restore answered state after re-render ──
-  // When cards are re-rendered (SPA navigation back), mark answered ones
   function restoreAnsweredState() {
     var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
     cards.forEach(function(card) {
       var key = getQKey(card.dataset.si, card.dataset.qi);
       if (answeredKeys[key] && !card.dataset.iqEnhanced) {
         card.dataset.iqEnhanced = 'true';
-        // Don't rebuild interactive UI — just show a "completed" indicator
         var q = getQuestionData(parseInt(card.dataset.si), parseInt(card.dataset.qi));
         if (!q || !q.type || !q.correctAnswer) return;
         var questionDiv = card.querySelector('.qcard-question');
@@ -468,13 +467,79 @@
     });
   }
 
+  // ── Teacher Reveal integration ──
+  function setupTeacherRevealListeners() {
+    document.addEventListener('tr:session-start', function() {
+      iqSessionActive = true;
+      // Hide all Check buttons
+      document.querySelectorAll('.iq-check-btn').forEach(function(btn) {
+        btn.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('tr:session-end', function() {
+      iqSessionActive = false;
+      // Show Check buttons for unanswered, unlocked questions
+      document.querySelectorAll('.iq-zone').forEach(function(zone) {
+        if (zone.classList.contains('locked')) return;
+        var btn = zone.querySelector('.iq-check-btn');
+        if (btn) {
+          btn.style.display = '';
+          // Enable if a selection exists
+          if (zone.querySelector('.iq-choice.selected') ||
+              zone.querySelector('.iq-error-option.selected') ||
+              zone.querySelector('.iq-answer-zone.has-items')) {
+            btn.disabled = false;
+          }
+        }
+      });
+    });
+
+    document.addEventListener('tr:question-revealed', function(e) {
+      var si = e.detail.si;
+      var qi = e.detail.qi;
+      var key = getQKey(si, qi);
+      if (answeredKeys[key]) return;
+
+      // Find the card's iq-zone
+      var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
+      if (!card) return;
+      var zone = card.querySelector('.iq-zone');
+      if (!zone || zone.classList.contains('locked')) return;
+
+      // Check if a selection exists — auto-trigger the Check button
+      var hasSelection = zone.querySelector('.iq-choice.selected') ||
+                         zone.querySelector('.iq-error-option.selected') ||
+                         zone.querySelector('.iq-answer-zone.has-items');
+
+      var checkBtn = zone.querySelector('.iq-check-btn');
+      if (hasSelection && checkBtn) {
+        checkBtn.style.display = '';
+        checkBtn.disabled = false;
+        checkBtn.click();
+      } else if (checkBtn) {
+        // No selection yet — show the Check button so student can still answer
+        checkBtn.style.display = '';
+      }
+    });
+  }
+
+  // ── Detect if a teacher session is already active ──
+  function detectExistingSession() {
+    if (document.querySelector('.tr-session-badge') ||
+        document.querySelector('.tr-locked')) {
+      iqSessionActive = true;
+    }
+  }
+
   // ── Init ──
   function init() {
+    detectExistingSession();
     createScoreTracker();
+    setupTeacherRevealListeners();
     enhanceVisibleCards();
     setupObserver();
 
-    // Also listen for hash changes (SPA navigation)
     window.addEventListener('hashchange', function() {
       setTimeout(function() {
         restoreAnsweredState();
@@ -486,7 +551,6 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
-    // Small delay to ensure grammarData rendering has completed
     setTimeout(init, 100);
   }
 })();
