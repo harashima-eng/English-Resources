@@ -297,6 +297,11 @@
         selectedLetter = item.letter;
         if (window.UISound) UISound.play('click');
         if (!iqSessionActive) checkBtn.disabled = false;
+        if (iqSessionActive) {
+          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+            detail: { si: si, qi: qi, answer: item.letter, type: 'choice' }
+          }));
+        }
       };
       choicesDiv.appendChild(btn);
     });
@@ -373,6 +378,11 @@
         selectedLabel = label;
         if (window.UISound) UISound.play('click');
         updateCheckState();
+        if (iqSessionActive) {
+          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+            detail: { si: si, qi: qi, answer: label, type: 'error' }
+          }));
+        }
       };
     });
 
