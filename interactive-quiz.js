@@ -30,12 +30,50 @@
   var iqSessionActive = false;
   var reviewMode = false;
 
+  // ── Gamification state ──
+  var streak = 0;
+  var bestStreak = 0;
+  var badges = [];
+  var sectionScores = {};  // si → { correct: N, total: N }
+
+  var BADGES = [
+    { id: 'first-blood', name: 'First Blood', desc: 'First correct answer', icon: '\u2B50' },
+    { id: 'streak-3', name: 'On Fire', desc: '3 in a row', icon: '\uD83D\uDD25' },
+    { id: 'streak-5', name: 'Blazing', desc: '5 in a row', icon: '\uD83D\uDD25\uD83D\uDD25' },
+    { id: 'streak-10', name: 'Unstoppable', desc: '10 in a row', icon: '\uD83D\uDD25\uD83D\uDD25\uD83D\uDD25' },
+    { id: 'perfect-section', name: 'Perfect Section', desc: '100% on a section', icon: '\u2705' },
+    { id: 'lesson-complete', name: 'Lesson Complete', desc: 'All questions done', icon: '\uD83C\uDFC1' },
+    { id: 'lesson-master', name: 'Lesson Master', desc: '100% entire lesson', icon: '\uD83C\uDFC6' }
+  ];
+
+  function loadProgress() {
+    var key = 'iq-progress-' + (document.body.dataset.examId || 'default');
+    try {
+      var data = JSON.parse(localStorage.getItem(key) || '{}');
+      bestStreak = data.bestStreak || 0;
+      badges = data.badges || [];
+      sectionScores = data.sectionScores || {};
+    } catch (e) { /* ignore corrupt data */ }
+  }
+
+  function saveProgress() {
+    var key = 'iq-progress-' + (document.body.dataset.examId || 'default');
+    localStorage.setItem(key, JSON.stringify({
+      bestStreak: bestStreak,
+      badges: badges,
+      sectionScores: sectionScores
+    }));
+  }
+
   // ── Score tracker DOM ──
   var scoreEl = null;
   var scoreTextEl = null;
   var scoreFillEl = null;
   var reviewBtnEl = null;
   var reviewNavEl = null;
+  var streakEl = null;
+  var trophyBtnEl = null;
+  var badgePanelEl = null;
 
   function createScoreTracker() {
     scoreEl = document.createElement('div');
