@@ -24,10 +24,16 @@
     reveal:  'TOGGLE_ON'
   };
 
-  // Event delegation for toggle buttons (all lessons)
+  // Event delegation for all UI interactions
   document.addEventListener('click', function(e) {
-    if (ready && e.target.closest('.toggle-btn')) {
+    if (!ready) return;
+    var t = e.target;
+    if (t.closest('.toggle-btn') || t.closest('.top-nav-theme')) {
       snd.play(Snd.SOUNDS.TOGGLE_ON);
+    } else if (t.closest('.top-nav-link') || t.closest('.view-btn-nav') ||
+               t.closest('.sub-nav-cat') || t.closest('.sub-nav-section') ||
+               t.closest('.mobile-nav-btn')) {
+      snd.play(Snd.SOUNDS.TAP);
     }
   });
 
