@@ -348,12 +348,14 @@
       if (state.sessionActive && !state.isTeacher) {
         lockAllQuestions();
         showSessionBadge();
+        document.dispatchEvent(new CustomEvent('tr:session-start'));
       } else if (!state.sessionActive && wasActive) {
         unlockAll();
         state.revealed = {};
         state.sectionRevealed = {};
         hideSessionBadge();
         showToast('練習セッション終了 — 自習モードに戻りました');
+        document.dispatchEvent(new CustomEvent('tr:session-end'));
       }
     });
 
