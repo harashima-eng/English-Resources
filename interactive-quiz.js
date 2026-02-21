@@ -786,11 +786,13 @@
           var ci = zone.querySelector('.iq-correction-input');
           var fillinInputs = zone.closest('.qcard-question') ? zone.closest('.qcard-question').querySelectorAll('.iq-fillin-input') : [];
           var fillinFilled = fillinInputs.length > 0 && Array.prototype.every.call(fillinInputs, function(inp) { return inp.value.trim(); });
+          var composeInput = zone.querySelector('.iq-compose-input');
           if (zone.querySelector('.iq-choice.selected') ||
               zone.querySelector('.iq-error-option.selected') ||
               (ci && ci.value.trim()) ||
               zone.querySelector('.iq-answer-zone.has-items') ||
-              fillinFilled) {
+              fillinFilled ||
+              (composeInput && composeInput.value.trim())) {
             btn.disabled = false;
           }
         }
@@ -814,11 +816,13 @@
       var corrInput = zone.querySelector('.iq-correction-input');
       var fillinInputs = card.querySelectorAll('.iq-fillin-input');
       var fillinFilled = fillinInputs.length > 0 && Array.prototype.every.call(fillinInputs, function(inp) { return inp.value.trim(); });
+      var composeInput = zone.querySelector('.iq-compose-input');
       var hasSelection = zone.querySelector('.iq-choice.selected') ||
                          (errorSelected && (!corrInput || corrInput.value.trim())) ||
                          (corrInput && corrInput.value.trim() && !errorSelected) ||
                          zone.querySelector('.iq-answer-zone.has-items') ||
-                         fillinFilled;
+                         fillinFilled ||
+                         (composeInput && composeInput.value.trim());
 
       var checkBtn = zone.querySelector('.iq-check-btn');
       if (hasSelection && checkBtn) {
