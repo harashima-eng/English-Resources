@@ -32,7 +32,7 @@ html.dark .iq-zone {
   border: 1.5px solid rgba(120, 113, 108, 0.2);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.7);
-  font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 500 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   cursor: pointer;
   transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
