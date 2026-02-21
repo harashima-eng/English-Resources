@@ -859,6 +859,98 @@
     }
   }
 
+  // ── Wrong Answer Review ──
+  function getWrongBySec() {
+    var groups = {};
+    Object.keys(answeredKeys).forEach(function(key) {
+      if (answeredKeys[key] !== 'wrong') return;
+      var parts = key.split('-');
+      var si = parseInt(parts[0]);
+      var qi = parseInt(parts[1]);
+      if (!groups[si]) groups[si] = [];
+      groups[si].push(qi);
+    });
+    return groups;
+  }
+
+  function getTotalWrong() {
+    return Object.keys(answeredKeys).filter(function(k) {
+      return answeredKeys[k] === 'wrong';
+    }).length;
+  }
+
+  function toggleReviewMode() {
+    reviewMode = !reviewMode;
+    if (scoreEl) scoreEl.classList.toggle('iq-review-active', reviewMode);
+    if (reviewBtnEl) reviewBtnEl.classList.toggle('active', reviewMode);
+
+    if (reviewMode) {
+      if (getTotalWrong() === 0) {
+        reviewMode = false;
+        if (reviewBtnEl) reviewBtnEl.classList.remove('active');
+        if (scoreEl) scoreEl.classList.remove('iq-review-active');
+        return;
+      }
+      applyReviewFilter();
+    } else {
+      removeReviewFilter();
+    }
+  }
+
+  function applyReviewFilter() {
+    var wrongBySec = getWrongBySec();
+    showReviewNav(wrongBySec);
+    filterVisibleCards();
+  }
+
+  function filterVisibleCards() {
+    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    cards.forEach(function(card) {
+      var key = getQKey(card.dataset.si, card.dataset.qi);
+      card.style.display = (reviewMode && answeredKeys[key] !== 'wrong') ? 'none' : '';
+    });
+  }
+
+  function showReviewNav(wrongBySec) {
+    if (!reviewNavEl) {
+      reviewNavEl = document.createElement('div');
+      reviewNavEl.className = 'iq-review-nav';
+      document.body.appendChild(reviewNavEl);
+    }
+
+    reviewNavEl.textContent = '';
+    var sectionIndices = Object.keys(wrongBySec).map(Number).sort();
+
+    var label = document.createElement('div');
+    label.className = 'iq-review-label';
+    label.textContent = 'Wrong: ' + getTotalWrong() + ' questions';
+    reviewNavEl.appendChild(label);
+
+    sectionIndices.forEach(function(si) {
+      var secTitle = grammarData.sections[si] ? grammarData.sections[si].title : 'S' + (si + 1);
+      var btn = document.createElement('button');
+      btn.className = 'iq-review-sec-btn';
+      btn.textContent = secTitle + ' (' + wrongBySec[si].length + ')';
+      btn.onclick = function() {
+        if (typeof Router !== 'undefined' && Router.setSection) {
+          Router.setSection(si);
+        } else if (typeof NavState !== 'undefined') {
+          window.location.hash = '#section-' + si;
+        }
+        setTimeout(filterVisibleCards, 100);
+      };
+      reviewNavEl.appendChild(btn);
+    });
+
+    reviewNavEl.style.display = '';
+  }
+
+  function removeReviewFilter() {
+    if (reviewNavEl) reviewNavEl.style.display = 'none';
+    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    cards.forEach(function(card) { card.style.display = ''; });
+  }
+
   // ── Init ──
   function init() {
     detectExistingSession();
@@ -871,6 +963,7 @@
       setTimeout(function() {
         restoreAnsweredState();
         enhanceVisibleCards();
+        if (reviewMode) filterVisibleCards();
       }, 50);
     });
   }
