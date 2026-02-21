@@ -514,6 +514,25 @@ html.dark .iq-fillin-input.wrong {
 }
 
 
+/* ── Scramble sentence frame (prefix/suffix around answer zone) ── */
+.iq-scramble-frame {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+}
+.iq-scramble-context {
+  font: 500 15px/1.4 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text, #1C1917);
+  white-space: nowrap;
+}
+[data-theme="dark"] .iq-scramble-context,
+html.dark .iq-scramble-context {
+  color: var(--text, #F5F3F0);
+}
+
+
 /* ── Hide static choices/scramble when interactive UI is present ── */
 .qcard-question:has(.iq-zone) > .choices,
 .qcard-question:has(.iq-zone) > .scramble {

@@ -596,9 +596,30 @@
     ansLabel.textContent = 'Your answer:';
     zone.appendChild(ansLabel);
 
+    var frame = parseScrambleFrame(q.scramble);
     var ansDiv = document.createElement('div');
     ansDiv.className = 'iq-answer-zone';
-    zone.appendChild(ansDiv);
+
+    if (frame.prefix || frame.suffix) {
+      var frameDiv = document.createElement('div');
+      frameDiv.className = 'iq-scramble-frame';
+      if (frame.prefix) {
+        var pre = document.createElement('span');
+        pre.className = 'iq-scramble-context';
+        pre.textContent = frame.prefix;
+        frameDiv.appendChild(pre);
+      }
+      frameDiv.appendChild(ansDiv);
+      if (frame.suffix) {
+        var suf = document.createElement('span');
+        suf.className = 'iq-scramble-context';
+        suf.textContent = frame.suffix;
+        frameDiv.appendChild(suf);
+      }
+      zone.appendChild(frameDiv);
+    } else {
+      zone.appendChild(ansDiv);
+    }
 
     function renderAnswerZone() {
       ansDiv.textContent = '';
