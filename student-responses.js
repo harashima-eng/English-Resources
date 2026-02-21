@@ -76,7 +76,7 @@
     });
   }
 
-  function updateDisplay(key, counts, total) {
+  function updateDisplay(key, counts, total, correctAnswer) {
     var display = aggregateDisplays[key];
     if (!display) return;
 
@@ -88,6 +88,12 @@
 
     display.style.display = '';
 
+    var parts = key.split('-');
+    var qLabel = document.createElement('div');
+    qLabel.className = 'sr-question-label';
+    qLabel.textContent = 'Q' + (parseInt(parts[1]) + 1);
+    display.appendChild(qLabel);
+
     var totalLabel = document.createElement('div');
     totalLabel.className = 'sr-total';
     totalLabel.textContent = total + ' responses';
@@ -95,17 +101,18 @@
 
     var answers = Object.keys(counts).sort();
     answers.forEach(function(answer) {
+      var isCorrect = correctAnswer && answer.toLowerCase() === correctAnswer.toLowerCase();
       var bar = document.createElement('div');
       bar.className = 'sr-bar';
 
       var label = document.createElement('span');
-      label.className = 'sr-label';
+      label.className = 'sr-label ' + (isCorrect ? 'sr-correct' : 'sr-wrong');
       label.textContent = answer.toUpperCase();
 
       var track = document.createElement('div');
       track.className = 'sr-fill-track';
       var fill = document.createElement('div');
-      fill.className = 'sr-fill';
+      fill.className = 'sr-fill ' + (isCorrect ? 'sr-correct' : 'sr-wrong');
       var pct = total > 0 ? (counts[answer] / total * 100) : 0;
       fill.style.width = pct + '%';
       track.appendChild(fill);

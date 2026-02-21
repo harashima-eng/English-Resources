@@ -807,6 +807,23 @@ html.dark .sr-count {
   color: #E7E5E4;
 }
 
+.sr-question-label {
+  font: 700 11px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #0D9488;
+  margin-bottom: 4px;
+}
+[data-theme="dark"] .sr-question-label,
+html.dark .sr-question-label { color: #14B8A6; }
+
+.sr-fill.sr-correct { background: linear-gradient(90deg, #16A34A, #22C55E); }
+.sr-fill.sr-wrong { background: linear-gradient(90deg, #DC2626, #EF4444); }
+.sr-label.sr-correct { color: #16A34A; }
+.sr-label.sr-wrong { color: #DC2626; }
+[data-theme="dark"] .sr-label.sr-correct,
+html.dark .sr-label.sr-correct { color: #22C55E; }
+[data-theme="dark"] .sr-label.sr-wrong,
+html.dark .sr-label.sr-wrong { color: #EF4444; }
+
 .sr-question-display {
   margin-bottom: 6px;
   padding-bottom: 6px;
