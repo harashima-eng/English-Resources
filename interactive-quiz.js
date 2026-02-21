@@ -480,6 +480,75 @@
     zone.appendChild(checkBtn);
   }
 
+  // ── Fill-in UI (inline blank inputs in sentence) ──
+  function buildFillinUI(zone, q, si, qi, cardEl) {
+    var qtext = cardEl.querySelector('.qtext');
+    if (!qtext || !q.correctAnswer || !Array.isArray(q.correctAnswer)) return;
+
+    // Replace (   ) / （　　） patterns with inline inputs
+    var idx = 0;
+    var blankRe = /[（(][\s\u3000]+[)）]/g;
+    qtext.innerHTML = qtext.innerHTML.replace(blankRe, function() {
+      var i = idx++;
+      return '<input type="text" class="iq-fillin-input" data-idx="' + i + '" autocomplete="off" spellcheck="false">';
+    });
+
+    var inputs = qtext.querySelectorAll('.iq-fillin-input');
+    if (inputs.length === 0) return;
+
+    // Auto-size each input based on expected answer length
+    inputs.forEach(function(inp, i) {
+      var answer = q.correctAnswer[i] || '';
+      var charW = Math.max(answer.length, 3);
+      inp.style.width = (charW * 12 + 24) + 'px';
+    });
+
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'iq-check-btn';
+    checkBtn.textContent = 'Check';
+    checkBtn.disabled = true;
+    if (iqSessionActive) checkBtn.style.display = 'none';
+
+    // Enable Check when all blanks have content
+    function updateCheckState() {
+      if (iqSessionActive) return;
+      var allFilled = true;
+      inputs.forEach(function(inp) {
+        if (!inp.value.trim()) allFilled = false;
+      });
+      checkBtn.disabled = !allFilled;
+    }
+    inputs.forEach(function(inp) {
+      inp.addEventListener('input', updateCheckState);
+    });
+
+    checkBtn.onclick = function() {
+      var allCorrect = true;
+      inputs.forEach(function(inp, i) {
+        var typed = inp.value.trim().toLowerCase();
+        var expected = (q.correctAnswer[i] || '').toLowerCase();
+        var isRight = typed === expected;
+        inp.classList.add(isRight ? 'correct' : 'wrong');
+        inp.disabled = true;
+        if (!isRight) allCorrect = false;
+      });
+
+      if (window.UISound) UISound.play(allCorrect ? 'correct' : 'wrong');
+      zone.classList.add('locked');
+      checkBtn.style.display = 'none';
+
+      var display = q.correctAnswer.join(', ');
+      var msg = allCorrect
+        ? 'Correct! ' + display
+        : 'Incorrect. Correct answer: ' + display;
+      zone.appendChild(createFeedback(allCorrect, msg));
+
+      answeredKeys[getQKey(si, qi)] = true;
+      addScore(allCorrect);
+    };
+    zone.appendChild(checkBtn);
+  }
+
   // ── Scramble UI ──
   function buildScrambleUI(zone, q, si, qi) {
     var words = parseScrambleWords(q.scramble);
