@@ -2403,7 +2403,7 @@ function renderQuestion(q, si, qi) {
 function renderQuestions(sectionIndex) {
   const section = grammarData.sections[sectionIndex];
   const container = document.getElementById('questionsList');
-  container.innerHTML = section.questions.map(q => renderQuestion(q)).join('');
+  container.innerHTML = section.questions.map((q, qi) => renderQuestion(q, sectionIndex, qi)).join('');
 }
 
 // ===== CARD REVEAL ANIMATION =====
