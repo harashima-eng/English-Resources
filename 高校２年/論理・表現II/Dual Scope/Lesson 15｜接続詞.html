@@ -1829,45 +1829,45 @@ const grammarData = {
       open: true,
       questions: [
         {
-          num: "(1)",
+          num: "(1)", type: "choice", correctAnswer: "b",
           text: "Watch your step, (   ) you'll fall down the stairs.",
-          choices: "選択肢: and, or, but",
+          choices: "a. and　b. or　c. but",
           vocab: [["watch your step", "足元に気をつける"],["fall down", "落ちる、転ぶ"],["stairs", "階段"]],
           hint: ["文の構造を確認：命令文 + 接続詞 + 結果の文","「足元に気をつけて」→ 守らないとどうなる？","命令に従わなかった場合の否定的な結果を表す接続詞は？"]},
         {
-          num: "(2)",
+          num: "(2)", type: "choice", correctAnswer: "a",
           text: "Hurry up, (   ) you'll be in time for school.",
-          choices: "選択肢: and, or, but",
+          choices: "a. and　b. or　c. but",
           vocab: [["hurry up", "急ぐ"],["in time for", "～に間に合って"]],
           hint: ["文の構造を確認：命令文 + 接続詞 + 結果の文","「急ぎなさい」→ 従えばどうなる？","命令に従った場合の肯定的な結果を表す接続詞は？"]},
         {
-          num: "(3)",
+          num: "(3)", type: "choice", correctAnswer: "c",
           text: "I stood still, (   ) I didn't know what to do.",
-          choices: "選択肢: if, although, for",
+          choices: "a. if　b. although　c. for",
           vocab: [["stand still", "じっと立っている"],["what to do", "何をすべきか"]],
           hint: ["前の文と後の文の関係を考えよう","後の文が前の文の理由・原因を説明しているか？","補足的に理由を述べる等位接続詞を選ぼう"]},
         {
-          num: "(4)",
+          num: "(4)", type: "choice", correctAnswer: "c",
           text: "(   ) you will succeed or not depends on your effort.",
-          choices: "選択肢: That, If, Whether",
+          choices: "a. That　b. If　c. Whether",
           vocab: [["succeed", "成功する"],["depend on", "～次第である"],["effort", "努力"]],
           hint: ["文全体の構造を確認：（  ）節が主語になっている","「or not」が後ろにあることに注目","文頭で主語になれる接続詞はどれか考えよう"]},
         {
-          num: "(5)",
+          num: "(5)", type: "choice", correctAnswer: "c",
           text: "She succeeded even (   ) she was young.",
-          choices: "選択肢: although, if, though",
+          choices: "a. although　b. if　c. though",
           vocab: [["succeed", "成功する"],["young", "若い"]],
           hint: ["前後の文の関係：「若い」のに「成功した」という対比","「even」という強調語に続く接続詞は何が自然か","3つの選択肢のうち、evenと結合できるのはどれ？"]},
         {
-          num: "(6)",
+          num: "(6)", type: "choice", correctAnswer: "a",
           text: "(   ) it grew darker, it snowed more and more.",
-          choices: "選択肢: As, Because, Since",
+          choices: "a. As　b. Because　c. Since",
           vocab: [["grow dark", "暗くなる"],["more and more", "ますます"],["snow", "雪が降る"]],
           hint: ["主節に「more and more」という変化の表現がある","2つの変化が連動して進行している","比例・変化を表す接続詞を選ぼう"]},
         {
-          num: "(7)",
+          num: "(7)", type: "choice", correctAnswer: "c",
           text: "(   ) you start reading the book, you cannot stop it.",
-          choices: "選択肢: Though, Whether, Once",
+          choices: "a. Though　b. Whether　c. Once",
           vocab: [["start reading", "読み始める"],["cannot stop", "やめられない"]],
           hint: ["「読み始める」と「やめられない」の関係は？","ある行動を開始した後、それが継続する状態","時と条件の両方の意味を持つ接続詞を選ぼう"]}
       ]
@@ -1908,19 +1908,19 @@ const grammarData = {
       open: false,
       questions: [
         {
-          num: "(1)",
+          num: "(1)", type: "scramble", correctAnswer: "so that Ann can join us",
           text: "アンも仲間に入れるように，英語で話しましょう．",
           scramble: "Let's talk in English [ Ann, so, join, can, that, us ].",
           vocab: [["join", "加わる"],["talk in English", "英語で話す"]],
           hint: ["「Aが～できるように」という目的を表す構文","目的を示す接続詞 + 主語 + 助動詞の語順","日本語の「～できるように」を英語の構文に当てはめよう"]},
         {
-          num: "(2)",
+          num: "(2)", type: "scramble", correctAnswer: "was not his words but his attitude that",
           text: "私をいら立たせたのは彼の言葉ではなく，彼の態度だった．",
           scramble: "It [ but, his attitude, his words, not, that, was ] irritated me.",
           vocab: [["irritate", "いら立たせる"],["attitude", "態度"]],
           hint: ["「AではなくB」という対比","強調構文を使う","「not A but B」を強調構文に組み込む"]},
         {
-          num: "(3)",
+          num: "(3)", type: "scramble", correctAnswer: "idea occurred to me that all human beings are",
           text: "人はみな平等だという考えが頭に浮かんだ．",
           scramble: "The [ are, that, idea, occurred, all human beings, to me ] equal.",
           vocab: [["occur to", "～の頭に浮かぶ"],["human beings", "人間"],["equal", "平等な"]],
