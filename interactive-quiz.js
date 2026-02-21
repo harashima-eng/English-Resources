@@ -110,6 +110,14 @@
     return match[1].split(',').map(function(w) { return w.trim(); });
   }
 
+  function matchesCorrectText(typed, correctText) {
+    var answers = Array.isArray(correctText) ? correctText : [correctText];
+    return answers.some(function(a) { return typed.toLowerCase() === a.toLowerCase(); });
+  }
+  function displayCorrectText(correctText) {
+    return Array.isArray(correctText) ? correctText.join(' / ') : correctText;
+  }
+
   function shuffle(arr) {
     var a = arr.slice();
     for (var i = a.length - 1; i > 0; i--) {
