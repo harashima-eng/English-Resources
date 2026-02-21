@@ -21,17 +21,21 @@
   color: #44403C;
   cursor: pointer;
   letter-spacing: 0.02em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  opacity: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.3s ease;
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.06),
     0 4px 12px rgba(0, 0, 0, 0.08);
 }
-.tr-login-btn:hover {
+.tr-login-btn:hover,
+.tr-login-btn:focus {
+  opacity: 1;
   transform: translateY(-1px);
   background: rgba(255, 253, 250, 0.95);
   box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.08),
     0 8px 24px rgba(0, 0, 0, 0.12);
+  outline: none;
 }
 .tr-login-btn:active {
   transform: translateY(0) scale(0.97);
