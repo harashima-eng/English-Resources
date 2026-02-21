@@ -610,7 +610,7 @@
         zone.classList.add('locked');
         evalDiv.remove();
         zone.appendChild(createFeedback(false, 'Answer: ' + q.correctAnswer));
-        answeredKeys[getQKey(si, qi)] = true;
+        answeredKeys[getQKey(si, qi)] = 'wrong';
         addScore(false);
       };
 
@@ -723,7 +723,7 @@
         : 'Incorrect. Answer: ' + q.correctAnswer;
       zone.appendChild(createFeedback(isCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = true;
+      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
       addScore(isCorrect);
     };
     zone.appendChild(checkBtn);
