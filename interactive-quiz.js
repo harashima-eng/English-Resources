@@ -424,7 +424,7 @@
         correctionInput.parentNode.insertBefore(answer, correctionInput.nextSibling);
       }
 
-      answeredKeys[getQKey(si, qi)] = true;
+      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
       addScore(isCorrect);
     };
     zone.appendChild(checkBtn);
@@ -483,7 +483,7 @@
         input.parentNode.insertBefore(answer, input.nextSibling);
       }
 
-      answeredKeys[getQKey(si, qi)] = true;
+      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
       addScore(isCorrect);
     };
     zone.appendChild(checkBtn);
@@ -552,7 +552,7 @@
         : 'Incorrect. Correct answer: ' + display;
       zone.appendChild(createFeedback(allCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = true;
+      answeredKeys[getQKey(si, qi)] = allCorrect ? 'correct' : 'wrong';
       addScore(allCorrect);
     };
     zone.appendChild(checkBtn);
@@ -598,7 +598,7 @@
         zone.classList.add('locked');
         evalDiv.remove();
         zone.appendChild(createFeedback(true, 'Correct!'));
-        answeredKeys[getQKey(si, qi)] = true;
+        answeredKeys[getQKey(si, qi)] = 'correct';
         addScore(true);
       };
 
