@@ -378,6 +378,7 @@
                 state.revealed[key] = true;
                 var qEl = getQEl(secIdx, q.index);
                 revealQuestion(qEl);
+                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: q.index } }));
               }
             });
           }
@@ -393,6 +394,7 @@
               state.revealed[key] = true;
               var qEl = getQEl(secIdx, qIdx);
               revealQuestion(qEl);
+              document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: qIdx } }));
             } else if (qData && !qData.revealed && state.revealed[key]) {
               // Teacher re-locked this question
               state.revealed[key] = false;
@@ -414,6 +416,7 @@
               state.revealed[key] = true;
               var qEl = getQEl(sec.index, q.index);
               revealQuestion(qEl);
+              document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: sec.index, qi: q.index } }));
             }
           });
         });
@@ -748,6 +751,7 @@
       state.revealed = {};
       state.sectionRevealed = {};
       lockAllQuestions();
+      document.dispatchEvent(new CustomEvent('tr:session-start'));
       showToast('セッションを開始しました');
       if (panelEl) {
         panelEl.querySelectorAll('.tr-btn-q, .tr-btn-section').forEach(function(b) {
@@ -764,6 +768,7 @@
       state.revealed = {};
       state.sectionRevealed = {};
       unlockAll();
+      document.dispatchEvent(new CustomEvent('tr:session-end'));
       showToast('セッション終了');
       if (panelEl) {
         panelEl.querySelectorAll('.tr-btn-q, .tr-btn-section').forEach(function(b) {
@@ -797,6 +802,7 @@
       if (!state.isTeacher) {
         lockAllQuestions();
         showSessionBadge();
+        document.dispatchEvent(new CustomEvent('tr:session-start'));
       }
 
       if (data.revealAll) {
@@ -805,6 +811,7 @@
             var key = getQKey(sec.index, q.index);
             state.revealed[key] = true;
             revealQuestion(getQEl(sec.index, q.index));
+            document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: sec.index, qi: q.index } }));
           });
         });
         return;
@@ -823,14 +830,17 @@
                 var key = getQKey(secIdx, q.index);
                 state.revealed[key] = true;
                 revealQuestion(getQEl(secIdx, q.index));
+                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: q.index } }));
               });
             }
           } else if (sec.questions) {
             Object.keys(sec.questions).forEach(function(qi) {
               if (sec.questions[qi] && sec.questions[qi].revealed) {
-                var key = getQKey(secIdx, parseInt(qi));
+                var qIdx = parseInt(qi);
+                var key = getQKey(secIdx, qIdx);
                 state.revealed[key] = true;
-                revealQuestion(getQEl(secIdx, parseInt(qi)));
+                revealQuestion(getQEl(secIdx, qIdx));
+                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: qIdx } }));
               }
             });
           }
