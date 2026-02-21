@@ -757,8 +757,11 @@
         if (!questionDiv) return;
         var zone = document.createElement('div');
         zone.className = 'iq-zone locked';
+        var wasCorrect = answeredKeys[key] === 'correct';
         var displayAnswer = Array.isArray(q.correctAnswer) ? q.correctAnswer.join(', ') : (q.correctAnswer || displayCorrectText(q.correctText));
-        zone.appendChild(createFeedback(true, 'Answered. Correct answer: ' + displayAnswer));
+        var msg = wasCorrect ? 'Correct!' : 'Incorrect. Answer: ' + displayAnswer;
+        zone.appendChild(createFeedback(wasCorrect, msg));
+        if (!wasCorrect) card.classList.add('iq-wrong');
         questionDiv.appendChild(zone);
       }
     });
