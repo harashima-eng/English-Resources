@@ -558,6 +558,69 @@
     zone.appendChild(checkBtn);
   }
 
+  // ── Compose UI (free-form English writing with self-evaluation) ──
+  function buildComposeUI(zone, q, si, qi) {
+    if (!q.correctAnswer) return;
+
+    var textarea = document.createElement('textarea');
+    textarea.className = 'iq-compose-input';
+    textarea.rows = 2;
+    textarea.placeholder = 'Write your English sentence here...';
+    zone.appendChild(textarea);
+
+    var showBtn = document.createElement('button');
+    showBtn.className = 'iq-check-btn';
+    showBtn.textContent = 'Show Answer';
+    showBtn.disabled = true;
+    if (iqSessionActive) showBtn.style.display = 'none';
+
+    textarea.addEventListener('input', function() {
+      if (!iqSessionActive) showBtn.disabled = !textarea.value.trim();
+    });
+
+    showBtn.onclick = function() {
+      showBtn.style.display = 'none';
+      textarea.disabled = true;
+
+      var reveal = document.createElement('div');
+      reveal.className = 'iq-compose-reveal';
+      reveal.textContent = q.correctAnswer;
+      zone.appendChild(reveal);
+
+      var evalDiv = document.createElement('div');
+      evalDiv.className = 'iq-self-eval';
+
+      var rightBtn = document.createElement('button');
+      rightBtn.className = 'iq-eval-btn right';
+      rightBtn.textContent = 'Got it right';
+      rightBtn.onclick = function() {
+        if (window.UISound) UISound.play('correct');
+        zone.classList.add('locked');
+        evalDiv.remove();
+        zone.appendChild(createFeedback(true, 'Correct!'));
+        answeredKeys[getQKey(si, qi)] = true;
+        addScore(true);
+      };
+
+      var wrongBtn = document.createElement('button');
+      wrongBtn.className = 'iq-eval-btn wrong';
+      wrongBtn.textContent = 'Got it wrong';
+      wrongBtn.onclick = function() {
+        if (window.UISound) UISound.play('wrong');
+        zone.classList.add('locked');
+        evalDiv.remove();
+        zone.appendChild(createFeedback(false, 'Answer: ' + q.correctAnswer));
+        answeredKeys[getQKey(si, qi)] = true;
+        addScore(false);
+      };
+
+      evalDiv.appendChild(rightBtn);
+      evalDiv.appendChild(wrongBtn);
+      zone.appendChild(evalDiv);
+    };
+    zone.appendChild(showBtn);
+  }
+
   // ── Scramble UI ──
   function buildScrambleUI(zone, q, si, qi) {
     var words = parseScrambleWords(q.scramble);
