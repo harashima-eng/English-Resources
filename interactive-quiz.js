@@ -230,6 +230,11 @@
         selected = opt;
         if (window.UISound) UISound.play('click');
         if (!iqSessionActive) checkBtn.disabled = false;
+        if (iqSessionActive) {
+          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+            detail: { si: si, qi: qi, answer: opt, type: 'pair' }
+          }));
+        }
       };
       choicesDiv.appendChild(btn);
     });
