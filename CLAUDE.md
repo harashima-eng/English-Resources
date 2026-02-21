@@ -95,3 +95,16 @@ Teach **non-answer** vocabulary in the sentence. Never include the answer word/p
 
 ### Answer Section (Answer button)
 Write freely — this is hidden behind the Answer button. Include answer, translation, explanation, grammar pattern, and per-choice breakdowns where applicable.
+
+### Documentation Auto-Update
+After completing any Dual Scope work (new features, bug fixes, data changes), update these files:
+
+| File | What to Update |
+|------|---------------|
+| `Template & MD & LOG/CHANGELOG.md` | Add dated entry describing changes |
+| `Template & MD & LOG/README.md` | Update architecture/feature docs if new types or patterns added |
+| `Template & MD & LOG/grammar-template.html` | Update data structure docs and comments if schema changed |
+
+Location: `高校２年/論理・表現II/Dual Scope/Template & MD & LOG/`
+
+These files also exist at: `/Users/slimtetto/Desktop/Claude Code/論理・表現Ⅱ/DUAL SCOPE/問題＆解答解説/Template & MD & LOG/`
