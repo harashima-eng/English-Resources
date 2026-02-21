@@ -601,9 +601,11 @@
         var btn = zone.querySelector('.iq-check-btn');
         if (btn) {
           btn.style.display = '';
-          // Enable if a selection exists
+          // Enable if a selection or correction input exists
+          var ci = zone.querySelector('.iq-correction-input');
           if (zone.querySelector('.iq-choice.selected') ||
               zone.querySelector('.iq-error-option.selected') ||
+              (ci && ci.value.trim()) ||
               zone.querySelector('.iq-answer-zone.has-items')) {
             btn.disabled = false;
           }
