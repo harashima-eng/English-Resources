@@ -983,6 +983,24 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   color: #777;
 }
 
+.iq-badge-reset {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 6px;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.iq-badge-reset:hover {
+  color: #e53935;
+  border-color: #e53935;
+}
+
 .iq-badge-close {
   position: absolute;
   top: 8px;
@@ -1062,6 +1080,14 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   }
   .iq-badge-desc {
     color: #999;
+  }
+  .iq-badge-reset {
+    border-color: #444;
+    color: #777;
+  }
+  .iq-badge-reset:hover {
+    color: #ef5350;
+    border-color: #ef5350;
   }
   .iq-badge-close {
     color: #777;
