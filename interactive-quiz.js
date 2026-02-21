@@ -634,7 +634,7 @@
       zone.appendChild(createFeedback(allCorrect, msg));
 
       answeredKeys[getQKey(si, qi)] = allCorrect ? 'correct' : 'wrong';
-      addScore(allCorrect);
+      addScore(allCorrect, si);
     };
     zone.appendChild(checkBtn);
   }
@@ -680,7 +680,7 @@
         evalDiv.remove();
         zone.appendChild(createFeedback(true, 'Correct!'));
         answeredKeys[getQKey(si, qi)] = 'correct';
-        addScore(true);
+        addScore(true, si);
       };
 
       var wrongBtn = document.createElement('button');
@@ -692,7 +692,7 @@
         evalDiv.remove();
         zone.appendChild(createFeedback(false, 'Answer: ' + q.correctAnswer));
         answeredKeys[getQKey(si, qi)] = 'wrong';
-        addScore(false);
+        addScore(false, si);
       };
 
       evalDiv.appendChild(rightBtn);
