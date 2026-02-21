@@ -2104,7 +2104,7 @@ const grammarData = { sections: [
           grammar: "The reason (why) S V is that ... = ～なのは…だからである"
         },
         {
-          num: "(6)",
+          num: "(6)", type: "scramble", correctAnswer: "like singing and others don't",
           text: "歌うのが好きな人もいるし，そうでない人もいます。<br>Some (　)(　)(　)(　)(　).",
           scramble: "[ a. singing　b. others　c. don't　d. and　e. like ]",
           vocab: [],
@@ -2121,7 +2121,7 @@ const grammarData = { sections: [
       open: true,
       questions: [
         {
-          num: "(1)",
+          num: "(1)", type: "error", correctAnswer: "b", correctText: ["much", "far"],
           text: "<u>a. Bob's</u> new computer in the office is <u>b. very</u> more <u>c. advanced</u> than <u>d. ours</u>.",
           vocab: [["advanced", "高性能な、先進的な"]],
           hint: ["比較級を強める語に注目しよう", "more advanced は比較級。比較級の前に置ける強調語は？", "very は原級を強めるが、比較級にはどんな語を使う？"],
@@ -2131,7 +2131,7 @@ const grammarData = { sections: [
           grammar: "比較級の強調: much / far / a lot / even / still ＋ 比較級（× very ＋ 比較級）"
         },
         {
-          num: "(2)",
+          num: "(2)", type: "error", correctAnswer: "d", correctText: "two-week",
           text: "I am <u>a. frightfully</u> busy <u>b. because</u> I have just <u>c. got</u> back from a <u>d. two-weeks</u> vacation.",
           vocab: [["frightfully", "恐ろしく、ものすごく"], ["vacation", "休暇"]],
           hint: ["ハイフンでつないだ「数詞-名詞」が形容詞になるルールに注目", "数詞と名詞をハイフンでつなぐと形容詞になる。その場合の名詞の形は？", "形容詞として使うとき、名詞は単数形にする"],
@@ -2141,7 +2141,7 @@ const grammarData = { sections: [
           grammar: "数詞-名詞（ハイフンつなぎ）= 形容詞：a two-week vacation, a ten-year-old boy（名詞は常に単数形）"
         },
         {
-          num: "(3)",
+          num: "(3)", type: "error", correctAnswer: "d", correctText: ["much furniture", "a lot of furniture"],
           text: "<u>a. Although</u> the department store <u>b. was crowded with</u> <u>c. a lot of</u> customers, she bought <u>d. many furnitures</u>.",
           vocab: [["department store", "デパート"], ["crowded with", "～で混雑した"], ["customers", "客"]],
           hint: ["furniture という名詞の特殊な性質に注目", "furniture は集合名詞。可算名詞？不可算名詞？", "不可算名詞には many は使えない。量を表す表現を考えよう"],
@@ -2151,7 +2151,7 @@ const grammarData = { sections: [
           grammar: "furniture（不可算名詞）= 家具。× furnitures, × many furniture → ○ much furniture, a lot of furniture"
         },
         {
-          num: "(4)",
+          num: "(4)", type: "error", correctAnswer: "b", correctText: "to",
           text: "Meg <u>a. has been</u> married <u>b. with</u> Mike <u>c. for</u> ten years <u>d. now</u>.",
           vocab: [],
           hint: ["「～と結婚している」の正しい前置詞は？", "日本語の「～と」に惑わされないように注意", "be married ＿＿ ～ の定型表現"],
@@ -2161,7 +2161,7 @@ const grammarData = { sections: [
           grammar: "be married to ～ = ～と結婚している（× be married with）"
         },
         {
-          num: "(5)",
+          num: "(5)", type: "error", correctAnswer: "a", correctText: "that",
           text: "The news <u>a. which</u> they <u>b. had won</u> the prize made them <u>c. very proud</u> of <u>d. themselves</u>.",
           vocab: [["prize", "賞"]],
           hint: ["The news と which 以下の関係を考えよう", "which の後の部分で The news は主語にも目的語にもなっていない", "「～という知らせ」＝ 名詞と同格の節を導く接続詞は？"],
@@ -2171,7 +2171,7 @@ const grammarData = { sections: [
           grammar: "the news that ～ = ～という知らせ（同格の that 節）※ 関係代名詞 which は不可"
         },
         {
-          num: "(6)",
+          num: "(6)", type: "error", correctAnswer: "d", correctText: "before",
           text: "When he arrived <u>a. at</u> her house, he found <u>b. that</u> she <u>c. had</u> already departed three hours <u>d. ago</u>.",
           vocab: [["arrived", "着いた"], ["departed", "出発した"]],
           hint: ["過去のある時点を基準にして「～前に」と言うとき", "ago は現在を基準にした表現。過去の時点が基準の場合は？", "過去完了形（had departed）と一緒に使う「～前に」の副詞"],
