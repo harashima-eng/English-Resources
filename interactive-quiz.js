@@ -19,7 +19,7 @@
   var totalInteractive = 0;
   grammarData.sections.forEach(function(sec) {
     sec.questions.forEach(function(q) {
-      if (q.type && q.correctAnswer) totalInteractive++;
+      if (q.type && (q.correctAnswer || q.correctText)) totalInteractive++;
     });
   });
   if (totalInteractive === 0) return;
@@ -144,7 +144,7 @@
     cardEl.dataset.iqEnhanced = 'true';
 
     var q = getQuestionData(si, qi);
-    if (!q || !q.type || !q.correctAnswer) return;
+    if (!q || !q.type || (!q.correctAnswer && !q.correctText)) return;
 
     var questionDiv = cardEl.querySelector('.qcard-question');
     if (!questionDiv) return;
@@ -585,7 +585,7 @@
         if (!questionDiv) return;
         var zone = document.createElement('div');
         zone.className = 'iq-zone locked';
-        var displayAnswer = q.correctAnswer || q.correctText;
+        var displayAnswer = q.correctAnswer || displayCorrectText(q.correctText);
         zone.appendChild(createFeedback(true, 'Answered. Correct answer: ' + displayAnswer));
         questionDiv.appendChild(zone);
       }
