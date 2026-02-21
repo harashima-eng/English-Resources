@@ -515,6 +515,7 @@
   var panelEl = null;
 
   function showTeacherPanel() {
+    if (collapsedTabEl) collapsedTabEl.style.display = 'none';
     if (panelEl) { panelEl.style.display = ''; shiftContent(true); return; }
 
     panelEl = document.createElement('div');
@@ -550,6 +551,7 @@
     closeBtn.onclick = function() {
       container.style.display = 'none';
       shiftContent(false);
+      if (collapsedTabEl) collapsedTabEl.style.display = 'none';
       showReopenButton();
     };
 
