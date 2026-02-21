@@ -3,7 +3,7 @@
    https://snd.dev/
 
    Usage: UISound.play('click')
-   Auto-plays 'reveal' on .toggle-btn clicks via event delegation. */
+   Auto-plays sounds on toggles, nav, and UI clicks via event delegation. */
 
 (function() {
   'use strict';
