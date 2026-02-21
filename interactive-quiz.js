@@ -250,7 +250,7 @@
       var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + q.correctAnswer;
       zone.appendChild(createFeedback(isCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = true;
+      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
       addScore(isCorrect);
     };
     zone.appendChild(checkBtn);
@@ -314,7 +314,7 @@
       var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + correctText;
       zone.appendChild(createFeedback(isCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = true;
+      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
       addScore(isCorrect);
     };
     zone.appendChild(checkBtn);
