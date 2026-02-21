@@ -735,6 +735,90 @@ html.dark .iq-review-sec-btn {
 }
 
 
+/* ── Student Response Aggregation (teacher panel) ── */
+.sr-section-responses {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(120, 113, 108, 0.04);
+  border: 1px solid rgba(168, 162, 158, 0.12);
+}
+[data-theme="dark"] .sr-section-responses,
+html.dark .sr-section-responses {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.sr-total {
+  font: 600 10px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text-muted, #A8A29E);
+  margin-bottom: 4px;
+}
+
+.sr-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+  height: 20px;
+}
+
+.sr-label {
+  font: 700 11px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #57534E;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .sr-label,
+html.dark .sr-label {
+  color: #D6D3D1;
+}
+
+.sr-fill-track {
+  flex: 1;
+  height: 14px;
+  border-radius: 4px;
+  background: rgba(120, 113, 108, 0.08);
+  overflow: hidden;
+}
+[data-theme="dark"] .sr-fill-track,
+html.dark .sr-fill-track {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sr-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #0D9488, #14B8A6);
+  transition: width 0.3s ease;
+  min-width: 2px;
+}
+
+.sr-count {
+  font: 700 11px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #44403C;
+  width: 20px;
+  text-align: right;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .sr-count,
+html.dark .sr-count {
+  color: #E7E5E4;
+}
+
+.sr-question-display {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(168, 162, 158, 0.1);
+}
+.sr-question-display:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .iq-choice,
