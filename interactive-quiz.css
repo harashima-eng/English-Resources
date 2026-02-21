@@ -527,7 +527,8 @@ html.dark .iq-fillin-input.wrong {
   .iq-chip,
   .iq-check-btn,
   .iq-score,
-  .iq-score-fill {
+  .iq-score-fill,
+  .iq-fillin-input {
     transition-duration: 0.01ms !important;
   }
   .iq-feedback {
