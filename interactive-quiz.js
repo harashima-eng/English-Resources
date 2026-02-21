@@ -34,6 +34,8 @@
   var scoreEl = null;
   var scoreTextEl = null;
   var scoreFillEl = null;
+  var reviewBtnEl = null;
+  var reviewNavEl = null;
 
   function createScoreTracker() {
     scoreEl = document.createElement('div');
@@ -49,8 +51,16 @@
     scoreFillEl.className = 'iq-score-fill';
     barEl.appendChild(scoreFillEl);
 
+    reviewBtnEl = document.createElement('button');
+    reviewBtnEl.className = 'iq-review-btn';
+    reviewBtnEl.textContent = '\u2716';
+    reviewBtnEl.title = 'Review wrong answers';
+    reviewBtnEl.style.display = 'none';
+    reviewBtnEl.onclick = function() { toggleReviewMode(); };
+
     scoreEl.appendChild(scoreTextEl);
     scoreEl.appendChild(barEl);
+    scoreEl.appendChild(reviewBtnEl);
     document.body.appendChild(scoreEl);
   }
 
@@ -75,6 +85,7 @@
     if (isCorrect) score.correct++;
     updateScoreText();
     updateScoreBar();
+    if (!isCorrect && reviewBtnEl) reviewBtnEl.style.display = '';
   }
 
   // ── Helpers ──
