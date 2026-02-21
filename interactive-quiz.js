@@ -177,6 +177,9 @@
       case 'correction':
         buildCorrectionUI(zone, q, si, qi, cardEl);
         break;
+      case 'fillin':
+        buildFillinUI(zone, q, si, qi, cardEl);
+        break;
       default:
         return;
     }
