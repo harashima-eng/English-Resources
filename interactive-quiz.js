@@ -26,8 +26,9 @@
 
   // ── State ──
   var score = { correct: 0, answered: 0, total: totalInteractive };
-  var answeredKeys = {};  // "si-qi" → true
+  var answeredKeys = {};  // "si-qi" → "correct" | "wrong"
   var iqSessionActive = false;
+  var reviewMode = false;
 
   // ── Score tracker DOM ──
   var scoreEl = null;
