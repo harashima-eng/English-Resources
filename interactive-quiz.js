@@ -664,7 +664,7 @@
         if (!questionDiv) return;
         var zone = document.createElement('div');
         zone.className = 'iq-zone locked';
-        var displayAnswer = q.correctAnswer || displayCorrectText(q.correctText);
+        var displayAnswer = Array.isArray(q.correctAnswer) ? q.correctAnswer.join(', ') : (q.correctAnswer || displayCorrectText(q.correctText));
         zone.appendChild(createFeedback(true, 'Answered. Correct answer: ' + displayAnswer));
         questionDiv.appendChild(zone);
       }
@@ -689,12 +689,15 @@
         var btn = zone.querySelector('.iq-check-btn');
         if (btn) {
           btn.style.display = '';
-          // Enable if a selection or correction input exists
+          // Enable if a selection, correction input, or fillin inputs exist
           var ci = zone.querySelector('.iq-correction-input');
+          var fillinInputs = zone.closest('.qcard-question') ? zone.closest('.qcard-question').querySelectorAll('.iq-fillin-input') : [];
+          var fillinFilled = fillinInputs.length > 0 && Array.prototype.every.call(fillinInputs, function(inp) { return inp.value.trim(); });
           if (zone.querySelector('.iq-choice.selected') ||
               zone.querySelector('.iq-error-option.selected') ||
               (ci && ci.value.trim()) ||
-              zone.querySelector('.iq-answer-zone.has-items')) {
+              zone.querySelector('.iq-answer-zone.has-items') ||
+              fillinFilled) {
             btn.disabled = false;
           }
         }
