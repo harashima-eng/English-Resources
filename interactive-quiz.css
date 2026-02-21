@@ -463,6 +463,57 @@ html.dark .iq-error-highlight.wrong {
 }
 
 
+/* ── Fill-in-the-blank inline inputs ── */
+.iq-fillin-input {
+  display: inline-block;
+  width: 70px;
+  border: none;
+  border-bottom: 2px solid rgba(120, 113, 108, 0.3);
+  background: transparent;
+  text-align: center;
+  font: inherit;
+  padding: 2px 4px;
+  margin: 0 2px;
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.iq-fillin-input:focus {
+  border-bottom-color: #0D9488;
+}
+.iq-fillin-input:disabled {
+  opacity: 0.7;
+}
+.iq-fillin-input.correct {
+  border-bottom-color: #16A34A;
+  color: #16A34A;
+  font-weight: 600;
+}
+.iq-fillin-input.wrong {
+  border-bottom-color: #DC2626;
+  color: #DC2626;
+}
+[data-theme="dark"] .iq-fillin-input,
+html.dark .iq-fillin-input {
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+  color: var(--text, #F5F3F0);
+}
+[data-theme="dark"] .iq-fillin-input:focus,
+html.dark .iq-fillin-input:focus {
+  border-bottom-color: #14B8A6;
+}
+[data-theme="dark"] .iq-fillin-input.correct,
+html.dark .iq-fillin-input.correct {
+  border-bottom-color: #22C55E;
+  color: #22C55E;
+}
+[data-theme="dark"] .iq-fillin-input.wrong,
+html.dark .iq-fillin-input.wrong {
+  border-bottom-color: #EF4444;
+  color: #EF4444;
+}
+
+
 /* ── Hide static choices/scramble when interactive UI is present ── */
 .qcard-question:has(.iq-zone) > .choices,
 .qcard-question:has(.iq-zone) > .scramble {

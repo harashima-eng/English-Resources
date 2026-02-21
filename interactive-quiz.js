@@ -719,10 +719,13 @@
       // Check if a selection exists — auto-trigger the Check button
       var errorSelected = zone.querySelector('.iq-error-option.selected');
       var corrInput = zone.querySelector('.iq-correction-input');
+      var fillinInputs = card.querySelectorAll('.iq-fillin-input');
+      var fillinFilled = fillinInputs.length > 0 && Array.prototype.every.call(fillinInputs, function(inp) { return inp.value.trim(); });
       var hasSelection = zone.querySelector('.iq-choice.selected') ||
                          (errorSelected && (!corrInput || corrInput.value.trim())) ||
                          (corrInput && corrInput.value.trim() && !errorSelected) ||
-                         zone.querySelector('.iq-answer-zone.has-items');
+                         zone.querySelector('.iq-answer-zone.has-items') ||
+                         fillinFilled;
 
       var checkBtn = zone.querySelector('.iq-check-btn');
       if (hasSelection && checkBtn) {
