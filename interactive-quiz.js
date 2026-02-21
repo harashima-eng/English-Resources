@@ -117,6 +117,12 @@
     return parts.map(function(w) { return w.trim(); }).filter(Boolean);
   }
 
+  function parseScrambleFrame(scrambleStr) {
+    var match = scrambleStr.match(/^(.*?)\[.*\](.*)$/);
+    if (!match) return { prefix: '', suffix: '' };
+    return { prefix: match[1].trim(), suffix: match[2].trim() };
+  }
+
   function matchesCorrectText(typed, correctText) {
     var answers = Array.isArray(correctText) ? correctText : [correctText];
     return answers.some(function(a) { return typed.toLowerCase() === a.toLowerCase(); });
