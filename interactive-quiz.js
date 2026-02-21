@@ -299,6 +299,17 @@
     if (underlines.length < 2) return;
 
     var selectedLabel = null;
+    var correctionInput = null;
+    var hasTextReq = !!q.correctText;
+
+    function updateCheckState() {
+      if (iqSessionActive) return;
+      if (hasTextReq) {
+        checkBtn.disabled = !(selectedLabel && correctionInput && correctionInput.value.trim());
+      } else {
+        checkBtn.disabled = !selectedLabel;
+      }
+    }
 
     underlines.forEach(function(u) {
       var text = u.textContent.trim();
@@ -314,14 +325,25 @@
         u.classList.add('selected');
         selectedLabel = label;
         if (window.UISound) UISound.play('click');
-        if (!iqSessionActive) checkBtn.disabled = false;
+        updateCheckState();
       };
     });
 
     var hint = document.createElement('div');
     hint.className = 'iq-scramble-label';
-    hint.textContent = 'Click the underlined part with an error';
+    hint.textContent = hasTextReq
+      ? 'Click the error, then type the correct form'
+      : 'Click the underlined part with an error';
     zone.appendChild(hint);
+
+    if (hasTextReq) {
+      correctionInput = document.createElement('input');
+      correctionInput.type = 'text';
+      correctionInput.className = 'iq-correction-input';
+      correctionInput.placeholder = 'Type the correct form...';
+      correctionInput.oninput = function() { updateCheckState(); };
+      zone.appendChild(correctionInput);
+    }
 
     var checkBtn = document.createElement('button');
     checkBtn.className = 'iq-check-btn';
@@ -330,7 +352,16 @@
     if (iqSessionActive) checkBtn.style.display = 'none';
     checkBtn.onclick = function() {
       if (!selectedLabel) return;
-      var isCorrect = selectedLabel === q.correctAnswer;
+      var selectionCorrect = selectedLabel === q.correctAnswer;
+      var textCorrect = true;
+
+      if (hasTextReq && correctionInput) {
+        var typed = correctionInput.value.trim();
+        textCorrect = typed.toLowerCase() === q.correctText.toLowerCase();
+        correctionInput.disabled = true;
+      }
+
+      var isCorrect = selectionCorrect && textCorrect;
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
@@ -346,8 +377,22 @@
         }
       });
 
-      var msg = isCorrect ? 'Correct!' : 'Incorrect. The error is in part ' + q.correctAnswer + '.';
+      var msg;
+      if (isCorrect) {
+        msg = 'Correct!';
+      } else if (selectionCorrect && !textCorrect) {
+        msg = 'You found the error! The correct form is: ' + q.correctText;
+      } else {
+        msg = 'Incorrect. The error is in part ' + q.correctAnswer + '.';
+      }
       zone.appendChild(createFeedback(isCorrect, msg));
+
+      if (hasTextReq && !textCorrect) {
+        var answer = document.createElement('div');
+        answer.className = 'iq-correction-answer';
+        answer.textContent = q.correctText;
+        correctionInput.parentNode.insertBefore(answer, correctionInput.nextSibling);
+      }
 
       answeredKeys[getQKey(si, qi)] = true;
       addScore(isCorrect);
