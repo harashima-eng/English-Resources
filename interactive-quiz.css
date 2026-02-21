@@ -385,6 +385,52 @@ html.dark .iq-score-bar {
 }
 
 
+/* ── Error correction text input ── */
+.iq-correction-input {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border: 1.5px solid rgba(120, 113, 108, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text, #1C1917);
+  transition: border-color 0.15s ease;
+}
+.iq-correction-input:focus {
+  outline: none;
+  border-color: #0D9488;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.1);
+}
+.iq-correction-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+[data-theme="dark"] .iq-correction-input,
+html.dark .iq-correction-input {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text, #F5F3F0);
+}
+[data-theme="dark"] .iq-correction-input:focus,
+html.dark .iq-correction-input:focus {
+  border-color: #14B8A6;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.15);
+}
+
+.iq-correction-answer {
+  margin-top: 4px;
+  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #16A34A;
+}
+[data-theme="dark"] .iq-correction-answer,
+html.dark .iq-correction-answer {
+  color: #22C55E;
+}
+
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .iq-choice,

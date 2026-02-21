@@ -562,8 +562,10 @@
       if (!zone || zone.classList.contains('locked')) return;
 
       // Check if a selection exists — auto-trigger the Check button
+      var errorSelected = zone.querySelector('.iq-error-option.selected');
+      var corrInput = zone.querySelector('.iq-correction-input');
       var hasSelection = zone.querySelector('.iq-choice.selected') ||
-                         zone.querySelector('.iq-error-option.selected') ||
+                         (errorSelected && (!corrInput || corrInput.value.trim())) ||
                          zone.querySelector('.iq-answer-zone.has-items');
 
       var checkBtn = zone.querySelector('.iq-check-btn');
