@@ -463,6 +463,13 @@ html.dark .iq-error-highlight.wrong {
 }
 
 
+/* ── Hide static choices/scramble when interactive UI is present ── */
+.qcard-question:has(.iq-zone) > .choices,
+.qcard-question:has(.iq-zone) > .scramble {
+  display: none;
+}
+
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .iq-choice,
