@@ -186,6 +186,9 @@
       case 'fillin':
         buildFillinUI(zone, q, si, qi, cardEl);
         break;
+      case 'compose':
+        buildComposeUI(zone, q, si, qi);
+        break;
       default:
         return;
     }
