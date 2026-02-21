@@ -427,6 +427,7 @@
     checkBtn.onclick = function() {
       var studentAnswer = placed.map(function(p) { return p.word; }).join(' ');
       var isCorrect = studentAnswer.toLowerCase() === q.correctAnswer.toLowerCase();
+      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
 
