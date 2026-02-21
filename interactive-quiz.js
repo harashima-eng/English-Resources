@@ -313,6 +313,7 @@
         underlines.forEach(function(uu) { uu.classList.remove('selected'); });
         u.classList.add('selected');
         selectedLabel = label;
+        if (window.UISound) UISound.play('click');
         if (!iqSessionActive) checkBtn.disabled = false;
       };
     });
@@ -330,6 +331,7 @@
     checkBtn.onclick = function() {
       if (!selectedLabel) return;
       var isCorrect = selectedLabel === q.correctAnswer;
+      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
       checkBtn.style.display = 'none';
 
@@ -380,6 +382,7 @@
         if (zone.classList.contains('locked') || chip.classList.contains('hidden')) return;
         chip.classList.add('hidden');
         placed.push({ word: word, poolIdx: idx });
+        if (window.UISound) UISound.play('click');
         renderAnswerZone();
         if (!iqSessionActive) checkBtn.disabled = placed.length === 0;
       };
@@ -408,6 +411,7 @@
           if (zone.classList.contains('locked')) return;
           poolChips[item.poolIdx].classList.remove('hidden');
           placed.splice(i, 1);
+          if (window.UISound) UISound.play('click');
           renderAnswerZone();
           if (!iqSessionActive) checkBtn.disabled = placed.length === 0;
         };
