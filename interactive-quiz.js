@@ -118,12 +118,28 @@
     scoreFillEl.style.width = pct + '%';
   }
 
-  function addScore(isCorrect) {
+  function addScore(isCorrect, si) {
     score.answered++;
-    if (isCorrect) score.correct++;
+    if (isCorrect) {
+      score.correct++;
+      streak++;
+      if (streak > bestStreak) bestStreak = streak;
+    } else {
+      streak = 0;
+      if (reviewBtnEl) reviewBtnEl.style.display = '';
+    }
     updateScoreText();
     updateScoreBar();
-    if (!isCorrect && reviewBtnEl) reviewBtnEl.style.display = '';
+    updateStreakDisplay();
+    if (si !== undefined) updateSectionScore(si, isCorrect);
+    checkAchievements(si);
+    saveProgress();
+  }
+
+  function updateSectionScore(si, isCorrect) {
+    if (!sectionScores[si]) sectionScores[si] = { correct: 0, total: 0 };
+    sectionScores[si].total++;
+    if (isCorrect) sectionScores[si].correct++;
   }
 
   // ── Helpers ──
@@ -306,7 +322,7 @@
       zone.appendChild(createFeedback(isCorrect, msg));
 
       answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
-      addScore(isCorrect);
+      addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
   }
@@ -375,7 +391,7 @@
       zone.appendChild(createFeedback(isCorrect, msg));
 
       answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
-      addScore(isCorrect);
+      addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
   }
@@ -490,7 +506,7 @@
       }
 
       answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
-      addScore(isCorrect);
+      addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
   }
@@ -549,7 +565,7 @@
       }
 
       answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
-      addScore(isCorrect);
+      addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
   }
@@ -789,7 +805,7 @@
       zone.appendChild(createFeedback(isCorrect, msg));
 
       answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
-      addScore(isCorrect);
+      addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
   }
