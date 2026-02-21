@@ -1,0 +1,492 @@
+/* Interactive Quiz Module
+   Adds interactive answering to grammarData-driven lesson pages.
+   Enhances existing .qcard DOM elements with input UI and feedback.
+   Supports: pair, choice, error, scramble question types.
+   Non-interactive types (translate, compose) are left untouched. */
+
+(function() {
+  'use strict';
+
+  if (typeof grammarData === 'undefined' || !grammarData.sections) return;
+
+  // Count interactive questions
+  var totalInteractive = 0;
+  grammarData.sections.forEach(function(sec) {
+    sec.questions.forEach(function(q) {
+      if (q.type && q.correctAnswer) totalInteractive++;
+    });
+  });
+  if (totalInteractive === 0) return;
+
+  // ── State ──
+  var score = { correct: 0, answered: 0, total: totalInteractive };
+  var answeredKeys = {};  // "si-qi" → true
+
+  // ── Score tracker DOM ──
+  var scoreEl = null;
+  var scoreTextEl = null;
+  var scoreFillEl = null;
+
+  function createScoreTracker() {
+    scoreEl = document.createElement('div');
+    scoreEl.className = 'iq-score';
+
+    scoreTextEl = document.createElement('span');
+    scoreTextEl.className = 'iq-score-text';
+    updateScoreText();
+
+    var barEl = document.createElement('div');
+    barEl.className = 'iq-score-bar';
+    scoreFillEl = document.createElement('div');
+    scoreFillEl.className = 'iq-score-fill';
+    barEl.appendChild(scoreFillEl);
+
+    scoreEl.appendChild(scoreTextEl);
+    scoreEl.appendChild(barEl);
+    document.body.appendChild(scoreEl);
+  }
+
+  function updateScoreText() {
+    if (!scoreTextEl) return;
+    scoreTextEl.textContent = '';
+    var numSpan = document.createElement('span');
+    numSpan.className = 'iq-score-num';
+    numSpan.textContent = score.correct + ' / ' + score.total;
+    scoreTextEl.textContent = 'Score: ';
+    scoreTextEl.appendChild(numSpan);
+  }
+
+  function updateScoreBar() {
+    if (!scoreFillEl) return;
+    var pct = score.total > 0 ? (score.correct / score.total) * 100 : 0;
+    scoreFillEl.style.width = pct + '%';
+  }
+
+  function addScore(isCorrect) {
+    score.answered++;
+    if (isCorrect) score.correct++;
+    updateScoreText();
+    updateScoreBar();
+  }
+
+  // ── Helpers ──
+  function getQKey(si, qi) { return si + '-' + qi; }
+
+  function getQuestionData(si, qi) {
+    var sec = grammarData.sections[si];
+    return sec ? sec.questions[qi] : null;
+  }
+
+  // Parse choices string "a. foo　b. bar　c. baz" into [{letter:"a", text:"foo"}, ...]
+  function parseChoices(choicesStr) {
+    var items = choicesStr.split(/\u3000|\t/);  // split on fullwidth space or tab
+    var result = [];
+    items.forEach(function(item) {
+      item = item.trim();
+      if (!item) return;
+      var match = item.match(/^([a-z])\.\s*(.+)/);
+      if (match) {
+        result.push({ letter: match[1], text: match[2] });
+      }
+    });
+    return result;
+  }
+
+  // Parse pair options from text like "( awake, wake )"
+  function parsePairOptions(text) {
+    var match = text.match(/\(\s*([^,]+),\s*([^)]+)\s*\)/);
+    if (!match) return null;
+    return [match[1].trim(), match[2].trim()];
+  }
+
+  // Parse scramble words from "[ word1, word2, word3 ]"
+  function parseScrambleWords(scrambleStr) {
+    var match = scrambleStr.match(/\[\s*(.+?)\s*\]/);
+    if (!match) return [];
+    return match[1].split(',').map(function(w) { return w.trim(); });
+  }
+
+  // Shuffle array (Fisher-Yates)
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  // Create feedback element
+  function createFeedback(isCorrect, message) {
+    var el = document.createElement('div');
+    el.className = 'iq-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+    el.textContent = message;
+    return el;
+  }
+
+  // ── Enhance a single .qcard ──
+  function enhanceCard(cardEl) {
+    var si = parseInt(cardEl.dataset.si);
+    var qi = parseInt(cardEl.dataset.qi);
+    var key = getQKey(si, qi);
+
+    // Skip if already enhanced or already answered
+    if (cardEl.dataset.iqEnhanced || answeredKeys[key]) return;
+    cardEl.dataset.iqEnhanced = 'true';
+
+    var q = getQuestionData(si, qi);
+    if (!q || !q.type || !q.correctAnswer) return;
+
+    var questionDiv = cardEl.querySelector('.qcard-question');
+    if (!questionDiv) return;
+
+    var zone = document.createElement('div');
+    zone.className = 'iq-zone';
+
+    switch (q.type) {
+      case 'pair':
+        buildPairUI(zone, q, si, qi);
+        break;
+      case 'choice':
+        buildChoiceUI(zone, q, si, qi);
+        break;
+      case 'error':
+        buildErrorUI(zone, q, si, qi, cardEl);
+        break;
+      case 'scramble':
+        buildScrambleUI(zone, q, si, qi);
+        break;
+      default:
+        return;
+    }
+
+    questionDiv.appendChild(zone);
+  }
+
+  // ── Pair UI ──
+  function buildPairUI(zone, q, si, qi) {
+    var options = parsePairOptions(q.text);
+    if (!options) return;
+
+    var choicesDiv = document.createElement('div');
+    choicesDiv.className = 'iq-choices';
+    var selected = null;
+
+    options.forEach(function(opt) {
+      var btn = document.createElement('button');
+      btn.className = 'iq-choice';
+      btn.textContent = opt;
+      btn.onclick = function() {
+        if (zone.classList.contains('locked')) return;
+        choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
+          b.classList.remove('selected');
+        });
+        btn.classList.add('selected');
+        selected = opt;
+        checkBtn.disabled = false;
+      };
+      choicesDiv.appendChild(btn);
+    });
+
+    zone.appendChild(choicesDiv);
+
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'iq-check-btn';
+    checkBtn.textContent = 'Check';
+    checkBtn.disabled = true;
+    checkBtn.onclick = function() {
+      var isCorrect = selected === q.correctAnswer;
+      zone.classList.add('locked');
+      checkBtn.style.display = 'none';
+
+      choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
+        if (b.textContent === q.correctAnswer) {
+          b.classList.remove('selected');
+          b.classList.add('correct');
+        } else if (b.classList.contains('selected')) {
+          b.classList.add('wrong');
+        } else {
+          b.classList.add('dimmed');
+        }
+      });
+
+      var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + q.correctAnswer;
+      zone.appendChild(createFeedback(isCorrect, msg));
+
+      answeredKeys[getQKey(si, qi)] = true;
+      addScore(isCorrect);
+    };
+    zone.appendChild(checkBtn);
+  }
+
+  // ── Choice UI ──
+  function buildChoiceUI(zone, q, si, qi) {
+    if (!q.choices) return;
+    var items = parseChoices(q.choices);
+    if (items.length === 0) return;
+
+    var choicesDiv = document.createElement('div');
+    choicesDiv.className = 'iq-choices';
+    var selectedLetter = null;
+
+    items.forEach(function(item) {
+      var btn = document.createElement('button');
+      btn.className = 'iq-choice';
+      btn.textContent = item.letter + '. ' + item.text;
+      btn.dataset.letter = item.letter;
+      btn.onclick = function() {
+        if (zone.classList.contains('locked')) return;
+        choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
+          b.classList.remove('selected');
+        });
+        btn.classList.add('selected');
+        selectedLetter = item.letter;
+        checkBtn.disabled = false;
+      };
+      choicesDiv.appendChild(btn);
+    });
+
+    zone.appendChild(choicesDiv);
+
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'iq-check-btn';
+    checkBtn.textContent = 'Check';
+    checkBtn.disabled = true;
+    checkBtn.onclick = function() {
+      var isCorrect = selectedLetter === q.correctAnswer;
+      zone.classList.add('locked');
+      checkBtn.style.display = 'none';
+
+      var correctText = '';
+      choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
+        if (b.dataset.letter === q.correctAnswer) {
+          b.classList.remove('selected');
+          b.classList.add('correct');
+          correctText = b.textContent;
+        } else if (b.classList.contains('selected')) {
+          b.classList.add('wrong');
+        } else {
+          b.classList.add('dimmed');
+        }
+      });
+
+      var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + correctText;
+      zone.appendChild(createFeedback(isCorrect, msg));
+
+      answeredKeys[getQKey(si, qi)] = true;
+      addScore(isCorrect);
+    };
+    zone.appendChild(checkBtn);
+  }
+
+  // ── Error UI ──
+  function buildErrorUI(zone, q, si, qi, cardEl) {
+    // Error questions have labeled underlines: <u>a. word</u>, <u>b. word</u>, etc.
+    // Make them clickable in the qtext
+    var qtext = cardEl.querySelector('.qtext');
+    if (!qtext) return;
+
+    var underlines = qtext.querySelectorAll('u');
+    if (underlines.length < 2) return;  // need multiple options
+
+    var selectedLabel = null;
+
+    underlines.forEach(function(u) {
+      var text = u.textContent.trim();
+      var match = text.match(/^([a-d])\./);
+      if (!match) return;
+      var label = match[1];
+      u.classList.add('iq-error-option');
+      u.dataset.label = label;
+      u.style.cursor = 'pointer';
+      u.onclick = function() {
+        if (zone.classList.contains('locked')) return;
+        underlines.forEach(function(uu) { uu.classList.remove('selected'); });
+        u.classList.add('selected');
+        selectedLabel = label;
+        checkBtn.disabled = false;
+      };
+    });
+
+    // Only add a check button (no choices div needed — the underlines ARE the choices)
+    var hint = document.createElement('div');
+    hint.className = 'iq-scramble-label';
+    hint.textContent = 'Click the underlined part with an error';
+    zone.appendChild(hint);
+
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'iq-check-btn';
+    checkBtn.textContent = 'Check';
+    checkBtn.disabled = true;
+    checkBtn.onclick = function() {
+      var isCorrect = selectedLabel === q.correctAnswer;
+      zone.classList.add('locked');
+      checkBtn.style.display = 'none';
+
+      underlines.forEach(function(u) {
+        if (!u.dataset.label) return;
+        u.style.cursor = 'default';
+        if (u.dataset.label === q.correctAnswer) {
+          u.classList.remove('selected');
+          u.classList.add('correct');
+        } else if (u.classList.contains('selected')) {
+          u.classList.add('wrong');
+        }
+      });
+
+      var msg = isCorrect ? 'Correct!' : 'Incorrect. The error is in part ' + q.correctAnswer + '.';
+      zone.appendChild(createFeedback(isCorrect, msg));
+
+      answeredKeys[getQKey(si, qi)] = true;
+      addScore(isCorrect);
+    };
+    zone.appendChild(checkBtn);
+  }
+
+  // ── Scramble UI ──
+  function buildScrambleUI(zone, q, si, qi) {
+    var words = parseScrambleWords(q.scramble);
+    if (words.length === 0) return;
+
+    var shuffled = shuffle(words);
+    var placed = [];  // words placed in answer zone (in order)
+
+    // Label
+    var poolLabel = document.createElement('div');
+    poolLabel.className = 'iq-scramble-label';
+    poolLabel.textContent = 'Available words:';
+    zone.appendChild(poolLabel);
+
+    // Word pool
+    var poolDiv = document.createElement('div');
+    poolDiv.className = 'iq-scramble-pool';
+
+    var poolChips = [];
+    shuffled.forEach(function(word, idx) {
+      var chip = document.createElement('button');
+      chip.className = 'iq-chip';
+      chip.textContent = word;
+      chip.dataset.word = word;
+      chip.dataset.idx = idx;
+      chip.onclick = function() {
+        if (zone.classList.contains('locked') || chip.classList.contains('hidden')) return;
+        chip.classList.add('hidden');
+        placed.push({ word: word, poolIdx: idx });
+        renderAnswerZone();
+        checkBtn.disabled = placed.length === 0;
+      };
+      poolDiv.appendChild(chip);
+      poolChips.push(chip);
+    });
+    zone.appendChild(poolDiv);
+
+    // Answer zone label
+    var ansLabel = document.createElement('div');
+    ansLabel.className = 'iq-scramble-label';
+    ansLabel.textContent = 'Your answer:';
+    zone.appendChild(ansLabel);
+
+    // Answer zone
+    var ansDiv = document.createElement('div');
+    ansDiv.className = 'iq-answer-zone';
+    zone.appendChild(ansDiv);
+
+    function renderAnswerZone() {
+      ansDiv.textContent = '';
+      ansDiv.classList.toggle('has-items', placed.length > 0);
+      placed.forEach(function(item, i) {
+        var chip = document.createElement('button');
+        chip.className = 'iq-chip placed';
+        chip.textContent = item.word;
+        chip.onclick = function() {
+          if (zone.classList.contains('locked')) return;
+          // Return to pool
+          poolChips[item.poolIdx].classList.remove('hidden');
+          placed.splice(i, 1);
+          renderAnswerZone();
+          checkBtn.disabled = placed.length === 0;
+        };
+        ansDiv.appendChild(chip);
+      });
+    }
+
+    // Check button
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'iq-check-btn';
+    checkBtn.textContent = 'Check';
+    checkBtn.disabled = true;
+    checkBtn.onclick = function() {
+      var studentAnswer = placed.map(function(p) { return p.word; }).join(' ');
+      var isCorrect = studentAnswer.toLowerCase() === q.correctAnswer.toLowerCase();
+      zone.classList.add('locked');
+      checkBtn.style.display = 'none';
+
+      var msg = isCorrect
+        ? 'Correct!'
+        : 'Incorrect. Answer: ' + q.correctAnswer;
+      zone.appendChild(createFeedback(isCorrect, msg));
+
+      answeredKeys[getQKey(si, qi)] = true;
+      addScore(isCorrect);
+    };
+    zone.appendChild(checkBtn);
+  }
+
+  // ── Enhance all visible cards ──
+  function enhanceVisibleCards() {
+    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    cards.forEach(function(card) { enhanceCard(card); });
+  }
+
+  // ── Re-apply on navigation (MutationObserver for SPA) ──
+  function setupObserver() {
+    var target = document.getElementById('questionsList');
+    if (!target) return;
+    new MutationObserver(function() {
+      enhanceVisibleCards();
+    }).observe(target, { childList: true });
+  }
+
+  // ── Restore answered state after re-render ──
+  // When cards are re-rendered (SPA navigation back), mark answered ones
+  function restoreAnsweredState() {
+    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    cards.forEach(function(card) {
+      var key = getQKey(card.dataset.si, card.dataset.qi);
+      if (answeredKeys[key] && !card.dataset.iqEnhanced) {
+        card.dataset.iqEnhanced = 'true';
+        // Don't rebuild interactive UI — just show a "completed" indicator
+        var q = getQuestionData(parseInt(card.dataset.si), parseInt(card.dataset.qi));
+        if (!q || !q.type || !q.correctAnswer) return;
+        var questionDiv = card.querySelector('.qcard-question');
+        if (!questionDiv) return;
+        var zone = document.createElement('div');
+        zone.className = 'iq-zone locked';
+        zone.appendChild(createFeedback(true, 'Answered. Correct answer: ' + q.correctAnswer));
+        questionDiv.appendChild(zone);
+      }
+    });
+  }
+
+  // ── Init ──
+  function init() {
+    createScoreTracker();
+    enhanceVisibleCards();
+    setupObserver();
+
+    // Also listen for hash changes (SPA navigation)
+    window.addEventListener('hashchange', function() {
+      setTimeout(function() {
+        restoreAnsweredState();
+        enhanceVisibleCards();
+      }, 50);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    // Small delay to ensure grammarData rendering has completed
+    setTimeout(init, 100);
+  }
+})();
