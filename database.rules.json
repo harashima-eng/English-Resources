@@ -11,6 +11,17 @@
         ".read": true,
         ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
       }
+    },
+    "responses": {
+      "$examId": {
+        ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+        "$questionKey": {
+          "$deviceId": {
+            ".write": true,
+            ".validate": "newData.hasChildren(['answer', 'timestamp']) && newData.child('answer').isString() && newData.child('answer').val().length < 20"
+          }
+        }
+      }
     }
   }
 }
