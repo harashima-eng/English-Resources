@@ -51,10 +51,15 @@
     var key = si + '-' + qi;
     if (listeners[key]) return;
 
+    var correctAnswer = null;
+    if (typeof grammarData !== 'undefined' && grammarData.sections[si]) {
+      correctAnswer = grammarData.sections[si].questions[qi].correctAnswer;
+    }
+
     listeners[key] = responsesRef.child(key).on('value', function(snap) {
       var responses = snap.val();
       if (!responses) {
-        updateDisplay(key, {}, 0);
+        updateDisplay(key, {}, 0, correctAnswer);
         return;
       }
 
@@ -67,7 +72,7 @@
         total++;
       });
 
-      updateDisplay(key, counts, total);
+      updateDisplay(key, counts, total, correctAnswer);
     });
   }
 
