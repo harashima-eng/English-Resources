@@ -11,6 +11,7 @@ Usage:
 import os
 import sys
 import json
+import hashlib
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -32,6 +33,7 @@ from english_resources.sitemap import write_sitemap
 
 # Configuration
 REPO_DIR = "/Users/slimtetto/Projects/English-Resources"
+BASE_URL = "https://harashima-eng.github.io/English-Resources"
 LOG_FILE = "/tmp/english-resources-generate.log"
 
 # Set up logging
@@ -46,23 +48,27 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def generate_og_meta(title: str, description: str, depth: int = 0) -> str:
-    """Generate Open Graph meta tags."""
+def generate_og_meta(title: str, description: str, canonical_path: str = "") -> str:
+    """Generate Open Graph and canonical meta tags."""
+    canonical = f'{BASE_URL}/{canonical_path}' if canonical_path else BASE_URL
     return f'''<meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://harashima-eng.github.io/English-Resources/og-image.png">
-<meta name="twitter:card" content="summary_large_image">'''
+<meta property="og:image" content="{BASE_URL}/og-image.png">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="{canonical}">'''
 
 
-def get_css_path(depth: int) -> str:
-    """Get relative path to styles.css based on folder depth."""
+def get_css_path(depth: int, css_hash: str = "") -> str:
+    """Get relative path to styles.css based on folder depth, with cache-busting hash."""
+    suffix = f"?v={css_hash}" if css_hash else ""
     if depth == 0:
-        return "styles.css"
-    return "../" * depth + "styles.css"
+        return f"styles.css{suffix}"
+    return "../" * depth + f"styles.css{suffix}"
 
 
-def generate_main_index(folders_data: list, settings: dict) -> str:
+def generate_main_index(folders_data: list, settings: dict, css_hash: str = "") -> str:
     """Generate the main index.html."""
     folder_cards = ""
     for folder in folders_data:
@@ -88,9 +94,9 @@ def generate_main_index(folders_data: list, settings: dict) -> str:
         <span class="card-arrow">{ARROW_SVG}</span>
       </a>'''
 
-    og_meta = generate_og_meta(settings['siteName'], '英語学習教材ライブラリ - 高校英語の学習教材にアクセス')
+    og_meta = generate_og_meta(settings['siteName'], '英語学習教材ライブラリ - 高校英語の学習教材にアクセス', 'index.html')
     formatted_date = get_formatted_date()
-    css_path = get_css_path(0)
+    css_path = get_css_path(0, css_hash)
 
     return f'''<!DOCTYPE html>
 <html lang="ja">
@@ -139,7 +145,8 @@ def generate_main_index(folders_data: list, settings: dict) -> str:
 
 
 def generate_folder_index(path: str, rel_path: str, name: str, parent_path: str = "../",
-                          depth: int = 1, grade_color: str = None, grade_color_dark: str = None) -> str:
+                          depth: int = 1, grade_color: str = None, grade_color_dark: str = None,
+                          css_hash: str = "") -> str:
     """Generate index.html for a subfolder with separate folder/file sections."""
     subfolders = []
     files = []
@@ -257,8 +264,9 @@ def generate_folder_index(path: str, rel_path: str, name: str, parent_path: str 
 
     breadcrumb_html = build_breadcrumb(rel_path, depth)
     favicon_path = '../' * depth + 'favicon.svg'
-    css_path = get_css_path(depth)
-    og_meta = generate_og_meta(f"{name} | English Resources", f"英語学習教材ライブラリ - {name}", depth)
+    css_path = get_css_path(depth, css_hash)
+    canonical_path = safe_quote(rel_path) + '/index.html' if rel_path else 'index.html'
+    og_meta = generate_og_meta(f"{name} | English Resources", f"英語学習教材ライブラリ - {name}", canonical_path)
     formatted_date = get_formatted_date()
 
     return f'''<!DOCTYPE html>
@@ -302,13 +310,15 @@ def generate_folder_index(path: str, rel_path: str, name: str, parent_path: str 
 </html>'''
 
 
-def write_css_file():
-    """Write the external CSS stylesheet."""
+def write_css_file() -> str:
+    """Write the external CSS stylesheet and return content hash for cache busting."""
     css_path = os.path.join(REPO_DIR, 'styles.css')
     try:
         with open(css_path, 'w', encoding='utf-8') as f:
             f.write(MAIN_STYLE)
-        logger.info("Generated styles.css")
+        css_hash = hashlib.md5(MAIN_STYLE.encode()).hexdigest()[:8]
+        logger.info(f"Generated styles.css (hash: {css_hash})")
+        return css_hash
     except OSError as e:
         logger.error(f"Error writing styles.css: {e}")
         raise
@@ -348,7 +358,7 @@ def scan_and_generate():
         }
 
     # Write external CSS file
-    write_css_file()
+    css_hash = write_css_file()
 
     # Find top-level folders
     top_folders = scan_top_folders(REPO_DIR)
@@ -357,7 +367,7 @@ def scan_and_generate():
     # Generate main index
     logger.info("Generating main index.html...")
     try:
-        main_html = generate_main_index(top_folders, settings)
+        main_html = generate_main_index(top_folders, settings, css_hash)
         with open(os.path.join(REPO_DIR, 'index.html'), 'w', encoding='utf-8') as f:
             f.write(main_html)
     except OSError as e:
@@ -379,7 +389,7 @@ def scan_and_generate():
 
         logger.info(f"Generating {rel_path}/index.html...")
         try:
-            html = generate_folder_index(path, rel_path, name, parent, depth, grade_color, grade_color_dark)
+            html = generate_folder_index(path, rel_path, name, parent, depth, grade_color, grade_color_dark, css_hash)
             with open(os.path.join(path, 'index.html'), 'w', encoding='utf-8') as f:
                 f.write(html)
         except OSError as e:
@@ -404,7 +414,7 @@ def scan_and_generate():
     # Generate sitemap
     logger.info("Generating sitemap.xml...")
     try:
-        write_sitemap(REPO_DIR)
+        write_sitemap(REPO_DIR, BASE_URL)
     except OSError as e:
         logger.error(f"Error writing sitemap.xml: {e}")
 

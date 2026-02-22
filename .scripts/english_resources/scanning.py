@@ -14,7 +14,9 @@ IGNORED_DIRS = {'.git', '.scripts', 'node_modules', '.DS_Store'}
 IGNORED_FILES = {
     'index.html', 'auto-sync.sh', 'data.json', '.nojekyll', '.DS_Store',
     'SYSTEM-README.md', 'CLAUDE.md', 'favicon.svg', 'og-image.svg', 'og-image.png',
-    'styles.css', 'sitemap.xml'
+    'styles.css', 'sitemap.xml', 'robots.txt', '404.html',
+    'firebase-config.js', 'teacher-reveal.js', 'teacher-reveal.css',
+    'firebase.json', 'database.rules.json', '.firebaserc'
 }
 
 # Folder name display mappings
