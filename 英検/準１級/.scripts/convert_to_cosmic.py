@@ -220,15 +220,24 @@ def extract_answers(html_chunk):
     """Extract answer blocks (Yes/No or single) from a question section."""
     answers = []
 
-    # Find answer sections (not hint-box)
-    ans_pattern = re.compile(
-        r'<div\s+id="([^"]+)"\s+class="answer-section\s+hidden">(.*?)</div>\s*</div>\s*</div>',
-        re.DOTALL
+    # Find answer section openings (NOT hint-box)
+    opening_pattern = re.compile(
+        r'<div\s+id="([^"]+)"\s+class="answer-section\s+hidden">'
     )
 
-    for match in ans_pattern.finditer(html_chunk):
+    openings = list(opening_pattern.finditer(html_chunk))
+
+    for i, match in enumerate(openings):
         ans_id = match.group(1)
-        ans_html = match.group(2)
+        start = match.end()
+
+        # Bound to next answer section opening or end of chunk
+        if i + 1 < len(openings):
+            end = openings[i + 1].start()
+        else:
+            end = len(html_chunk)
+
+        ans_html = html_chunk[start:end]
 
         # Determine if YES or NO
         label = 'Model Answer'
@@ -238,21 +247,22 @@ def extract_answers(html_chunk):
             label = 'No'
 
         # Extract model answer text
-        en_match = re.search(r'<div\s+class="model-answer">\s*(?:<strong>[^<]*</strong>\s*<br>)?\s*"?(.*?)"?\s*</div>', ans_html, re.DOTALL)
-        en_text = en_match.group(1).strip() if en_match else ''
-        # Clean up HTML tags within answer
-        en_text = re.sub(r'<[^>]+>', '', en_text).strip()
-        en_text = en_text.strip('"')
+        en_match = re.search(r'<div\s+class="model-answer">(.*?)</div>', ans_html, re.DOTALL)
+        en_text = ''
+        if en_match:
+            en_text = re.sub(r'<[^>]+>', '', en_match.group(1)).strip()
+            en_text = en_text.strip('"')
 
         # Extract JP translation
-        jp_match = re.search(r'<div\s+class="jp-translation">\s*(?:<strong>[^<]*</strong>\s*<br>)?\s*(.*?)\s*</div>', ans_html, re.DOTALL)
-        jp_text = jp_match.group(1).strip() if jp_match else ''
-        jp_text = re.sub(r'<[^>]+>', '', jp_text).strip()
-        jp_text = jp_text.strip('「」')
+        jp_match = re.search(r'<div\s+class="jp-translation">(.*?)</div>', ans_html, re.DOTALL)
+        jp_text = ''
+        if jp_match:
+            jp_text = re.sub(r'<[^>]+>', '', jp_match.group(1)).strip()
+            jp_text = jp_text.strip('「」')
 
         # Extract tips (Director's Notes)
         tips = []
-        tips_pattern = re.compile(r'<li>\s*<strong>"([^"]+)"</strong>\s*-\s*(.*?)\s*</li>', re.DOTALL)
+        tips_pattern = re.compile(r'<li>\s*<strong>"([^"]+)"</strong>\s*[-–]\s*(.*?)\s*</li>', re.DOTALL)
         for tip in tips_pattern.finditer(ans_html):
             tips.append({
                 'phrase': tip.group(1),
