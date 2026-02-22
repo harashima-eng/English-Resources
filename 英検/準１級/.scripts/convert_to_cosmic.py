@@ -306,6 +306,183 @@ def extract_filler_phrases(html):
     return fillers
 
 
+def extract_questions_part7(html):
+    """Extract question data from Part 7's unique HTML structure.
+
+    Part 7 uses collapsible-section for categories, no difficulty badges,
+    both Yes/No in one answer-section, and phrase-item divs for tips.
+    """
+    categories = []
+
+    # Find the 3 question sections (no2, no3, no4)
+    section_pattern = re.compile(
+        r'<div\s+id="(no\d+)"\s+class="collapsible-section">\s*'
+        r'<div\s+class="section-header"[^>]*>\s*<h2>(.*?)</h2>',
+        re.DOTALL
+    )
+    section_matches = list(section_pattern.finditer(html))
+
+    for i, sec_match in enumerate(section_matches):
+        sec_id = sec_match.group(1)
+        sec_header = re.sub(r'[^\w\s.()（）題]', '', sec_match.group(2)).strip()
+
+        start = sec_match.end()
+        if i + 1 < len(section_matches):
+            end = section_matches[i + 1].start()
+        else:
+            end = len(html)
+
+        sec_html = html[start:end]
+
+        # Find questions within this section
+        q_pattern = re.compile(
+            r'<div\s+class="question-title">(Q\d+):\s*(.*?)</div>',
+            re.DOTALL
+        )
+        q_matches = list(q_pattern.finditer(sec_html))
+
+        questions = []
+        for j, q_match in enumerate(q_matches):
+            q_num = q_match.group(1)
+            q_text = q_match.group(2).strip()
+
+            # Bound to next question or end
+            q_start = q_match.end()
+            if j + 1 < len(q_matches):
+                q_end = q_matches[j + 1].start()
+            else:
+                q_end = len(sec_html)
+
+            q_html = sec_html[q_start:q_end]
+
+            # Extract hints from hint-section
+            hint = extract_hint_part7(q_html)
+
+            # Extract answers (both perspectives in one answer-section)
+            answers = extract_answers_part7(q_html)
+
+            questions.append({
+                'num': q_num,
+                'text': q_text,
+                'difficulty': 'intermediate',  # default since Part 7 has no badges
+                'hint': hint,
+                'answers': answers,
+            })
+
+        categories.append({
+            'id': sec_id,
+            'name': sec_header,
+            'questions': questions,
+        })
+
+    return categories
+
+
+def extract_hint_part7(q_html):
+    """Extract hint from Part 7's hint-section structure."""
+    hint_match = re.search(r'<div\s+class="hint-content">(.*?)</div>\s*</div>\s*</div>', q_html, re.DOTALL)
+    if not hint_match:
+        # Try broader match
+        hint_match = re.search(r'<div\s+class="hint-content">(.*?)<button\s+class="show-answer', q_html, re.DOTALL)
+    if not hint_match:
+        return None
+
+    hint_html = hint_match.group(1)
+    items = re.findall(r'<li>(.*?)</li>', hint_html, re.DOTALL)
+
+    return {
+        'items': items,
+        'key_phrases': [],
+    }
+
+
+def extract_answers_part7(q_html):
+    """Extract both perspectives from Part 7's single answer-section."""
+    answers = []
+
+    ans_match = re.search(r'<div\s+class="answer-section">(.*)', q_html, re.DOTALL)
+    if not ans_match:
+        return answers
+
+    ans_html = ans_match.group(1)
+
+    # Find Answer A (Yes) and Answer B (No) by their h4 headers
+    perspectives = re.split(r'<h4[^>]*>(?=[✅❌])', ans_html)
+
+    for persp in perspectives:
+        if not persp.strip():
+            continue
+
+        # Determine Yes/No
+        label = 'Model Answer'
+        if 'Yes' in persp[:100] or 'Answer A' in persp[:100]:
+            label = 'Yes'
+        elif 'No' in persp[:100] or 'Answer B' in persp[:100]:
+            label = 'No'
+
+        # Extract model answer
+        en_match = re.search(r'<div\s+class="model-answer">\s*(.*?)\s*</div>', persp, re.DOTALL)
+        en_text = ''
+        if en_match:
+            en_text = re.sub(r'<[^>]+>', '', en_match.group(1)).strip().strip('"')
+
+        # Extract JP translation
+        jp_match = re.search(r'<div\s+class="jp-translation">(.*?)</div>', persp, re.DOTALL)
+        jp_text = ''
+        if jp_match:
+            jp_text = re.sub(r'<[^>]+>', '', jp_match.group(1))
+            jp_text = re.sub(r'^[🇯🇵]*\s*日本語訳\s*:?\s*', '', jp_text.strip())
+            jp_text = re.sub(r'\s+', ' ', jp_text).strip().strip('「」')
+
+        # Extract tips from phrase-item divs
+        tips = []
+        tip_pattern = re.compile(r'<div\s+class="phrase-item"><strong>(.*?)</strong>\s*[-–]\s*(.*?)</div>', re.DOTALL)
+        for tip in tip_pattern.finditer(persp):
+            tips.append({
+                'phrase': tip.group(1).strip(),
+                'explain': tip.group(2).strip(),
+            })
+
+        if en_text:
+            answers.append({
+                'id': f'part7-{label.lower()}',
+                'label': label,
+                'en_text': en_text,
+                'jp_text': jp_text,
+                'tips': tips,
+            })
+
+    return answers
+
+
+def auto_split_categories(categories, config):
+    """Split a single-category result into multiple categories based on config.
+
+    Used when the old HTML has only one category section but the cosmic
+    design wants multiple sections (e.g., Part 3: 8 questions → 3 groups).
+    """
+    if len(categories) != 1 or len(config['categories']) <= 1:
+        return categories
+
+    all_questions = categories[0]['questions']
+    n_cats = len(config['categories'])
+    per_cat = len(all_questions) // n_cats
+    remainder = len(all_questions) % n_cats
+
+    new_categories = []
+    idx = 0
+    for i, cat_config in enumerate(config['categories']):
+        count = per_cat + (1 if i < remainder else 0)
+        new_categories.append({
+            'id': cat_config['id'],
+            'name': cat_config['label'],
+            'questions': all_questions[idx:idx + count],
+        })
+        idx += count
+
+    return new_categories
+
+
 def read_template_parts():
     """Read CSS and JS template from Part 1."""
     part1_path = os.path.join(os.path.dirname(__file__), '..',
