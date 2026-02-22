@@ -250,14 +250,20 @@ def extract_answers(html_chunk):
         en_match = re.search(r'<div\s+class="model-answer">(.*?)</div>', ans_html, re.DOTALL)
         en_text = ''
         if en_match:
-            en_text = re.sub(r'<[^>]+>', '', en_match.group(1)).strip()
+            en_text = re.sub(r'<[^>]+>', '', en_match.group(1))
+            # Remove YES/NO/label prefixes
+            en_text = re.sub(r'^[✅❌⭐🔵]*\s*(YES|NO|Model Answer)\s*:?\s*', '', en_text.strip())
+            en_text = re.sub(r'\s+', ' ', en_text).strip()
             en_text = en_text.strip('"')
 
         # Extract JP translation
         jp_match = re.search(r'<div\s+class="jp-translation">(.*?)</div>', ans_html, re.DOTALL)
         jp_text = ''
         if jp_match:
-            jp_text = re.sub(r'<[^>]+>', '', jp_match.group(1)).strip()
+            jp_text = re.sub(r'<[^>]+>', '', jp_match.group(1))
+            # Remove 日本語訳 prefix
+            jp_text = re.sub(r'^[🇯🇵]*\s*日本語訳\s*:?\s*', '', jp_text.strip())
+            jp_text = re.sub(r'\s+', ' ', jp_text).strip()
             jp_text = jp_text.strip('「」')
 
         # Extract tips (Director's Notes)
