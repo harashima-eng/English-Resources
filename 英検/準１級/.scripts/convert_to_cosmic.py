@@ -82,10 +82,11 @@ FILE_CONFIG = {
         'title': 'Final Review',
         'part_label': 'Part 7 — FINAL',
         'part_key': 'part7',
+        'variant': 'part7',  # signals different extraction logic
         'categories': [
-            {'id': 'sec-cat1', 'label': 'Review A', 'css_class': 'cat1', 'color_var': '--cat1'},
-            {'id': 'sec-cat2', 'label': 'Review B', 'css_class': 'cat2', 'color_var': '--cat2'},
-            {'id': 'sec-cat3', 'label': 'Review C', 'css_class': 'cat3', 'color_var': '--cat3'},
+            {'id': 'sec-no2', 'label': 'No.2', 'css_class': 'cat1', 'color_var': '--cat1'},
+            {'id': 'sec-no3', 'label': 'No.3', 'css_class': 'cat2', 'color_var': '--cat2'},
+            {'id': 'sec-no4', 'label': 'No.4', 'css_class': 'cat3', 'color_var': '--cat3'},
         ],
         'cat_colors': {
             'cat1': '#00e5cc',
