@@ -290,16 +290,21 @@ def extract_answers(html_chunk):
 def extract_filler_phrases(html):
     """Extract filler phrases from old design."""
     fillers = []
+    # Match both <span class="jp"> and <div class="jp">
     filler_pattern = re.compile(
         r'<div\s+class="filler-card">\s*'
         r'<strong>(.*?)</strong>\s*'
-        r'<span\s+class="jp">(.*?)</span>',
+        r'<(?:span|div)\s+class="jp">(.*?)</(?:span|div)>',
         re.DOTALL
     )
 
     for match in filler_pattern.finditer(html):
+        en = match.group(1).strip()
+        # Remove numbering like "1. " and strip quotes
+        en = re.sub(r'^\d+\.\s*', '', en)
+        en = en.strip('"')
         fillers.append({
-            'en': match.group(1).strip(),
+            'en': en,
             'jp': match.group(2).strip().strip('「」'),
         })
 
