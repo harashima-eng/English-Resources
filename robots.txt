@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Sitemap: https://harashima-eng.github.io/English-Resources/sitemap.xml
+Disallow: /.git
+Disallow: /.scripts
