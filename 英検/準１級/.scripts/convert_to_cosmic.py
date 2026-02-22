@@ -142,18 +142,6 @@ def extract_questions_from_category(cat_html):
     """Extract individual questions from a category section."""
     questions = []
 
-    # Find question collapsibles
-    q_pattern = re.compile(
-        r'<div\s+class="question-collapsible">(.*?)</div>\s*</div>\s*</div>\s*</div>',
-        re.DOTALL
-    )
-
-    # Alternative: find question blocks by data-question attribute
-    q_block_pattern = re.compile(
-        r'<div\s+class="question-block"\s+data-question="(\d+)">(.*?)(?=<div\s+class="question-block"|</div>\s*</div>\s*</div>\s*</div>)',
-        re.DOTALL
-    )
-
     # Find question headers
     q_header_pattern = re.compile(
         r'<div\s+class="question-title">\s*'
@@ -164,19 +152,22 @@ def extract_questions_from_category(cat_html):
 
     headers = list(q_header_pattern.finditer(cat_html))
 
-    for h_match in headers:
+    for i, h_match in enumerate(headers):
         q_num = h_match.group(1)
         q_text = h_match.group(2).strip()
         q_diff = h_match.group(3)
 
-        # Find the content for this question
+        # Bound search to this question only (until next header or end)
         start = h_match.end()
+        if i + 1 < len(headers):
+            end = headers[i + 1].start()
+        else:
+            end = len(cat_html)
 
-        # Extract hint content
-        hint = extract_hint(cat_html[start:start+5000])
+        q_html = cat_html[start:end]
 
-        # Extract answers
-        answers = extract_answers(cat_html[start:start+10000])
+        hint = extract_hint(q_html)
+        answers = extract_answers(q_html)
 
         questions.append({
             'num': q_num,
