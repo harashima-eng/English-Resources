@@ -501,9 +501,13 @@ def read_template_parts():
     css_match = re.search(r'<style>(.*?)</style>', content, re.DOTALL)
     css = css_match.group(1) if css_match else ''
 
-    # Extract starfield HTML
-    star_match = re.search(r'(<!-- ═+ STARFIELD ═+ -->\n<div class="starfield">.*?</div>)', content, re.DOTALL)
-    starfield = star_match.group(1) if star_match else ''
+    # Extract starfield HTML (between STARFIELD comment and Top Bar comment)
+    star_start = content.find('<!-- ═')
+    star_end = content.find('<!-- Top Bar -->')
+    if star_start != -1 and star_end != -1:
+        starfield = content[star_start:star_end].strip()
+    else:
+        starfield = ''
 
     # Extract JS (between <script> and </script>), minus the PART/TOTAL_Q constants
     js_match = re.search(r'<script>(.*?)</script>', content, re.DOTALL)
