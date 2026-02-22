@@ -182,25 +182,33 @@ def extract_questions_from_category(cat_html):
 
 def extract_hint(html_chunk):
     """Extract hint content from a question section."""
-    hint_pattern = re.compile(
-        r'<div\s+id="[^"]*"\s+class="answer-section\s+hint-box\s+hidden">(.*?)</div>\s*</div>',
-        re.DOTALL
+    # Find hint section opening
+    hint_opening = re.search(
+        r'<div\s+id="[^"]*"\s+class="answer-section\s+hint-box\s+hidden">',
+        html_chunk
     )
-    match = hint_pattern.search(html_chunk)
-    if not match:
+    if not hint_opening:
         return None
 
-    hint_html = match.group(1)
+    # Bound hint content: from opening to next answer-section or end
+    start = hint_opening.end()
+    next_section = re.search(
+        r'<div\s+id="[^"]*"\s+class="answer-section\s+hidden">',
+        html_chunk[start:]
+    )
+    if next_section:
+        hint_html = html_chunk[start:start + next_section.start()]
+    else:
+        hint_html = html_chunk[start:]
 
     # Extract hint items
     items = re.findall(r'<li>(.*?)</li>', hint_html, re.DOTALL)
 
     # Extract key phrases
-    key_phrases_match = re.search(r'Key phrases?:(.+?)$', hint_html, re.DOTALL | re.MULTILINE)
     key_phrases = []
-    if key_phrases_match:
-        kp_text = key_phrases_match.group(1)
-        key_phrases = re.findall(r'"([^"]+)"', kp_text)
+    kp_match = re.search(r'Key phrases?:\s*(.*?)(?:</p>|$)', hint_html, re.DOTALL)
+    if kp_match:
+        key_phrases = re.findall(r'"([^"]+)"', kp_match.group(1))
 
     return {
         'items': items,
