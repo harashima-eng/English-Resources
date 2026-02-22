@@ -1,1119 +1,1995 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>英検準1級 スピーキング対策ガイド - PART 7</title>
-    
-    <meta property="og:title" content="英検準1級 スピーキング Part 7 対策ガイド - 総合復習">
-    <meta property="og:description" content="英検準1級スピーキングPart 7の完全対策！総合復習・両論併記で15題を徹底練習。Yes/No両方の視点でクリティカルシンキングを鍛える。">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ja_JP">
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #667eea; --secondary: #764ba2; --accent: #f5576c;
-            --success: #20c997; --warning: #ffd93d; --bg-light: #f8f9fa;
-            --text-dark: #495057; --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: clamp(12px, 3vw, 20px); line-height: 1.6; min-height: 100vh;
-        }
-        body.dark-mode { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
-        .container {
-            max-width: 1200px; margin: 0 auto; background: white;
-            border-radius: clamp(12px, 2vw, 20px); box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-        body.dark-mode .container { background: #0f3460; color: #e8e8e8; }
-        .header {
-            background: linear-gradient(135deg, #f093fb 0%, var(--accent) 100%);
-            color: white; padding: clamp(20px, 4vw, 30px) clamp(20px, 5vw, 40px);
-            text-align: center; position: sticky; top: 0; z-index: 100;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .header h1 {
-            font-size: clamp(1.5rem, 4vw, 2.2rem); text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            margin-bottom: 10px; letter-spacing: -0.02em;
-        }
-        .header p { font-size: clamp(0.85rem, 2vw, 1rem); opacity: 0.95; }
-        .header.minimized { padding: 15px clamp(20px, 5vw, 40px); }
-        .header.minimized h1, .header.minimized p, .header.minimized .progress-container { display: none; }
-        .header-toggle-btn {
-            position: absolute; top: 15px; left: 15px;
-            background: rgba(255,255,255,0.2); border: none; border-radius: 50%;
-            width: clamp(36px, 8vw, 40px); height: clamp(36px, 8vw, 40px);
-            font-size: clamp(1rem, 2.5vw, 1.2rem); cursor: pointer;
-            transition: var(--transition); color: white; z-index: 101;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .header-toggle-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
-        .header-toggle-btn:active { transform: scale(0.95); }
-        .header.minimized .header-toggle-btn { transform: rotate(180deg); }
-        .progress-container {
-            background: rgba(255,255,255,0.2); border-radius: 10px;
-            height: 10px; margin-top: 15px; overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .progress-bar {
-            height: 100%; background: linear-gradient(90deg, var(--success) 0%, var(--warning) 100%);
-            border-radius: 10px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 8px rgba(32, 201, 151, 0.3);
-        }
-        .dark-mode-toggle {
-            position: fixed; top: clamp(15px, 3vw, 20px); right: clamp(15px, 3vw, 20px);
-            background: rgba(255,255,255,0.9); border: none; border-radius: 50%;
-            width: clamp(45px, 10vw, 55px); height: clamp(45px, 10vw, 55px);
-            font-size: clamp(1.3rem, 3vw, 1.6rem); cursor: pointer;
-            transition: var(--transition); z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .dark-mode-toggle:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
-        .dark-mode-toggle:active { transform: scale(0.95); }
-        body.dark-mode .dark-mode-toggle { background: rgba(255,255,255,0.1); color: #ffd93d; }
-        .content { padding: clamp(20px, 4vw, 40px); }
-        .collapsible-section {
-            margin-bottom: 25px; border-radius: 12px; overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: var(--transition);
-        }
-        .collapsible-section:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
-        .section-header {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: clamp(18px, 3vw, 25px); cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: var(--transition); gap: 15px;
-        }
-        body.dark-mode .section-header { background: linear-gradient(135deg, #1e3a5f 0%, #4a1942 100%); }
-        .section-header:hover { opacity: 0.95; transform: translateX(3px); }
-        .section-header:active { transform: translateX(0); }
-        .section-header h2 {
-            color: #087f5b; font-size: clamp(1.1rem, 3vw, 1.5rem);
-            flex: 1; word-break: break-word;
-        }
-        body.dark-mode .section-header h2 { color: #20c997; }
-        .section-toggle {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0;
-        }
-        .section-header.active .section-toggle { transform: rotate(180deg); }
-        .section-content {
-            max-height: 0; overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: white;
-        }
-        body.dark-mode .section-content { background: #1a2332; }
-        .section-content.active { max-height: 40000px; padding: clamp(20px, 4vw, 30px); }
-        .filler-section {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-left: 6px solid #20c997; padding: clamp(20px, 4vw, 25px);
-            border-radius: 12px; margin-bottom: 30px;
-        }
-        body.dark-mode .filler-section { background: linear-gradient(135deg, #1e3a5f 0%, #4a1942 100%); }
-        .filler-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-            gap: clamp(12px, 2vw, 15px); margin-top: 15px;
-        }
-        .filler-card {
-            background: var(--bg-light); padding: clamp(15px, 3vw, 18px);
-            border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            transition: var(--transition); border-left: 4px solid transparent;
-        }
-        body.dark-mode .filler-card { background: rgba(255,255,255,0.05); }
-        .filler-card:hover {
-            transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-            border-left-color: var(--success);
-        }
-        .filler-card strong {
-            color: var(--success); display: block; margin-bottom: 8px;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-        .filler-card .jp {
-            color: #666; font-size: clamp(0.85rem, 1.8vw, 0.95rem); line-height: 1.5;
-        }
-        body.dark-mode .filler-card .jp { color: #adb5bd; }
-        .question-collapsible {
-            margin-bottom: 20px; border-radius: 12px; overflow: hidden;
-            border: 2px solid #e9ecef; box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            transition: var(--transition);
-        }
-        body.dark-mode .question-collapsible { border-color: #2c3e50; }
-        .question-collapsible:hover {
-            border-color: var(--primary); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-        }
-        .question-header {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: clamp(15px, 3vw, 20px); cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: var(--transition); gap: 12px;
-        }
-        body.dark-mode .question-header { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); }
-        .question-header:hover { background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%); }
-        body.dark-mode .question-header:hover { background: linear-gradient(135deg, #34495e 0%, #3d566e 100%); }
-        .question-title {
-            font-weight: 600; color: var(--text-dark);
-            font-size: clamp(0.95rem, 2.2vw, 1.1rem); flex: 1; word-break: break-word;
-        }
-        body.dark-mode .question-title { color: #e8e8e8; }
-        .question-toggle {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--primary); flex-shrink: 0;
-        }
-        .question-header.active .question-toggle { transform: rotate(180deg); }
-        .question-content {
-            max-height: 0; overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: white;
-        }
-        body.dark-mode .question-content { background: #1a2332; }
-        .question-content.active { max-height: 7000px; padding: clamp(18px, 3vw, 25px); }
-        .hint-section { margin-bottom: 20px; }
-        .hint-btn {
-            background: linear-gradient(135deg, var(--warning) 0%, #ffb347 100%);
-            color: #495057; border: none;
-            padding: clamp(10px, 2vw, 12px) clamp(18px, 3vw, 24px);
-            border-radius: 8px; cursor: pointer; font-weight: 600;
-            transition: var(--transition); box-shadow: 0 3px 10px rgba(255, 217, 61, 0.3);
-            font-size: clamp(0.9rem, 2vw, 1rem); width: 100%; max-width: 220px;
-        }
-        .hint-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 217, 61, 0.4); }
-        .hint-btn:active { transform: translateY(0); }
-        .hint-content {
-            display: none; background: #fff9e6; border-left: 4px solid var(--warning);
-            padding: clamp(15px, 3vw, 20px); margin-top: 15px; border-radius: 8px;
-            animation: slideDown 0.4s ease;
-        }
-        body.dark-mode .hint-content { background: rgba(255, 217, 61, 0.1); color: #e8e8e8; }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .hint-content ul { padding-left: 20px; margin-top: 10px; }
-        .hint-content li {
-            margin-bottom: 8px; line-height: 1.6; font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-        .answer-container {
-            display: grid; grid-template-columns: 1fr;
-            gap: clamp(12px, 2vw, 15px); margin-bottom: 15px;
-        }
-        @media (min-width: 768px) {
-            .answer-container { grid-template-columns: 1fr 1fr; }
-        }
-        .model-answer, .jp-translation {
-            background: var(--bg-light); padding: clamp(15px, 3vw, 20px);
-            border-radius: 10px; line-height: 1.7; font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-        body.dark-mode .model-answer, body.dark-mode .jp-translation { background: rgba(255,255,255,0.05); }
-        .model-answer { border-left: 4px solid var(--success); }
-        .jp-translation { border-left: 4px solid var(--accent); }
-        .jp-translation strong { color: var(--accent); font-size: clamp(0.95rem, 2.1vw, 1.05rem); }
-        .notable-phrases {
-            background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%);
-            border-left: 4px solid #ff9800; padding: clamp(15px, 3vw, 18px);
-            border-radius: 8px; margin-top: 15px;
-        }
-        body.dark-mode .notable-phrases { background: rgba(255, 152, 0, 0.1); border-left-color: #ffb74d; }
-        .notable-phrases h5 {
-            color: #e65100; margin-bottom: 12px; font-size: clamp(0.95rem, 2vw, 1.05rem);
-        }
-        body.dark-mode .notable-phrases h5 { color: #ffb74d; }
-        .phrase-item {
-            margin-bottom: 8px; padding: 8px 12px;
-            background: rgba(255,255,255,0.6); border-radius: 6px;
-            font-size: clamp(0.85rem, 1.9vw, 0.95rem);
-        }
-        body.dark-mode .phrase-item { background: rgba(255,255,255,0.05); }
-        .phrase-item strong { color: #d84315; }
-        body.dark-mode .phrase-item strong { color: #ff9800; }
-        .show-answer-btn {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white; border: none;
-            padding: clamp(12px, 2.5vw, 15px) clamp(25px, 4vw, 35px);
-            border-radius: 10px; cursor: pointer; font-weight: 600;
-            transition: var(--transition); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-            margin-bottom: 20px; font-size: clamp(0.95rem, 2vw, 1.05rem);
-            width: 100%; max-width: 280px;
-        }
-        .show-answer-btn:hover {
-            transform: translateY(-3px); box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
-        }
-        .show-answer-btn:active { transform: translateY(0); }
-        .answer-section { display: none; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .footer {
-            text-align: center; padding: clamp(20px, 4vw, 30px);
-            background: var(--bg-light); color: var(--text-dark);
-            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
-        }
-        body.dark-mode .footer { background: #0a1929; color: #adb5bd; }
-        .footer strong { color: var(--accent); }
-        @media (max-width: 480px) {
-            body { padding: 8px; }
-            .container { border-radius: 12px; }
-            .content { padding: 15px; }
-            .collapsible-section { margin-bottom: 18px; }
-            .question-collapsible { margin-bottom: 15px; }
-            .filler-grid { grid-template-columns: 1fr; }
-            .show-answer-btn, .hint-btn { max-width: 100%; }
-        }
-        @media (hover: none) and (pointer: coarse) {
-            .section-header, .question-header { padding: 20px; }
-            .show-answer-btn, .hint-btn, .dark-mode-toggle, .header-toggle-btn {
-                min-height: 44px; min-width: 44px;
-            }
-        }
-        html { scroll-behavior: smooth; }
-        *:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 7 — FINAL: Final Review | Eiken Pre-1 Speaking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════════════
+   HOLLYWOOD COSMIC — Retro Cinema × Sci-Fi Fusion
+   Gold warmth meets cosmic energy
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #0a0908;
+  --surface: #1a1816;
+  --surface-raised: #262420;
+  --surface-glow: #221e18;
+  --gold: #d4a644;
+  --gold-dim: #a07830;
+  --gold-glow: rgba(212,166,68,0.4);
+  --cream: #f5e6c8;
+  --cream-dim: #c4b49a;
+  --burnt: #e07030;
+  --burnt-dim: #a85220;
+  --hot-pink: #ff3fac;
+  --hot-pink-glow: rgba(255,63,172,0.5);
+  --cosmic: #9d5cf6;
+  --nebula: #c77dff;
+  --starfield: #7b68ee;
+  --energy: #00cfff;
+  --film-strip: #16140e;
+  --border: rgba(212,166,68,0.10);
+  --border-gold: rgba(212,166,68,0.20);
+  --border-energy: rgba(0,207,255,0.25);
+  --env: #00e5cc;
+  --work: #ffc347;
+  --edu: #ff5370;
+  /* File-specific category colors */
+  --cat1: #00e5cc;
+  --cat2: #ffc347;
+  --cat3: #ff5370;
+  --shadow-cosmic: 0 0 24px rgba(157,92,246,0.3), 0 0 48px rgba(157,92,246,0.15);
+  --shadow-energy: 0 0 16px rgba(0,207,255,0.4), 0 0 32px rgba(0,207,255,0.2);
+  --shadow-gold: 0 0 20px rgba(212,166,68,0.35), 0 0 40px rgba(212,166,68,0.15);
+  --font-display: 'Bebas Neue', 'Arial Black', sans-serif;
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-jp: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+  --font-mono: 'Courier New', monospace;
+}
+
+[data-theme="matinee"] {
+  --bg: #fdf8ef;
+  --surface: #f0e8d4;
+  --surface-raised: #e8dfc8;
+  --surface-glow: #ede4f8;
+  --cream: #1a1020;
+  --cream-dim: #4a3d5c;
+  --gold: #7a5a00;
+  --gold-dim: #5a4200;
+  --border: rgba(107,46,179,0.15);
+  --border-gold: rgba(122,90,0,0.25);
+  --border-energy: rgba(0,104,130,0.3);
+  --film-strip: #e0d8c4;
+  --cosmic: #6b2eb3;
+  --nebula: #8840bb;
+  --starfield: #4a3a99;
+  --energy: #006882;
+  --hot-pink: #c0006e;
+  --env: #006860;
+  --work: #7a5a00;
+  --edu: #c0203a;
+}
+
+[data-theme="matinee"] .starfield { opacity: 0.15; }
+[data-theme="matinee"] body::before { background: radial-gradient(ellipse at center, transparent 50%, rgba(253,248,239,0.4) 100%); }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Cosmic Vignette ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(10,9,8,0.7) 100%);
+}
+
+/* ── Starfield ── */
+.starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  perspective: 600px;
+}
+
+.star {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  border-radius: 50%;
+  animation:
+    star-warp 1.2s var(--d, 0s) cubic-bezier(0.25,0.46,0.45,0.94) both,
+    star-twinkle var(--dur, 5s) calc(var(--d, 0s) + 1.4s) ease-in-out infinite;
+}
+
+.star--sm { width: 2px; height: 2px; background: #fff; box-shadow: 0 0 2px rgba(255,255,255,0.6); }
+.star--md { width: 3px; height: 3px; background: #c8d8ff; box-shadow: 0 0 4px 1px rgba(180,210,255,0.5); }
+.star--lg { width: 4px; height: 4px; background: #e0f0ff; box-shadow: 0 0 6px 2px rgba(150,200,255,0.7), 0 0 12px 3px rgba(100,160,255,0.3); }
+
+@keyframes star-warp {
+  0% { opacity: 0; transform: scale(0.05); }
+  20% { opacity: 0; }
+  40% { opacity: 1; transform: scale(0.4); }
+  80% { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 0.7; transform: scale(1); }
+}
+
+@keyframes star-twinkle {
+  0% { opacity: 0.7; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.7; }
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--cream);
+  font-size: 1.15rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Page Load: Cosmic Warp In ── */
+.page-wrap {
+  animation: cosmicWarpIn 2.2s cubic-bezier(0.22,0.61,0.36,1) both;
+}
+
+@keyframes cosmicWarpIn {
+  0% { opacity: 0; filter: brightness(0) saturate(0); }
+  30% { opacity: 0; filter: brightness(0) saturate(0); }
+  60% { opacity: 0.6; filter: brightness(0.5) saturate(1.5); }
+  100% { opacity: 1; filter: brightness(1) saturate(1); }
+}
+
+/* ── Layout ── */
+.page { max-width: 1400px; margin: 0 auto; padding: 28px clamp(20px, 3vw, 48px) 100px; }
+
+/* ═══════════════════════════════════════
+   MARQUEE HEADER — Cinema Title Card
+   ═══════════════════════════════════════ */
+.cinema-header {
+  text-align: center;
+  padding: 60px 30px 50px;
+  margin-bottom: 40px;
+  position: relative;
+  border: 3px solid var(--gold);
+  border-radius: 4px;
+  background: var(--surface);
+  animation: heroMaterialize 1.6s cubic-bezier(0.22,0.61,0.36,1) 0.8s both,
+             headerBreathe 6s ease-in-out 3.5s infinite;
+}
+
+@keyframes heroMaterialize {
+  0% { opacity: 0; transform: translateY(60px) scale(0.9); border-color: var(--cosmic); box-shadow: var(--shadow-cosmic); }
+  40% { opacity: 0.7; transform: translateY(10px) scale(0.97); border-color: var(--energy); box-shadow: var(--shadow-energy); }
+  70% { opacity: 1; transform: translateY(-4px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); border-color: var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+}
+
+@keyframes headerBreathe {
+  0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 rgba(157,92,246,0); }
+  50% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 40px rgba(157,92,246,0.12), 0 0 80px rgba(0,207,255,0.06); }
+}
+
+/* Marquee Lights — traveling dots around the border */
+.cinema-header::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px dashed var(--gold-dim);
+  border-radius: 6px;
+  animation: marqueeGlow 3s ease-in-out infinite;
+}
+
+@keyframes marqueeGlow {
+  0%, 100% { border-color: var(--gold-dim); box-shadow: 0 0 8px var(--gold-glow), 0 0 0 rgba(157,92,246,0); }
+  33% { border-color: var(--cosmic); box-shadow: 0 0 12px rgba(157,92,246,0.3), 0 0 24px rgba(157,92,246,0.1); }
+  66% { border-color: var(--energy); box-shadow: 0 0 12px rgba(0,207,255,0.3), 0 0 24px rgba(0,207,255,0.1); }
+}
+
+/* Traveling light dots */
+.cinema-header::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 0 0 / 20px 20px repeat-x,
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 0 100% / 20px 20px repeat-x,
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 0 0 / 20px 20px repeat-y,
+    radial-gradient(circle 3px, var(--gold) 100%, transparent 100%) 100% 0 / 20px 20px repeat-y;
+  animation: travelingLights 2s linear infinite;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes travelingLights {
+  from { background-position: 0 0, 20px 100%, 0 0, 100% 20px; }
+  to { background-position: 20px 0, 0 100%, 0 20px, 100% 0; }
+}
+
+.cinema-header .presents {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.35em;
+  color: var(--cream-dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  animation: cosmicRise 0.9s cubic-bezier(0.22,0.61,0.36,1) 1.6s both;
+}
+
+.cinema-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 4.5rem);
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 6px;
+  text-shadow: 0 0 30px var(--gold-glow), 0 2px 0 var(--gold-dim);
+  animation: titleMaterialize 1.4s cubic-bezier(0.22,0.61,0.36,1) 1.2s both;
+}
+
+@keyframes titleMaterialize {
+  0% { opacity: 0; transform: scale(0.6) translateY(20px); letter-spacing: 0.5em; text-shadow: 0 0 60px var(--energy), 0 0 120px var(--cosmic); color: var(--energy); }
+  30% { opacity: 0.8; transform: scale(0.9) translateY(4px); letter-spacing: 0.15em; text-shadow: 0 0 40px var(--cosmic), 0 0 80px rgba(157,92,246,0.4); }
+  60% { opacity: 1; transform: scale(1.04) translateY(-2px); text-shadow: 0 0 30px var(--gold-glow), 0 0 60px rgba(212,166,68,0.3); color: var(--gold); }
+  100% { opacity: 1; transform: scale(1) translateY(0); letter-spacing: 0.08em; text-shadow: 0 0 30px var(--gold-glow), 0 2px 0 var(--gold-dim); color: var(--gold); }
+}
+
+.cinema-header .tagline {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--cream-dim);
+  margin-top: 4px;
+  animation: cosmicRise 0.9s cubic-bezier(0.22,0.61,0.36,1) 2.0s both;
+}
+
+@keyframes cosmicRise {
+  0% { opacity: 0; transform: translateY(24px); filter: blur(4px); }
+  50% { opacity: 0.6; transform: translateY(6px); filter: blur(1px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ── Progress Film Strip ── */
+.film-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 28px;
+  animation: cosmicRise 0.9s cubic-bezier(0.22,0.61,0.36,1) 2.4s both;
+}
+
+.film-track {
+  position: relative;
+  width: 220px;
+  height: 24px;
+  background: var(--film-strip);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+/* Sprocket holes */
+.film-track::before, .film-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  width: 100%;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--bg) 0 6px, transparent 6px 14px);
+  z-index: 2;
+}
+.film-track::after { top: auto; bottom: 2px; }
+
+.film-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--burnt));
+  transition: width 0.6s ease;
+  z-index: 1;
+}
+
+.film-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
+/* ═══════════════════════════════════════
+   TOP BAR
+   ═══════════════════════════════════════ */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,9,8,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(20px, 3vw, 48px);
+}
+
+.top-bar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+}
+
+.back-link {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--cream-dim);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--gold); }
+
+.theme-toggle {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 5px 14px;
+  cursor: pointer;
+  color: var(--cream-dim);
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* ═══════════════════════════════════════
+   TABLE OF CONTENTS — Chapter Select
+   ═══════════════════════════════════════ */
+.chapter-select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 24px;
+  animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 2.8s both;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.chapter-select h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.chapter-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 6px;
+}
+
+.chapter-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+}
+
+.chapter-item:hover {
+  background: var(--surface-raised);
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+
+.chapter-item .reel {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid;
+  flex-shrink: 0;
+}
+
+.chapter-item .chk {
+  margin-left: auto;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.85rem;
+}
+
+.chapter-item.done .chk { opacity: 1; }
+
+/* ═══════════════════════════════════════
+   COLLAPSIBLE SECTIONS — Poster Cards
+   ═══════════════════════════════════════ */
+.poster-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+.poster-card:hover {
+  border-color: var(--cosmic);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 16px rgba(157,92,246,0.12);
+}
+
+.poster-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.poster-header:hover { background: var(--surface-raised); }
+
+.poster-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.chevron {
+  width: 22px;
+  height: 22px;
+  color: var(--gold-dim);
+  transition: transform 0.35s ease, color 0.2s;
+  flex-shrink: 0;
+}
+
+.poster-card.open .chevron { transform: rotate(180deg); color: var(--gold); }
+
+.poster-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  flex: 1;
+}
+
+.poster-body-inner { padding: 0 22px 22px; }
+
+/* Formula steps */
+.formula-steps { display: grid; gap: 8px; margin-top: 14px; grid-auto-rows: 1fr; }
+
+.formula-step {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface-raised);
+  border-left: 3px solid var(--gold);
+  border-radius: 2px;
+}
+
+.formula-step .num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.formula-step .label { font-weight: 700; color: var(--cream); }
+.formula-step .desc { color: var(--cream-dim); }
+
+/* Filler chips */
+.filler-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+  grid-auto-rows: 1fr;
+}
+
+.filler-chip {
+  padding: 14px 16px;
+  background: var(--surface-raised);
+  border-left: 3px solid var(--burnt);
+  border-radius: 2px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.filler-chip:hover {
+  transform: translateX(4px);
+  box-shadow: -3px 0 0 var(--hot-pink);
+  border-left-color: var(--hot-pink);
+}
+
+.filler-chip .en {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--cream);
+  margin-bottom: 2px;
+}
+
+.filler-chip .jp {
+  font-family: var(--font-jp);
+  font-size: 0.82rem;
+  color: var(--cream-dim);
+}
+
+/* ── Staggered Card Rise ── */
+@keyframes cardRise {
+  0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+  60% { opacity: 0.8; transform: translateY(-4px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Staggered entrance for poster cards and categories */
+.poster-card:nth-child(2) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.0s both; }
+.poster-card:nth-child(3) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.15s both; }
+.category:nth-of-type(1) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.3s both; }
+.category:nth-of-type(2) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.45s both; }
+.category:nth-of-type(3) { animation: cardRise 0.8s cubic-bezier(0.22,0.61,0.36,1) 3.6s both; }
+
+/* ═══════════════════════════════════════
+   BENTO GRID LAYOUT
+   ═══════════════════════════════════════ */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .bento-grid .chapter-select { grid-column: 1 / -1; }
+  .bento-grid .category { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1024px) {
+  .bento-grid { gap: 24px; }
+}
+
+@media (min-width: 1400px) {
+  .bento-grid { gap: 28px; }
+}
+
+/* Q-card grid within categories */
+.q-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .q-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .q-card-grid { gap: 20px; }
+}
+
+@media (min-width: 1400px) {
+  .q-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+}
+
+/* ═══════════════════════════════════════
+   CATEGORY DIVIDERS — Film Strip
+   ═══════════════════════════════════════ */
+.category { margin-bottom: 0; }
+
+.film-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.film-divider::before, .film-divider::after {
+  content: '';
+  flex: 1;
+  height: 16px;
+  background: var(--film-strip);
+  border-radius: 2px;
+  /* sprocket pattern */
+  background-image: repeating-linear-gradient(90deg,
+    var(--bg) 0 5px, transparent 5px 12px);
+  background-size: 100% 4px;
+  background-position: 0 0, 0 100%;
+  background-repeat: repeat-x;
+}
+
+.film-divider .cat-label {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 6px 20px;
+  border: 2px solid;
+  border-radius: 2px;
+}
+
+.film-divider .cat-label.cat1 { color: #00e5cc; border-color: #00e5cc; }
+.film-divider .cat-label.cat2 { color: #ffc347; border-color: #ffc347; }
+.film-divider .cat-label.cat3 { color: #ff5370; border-color: #ff5370; }
+
+/* ═══════════════════════════════════════
+   QUESTION CARDS
+   ═══════════════════════════════════════ */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.4s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,166,68,0.06);
+}
+
+.q-card:hover {
+  border-color: var(--cosmic);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 20px rgba(157,92,246,0.15);
+}
+
+.q-card.open {
+  grid-column: 1 / -1;
+  border-color: var(--gold);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), var(--shadow-gold), inset 0 0 60px rgba(157,92,246,0.03);
+}
+
+.q-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.q-header:hover { background: var(--surface-raised); }
+
+.q-title {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.q-title .num {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-right: 8px;
+  letter-spacing: 0.05em;
+}
+
+.q-diff {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  border: 1px solid;
+}
+
+.q-diff.basic { color: #00e5cc; border-color: #00e5cc; }
+.q-diff.intermediate { color: #ffc347; border-color: #ffc347; }
+.q-diff.advanced { color: #ff5370; border-color: #ff5370; }
+
+.q-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.q-body-inner { padding: 0 22px 22px; }
+
+/* ═══════════════════════════════════════
+   ACTION BUTTONS — Neon Style
+   ═══════════════════════════════════════ */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.btn {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.btn:active { transform: scale(0.96); }
+
+/* Neon Hint Button */
+.btn-hint {
+  background: transparent;
+  color: var(--work);
+  border: 1px solid var(--work);
+  box-shadow: 0 0 8px rgba(247,183,49,0.2);
+}
+
+.btn-hint:hover {
+  box-shadow: 0 0 16px rgba(247,183,49,0.4), inset 0 0 16px rgba(247,183,49,0.05);
+  text-shadow: 0 0 8px var(--work);
+}
+
+/* Cosmic Answer Button */
+.btn-answer {
+  background: linear-gradient(135deg, var(--hot-pink), var(--cosmic));
+  color: white;
+  box-shadow: 0 0 12px rgba(255,63,172,0.4), 0 0 4px rgba(157,92,246,0.3);
+  animation: cosmicPulse 3s ease-in-out infinite;
+}
+
+@keyframes cosmicPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(255,63,172,0.4), 0 0 4px rgba(157,92,246,0.3); }
+  50% { box-shadow: 0 0 24px rgba(255,63,172,0.5), 0 0 48px rgba(157,92,246,0.25), 0 0 8px rgba(0,207,255,0.2); }
+}
+
+.btn-answer:hover {
+  box-shadow: 0 0 30px rgba(255,63,172,0.5), 0 0 60px rgba(157,92,246,0.3), 0 0 12px rgba(0,207,255,0.3);
+  transform: translateY(-2px);
+}
+
+/* Alt Answer Button */
+.btn-alt {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--border);
+}
+
+.btn-alt:hover {
+  border-color: var(--cream-dim);
+  box-shadow: 0 0 10px rgba(245,230,200,0.1);
+}
+
+.btn.active { opacity: 0.5; }
+
+/* ═══════════════════════════════════════
+   PANELS — Answer/Hint Content
+   ═══════════════════════════════════════ */
+.panel {
+  display: none;
+  margin-top: 14px;
+  animation: panelReveal 0.4s ease-out;
+}
+
+.panel.visible { display: block; }
+
+@keyframes panelReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Hint Panel ── */
+.hint-panel {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--work);
+  border-radius: 2px;
+  padding: 22px;
+}
+
+.hint-panel h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--work);
+  margin-bottom: 14px;
+}
+
+.hint-panel ul { list-style: none; padding: 0; }
+
+.hint-panel li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 8px;
+  font-size: 0.98rem;
+  color: var(--cream-dim);
+}
+
+.hint-panel li::before {
+  content: '\25B8';
+  position: absolute;
+  left: 0;
+  color: var(--work);
+}
+
+.hint-panel .key-phrases {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 0.95rem;
+  color: var(--cream-dim);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.hint-panel .key-phrases code {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(212,166,68,0.12);
+  border: 1px solid var(--gold-dim);
+  padding: 4px 12px;
+  border-radius: 2px;
+  color: var(--gold);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.hint-panel .key-phrases code:hover {
+  background: rgba(212,166,68,0.2);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* ── Answer Panel ── */
+.answer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.model-answer {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 2px;
+  padding: 20px;
+}
+
+.model-answer .side-label {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.model-answer .en-text {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  font-style: normal;
+  color: var(--cream);
+}
+
+.jp-box {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--burnt);
+  border-radius: 2px;
+  padding: 20px;
+}
+
+.jp-box .side-label {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--burnt);
+  margin-bottom: 10px;
+}
+
+.jp-box .jp-text {
+  font-family: var(--font-jp);
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+}
+
+/* ── Director's Notes (Tips) ── */
+.directors-notes {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 20px;
+  position: relative;
+}
+
+/* Clapperboard stripe at top */
+.directors-notes::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(135deg,
+    var(--hot-pink) 0 8px, var(--bg) 8px 16px);
+}
+
+.directors-notes h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hot-pink);
+  margin-bottom: 16px;
+  margin-top: 4px;
+}
+
+.directors-notes ul { list-style: none; padding: 0; }
+
+.directors-notes li {
+  margin-bottom: 14px;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  padding-left: 16px;
+  border-left: 2px solid var(--border);
+}
+
+.directors-notes li:last-child { margin-bottom: 0; }
+
+.directors-notes .phrase {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--nebula);
+  font-style: normal;
+  text-shadow: 0 0 12px rgba(199,125,255,0.5);
+}
+
+.directors-notes .explain {
+  color: var(--cream-dim);
+  font-family: var(--font-jp);
+  font-size: 0.92rem;
+}
+
+/* ═══════════════════════════════════════
+   BACK TO TOP — Film Reel
+   ═══════════════════════════════════════ */
+.back-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.back-top.visible { opacity: 1; pointer-events: auto; }
+
+.back-top:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 0 24px var(--gold-glow), 0 0 40px rgba(157,92,246,0.2);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — Landscape-First
+   ═══════════════════════════════════════ */
+
+/* ── 1024px+ : iPad landscape, laptops ── */
+@media (min-width: 1024px) {
+  body { font-size: 1.25rem; }
+  .q-title { font-size: 1.15rem; }
+  .q-title .num { font-size: 1.25rem; }
+  .model-answer .en-text { font-size: 1.2rem; }
+  .directors-notes li { font-size: 1.15rem; }
+  .poster-header h2 { font-size: 1.3rem; }
+  .chapter-select h2 { font-size: 1.2rem; }
+  .chapter-item { font-size: 1rem; }
+  .formula-step .num { font-size: 1.5rem; }
+  .formula-step .desc { font-size: 1rem; }
+  .filler-chip .en { font-size: 1rem; }
+  .btn { font-size: 0.9rem; padding: 12px 26px; }
+}
+
+/* ── 1400px+ : MacBook full experience ── */
+@media (min-width: 1400px) {
+  body { font-size: 1.3rem; }
+  .cinema-header { padding: 70px 40px 60px; }
+  .cinema-header h1 { font-size: clamp(3.2rem, 5vw, 5rem); }
+  .q-title { font-size: 1.2rem; }
+  .q-header { padding: 22px 28px; }
+  .model-answer .en-text { font-size: 1.25rem; }
+  .directors-notes li { font-size: 1.2rem; }
+  .formula-step { padding: 16px 22px; }
+}
+
+/* ── Below 768px: compact ── */
+@media (max-width: 767px) {
+  .answer-grid { grid-template-columns: 1fr; }
+  .cinema-header { padding: 50px 24px 42px; }
+  .cinema-header h1 { font-size: 2.8rem; }
+  .filler-grid { grid-template-columns: 1fr 1fr; }
+  .chapter-list { grid-template-columns: 1fr 1fr; }
+  .q-header { padding: 16px 18px; }
+  .q-body-inner { padding: 0 18px 18px; }
+  .poster-header { padding: 16px 18px; }
+  .poster-body-inner { padding: 0 18px 18px; }
+  .formula-step { padding: 12px 14px; gap: 10px; }
+  .hint-panel { padding: 18px; }
+  .directors-notes { padding: 18px; }
+  .back-top { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+}
+
+/* ── Mobile (low priority) ── */
+@media (max-width: 480px) {
+  .page { padding: 0 12px 80px; }
+  .cinema-header { padding: 36px 16px 28px; }
+  .cinema-header h1 { font-size: 2rem; letter-spacing: 0.04em; }
+  .cinema-header .presents { font-size: 0.8rem; }
+  .cinema-header .tagline { font-size: 0.95rem; }
+  .film-progress { flex-direction: column; gap: 8px; }
+  .film-track { width: 100%; max-width: 240px; }
+  .chapter-select { padding: 16px; }
+  .chapter-list { grid-template-columns: 1fr; }
+  .chapter-item { padding: 8px 12px; font-size: 0.88rem; }
+  .film-divider::before, .film-divider::after { display: none; }
+  .film-divider { justify-content: center; }
+  .poster-header { padding: 14px; }
+  .poster-header h2 { font-size: 1rem; }
+  .poster-body-inner { padding: 0 14px 14px; }
+  .filler-grid { grid-template-columns: 1fr; }
+  .q-header { flex-wrap: wrap; padding: 14px; gap: 8px; }
+  .q-title { flex-basis: calc(100% - 34px); font-size: 0.93rem; }
+  .q-diff { order: 3; font-size: 0.68rem; padding: 2px 10px; }
+  .chevron { order: 2; width: 20px; height: 20px; }
+  .q-body-inner { padding: 0 14px 14px; }
+  .formula-step { padding: 10px 12px; gap: 8px; flex-wrap: wrap; }
+  .actions { flex-direction: column; }
+  .btn { text-align: center; padding: 12px 18px; font-size: 0.82rem; }
+  .model-answer { padding: 16px; }
+  .model-answer .en-text { font-size: 0.9rem; line-height: 1.75; }
+  .jp-box { padding: 16px; }
+  .directors-notes { padding: 14px; }
+  .directors-notes li { font-size: 0.85rem; }
+  .hint-panel { padding: 16px; }
+  .hint-panel .key-phrases code { font-size: 0.8rem; padding: 1px 6px; }
+  .back-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
+  .cinema-header::before { inset: -5px; }
+  .cinema-header::after { inset: -8px; }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+  .starfield { display: none; }
+}
+
+@media print {
+  .top-bar, .back-top, .actions { display: none; }
+  .q-body, .poster-body { max-height: none !important; }
+  .panel { display: block !important; }
+  body { background: white; color: #1a1a1a; }
+  body::before, body::after { display: none; }
+  .starfield { display: none; }
+}
+
+</style>
 </head>
 <body>
 
-<div style="display: none;" id="artifact-metadata">
-    <h1>英検準1級 スピーキング Part 7 対策ガイド - 総合復習</h1>
-    <p>英検準1級スピーキングPart 7の完全対策！総合復習・両論併記で15題を徹底練習。Yes/No両方の視点でクリティカルシンキングを鍛える。</p>
+<div class="page-wrap">
+
+<!-- ═══════════ STARFIELD ═══════════ -->
+<div class="starfield">
+<div class="star star--sm" style="--x:5%;--y:12%;--d:0s;--dur:4.2s"></div>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="index.html" class="back-link">&larr; Back</a>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="theme-label">Matinee</span>
+    </button>
+  </div>
 </div>
 
-<button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
 
-<div class="container">
-    <div class="header" id="mainHeader">
-        <button class="header-toggle-btn" onclick="toggleHeader()">▼</button>
-        <h1>🎯 英検準1級 スピーキング Part 7</h1>
-        <p>総合復習 - 両論併記で批判的思考力を鍛える</p>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+<div class="page">
+
+  <!-- Cinema Header -->
+  <header class="cinema-header">
+    <div class="presents">Eiken Pre-1 Speaking Presents</div>
+    <h1>Final Review</h1>
+    <div class="tagline">Eiken Pre-1 Speaking &mdash; Part 7 — FINAL</div>
+    <div class="film-progress">
+      <div class="film-track"><div class="film-fill" id="progressFill"></div></div>
+      <span class="film-label" id="progressLabel">0 / 9</span>
+    </div>
+  </header>
+
+  <!-- Bento Grid -->
+  <div class="bento-grid">
+
+  <!-- Chapter Select -->
+  <nav class="chapter-select">
+    <h2>Chapter Select</h2>
+    <div class="chapter-list">
+      <a class="chapter-item" onclick="navTo('#formula')">
+        <span class="reel" style="border-color:var(--gold)"></span>
+        <span>The Formula</span>
+        <span class="chk">&#10003;</span>
+      </a>
+      <a class="chapter-item" onclick="navTo('#fillers')">
+        <span class="reel" style="border-color:var(--burnt)"></span>
+        <span>Filler Phrases</span>
+        <span class="chk">&#10003;</span>
+      </a>
+      <a class="chapter-item" onclick="navTo('#sec-no2')">
+        <span class="reel" style="border-color:#00e5cc"></span>
+        <span>No.2 (3)</span>
+        <span class="chk">&#10003;</span>
+      </a>
+      <a class="chapter-item" onclick="navTo('#sec-no3')">
+        <span class="reel" style="border-color:#ffc347"></span>
+        <span>No.3 (3)</span>
+        <span class="chk">&#10003;</span>
+      </a>
+      <a class="chapter-item" onclick="navTo('#sec-no4')">
+        <span class="reel" style="border-color:#ff5370"></span>
+        <span>No.4 (3)</span>
+        <span class="chk">&#10003;</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Winning Formula -->
+  <section id="formula" class="poster-card open">
+    <div class="poster-header" onclick="toggleCollapsible(this)">
+      <h2>The Winning Formula (40-45 Sec)</h2>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="poster-body">
+      <div class="poster-body-inner">
+        <p style="color:var(--cream-dim);margin-bottom:16px">
+          Follow this structure for every question. Examiners expect a clear opinion, two supported reasons, and a conclusion.
+        </p>
+        <div class="formula-steps">
+          <div class="formula-step"><span class="num">1</span><div><span class="label">Opinion</span> <span class="desc">&mdash; State your position clearly (5 sec)</span></div></div>
+          <div class="formula-step"><span class="num">2</span><div><span class="label">Reason 1 + Example</span> <span class="desc">&mdash; First supporting point with concrete detail (15-20 sec)</span></div></div>
+          <div class="formula-step"><span class="num">3</span><div><span class="label">Reason 2 + Example</span> <span class="desc">&mdash; Second supporting point with evidence (15-20 sec)</span></div></div>
+          <div class="formula-step"><span class="num">4</span><div><span class="label">Conclusion</span> <span class="desc">&mdash; Restate your position with conviction (5 sec)</span></div></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filler Phrases -->
+  <section id="fillers" class="poster-card">
+    <div class="poster-header" onclick="toggleCollapsible(this)">
+      <h2>Filler Phrases &mdash; Buy Time</h2>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="poster-body">
+      <div class="poster-body-inner">
+        <p style="color:var(--cream-dim);margin-bottom:14px">Silence is penalized. Use these phrases naturally to buy thinking time.</p>
+        <div class="filler-grid">
+          <div class="filler-chip"><span class="en">That depends on...</span><span class="jp">それは…次第ですね</span></div>
+          <div class="filler-chip"><span class="en">Let me clarify my thoughts...</span><span class="jp">考えを整理させてください…</span></div>
+          <div class="filler-chip"><span class="en">Generally speaking...</span><span class="jp">一般的に言うと…</span></div>
+          <div class="filler-chip"><span class="en">I'd like to point out that...</span><span class="jp">指摘したいのは…</span></div>
+          <div class="filler-chip"><span class="en">To put it simply...</span><span class="jp">簡単に言うと…</span></div>
+          <div class="filler-chip"><span class="en">From different angles...</span><span class="jp">様々な角度から見ると…</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- NO.2 QUESTIONS -->
+  <section id="sec-no2" class="category">
+    <div class="film-divider"><span class="cat-label cat1">No.2 &mdash; 3 Questions</span></div>
+    <div class="q-card-grid">
+
+    <!-- Q1 -->
+    <div class="q-card" data-q="1">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q1</span> Are infectious diseases becoming a bigger problem today?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no21')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no21-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no21-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no21" class="panel hint-panel">
+          <h3>Consider Both Sides</h3>
+          <ul>
+            <li>New pandemics emerging (COVID-19 example)</li>
+            <li>Global travel spreads diseases faster</li>
+            <li>Antibiotic-resistant bacteria increasing</li>
+            <li>Vaccine technology has advanced dramatically</li>
+            <li>Better sanitation than in the past</li>
+            <li>WHO and global monitoring systems strengthened</li>
+          </ul>
+        </div>
+        <div id="ans-no21-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, I think so. Global travel makes diseases spread faster than before. We've seen this with COVID-19, which became a pandemic within months."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、そう思います。国際的な移動により、病気は以前より早く広がります。COVID-19で見たように、数ヶ月でパンデミックになりました。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"spread faster"</span> <span class="explain">より早く広がる</span></li>
+              <li><span class="phrase">"became a pandemic"</span> <span class="explain">パンデミックになった</span></li>
+              <li><span class="phrase">"within months"</span> <span class="explain">数ヶ月以内に</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no21-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not necessarily. Modern medicine has advanced significantly with vaccines and treatments. We can now respond to outbreaks much faster than in the past."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">必ずしもそうではありません。現代医学はワクチンや治療法で大幅に進歩しました。過去よりもはるかに速く流行に対応できます。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"not necessarily"</span> <span class="explain">必ずしも〜ではない</span></li>
+              <li><span class="phrase">"advanced significantly"</span> <span class="explain">大幅に進歩した</span></li>
+              <li><span class="phrase">"respond to outbreaks"</span> <span class="explain">流行に対応する</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
     </div>
 
-    <div class="content">
-        
-        <div id="fillers" class="collapsible-section">
-            <div class="section-header active" onclick="toggleSection(this)">
-                <h2>💬 会話のつなぎフレーズ (考える時間を稼ぐ！)</h2>
-                <span class="section-toggle">▼</span>
-            </div>
-            <div class="section-content active">
-                <div class="filler-section">
-                    <p><strong>💡 これらのフレーズで自然に考える時間を作ろう！</strong></p>
-                    <div class="filler-grid">
-                        <div class="filler-card">
-                            <strong>1. "That depends on..."</strong>
-                            <div class="jp">「それは…次第ですね」</div>
-                        </div>
-                        <div class="filler-card">
-                            <strong>2. "Let me clarify my thoughts..."</strong>
-                            <div class="jp">「考えを整理させてください…」</div>
-                        </div>
-                        <div class="filler-card">
-                            <strong>3. "Generally speaking..."</strong>
-                            <div class="jp">「一般的に言うと…」</div>
-                        </div>
-                        <div class="filler-card">
-                            <strong>4. "I'd like to point out that..."</strong>
-                            <div class="jp">「指摘したいのは…」</div>
-                        </div>
-                        <div class="filler-card">
-                            <strong>5. "To put it simply..."</strong>
-                            <div class="jp">「簡単に言うと…」</div>
-                        </div>
-                        <div class="filler-card">
-                            <strong>6. "From different angles..."</strong>
-                            <div class="jp">「様々な角度から見ると…」</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Q2 -->
+    <div class="q-card" data-q="2">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q2</span> Do you think high school tuition should be free for all students?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no22')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no22-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no22-no')">Answer (No)</button>
         </div>
-
-
-        <!-- NO.2 SECTION (3 questions) -->
-        <div id="no2" class="collapsible-section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>📝 No.2 予想問題 (3題)</h2>
-                <span class="section-toggle">▼</span>
-            </div>
-            <div class="section-content">
-
-                <!-- Q1 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q1: Are infectious diseases becoming a bigger problem today?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>New pandemics emerging (COVID-19 example)</li>
-                                        <li>Global travel spreads diseases faster</li>
-                                        <li>Antibiotic-resistant bacteria increasing</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Vaccine technology has advanced dramatically</li>
-                                        <li>Better sanitation than in the past</li>
-                                        <li>WHO and global monitoring systems strengthened</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, I think so. Global travel makes diseases spread faster than before. We've seen this with COVID-19, which became a pandemic within months."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、そう思います。国際的な移動により、病気は以前より早く広がります。COVID-19で見たように、数ヶ月でパンデミックになりました。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>spread faster</strong> - より早く広がる</div>
-                                    <div class="phrase-item"><strong>became a pandemic</strong> - パンデミックになった</div>
-                                    <div class="phrase-item"><strong>within months</strong> - 数ヶ月以内に</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not necessarily. Modern medicine has advanced significantly with vaccines and treatments. We can now respond to outbreaks much faster than in the past."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「必ずしもそうではありません。現代医学はワクチンや治療法で大幅に進歩しました。過去よりもはるかに速く流行に対応できます。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>not necessarily</strong> - 必ずしも〜ではない</div>
-                                    <div class="phrase-item"><strong>advanced significantly</strong> - 大幅に進歩した</div>
-                                    <div class="phrase-item"><strong>respond to outbreaks</strong> - 流行に対応する</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Q2 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q2: Do you think high school tuition should be free for all students?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Equal opportunity is foundation of democracy</li>
-                                        <li>Breaks the cycle of poverty</li>
-                                        <li>Develops future talented workforce</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Difficult to secure funding (tax increase needed)</li>
-                                        <li>May lower education quality</li>
-                                        <li>Scholarship system more efficient</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, definitely. Free education gives everyone equal opportunities to learn. It helps reduce the gap between rich and poor families in society."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、絶対に。無償教育は全ての人に平等な学習機会を与えます。社会における富裕層と貧困層の格差を減らすのに役立ちます。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>equal opportunities</strong> - 平等な機会</div>
-                                    <div class="phrase-item"><strong>reduce the gap</strong> - 格差を減らす</div>
-                                    <div class="phrase-item"><strong>rich and poor families</strong> - 富裕層と貧困層</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not necessarily. Free education requires huge government funding, which means higher taxes. A scholarship system for students who need help would be more efficient."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「必ずしもそうではありません。無償教育には莫大な政府資金が必要で、増税を意味します。支援が必要な学生向けの奨学金制度の方が効率的でしょう。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>huge government funding</strong> - 莫大な政府資金</div>
-                                    <div class="phrase-item"><strong>higher taxes</strong> - 増税</div>
-                                    <div class="phrase-item"><strong>scholarship system</strong> - 奨学金制度</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q3: Do you think it is good for people to spend time on social media?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Stay connected with friends and family</li>
-                                        <li>Convenient for news and information gathering</li>
-                                        <li>Business and self-expression opportunities</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Risk of social media addiction</li>
-                                        <li>Negative effects on mental health</li>
-                                        <li>Real-life relationships become weaker</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, in moderation. Social media helps people stay connected with friends and family. It's also useful for getting news and information quickly."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、適度であれば。ソーシャルメディアは友人や家族とつながるのに役立ちます。ニュースや情報を素早く得るのにも便利です。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>in moderation</strong> - 適度に、ほどほどに</div>
-                                    <div class="phrase-item"><strong>stay connected with</strong> - 〜とつながり続ける</div>
-                                    <div class="phrase-item"><strong>get news quickly</strong> - 素早くニュースを得る</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not really. People often spend too much time scrolling, which affects their mental health. Face-to-face interaction is much more valuable for relationships."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「あまりそうは思いません。人々はスクロールに時間をかけすぎ、精神的健康に影響します。対面でのやり取りの方が人間関係にはるかに価値があります。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>spend too much time</strong> - 時間をかけすぎる</div>
-                                    <div class="phrase-item"><strong>affects mental health</strong> - 精神的健康に影響する</div>
-                                    <div class="phrase-item"><strong>face-to-face interaction</strong> - 対面でのやり取り</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
+        <div id="hint-no22" class="panel hint-panel">
+          <h3>Think About It First</h3>
+          <ul>
+            <li>Equal opportunity is foundation of democracy</li>
+            <li>Breaks the cycle of poverty</li>
+            <li>Develops future talented workforce</li>
+            <li>Difficult to secure funding (tax increase needed)</li>
+            <li>May lower education quality</li>
+            <li>Scholarship system more efficient</li>
+          </ul>
         </div>
-
-
-        <!-- NO.3 SECTION (3 questions) -->
-        <div id="no3" class="collapsible-section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>📝 No.3 予想問題 (3題)</h2>
-                <span class="section-toggle">▼</span>
+        <div id="ans-no22-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, definitely. Free education gives everyone equal opportunities to learn. It helps reduce the gap between rich and poor families in society."</p>
             </div>
-            <div class="section-content">
-
-                <!-- Q1 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q1: Do you think it is safe to trust online reviews when choosing a service?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Get real customer experiences and opinions</li>
-                                        <li>Can compare multiple reviews from different sources</li>
-                                        <li>Helps judge service quality beforehand</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Fake reviews and paid promotions exist</li>
-                                        <li>Personal subjective opinions may be biased</li>
-                                        <li>Companies can manipulate reviews</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, generally. Online reviews give us real customer experiences. Reading multiple reviews from different sources helps us make informed decisions."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、一般的には。オンラインレビューは実際の顧客体験を提供します。複数の情報源からレビューを読むことで、情報に基づいた決定ができます。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>real customer experiences</strong> - 実際の顧客体験</div>
-                                    <div class="phrase-item"><strong>from different sources</strong> - 複数の情報源から</div>
-                                    <div class="phrase-item"><strong>make informed decisions</strong> - 情報に基づいた決定をする</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not entirely. Many reviews are fake or biased. Companies sometimes pay for positive reviews, so it's hard to know what's genuine."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「完全にはそうではありません。多くのレビューは偽物か偏っています。企業は時々肯定的なレビューに料金を払うため、何が本物か見分けるのは困難です。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>not entirely</strong> - 完全には〜ではない</div>
-                                    <div class="phrase-item"><strong>fake or biased</strong> - 偽物または偏っている</div>
-                                    <div class="phrase-item"><strong>what's genuine</strong> - 何が本物か</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Q2 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q2: Do you think that new technology, such as AI, will make our lives better?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Automates repetitive tasks for efficiency</li>
-                                        <li>Innovation in medical and educational fields</li>
-                                        <li>Creates new jobs and industries</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Risk of mass unemployment</li>
-                                        <li>Privacy invasion concerns</li>
-                                        <li>Human relationships becoming weaker</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, I think so. AI can handle repetitive tasks efficiently. This allows humans to focus on more creative and meaningful work."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、そう思います。AIは反復的な作業を効率的に処理できます。これにより人間はより創造的で有意義な仕事に集中できます。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>handle repetitive tasks</strong> - 反復作業を処理する</div>
-                                    <div class="phrase-item"><strong>allows humans to focus on</strong> - 人間が〜に集中できる</div>
-                                    <div class="phrase-item"><strong>meaningful work</strong> - 有意義な仕事</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not necessarily. AI might eliminate many jobs without creating enough new ones. It could also invade our privacy and make us too dependent on technology."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「必ずしもそうではありません。AIは十分な新しい仕事を生み出さずに多くの仕事を奪う可能性があります。プライバシーを侵害し、技術への依存度を高めすぎる恐れもあります。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>eliminate jobs</strong> - 仕事を奪う</div>
-                                    <div class="phrase-item"><strong>invade our privacy</strong> - プライバシーを侵害する</div>
-                                    <div class="phrase-item"><strong>too dependent on</strong> - 〜に依存しすぎる</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q3: Do you think that reading helps young people develop a strong character?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Exposure to diverse perspectives and values</li>
-                                        <li>Develops empathy and imagination</li>
-                                        <li>Improves critical thinking skills</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Real-life experiences more important for character</li>
-                                        <li>Reading alone is insufficient</li>
-                                        <li>Social relationships and sports equally important</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, absolutely. Reading exposes young people to different perspectives and ideas. It helps them develop empathy and critical thinking skills."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、絶対に。読書は若者を異なる視点やアイデアに触れさせます。共感力と批判的思考力を育てるのに役立ちます。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>exposes to</strong> - 〜に触れさせる</div>
-                                    <div class="phrase-item"><strong>different perspectives</strong> - 異なる視点</div>
-                                    <div class="phrase-item"><strong>critical thinking skills</strong> - 批判的思考力</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not by itself. Character develops through real-life experiences and relationships. Reading is helpful, but activities like sports and teamwork are equally important."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「それだけでは不十分です。人格は実生活の経験や人間関係を通じて発達します。読書は役立ちますが、スポーツやチームワークも同様に重要です。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>not by itself</strong> - それだけでは不十分</div>
-                                    <div class="phrase-item"><strong>real-life experiences</strong> - 実生活の経験</div>
-                                    <div class="phrase-item"><strong>equally important</strong> - 同様に重要</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、絶対に。無償教育は全ての人に平等な学習機会を与えます。社会における富裕層と貧困層の格差を減らすのに役立ちます。</p>
             </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"equal opportunities"</span> <span class="explain">平等な機会</span></li>
+              <li><span class="phrase">"reduce the gap"</span> <span class="explain">格差を減らす</span></li>
+              <li><span class="phrase">"rich and poor families"</span> <span class="explain">富裕層と貧困層</span></li>
+            </ul>
+          </div>
         </div>
-
-
-        <!-- NO.4 SECTION (3 questions) -->
-        <div id="no4" class="collapsible-section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>📝 No.4 予想問題 (3題)</h2>
-                <span class="section-toggle">▼</span>
+        <div id="ans-no22-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not necessarily. Free education requires huge government funding, which means higher taxes. A scholarship system for students who need help would be more efficient."</p>
             </div>
-            <div class="section-content">
-
-                <!-- Q1 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q1: Should the government do more to increase the birth rate in Japan?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Serious labor shortage due to declining birth rate</li>
-                                        <li>Social security system sustainability</li>
-                                        <li>Necessary to maintain economic growth</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Should respect individual freedom of choice</li>
-                                        <li>Other solutions like immigration exist</li>
-                                        <li>Population decline also reduces environmental burden</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, definitely. The government should provide better childcare support and financial assistance. Making it easier to balance work and family would encourage more people to have children."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、絶対に。政府はより良い育児支援と経済的援助を提供すべきです。仕事と家庭の両立を容易にすれば、より多くの人が子どもを持つことを奨励されるでしょう。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>childcare support</strong> - 育児支援</div>
-                                    <div class="phrase-item"><strong>financial assistance</strong> - 経済的援助</div>
-                                    <div class="phrase-item"><strong>balance work and family</strong> - 仕事と家庭を両立する</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not necessarily. Having children is a personal choice that shouldn't be pressured. The government should focus on immigration and automation instead."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「必ずしもそうではありません。子どもを持つことは個人的な選択であり、圧力をかけるべきではありません。政府は移民と自動化に焦点を当てるべきです。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>personal choice</strong> - 個人的な選択</div>
-                                    <div class="phrase-item"><strong>shouldn't be pressured</strong> - 圧力をかけるべきでない</div>
-                                    <div class="phrase-item"><strong>focus on</strong> - 〜に焦点を当てる</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Q2 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q2: Should the Japanese government accept more immigrants from developing countries?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Immediate solution to labor shortage</li>
-                                        <li>Cultural diversity promotes innovation</li>
-                                        <li>Necessary to maintain international competitiveness</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Difficulty of social integration (language and cultural barriers)</li>
-                                        <li>Security concerns</li>
-                                        <li>May reduce employment opportunities for Japanese</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, I think so. Accepting more immigrants can solve the labor shortage problem. It would also bring cultural diversity and new perspectives to Japanese society."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、そう思います。より多くの移民を受け入れることで労働力不足の問題を解決できます。また、文化的多様性と新しい視点を日本社会にもたらすでしょう。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>labor shortage problem</strong> - 労働力不足の問題</div>
-                                    <div class="phrase-item"><strong>cultural diversity</strong> - 文化的多様性</div>
-                                    <div class="phrase-item"><strong>new perspectives</strong> - 新しい視点</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not necessarily. Japan needs to address integration challenges first. Language barriers and cultural differences could create social problems if not managed properly."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「必ずしもそうではありません。日本はまず統合の課題に対処する必要があります。言語の壁と文化的相違は、適切に管理されなければ社会問題を生む可能性があります。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>integration challenges</strong> - 統合の課題</div>
-                                    <div class="phrase-item"><strong>language barriers</strong> - 言語の壁</div>
-                                    <div class="phrase-item"><strong>if not managed properly</strong> - 適切に管理されなければ</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="question-collapsible">
-                    <div class="question-header" onclick="toggleQuestion(this)">
-                        <div class="question-title">Q3: Do people today rely too much on their mobile devices such as smartphones?</div>
-                        <span class="question-toggle">▼</span>
-                    </div>
-                    <div class="question-content">
-                        
-                        <div class="hint-section">
-                            <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hints</button>
-                            <div class="hint-content">
-                                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dee2e6;">
-                                    <strong style="color: #20c997; font-size: 1.05rem;">✅ Hint A (Yes perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Decrease in face-to-face communication</li>
-                                        <li>Addiction and negative effects on mental health</li>
-                                        <li>Declining memory and concentration ability</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong style="color: #f5576c; font-size: 1.05rem;">❌ Hint B (No perspective):</strong>
-                                    <ul style="margin-top: 10px;">
-                                        <li>Convenient and efficient tool</li>
-                                        <li>Democratization of information access</li>
-                                        <li>Natural flow of the times</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 Show Both Perspectives</button>
-                        
-                        <div class="answer-section">
-                            <div style="margin-bottom: 30px; padding-bottom: 25px; border-bottom: 3px solid #e9ecef;">
-                                <h4 style="color: #20c997; margin-bottom: 15px; font-size: 1.15rem;">✅ Answer A (Yes perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Yes, I think so. Many people constantly check their phones, even during conversations. This reduces face-to-face interaction and can harm relationships."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「はい、そう思います。多くの人が会話中でも常に携帯電話を確認します。これは対面での交流を減らし、人間関係を損なう可能性があります。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>constantly check</strong> - 常に確認する</div>
-                                    <div class="phrase-item"><strong>reduces face-to-face interaction</strong> - 対面での交流を減らす</div>
-                                    <div class="phrase-item"><strong>harm relationships</strong> - 人間関係を損なう</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 style="color: #f5576c; margin-bottom: 15px; font-size: 1.15rem;">❌ Answer B (No perspective)</h4>
-                                <div class="answer-container">
-                                    <div class="model-answer">
-                                        "Not necessarily. Smartphones are essential tools for modern life. They help us stay connected and access information instantly, which improves productivity."
-                                    </div>
-                                    <div class="jp-translation">
-                                        <strong>🇯🇵 日本語訳:</strong><br>
-                                        「必ずしもそうではありません。スマートフォンは現代生活に不可欠なツールです。つながりを保ち、即座に情報にアクセスでき、生産性を向上させます。」
-                                    </div>
-                                </div>
-                                <div class="notable-phrases">
-                                    <h5>📌 Notable Phrases & Words:</h5>
-                                    <div class="phrase-item"><strong>essential tools</strong> - 不可欠なツール</div>
-                                    <div class="phrase-item"><strong>stay connected</strong> - つながりを保つ</div>
-                                    <div class="phrase-item"><strong>improves productivity</strong> - 生産性を向上させる</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">必ずしもそうではありません。無償教育には莫大な政府資金が必要で、増税を意味します。支援が必要な学生向けの奨学金制度の方が効率的でしょう。</p>
             </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"huge government funding"</span> <span class="explain">莫大な政府資金</span></li>
+              <li><span class="phrase">"higher taxes"</span> <span class="explain">増税</span></li>
+              <li><span class="phrase">"scholarship system"</span> <span class="explain">奨学金制度</span></li>
+            </ul>
+          </div>
         </div>
-
+      </div></div>
     </div>
 
-    <div class="footer">
-        <p>🎓 <strong>英検準1級スピーキング Part 7 対策ガイド</strong></p>
-        <p>Teacher: <strong>Harashima</strong> │ 総合復習・両論併記 - 全9題完全収録</p>
+    <!-- Q3 -->
+    <div class="q-card" data-q="3">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q3</span> Do you think it is good for people to spend time on social media?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no23')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no23-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no23-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no23" class="panel hint-panel">
+          <h3>Think About It First</h3>
+          <ul>
+            <li>Stay connected with friends and family</li>
+            <li>Convenient for news and information gathering</li>
+            <li>Business and self-expression opportunities</li>
+            <li>Risk of social media addiction</li>
+            <li>Negative effects on mental health</li>
+            <li>Real-life relationships become weaker</li>
+          </ul>
+        </div>
+        <div id="ans-no23-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, in moderation. Social media helps people stay connected with friends and family. It's also useful for getting news and information quickly."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、適度であれば。ソーシャルメディアは友人や家族とつながるのに役立ちます。ニュースや情報を素早く得るのにも便利です。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"in moderation"</span> <span class="explain">適度に、ほどほどに</span></li>
+              <li><span class="phrase">"stay connected with"</span> <span class="explain">〜とつながり続ける</span></li>
+              <li><span class="phrase">"get news quickly"</span> <span class="explain">素早くニュースを得る</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no23-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not really. People often spend too much time scrolling, which affects their mental health. Face-to-face interaction is much more valuable for relationships."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">あまりそうは思いません。人々はスクロールに時間をかけすぎ、精神的健康に影響します。対面でのやり取りの方が人間関係にはるかに価値があります。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"spend too much time"</span> <span class="explain">時間をかけすぎる</span></li>
+              <li><span class="phrase">"affects mental health"</span> <span class="explain">精神的健康に影響する</span></li>
+              <li><span class="phrase">"face-to-face interaction"</span> <span class="explain">対面でのやり取り</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
     </div>
+    </div><!-- /q-card-grid -->
+  </section>
+
+  <!-- NO.3 QUESTIONS -->
+  <section id="sec-no3" class="category">
+    <div class="film-divider"><span class="cat-label cat2">No.3 &mdash; 3 Questions</span></div>
+    <div class="q-card-grid">
+
+    <!-- Q1 -->
+    <div class="q-card" data-q="4">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q1</span> Do you think it is safe to trust online reviews when choosing a service?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no34')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no34-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no34-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no34" class="panel hint-panel">
+          <h3>Think About It First</h3>
+          <ul>
+            <li>Get real customer experiences and opinions</li>
+            <li>Can compare multiple reviews from different sources</li>
+            <li>Helps judge service quality beforehand</li>
+            <li>Fake reviews and paid promotions exist</li>
+            <li>Personal subjective opinions may be biased</li>
+            <li>Companies can manipulate reviews</li>
+          </ul>
+        </div>
+        <div id="ans-no34-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, generally. Online reviews give us real customer experiences. Reading multiple reviews from different sources helps us make informed decisions."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、一般的には。オンラインレビューは実際の顧客体験を提供します。複数の情報源からレビューを読むことで、情報に基づいた決定ができます。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"real customer experiences"</span> <span class="explain">実際の顧客体験</span></li>
+              <li><span class="phrase">"from different sources"</span> <span class="explain">複数の情報源から</span></li>
+              <li><span class="phrase">"make informed decisions"</span> <span class="explain">情報に基づいた決定をする</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no34-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not entirely. Many reviews are fake or biased. Companies sometimes pay for positive reviews, so it's hard to know what's genuine."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">完全にはそうではありません。多くのレビューは偽物か偏っています。企業は時々肯定的なレビューに料金を払うため、何が本物か見分けるのは困難です。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"not entirely"</span> <span class="explain">完全には〜ではない</span></li>
+              <li><span class="phrase">"fake or biased"</span> <span class="explain">偽物または偏っている</span></li>
+              <li><span class="phrase">"what's genuine"</span> <span class="explain">何が本物か</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-q="5">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q2</span> Do you think that new technology, such as AI, will make our lives better?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no35')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no35-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no35-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no35" class="panel hint-panel">
+          <h3>Consider Both Sides</h3>
+          <ul>
+            <li>Automates repetitive tasks for efficiency</li>
+            <li>Innovation in medical and educational fields</li>
+            <li>Creates new jobs and industries</li>
+            <li>Risk of mass unemployment</li>
+            <li>Privacy invasion concerns</li>
+            <li>Human relationships becoming weaker</li>
+          </ul>
+        </div>
+        <div id="ans-no35-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, I think so. AI can handle repetitive tasks efficiently. This allows humans to focus on more creative and meaningful work."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、そう思います。AIは反復的な作業を効率的に処理できます。これにより人間はより創造的で有意義な仕事に集中できます。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"handle repetitive tasks"</span> <span class="explain">反復作業を処理する</span></li>
+              <li><span class="phrase">"allows humans to focus on"</span> <span class="explain">人間が〜に集中できる</span></li>
+              <li><span class="phrase">"meaningful work"</span> <span class="explain">有意義な仕事</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no35-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not necessarily. AI might eliminate many jobs without creating enough new ones. It could also invade our privacy and make us too dependent on technology."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">必ずしもそうではありません。AIは十分な新しい仕事を生み出さずに多くの仕事を奪う可能性があります。プライバシーを侵害し、技術への依存度を高めすぎる恐れもあります。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"eliminate jobs"</span> <span class="explain">仕事を奪う</span></li>
+              <li><span class="phrase">"invade our privacy"</span> <span class="explain">プライバシーを侵害する</span></li>
+              <li><span class="phrase">"too dependent on"</span> <span class="explain">〜に依存しすぎる</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-q="6">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q3</span> Do you think that reading helps young people develop a strong character?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no36')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no36-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no36-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no36" class="panel hint-panel">
+          <h3>Think About It First</h3>
+          <ul>
+            <li>Exposure to diverse perspectives and values</li>
+            <li>Develops empathy and imagination</li>
+            <li>Improves critical thinking skills</li>
+            <li>Real-life experiences more important for character</li>
+            <li>Reading alone is insufficient</li>
+            <li>Social relationships and sports equally important</li>
+          </ul>
+        </div>
+        <div id="ans-no36-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, absolutely. Reading exposes young people to different perspectives and ideas. It helps them develop empathy and critical thinking skills."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、絶対に。読書は若者を異なる視点やアイデアに触れさせます。共感力と批判的思考力を育てるのに役立ちます。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"exposes to"</span> <span class="explain">〜に触れさせる</span></li>
+              <li><span class="phrase">"different perspectives"</span> <span class="explain">異なる視点</span></li>
+              <li><span class="phrase">"critical thinking skills"</span> <span class="explain">批判的思考力</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no36-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not by itself. Character develops through real-life experiences and relationships. Reading is helpful, but activities like sports and teamwork are equally important."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">それだけでは不十分です。人格は実生活の経験や人間関係を通じて発達します。読書は役立ちますが、スポーツやチームワークも同様に重要です。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"not by itself"</span> <span class="explain">それだけでは不十分</span></li>
+              <li><span class="phrase">"real-life experiences"</span> <span class="explain">実生活の経験</span></li>
+              <li><span class="phrase">"equally important"</span> <span class="explain">同様に重要</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    </div><!-- /q-card-grid -->
+  </section>
+
+  <!-- NO.4 QUESTIONS -->
+  <section id="sec-no4" class="category">
+    <div class="film-divider"><span class="cat-label cat3">No.4 &mdash; 3 Questions</span></div>
+    <div class="q-card-grid">
+
+    <!-- Q1 -->
+    <div class="q-card" data-q="7">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q1</span> Should the government do more to increase the birth rate in Japan?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no47')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no47-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no47-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no47" class="panel hint-panel">
+          <h3>Consider Both Sides</h3>
+          <ul>
+            <li>Serious labor shortage due to declining birth rate</li>
+            <li>Social security system sustainability</li>
+            <li>Necessary to maintain economic growth</li>
+            <li>Should respect individual freedom of choice</li>
+            <li>Other solutions like immigration exist</li>
+            <li>Population decline also reduces environmental burden</li>
+          </ul>
+        </div>
+        <div id="ans-no47-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, definitely. The government should provide better childcare support and financial assistance. Making it easier to balance work and family would encourage more people to have children."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、絶対に。政府はより良い育児支援と経済的援助を提供すべきです。仕事と家庭の両立を容易にすれば、より多くの人が子どもを持つことを奨励されるでしょう。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"childcare support"</span> <span class="explain">育児支援</span></li>
+              <li><span class="phrase">"financial assistance"</span> <span class="explain">経済的援助</span></li>
+              <li><span class="phrase">"balance work and family"</span> <span class="explain">仕事と家庭を両立する</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no47-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not necessarily. Having children is a personal choice that shouldn't be pressured. The government should focus on immigration and automation instead."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">必ずしもそうではありません。子どもを持つことは個人的な選択であり、圧力をかけるべきではありません。政府は移民と自動化に焦点を当てるべきです。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"personal choice"</span> <span class="explain">個人的な選択</span></li>
+              <li><span class="phrase">"shouldn't be pressured"</span> <span class="explain">圧力をかけるべきでない</span></li>
+              <li><span class="phrase">"focus on"</span> <span class="explain">〜に焦点を当てる</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-q="8">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q2</span> Should the Japanese government accept more immigrants from developing countries?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no48')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no48-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no48-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no48" class="panel hint-panel">
+          <h3>Consider Both Sides</h3>
+          <ul>
+            <li>Immediate solution to labor shortage</li>
+            <li>Cultural diversity promotes innovation</li>
+            <li>Necessary to maintain international competitiveness</li>
+            <li>Difficulty of social integration (language and cultural barriers)</li>
+            <li>Security concerns</li>
+            <li>May reduce employment opportunities for Japanese</li>
+          </ul>
+        </div>
+        <div id="ans-no48-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, I think so. Accepting more immigrants can solve the labor shortage problem. It would also bring cultural diversity and new perspectives to Japanese society."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、そう思います。より多くの移民を受け入れることで労働力不足の問題を解決できます。また、文化的多様性と新しい視点を日本社会にもたらすでしょう。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"labor shortage problem"</span> <span class="explain">労働力不足の問題</span></li>
+              <li><span class="phrase">"cultural diversity"</span> <span class="explain">文化的多様性</span></li>
+              <li><span class="phrase">"new perspectives"</span> <span class="explain">新しい視点</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no48-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not necessarily. Japan needs to address integration challenges first. Language barriers and cultural differences could create social problems if not managed properly."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">必ずしもそうではありません。日本はまず統合の課題に対処する必要があります。言語の壁と文化的相違は、適切に管理されなければ社会問題を生む可能性があります。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"integration challenges"</span> <span class="explain">統合の課題</span></li>
+              <li><span class="phrase">"language barriers"</span> <span class="explain">言語の壁</span></li>
+              <li><span class="phrase">"if not managed properly"</span> <span class="explain">適切に管理されなければ</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-q="9">
+      <div class="q-header" onclick="toggleQ(this)">
+        <div class="q-title"><span class="num">Q3</span> Do people today rely too much on their mobile devices such as smartphones?</div>
+        <span class="q-diff intermediate">Intermediate</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="q-body"><div class="q-body-inner">
+        <div class="actions">
+          <button class="btn btn-hint" onclick="togglePanel(event,'hint-no49')">Hint</button>
+          <button class="btn btn-answer" onclick="togglePanel(event,'ans-no49-yes')">Answer (Yes)</button>
+          <button class="btn btn-alt" onclick="togglePanel(event,'ans-no49-no')">Answer (No)</button>
+        </div>
+        <div id="hint-no49" class="panel hint-panel">
+          <h3>Think About It First</h3>
+          <ul>
+            <li>Decrease in face-to-face communication</li>
+            <li>Addiction and negative effects on mental health</li>
+            <li>Declining memory and concentration ability</li>
+            <li>Convenient and efficient tool</li>
+            <li>Democratization of information access</li>
+            <li>Natural flow of the times</li>
+          </ul>
+        </div>
+        <div id="ans-no49-yes" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">Yes</span>
+              <p class="en-text">"Yes, I think so. Many people constantly check their phones, even during conversations. This reduces face-to-face interaction and can harm relationships."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">はい、そう思います。多くの人が会話中でも常に携帯電話を確認します。これは対面での交流を減らし、人間関係を損なう可能性があります。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"constantly check"</span> <span class="explain">常に確認する</span></li>
+              <li><span class="phrase">"reduces face-to-face interaction"</span> <span class="explain">対面での交流を減らす</span></li>
+              <li><span class="phrase">"harm relationships"</span> <span class="explain">人間関係を損なう</span></li>
+            </ul>
+          </div>
+        </div>
+        <div id="ans-no49-no" class="panel">
+          <div class="answer-grid">
+            <div class="model-answer">
+              <span class="side-label">No</span>
+              <p class="en-text">"Not necessarily. Smartphones are essential tools for modern life. They help us stay connected and access information instantly, which improves productivity."</p>
+            </div>
+            <div class="jp-box">
+              <span class="side-label">Japanese</span>
+              <p class="jp-text">必ずしもそうではありません。スマートフォンは現代生活に不可欠なツールです。つながりを保ち、即座に情報にアクセスでき、生産性を向上させます。</p>
+            </div>
+          </div>
+          <div class="directors-notes">
+            <h3>Director's Notes</h3>
+            <ul>
+              <li><span class="phrase">"essential tools"</span> <span class="explain">不可欠なツール</span></li>
+              <li><span class="phrase">"stay connected"</span> <span class="explain">つながりを保つ</span></li>
+              <li><span class="phrase">"improves productivity"</span> <span class="explain">生産性を向上させる</span></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    </div><!-- /q-card-grid -->
+  </section>
+
+
+  </div><!-- /bento-grid -->
+
+</div>
 </div>
 
 <script>
-    let totalQuestions = 9;
-    let answeredQuestions = 0;
 
-    function updateProgress() {
-        const percentage = (answeredQuestions / totalQuestions) * 100;
-        document.getElementById('progressBar').style.width = percentage + '%';
-    }
+const PART = 'part7';
+const TOTAL_Q = 9;
+const answered = new Set(JSON.parse(localStorage.getItem('eiken-' + PART) || '[]'));
 
-    function toggleSection(element) {
-        element.classList.toggle('active');
-        const content = element.nextElementSibling;
-        content.classList.toggle('active');
-    }
+/* ── Theme ── */
+function toggleTheme() {
+  const isMatinee = document.documentElement.getAttribute('data-theme') === 'matinee';
+  document.documentElement.setAttribute('data-theme', isMatinee ? '' : 'matinee');
+  document.querySelector('.theme-label').textContent = isMatinee ? 'Matinee' : 'Evening';
+  localStorage.setItem('eiken-theme-hollywood', isMatinee ? '' : 'matinee');
+}
 
-    function toggleQuestion(element) {
-        element.classList.toggle('active');
-        const content = element.nextElementSibling;
-        content.classList.toggle('active');
-    }
+(function initTheme() {
+  const saved = localStorage.getItem('eiken-theme-hollywood');
+  if (saved === 'matinee') {
+    document.documentElement.setAttribute('data-theme', 'matinee');
+    const lbl = document.querySelector('.theme-label');
+    if (lbl) lbl.textContent = 'Evening';
+  }
+})();
 
-    function toggleHint(button) {
-        const hintContent = button.nextElementSibling;
-        if (hintContent.style.display === 'none' || hintContent.style.display === '') {
-            hintContent.style.display = 'block';
-            button.textContent = '🔒 Hide Hints';
-        } else {
-            hintContent.style.display = 'none';
-            button.textContent = '💡 Show Hints';
-        }
-    }
-
-    function toggleAnswer(button) {
-        const answerSection = button.nextElementSibling;
-        if (answerSection.style.display === 'none' || answerSection.style.display === '') {
-            answerSection.style.display = 'block';
-            button.textContent = '🔒 Hide Answers';
-            answeredQuestions++;
-            updateProgress();
-        } else {
-            answerSection.style.display = 'none';
-            button.textContent = '📖 Show Both Perspectives';
-            answeredQuestions--;
-            updateProgress();
-        }
-    }
-
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
-        const button = document.querySelector('.dark-mode-toggle');
-        button.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    }
-
-    function toggleHeader() {
-        const header = document.getElementById('mainHeader');
-        header.classList.toggle('minimized');
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-            document.querySelector('.dark-mode-toggle').textContent = '☀️';
-        }
+/* ── Collapsible (poster cards) ── */
+function toggleCollapsible(header) {
+  const card = header.parentElement;
+  const body = header.nextElementSibling;
+  card.classList.toggle('open');
+  if (card.classList.contains('open')) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function handler() {
+      body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', handler);
     });
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; });
+  }
+}
+
+document.querySelectorAll('.poster-card.open .poster-body').forEach(b => {
+  b.style.maxHeight = 'none';
+});
+
+/* ── Question cards ── */
+function toggleQ(header) {
+  const card = header.parentElement;
+  const body = header.nextElementSibling;
+  card.classList.toggle('open');
+  if (card.classList.contains('open')) {
+    requestAnimationFrame(() => {
+      body.style.maxHeight = body.scrollHeight + 'px';
+    });
+  } else {
+    body.style.maxHeight = '0';
+  }
+}
+
+/* ── Panels ── */
+function togglePanel(e, id) {
+  e.stopPropagation();
+  const panel = document.getElementById(id);
+  const btn = e.target;
+  const isVisible = panel.classList.contains('visible');
+
+  panel.classList.toggle('visible');
+  btn.classList.toggle('active');
+
+  const qBody = panel.closest('.q-body');
+  if (qBody) requestAnimationFrame(() => { qBody.style.maxHeight = qBody.scrollHeight + 'px'; });
+
+  if (!isVisible && !id.startsWith('hint-')) {
+    const card = panel.closest('.q-card');
+    if (card) {
+      const q = card.dataset.q;
+      answered.add(q);
+      localStorage.setItem('eiken-' + PART, JSON.stringify([...answered]));
+      updateProgress();
+    }
+  }
+}
+
+/* ── Progress ── */
+function updateProgress() {
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  if (fill) fill.style.width = (answered.size / TOTAL_Q * 100) + '%';
+  if (label) label.textContent = answered.size + ' / ' + TOTAL_Q;
+}
+updateProgress();
+
+/* ── Scroll ── */
+function navTo(sel) {
+  const el = document.querySelector(sel);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Back to top ── */
+window.addEventListener('scroll', () => {
+  const btn = document.querySelector('.back-top');
+  if (btn) btn.classList.toggle('visible', scrollY > 400);
+}, { passive: true });
+
+/* ── Keyboard shortcuts ── */
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input,textarea')) return;
+  if (e.key === 'd') toggleTheme();
+  if (e.key === 't') window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 </script>
 
 </body>
