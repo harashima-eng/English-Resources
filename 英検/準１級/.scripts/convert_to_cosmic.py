@@ -837,7 +837,13 @@ def main():
 
     # Extract content from old design
     print("  Extracting categories and questions...")
-    categories = extract_questions_from_old(old_html)
+    if config.get('variant') == 'part7':
+        categories = extract_questions_part7(old_html)
+    else:
+        categories = extract_questions_from_old(old_html)
+
+    # Auto-split single category into multiple if config expects more
+    categories = auto_split_categories(categories, config)
 
     for cat in categories:
         print(f"    {cat['name']}: {len(cat['questions'])} questions")
