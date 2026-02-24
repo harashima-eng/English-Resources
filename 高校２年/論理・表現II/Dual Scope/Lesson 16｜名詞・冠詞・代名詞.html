@@ -2503,6 +2503,7 @@ function initOverviewScrollReveals() {
 
     const tl = gsap.timeline({
       scrollTrigger: {
+        id: `overview-${si}`,
         trigger: section,
         start: GSAP_CONFIG.scroll.start,
         toggleActions: GSAP_CONFIG.scroll.toggleActions
@@ -2520,86 +2521,45 @@ function initOverviewScrollReveals() {
 // ===== B8: HOVER ANIMATIONS (GSAP) =====
 function initHoverAnimations() {
   if (typeof gsap === 'undefined' || UV_REDUCED || 'ontouchstart' in window) return;
+  if (document._hoverDelegateInit) return;
+  document._hoverDelegateInit = true;
 
-  function setupHover(selector, enterProps, leaveProps) {
-    document.querySelectorAll(selector).forEach(el => {
-      if (el._hoverInit) return;
-      el._hoverInit = true;
-      el.addEventListener('mouseenter', () => {
-        gsap.to(el, { ...enterProps, duration: GSAP_CONFIG.duration.micro, overwrite: true });
-      });
-      el.addEventListener('mouseleave', () => {
-        if (leaveProps) {
-          gsap.to(el, { ...leaveProps, duration: GSAP_CONFIG.duration.micro, overwrite: true });
-        } else {
-          gsap.to(el, { clearProps: Object.keys(enterProps).join(','), duration: GSAP_CONFIG.duration.micro, overwrite: true });
-        }
-      });
-    });
+  const hoverRules = [
+    { sel: '.top-nav-link:not(.active)', enter: { y: -1, color: 'var(--text)' }, leave: { y: 0, clearProps: 'color' } },
+    { sel: '.top-nav-theme', enter: { scale: GSAP_CONFIG.hover.scaleSmall, boxShadow: 'var(--shadow-sm)' }, leave: { scale: 1, boxShadow: '' } },
+    { sel: '.sub-nav-cat', enter: { y: -2, borderColor: 'var(--cat-color)', color: 'var(--cat-color)' }, leave: { y: 0, clearProps: 'borderColor,color' } },
+    { sel: '.sub-nav-section:not(.active)', enter: { scale: GSAP_CONFIG.hover.scaleMedium, borderColor: 'var(--text)', color: 'var(--text)' }, leave: { scale: 1, clearProps: 'borderColor,color' } },
+    { sel: '.btn-primary', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, leave: { y: 0, boxShadow: '' }, dur: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.spring },
+    { sel: '.btn-secondary', enter: { borderColor: 'var(--text)', backgroundColor: 'var(--card)', boxShadow: 'var(--shadow)' }, leave: { clearProps: 'borderColor,backgroundColor,boxShadow' } },
+    { sel: '.toggle-btn', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: '0 6px 20px rgba(0,0,0,0.15)' }, leave: { y: 0, scale: 1, boxShadow: '0 2px 8px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08)' }, ease: GSAP_CONFIG.ease.spring },
+    { sel: '.box', enter: { y: -2, boxShadow: 'var(--shadow)', borderColor: 'var(--border-visible)' }, leave: { y: 0, boxShadow: 'var(--shadow-sm)', clearProps: 'borderColor' } },
+    { sel: '.qcard', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, leave: { y: 0, boxShadow: 'var(--shadow)' } },
+    { sel: '.view-btn-nav:not(.active)', enter: { backgroundColor: 'var(--card)', color: 'var(--text)' }, leave: { clearProps: 'backgroundColor,color' } },
+  ];
+
+  function findRule(el) {
+    for (const r of hoverRules) { if (el.matches(r.sel)) return r; }
+    return null;
   }
 
-  // -- Interaction: Nav link hover --
-  setupHover('.top-nav-link:not(.active)', { y: -1, color: 'var(--text)' }, { y: 0, clearProps: 'color' });
+  document.addEventListener('mouseenter', (e) => {
+    const r = findRule(e.target);
+    if (!r) return;
+    gsap.to(e.target, { ...r.enter, duration: r.dur || GSAP_CONFIG.duration.micro, ease: r.ease, overwrite: true });
+  }, true);
 
-  // -- Interaction: Theme button hover --
-  setupHover('.top-nav-theme', { scale: GSAP_CONFIG.hover.scaleSmall, boxShadow: 'var(--shadow-sm)' }, { scale: 1, boxShadow: '' });
+  document.addEventListener('mouseleave', (e) => {
+    const r = findRule(e.target);
+    if (!r) return;
+    gsap.to(e.target, { ...r.leave, duration: r.dur || GSAP_CONFIG.duration.micro, overwrite: true });
+  }, true);
 
-  // -- Interaction: Sub-nav category hover --
-  document.querySelectorAll('.sub-nav-cat').forEach(el => {
-    if (el._hoverInit) return;
-    el._hoverInit = true;
-    el.addEventListener('mouseenter', () => {
-      gsap.to(el, { y: -2, borderColor: 'var(--cat-color)', color: 'var(--cat-color)', duration: GSAP_CONFIG.duration.micro, overwrite: true });
-    });
-    el.addEventListener('mouseleave', () => {
-      gsap.to(el, { y: 0, clearProps: 'borderColor,color', duration: GSAP_CONFIG.duration.micro, overwrite: true });
-    });
-  });
-
-  // -- Interaction: Sub-nav section hover --
-  setupHover('.sub-nav-section:not(.active)', { scale: GSAP_CONFIG.hover.scaleMedium, borderColor: 'var(--text)', color: 'var(--text)' }, { scale: 1, clearProps: 'borderColor,color' });
-
-  // -- Interaction: Primary button hover --
-  document.querySelectorAll('.btn-primary').forEach(el => {
-    if (el._hoverInit) return;
-    el._hoverInit = true;
-    el.addEventListener('mouseenter', () => {
-      gsap.to(el, { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)', duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.spring });
-    });
-    el.addEventListener('mouseleave', () => {
-      gsap.to(el, { y: 0, boxShadow: '', duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.default });
-    });
-  });
-
-  // -- Interaction: Secondary button hover --
-  setupHover('.btn-secondary', { borderColor: 'var(--text)', backgroundColor: 'var(--card)', boxShadow: 'var(--shadow)' }, { clearProps: 'borderColor,backgroundColor,boxShadow' });
-
-  // -- Interaction: Toggle button hover + active --
-  document.querySelectorAll('.toggle-btn').forEach(el => {
-    if (el._hoverInit) return;
-    el._hoverInit = true;
-    el.addEventListener('mouseenter', () => {
-      gsap.to(el, { y: GSAP_CONFIG.hover.lift, boxShadow: '0 6px 20px rgba(0,0,0,0.15)', duration: GSAP_CONFIG.duration.micro, ease: GSAP_CONFIG.ease.spring });
-    });
-    el.addEventListener('mouseleave', () => {
-      gsap.to(el, { y: 0, scale: 1, boxShadow: '0 2px 8px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08)', duration: GSAP_CONFIG.duration.micro, ease: GSAP_CONFIG.ease.default });
-    });
-    el.addEventListener('mousedown', () => {
-      gsap.to(el, { y: 0, scale: 0.96, duration: 0.1 });
-    });
-    el.addEventListener('mouseup', () => {
-      gsap.to(el, { scale: 1, duration: 0.15, ease: GSAP_CONFIG.ease.spring });
-    });
-  });
-
-  // -- Interaction: Box hover --
-  setupHover('.box', { y: -2, boxShadow: 'var(--shadow)', borderColor: 'var(--border-visible)' }, { y: 0, boxShadow: 'var(--shadow-sm)', clearProps: 'borderColor' });
-
-  // -- Interaction: Question card hover --
-  setupHover('.qcard', { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, { y: 0, boxShadow: 'var(--shadow)' });
-
-  // -- Interaction: View button hover --
-  setupHover('.view-btn-nav:not(.active)', { backgroundColor: 'var(--card)', color: 'var(--text)' }, { clearProps: 'backgroundColor,color' });
+  document.addEventListener('mousedown', (e) => {
+    if (e.target.matches('.toggle-btn')) gsap.to(e.target, { y: 0, scale: 0.96, duration: 0.1 });
+  }, true);
+  document.addEventListener('mouseup', (e) => {
+    if (e.target.matches('.toggle-btn')) gsap.to(e.target, { scale: 1, duration: 0.15, ease: GSAP_CONFIG.ease.spring });
+  }, true);
 }
 
 // ===== C8: SEARCH FOCUS ANIMATION =====
