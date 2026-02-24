@@ -959,7 +959,7 @@
   function getWrongBySec() {
     var groups = {};
     Object.keys(answeredKeys).forEach(function(key) {
-      if (answeredKeys[key] !== 'wrong') return;
+      if (getAnswerResult(key) !== 'wrong') return;
       var parts = key.split('-');
       var si = parseInt(parts[0]);
       var qi = parseInt(parts[1]);
@@ -971,7 +971,7 @@
 
   function getTotalWrong() {
     return Object.keys(answeredKeys).filter(function(k) {
-      return answeredKeys[k] === 'wrong';
+      return getAnswerResult(k) === 'wrong';
     }).length;
   }
 
@@ -1003,7 +1003,7 @@
     var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
     cards.forEach(function(card) {
       var key = getQKey(card.dataset.si, card.dataset.qi);
-      card.style.display = (reviewMode && answeredKeys[key] !== 'wrong') ? 'none' : '';
+      card.style.display = (reviewMode && getAnswerResult(key) !== 'wrong') ? 'none' : '';
     });
   }
 
