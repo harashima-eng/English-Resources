@@ -53,6 +53,13 @@
       bestStreak = data.bestStreak || 0;
       badges = data.badges || [];
       sectionScores = data.sectionScores || {};
+      if (data.answeredKeys) {
+        answeredKeys = {};
+        Object.keys(data.answeredKeys).forEach(function(k) {
+          var v = data.answeredKeys[k];
+          answeredKeys[k] = (typeof v === 'string') ? { result: v } : v;
+        });
+      }
     } catch (e) { /* ignore corrupt data */ }
   }
 
@@ -61,8 +68,16 @@
     localStorage.setItem(key, JSON.stringify({
       bestStreak: bestStreak,
       badges: badges,
-      sectionScores: sectionScores
+      sectionScores: sectionScores,
+      answeredKeys: answeredKeys
     }));
+  }
+
+  function getAnswerResult(key) {
+    var entry = answeredKeys[key];
+    if (!entry) return null;
+    if (typeof entry === 'string') return entry;
+    return entry.result;
   }
 
   // ── Score tracker DOM ──
