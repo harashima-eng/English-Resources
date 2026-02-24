@@ -531,24 +531,10 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border-visible);
       border-left: 4px solid var(--card-accent);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: fadeIn 0.4s ease backwards;
       transform-style: preserve-3d;
     }
 
-    .conj-card:hover {
-      transform: translateY(-4px) rotateX(2deg) rotateY(-1deg);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .conj-card:nth-child(1) { animation-delay: 0s; }
-    .conj-card:nth-child(2) { animation-delay: 0.05s; }
-    .conj-card:nth-child(3) { animation-delay: 0.1s; }
-    .conj-card:nth-child(4) { animation-delay: 0.15s; }
-    .conj-card:nth-child(5) { animation-delay: 0.2s; }
-    .conj-card:nth-child(6) { animation-delay: 0.25s; }
-    .conj-card:nth-child(7) { animation-delay: 0.3s; }
-    .conj-card:nth-child(8) { animation-delay: 0.35s; }
+    /* .conj-card hover + entrance handled by GSAP */
 
     .conj-section.coord .conj-card { --card-accent: var(--coord); }
     .conj-section.subord .conj-card { --card-accent: var(--subord); }
@@ -684,7 +670,6 @@
       background: linear-gradient(90deg, var(--coord), var(--subord));
       border-radius: 100px;
       width: 0%;
-      transition: width 0.3s ease;
     }
 
     .progress-label {
@@ -709,7 +694,6 @@
       font-size: 15px;
       font-family: inherit;
       color: var(--text);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .search-input:focus {
@@ -744,36 +728,14 @@
     /* Question Card */
     /* Performance fix: removed staggered animations that cause GPU overload with many cards */
     /* パフォーマンス修正: 多数のカードでGPU過負荷を引き起こすアニメーションを削除 */
+    /* .qcard reveal + hover handled by GSAP */
     .qcard {
       background: var(--card);
       border-radius: var(--radius);
       border: 1px solid var(--border-visible);
       box-shadow: var(--shadow);
       overflow: hidden;
-      /* Card reveal animation - starts hidden */
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease,
-                  transform 0.5s ease,
-                  box-shadow 0.3s ease;
     }
-
-    .qcard.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .qcard.visible:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* Staggered reveal delays */
-    .qcard:nth-child(1) { transition-delay: 0s; }
-    .qcard:nth-child(2) { transition-delay: 0.05s; }
-    .qcard:nth-child(3) { transition-delay: 0.1s; }
-    .qcard:nth-child(4) { transition-delay: 0.15s; }
-    .qcard:nth-child(5) { transition-delay: 0.2s; }
 
     /* Dark mode glassy cards with visible shadows */
     [data-theme="dark"] .qcard {
@@ -943,21 +905,9 @@
       /* Default shadow for elevated look */
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12),
                   0 4px 12px rgba(0, 0, 0, 0.08);
-      /* Spring effect transition */
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  box-shadow 0.2s ease,
-                  background-color 0.2s ease;
     }
 
-    .toggle-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .toggle-btn:active {
-      transform: translateY(0) scale(0.96);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+    /* .toggle-btn hover/active handled by GSAP */
 
     .toggle-btn.vocab { background: var(--correl); color: white; }
     .toggle-btn.hint { background: var(--coord); color: white; }
@@ -979,14 +929,9 @@
       line-height: 1.7;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    .box:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-      border-color: var(--border-visible);
-    }
+    /* .box hover handled by GSAP */
 
     .vocab-box {
       background: var(--card);
@@ -1019,9 +964,7 @@
       box-shadow: var(--shadow-sm);
     }
 
-    [data-theme="dark"] .box:hover {
-      box-shadow: var(--shadow);
-    }
+    /* dark .box hover handled by GSAP */
 
     .choice-explanations {
       margin-top: 12px;
