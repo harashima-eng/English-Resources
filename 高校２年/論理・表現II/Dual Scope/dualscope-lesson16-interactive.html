@@ -93,7 +93,7 @@
       line-height: 1.7;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      /* Theme transition handled by GSAP */
     }
 
     /* Header */
@@ -177,10 +177,9 @@
       background: transparent;
       color: var(--color-text-secondary);
       cursor: pointer;
-      transition: all 0.15s ease;
+      /* Hover handled by GSAP */
       white-space: nowrap;
     }
-    .mode-btn:hover { background: var(--color-border-light); }
     .mode-btn.active {
       background: var(--color-surface);
       color: var(--color-primary);
@@ -207,12 +206,7 @@
       background: var(--color-surface);
       color: var(--color-text-secondary);
       cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .control-btn:hover {
-      border-color: var(--color-primary-light);
-      color: var(--color-primary);
-      background: var(--color-highlight-bg);
+      /* Hover handled by GSAP */
     }
     .control-btn.active {
       background: var(--color-primary);
@@ -239,11 +233,7 @@
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
       overflow: hidden;
-      transition: all 0.2s ease;
-    }
-    .sentence-card:hover {
-      border-color: var(--color-primary-light);
-      box-shadow: var(--shadow-md);
+      /* Hover handled by GSAP */
     }
     .sentence-card.practiced {
       border-left: 4px solid var(--color-success);
