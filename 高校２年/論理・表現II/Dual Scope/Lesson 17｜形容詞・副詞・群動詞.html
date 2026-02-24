@@ -925,14 +925,9 @@
       line-height: 1.7;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    .box:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-      border-color: var(--border-visible);
-    }
+    /* .box hover handled by GSAP */
 
     .vocab-box {
       background: var(--card);
@@ -962,10 +957,6 @@
       background: var(--card);
       border-color: var(--border-visible);
       box-shadow: var(--shadow-sm);
-    }
-
-    [data-theme="dark"] .box:hover {
-      box-shadow: var(--shadow);
     }
 
     .choice-explanations {
