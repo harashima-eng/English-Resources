@@ -1024,12 +1024,6 @@
     input.className = 'iq-correction-input';
     input.placeholder = errorWord + ' → ...';
 
-    var checkBtn = document.createElement('button');
-    checkBtn.className = 'iq-check-btn iq-check-btn--subtle';
-    checkBtn.textContent = 'Check';
-    checkBtn.disabled = true;
-    if (iqSessionActive) checkBtn.style.display = 'none';
-
     function performCheck() {
       var typed = input.value.trim();
       if (!typed || zone.classList.contains('locked')) return;
@@ -1038,7 +1032,6 @@
 
       input.disabled = true;
       zone.classList.add('locked');
-      checkBtn.style.display = 'none';
 
       if (underline) underline.classList.add(isCorrect ? 'correct' : 'wrong');
 
@@ -1046,7 +1039,6 @@
       var msg = isCorrect
         ? 'Correct! ' + errorWord + ' → ' + display
         : 'Incorrect. The correct form is: ' + display;
-      zone.appendChild(createFeedback(isCorrect, msg));
 
       if (!isCorrect) {
         var answer = document.createElement('div');
@@ -1057,23 +1049,28 @@
 
       answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: input.value.trim(), type: 'correction' };
       addScore(isCorrect, si);
+      return { isCorrect: isCorrect, message: msg };
     }
 
     zone._performCheck = performCheck;
 
     input.oninput = function() {
-      if (!iqSessionActive) checkBtn.disabled = !input.value.trim();
+      if (!iqSessionActive && input.value.trim()) {
+        showCheckPopup(input, zone, performCheck);
+      }
     };
     input.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !checkBtn.disabled) {
+      if (e.key === 'Enter' && input.value.trim()) {
         e.preventDefault();
-        performCheck();
+        if (zone._popup) {
+          var result = performCheck();
+          if (result) transformToResult(zone._popup, result.isCorrect, result.message);
+        } else if (!iqSessionActive) {
+          showCheckPopup(input, zone, performCheck);
+        }
       }
     });
     zone.appendChild(input);
-
-    checkBtn.onclick = function() { performCheck(); };
-    zone.appendChild(checkBtn);
   }
 
   // ── Fill-in UI (inline blank inputs in sentence) ──
