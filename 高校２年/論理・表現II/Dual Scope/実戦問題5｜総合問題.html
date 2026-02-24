@@ -916,20 +916,7 @@
       /* Default shadow for elevated look */
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12),
                   0 4px 12px rgba(0, 0, 0, 0.08);
-      /* Spring effect transition */
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  box-shadow 0.2s ease,
-                  background-color 0.2s ease;
-    }
-
-    .toggle-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .toggle-btn:active {
-      transform: translateY(0) scale(0.96);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      /* Hover/active handled by GSAP initHoverAnimations() */
     }
 
     .toggle-btn.vocab { background: var(--adv); color: white; }
@@ -952,13 +939,7 @@
       line-height: 1.7;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    .box:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-      border-color: var(--border-visible);
+      /* Hover handled by GSAP initHoverAnimations() */
     }
 
     .vocab-box {
@@ -992,9 +973,7 @@
       box-shadow: var(--shadow-sm);
     }
 
-    [data-theme="dark"] .box:hover {
-      box-shadow: var(--shadow);
-    }
+
 
     .choice-explanations {
       margin-top: 12px;
@@ -1085,63 +1064,10 @@
     .view-overview.active { display: block; }
     .view-question.active { display: block; }
 
-    /* ===== CSS ANIMATIONS ===== */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    /* All animations handled by GSAP -- see initHoverAnimations(), initCardReveal(), etc. */
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .collapsible.open {
-      animation: slideInSmooth 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    @keyframes slideInSmooth {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Reduced motion support for accessibility */
+    /* Reduced motion: GSAP handles via UV_REDUCED flag */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
       html {
         scroll-behavior: auto;
       }
@@ -1275,7 +1201,7 @@
         font-family: inherit;
         cursor: pointer;
         border-radius: 12px;
-        transition: color 0.2s ease, background-color 0.2s ease;
+        /* Hover/active handled by GSAP initHoverAnimations() */
       }
 
       .mobile-nav-btn.active {
