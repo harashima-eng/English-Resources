@@ -2605,6 +2605,7 @@ function initOverviewScrollReveals() {
 
     const tl = gsap.timeline({
       scrollTrigger: {
+        id: `overview-${si}`,
         trigger: section,
         start: GSAP_CONFIG.scroll.start,
         toggleActions: GSAP_CONFIG.scroll.toggleActions
