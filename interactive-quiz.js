@@ -1332,14 +1332,10 @@
 
   function toggleReviewMode() {
     reviewMode = !reviewMode;
-    if (scoreEl) scoreEl.classList.toggle('iq-review-active', reviewMode);
-    if (reviewBtnEl) reviewBtnEl.classList.toggle('active', reviewMode);
 
     if (reviewMode) {
       if (getTotalWrong() === 0) {
         reviewMode = false;
-        if (reviewBtnEl) reviewBtnEl.classList.remove('active');
-        if (scoreEl) scoreEl.classList.remove('iq-review-active');
         return;
       }
       applyReviewFilter();
@@ -1557,10 +1553,8 @@
       answeredKeys = {};
       saveProgress();
       toggleBadgePanel();
-      updateScoreText();
-      updateScoreBar();
+      updateProgressPanel();
       updateStreakDisplay();
-      if (reviewBtnEl) reviewBtnEl.style.display = 'none';
     };
     badgePanelEl.appendChild(resetBtn);
 
