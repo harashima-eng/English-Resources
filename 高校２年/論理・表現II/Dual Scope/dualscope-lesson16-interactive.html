@@ -853,14 +853,35 @@
       document.getElementById('progressCount').textContent = practiced.size + ' / ' + sentences.length;
     }
 
-    // Toggle card reveal
+    // Toggle card reveal (GSAP)
     function toggleCard(index) {
       if (currentMode === 'all') return;
       const card = document.querySelector('[data-index="' + index + '"]');
-      card.classList.toggle('revealed');
+      const isRevealed = card.classList.contains('revealed');
+      const toggle = card.querySelector('.card-toggle');
+      const hiddenEls = card.querySelectorAll('.text-hidden');
+      const blankWords = card.querySelectorAll('.blank-word');
+
+      if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+        if (isRevealed) {
+          // Close: reverse animations
+          card.classList.remove('revealed');
+          if (toggle) gsap.to(toggle, { rotation: 0, backgroundColor: 'var(--color-border-light)', color: 'var(--color-text-muted)', duration: 0.2, ease: GSAP_CONFIG.ease.default });
+          hiddenEls.forEach(el => gsap.to(el, { opacity: 0.15, duration: 0.2 }));
+          blankWords.forEach(el => gsap.to(el, { color: 'transparent', duration: 0.2 }));
+        } else {
+          // Open: animate reveal
+          card.classList.add('revealed');
+          if (toggle) gsap.to(toggle, { rotation: 180, backgroundColor: 'var(--color-primary)', color: 'white', duration: 0.3, ease: GSAP_CONFIG.ease.spring });
+          hiddenEls.forEach(el => gsap.to(el, { opacity: 1, duration: 0.3, ease: GSAP_CONFIG.ease.default }));
+          blankWords.forEach(el => gsap.to(el, { color: 'var(--color-primary)', duration: 0.3 }));
+        }
+      } else {
+        card.classList.toggle('revealed');
+      }
     }
 
-    // Toggle practiced
+    // Toggle practiced (GSAP celebration)
     function togglePracticed(index, event) {
       event.stopPropagation();
       const card = document.querySelector('[data-index="' + index + '"]');
@@ -870,12 +891,16 @@
         practiced.delete(index);
         card.classList.remove('practiced');
         btn.classList.remove('done');
-        btn.innerHTML = svgCircle + ' 練習完了にする';
+        btn.innerHTML = svgCircle + ' \u7DF4\u7FD2\u5B8C\u4E86\u306B\u3059\u308B';
       } else {
         practiced.add(index);
         card.classList.add('practiced');
         btn.classList.add('done');
-        btn.innerHTML = svgCheck + ' 練習完了';
+        btn.innerHTML = svgCheck + ' \u7DF4\u7FD2\u5B8C\u4E86';
+        // -- Celebration pulse --
+        if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+          gsap.fromTo(btn, { scale: 0.9 }, { scale: 1, duration: 0.4, ease: GSAP_CONFIG.ease.elastic });
+        }
       }
 
       saveState();
