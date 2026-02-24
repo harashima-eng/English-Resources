@@ -26,7 +26,7 @@
 
   // ── State ──
   var score = { correct: 0, answered: 0, total: totalInteractive };
-  var answeredKeys = {};  // "si-qi" → "correct" | "wrong"
+  var answeredKeys = {};  // "si-qi" → { result: "correct"|"wrong", userAnswer: <varies>, type: string }
   var iqSessionActive = false;
   var reviewMode = false;
 
