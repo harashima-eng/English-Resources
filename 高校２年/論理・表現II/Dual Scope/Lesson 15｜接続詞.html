@@ -2479,7 +2479,12 @@ function initHomeEntrance() {
 function initOverviewScrollReveals() {
   if (typeof gsap === 'undefined' || UV_REDUCED) return;
 
-  gsap.utils.toArray('.conj-section').forEach(section => {
+  // Kill previous overview ScrollTriggers to prevent accumulation
+  ScrollTrigger.getAll().forEach(t => {
+    if (t.vars.id && t.vars.id.startsWith('overview-')) t.kill();
+  });
+
+  gsap.utils.toArray('.conj-section').forEach((section, si) => {
     const header = section.querySelector('.conj-section-header');
     const cards = section.querySelectorAll('.conj-card');
 
@@ -2487,6 +2492,7 @@ function initOverviewScrollReveals() {
 
     const tl = gsap.timeline({
       scrollTrigger: {
+        id: `overview-${si}`,
         trigger: section,
         start: GSAP_CONFIG.scroll.start,
         toggleActions: GSAP_CONFIG.scroll.toggleActions
