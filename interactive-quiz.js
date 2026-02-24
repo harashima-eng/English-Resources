@@ -800,63 +800,11 @@
 
     var selectedLabel = null;
     var correctionInput = null;
+    var checkBtn = null;
     var hasTextReq = !!q.correctText;
 
-    function updateCheckState() {
-      if (iqSessionActive) return;
-      if (hasTextReq) {
-        checkBtn.disabled = !(selectedLabel && correctionInput && correctionInput.value.trim());
-      } else {
-        checkBtn.disabled = !selectedLabel;
-      }
-    }
-
-    underlines.forEach(function(u) {
-      var text = u.textContent.trim();
-      var match = text.match(/^([a-d])\./);
-      if (!match) return;
-      var label = match[1];
-      u.classList.add('iq-error-option');
-      u.dataset.label = label;
-      u.style.cursor = 'pointer';
-      u.onclick = function() {
-        if (zone.classList.contains('locked')) return;
-        underlines.forEach(function(uu) { uu.classList.remove('selected'); });
-        u.classList.add('selected');
-        selectedLabel = label;
-        if (window.UISound) UISound.play('click');
-        updateCheckState();
-        if (iqSessionActive) {
-          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
-            detail: { si: si, qi: qi, answer: label, type: 'error' }
-          }));
-        }
-      };
-    });
-
-    var hint = document.createElement('div');
-    hint.className = 'iq-scramble-label';
-    hint.textContent = hasTextReq
-      ? 'Click the error, then type the correct form'
-      : 'Click the underlined part with an error';
-    zone.appendChild(hint);
-
-    if (hasTextReq) {
-      correctionInput = document.createElement('input');
-      correctionInput.type = 'text';
-      correctionInput.className = 'iq-correction-input';
-      correctionInput.placeholder = 'Type the correct form...';
-      correctionInput.oninput = function() { updateCheckState(); };
-      zone.appendChild(correctionInput);
-    }
-
-    var checkBtn = document.createElement('button');
-    checkBtn.className = 'iq-check-btn';
-    checkBtn.textContent = 'Check';
-    checkBtn.disabled = true;
-    if (iqSessionActive) checkBtn.style.display = 'none';
-    checkBtn.onclick = function() {
-      if (!selectedLabel) return;
+    function performCheck() {
+      if (!selectedLabel || zone.classList.contains('locked')) return;
       var selectionCorrect = selectedLabel === q.correctAnswer;
       var textCorrect = true;
 
@@ -869,7 +817,7 @@
       var isCorrect = selectionCorrect && textCorrect;
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
-      checkBtn.style.display = 'none';
+      if (checkBtn) checkBtn.style.display = 'none';
 
       underlines.forEach(function(u) {
         if (!u.dataset.label) return;
@@ -901,8 +849,72 @@
 
       answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: { label: selectedLabel, correctionText: (correctionInput ? correctionInput.value.trim() : null) }, type: 'error' };
       addScore(isCorrect, si);
-    };
-    zone.appendChild(checkBtn);
+    }
+
+    zone._performCheck = performCheck;
+
+    underlines.forEach(function(u) {
+      var text = u.textContent.trim();
+      var match = text.match(/^([a-d])\./);
+      if (!match) return;
+      var label = match[1];
+      u.classList.add('iq-error-option');
+      u.dataset.label = label;
+      u.style.cursor = 'pointer';
+      u.onclick = function() {
+        if (zone.classList.contains('locked')) return;
+        underlines.forEach(function(uu) { uu.classList.remove('selected'); });
+        u.classList.add('selected');
+        selectedLabel = label;
+        if (window.UISound) UISound.play('click');
+        if (iqSessionActive) {
+          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+            detail: { si: si, qi: qi, answer: label, type: 'error' }
+          }));
+          return;
+        }
+        if (!hasTextReq) {
+          // Auto-check for click-only error questions
+          setTimeout(function() { performCheck(); }, 300);
+        } else if (checkBtn) {
+          checkBtn.disabled = !(correctionInput && correctionInput.value.trim());
+        }
+      };
+    });
+
+    var hint = document.createElement('div');
+    hint.className = 'iq-scramble-label';
+    hint.textContent = hasTextReq
+      ? 'Click the error, then type the correct form'
+      : 'Click the underlined part with an error';
+    zone.appendChild(hint);
+
+    if (hasTextReq) {
+      correctionInput = document.createElement('input');
+      correctionInput.type = 'text';
+      correctionInput.className = 'iq-correction-input';
+      correctionInput.placeholder = 'Type the correct form...';
+      correctionInput.oninput = function() {
+        if (!iqSessionActive && checkBtn) {
+          checkBtn.disabled = !(selectedLabel && correctionInput.value.trim());
+        }
+      };
+      correctionInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && checkBtn && !checkBtn.disabled) {
+          e.preventDefault();
+          performCheck();
+        }
+      });
+      zone.appendChild(correctionInput);
+
+      checkBtn = document.createElement('button');
+      checkBtn.className = 'iq-check-btn iq-check-btn--subtle';
+      checkBtn.textContent = 'Check';
+      checkBtn.disabled = true;
+      if (iqSessionActive) checkBtn.style.display = 'none';
+      checkBtn.onclick = function() { performCheck(); };
+      zone.appendChild(checkBtn);
+    }
   }
 
   // ── Correction UI (single-underline error — type the fix) ──
