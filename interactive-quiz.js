@@ -1360,7 +1360,10 @@
   function setupTeacherRevealListeners() {
     document.addEventListener('tr:session-start', function() {
       iqSessionActive = true;
-      // Hide all Check buttons
+      // Dismiss any open popups and hide remaining Check buttons (compose)
+      document.querySelectorAll('.iq-zone').forEach(function(zone) {
+        dismissPopup(zone);
+      });
       document.querySelectorAll('.iq-check-btn').forEach(function(btn) {
         btn.style.display = 'none';
       });
@@ -1368,23 +1371,14 @@
 
     document.addEventListener('tr:session-end', function() {
       iqSessionActive = false;
-      // Show Check buttons for unanswered, unlocked questions
+      // Re-enable compose Check buttons for unanswered questions
       document.querySelectorAll('.iq-zone').forEach(function(zone) {
         if (zone.classList.contains('locked')) return;
         var btn = zone.querySelector('.iq-check-btn');
         if (btn) {
           btn.style.display = '';
-          // Enable if a selection, correction input, or fillin inputs exist
-          var ci = zone.querySelector('.iq-correction-input');
-          var fillinInputs = zone.closest('.qcard-question') ? zone.closest('.qcard-question').querySelectorAll('.iq-fillin-input') : [];
-          var fillinFilled = fillinInputs.length > 0 && Array.prototype.every.call(fillinInputs, function(inp) { return inp.value.trim(); });
           var composeInput = zone.querySelector('.iq-compose-input');
-          if (zone.querySelector('.iq-choice.selected') ||
-              zone.querySelector('.iq-error-option.selected') ||
-              (ci && ci.value.trim()) ||
-              zone.querySelector('.iq-answer-zone.has-items') ||
-              fillinFilled ||
-              (composeInput && composeInput.value.trim())) {
+          if (composeInput && composeInput.value.trim()) {
             btn.disabled = false;
           }
         }
@@ -1397,13 +1391,12 @@
       var key = getQKey(si, qi);
       if (answeredKeys[key]) return;
 
-      // Find the card's iq-zone
       var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
       if (!card) return;
       var zone = card.querySelector('.iq-zone');
       if (!zone || zone.classList.contains('locked')) return;
 
-      // Check if a selection exists — auto-trigger the Check button
+      // Check if a selection/input exists — auto-trigger via _performCheck
       var errorSelected = zone.querySelector('.iq-error-option.selected');
       var corrInput = zone.querySelector('.iq-correction-input');
       var fillinInputs = card.querySelectorAll('.iq-fillin-input');
@@ -1416,14 +1409,20 @@
                          fillinFilled ||
                          (composeInput && composeInput.value.trim());
 
-      var checkBtn = zone.querySelector('.iq-check-btn');
-      if (hasSelection && checkBtn) {
-        checkBtn.style.display = '';
-        checkBtn.disabled = false;
-        checkBtn.click();
-      } else if (checkBtn) {
-        // No selection yet — show the Check button so student can still answer
-        checkBtn.style.display = '';
+      if (hasSelection && zone._performCheck) {
+        var result = zone._performCheck();
+        // For revealed questions, show inline feedback (no popup)
+        if (result) {
+          zone.appendChild(createFeedback(result.isCorrect, result.message));
+        }
+      } else if (hasSelection) {
+        // Fallback for compose (has check button, not _performCheck)
+        var checkBtn = zone.querySelector('.iq-check-btn');
+        if (checkBtn) {
+          checkBtn.style.display = '';
+          checkBtn.disabled = false;
+          checkBtn.click();
+        }
       }
     });
   }
