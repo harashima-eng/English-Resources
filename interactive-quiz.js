@@ -287,6 +287,133 @@
     }
 
     questionDiv.appendChild(zone);
+
+    // If previously answered, restore visual state immediately
+    if (answeredKeys[key]) {
+      applyAnsweredVisualState(zone, q, answeredKeys[key], cardEl);
+    }
+  }
+
+  // ── Apply post-answer visual state for restored cards ──
+  function applyAnsweredVisualState(zone, q, entry, cardEl) {
+    var result = entry.result || (typeof entry === 'string' ? entry : null);
+    var userAnswer = entry.userAnswer;
+    var type = entry.type || q.type;
+    var wasCorrect = result === 'correct';
+
+    // Lock zone and hide check/show buttons
+    zone.classList.add('locked');
+    zone.querySelectorAll('.iq-check-btn').forEach(function(btn) { btn.style.display = 'none'; });
+
+    switch (type) {
+      case 'pair': {
+        zone.querySelectorAll('.iq-choice').forEach(function(b) {
+          if (b.textContent === q.correctAnswer) {
+            b.classList.add('correct');
+          } else if (!wasCorrect && b.textContent === userAnswer) {
+            b.classList.add('selected', 'wrong');
+          } else {
+            b.classList.add('dimmed');
+          }
+        });
+        break;
+      }
+
+      case 'choice': {
+        zone.querySelectorAll('.iq-choice').forEach(function(b) {
+          if (b.dataset.letter === q.correctAnswer) {
+            b.classList.add('correct');
+          } else if (!wasCorrect && b.dataset.letter === userAnswer) {
+            b.classList.add('selected', 'wrong');
+          } else {
+            b.classList.add('dimmed');
+          }
+        });
+        break;
+      }
+
+      case 'error': {
+        var qtext = cardEl.querySelector('.qtext');
+        if (qtext) {
+          var underlines = qtext.querySelectorAll('u[data-label]');
+          var selectedLabel = userAnswer ? userAnswer.label : null;
+          underlines.forEach(function(u) {
+            u.style.cursor = 'default';
+            if (u.dataset.label === q.correctAnswer) {
+              u.classList.add('correct');
+            } else if (!wasCorrect && u.dataset.label === selectedLabel) {
+              u.classList.add('selected', 'wrong');
+            }
+          });
+        }
+        var corrInput = zone.querySelector('.iq-correction-input');
+        if (corrInput) {
+          if (userAnswer && userAnswer.correctionText) corrInput.value = userAnswer.correctionText;
+          corrInput.disabled = true;
+        }
+        break;
+      }
+
+      case 'correction': {
+        var correctionInput = zone.querySelector('.iq-correction-input');
+        if (correctionInput) {
+          if (userAnswer) correctionInput.value = userAnswer;
+          correctionInput.disabled = true;
+        }
+        var corrQtext = cardEl.querySelector('.qtext');
+        if (corrQtext) {
+          var underline = corrQtext.querySelector('u');
+          if (underline) underline.classList.add(wasCorrect ? 'correct' : 'wrong');
+        }
+        if (!wasCorrect) {
+          var display = displayCorrectText(q.correctText);
+          var answerEl = document.createElement('div');
+          answerEl.className = 'iq-correction-answer';
+          answerEl.textContent = display;
+          if (correctionInput) correctionInput.parentNode.insertBefore(answerEl, correctionInput.nextSibling);
+        }
+        break;
+      }
+
+      case 'fillin': {
+        var fillinQtext = cardEl.querySelector('.qtext');
+        if (fillinQtext && userAnswer && Array.isArray(userAnswer)) {
+          var inputs = fillinQtext.querySelectorAll('.iq-fillin-input');
+          inputs.forEach(function(inp, i) {
+            if (userAnswer[i] !== undefined) inp.value = userAnswer[i];
+            var expected = (q.correctAnswer[i] || '').toLowerCase();
+            var typed = (userAnswer[i] || '').trim().toLowerCase();
+            inp.classList.add(typed === expected ? 'correct' : 'wrong');
+            inp.disabled = true;
+          });
+        }
+        break;
+      }
+
+      case 'compose': {
+        var textarea = zone.querySelector('.iq-compose-input');
+        if (textarea) textarea.disabled = true;
+        // Show model answer directly
+        var reveal = document.createElement('div');
+        reveal.className = 'iq-compose-reveal';
+        reveal.textContent = q.correctAnswer;
+        zone.appendChild(reveal);
+        break;
+      }
+
+      case 'scramble':
+        // Cannot restore word placement — just show feedback
+        break;
+    }
+
+    // Add feedback message
+    var displayAnswer = Array.isArray(q.correctAnswer)
+      ? q.correctAnswer.join(', ')
+      : (q.correctAnswer || displayCorrectText(q.correctText));
+    var msg = wasCorrect ? 'Correct!' : 'Incorrect. Answer: ' + displayAnswer;
+    zone.appendChild(createFeedback(wasCorrect, msg));
+
+    if (!wasCorrect) cardEl.classList.add('iq-wrong');
   }
 
   // ── Pair UI ──
@@ -853,26 +980,10 @@
   }
 
   // ── Restore answered state after re-render ──
+  // Now handled by enhanceCard() which builds full UI + applies visual state.
+  // This wrapper exists for backward compat with hashchange handler.
   function restoreAnsweredState() {
-    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
-    cards.forEach(function(card) {
-      var key = getQKey(card.dataset.si, card.dataset.qi);
-      if (answeredKeys[key] && !card.dataset.iqEnhanced) {
-        card.dataset.iqEnhanced = 'true';
-        var q = getQuestionData(parseInt(card.dataset.si), parseInt(card.dataset.qi));
-        if (!q || !q.type || (!q.correctAnswer && !q.correctText)) return;
-        var questionDiv = card.querySelector('.qcard-question');
-        if (!questionDiv) return;
-        var zone = document.createElement('div');
-        zone.className = 'iq-zone locked';
-        var wasCorrect = getAnswerResult(key) === 'correct';
-        var displayAnswer = Array.isArray(q.correctAnswer) ? q.correctAnswer.join(', ') : (q.correctAnswer || displayCorrectText(q.correctText));
-        var msg = wasCorrect ? 'Correct!' : 'Incorrect. Answer: ' + displayAnswer;
-        zone.appendChild(createFeedback(wasCorrect, msg));
-        if (!wasCorrect) card.classList.add('iq-wrong');
-        questionDiv.appendChild(zone);
-      }
-    });
+    enhanceVisibleCards();
   }
 
   // ── Teacher Reveal integration ──
