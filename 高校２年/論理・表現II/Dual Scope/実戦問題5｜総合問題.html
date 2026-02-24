@@ -1662,7 +1662,49 @@
 
   <footer>DUAL SCOPE English Grammar - &#23455;&#25126;&#21839;&#38988;5: &#32207;&#21512;&#21839;&#38988;</footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+// ===== GSAP SETUP =====
+if (typeof gsap !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+const UV_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const GSAP_CONFIG = {
+  ease: {
+    default: 'power3.out',
+    smooth: 'power2.inOut',
+    spring: 'back.out(1.7)',
+    gentle: 'power1.out',
+    nav: 'power2.out',
+    elastic: 'elastic.out(1, 0.3)',
+  },
+  duration: {
+    micro: 0.1,
+    fast: 0.25,
+    normal: 0.5,
+    slow: 0.8,
+    nav: 0.3,
+    view: 0.4,
+  },
+  stagger: {
+    tight: 0.03,
+    normal: 0.08,
+    relaxed: 0.15,
+  },
+  scroll: {
+    start: 'top 85%',
+    toggleActions: 'play none none none',
+  },
+  hover: {
+    lift: -3,
+    liftLarge: -4,
+    scaleSmall: 1.05,
+    scaleMedium: 1.08,
+  },
+};
+
 // ===== GRAMMAR DATA =====
 const grammarData = { sections: [
     {
