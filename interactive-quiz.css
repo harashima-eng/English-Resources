@@ -668,14 +668,18 @@ html.dark .iq-progress-backdrop {
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
-  .iq-score {
+  .iq-progress-tab {
     bottom: 12px;
     left: 12px;
-    padding: 8px 14px;
-    gap: 8px;
+    padding: 6px 10px;
+    gap: 6px;
   }
-  .iq-score-text { font-size: 12px; }
-  .iq-score-bar { width: 60px; }
+  .iq-progress-tab-score { font-size: 11px; }
+  .iq-progress-tab-bar { width: 36px; }
+
+  .iq-progress-panel {
+    width: 280px;
+  }
 
   .iq-choice {
     padding: 7px 12px;
