@@ -888,7 +888,7 @@
     var hasTextReq = !!q.correctText;
 
     function performCheck() {
-      if (!selectedLabel || zone.classList.contains('locked')) return;
+      if (!selectedLabel || zone.classList.contains('locked')) return null;
       var selectionCorrect = selectedLabel === q.correctAnswer;
       var textCorrect = true;
 
@@ -901,7 +901,6 @@
       var isCorrect = selectionCorrect && textCorrect;
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
-      if (checkBtn) checkBtn.style.display = 'none';
 
       underlines.forEach(function(u) {
         if (!u.dataset.label) return;
@@ -922,7 +921,6 @@
       } else {
         msg = 'Incorrect. The error is in part ' + q.correctAnswer + '.';
       }
-      zone.appendChild(createFeedback(isCorrect, msg));
 
       if (hasTextReq && !textCorrect) {
         var answer = document.createElement('div');
@@ -933,9 +931,22 @@
 
       answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: { label: selectedLabel, correctionText: (correctionInput ? correctionInput.value.trim() : null) }, type: 'error' };
       addScore(isCorrect, si);
+      return { isCorrect: isCorrect, message: msg };
     }
 
     zone._performCheck = performCheck;
+
+    function tryShowPopup(anchorEl) {
+      if (iqSessionActive) return;
+      if (hasTextReq) {
+        // Need both selection AND text filled
+        if (selectedLabel && correctionInput && correctionInput.value.trim()) {
+          showCheckPopup(correctionInput, zone, performCheck);
+        }
+      } else {
+        showCheckPopup(anchorEl, zone, performCheck);
+      }
+    }
 
     underlines.forEach(function(u) {
       var text = u.textContent.trim();
@@ -957,12 +968,7 @@
           }));
           return;
         }
-        if (!hasTextReq) {
-          // Auto-check for click-only error questions
-          setTimeout(function() { performCheck(); }, 300);
-        } else if (checkBtn) {
-          checkBtn.disabled = !(correctionInput && correctionInput.value.trim());
-        }
+        tryShowPopup(u);
       };
     });
 
@@ -979,25 +985,23 @@
       correctionInput.className = 'iq-correction-input';
       correctionInput.placeholder = 'Type the correct form...';
       correctionInput.oninput = function() {
-        if (!iqSessionActive && checkBtn) {
-          checkBtn.disabled = !(selectedLabel && correctionInput.value.trim());
+        if (!iqSessionActive && selectedLabel && correctionInput.value.trim()) {
+          tryShowPopup(correctionInput);
         }
       };
       correctionInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && checkBtn && !checkBtn.disabled) {
+        if (e.key === 'Enter' && selectedLabel && correctionInput.value.trim()) {
           e.preventDefault();
-          performCheck();
+          // Trigger check directly via popup or perform
+          if (zone._popup) {
+            var result = performCheck();
+            if (result) transformToResult(zone._popup, result.isCorrect, result.message);
+          } else {
+            tryShowPopup(correctionInput);
+          }
         }
       });
       zone.appendChild(correctionInput);
-
-      checkBtn = document.createElement('button');
-      checkBtn.className = 'iq-check-btn iq-check-btn--subtle';
-      checkBtn.textContent = 'Check';
-      checkBtn.disabled = true;
-      if (iqSessionActive) checkBtn.style.display = 'none';
-      checkBtn.onclick = function() { performCheck(); };
-      zone.appendChild(checkBtn);
     }
   }
 
