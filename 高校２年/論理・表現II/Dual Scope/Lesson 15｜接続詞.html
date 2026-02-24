@@ -2055,46 +2055,79 @@ const Router = {
   },
 
   render() {
-    // Update main nav
+    const prevView = this._currentView || null;
+    this._currentView = NavState.view;
+
+    // -- Animation: Update nav active states --
     document.querySelectorAll('.top-nav-link').forEach(link => {
       link.classList.toggle('active', link.dataset.nav === NavState.view);
     });
     document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.nav === NavState.view);
+      const isActive = btn.dataset.nav === NavState.view;
+      btn.classList.toggle('active', isActive);
+      // -- Animation: C11 Mobile nav bounce --
+      if (isActive && prevView && prevView !== NavState.view && typeof gsap !== 'undefined' && !UV_REDUCED) {
+        gsap.fromTo(btn, { scale: 0.9 }, { scale: 1, duration: 0.3, ease: GSAP_CONFIG.ease.elastic });
+      }
     });
 
-    // Update views
-    document.querySelectorAll('.view-home, .view-overview, .view-question').forEach(view => {
-      view.classList.remove('active');
-    });
-
+    const viewMap = { home: 'viewHome', overview: 'viewOverview', question: 'viewQuestion' };
     const mainContent = document.getElementById('mainContent');
     const subNav = document.getElementById('subNav');
 
-    if (NavState.view === 'home') {
-      document.getElementById('viewHome').classList.add('active');
-      subNav.classList.remove('visible');
+    // -- Animation: C1 View transition --
+    const oldViewEl = prevView ? document.getElementById(viewMap[prevView]) : null;
+    const newViewEl = document.getElementById(viewMap[NavState.view]);
+
+    if (typeof gsap !== 'undefined' && prevView && prevView !== NavState.view && !UV_REDUCED) {
+      // Animate old view out
+      if (oldViewEl) {
+        gsap.to(oldViewEl, {
+          opacity: 0, y: -20,
+          duration: GSAP_CONFIG.duration.fast,
+          ease: GSAP_CONFIG.ease.default,
+          onComplete: () => { oldViewEl.classList.remove('active'); gsap.set(oldViewEl, { clearProps: 'all' }); }
+        });
+      }
+      // Show new view with entrance
+      setTimeout(() => {
+        document.querySelectorAll('.view-home, .view-overview, .view-question').forEach(v => {
+          if (v !== oldViewEl) v.classList.remove('active');
+        });
+        newViewEl.classList.add('active');
+        gsap.fromTo(newViewEl, { opacity: 0, y: 20 }, {
+          opacity: 1, y: 0,
+          duration: GSAP_CONFIG.duration.view,
+          ease: GSAP_CONFIG.ease.default,
+          onComplete: () => this._postRender(NavState.view, mainContent, subNav)
+        });
+      }, UV_REDUCED ? 0 : 200);
+    } else {
+      // First render or reduced motion: instant
+      document.querySelectorAll('.view-home, .view-overview, .view-question').forEach(v => v.classList.remove('active'));
+      newViewEl.classList.add('active');
+      this._postRender(NavState.view, mainContent, subNav);
+    }
+
+    invalidateCaches();
+  },
+
+  _postRender(view, mainContent, subNav) {
+    if (view === 'home') {
       mainContent.classList.remove('has-subnav');
-    } else if (NavState.view === 'overview') {
-      document.getElementById('viewOverview').classList.add('active');
-      subNav.classList.remove('visible');
+      initHomeEntrance();
+    } else if (view === 'overview') {
       mainContent.classList.remove('has-subnav');
-      // Initialize tilt effect for overview cards
-      // Overview カードの傾きエフェクトを初期化
-      setTimeout(initTypeCardTilt, 100);
-    } else if (NavState.view === 'question') {
-      document.getElementById('viewQuestion').classList.add('active');
-      // Only show sub-nav if nav is visible (respects auto-hide state)
-      // ナビが表示中の場合のみサブナビを表示（自動非表示状態を尊重）
+      setTimeout(() => { initOverviewEntrance(); initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
+    } else if (view === 'question') {
       if (navVisible) {
-        subNav.classList.add('visible');
+        gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
       }
       mainContent.classList.add('has-subnav');
       this.renderQuestionView();
     }
-
-    // Invalidate caches when switching views
-    invalidateCaches();
+    // Re-init hover after view change
+    setTimeout(initHoverAnimations, 100);
   },
 
   renderQuestionView() {
@@ -2106,17 +2139,26 @@ const Router = {
     // Render section toggles
     const sections = NavState.categoryMap[NavState.category];
     const togglesContainer = document.getElementById('sectionToggles');
-    togglesContainer.innerHTML = sections.map((sectionIndex, i) => {
+    togglesContainer.textContent = '';
+    sections.forEach((sectionIndex, i) => {
       const isActive = NavState.section === sectionIndex;
-      return `<button class="sub-nav-section ${isActive ? 'active' : ''}"
-                      onclick="Router.setSection(${sectionIndex})">${i + 1}</button>`;
-    }).join('');
+      const btn = document.createElement('button');
+      btn.className = 'sub-nav-section' + (isActive ? ' active' : '');
+      btn.onclick = () => Router.setSection(sectionIndex);
+      btn.textContent = i + 1;
+      togglesContainer.appendChild(btn);
+    });
+
+    // -- Animation: C10 Section number stagger --
+    if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+      gsap.from('.sub-nav-section', { scale: 0, opacity: 0, stagger: 0.04, duration: 0.3, ease: GSAP_CONFIG.ease.spring });
+    }
 
     // Update header
     const info = categoryInfo[NavState.category];
     const badge = document.getElementById('categoryBadge');
     badge.className = 'question-category-badge ' + info.class;
-    document.getElementById('categoryIcon').innerHTML = info.icon;
+    document.getElementById('categoryIcon').textContent = info.iconText || '';
     document.getElementById('categoryName').textContent = info.name;
 
     const sectionData = grammarData.sections[NavState.section];
@@ -2124,11 +2166,17 @@ const Router = {
     document.getElementById('sectionSubtitle').textContent =
       sectionData.questions.length + ' questions';
 
+    // -- Animation: C9 Badge entrance --
+    if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+      gsap.from('#categoryBadge', { scale: 0.8, opacity: 0, duration: 0.4, ease: GSAP_CONFIG.ease.spring });
+      gsap.from('#sectionTitle', { opacity: 0, y: 10, duration: 0.4, delay: 0.1, ease: GSAP_CONFIG.ease.default });
+    }
+
     // Render questions
     renderQuestions(NavState.section);
     if (window.prefetchAnswers) window.prefetchAnswers(NavState.section);
 
-    // Initialize card reveal animations
+    // Initialize card reveal
     initCardReveal();
 
     // Reset search
