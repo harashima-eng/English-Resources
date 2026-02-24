@@ -1333,6 +1333,13 @@
   // ── Init ──
   function init() {
     loadProgress();
+
+    // Reconstruct score from loaded answeredKeys
+    Object.keys(answeredKeys).forEach(function(key) {
+      score.answered++;
+      if (getAnswerResult(key) === 'correct') score.correct++;
+    });
+
     detectExistingSession();
     createScoreTracker();
     setupTeacherRevealListeners();
@@ -1341,7 +1348,6 @@
 
     window.addEventListener('hashchange', function() {
       setTimeout(function() {
-        restoreAnsweredState();
         enhanceVisibleCards();
         if (reviewMode) filterVisibleCards();
       }, 50);
