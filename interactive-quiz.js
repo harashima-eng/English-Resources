@@ -1101,20 +1101,19 @@
       inp.style.width = (charW * 12 + 24) + 'px';
     });
 
-    var checkBtn = document.createElement('button');
-    checkBtn.className = 'iq-check-btn iq-check-btn--subtle';
-    checkBtn.textContent = 'Check';
-    checkBtn.disabled = true;
-    if (iqSessionActive) checkBtn.style.display = 'none';
-
-    // Enable Check when all blanks have content
-    function updateCheckState() {
-      if (iqSessionActive) return;
-      var allFilled = true;
+    function allBlanksFilled() {
+      var filled = true;
       inputs.forEach(function(inp) {
-        if (!inp.value.trim()) allFilled = false;
+        if (!inp.value.trim()) filled = false;
       });
-      checkBtn.disabled = !allFilled;
+      return filled;
+    }
+
+    function tryShowFillinPopup() {
+      if (iqSessionActive || !allBlanksFilled()) return;
+      // Show popup above the last filled input
+      var lastInput = inputs[inputs.length - 1];
+      showCheckPopup(lastInput, zone, performCheck);
     }
 
     function performCheck() {
@@ -1131,32 +1130,35 @@
 
       if (window.UISound) UISound.play(allCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
-      checkBtn.style.display = 'none';
 
       var display = q.correctAnswer.join(', ');
       var msg = allCorrect
         ? 'Correct! ' + display
         : 'Incorrect. Correct answer: ' + display;
-      zone.appendChild(createFeedback(allCorrect, msg));
 
       answeredKeys[getQKey(si, qi)] = { result: allCorrect ? 'correct' : 'wrong', userAnswer: Array.from(inputs).map(function(inp) { return inp.value.trim(); }), type: 'fillin' };
       addScore(allCorrect, si);
+      return { isCorrect: allCorrect, message: msg };
     }
 
     zone._performCheck = performCheck;
 
     inputs.forEach(function(inp) {
-      inp.addEventListener('input', updateCheckState);
+      inp.addEventListener('input', function() { tryShowFillinPopup(); });
       inp.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
           e.preventDefault();
-          if (!checkBtn.disabled) performCheck();
+          if (allBlanksFilled()) {
+            if (zone._popup) {
+              var result = performCheck();
+              if (result) transformToResult(zone._popup, result.isCorrect, result.message);
+            } else if (!iqSessionActive) {
+              tryShowFillinPopup();
+            }
+          }
         }
       });
     });
-
-    checkBtn.onclick = function() { performCheck(); };
-    zone.appendChild(checkBtn);
   }
 
   // ── Compose UI (free-form English writing with self-evaluation) ──
@@ -1251,7 +1253,9 @@
         placed.push({ word: word, poolIdx: idx });
         if (window.UISound) UISound.play('click');
         renderAnswerZone();
-        if (!iqSessionActive) checkBtn.disabled = placed.length === 0;
+        if (!iqSessionActive && placed.length > 0) {
+          showCheckPopup(ansDiv, zone, performCheck);
+        }
       };
       poolDiv.appendChild(chip);
       poolChips.push(chip);
@@ -1301,33 +1305,33 @@
           placed.splice(i, 1);
           if (window.UISound) UISound.play('click');
           renderAnswerZone();
-          if (!iqSessionActive) checkBtn.disabled = placed.length === 0;
+          if (!iqSessionActive && placed.length > 0) {
+            showCheckPopup(ansDiv, zone, performCheck);
+          } else {
+            dismissPopup(zone);
+          }
         };
         ansDiv.appendChild(chip);
       });
     }
 
-    var checkBtn = document.createElement('button');
-    checkBtn.className = 'iq-check-btn';
-    checkBtn.textContent = 'Check';
-    checkBtn.disabled = true;
-    if (iqSessionActive) checkBtn.style.display = 'none';
-    checkBtn.onclick = function() {
+    function performCheck() {
+      if (zone.classList.contains('locked')) return;
       var studentAnswer = placed.map(function(p) { return p.word; }).join(' ');
       var isCorrect = studentAnswer.toLowerCase() === q.correctAnswer.toLowerCase();
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
-      checkBtn.style.display = 'none';
 
       var msg = isCorrect
         ? 'Correct!'
         : 'Incorrect. Answer: ' + q.correctAnswer;
-      zone.appendChild(createFeedback(isCorrect, msg));
 
       answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: null, type: 'scramble' };
       addScore(isCorrect, si);
-    };
-    zone.appendChild(checkBtn);
+      return { isCorrect: isCorrect, message: msg };
+    }
+
+    zone._performCheck = performCheck;
   }
 
   // ── Enhance all visible cards ──
