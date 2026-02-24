@@ -591,7 +591,7 @@
         input.parentNode.insertBefore(answer, input.nextSibling);
       }
 
-      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
+      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: input.value.trim(), type: 'correction' };
       addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
@@ -660,7 +660,7 @@
         : 'Incorrect. Correct answer: ' + display;
       zone.appendChild(createFeedback(allCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = allCorrect ? 'correct' : 'wrong';
+      answeredKeys[getQKey(si, qi)] = { result: allCorrect ? 'correct' : 'wrong', userAnswer: Array.from(inputs).map(function(inp) { return inp.value.trim(); }), type: 'fillin' };
       addScore(allCorrect, si);
     };
     zone.appendChild(checkBtn);
@@ -706,7 +706,7 @@
         zone.classList.add('locked');
         evalDiv.remove();
         zone.appendChild(createFeedback(true, 'Correct!'));
-        answeredKeys[getQKey(si, qi)] = 'correct';
+        answeredKeys[getQKey(si, qi)] = { result: 'correct', userAnswer: 'self-correct', type: 'compose' };
         addScore(true, si);
       };
 
@@ -718,7 +718,7 @@
         zone.classList.add('locked');
         evalDiv.remove();
         zone.appendChild(createFeedback(false, 'Answer: ' + q.correctAnswer));
-        answeredKeys[getQKey(si, qi)] = 'wrong';
+        answeredKeys[getQKey(si, qi)] = { result: 'wrong', userAnswer: 'self-wrong', type: 'compose' };
         addScore(false, si);
       };
 
@@ -831,7 +831,7 @@
         : 'Incorrect. Answer: ' + q.correctAnswer;
       zone.appendChild(createFeedback(isCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
+      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: null, type: 'scramble' };
       addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
@@ -865,7 +865,7 @@
         if (!questionDiv) return;
         var zone = document.createElement('div');
         zone.className = 'iq-zone locked';
-        var wasCorrect = answeredKeys[key] === 'correct';
+        var wasCorrect = getAnswerResult(key) === 'correct';
         var displayAnswer = Array.isArray(q.correctAnswer) ? q.correctAnswer.join(', ') : (q.correctAnswer || displayCorrectText(q.correctText));
         var msg = wasCorrect ? 'Correct!' : 'Incorrect. Answer: ' + displayAnswer;
         zone.appendChild(createFeedback(wasCorrect, msg));
