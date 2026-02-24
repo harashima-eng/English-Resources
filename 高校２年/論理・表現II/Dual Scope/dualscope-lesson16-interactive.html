@@ -1022,12 +1022,50 @@
       });
     }
 
+    // ===== GSAP HOVER ANIMATIONS =====
+    function initInteractiveHovers() {
+      if (typeof gsap === 'undefined' || UV_REDUCED || 'ontouchstart' in window) return;
+
+      function setupHover(selector, enterProps, leaveProps) {
+        document.querySelectorAll(selector).forEach(el => {
+          if (el._hoverInit) return;
+          el._hoverInit = true;
+          el.addEventListener('mouseenter', () => {
+            gsap.to(el, { ...enterProps, duration: GSAP_CONFIG.duration.micro, overwrite: true });
+          });
+          el.addEventListener('mouseleave', () => {
+            if (leaveProps) {
+              gsap.to(el, { ...leaveProps, duration: GSAP_CONFIG.duration.micro, overwrite: true });
+            } else {
+              gsap.to(el, { clearProps: Object.keys(enterProps).join(','), duration: GSAP_CONFIG.duration.micro, overwrite: true });
+            }
+          });
+        });
+      }
+
+      // Mode buttons
+      setupHover('.mode-btn:not(.active)', { backgroundColor: 'var(--color-border-light)' }, { clearProps: 'backgroundColor' });
+
+      // Control buttons
+      setupHover('.control-btn:not(.active)', { borderColor: 'var(--color-primary-light)', color: 'var(--color-primary)', backgroundColor: 'var(--color-highlight-bg)' }, { clearProps: 'borderColor,color,backgroundColor' });
+
+      // Sentence cards
+      setupHover('.sentence-card', { borderColor: 'var(--color-primary-light)', boxShadow: 'var(--shadow-md)' }, { clearProps: 'borderColor', boxShadow: '' });
+
+      // Practice buttons
+      setupHover('.practice-btn:not(.done)', { borderColor: 'var(--color-success)', color: 'var(--color-success)', backgroundColor: 'var(--color-success-bg)' }, { clearProps: 'borderColor,color,backgroundColor' });
+
+      // Reset button
+      setupHover('.reset-btn', { borderColor: '#EF4444', color: '#EF4444', backgroundColor: '#FEF2F2' }, { clearProps: 'borderColor,color,backgroundColor' });
+    }
+
     // Initialize
     loadTheme();
     loadState();
     initModeSelector();
     renderSentences();
     updateProgress();
+    initInteractiveHovers();
   </script>
 </body>
 </html>
