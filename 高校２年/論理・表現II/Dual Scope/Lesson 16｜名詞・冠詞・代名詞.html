@@ -2442,17 +2442,26 @@ function initTypeCardTilt() {
     const xTo = gsap.quickTo(card, 'rotationX', { duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.gentle });
     const yTo = gsap.quickTo(card, 'rotationY', { duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.gentle });
 
+    let cachedRect = null;
+    let tiltRafId = 0;
+
     card.addEventListener('mouseenter', () => {
+      cachedRect = card.getBoundingClientRect();
       gsap.to(card, { y: GSAP_CONFIG.hover.liftLarge, boxShadow: 'var(--shadow-lg)', duration: 0.3 });
     });
 
     card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      xTo((e.clientY - rect.top - rect.height / 2) / 80);
-      yTo((rect.width / 2 - (e.clientX - rect.left)) / 80);
+      if (!cachedRect || tiltRafId) return;
+      tiltRafId = requestAnimationFrame(() => {
+        tiltRafId = 0;
+        xTo((e.clientY - cachedRect.top - cachedRect.height / 2) / 80);
+        yTo((cachedRect.width / 2 - (e.clientX - cachedRect.left)) / 80);
+      });
     });
 
     card.addEventListener('mouseleave', () => {
+      cachedRect = null;
+      if (tiltRafId) { cancelAnimationFrame(tiltRafId); tiltRafId = 0; }
       xTo(0);
       yTo(0);
       gsap.to(card, { y: 0, boxShadow: '', duration: 0.4, ease: GSAP_CONFIG.ease.default });
@@ -2481,7 +2490,12 @@ function initHomeEntrance() {
 function initOverviewScrollReveals() {
   if (typeof gsap === 'undefined' || UV_REDUCED) return;
 
-  gsap.utils.toArray('.conj-section').forEach(section => {
+  // Kill previous overview ScrollTriggers to prevent accumulation
+  ScrollTrigger.getAll().forEach(t => {
+    if (t.vars.id && t.vars.id.startsWith('overview-')) t.kill();
+  });
+
+  gsap.utils.toArray('.conj-section').forEach((section, si) => {
     const header = section.querySelector('.conj-section-header');
     const cards = section.querySelectorAll('.conj-card');
 
@@ -2642,14 +2656,20 @@ function initAutoHideNav() {
     }
   }, { passive: true });
 
+  let navRafId = 0;
   document.addEventListener('mousemove', (e) => {
     if (!hasScrolled) return;
-    if (e.clientY < 80) {
-      showNav();
-    } else if (e.clientY > 200 && navVisible) {
-      hideNav();
-    }
-  });
+    if (navRafId) return;
+    const clientY = e.clientY;
+    navRafId = requestAnimationFrame(() => {
+      navRafId = 0;
+      if (clientY < 80) {
+        if (!navVisible) showNav();
+      } else if (clientY > 200 && navVisible) {
+        hideNav();
+      }
+    });
+  }, { passive: true });
 
   topNav.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
   subNav.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
