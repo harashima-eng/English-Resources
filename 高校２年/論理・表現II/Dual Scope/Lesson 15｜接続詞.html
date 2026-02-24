@@ -136,9 +136,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      /* Auto-hide: slide up when hidden */
+      /* Auto-hide: initial state hidden (GSAP handles animation) */
       transform: translateY(-100%);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       /* Glassmorphism effect */
       background: rgba(250, 248, 245, 0.85);
       backdrop-filter: blur(20px);
@@ -147,9 +146,7 @@
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     }
 
-    .top-nav.visible {
-      transform: translateY(0);
-    }
+    /* .top-nav visibility controlled by GSAP */
 
     [data-theme="dark"] .top-nav {
       background: rgba(15, 14, 13, 0.85);
@@ -182,17 +179,13 @@
       color: var(--text-secondary);
       text-decoration: none;
       border-radius: 100px;
-      transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
       cursor: pointer;
       border: none;
       background: transparent;
       font-family: inherit;
     }
 
-    .top-nav-link:hover {
-      color: var(--text);
-      transform: translateY(-1px);
-    }
+    /* .top-nav-link hover handled by GSAP */
 
     .top-nav-link.active {
       color: var(--text);
