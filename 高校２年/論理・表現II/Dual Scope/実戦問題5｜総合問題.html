@@ -2640,6 +2640,7 @@ function initHoverAnimations() {
   ];
 
   function findRule(el) {
+    if (!el.matches) return null;
     for (const r of hoverRules) { if (el.matches(r.sel)) return r; }
     return null;
   }
