@@ -299,7 +299,9 @@
     var row = document.createElement('div');
     row.className = 'iq-progress-section-row';
     row.onclick = function() {
-      if (typeof Router !== 'undefined' && Router.setSection) {
+      if (typeof Router !== 'undefined' && Router.navigate) {
+        Router.navigate('question', cat, si);
+      } else if (typeof Router !== 'undefined' && Router.setSection) {
         if (cat && Router.setCategory) Router.setCategory(cat);
         Router.setSection(si);
       } else {
