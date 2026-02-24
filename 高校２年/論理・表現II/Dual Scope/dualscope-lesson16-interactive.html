@@ -915,7 +915,7 @@
       saveState();
     }
 
-    // Change mode
+    // Change mode (GSAP transition)
     function changeMode(mode) {
       currentMode = mode;
 
@@ -923,7 +923,21 @@
         btn.classList.toggle('active', btn.dataset.mode === mode);
       });
 
-      renderSentences();
+      const container = document.getElementById('sentenceList');
+      if (typeof gsap !== 'undefined' && !UV_REDUCED && container.children.length) {
+        // Fade out, re-render, fade in
+        gsap.to(container, {
+          opacity: 0, y: -10,
+          duration: 0.15,
+          ease: GSAP_CONFIG.ease.default,
+          onComplete: () => {
+            renderSentences();
+            gsap.fromTo(container, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25, ease: GSAP_CONFIG.ease.default });
+          }
+        });
+      } else {
+        renderSentences();
+      }
       saveState();
     }
 
@@ -985,6 +999,19 @@
 
         container.appendChild(card);
       });
+
+      // -- Card entrance stagger --
+      if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+        gsap.from('.sentence-card', {
+          opacity: 0, y: 15,
+          duration: GSAP_CONFIG.duration.fast,
+          ease: GSAP_CONFIG.ease.default,
+          stagger: GSAP_CONFIG.stagger.tight
+        });
+      }
+
+      // Re-init hovers after render
+      setTimeout(initInteractiveHovers, 50);
     }
 
     // Initialize mode selector
