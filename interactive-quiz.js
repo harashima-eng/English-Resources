@@ -490,6 +490,90 @@
     return el;
   }
 
+  // ── Check Popup (appears above the interacted element) ──
+  function dismissPopup(zone) {
+    var existing = zone._popup;
+    if (!existing) return;
+    zone._popup = null;
+    if (typeof gsap !== 'undefined') {
+      gsap.to(existing, { scale: 0, opacity: 0, duration: 0.15, ease: 'power2.in', onComplete: function() { existing.remove(); } });
+    } else {
+      existing.remove();
+    }
+  }
+
+  function showCheckPopup(anchorEl, zone, onCheck) {
+    if (iqSessionActive) return null;
+    dismissPopup(zone);
+
+    var popup = document.createElement('div');
+    popup.className = 'iq-check-popup';
+
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'iq-popup-check-btn';
+    checkBtn.textContent = 'Check';
+    checkBtn.onclick = function(e) {
+      e.stopPropagation();
+      var result = onCheck();
+      if (result) {
+        transformToResult(popup, result.isCorrect, result.message);
+      }
+    };
+    popup.appendChild(checkBtn);
+
+    // Position popup above anchor
+    zone.style.position = 'relative';
+    zone.appendChild(popup);
+
+    // Calculate position relative to zone
+    var zoneRect = zone.getBoundingClientRect();
+    var anchorRect = anchorEl.getBoundingClientRect();
+    var anchorCenterX = anchorRect.left + anchorRect.width / 2 - zoneRect.left;
+    var anchorTop = anchorRect.top - zoneRect.top;
+
+    popup.style.position = 'absolute';
+    popup.style.left = anchorCenterX + 'px';
+    popup.style.top = anchorTop + 'px';
+    popup.style.transform = 'translate(-50%, -100%) translateY(-10px)';
+
+    zone._popup = popup;
+
+    // GSAP entrance
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(popup,
+        { scale: 0, opacity: 0, transformOrigin: 'bottom center' },
+        { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(1.7)' }
+      );
+    }
+
+    return popup;
+  }
+
+  function transformToResult(popup, isCorrect, message) {
+    if (!popup) return;
+    popup.classList.add('result', isCorrect ? 'correct' : 'incorrect');
+
+    // Replace content
+    popup.textContent = '';
+    var icon = document.createElement('span');
+    icon.className = 'iq-popup-icon';
+    icon.textContent = isCorrect ? '\u2713' : '\u2717';
+    popup.appendChild(icon);
+
+    var msg = document.createElement('span');
+    msg.className = 'iq-popup-msg';
+    msg.textContent = message;
+    popup.appendChild(msg);
+
+    // GSAP morph animation
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(popup,
+        { scale: 0.9 },
+        { scale: 1, duration: 0.2, ease: 'back.out(1.4)' }
+      );
+    }
+  }
+
   // ── Enhance a single .qcard ──
   function enhanceCard(cardEl) {
     var si = parseInt(cardEl.dataset.si);
