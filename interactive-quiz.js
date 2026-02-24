@@ -1254,8 +1254,10 @@
         placed.push({ word: word, poolIdx: idx });
         if (window.UISound) UISound.play('click');
         renderAnswerZone();
-        if (!iqSessionActive && placed.length > 0) {
+        if (!iqSessionActive && placed.length === shuffled.length) {
           showCheckPopup(ansDiv, zone, performCheck);
+        } else {
+          dismissPopup(zone);
         }
       };
       poolDiv.appendChild(chip);
