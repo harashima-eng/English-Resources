@@ -80,36 +80,61 @@
     return entry.result;
   }
 
-  // ── Score tracker DOM ──
-  var scoreEl = null;
-  var scoreTextEl = null;
-  var scoreFillEl = null;
-  var reviewBtnEl = null;
-  var reviewNavEl = null;
+  // ── Progress panel DOM ──
+  var progressTabEl = null;
+  var progressPanelEl = null;
+  var progressBackdropEl = null;
+  var progressBodyEl = null;
+  var tabScoreEl = null;
+  var tabFillEl = null;
+  var panelTotalEl = null;
+  var panelFillEl = null;
   var streakEl = null;
   var trophyBtnEl = null;
   var badgePanelEl = null;
+  var reviewNavEl = null;
+  var retryBtnEl = null;
+  var progressPanelOpen = false;
 
-  function createScoreTracker() {
-    scoreEl = document.createElement('div');
-    scoreEl.className = 'iq-score';
+  var CATEGORY_NAMES = { basic: '\u57FA\u672C\u554F\u984C', comm: 'FOR COMMUNICATION', advanced: '\u767A\u5C55\u554F\u984C' };
 
-    scoreTextEl = document.createElement('span');
-    scoreTextEl.className = 'iq-score-text';
-    updateScoreText();
+  function createProgressPanel() {
+    // ── Tab handle (always visible, bottom-left) ──
+    progressTabEl = document.createElement('div');
+    progressTabEl.className = 'iq-progress-tab';
+    progressTabEl.onclick = function() { toggleProgressPanel(); };
+    progressTabEl.title = 'Progress';
 
-    var barEl = document.createElement('div');
-    barEl.className = 'iq-score-bar';
-    scoreFillEl = document.createElement('div');
-    scoreFillEl.className = 'iq-score-fill';
-    barEl.appendChild(scoreFillEl);
+    tabScoreEl = document.createElement('span');
+    tabScoreEl.className = 'iq-progress-tab-score';
 
-    reviewBtnEl = document.createElement('button');
-    reviewBtnEl.className = 'iq-review-btn';
-    reviewBtnEl.textContent = '\u2716';
-    reviewBtnEl.title = 'Review wrong answers';
-    reviewBtnEl.style.display = 'none';
-    reviewBtnEl.onclick = function() { toggleReviewMode(); };
+    var tabBar = document.createElement('div');
+    tabBar.className = 'iq-progress-tab-bar';
+    tabFillEl = document.createElement('div');
+    tabFillEl.className = 'iq-progress-tab-fill';
+    tabBar.appendChild(tabFillEl);
+
+    progressTabEl.appendChild(tabScoreEl);
+    progressTabEl.appendChild(tabBar);
+    document.body.appendChild(progressTabEl);
+
+    // ── Panel (hidden, slides from left) ──
+    progressPanelEl = document.createElement('div');
+    progressPanelEl.className = 'iq-progress-panel';
+
+    // Header
+    var header = document.createElement('div');
+    header.className = 'iq-progress-header';
+
+    var headerTop = document.createElement('div');
+    headerTop.className = 'iq-progress-header-top';
+
+    var titleEl = document.createElement('span');
+    titleEl.className = 'iq-progress-title';
+    titleEl.textContent = 'Progress';
+
+    var headerActions = document.createElement('div');
+    headerActions.className = 'iq-progress-header-actions';
 
     streakEl = document.createElement('span');
     streakEl.className = 'iq-streak';
@@ -121,28 +146,248 @@
     trophyBtnEl.title = 'Achievements';
     trophyBtnEl.onclick = function() { toggleBadgePanel(); };
 
-    scoreEl.appendChild(scoreTextEl);
-    scoreEl.appendChild(barEl);
-    scoreEl.appendChild(streakEl);
-    scoreEl.appendChild(reviewBtnEl);
-    scoreEl.appendChild(trophyBtnEl);
-    document.body.appendChild(scoreEl);
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'iq-progress-close';
+    closeBtn.textContent = '\u2715';
+    closeBtn.onclick = function() { closeProgressPanel(); };
+
+    headerActions.appendChild(streakEl);
+    headerActions.appendChild(trophyBtnEl);
+    headerActions.appendChild(closeBtn);
+    headerTop.appendChild(titleEl);
+    headerTop.appendChild(headerActions);
+
+    // Total score in header
+    panelTotalEl = document.createElement('div');
+    panelTotalEl.className = 'iq-progress-total';
+
+    var totalBar = document.createElement('div');
+    totalBar.className = 'iq-progress-total-bar';
+    panelFillEl = document.createElement('div');
+    panelFillEl.className = 'iq-progress-total-fill';
+    totalBar.appendChild(panelFillEl);
+
+    header.appendChild(headerTop);
+    header.appendChild(panelTotalEl);
+    header.appendChild(totalBar);
+
+    // Body (scrollable section list)
+    progressBodyEl = document.createElement('div');
+    progressBodyEl.className = 'iq-progress-body';
+
+    // Footer
+    var footer = document.createElement('div');
+    footer.className = 'iq-progress-footer';
+
+    retryBtnEl = document.createElement('button');
+    retryBtnEl.className = 'iq-progress-retry-btn';
+    retryBtnEl.textContent = 'Retry Wrong';
+    retryBtnEl.style.display = 'none';
+    retryBtnEl.onclick = function() { startRetryMode(); };
+
+    var resetBtn = document.createElement('button');
+    resetBtn.className = 'iq-progress-reset-btn';
+    resetBtn.textContent = 'Reset All';
+    resetBtn.onclick = function() { confirmAndResetProgress(); };
+
+    footer.appendChild(retryBtnEl);
+    footer.appendChild(resetBtn);
+
+    progressPanelEl.appendChild(header);
+    progressPanelEl.appendChild(progressBodyEl);
+    progressPanelEl.appendChild(footer);
+    document.body.appendChild(progressPanelEl);
+
+    // Set initial off-screen position
+    if (typeof gsap !== 'undefined') {
+      gsap.set(progressPanelEl, { x: -320 });
+    } else {
+      progressPanelEl.style.transform = 'translateX(-320px)';
+    }
+
+    // ── Backdrop (mobile) ──
+    progressBackdropEl = document.createElement('div');
+    progressBackdropEl.className = 'iq-progress-backdrop';
+    progressBackdropEl.style.display = 'none';
+    progressBackdropEl.onclick = function() { closeProgressPanel(); };
+    document.body.appendChild(progressBackdropEl);
+
+    // Initial content
+    updateProgressPanel();
   }
 
-  function updateScoreText() {
-    if (!scoreTextEl) return;
-    scoreTextEl.textContent = '';
-    var numSpan = document.createElement('span');
-    numSpan.className = 'iq-score-num';
-    numSpan.textContent = score.correct + ' / ' + score.total;
-    scoreTextEl.textContent = 'Score: ';
-    scoreTextEl.appendChild(numSpan);
-  }
-
-  function updateScoreBar() {
-    if (!scoreFillEl) return;
+  // ── Update tab + panel content ──
+  function updateProgressPanel() {
     var pct = score.total > 0 ? (score.correct / score.total) * 100 : 0;
-    scoreFillEl.style.width = pct + '%';
+
+    // Update tab
+    if (tabScoreEl) tabScoreEl.textContent = score.correct + '/' + score.total;
+    if (tabFillEl) tabFillEl.style.width = pct + '%';
+
+    // Update panel header
+    if (panelTotalEl) {
+      panelTotalEl.textContent = '';
+      var numSpan = document.createElement('span');
+      numSpan.className = 'iq-progress-total-num';
+      numSpan.textContent = score.correct + ' / ' + score.total;
+      panelTotalEl.appendChild(numSpan);
+      if (score.answered > 0 && score.answered < score.total) {
+        var answeredSpan = document.createElement('span');
+        answeredSpan.className = 'iq-progress-total-answered';
+        answeredSpan.textContent = ' (' + score.answered + ' answered)';
+        panelTotalEl.appendChild(answeredSpan);
+      }
+    }
+    if (panelFillEl) panelFillEl.style.width = pct + '%';
+
+    // Update retry button
+    var wrongCount = getTotalWrong();
+    if (retryBtnEl) {
+      retryBtnEl.textContent = 'Retry Wrong' + (wrongCount > 0 ? ' (' + wrongCount + ')' : '');
+      retryBtnEl.style.display = wrongCount > 0 ? '' : 'none';
+    }
+
+    // Rebuild body
+    if (!progressBodyEl) return;
+    progressBodyEl.textContent = '';
+
+    var categoryMap = (typeof NavState !== 'undefined' && NavState.categoryMap) ? NavState.categoryMap : null;
+
+    if (categoryMap) {
+      Object.keys(categoryMap).forEach(function(cat) {
+        var sectionIndices = categoryMap[cat];
+        if (!sectionIndices || sectionIndices.length === 0) return;
+
+        var catHeader = document.createElement('div');
+        catHeader.className = 'iq-progress-category-name';
+        catHeader.textContent = CATEGORY_NAMES[cat] || cat;
+        progressBodyEl.appendChild(catHeader);
+
+        sectionIndices.forEach(function(si) {
+          var row = createSectionRow(si, cat);
+          if (row) progressBodyEl.appendChild(row);
+        });
+      });
+    } else {
+      grammarData.sections.forEach(function(sec, si) {
+        var row = createSectionRow(si, null);
+        if (row) progressBodyEl.appendChild(row);
+      });
+    }
+  }
+
+  function createSectionRow(si, cat) {
+    var sec = grammarData.sections[si];
+    if (!sec) return null;
+
+    var interactiveCount = 0;
+    var answeredCount = 0;
+    var correctCount = 0;
+    sec.questions.forEach(function(q, qi) {
+      if (q.type && (q.correctAnswer || q.correctText)) {
+        interactiveCount++;
+        var key = si + '-' + qi;
+        if (answeredKeys[key]) {
+          answeredCount++;
+          if (getAnswerResult(key) === 'correct') correctCount++;
+        }
+      }
+    });
+
+    if (interactiveCount === 0) return null;
+
+    var row = document.createElement('div');
+    row.className = 'iq-progress-section-row';
+    row.onclick = function() {
+      if (typeof Router !== 'undefined' && Router.setSection) {
+        if (cat && Router.setCategory) Router.setCategory(cat);
+        Router.setSection(si);
+      } else {
+        window.location.hash = '#section-' + si;
+      }
+      closeProgressPanel();
+    };
+
+    var titleEl = document.createElement('span');
+    titleEl.className = 'iq-progress-section-title';
+    var shortTitle = sec.title.replace(/^\[\d+\]\s*/, '').replace(/^[\u57FA\u672C\u554F\u984C\u767A\u5C55\u554F\u984CFOR COMMUNICATION]+\s*\d*[\uFF5C|]\s*/, '');
+    titleEl.textContent = shortTitle || sec.title;
+    titleEl.title = sec.title;
+
+    var fractionEl = document.createElement('span');
+    fractionEl.className = 'iq-progress-section-fraction';
+    fractionEl.textContent = correctCount + '/' + interactiveCount;
+
+    var barEl = document.createElement('div');
+    barEl.className = 'iq-progress-section-bar';
+    var fillEl = document.createElement('div');
+    fillEl.className = 'iq-progress-section-fill';
+    fillEl.style.width = (interactiveCount > 0 ? (correctCount / interactiveCount) * 100 : 0) + '%';
+    barEl.appendChild(fillEl);
+
+    var statusEl = document.createElement('span');
+    statusEl.className = 'iq-progress-section-status';
+    if (answeredCount === 0) {
+      statusEl.classList.add('not-started');
+    } else if (correctCount === interactiveCount) {
+      statusEl.classList.add('all-correct');
+    } else {
+      statusEl.classList.add('partial');
+    }
+
+    row.appendChild(titleEl);
+    row.appendChild(fractionEl);
+    row.appendChild(barEl);
+    row.appendChild(statusEl);
+
+    return row;
+  }
+
+  // ── Panel open/close ──
+  function toggleProgressPanel() {
+    if (progressPanelOpen) closeProgressPanel();
+    else openProgressPanel();
+  }
+
+  function openProgressPanel() {
+    if (!progressPanelEl || progressPanelOpen) return;
+    progressPanelOpen = true;
+    updateProgressPanel();
+    if (typeof gsap !== 'undefined') {
+      gsap.to(progressPanelEl, { x: 0, duration: 0.35, ease: 'power2.out' });
+      if (progressBackdropEl) {
+        progressBackdropEl.style.display = '';
+        gsap.fromTo(progressBackdropEl, { opacity: 0 }, { opacity: 1, duration: 0.25 });
+      }
+    } else {
+      progressPanelEl.style.transform = 'translateX(0)';
+      if (progressBackdropEl) progressBackdropEl.style.display = '';
+    }
+  }
+
+  function closeProgressPanel() {
+    if (!progressPanelEl || !progressPanelOpen) return;
+    progressPanelOpen = false;
+    if (typeof gsap !== 'undefined') {
+      gsap.to(progressPanelEl, { x: -320, duration: 0.3, ease: 'power2.inOut' });
+      if (progressBackdropEl) {
+        gsap.to(progressBackdropEl, { opacity: 0, duration: 0.2, onComplete: function() {
+          progressBackdropEl.style.display = 'none';
+        }});
+      }
+    } else {
+      progressPanelEl.style.transform = 'translateX(-320px)';
+      if (progressBackdropEl) progressBackdropEl.style.display = 'none';
+    }
+  }
+
+  function flashTab(isCorrect) {
+    if (!progressTabEl || typeof gsap === 'undefined') return;
+    var color = isCorrect ? 'rgba(22, 163, 74, 0.4)' : 'rgba(220, 38, 38, 0.4)';
+    gsap.fromTo(progressTabEl,
+      { boxShadow: '0 0 0 0 ' + color },
+      { boxShadow: '0 0 12px 4px ' + color, duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.inOut' }
+    );
   }
 
   function addScore(isCorrect, si) {
@@ -153,11 +398,10 @@
       if (streak > bestStreak) bestStreak = streak;
     } else {
       streak = 0;
-      if (reviewBtnEl) reviewBtnEl.style.display = '';
     }
-    updateScoreText();
-    updateScoreBar();
+    updateProgressPanel();
     updateStreakDisplay();
+    flashTab(isCorrect);
     if (si !== undefined) updateSectionScore(si, isCorrect);
     checkAchievements(si);
     saveProgress();
