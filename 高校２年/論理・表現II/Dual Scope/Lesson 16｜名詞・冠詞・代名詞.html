@@ -2495,20 +2495,10 @@ function initOverviewScrollReveals() {
       }
     });
 
-    tl.from(header, { opacity: 0, x: -30, duration: 0.6, ease: GSAP_CONFIG.ease.default });
+    tl.from(header, { opacity: 0, x: -20, duration: 0.4, ease: GSAP_CONFIG.ease.default });
 
     cards.forEach((card, i) => {
-      const word = card.querySelector('.conj-card-word');
-      const meaning = card.querySelector('.conj-card-meaning');
-      const example = card.querySelector('.conj-card-example');
-      const tip = card.querySelector('.conj-card-tip');
-
-      const offset = '-=0.3';
-      tl.from(card, { opacity: 0, y: 15, duration: 0.4, ease: GSAP_CONFIG.ease.default }, i === 0 ? offset : `-=${0.35}`);
-      if (word) tl.from(word, { opacity: 0, scale: 1.05, duration: 0.3 }, '-=0.25');
-      if (meaning) tl.from(meaning, { opacity: 0, duration: 0.25 }, '-=0.2');
-      if (example) tl.from(example, { opacity: 0, y: 8, duration: 0.3 }, '-=0.15');
-      if (tip) tl.from(tip, { opacity: 0, duration: 0.25 }, '-=0.1');
+      tl.from(card, { opacity: 0, y: 10, duration: 0.3, ease: GSAP_CONFIG.ease.default }, i === 0 ? '-=0.2' : '-=0.25');
     });
   });
 }
