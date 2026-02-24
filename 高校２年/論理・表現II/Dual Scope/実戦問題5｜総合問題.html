@@ -292,11 +292,6 @@
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
-      /* Simplified: reduced from 5 properties to 3 essential ones for better performance */
-      /* 簡略化: パフォーマンス向上のため5つのプロパティから3つの重要なものに削減 */
-      transition: background-color 0.2s ease,
-                  transform 0.2s ease,
-                  box-shadow 0.2s ease;
       position: relative;
       overflow: hidden;
     }
@@ -306,7 +301,6 @@
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity 0.2s ease;
     }
 
     .sub-nav-cat[data-cat="selection"] { --cat-color: var(--cat-selection); --cat-bg: var(--cat-selection-light); }
@@ -314,11 +308,7 @@
     .sub-nav-cat[data-cat="ordering"] { --cat-color: var(--cat-ordering); --cat-bg: var(--cat-ordering-light); }
     .sub-nav-cat[data-cat="correction"] { --cat-color: var(--cat-correction); --cat-bg: var(--cat-correction-light); }
 
-    .sub-nav-cat:hover {
-      border-color: var(--cat-color);
-      color: var(--cat-color);
-      transform: translateY(-2px);
-    }
+    /* .sub-nav-cat hover handled by GSAP */
 
     .sub-nav-cat.active {
       border-color: var(--cat-color);
@@ -343,17 +333,12 @@
       font-weight: 700;
       font-family: 'Space Grotesk', monospace;
       cursor: pointer;
-      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .sub-nav-section:hover {
-      border-color: var(--text);
-      color: var(--text);
-      transform: scale(1.08);
-    }
+    /* .sub-nav-section hover handled by GSAP */
 
     .sub-nav-section.active {
       background: var(--text);
