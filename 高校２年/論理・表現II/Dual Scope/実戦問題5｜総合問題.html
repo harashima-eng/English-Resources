@@ -704,13 +704,11 @@
       font-size: 15px;
       font-family: inherit;
       color: var(--text);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      /* Search focus animation handled by GSAP initSearchFocus() */
     }
 
     .search-input:focus {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px var(--prep-light);
     }
 
     .search-input::placeholder {
@@ -745,28 +743,8 @@
       border: 1px solid var(--border-visible);
       box-shadow: var(--shadow);
       overflow: hidden;
-      /* Card reveal animation - starts hidden */
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease,
-                  transform 0.5s ease,
-                  box-shadow 0.3s ease;
+      /* Card reveal + hover handled by GSAP initCardReveal() + initHoverAnimations() */
     }
-
-    .qcard.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .qcard.visible:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* Staggered reveal delays */
-    .qcard:nth-child(1) { transition-delay: 0s; }
-    .qcard:nth-child(2) { transition-delay: 0.05s; }
-    .qcard:nth-child(3) { transition-delay: 0.1s; }
     .qcard:nth-child(4) { transition-delay: 0.15s; }
     .qcard:nth-child(5) { transition-delay: 0.2s; }
 
