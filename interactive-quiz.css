@@ -935,43 +935,6 @@ html.dark .iq-scramble-context {
 
 
 /* ── Wrong Answer Review ── */
-.iq-review-btn {
-  width: 28px;
-  height: 28px;
-  border: 1.5px solid rgba(220, 38, 38, 0.3);
-  border-radius: 8px;
-  background: rgba(220, 38, 38, 0.06);
-  color: #DC2626;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-}
-.iq-review-btn:hover {
-  background: rgba(220, 38, 38, 0.12);
-  border-color: rgba(220, 38, 38, 0.5);
-  transform: translateY(-1px);
-}
-.iq-review-btn.active {
-  background: linear-gradient(135deg, #DC2626, #B91C1C);
-  color: #fff;
-  border-color: transparent;
-}
-[data-theme="dark"] .iq-review-btn,
-html.dark .iq-review-btn {
-  border-color: rgba(239, 68, 68, 0.3);
-  background: rgba(239, 68, 68, 0.08);
-  color: #EF4444;
-}
-[data-theme="dark"] .iq-review-btn.active,
-html.dark .iq-review-btn.active {
-  background: linear-gradient(135deg, #EF4444, #DC2626);
-  color: #fff;
-}
-
 .iq-review-nav {
   position: fixed;
   bottom: 80px;
@@ -1156,11 +1119,6 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
     bottom: 64px;
     left: 12px;
     max-width: 240px;
-  }
-  .iq-review-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 10px;
   }
 }
 
