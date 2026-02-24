@@ -1398,6 +1398,38 @@
     cards.forEach(function(card) { card.style.display = ''; });
   }
 
+  // ── Retry & Reset (stubs — fully implemented in Phase C) ──
+  function startRetryMode() {
+    // TODO: Phase C implementation
+    toggleReviewMode();
+    closeProgressPanel();
+  }
+
+  function confirmAndResetProgress() {
+    // TODO: Phase C — add GSAP confirmation dialog
+    if (!confirm('Reset all progress? This cannot be undone.')) return;
+    streak = 0;
+    bestStreak = 0;
+    badges = [];
+    sectionScores = {};
+    score.correct = 0;
+    score.answered = 0;
+    answeredKeys = {};
+    saveProgress();
+    updateProgressPanel();
+    updateStreakDisplay();
+    closeProgressPanel();
+    // Re-render current cards without answered state
+    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    cards.forEach(function(card) {
+      card.dataset.iqEnhanced = '';
+      card.classList.remove('iq-wrong');
+      var zone = card.querySelector('.iq-zone');
+      if (zone) zone.remove();
+    });
+    enhanceVisibleCards();
+  }
+
   // ── Gamification UI ──
   function updateStreakDisplay() {
     if (!streakEl) return;
