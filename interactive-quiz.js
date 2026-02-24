@@ -29,6 +29,10 @@
   var answeredKeys = {};  // "si-qi" → { result: "correct"|"wrong", userAnswer: <varies>, type: string }
   var iqSessionActive = false;
   var reviewMode = false;
+  var retryMode = false;
+  var retryKeys = [];
+  var retryBackup = {};
+  var retryBarEl = null;
 
   // ── Gamification state ──
   var streak = 0;
