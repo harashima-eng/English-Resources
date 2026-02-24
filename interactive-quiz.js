@@ -417,7 +417,7 @@
       var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + correctText;
       zone.appendChild(createFeedback(isCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
+      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: selectedLetter, type: 'choice' };
       addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
@@ -532,7 +532,7 @@
         correctionInput.parentNode.insertBefore(answer, correctionInput.nextSibling);
       }
 
-      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
+      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: { label: selectedLabel, correctionText: (correctionInput ? correctionInput.value.trim() : null) }, type: 'error' };
       addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
