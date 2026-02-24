@@ -246,7 +246,7 @@
     var qi = parseInt(cardEl.dataset.qi);
     var key = getQKey(si, qi);
 
-    if (cardEl.dataset.iqEnhanced || answeredKeys[key]) return;
+    if (cardEl.dataset.iqEnhanced) return;
     cardEl.dataset.iqEnhanced = 'true';
 
     var q = getQuestionData(si, qi);
