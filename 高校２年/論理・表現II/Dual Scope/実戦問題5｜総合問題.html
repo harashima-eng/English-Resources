@@ -2345,49 +2345,78 @@ function renderQuestions(sectionIndex) {
 let revealObserver = null;
 
 function initCardReveal() {
-  // Disconnect previous observer if exists
-  if (revealObserver) {
-    revealObserver.disconnect();
-  }
+  if (revealObserver) revealObserver.disconnect();
+  if (typeof gsap === 'undefined') return;
 
-  // Check for reduced motion preference
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // Skip animation for reduced motion - just make all cards visible
-    document.querySelectorAll('.qcard').forEach(card => {
-      card.classList.add('visible');
-    });
+  const cards = document.querySelectorAll('.qcard');
+  if (!cards.length) return;
+
+  if (UV_REDUCED) {
+    gsap.set(cards, { opacity: 1, y: 0 });
     return;
   }
 
-  const observerOptions = {
-    root: null,
-    rootMargin: '50px',
-    threshold: 0.1
-  };
+  gsap.set(cards, { opacity: 0, y: 20 });
 
   revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+        gsap.to(entry.target, {
+          opacity: 1, y: 0,
+          duration: GSAP_CONFIG.duration.normal,
+          ease: GSAP_CONFIG.ease.default
+        });
         revealObserver.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { root: null, rootMargin: '50px', threshold: 0.1 });
 
-  // Observe all question cards
-  document.querySelectorAll('.qcard').forEach(card => {
-    revealObserver.observe(card);
-  });
+  cards.forEach(card => revealObserver.observe(card));
 }
 
-// ===== EVENT HANDLERS =====
+// ===== B6: COLLAPSIBLE TOGGLE (GSAP) + C4: CHILD STAGGER + C5: ANSWER CELEBRATION =====
 function toggle(btn, type) {
   const card = btn.closest('.qcard');
   const block = card.querySelector(`.collapsible[data-type="${type}"]`);
-  if (block) {
+  if (!block) return;
+
+  const isOpen = block.classList.contains('open');
+
+  if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+    if (isOpen) {
+      gsap.to(block, {
+        opacity: 0, y: -10,
+        duration: GSAP_CONFIG.duration.fast,
+        ease: GSAP_CONFIG.ease.default,
+        onComplete: () => { block.classList.remove('open'); gsap.set(block, { clearProps: 'all' }); }
+      });
+    } else {
+      block.classList.add('open');
+      gsap.fromTo(block, { opacity: 0, y: -10 }, {
+        opacity: 1, y: 0,
+        duration: 0.35,
+        ease: 'power2.out'
+      });
+
+      // -- C4: Stagger child elements --
+      const items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
+      if (items.length > 1) {
+        gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
+      }
+
+      // -- C5: Answer celebration --
+      if (type === 'answer') {
+        const ansBox = block.querySelector('.ans-box');
+        if (ansBox) {
+          gsap.fromTo(ansBox, { scale: 0.97 }, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)' });
+        }
+      }
+    }
+  } else {
     block.classList.toggle('open');
-    updateProgress();
   }
+
+  updateProgress();
 }
 
 function setView(view) {
@@ -2398,7 +2427,7 @@ function setView(view) {
   });
 }
 
-// ===== PROGRESS =====
+// ===== B7: PROGRESS BAR (GSAP) + C6: GLOW ON 100% =====
 let progressBarEl = null;
 let progressTextEl = null;
 
@@ -2410,7 +2439,20 @@ function updateProgress() {
   const revealed = document.querySelectorAll('.collapsible[data-type="answer"].open').length;
   const pct = total > 0 ? Math.round((revealed / total) * 100) : 0;
 
-  if (progressBarEl) progressBarEl.style.width = pct + '%';
+  if (progressBarEl) {
+    if (typeof gsap !== 'undefined') {
+      gsap.to(progressBarEl, { width: pct + '%', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.default });
+      // -- C6: Glow on 100% --
+      if (pct === 100 && !UV_REDUCED) {
+        gsap.fromTo(progressBarEl,
+          { boxShadow: '0 0 0px var(--accent)' },
+          { boxShadow: '0 0 20px var(--accent)', duration: 0.6, yoyo: true, repeat: 1, ease: 'power2.inOut' }
+        );
+      }
+    } else {
+      progressBarEl.style.width = pct + '%';
+    }
+  }
   if (progressTextEl) progressTextEl.textContent = `${revealed} / ${total} answers revealed`;
 }
 
@@ -2465,96 +2507,262 @@ function handleSearch() {
   });
 }
 
-// ===== THEME =====
+// ===== C7: THEME TOGGLE WITH ICON SPIN =====
 function toggleTheme() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const icon = document.querySelector('.theme-icon');
+
   document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
   try { localStorage.setItem('theme', isDark ? 'light' : 'dark'); } catch(e) {}
-  document.querySelector('.theme-icon').innerHTML = isDark ? '&#9728;&#65039;' : '&#127769;';
+
+  if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+    gsap.to(icon, {
+      rotation: 180, scale: 0.5, opacity: 0, duration: 0.2,
+      onComplete: () => {
+        icon.textContent = isDark ? '\u2600\uFE0F' : '\u{1F319}';
+        gsap.fromTo(icon,
+          { rotation: -180, scale: 0.5, opacity: 0 },
+          { rotation: 0, scale: 1, opacity: 1, duration: 0.3, ease: GSAP_CONFIG.ease.spring }
+        );
+      }
+    });
+  } else {
+    icon.textContent = isDark ? '\u2600\uFE0F' : '\u{1F319}';
+  }
 }
 
-// ===== TILT EFFECT FOR OVERVIEW CARDS =====
-// 3D傾きエフェクト - Overview カードにインタラクティブな動きを追加
+// ===== B3: 3D TILT EFFECT (GSAP quickTo) =====
 function initTypeCardTilt() {
+  if (typeof gsap === 'undefined' || UV_REDUCED) return;
   const cards = document.querySelectorAll('.conj-card');
-  if (!cards.length) return;
+  if (!cards.length || 'ontouchstart' in window) return;
 
   cards.forEach(card => {
-    let rafId = null;
-    let targetX = 0, targetY = 0;
-    let currentX = 0, currentY = 0;
+    if (card._tiltInit) return;
+    card._tiltInit = true;
+
+    gsap.set(card, { transformPerspective: 1000 });
+
+    const xTo = gsap.quickTo(card, 'rotationX', { duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.gentle });
+    const yTo = gsap.quickTo(card, 'rotationY', { duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.gentle });
 
     card.addEventListener('mouseenter', () => {
-      card.style.transition = 'box-shadow 0.3s ease';
+      gsap.to(card, { y: GSAP_CONFIG.hover.liftLarge, boxShadow: 'var(--shadow-lg)', duration: 0.3 });
     });
 
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      targetX = (y - centerY) / 80;
-      targetY = (centerX - x) / 80;
-
-      if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          currentX += (targetX - currentX) * 0.15;
-          currentY += (targetY - currentY) * 0.15;
-          card.style.transform = `perspective(1000px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(-3px)`;
-          card.style.boxShadow = 'var(--shadow-lg)';
-          rafId = null;
-        });
-      }
+      xTo((e.clientY - rect.top - rect.height / 2) / 80);
+      yTo((rect.width / 2 - (e.clientX - rect.left)) / 80);
     });
 
     card.addEventListener('mouseleave', () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-      card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease';
-      card.style.transform = '';
-      card.style.boxShadow = '';
-      currentX = 0;
-      currentY = 0;
-      targetX = 0;
-      targetY = 0;
+      xTo(0);
+      yTo(0);
+      gsap.to(card, { y: 0, boxShadow: '', duration: 0.4, ease: GSAP_CONFIG.ease.default });
     });
   });
 }
 
-// ===== AUTO-HIDE NAVIGATION =====
-// ナビゲーション自動非表示機能
-let navVisible = true;        // Start visible - 最初は表示
+// ===== B1: HOME ENTRANCE (GSAP timeline) =====
+function initHomeEntrance() {
+  if (typeof gsap === 'undefined') return;
+  const els = ['.home-label', '.home-title', '.home-subtitle', '.home-cta'];
+
+  if (UV_REDUCED) {
+    gsap.set(els.join(','), { opacity: 1, y: 0 });
+    return;
+  }
+
+  const tl = gsap.timeline({ defaults: { ease: GSAP_CONFIG.ease.default, duration: GSAP_CONFIG.duration.slow } });
+  tl.from('.home-label', { opacity: 0, y: 24 })
+    .from('.home-title', { opacity: 0, y: 24 }, '-=0.4')
+    .from('.home-subtitle', { opacity: 0, y: 24 }, '-=0.3')
+    .from('.home-cta', { opacity: 0, y: 24 }, '-=0.2');
+}
+
+// ===== B2: OVERVIEW CARD ENTRANCE (GSAP stagger) =====
+function initOverviewEntrance() {
+  if (typeof gsap === 'undefined') return;
+  const cards = document.querySelectorAll('.conj-card');
+  if (!cards.length) return;
+
+  if (UV_REDUCED) {
+    gsap.set(cards, { opacity: 1, y: 0 });
+    return;
+  }
+
+  gsap.from(cards, { opacity: 0, y: 12, duration: 0.4, ease: GSAP_CONFIG.ease.default, stagger: GSAP_CONFIG.stagger.tight });
+}
+
+// ===== C2: OVERVIEW SECTION SCROLL REVEALS + C3: CARD CONTENT STAGGER =====
+function initOverviewScrollReveals() {
+  if (typeof gsap === 'undefined' || UV_REDUCED) return;
+
+  gsap.utils.toArray('.conj-section').forEach(section => {
+    const header = section.querySelector('.conj-section-header');
+    const cards = section.querySelectorAll('.conj-card');
+
+    if (!header || !cards.length) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: GSAP_CONFIG.scroll.start,
+        toggleActions: GSAP_CONFIG.scroll.toggleActions
+      }
+    });
+
+    tl.from(header, { opacity: 0, x: -30, duration: 0.6, ease: GSAP_CONFIG.ease.default });
+
+    cards.forEach((card, i) => {
+      const word = card.querySelector('.conj-card-word');
+      const meaning = card.querySelector('.conj-card-meaning');
+      const example = card.querySelector('.conj-card-example');
+      const tip = card.querySelector('.conj-card-tip');
+
+      const offset = '-=0.3';
+      tl.from(card, { opacity: 0, y: 15, duration: 0.4, ease: GSAP_CONFIG.ease.default }, i === 0 ? offset : `-=${0.35}`);
+      if (word) tl.from(word, { opacity: 0, scale: 1.05, duration: 0.3 }, '-=0.25');
+      if (meaning) tl.from(meaning, { opacity: 0, duration: 0.25 }, '-=0.2');
+      if (example) tl.from(example, { opacity: 0, y: 8, duration: 0.3 }, '-=0.15');
+      if (tip) tl.from(tip, { opacity: 0, duration: 0.25 }, '-=0.1');
+    });
+  });
+}
+
+// ===== B8: HOVER ANIMATIONS (GSAP) =====
+function initHoverAnimations() {
+  if (typeof gsap === 'undefined' || UV_REDUCED || 'ontouchstart' in window) return;
+
+  function setupHover(selector, enterProps, leaveProps) {
+    document.querySelectorAll(selector).forEach(el => {
+      if (el._hoverInit) return;
+      el._hoverInit = true;
+      el.addEventListener('mouseenter', () => {
+        gsap.to(el, { ...enterProps, duration: GSAP_CONFIG.duration.micro, overwrite: true });
+      });
+      el.addEventListener('mouseleave', () => {
+        if (leaveProps) {
+          gsap.to(el, { ...leaveProps, duration: GSAP_CONFIG.duration.micro, overwrite: true });
+        } else {
+          gsap.to(el, { clearProps: Object.keys(enterProps).join(','), duration: GSAP_CONFIG.duration.micro, overwrite: true });
+        }
+      });
+    });
+  }
+
+  // -- Interaction: Nav link hover --
+  setupHover('.top-nav-link:not(.active)', { y: -1, color: 'var(--text)' }, { y: 0, clearProps: 'color' });
+
+  // -- Interaction: Theme button hover --
+  setupHover('.top-nav-theme', { scale: GSAP_CONFIG.hover.scaleSmall, boxShadow: 'var(--shadow-sm)' }, { scale: 1, boxShadow: '' });
+
+  // -- Interaction: Sub-nav category hover --
+  document.querySelectorAll('.sub-nav-cat').forEach(el => {
+    if (el._hoverInit) return;
+    el._hoverInit = true;
+    el.addEventListener('mouseenter', () => {
+      gsap.to(el, { y: -2, borderColor: 'var(--cat-color)', color: 'var(--cat-color)', duration: GSAP_CONFIG.duration.micro, overwrite: true });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { y: 0, clearProps: 'borderColor,color', duration: GSAP_CONFIG.duration.micro, overwrite: true });
+    });
+  });
+
+  // -- Interaction: Sub-nav section hover --
+  setupHover('.sub-nav-section:not(.active)', { scale: GSAP_CONFIG.hover.scaleMedium, borderColor: 'var(--text)', color: 'var(--text)' }, { scale: 1, clearProps: 'borderColor,color' });
+
+  // -- Interaction: Primary button hover --
+  document.querySelectorAll('.btn-primary').forEach(el => {
+    if (el._hoverInit) return;
+    el._hoverInit = true;
+    el.addEventListener('mouseenter', () => {
+      gsap.to(el, { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)', duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.spring });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { y: 0, boxShadow: '', duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.default });
+    });
+  });
+
+  // -- Interaction: Secondary button hover --
+  setupHover('.btn-secondary', { borderColor: 'var(--text)', backgroundColor: 'var(--card)', boxShadow: 'var(--shadow)' }, { clearProps: 'borderColor,backgroundColor,boxShadow' });
+
+  // -- Interaction: Toggle button hover + active --
+  document.querySelectorAll('.toggle-btn').forEach(el => {
+    if (el._hoverInit) return;
+    el._hoverInit = true;
+    el.addEventListener('mouseenter', () => {
+      gsap.to(el, { y: GSAP_CONFIG.hover.lift, boxShadow: '0 6px 20px rgba(0,0,0,0.15)', duration: GSAP_CONFIG.duration.micro, ease: GSAP_CONFIG.ease.spring });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { y: 0, scale: 1, boxShadow: '0 2px 8px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08)', duration: GSAP_CONFIG.duration.micro, ease: GSAP_CONFIG.ease.default });
+    });
+    el.addEventListener('mousedown', () => {
+      gsap.to(el, { y: 0, scale: 0.96, duration: 0.1 });
+    });
+    el.addEventListener('mouseup', () => {
+      gsap.to(el, { scale: 1, duration: 0.15, ease: GSAP_CONFIG.ease.spring });
+    });
+  });
+
+  // -- Interaction: Box hover --
+  setupHover('.box', { y: -2, boxShadow: 'var(--shadow)', borderColor: 'var(--border-visible)' }, { y: 0, boxShadow: 'var(--shadow-sm)', clearProps: 'borderColor' });
+
+  // -- Interaction: Question card hover --
+  setupHover('.qcard', { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, { y: 0, boxShadow: 'var(--shadow)' });
+
+  // -- Interaction: View button hover --
+  setupHover('.view-btn-nav:not(.active)', { backgroundColor: 'var(--card)', color: 'var(--text)' }, { clearProps: 'backgroundColor,color' });
+}
+
+// ===== C8: SEARCH FOCUS ANIMATION =====
+function initSearchFocus() {
+  if (typeof gsap === 'undefined' || UV_REDUCED) return;
+  const input = document.getElementById('searchInput');
+  if (!input || input._focusInit) return;
+  input._focusInit = true;
+
+  input.addEventListener('focus', () => {
+    gsap.to(input, { scale: 1.02, boxShadow: '0 0 0 4px var(--prep-light)', duration: GSAP_CONFIG.duration.fast });
+  });
+  input.addEventListener('blur', () => {
+    gsap.to(input, { scale: 1, boxShadow: 'none', duration: 0.2 });
+  });
+}
+
+// ===== B5: AUTO-HIDE NAVIGATION (GSAP) =====
+let navVisible = true;
 let hideTimeout = null;
-let hasScrolled = false;      // Track if user has scrolled - スクロール検出用
+let hasScrolled = false;
 
 function showNav() {
   clearTimeout(hideTimeout);
   navVisible = true;
-  document.querySelector('.top-nav').classList.add('visible');
-  // Sub-nav only shows if in question view
-  if (NavState.view === 'question') {
-    document.getElementById('subNav').classList.add('visible');
+  if (typeof gsap !== 'undefined') {
+    gsap.to('.top-nav', { y: 0, duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+    if (NavState.view === 'question') {
+      gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+    }
   }
 }
 
 function hideNav() {
   hideTimeout = setTimeout(() => {
     navVisible = false;
-    document.querySelector('.top-nav').classList.remove('visible');
-    document.getElementById('subNav').classList.remove('visible');
-  }, 300); // Small delay to prevent flickering
+    if (typeof gsap !== 'undefined') {
+      gsap.to('.top-nav', { y: '-100%', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      gsap.to('#subNav', { y: '-100%', opacity: 0, pointerEvents: 'none', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+    }
+  }, 300);
 }
 
 function initAutoHideNav() {
   const topNav = document.querySelector('.top-nav');
   const subNav = document.getElementById('subNav');
 
-  // Show nav on page load - ページ読み込み時に表示
   showNav();
 
-  // First scroll detection - hide nav after first scroll
-  // 最初のスクロールでナビを隠す
   window.addEventListener('scroll', () => {
     if (!hasScrolled && window.scrollY > 50) {
       hasScrolled = true;
@@ -2562,10 +2770,8 @@ function initAutoHideNav() {
     }
   }, { passive: true });
 
-  // PC: Mouse hover detection (only after first scroll)
-  // PC: マウスホバー検出（スクロール後のみ）
   document.addEventListener('mousemove', (e) => {
-    if (!hasScrolled) return; // Don't hide until user has scrolled
+    if (!hasScrolled) return;
     if (e.clientY < 80) {
       showNav();
     } else if (e.clientY > 200 && navVisible) {
@@ -2573,29 +2779,17 @@ function initAutoHideNav() {
     }
   });
 
-  // Prevent hiding when hovering over nav itself
-  // ナビにホバー中は隠さない
   topNav.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
   subNav.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
-  topNav.addEventListener('mouseleave', () => {
-    if (hasScrolled) hideNav();
-  });
-  subNav.addEventListener('mouseleave', () => {
-    if (hasScrolled) hideNav();
-  });
+  topNav.addEventListener('mouseleave', () => { if (hasScrolled) hideNav(); });
+  subNav.addEventListener('mouseleave', () => { if (hasScrolled) hideNav(); });
 
-  // iPad/Touch: Tap detection at top
-  // iPad/タッチ: 画面上部タップで表示/非表示
   document.addEventListener('touchstart', (e) => {
     const touch = e.touches[0];
     if (touch.clientY < 100) {
-      if (navVisible && hasScrolled) {
-        hideNav();
-      } else {
-        showNav();
-      }
+      if (navVisible && hasScrolled) hideNav();
+      else showNav();
     } else if (touch.clientY > 200 && navVisible && hasScrolled) {
-      // Tap elsewhere hides nav (only after first scroll)
       hideNav();
     }
   }, { passive: true });
@@ -2608,7 +2802,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
-      document.querySelector('.theme-icon').innerHTML = '&#127769;';
+      document.querySelector('.theme-icon').textContent = '\u{1F319}';
     }
     const savedView = localStorage.getItem('viewMode') || 'single';
     setView(savedView);
@@ -2618,9 +2812,10 @@ window.addEventListener('DOMContentLoaded', () => {
   Router.parseHash();
   Router.render();
 
-  // Initialize auto-hide navigation
-  // ナビゲーション自動非表示を初期化
+  // Initialize GSAP-powered features
   initAutoHideNav();
+  initHoverAnimations();
+  initSearchFocus();
 });
 
 // Handle browser back/forward
