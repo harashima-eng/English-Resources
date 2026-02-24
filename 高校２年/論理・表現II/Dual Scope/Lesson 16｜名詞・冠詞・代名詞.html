@@ -303,11 +303,7 @@
     .sub-nav-cat[data-cat="comm"] { --cat-color: var(--cat-comm); --cat-bg: var(--cat-comm-light); }
     .sub-nav-cat[data-cat="advanced"] { --cat-color: var(--cat-advanced); --cat-bg: var(--cat-advanced-light); }
 
-    .sub-nav-cat:hover {
-      border-color: var(--cat-color);
-      color: var(--cat-color);
-      transform: translateY(-2px);
-    }
+    /* .sub-nav-cat hover handled by GSAP */
 
     .sub-nav-cat.active {
       border-color: var(--cat-color);
@@ -332,17 +328,12 @@
       font-weight: 700;
       font-family: 'Space Grotesk', monospace;
       cursor: pointer;
-      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .sub-nav-section:hover {
-      border-color: var(--text);
-      color: var(--text);
-      transform: scale(1.08);
-    }
+    /* .sub-nav-section hover handled by GSAP */
 
     .sub-nav-section.active {
       background: var(--text);
@@ -397,7 +388,6 @@
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 24px;
-      animation: fadeInUp 0.6s ease-out 0.1s both;
     }
 
     .home-title {
@@ -407,7 +397,6 @@
       line-height: 1.1;
       letter-spacing: -0.03em;
       margin-bottom: 24px;
-      animation: fadeInUp 0.6s ease-out 0.2s both;
     }
 
     .home-title em {
@@ -424,7 +413,6 @@
       max-width: 500px;
       margin: 0 auto 48px;
       line-height: 1.7;
-      animation: fadeInUp 0.6s ease-out 0.3s both;
     }
 
     .home-cta {
