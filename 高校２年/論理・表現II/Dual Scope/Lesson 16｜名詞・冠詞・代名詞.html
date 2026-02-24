@@ -2120,7 +2120,7 @@ const Router = {
       initHomeEntrance();
     } else if (view === 'overview') {
       mainContent.classList.remove('has-subnav');
-      setTimeout(() => { initOverviewEntrance(); initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
+      setTimeout(() => { initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
     } else if (view === 'question') {
       if (navVisible) {
         gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
@@ -2475,20 +2475,6 @@ function initHomeEntrance() {
     .from('.home-title', { opacity: 0, y: 24 }, '-=0.4')
     .from('.home-subtitle', { opacity: 0, y: 24 }, '-=0.3')
     .from('.home-cta', { opacity: 0, y: 24 }, '-=0.2');
-}
-
-// ===== B2: OVERVIEW CARD ENTRANCE (GSAP stagger) =====
-function initOverviewEntrance() {
-  if (typeof gsap === 'undefined') return;
-  const cards = document.querySelectorAll('.conj-card');
-  if (!cards.length) return;
-
-  if (UV_REDUCED) {
-    gsap.set(cards, { opacity: 1, y: 0 });
-    return;
-  }
-
-  gsap.from(cards, { opacity: 0, y: 12, duration: 0.4, ease: GSAP_CONFIG.ease.default, stagger: GSAP_CONFIG.stagger.tight });
 }
 
 // ===== C2: OVERVIEW SECTION SCROLL REVEALS + C3: CARD CONTENT STAGGER =====

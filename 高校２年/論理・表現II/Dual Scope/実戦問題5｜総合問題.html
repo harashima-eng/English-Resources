@@ -2581,20 +2581,6 @@ function initHomeEntrance() {
     .from('.home-cta', { opacity: 0, y: 24 }, '-=0.2');
 }
 
-// ===== B2: OVERVIEW CARD ENTRANCE (GSAP stagger) =====
-function initOverviewEntrance() {
-  if (typeof gsap === 'undefined') return;
-  const cards = document.querySelectorAll('.conj-card');
-  if (!cards.length) return;
-
-  if (UV_REDUCED) {
-    gsap.set(cards, { opacity: 1, y: 0 });
-    return;
-  }
-
-  gsap.from(cards, { opacity: 0, y: 12, duration: 0.4, ease: GSAP_CONFIG.ease.default, stagger: GSAP_CONFIG.stagger.tight });
-}
-
 // ===== C2: OVERVIEW SECTION SCROLL REVEALS + C3: CARD CONTENT STAGGER =====
 function initOverviewScrollReveals() {
   if (typeof gsap === 'undefined' || UV_REDUCED) return;
