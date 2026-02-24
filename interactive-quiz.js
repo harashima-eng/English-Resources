@@ -1650,6 +1650,7 @@
   function showToast(message) {
     var toast = document.createElement('div');
     toast.className = 'iq-toast';
+    toast.style.bottom = '80px';
     toast.textContent = message;
     document.body.appendChild(toast);
     if (typeof gsap !== 'undefined') {
