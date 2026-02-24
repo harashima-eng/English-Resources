@@ -1385,3 +1385,366 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
     animation: none;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   Check Popup (appears above selected element)
+   ══════════════════════════════════════════════════════════ */
+
+.iq-check-popup {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(13, 148, 136, 0.1);
+  white-space: nowrap;
+  pointer-events: auto;
+}
+.iq-check-popup::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid rgba(255, 255, 255, 0.92);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.08));
+}
+
+.iq-popup-check-btn {
+  padding: 6px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0D9488, #0F766E);
+  color: #fff;
+  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 1px 4px rgba(13, 148, 136, 0.25);
+}
+.iq-popup-check-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.35);
+}
+.iq-popup-check-btn:active {
+  transform: scale(0.96);
+}
+
+/* Result states */
+.iq-check-popup.result {
+  padding: 10px 18px;
+  gap: 6px;
+}
+.iq-check-popup.result.correct {
+  border-color: rgba(22, 163, 74, 0.4);
+  background: rgba(240, 253, 244, 0.95);
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.15);
+}
+.iq-check-popup.result.incorrect {
+  border-color: rgba(220, 38, 38, 0.4);
+  background: rgba(254, 242, 242, 0.95);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.15);
+}
+.iq-check-popup.result.correct::after {
+  border-top-color: rgba(240, 253, 244, 0.95);
+}
+.iq-check-popup.result.incorrect::after {
+  border-top-color: rgba(254, 242, 242, 0.95);
+}
+
+.iq-popup-icon {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+.iq-check-popup.correct .iq-popup-icon {
+  color: #16A34A;
+}
+.iq-check-popup.incorrect .iq-popup-icon {
+  color: #DC2626;
+}
+
+.iq-popup-msg {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 260px;
+  white-space: normal;
+}
+.iq-check-popup.correct .iq-popup-msg {
+  color: #15803D;
+}
+.iq-check-popup.incorrect .iq-popup-msg {
+  color: #B91C1C;
+}
+
+/* Dark mode */
+[data-theme="dark"] .iq-check-popup,
+html.dark .iq-check-popup {
+  background: rgba(30, 30, 30, 0.92);
+  border-color: rgba(20, 184, 166, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+[data-theme="dark"] .iq-check-popup::after,
+html.dark .iq-check-popup::after {
+  border-top-color: rgba(30, 30, 30, 0.92);
+}
+[data-theme="dark"] .iq-popup-check-btn,
+html.dark .iq-popup-check-btn {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+}
+[data-theme="dark"] .iq-check-popup.result.correct,
+html.dark .iq-check-popup.result.correct {
+  background: rgba(22, 101, 52, 0.9);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+[data-theme="dark"] .iq-check-popup.result.correct::after,
+html.dark .iq-check-popup.result.correct::after {
+  border-top-color: rgba(22, 101, 52, 0.9);
+}
+[data-theme="dark"] .iq-check-popup.correct .iq-popup-icon,
+html.dark .iq-check-popup.correct .iq-popup-icon {
+  color: #4ADE80;
+}
+[data-theme="dark"] .iq-check-popup.correct .iq-popup-msg,
+html.dark .iq-check-popup.correct .iq-popup-msg {
+  color: #BBF7D0;
+}
+[data-theme="dark"] .iq-check-popup.result.incorrect,
+html.dark .iq-check-popup.result.incorrect {
+  background: rgba(127, 29, 29, 0.9);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+[data-theme="dark"] .iq-check-popup.result.incorrect::after,
+html.dark .iq-check-popup.result.incorrect::after {
+  border-top-color: rgba(127, 29, 29, 0.9);
+}
+[data-theme="dark"] .iq-check-popup.incorrect .iq-popup-icon,
+html.dark .iq-check-popup.incorrect .iq-popup-icon {
+  color: #FCA5A5;
+}
+[data-theme="dark"] .iq-check-popup.incorrect .iq-popup-msg,
+html.dark .iq-check-popup.incorrect .iq-popup-msg {
+  color: #FECACA;
+}
+
+@media (prefers-color-scheme: dark) {
+  .iq-check-popup {
+    background: rgba(30, 30, 30, 0.92);
+    border-color: rgba(20, 184, 166, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+  .iq-check-popup::after {
+    border-top-color: rgba(30, 30, 30, 0.92);
+  }
+  .iq-popup-check-btn {
+    background: linear-gradient(135deg, #14B8A6, #0D9488);
+  }
+  .iq-check-popup.result.correct {
+    background: rgba(22, 101, 52, 0.9);
+    border-color: rgba(34, 197, 94, 0.4);
+  }
+  .iq-check-popup.result.correct::after {
+    border-top-color: rgba(22, 101, 52, 0.9);
+  }
+  .iq-check-popup.correct .iq-popup-icon { color: #4ADE80; }
+  .iq-check-popup.correct .iq-popup-msg { color: #BBF7D0; }
+  .iq-check-popup.result.incorrect {
+    background: rgba(127, 29, 29, 0.9);
+    border-color: rgba(239, 68, 68, 0.4);
+  }
+  .iq-check-popup.result.incorrect::after {
+    border-top-color: rgba(127, 29, 29, 0.9);
+  }
+  .iq-check-popup.incorrect .iq-popup-icon { color: #FCA5A5; }
+  .iq-check-popup.incorrect .iq-popup-msg { color: #FECACA; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   Retry Bar (fixed top banner during retry mode)
+   ══════════════════════════════════════════════════════════ */
+
+.iq-retry-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(185, 28, 28, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  z-index: 9999;
+  box-shadow: 0 2px 12px rgba(185, 28, 28, 0.3);
+}
+.iq-retry-bar button {
+  padding: 4px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font: 600 12px -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.iq-retry-bar button:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   Confirmation Dialog (GSAP-animated overlay)
+   ══════════════════════════════════════════════════════════ */
+
+.iq-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 10000;
+}
+
+.iq-confirm-dialog {
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.iq-confirm-title {
+  font: 700 17px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+
+.iq-confirm-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.iq-confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.iq-confirm-cancel {
+  padding: 8px 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f5f5f5;
+  color: #555;
+  font: 600 13px -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.iq-confirm-cancel:hover {
+  background: #eee;
+}
+
+.iq-confirm-ok {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #DC2626;
+  color: #fff;
+  font: 600 13px -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.iq-confirm-ok:hover {
+  background: #B91C1C;
+}
+.iq-confirm-ok:active {
+  transform: scale(0.97);
+}
+
+/* Confirm dialog dark mode */
+[data-theme="dark"] .iq-confirm-dialog,
+html.dark .iq-confirm-dialog {
+  background: #1e1e1e;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+[data-theme="dark"] .iq-confirm-title,
+html.dark .iq-confirm-title {
+  color: #eee;
+}
+[data-theme="dark"] .iq-confirm-text,
+html.dark .iq-confirm-text {
+  color: #aaa;
+}
+[data-theme="dark"] .iq-confirm-cancel,
+html.dark .iq-confirm-cancel {
+  background: #333;
+  border-color: #444;
+  color: #ccc;
+}
+[data-theme="dark"] .iq-confirm-cancel:hover,
+html.dark .iq-confirm-cancel:hover {
+  background: #3a3a3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .iq-confirm-dialog {
+    background: #1e1e1e;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  }
+  .iq-confirm-title { color: #eee; }
+  .iq-confirm-text { color: #aaa; }
+  .iq-confirm-cancel {
+    background: #333;
+    border-color: #444;
+    color: #ccc;
+  }
+  .iq-confirm-cancel:hover { background: #3a3a3a; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   Popup + Retry + Dialog: Reduced Motion
+   ══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .iq-check-popup,
+  .iq-retry-bar,
+  .iq-confirm-overlay,
+  .iq-confirm-dialog {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Popup + Retry: Mobile
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .iq-popup-msg {
+    max-width: 180px;
+  }
+}
