@@ -1439,16 +1439,198 @@
     cards.forEach(function(card) { card.style.display = ''; });
   }
 
-  // ── Retry & Reset (stubs — fully implemented in Phase C) ──
+  // ── Retry Wrong ──
   function startRetryMode() {
-    // TODO: Phase C implementation
-    toggleReviewMode();
+    // Collect wrong keys
+    var wrongKeys = Object.keys(answeredKeys).filter(function(k) {
+      return answeredKeys[k].result === 'wrong';
+    });
+    if (wrongKeys.length === 0) {
+      showToast('No wrong answers to retry!');
+      return;
+    }
+
+    retryMode = true;
+    retryKeys = wrongKeys;
+    retryBackup = {};
+
+    // Backup and clear wrong entries
+    retryKeys.forEach(function(k) {
+      retryBackup[k] = answeredKeys[k];
+      delete answeredKeys[k];
+    });
+
+    // Adjust score
+    score.answered -= retryKeys.length;
+    streak = 0;
+
+    // Clean up retry cards for re-enhancement
+    retryKeys.forEach(function(k) {
+      var parts = k.split('-');
+      var si = parts[0], qi = parts[1];
+      var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
+      if (!card) return;
+
+      // Restore fillin original HTML if stored
+      if (card.dataset.originalQtext) {
+        var qtext = card.querySelector('.qtext');
+        if (qtext) qtext.innerHTML = card.dataset.originalQtext;  // safe: restoring lesson HTML
+      }
+
+      card.dataset.iqEnhanced = '';
+      card.classList.remove('iq-wrong');
+      var zone = card.querySelector('.iq-zone');
+      if (zone) zone.remove();
+    });
+
+    // Re-enhance cleared cards
+    enhanceVisibleCards();
+
+    // Hide non-retry cards
+    var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    allCards.forEach(function(card) {
+      var key = card.dataset.si + '-' + card.dataset.qi;
+      if (retryKeys.indexOf(key) === -1) {
+        card.style.display = 'none';
+      } else {
+        card.style.display = '';
+      }
+    });
+
+    // Show retry bar
+    showRetryBar(retryKeys.length);
+
+    saveProgress();
+    updateProgressPanel();
     closeProgressPanel();
   }
 
+  function showRetryBar(count) {
+    if (retryBarEl) retryBarEl.remove();
+    retryBarEl = document.createElement('div');
+    retryBarEl.className = 'iq-retry-bar';
+
+    var text = document.createElement('span');
+    text.textContent = 'Retrying ' + count + ' wrong answer' + (count > 1 ? 's' : '');
+    retryBarEl.appendChild(text);
+
+    var exitBtn = document.createElement('button');
+    exitBtn.textContent = 'Exit';
+    exitBtn.onclick = function() { exitRetryMode(false); };
+    retryBarEl.appendChild(exitBtn);
+
+    document.body.appendChild(retryBarEl);
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(retryBarEl, { y: -44 }, { y: 0, duration: 0.3, ease: 'power2.out' });
+    }
+  }
+
+  function checkRetryComplete() {
+    var allDone = retryKeys.every(function(k) { return answeredKeys[k]; });
+    if (!allDone) return;
+    var allCorrect = retryKeys.every(function(k) { return answeredKeys[k].result === 'correct'; });
+    exitRetryMode(allCorrect);
+  }
+
+  function exitRetryMode(allCorrect) {
+    retryMode = false;
+
+    // Show all cards
+    var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    allCards.forEach(function(card) { card.style.display = ''; });
+
+    // Remove retry bar
+    if (retryBarEl) {
+      if (typeof gsap !== 'undefined') {
+        gsap.to(retryBarEl, { y: -44, duration: 0.2, onComplete: function() { retryBarEl.remove(); retryBarEl = null; } });
+      } else {
+        retryBarEl.remove();
+        retryBarEl = null;
+      }
+    }
+
+    // Count results
+    var correctCount = retryKeys.filter(function(k) { return answeredKeys[k] && answeredKeys[k].result === 'correct'; }).length;
+    if (allCorrect) {
+      showToast('All correct! Great job!');
+    } else {
+      showToast('Retry complete. ' + correctCount + '/' + retryKeys.length + ' correct.');
+    }
+
+    retryKeys = [];
+    retryBackup = {};
+    updateProgressPanel();
+  }
+
+  function showToast(message) {
+    var toast = document.createElement('div');
+    toast.className = 'iq-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(toast, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
+      gsap.to(toast, { opacity: 0, y: -10, duration: 0.3, delay: 2, onComplete: function() { toast.remove(); } });
+    } else {
+      setTimeout(function() { toast.remove(); }, 2500);
+    }
+  }
+
+  // ── Reset with GSAP confirmation ──
   function confirmAndResetProgress() {
-    // TODO: Phase C — add GSAP confirmation dialog
-    if (!confirm('Reset all progress? This cannot be undone.')) return;
+    var overlay = document.createElement('div');
+    overlay.className = 'iq-confirm-overlay';
+
+    var dialog = document.createElement('div');
+    dialog.className = 'iq-confirm-dialog';
+
+    var title = document.createElement('div');
+    title.className = 'iq-confirm-title';
+    title.textContent = 'Reset Progress';
+    dialog.appendChild(title);
+
+    var text = document.createElement('div');
+    text.className = 'iq-confirm-text';
+    text.textContent = 'All answers, scores, badges, and streaks will be cleared. This cannot be undone.';
+    dialog.appendChild(text);
+
+    var actions = document.createElement('div');
+    actions.className = 'iq-confirm-actions';
+
+    var cancelBtn = document.createElement('button');
+    cancelBtn.className = 'iq-confirm-cancel';
+    cancelBtn.textContent = 'Cancel';
+    cancelBtn.onclick = function() {
+      if (typeof gsap !== 'undefined') {
+        gsap.to(overlay, { opacity: 0, duration: 0.15, onComplete: function() { overlay.remove(); } });
+      } else {
+        overlay.remove();
+      }
+    };
+    actions.appendChild(cancelBtn);
+
+    var okBtn = document.createElement('button');
+    okBtn.className = 'iq-confirm-ok';
+    okBtn.textContent = 'Reset';
+    okBtn.onclick = function() {
+      performFullReset();
+      if (typeof gsap !== 'undefined') {
+        gsap.to(overlay, { opacity: 0, duration: 0.15, onComplete: function() { overlay.remove(); } });
+      } else {
+        overlay.remove();
+      }
+    };
+    actions.appendChild(okBtn);
+    dialog.appendChild(actions);
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.2 });
+      gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: 0.3, ease: 'back.out(1.7)' });
+    }
+  }
+
+  function performFullReset() {
     streak = 0;
     bestStreak = 0;
     badges = [];
@@ -1456,6 +1638,10 @@
     score.correct = 0;
     score.answered = 0;
     answeredKeys = {};
+    retryMode = false;
+    retryKeys = [];
+    retryBackup = {};
+    if (retryBarEl) { retryBarEl.remove(); retryBarEl = null; }
     saveProgress();
     updateProgressPanel();
     updateStreakDisplay();
@@ -1463,8 +1649,14 @@
     // Re-render current cards without answered state
     var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
     cards.forEach(function(card) {
+      // Restore fillin original HTML if stored
+      if (card.dataset.originalQtext) {
+        var qtext = card.querySelector('.qtext');
+        if (qtext) qtext.innerHTML = card.dataset.originalQtext;  // safe: restoring lesson HTML
+      }
       card.dataset.iqEnhanced = '';
       card.classList.remove('iq-wrong');
+      card.style.display = '';
       var zone = card.querySelector('.iq-zone');
       if (zone) zone.remove();
     });
