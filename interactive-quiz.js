@@ -734,42 +734,11 @@
     choicesDiv.className = 'iq-choices';
     var selectedLetter = null;
 
-    items.forEach(function(item) {
-      var btn = document.createElement('button');
-      btn.className = 'iq-choice';
-      btn.textContent = item.letter + '. ' + item.text;
-      btn.dataset.letter = item.letter;
-      btn.onclick = function() {
-        if (zone.classList.contains('locked')) return;
-        choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
-          b.classList.remove('selected');
-        });
-        btn.classList.add('selected');
-        selectedLetter = item.letter;
-        if (window.UISound) UISound.play('click');
-        if (!iqSessionActive) checkBtn.disabled = false;
-        if (iqSessionActive) {
-          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
-            detail: { si: si, qi: qi, answer: item.letter, type: 'choice' }
-          }));
-        }
-      };
-      choicesDiv.appendChild(btn);
-    });
-
-    zone.appendChild(choicesDiv);
-
-    var checkBtn = document.createElement('button');
-    checkBtn.className = 'iq-check-btn';
-    checkBtn.textContent = 'Check';
-    checkBtn.disabled = true;
-    if (iqSessionActive) checkBtn.style.display = 'none';
-    checkBtn.onclick = function() {
-      if (!selectedLetter) return;
+    function performCheck() {
+      if (!selectedLetter || zone.classList.contains('locked')) return;
       var isCorrect = selectedLetter === q.correctAnswer;
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
-      checkBtn.style.display = 'none';
 
       var correctText = '';
       choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
@@ -789,8 +758,36 @@
 
       answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: selectedLetter, type: 'choice' };
       addScore(isCorrect, si);
-    };
-    zone.appendChild(checkBtn);
+    }
+
+    zone._performCheck = performCheck;
+
+    items.forEach(function(item) {
+      var btn = document.createElement('button');
+      btn.className = 'iq-choice';
+      btn.textContent = item.letter + '. ' + item.text;
+      btn.dataset.letter = item.letter;
+      btn.onclick = function() {
+        if (zone.classList.contains('locked')) return;
+        choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
+          b.classList.remove('selected');
+        });
+        btn.classList.add('selected');
+        selectedLetter = item.letter;
+        if (window.UISound) UISound.play('click');
+        if (iqSessionActive) {
+          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+            detail: { si: si, qi: qi, answer: item.letter, type: 'choice' }
+          }));
+          return;
+        }
+        // Auto-check after brief delay for selection animation
+        setTimeout(function() { performCheck(); }, 300);
+      };
+      choicesDiv.appendChild(btn);
+    });
+
+    zone.appendChild(choicesDiv);
   }
 
   // ── Error UI ──
