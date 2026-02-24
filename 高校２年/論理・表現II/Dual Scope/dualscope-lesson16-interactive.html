@@ -299,7 +299,7 @@
     .text-hidden {
       filter: blur(8px);
       user-select: none;
-      transition: filter 0.3s ease;
+      /* Reveal handled by GSAP opacity animation (filter:blur stays as static state) */
     }
     .sentence-card.revealed .text-hidden {
       filter: none;
@@ -317,7 +317,7 @@
       font-weight: 600;
       color: transparent;
       position: relative;
-      transition: all 0.3s ease;
+      /* Reveal handled by GSAP */
     }
     .blank-word::before {
       content: '_____';
@@ -355,14 +355,9 @@
       border-radius: var(--radius-full);
       background: var(--color-border-light);
       color: var(--color-text-muted);
-      transition: all 0.2s ease;
+      /* Rotation + color handled by GSAP toggleCard() */
       flex-shrink: 0;
       margin-top: 4px;
-    }
-    .sentence-card.revealed .card-toggle {
-      background: var(--color-primary);
-      color: white;
-      transform: rotate(180deg);
     }
     .card-toggle svg { width: 18px; height: 18px; }
 
@@ -434,12 +429,7 @@
       font-family: var(--font-body);
       font-size: 0.8125rem;
       cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .practice-btn:hover {
-      border-color: var(--color-success);
-      color: var(--color-success);
-      background: var(--color-success-bg);
+      /* Hover handled by GSAP */
     }
     .practice-btn.done {
       border-style: solid;
@@ -469,12 +459,7 @@
       font-size: 0.9375rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .reset-btn:hover {
-      border-color: #EF4444;
-      color: #EF4444;
-      background: #FEF2F2;
+      /* Hover handled by GSAP */
     }
     .reset-btn svg { width: 18px; height: 18px; }
 
@@ -539,11 +524,10 @@
       .tap-hint { display: none; }
     }
 
+    /* Reduced motion: GSAP handles via UV_REDUCED flag.
+       Grid transition is the one CSS exception (GSAP cannot interpolate grid values). */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+      .card-body { transition: none !important; }
     }
   </style>
 </head>
@@ -618,7 +602,39 @@
     <p>駒込高校 2年3・4組 英語表現</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script>
+    // ===== GSAP SETUP =====
+    if (typeof gsap !== 'undefined') {
+      // No plugins needed for this file
+    }
+    const UV_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const GSAP_CONFIG = {
+      ease: {
+        default: 'power3.out',
+        smooth: 'power2.inOut',
+        spring: 'back.out(1.7)',
+        gentle: 'power1.out',
+        elastic: 'elastic.out(1, 0.3)',
+      },
+      duration: {
+        micro: 0.1,
+        fast: 0.25,
+        normal: 0.5,
+        slow: 0.8,
+      },
+      stagger: {
+        tight: 0.03,
+        normal: 0.08,
+        relaxed: 0.15,
+      },
+      hover: {
+        lift: -3,
+        scaleSmall: 1.05,
+      },
+    };
+
     // Sentence data with structured grammar
     const sentences = [
       {
