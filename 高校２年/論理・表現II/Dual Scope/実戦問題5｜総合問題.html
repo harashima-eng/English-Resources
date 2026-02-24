@@ -2211,7 +2211,7 @@ const Router = {
       initHomeEntrance();
     } else if (view === 'overview') {
       mainContent.classList.remove('has-subnav');
-      setTimeout(() => { initOverviewEntrance(); initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
+      setTimeout(() => { initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
     } else if (view === 'question') {
       if (navVisible) {
         gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
