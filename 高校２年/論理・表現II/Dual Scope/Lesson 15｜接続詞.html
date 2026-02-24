@@ -2552,10 +2552,10 @@ function initHoverAnimations() {
   }, true);
 
   document.addEventListener('mousedown', (e) => {
-    if (e.target.matches('.toggle-btn')) gsap.to(e.target, { y: 0, scale: 0.96, duration: 0.1 });
+    if (e.target.matches && e.target.matches('.toggle-btn')) gsap.to(e.target, { y: 0, scale: 0.96, duration: 0.1 });
   }, true);
   document.addEventListener('mouseup', (e) => {
-    if (e.target.matches('.toggle-btn')) gsap.to(e.target, { scale: 1, duration: 0.15, ease: GSAP_CONFIG.ease.spring });
+    if (e.target.matches && e.target.matches('.toggle-btn')) gsap.to(e.target, { scale: 1, duration: 0.15, ease: GSAP_CONFIG.ease.spring });
   }, true);
 }
 
