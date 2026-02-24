@@ -935,19 +935,16 @@
     input.type = 'text';
     input.className = 'iq-correction-input';
     input.placeholder = errorWord + ' → ...';
-    input.oninput = function() {
-      if (!iqSessionActive) checkBtn.disabled = !input.value.trim();
-    };
-    zone.appendChild(input);
 
     var checkBtn = document.createElement('button');
-    checkBtn.className = 'iq-check-btn';
+    checkBtn.className = 'iq-check-btn iq-check-btn--subtle';
     checkBtn.textContent = 'Check';
     checkBtn.disabled = true;
     if (iqSessionActive) checkBtn.style.display = 'none';
-    checkBtn.onclick = function() {
+
+    function performCheck() {
       var typed = input.value.trim();
-      if (!typed) return;
+      if (!typed || zone.classList.contains('locked')) return;
       var isCorrect = matchesCorrectText(typed, q.correctText);
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
 
@@ -972,7 +969,22 @@
 
       answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: input.value.trim(), type: 'correction' };
       addScore(isCorrect, si);
+    }
+
+    zone._performCheck = performCheck;
+
+    input.oninput = function() {
+      if (!iqSessionActive) checkBtn.disabled = !input.value.trim();
     };
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !checkBtn.disabled) {
+        e.preventDefault();
+        performCheck();
+      }
+    });
+    zone.appendChild(input);
+
+    checkBtn.onclick = function() { performCheck(); };
     zone.appendChild(checkBtn);
   }
 
