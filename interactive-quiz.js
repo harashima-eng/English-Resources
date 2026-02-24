@@ -821,7 +821,7 @@
     var selectedLetter = null;
 
     function performCheck() {
-      if (!selectedLetter || zone.classList.contains('locked')) return;
+      if (!selectedLetter || zone.classList.contains('locked')) return null;
       var isCorrect = selectedLetter === q.correctAnswer;
       if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
@@ -840,10 +840,9 @@
       });
 
       var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + correctText;
-      zone.appendChild(createFeedback(isCorrect, msg));
-
       answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: selectedLetter, type: 'choice' };
       addScore(isCorrect, si);
+      return { isCorrect: isCorrect, message: msg };
     }
 
     zone._performCheck = performCheck;
@@ -867,8 +866,7 @@
           }));
           return;
         }
-        // Auto-check after brief delay for selection animation
-        setTimeout(function() { performCheck(); }, 300);
+        showCheckPopup(btn, zone, performCheck);
       };
       choicesDiv.appendChild(btn);
     });
