@@ -348,7 +348,7 @@
       var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + q.correctAnswer;
       zone.appendChild(createFeedback(isCorrect, msg));
 
-      answeredKeys[getQKey(si, qi)] = isCorrect ? 'correct' : 'wrong';
+      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: selected, type: 'pair' };
       addScore(isCorrect, si);
     };
     zone.appendChild(checkBtn);
