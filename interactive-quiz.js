@@ -1579,7 +1579,7 @@
     });
 
     detectExistingSession();
-    createScoreTracker();
+    createProgressPanel();
     setupTeacherRevealListeners();
     enhanceVisibleCards();
     setupObserver();
