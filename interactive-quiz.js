@@ -411,6 +411,7 @@
     if (si !== undefined) updateSectionScore(si, isCorrect);
     checkAchievements(si);
     saveProgress();
+    if (retryMode) checkRetryComplete();
   }
 
   function updateSectionScore(si, isCorrect) {
