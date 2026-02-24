@@ -2526,11 +2526,8 @@ function initOverviewScrollReveals() {
 }
 
 // ===== B8: HOVER ANIMATIONS (GSAP) =====
-let _hoverInit = false;
 function initHoverAnimations() {
   if (typeof gsap === 'undefined' || UV_REDUCED || 'ontouchstart' in window) return;
-  if (_hoverInit) return;
-  _hoverInit = true;
 
   function setupHover(selector, enterProps, leaveProps) {
     document.querySelectorAll(selector).forEach(el => {
