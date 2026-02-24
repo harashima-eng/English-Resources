@@ -993,10 +993,15 @@
     var qtext = cardEl.querySelector('.qtext');
     if (!qtext || !q.correctAnswer || !Array.isArray(q.correctAnswer)) return;
 
+    // Store original HTML for retry restoration (before blank replacement)
+    if (!cardEl.dataset.originalQtext) {
+      cardEl.dataset.originalQtext = qtext.innerHTML;  // safe: source is lesson HTML, not user input
+    }
+
     // Replace (   ) / （　　） patterns with inline inputs
     var idx = 0;
     var blankRe = /[（(][\s\u3000]+[)）]/g;
-    qtext.innerHTML = qtext.innerHTML.replace(blankRe, function() {
+    qtext.innerHTML = qtext.innerHTML.replace(blankRe, function() {  // safe: integer index only
       var i = idx++;
       return '<input type="text" class="iq-fillin-input" data-idx="' + i + '" autocomplete="off" spellcheck="false">';
     });
@@ -1012,7 +1017,7 @@
     });
 
     var checkBtn = document.createElement('button');
-    checkBtn.className = 'iq-check-btn';
+    checkBtn.className = 'iq-check-btn iq-check-btn--subtle';
     checkBtn.textContent = 'Check';
     checkBtn.disabled = true;
     if (iqSessionActive) checkBtn.style.display = 'none';
@@ -1026,11 +1031,9 @@
       });
       checkBtn.disabled = !allFilled;
     }
-    inputs.forEach(function(inp) {
-      inp.addEventListener('input', updateCheckState);
-    });
 
-    checkBtn.onclick = function() {
+    function performCheck() {
+      if (zone.classList.contains('locked')) return;
       var allCorrect = true;
       inputs.forEach(function(inp, i) {
         var typed = inp.value.trim().toLowerCase();
@@ -1053,7 +1056,21 @@
 
       answeredKeys[getQKey(si, qi)] = { result: allCorrect ? 'correct' : 'wrong', userAnswer: Array.from(inputs).map(function(inp) { return inp.value.trim(); }), type: 'fillin' };
       addScore(allCorrect, si);
-    };
+    }
+
+    zone._performCheck = performCheck;
+
+    inputs.forEach(function(inp) {
+      inp.addEventListener('input', updateCheckState);
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (!checkBtn.disabled) performCheck();
+        }
+      });
+    });
+
+    checkBtn.onclick = function() { performCheck(); };
     zone.appendChild(checkBtn);
   }
 
