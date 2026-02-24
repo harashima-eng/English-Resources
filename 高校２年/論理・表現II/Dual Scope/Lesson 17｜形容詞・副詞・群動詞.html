@@ -388,7 +388,6 @@
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 24px;
-      animation: fadeInUp 0.6s ease-out 0.1s both;
     }
 
     .home-title {
@@ -398,7 +397,6 @@
       line-height: 1.1;
       letter-spacing: -0.03em;
       margin-bottom: 24px;
-      animation: fadeInUp 0.6s ease-out 0.2s both;
     }
 
     .home-title em {
@@ -415,14 +413,12 @@
       max-width: 500px;
       margin: 0 auto 48px;
       line-height: 1.7;
-      animation: fadeInUp 0.6s ease-out 0.3s both;
     }
 
     .home-cta {
       display: flex;
       gap: 16px;
       justify-content: center;
-      animation: fadeInUp 0.6s ease-out 0.4s both;
     }
 
     .btn-primary {
@@ -1048,66 +1044,11 @@
     .view-overview.active { display: block; }
     .view-question.active { display: block; }
 
-    /* ===== CSS ANIMATIONS ===== */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    /* All animations handled by GSAP - @keyframes removed */
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .collapsible.open {
-      animation: slideInSmooth 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    @keyframes slideInSmooth {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Reduced motion support for accessibility */
+    /* Reduced motion: GSAP handles animation skipping via UV_REDUCED flag */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      html {
-        scroll-behavior: auto;
-      }
+      html { scroll-behavior: auto; }
     }
 
     /* Responsive */
