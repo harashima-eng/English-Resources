@@ -231,6 +231,9 @@
     sectionObservers = [];
   }
 
+  // ── Cleanup on page unload ──
+  window.addEventListener('beforeunload', detachAllListeners);
+
   // ── Session lifecycle ──
   document.addEventListener('tr:session-start', function() {
     // Re-inject if panel was rebuilt

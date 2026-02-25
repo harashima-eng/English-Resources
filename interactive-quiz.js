@@ -1516,10 +1516,15 @@
   // ── Re-apply on navigation (MutationObserver for SPA) ──
   var iqObserver = null;
   function setupObserver() {
+    if (iqObserver) { iqObserver.disconnect(); iqObserver = null; }
     var target = document.getElementById('questionsList');
     if (!target) return;
     iqObserver = new MutationObserver(function() {
-      enhanceVisibleCards();
+      try {
+        enhanceVisibleCards();
+      } catch (e) {
+        console.error('[interactive-quiz] observer error:', e);
+      }
     });
     iqObserver.observe(target, { childList: true });
   }
