@@ -1018,8 +1018,10 @@
           sec.questions.forEach(function(q) {
             var key = getQKey(sec.index, q.index);
             state.revealed[key] = true;
-            if (!state.isTeacher) revealQuestion(getQEl(sec.index, q.index));
-            document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: sec.index, qi: q.index } }));
+            if (!state.isTeacher) {
+              revealQuestion(getQEl(sec.index, q.index));
+              document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: sec.index, qi: q.index } }));
+            }
           });
         });
         return;
@@ -1037,8 +1039,10 @@
               examIndex.sections[secIdx].questions.forEach(function(q) {
                 var key = getQKey(secIdx, q.index);
                 state.revealed[key] = true;
-                if (!state.isTeacher) revealQuestion(getQEl(secIdx, q.index));
-                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: q.index } }));
+                if (!state.isTeacher) {
+                  revealQuestion(getQEl(secIdx, q.index));
+                  document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: q.index } }));
+                }
               });
             }
           } else if (sec.questions) {
@@ -1047,8 +1051,10 @@
                 var qIdx = parseInt(qi);
                 var key = getQKey(secIdx, qIdx);
                 state.revealed[key] = true;
-                if (!state.isTeacher) revealQuestion(getQEl(secIdx, qIdx));
-                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: qIdx } }));
+                if (!state.isTeacher) {
+                  revealQuestion(getQEl(secIdx, qIdx));
+                  document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: qIdx } }));
+                }
               }
             });
           }
