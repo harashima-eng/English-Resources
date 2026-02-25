@@ -2468,6 +2468,8 @@ function initTypeCardTilt() {
 // ===== B1: HOME ENTRANCE (GSAP timeline) =====
 function initHomeEntrance() {
   if (typeof gsap === 'undefined') return;
+  if (document._homeEntrancePlayed) return;
+  document._homeEntrancePlayed = true;
   const els = ['.home-label', '.home-title', '.home-subtitle', '.home-cta'];
 
   if (UV_REDUCED) {
