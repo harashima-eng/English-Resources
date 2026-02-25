@@ -369,9 +369,15 @@
             var panelQBtn = panelEl.querySelector('.tr-btn-q[data-section="' + indices.si + '"][data-question="' + indices.qi + '"]');
             if (panelQBtn) panelQBtn.classList.add('revealed');
           }
+          // Open all 3 collapsibles (vocab, hint, answer) on teacher's card
+          openAllCollapsibles(qEl);
+          // Stop propagation so inline onclick doesn't toggle answer closed
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          return;
         }
       }
-      return; // Don't block — let normal toggle behavior happen
+      return; // Already revealed — let click propagate for normal individual toggle
     }
 
     // Student: check if revealed
