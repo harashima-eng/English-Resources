@@ -204,31 +204,6 @@
       align-items: center;
     }
 
-    .view-toggle-nav {
-      display: flex;
-      background: var(--bg-warm);
-      border-radius: 100px;
-      padding: 4px;
-    }
-
-    .view-btn-nav {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 100px;
-      background: transparent;
-      color: var(--text-secondary);
-      font-size: 13px;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
-    }
-
-    .view-btn-nav.active {
-      background: var(--card);
-      color: var(--text);
-      box-shadow: var(--shadow-sm);
-    }
-
     .top-nav-theme {
       width: 40px;
       height: 40px;
@@ -750,22 +725,12 @@
       contain: layout style;
     }
 
-    .qcard-question, .qcard-buttons, .qcard-left, .qcard-right {
+    .qcard-question, .qcard-left, .qcard-right {
       box-sizing: border-box;
     }
 
-    .qcard-buttons, .toggle-btn-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .qcard-buttons {
-      padding: 0 24px 20px;
-    }
-
-    /* Dual/Split view */
-    [data-view="dual"] .qcard {
+    /* Split layout */
+    .qcard {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto auto;
@@ -774,82 +739,42 @@
         "left right";
     }
 
-    [data-view="dual"] .qcard-buttons {
-      display: none;
-    }
-
-    [data-view="dual"] .qcard-question {
+    .qcard-question {
       grid-area: question;
       padding: 24px;
       border-bottom: 1px solid var(--border);
     }
 
-    [data-view="dual"] .qcard-left {
+    .qcard-left {
       grid-area: left;
       padding: 24px;
       border-right: 1px solid var(--border);
     }
 
-    [data-view="dual"] .qcard-right {
+    .qcard-right {
       grid-area: right;
       padding: 24px;
       background: var(--card);
     }
 
-    [data-view="dual"] .collapsible {
+    .collapsible {
       display: none;
     }
 
-    [data-view="dual"] .collapsible.open {
-      display: block;
-      margin-top: 16px;
-    }
-
-    /* Single view */
-    [data-view="single"] .qcard {
-      display: block;
-    }
-
-    [data-view="single"] .qcard-buttons {
-      display: flex;
-    }
-
-    [data-view="single"] .toggle-btn-row {
-      display: none;
-    }
-
-    [data-view="single"] .qcard-question {
-      padding: 24px 24px 16px;
-    }
-
-    [data-view="single"] .qcard-left {
-      padding: 0 24px 0;
-      border-right: none;
-    }
-
-    [data-view="single"] .qcard-right {
-      padding: 0 24px 24px;
-      background: transparent;
-    }
-
-    [data-view="single"] .collapsible {
-      display: none;
-    }
-
-    [data-view="single"] .collapsible.open {
+    .collapsible.open {
       display: block;
       margin-top: 16px;
     }
 
     @media (max-width: 800px) {
-      [data-view="dual"] .qcard {
+      .qcard {
         grid-template-columns: 1fr;
         grid-template-areas:
           "question"
           "left"
           "right";
       }
-      [data-view="dual"] .qcard-left {
+      .qcard-left {
         border-right: none;
         border-bottom: 1px solid var(--border);
       }
@@ -892,36 +817,6 @@
       background: var(--prep-light);
       border-left: 3px solid var(--prep);
       font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
-    }
-
-    .toggle-btn {
-      flex: 1;
-      min-width: 80px;
-      min-height: 44px;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      /* Default shadow for elevated look */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12),
-                  0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    /* .toggle-btn hover/active handled by GSAP */
-
-    .toggle-btn.vocab { background: var(--pronoun); color: white; }
-    .toggle-btn.hint { background: var(--prep); color: white; }
-    .toggle-btn.answer { background: var(--noun); color: white; }
-
-    @media (max-width: 768px) {
-      .toggle-btn {
-        min-height: 48px;
-        padding: 14px 28px;
-        font-size: 14px;
-      }
     }
 
     .box {
@@ -1086,10 +981,6 @@
         gap: 6px;
       }
 
-      .view-toggle-nav {
-        display: none;
-      }
-
       .sub-nav {
         padding: 12px 16px;
         gap: 10px;
@@ -1244,7 +1135,7 @@
     }
   </style>
 </head>
-<body data-view="single" data-exam-id="ds-lesson16-nouns-articles">
+<body data-exam-id="ds-lesson16-nouns-articles">
 
   <!-- ===== TOP NAVIGATION BAR ===== -->
   <nav class="top-nav" id="topNav">
@@ -1255,10 +1146,7 @@
       <button class="top-nav-link" data-nav="question" onclick="Router.navigate('question')" role="tab" aria-selected="false">Question</button>
     </div>
     <div class="top-nav-right">
-      <div class="view-toggle-nav">
-        <button class="view-btn-nav active" data-view="single" onclick="setView('single')">Single</button>
-        <button class="view-btn-nav" data-view="dual" onclick="setView('dual')">Split</button>
-      </div>
+
       <button class="top-nav-theme" onclick="toggleTheme()" title="Toggle theme">
         <span class="theme-icon">&#9728;&#65039;</span>
       </button>
