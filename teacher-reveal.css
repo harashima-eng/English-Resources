@@ -243,6 +243,15 @@ html.dark .tr-panel-section {
   margin-bottom: 0;
   padding-bottom: 0;
 }
+.tr-panel-logout {
+  border-top: 1px solid rgba(168, 162, 158, 0.15);
+  margin-top: 8px;
+  padding-top: 8px;
+}
+[data-theme="dark"] .tr-panel-logout,
+html.dark .tr-panel-logout {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
 
 /* ── Labels & Info ── */
 .tr-panel-label {

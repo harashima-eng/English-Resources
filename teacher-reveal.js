@@ -1050,7 +1050,7 @@
 
       // Auto-expire sessions older than 4 hours
       var sessionTime = new Date(data.activeSession).getTime();
-      if (Date.now() - sessionTime > 4 * 60 * 60 * 1000) {
+      if (Date.now() - sessionTime > SESSION_EXPIRY_MS) {
         examRef.update({ activeSession: null });
         return;
       }
