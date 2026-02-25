@@ -939,8 +939,15 @@
       document.dispatchEvent(new CustomEvent('tr:session-start'));
       showToast('セッションを開始しました');
       if (panelEl) {
-        panelEl.querySelectorAll('.tr-btn-q, .tr-btn-section').forEach(function(b) {
+        panelEl.querySelectorAll('.tr-btn-q').forEach(function(b) {
+          b.classList.remove('previewed');
+        });
+        panelEl.querySelectorAll('.tr-btn-section').forEach(function(b) {
           b.classList.remove('revealed');
+        });
+        panelEl.querySelectorAll('.tr-reveal-btn').forEach(function(rb) {
+          rb.classList.remove('revealed');
+          rb.textContent = '\u25CB'; // ○
         });
       }
     });
