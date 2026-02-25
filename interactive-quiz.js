@@ -220,6 +220,23 @@
     progressBackdropEl.onclick = function() { closeProgressPanel(); };
     document.body.appendChild(progressBackdropEl);
 
+    // ── Tab auto-hide ──
+    progressTabEl.addEventListener('mouseenter', function() {
+      clearTimeout(tabHideTimer);
+    });
+    progressTabEl.addEventListener('mouseleave', function() {
+      resetTabHideTimer();
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (progressPanelOpen) return;
+      var nearTab = e.clientY > window.innerHeight - 100 && e.clientX < 150;
+      if (nearTab && tabIsHidden) {
+        showTabWithGsap();
+        clearTimeout(tabHideTimer);
+      }
+    }, { passive: true });
+    resetTabHideTimer();
+
     // Initial content
     updateProgressPanel();
   }
@@ -393,11 +410,45 @@
 
   function flashTab(isCorrect) {
     if (!progressTabEl || typeof gsap === 'undefined') return;
+    if (tabIsHidden) showTabWithGsap();
+    resetTabHideTimer();
     var color = isCorrect ? 'rgba(22, 163, 74, 0.4)' : 'rgba(220, 38, 38, 0.4)';
     gsap.fromTo(progressTabEl,
       { boxShadow: '0 0 0 0 ' + color },
       { boxShadow: '0 0 12px 4px ' + color, duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.inOut' }
     );
+  }
+
+  function hideTabWithGsap() {
+    if (!progressTabEl || tabIsHidden || progressPanelOpen) return;
+    tabIsHidden = true;
+    if (typeof gsap !== 'undefined') {
+      gsap.to(progressTabEl, {
+        opacity: 0, x: -20,
+        duration: reducedMotion ? 0.01 : 0.3,
+        ease: 'power2.inOut',
+        onComplete: function() { progressTabEl.style.pointerEvents = 'none'; }
+      });
+    }
+  }
+
+  function showTabWithGsap() {
+    if (!progressTabEl || !tabIsHidden) return;
+    tabIsHidden = false;
+    progressTabEl.style.pointerEvents = '';
+    if (typeof gsap !== 'undefined') {
+      gsap.to(progressTabEl, {
+        opacity: 1, x: 0,
+        duration: reducedMotion ? 0.01 : 0.25,
+        ease: 'power2.out'
+      });
+    }
+  }
+
+  function resetTabHideTimer() {
+    clearTimeout(tabHideTimer);
+    if (progressPanelOpen) return;
+    tabHideTimer = setTimeout(hideTabWithGsap, 3000);
   }
 
   function addScore(isCorrect, si) {
