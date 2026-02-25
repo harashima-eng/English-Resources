@@ -28,8 +28,7 @@
   if (!examId) return;
 
   // ── Firebase init ──
-  if (typeof firebase === 'undefined' || !window.firebaseConfig) return;
-  if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+  if (typeof firebase === 'undefined' || !firebase.apps.length) return;
   var db = firebase.database();
   var auth = firebase.auth();
   var examRef = db.ref('exams/' + examId);
@@ -1147,16 +1146,21 @@
   var trObserver = null;
   function setupDynamicObserver() {
     if (pattern.name !== 'dualscope' || !pattern.isDynamic) return;
+    if (trObserver) { trObserver.disconnect(); trObserver = null; }
     var qListEl = document.getElementById('questionsList');
     if (!qListEl) return;
     var rafPending = false;
     trObserver = new MutationObserver(function() {
-      if (!state.sessionActive || state.isTeacher || rafPending) return;
-      rafPending = true;
-      requestAnimationFrame(function() {
-        rafPending = false;
-        applyLocksToVisibleDOM(false);
-      });
+      try {
+        if (!state.sessionActive || state.isTeacher || rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(function() {
+          rafPending = false;
+          applyLocksToVisibleDOM(false);
+        });
+      } catch (e) {
+        console.error('[teacher-reveal] observer error:', e);
+      }
     });
     trObserver.observe(qListEl, { childList: true });
   }

@@ -13,8 +13,7 @@
   var examId = document.body && document.body.dataset.examId;
   if (!examId) return;
 
-  if (typeof firebase === 'undefined' || !window.firebaseConfig) return;
-  if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+  if (typeof firebase === 'undefined' || !firebase.apps.length) return;
   var db = firebase.database();
 
   // Section-level cache: { sectionIndex: { questionIndex: answerData } }
