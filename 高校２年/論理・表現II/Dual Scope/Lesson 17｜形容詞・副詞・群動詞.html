@@ -15,7 +15,7 @@
       --card: #FFFFFF;
       --text: #1C1917;
       --text-secondary: #57534E;
-      --text-muted: #A3A09C;
+      --text-muted: #7A7672;
       --accent: #e8725c;
       --border: rgba(28, 25, 23, 0.08);
       --border-visible: rgba(28, 25, 23, 0.12);
@@ -62,7 +62,7 @@
       --card-solid: #242220;
       --text: #F5F3F0;
       --text-secondary: #A3A09C;
-      --text-muted: #666666;
+      --text-muted: #8A8A8A;
       --accent: #F08872;
       --border: rgba(255, 255, 255, 0.06);
       --border-visible: rgba(255, 255, 255, 0.10);
@@ -1583,7 +1583,8 @@
 if (typeof gsap !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
-const UV_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let UV_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', e => { UV_REDUCED = e.matches; });
 
 const GSAP_CONFIG = {
   ease: {
@@ -1997,9 +1998,11 @@ const Router = {
     const parts = hash.split('/');
 
     NavState.view = parts[0] || 'home';
+    if (!['home', 'overview', 'question'].includes(NavState.view)) NavState.view = 'home';
 
     if (NavState.view === 'question' && parts.length >= 3) {
       NavState.category = parts[1] || 'basic';
+      if (!NavState.categoryMap[NavState.category]) NavState.category = 'basic';
       const localIndex = parseInt(parts[2], 10) - 1 || 0;
       const sections = NavState.categoryMap[NavState.category] || [0];
       NavState.section = sections[Math.min(localIndex, sections.length - 1)] || 0;
@@ -2074,6 +2077,7 @@ const Router = {
   },
 
   _postRender(view, mainContent, subNav) {
+    window.scrollTo(0, 0);
     if (view === 'home') {
       mainContent.classList.remove('has-subnav');
       initHomeEntrance();
