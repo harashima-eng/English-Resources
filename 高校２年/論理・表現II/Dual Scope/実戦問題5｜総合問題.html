@@ -2703,7 +2703,7 @@ function showNav() {
   clearTimeout(hideTimeout);
   navVisible = true;
   if (typeof gsap !== 'undefined') {
-    gsap.to('.top-nav', { y: 0, duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+    gsap.to('.top-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     if (NavState.view === 'question') {
       gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
@@ -2714,8 +2714,8 @@ function hideNav() {
   hideTimeout = setTimeout(() => {
     navVisible = false;
     if (typeof gsap !== 'undefined') {
-      gsap.to('.top-nav', { y: '-100%', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
-      gsap.to('#subNav', { y: '-100%', opacity: 0, pointerEvents: 'none', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      gsap.to('.top-nav', { y: '-100%', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      gsap.to('#subNav', { y: '-100%', opacity: 0, pointerEvents: 'none', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
   }, 300);
 }
