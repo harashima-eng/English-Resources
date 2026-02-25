@@ -587,10 +587,12 @@
     return btn;
   }
 
-  // ── Nav toggle (injected into .top-nav-right after login) ──
+  // ── Nav toggle (injected into page nav bar after login) ──
   function createNavToggle() {
-    var topNavRight = document.querySelector('.top-nav-right');
-    if (!topNavRight || navToggleEl) return;
+    if (navToggleEl) return;
+    var target = document.querySelector('.top-nav-right')   // Dual Scope
+              || document.querySelector('.nav-bar');         // Exam pages
+
     navToggleEl = document.createElement('button');
     navToggleEl.className = 'tr-nav-toggle';
     navToggleEl.title = 'Teacher Panel';
@@ -604,7 +606,13 @@
         collapsePanel();
       }
     };
-    topNavRight.insertBefore(navToggleEl, topNavRight.firstChild);
+
+    if (target) {
+      target.appendChild(navToggleEl);
+    } else {
+      navToggleEl.classList.add('tr-nav-toggle--fixed');
+      document.body.appendChild(navToggleEl);
+    }
   }
 
   // ── Teacher login (popup-first, redirect fallback) ──

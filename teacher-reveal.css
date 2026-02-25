@@ -40,9 +40,9 @@
 .tr-login-btn:active {
   transform: translateY(0) scale(0.97);
 }
-@media (hover: none) {
+@media (max-width: 600px) {
   .tr-login-btn {
-    opacity: 0.7;
+    display: none;
   }
 }
 
