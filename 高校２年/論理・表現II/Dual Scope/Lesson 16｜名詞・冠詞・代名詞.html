@@ -1041,19 +1041,6 @@
 
     /* Mobile nav drawer */
     @media (max-width: 768px) {
-      .mobile-nav-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        background: var(--card);
-        cursor: pointer;
-        font-size: 20px;
-      }
-
       .mobile-nav {
         position: fixed;
         bottom: 0;
@@ -1436,7 +1423,7 @@
     <section class="view-question" id="viewQuestion">
       <div class="question-header">
         <div class="question-category-badge basic" id="categoryBadge">
-          <span id="categoryIcon">&#128218;</span>
+          <span id="categoryIcon" role="img" aria-label="Basic problems">&#128218;</span>
           <span id="categoryName">基本問題</span>
         </div>
         <h2 class="question-title" id="sectionTitle">[1] 基本問題 1</h2>
@@ -1894,9 +1881,9 @@ const NavState = {
 
 // Category display info
 const categoryInfo = {
-  basic: { name: '基本問題', iconText: '\u{1F4DA}', class: 'basic' },
-  comm: { name: 'For Communication', iconText: '\u{1F4AC}', class: 'comm' },
-  advanced: { name: '発展問題', iconText: '\u{1F680}', class: 'advanced' }
+  basic: { name: '基本問題', iconText: '\u{1F4DA}', iconLabel: 'Basic problems', class: 'basic' },
+  comm: { name: 'For Communication', iconText: '\u{1F4AC}', iconLabel: 'Communication', class: 'comm' },
+  advanced: { name: '発展問題', iconText: '\u{1F680}', iconLabel: 'Advanced problems', class: 'advanced' }
 };
 
 // ===== ROUTER =====
@@ -2071,7 +2058,9 @@ const Router = {
     const info = categoryInfo[NavState.category];
     const badge = document.getElementById('categoryBadge');
     badge.className = 'question-category-badge ' + info.class;
-    document.getElementById('categoryIcon').textContent = info.iconText || '';
+    const iconEl = document.getElementById('categoryIcon');
+    iconEl.textContent = info.iconText || '';
+    iconEl.setAttribute('aria-label', info.iconLabel || '');
     document.getElementById('categoryName').textContent = info.name;
 
     const sectionData = grammarData.sections[NavState.section];
@@ -2401,12 +2390,7 @@ function initHoverAnimations() {
     gsap.to(e.target, { ...r.leave, duration: r.dur || GSAP_CONFIG.duration.micro, overwrite: true });
   }, true);
 
-  document.addEventListener('mousedown', (e) => {
-    if (e.target.matches && e.target.matches('.toggle-btn')) gsap.to(e.target, { y: 0, scale: 0.96, duration: 0.1 });
-  }, true);
-  document.addEventListener('mouseup', (e) => {
-    if (e.target.matches && e.target.matches('.toggle-btn')) gsap.to(e.target, { scale: 1, duration: 0.15, ease: GSAP_CONFIG.ease.spring });
-  }, true);
+
 }
 
 // ===== C8: SEARCH FOCUS ANIMATION =====
@@ -2434,6 +2418,7 @@ function showNav() {
   navVisible = true;
   if (typeof gsap !== 'undefined') {
     gsap.to('.top-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+    gsap.to('.mobile-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     if (NavState.view === 'question') {
       gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
