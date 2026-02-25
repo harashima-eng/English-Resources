@@ -773,51 +773,25 @@
         qBtn.dataset.question = qi;
         qBtn.textContent = 'Q' + (qi + 1);
         qBtn.onclick = function() {
-          var qEl = getQEl(si, qi);
-          if (!qEl) return;
-          // Local preview toggle (teacher-only, no Firebase broadcast)
-          if (qBtn.classList.contains('previewed')) {
-            qBtn.classList.remove('previewed');
-            var box = getAnswerBox(qEl);
-            if (box) { box.classList.remove('show'); box.classList.remove('open'); }
-            var hintBox = getHintBox(qEl);
-            if (hintBox) { hintBox.classList.remove('show'); hintBox.classList.remove('open'); }
-            var wordsBox = qEl.querySelector('.collapsible[data-type="words"]');
-            if (wordsBox) { wordsBox.classList.remove('show'); wordsBox.classList.remove('open'); }
-          } else {
-            qBtn.classList.add('previewed');
-            showAllToggles(qEl);
-          }
-        };
-        qRow.appendChild(qBtn);
-
-        // Reveal-to-students toggle (Firebase broadcast)
-        var revealBtn = document.createElement('button');
-        revealBtn.className = 'tr-reveal-btn';
-        revealBtn.textContent = '\u25CB'; // ○
-        revealBtn.title = 'Reveal to students';
-        revealBtn.onclick = function() {
           var key = getQKey(si, qi);
           var updates = {};
           if (state.revealed[key]) {
+            // Un-reveal for students
             state.revealed[key] = false;
-            revealBtn.classList.remove('revealed');
-            revealBtn.textContent = '\u25CB'; // ○
+            qBtn.classList.remove('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = false;
             examRef.update(updates);
-            lockQuestion(getQEl(si, qi));
           } else {
+            // Reveal to students
             state.revealed[key] = true;
-            revealBtn.classList.add('revealed');
-            revealBtn.textContent = '\u25CF'; // ●
+            qBtn.classList.add('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
             examRef.update(updates);
-            revealQuestion(getQEl(si, qi));
-            showAllToggles(getQEl(si, qi));
-            qBtn.classList.add('previewed');
+            // Open answer on teacher's page (answer only, not words/hints)
+            showAnswerBox(getQEl(si, qi));
           }
         };
-        qRow.appendChild(revealBtn);
+        qRow.appendChild(qBtn);
 
         var preview = document.createElement('div');
         preview.className = 'tr-q-preview';
