@@ -587,34 +587,6 @@
     return btn;
   }
 
-  // ── Nav toggle (injected into page nav bar after login) ──
-  function createNavToggle() {
-    if (navToggleEl) return;
-    var target = document.querySelector('.top-nav-right')   // Dual Scope
-              || document.querySelector('.nav-bar');         // Exam pages
-
-    navToggleEl = document.createElement('button');
-    navToggleEl.className = 'tr-nav-toggle';
-    navToggleEl.title = 'Teacher Panel';
-    navToggleEl.textContent = '\u{1F4CB}';  // 📋
-    navToggleEl.onclick = function() {
-      if (!panelEl) return;
-      if (panelEl.style.display === 'none') {
-        expandPanel();
-        if (reopenBtn) reopenBtn.style.display = 'none';
-      } else {
-        collapsePanel();
-      }
-    };
-
-    if (target) {
-      target.appendChild(navToggleEl);
-    } else {
-      navToggleEl.classList.add('tr-nav-toggle--fixed');
-      document.body.appendChild(navToggleEl);
-    }
-  }
-
   // ── Teacher login (popup-first, redirect fallback) ──
   function teacherLogin() {
     var provider = new firebase.auth.GoogleAuthProvider();
@@ -678,9 +650,6 @@
     }
   }
 
-  // ── Nav toggle (top bar) ──
-  var navToggleEl = null;
-
   // ── Collapse / Expand ──
   var collapsedTabEl = null;
 
@@ -742,8 +711,6 @@
     });
 
     document.body.appendChild(panelEl);
-    createNavToggle();
-    if (navToggleEl) navToggleEl.classList.add('visible');
     shiftContent(true);
 
     examRef.child('activeSession').on('value', function(snap) {
