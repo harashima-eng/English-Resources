@@ -307,7 +307,141 @@ html.dark .tr-section-title {
 }
 
 
-/* ── Question Button Grid — equal cells ── */
+/* ── Resize handle (left edge) ── */
+.tr-resize-handle {
+  position: absolute;
+  left: -3px;
+  top: 40px;
+  bottom: 40px;
+  width: 6px;
+  cursor: ew-resize;
+  border-radius: 3px;
+  background: transparent;
+  transition: background-color 0.15s ease;
+  z-index: 1;
+}
+.tr-resize-handle:hover {
+  background: rgba(13, 148, 136, 0.35);
+}
+[data-theme="dark"] .tr-resize-handle:hover,
+html.dark .tr-resize-handle:hover {
+  background: rgba(20, 184, 166, 0.35);
+}
+
+/* ── Question Container (collapsible section content) ── */
+.tr-q-container {
+  overflow: hidden;
+  max-height: 2000px;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+.tr-q-container.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* ── Section collapse toggle ── */
+.tr-section-toggle {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: none;
+  font-size: 9px;
+  cursor: pointer;
+  color: #A8A29E;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.15s ease;
+  padding: 0;
+}
+.tr-section-toggle:hover { color: #57534E; }
+.tr-section-toggle.collapsed { transform: rotate(-90deg); }
+[data-theme="dark"] .tr-section-toggle { color: #78716C; }
+[data-theme="dark"] .tr-section-toggle:hover,
+html.dark .tr-section-toggle:hover { color: #D6D3D1; }
+
+/* ── Question Row — inline layout ── */
+.tr-q-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(168, 162, 158, 0.08);
+}
+.tr-q-row:last-of-type {
+  border-bottom: none;
+}
+[data-theme="dark"] .tr-q-row,
+html.dark .tr-q-row {
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Q button in row context — compact inline ── */
+.tr-q-row .tr-btn-q {
+  aspect-ratio: auto;
+  width: 38px;
+  height: 26px;
+  padding: 0;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ── Question preview text ── */
+.tr-q-preview {
+  flex: 1;
+  min-width: 0;
+  font-size: 11px;
+  color: #78716C;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+[data-theme="dark"] .tr-q-preview,
+html.dark .tr-q-preview {
+  color: #A8A29E;
+}
+
+/* ── Answer distribution toggle chevron ── */
+.tr-answer-toggle {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: none;
+  font-size: 8px;
+  cursor: pointer;
+  color: #A8A29E;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.15s ease;
+  padding: 0;
+}
+.tr-answer-toggle:hover { color: #57534E; }
+.tr-answer-toggle.open { transform: rotate(180deg); color: #0D9488; }
+[data-theme="dark"] .tr-answer-toggle { color: #78716C; }
+[data-theme="dark"] .tr-answer-toggle:hover,
+html.dark .tr-answer-toggle:hover { color: #D6D3D1; }
+[data-theme="dark"] .tr-answer-toggle.open,
+html.dark .tr-answer-toggle.open { color: #14B8A6; }
+
+/* ── Collapsible student response area ── */
+.tr-q-answers {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, padding 0.25s ease;
+  padding: 0 4px;
+}
+.tr-q-answers.open {
+  max-height: 200px;
+  padding: 4px 4px 8px;
+}
+
+/* ── Legacy Q grid (kept for non-dualscope patterns) ── */
 .tr-q-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -608,11 +742,17 @@ html.dark .tr-session-badge {
    ================================================================ */
 @media (max-width: 600px) {
   .tr-panel {
-    width: calc(100% - 24px);
+    width: calc(100% - 24px) !important;
+    min-width: unset;
+    max-width: unset;
     right: 12px;
     bottom: 12px;
     max-height: 55vh;
     border-radius: 14px;
+  }
+
+  .tr-resize-handle {
+    display: none;
   }
 
   .tr-panel-header {
@@ -630,6 +770,16 @@ html.dark .tr-session-badge {
 
   .tr-q-grid {
     gap: 3px;
+  }
+
+  .tr-q-row .tr-btn-q {
+    width: 34px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .tr-q-preview {
+    font-size: 10px;
   }
 
   .tr-btn-primary,
