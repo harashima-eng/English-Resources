@@ -866,14 +866,14 @@
             state.revealed[key] = false;
             qBtn.classList.remove('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = false;
-            examRef.update(updates);
+            examRef.update(updates).catch(function(e) { showToast('Error: ' + e.message); });
             if (window.UISound) UISound.play('click');
           } else {
             // Reveal to students
             state.revealed[key] = true;
             qBtn.classList.add('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
-            examRef.update(updates);
+            examRef.update(updates).catch(function(e) { showToast('Error: ' + e.message); });
             openAllCollapsibles(getQEl(si, qi));
             if (window.UISound) UISound.play('reveal');
           }
