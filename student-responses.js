@@ -32,6 +32,7 @@
   var isTeacher = false;
   var listeners = {};
   var aggregateDisplays = {};
+  var sectionObservers = [];
 
   // ── Student Side: Write responses to Firebase ──
   var debounceTimers = {};
@@ -203,14 +204,19 @@
       });
 
       var observer = new MutationObserver(function() {
-        var displays = responseArea.querySelectorAll('.sr-question-display');
-        var anyShown = false;
-        displays.forEach(function(d) {
-          if (d.style.display !== 'none' && d.children.length > 0) anyShown = true;
-        });
-        responseArea.style.display = anyShown ? '' : 'none';
+        try {
+          var displays = responseArea.querySelectorAll('.sr-question-display');
+          var anyShown = false;
+          displays.forEach(function(d) {
+            if (d.style.display !== 'none' && d.children.length > 0) anyShown = true;
+          });
+          responseArea.style.display = anyShown ? '' : 'none';
+        } catch (e) {
+          console.error('[student-responses] observer error:', e);
+        }
       });
       observer.observe(responseArea, { childList: true, subtree: true, attributes: true });
+      sectionObservers.push(observer);
     });
   }
 
@@ -221,6 +227,8 @@
     });
     listeners = {};
     aggregateDisplays = {};
+    sectionObservers.forEach(function(obs) { obs.disconnect(); });
+    sectionObservers = [];
   }
 
   // ── Session lifecycle ──
