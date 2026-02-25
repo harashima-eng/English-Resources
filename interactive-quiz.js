@@ -1211,7 +1211,13 @@
     }
 
     function tryShowFillinPopup() {
-      if (iqSessionActive || !allBlanksFilled()) return;
+      if (!allBlanksFilled()) return;
+      if (iqSessionActive) {
+        document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+          detail: { si: si, qi: qi, answer: Array.from(inputs).map(function(inp) { return inp.value.trim(); }).join(', '), type: 'fillin' }
+        }));
+        return;
+      }
       // Show popup above the last filled input
       var lastInput = inputs[inputs.length - 1];
       showCheckPopup(lastInput, zone, performCheck);
@@ -1279,7 +1285,13 @@
     if (iqSessionActive) showBtn.style.display = 'none';
 
     textarea.addEventListener('input', function() {
-      if (!iqSessionActive) showBtn.disabled = !textarea.value.trim();
+      if (iqSessionActive && textarea.value.trim()) {
+        document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+          detail: { si: si, qi: qi, answer: textarea.value.trim(), type: 'compose' }
+        }));
+      } else if (!iqSessionActive) {
+        showBtn.disabled = !textarea.value.trim();
+      }
     });
 
     showBtn.onclick = function() {
