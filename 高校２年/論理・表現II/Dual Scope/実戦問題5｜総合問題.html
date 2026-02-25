@@ -2623,10 +2623,10 @@ function initOverviewScrollReveals() {
       }
     });
 
-    tl.from(header, { opacity: 0, x: -20, duration: 0.4, ease: GSAP_CONFIG.ease.default });
+    tl.fromTo(header, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: GSAP_CONFIG.ease.default });
 
     cards.forEach((card, i) => {
-      tl.from(card, { opacity: 0, y: 10, duration: 0.3, ease: GSAP_CONFIG.ease.default }, i === 0 ? '-=0.2' : '-=0.25');
+      tl.fromTo(card, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: GSAP_CONFIG.ease.default }, i === 0 ? '-=0.2' : '-=0.25');
     });
   });
 }
