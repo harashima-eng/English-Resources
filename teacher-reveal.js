@@ -833,9 +833,7 @@
       examIndex.sections.forEach(function(sec) {
         sec.questions.forEach(function(q) {
           state.revealed[getQKey(sec.index, q.index)] = true;
-          var qEl = getQEl(sec.index, q.index);
-          revealQuestion(qEl);
-          showAllToggles(qEl);
+          showAnswerBox(getQEl(sec.index, q.index));
         });
       });
       showToast('\u5168\u89E3\u7B54\u3092\u516C\u958B\u3057\u307E\u3057\u305F');
@@ -931,14 +929,10 @@
       showToast('セッションを開始しました');
       if (panelEl) {
         panelEl.querySelectorAll('.tr-btn-q').forEach(function(b) {
-          b.classList.remove('previewed');
+          b.classList.remove('revealed');
         });
         panelEl.querySelectorAll('.tr-btn-section').forEach(function(b) {
           b.classList.remove('revealed');
-        });
-        panelEl.querySelectorAll('.tr-reveal-btn').forEach(function(rb) {
-          rb.classList.remove('revealed');
-          rb.textContent = '\u25CB'; // ○
         });
       }
     });
@@ -955,7 +949,7 @@
       showToast('セッション終了');
       if (panelEl) {
         panelEl.querySelectorAll('.tr-btn-q').forEach(function(b) {
-          b.classList.remove('previewed');
+          b.classList.remove('revealed');
         });
         panelEl.querySelectorAll('.tr-btn-section').forEach(function(b) {
           b.classList.remove('revealed');
