@@ -235,6 +235,17 @@
     detachAllListeners();
   });
 
+  document.addEventListener('tr:reset-responses', function() {
+    responsesRef.remove();
+    Object.keys(aggregateDisplays).forEach(function(key) {
+      var display = aggregateDisplays[key];
+      if (display) {
+        display.textContent = '';
+        display.style.display = 'none';
+      }
+    });
+  });
+
   // ── Init: Watch for teacher panel creation ──
   function init() {
     var panelCheck = new MutationObserver(function() {

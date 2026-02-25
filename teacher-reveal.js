@@ -657,6 +657,17 @@
       else startSession();
     };
     sessionSec.appendChild(sessionBtn);
+
+    var resetBtn = document.createElement('button');
+    resetBtn.className = 'tr-btn tr-btn-reset';
+    resetBtn.textContent = 'Reset Responses';
+    resetBtn.onclick = function() {
+      if (!confirm('\u751F\u5F92\u306E\u56DE\u7B54\u3092\u30EA\u30BB\u30C3\u30C8\u3057\u307E\u3059\u304B\uFF1F')) return;
+      document.dispatchEvent(new CustomEvent('tr:reset-responses'));
+      showToast('\u56DE\u7B54\u3092\u30EA\u30BB\u30C3\u30C8\u3057\u307E\u3057\u305F');
+    };
+    sessionSec.appendChild(resetBtn);
+
     body.appendChild(sessionSec);
 
     // Section controls — row layout with Q preview
