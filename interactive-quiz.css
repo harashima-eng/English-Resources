@@ -657,6 +657,37 @@ html.dark .iq-progress-backdrop {
   background: rgba(0, 0, 0, 0.5);
 }
 
+/* ── Edge trigger (left-edge hover zone for panel access) ── */
+.iq-edge-trigger {
+  position: fixed;
+  left: 0;
+  top: 30%;
+  bottom: 30%;
+  width: 8px;
+  z-index: 9997;
+  cursor: pointer;
+}
+.iq-edge-trigger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 32px;
+  border-radius: 0 3px 3px 0;
+  background: rgba(13, 148, 136, 0);
+  transition: background 0.2s ease, height 0.2s ease;
+}
+.iq-edge-trigger:hover::after {
+  background: rgba(13, 148, 136, 0.5);
+  height: 48px;
+}
+[data-theme="dark"] .iq-edge-trigger:hover::after,
+html.dark .iq-edge-trigger:hover::after {
+  background: rgba(20, 184, 166, 0.5);
+}
+
 
 /* ── Locked state (answered, no more interaction) ── */
 .iq-zone.locked .iq-choice,
@@ -676,6 +707,7 @@ html.dark .iq-progress-backdrop {
   }
   .iq-progress-tab-score { font-size: 11px; }
   .iq-progress-tab-bar { width: 36px; }
+  .iq-edge-trigger { display: none; }
 
   .iq-progress-panel {
     width: 280px;
