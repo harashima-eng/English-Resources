@@ -1261,6 +1261,7 @@
 
     inputs.forEach(function(inp) {
       inp.addEventListener('input', function() { tryShowFillinPopup(); });
+      inp.addEventListener('focus', function() { tryShowFillinPopup(); });
       inp.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
           e.preventDefault();
