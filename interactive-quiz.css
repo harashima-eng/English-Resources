@@ -1512,6 +1512,10 @@ html.dark .iq-check-popup {
 html.dark .iq-check-popup::after {
   border-top-color: rgba(30, 30, 30, 0.92);
 }
+[data-theme="dark"] .iq-check-popup.below::after,
+html.dark .iq-check-popup.below::after {
+  border-bottom-color: rgba(30, 30, 30, 0.92);
+}
 [data-theme="dark"] .iq-popup-check-btn,
 html.dark .iq-popup-check-btn {
   background: linear-gradient(135deg, #14B8A6, #0D9488);
@@ -1524,6 +1528,10 @@ html.dark .iq-check-popup.result.correct {
 [data-theme="dark"] .iq-check-popup.result.correct::after,
 html.dark .iq-check-popup.result.correct::after {
   border-top-color: rgba(22, 101, 52, 0.9);
+}
+[data-theme="dark"] .iq-check-popup.result.correct.below::after,
+html.dark .iq-check-popup.result.correct.below::after {
+  border-bottom-color: rgba(22, 101, 52, 0.9);
 }
 [data-theme="dark"] .iq-check-popup.correct .iq-popup-icon,
 html.dark .iq-check-popup.correct .iq-popup-icon {
@@ -1541,6 +1549,10 @@ html.dark .iq-check-popup.result.incorrect {
 [data-theme="dark"] .iq-check-popup.result.incorrect::after,
 html.dark .iq-check-popup.result.incorrect::after {
   border-top-color: rgba(127, 29, 29, 0.9);
+}
+[data-theme="dark"] .iq-check-popup.result.incorrect.below::after,
+html.dark .iq-check-popup.result.incorrect.below::after {
+  border-bottom-color: rgba(127, 29, 29, 0.9);
 }
 [data-theme="dark"] .iq-check-popup.incorrect .iq-popup-icon,
 html.dark .iq-check-popup.incorrect .iq-popup-icon {
