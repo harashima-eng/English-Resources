@@ -278,6 +278,7 @@
   }
 
   function lockAllQuestions() {
+    if (state.isTeacher) return;
     if (pattern.name === 'dualscope') {
       applyLocksToVisibleDOM(false);
       return;
