@@ -220,6 +220,17 @@
     progressBackdropEl.onclick = function() { closeProgressPanel(); };
     document.body.appendChild(progressBackdropEl);
 
+    // ── Nav bar toggle (visible in top nav) ──
+    var topNavRight = document.querySelector('.top-nav-right');
+    if (topNavRight) {
+      var navToggle = document.createElement('button');
+      navToggle.className = 'iq-nav-toggle';
+      navToggle.title = 'Progress Panel';
+      navToggle.textContent = '\u{1F4CB}';  // 📋
+      navToggle.onclick = function() { toggleProgressPanel(); };
+      topNavRight.insertBefore(navToggle, topNavRight.firstChild);
+    }
+
     // ── Tab auto-hide ──
     progressTabEl.addEventListener('mouseenter', function() {
       clearTimeout(tabHideTimer);

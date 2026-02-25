@@ -293,6 +293,35 @@ html.dark .iq-feedback.incorrect {
 }
 
 
+/* ── Nav bar progress toggle ── */
+.iq-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border, rgba(0,0,0,0.08));
+  border-radius: 10px;
+  background: var(--card, rgba(255,253,250,0.85));
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.iq-nav-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.iq-nav-toggle:active {
+  transform: scale(0.95);
+}
+[data-theme="dark"] .iq-nav-toggle,
+html.dark .iq-nav-toggle {
+  background: rgba(41, 37, 36, 0.85);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #E7E5E4;
+}
+
 /* ── Progress tab (bottom-left, always visible) ── */
 .iq-progress-tab {
   position: fixed;
