@@ -203,15 +203,27 @@
 
   // Resolve a question DOM element back to {si, qi} indices
   function findQIndices(qEl) {
-    if (pattern.name === 'dualscope' && pattern.isDynamic) {
-      var si = typeof NavState !== 'undefined' ? NavState.section : -1;
-      if (si < 0) return null;
-      var cards = document.getElementById('questionsList').querySelectorAll('.qcard');
-      for (var qi = 0; qi < cards.length; qi++) {
-        if (cards[qi] === qEl) return { si: si, qi: qi };
+    if (pattern.name === 'dualscope') {
+      if (pattern.isDynamic) {
+        var si = typeof NavState !== 'undefined' ? NavState.section : -1;
+        if (si < 0) return null;
+        var cards = document.getElementById('questionsList').querySelectorAll('.qcard');
+        for (var qi = 0; qi < cards.length; qi++) {
+          if (cards[qi] === qEl) return { si: si, qi: qi };
+        }
+        return null;
+      }
+      // Static dualscope: all sections rendered in DOM
+      var sections = document.querySelectorAll('.section');
+      for (var si = 0; si < sections.length; si++) {
+        var cards = sections[si].querySelectorAll('.qcard');
+        for (var qi = 0; qi < cards.length; qi++) {
+          if (cards[qi] === qEl) return { si: si, qi: qi };
+        }
       }
       return null;
     }
+    // Non-dualscope: use examIndex el refs
     for (var s = 0; s < examIndex.sections.length; s++) {
       var sec = examIndex.sections[s];
       for (var q = 0; q < sec.questions.length; q++) {
