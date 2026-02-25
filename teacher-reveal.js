@@ -143,6 +143,7 @@
     revealed: {},
     sectionRevealed: {}
   };
+  var initialized = false;
 
   // ── Helpers ──
   function getQKey(si, qi) { return si + '-' + qi; }
