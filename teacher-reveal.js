@@ -497,7 +497,8 @@
     if (!el) el = document.body;
     if (show && window.innerWidth >= 900) {
       el.style.transition = 'padding-right 0.3s ease';
-      el.style.paddingRight = '340px';
+      var w = panelEl ? panelEl.offsetWidth : 420;
+      el.style.paddingRight = (w + 40) + 'px';
     } else {
       el.style.paddingRight = '';
     }
