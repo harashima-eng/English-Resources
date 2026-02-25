@@ -2200,33 +2200,21 @@ function renderQuestion(q, si, qi) {
   if (q.scramble) questionHtml += `<div class="scramble">${q.scramble}</div>`;
   questionHtml += `</div>`;
 
-  let btnHtml = `<div class="qcard-buttons">
-    <button class="toggle-btn vocab" onclick="toggle(this,'vocab')" aria-expanded="false">Words</button>`;
-  if (q.hint) btnHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')" aria-expanded="false">Hint</button>`;
-  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer</button></div>`;
-
-  let leftHtml = `<div class="qcard-left">
-    <div class="toggle-btn-row">
-      <button class="toggle-btn vocab" onclick="toggle(this,'vocab')" aria-expanded="false">Words</button>`;
-  if (q.hint) leftHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')" aria-expanded="false">Hint</button>`;
-  leftHtml += `</div>`;
+  let leftHtml = `<div class="qcard-left">`;
   if (q.vocab) {
-    leftHtml += `<div class="collapsible" data-type="vocab"><div class="box vocab-box">`;
+    leftHtml += `<div class="collapsible open" data-type="vocab"><div class="box vocab-box">`;
     q.vocab.forEach(v => leftHtml += `<div class="vocab-item"><span class="vocab-word">${v[0]}</span>${v[1]}</div>`);
     leftHtml += `</div></div>`;
   }
   if (q.hint) {
-    leftHtml += `<div class="collapsible" data-type="hint"><div class="box hint-box"><span class="box-label">Solution</span>`;
+    leftHtml += `<div class="collapsible open" data-type="hint"><div class="box hint-box"><span class="box-label">Solution</span>`;
     q.hint.forEach(h => leftHtml += `<div class="hint-item">&#8594; ${h}</div>`);
     leftHtml += `</div></div>`;
   }
   leftHtml += `</div>`;
 
   let rightHtml = `<div class="qcard-right">
-    <div class="toggle-btn-row">
-      <button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer</button>
-    </div>
-    <div class="collapsible" data-type="answer"><div class="box ans-box">
+    <div class="collapsible open" data-type="answer"><div class="box ans-box">
       <span class="box-label">&#27491;&#35299;: ${q.answer}</span>`;
   if (q.translation) rightHtml += `<div class="jp-text">${q.translation}</div>`;
   if (q.explanation) rightHtml += `<div class="jp-text">${q.explanation}</div>`;
@@ -2241,7 +2229,7 @@ function renderQuestion(q, si, qi) {
   if (q.grammar) rightHtml += `<div class="grammar-ref">${q.grammar}</div>`;
   rightHtml += `</div></div></div>`;
 
-  return `<div class="qcard" data-si="${si}" data-qi="${qi}">${questionHtml}${btnHtml}${leftHtml}${rightHtml}</div>`;
+  return `<div class="qcard" data-si="${si}" data-qi="${qi}">${questionHtml}${leftHtml}${rightHtml}</div>`;
 }
 
 function renderQuestions(sectionIndex) {
