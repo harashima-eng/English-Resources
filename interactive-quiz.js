@@ -522,27 +522,33 @@
     };
     popup.appendChild(checkBtn);
 
-    // Position popup above anchor
+    // Position popup above or below anchor (smart flip)
     zone.style.position = 'relative';
     zone.appendChild(popup);
 
-    // Calculate position relative to zone
     var zoneRect = zone.getBoundingClientRect();
     var anchorRect = anchorEl.getBoundingClientRect();
     var anchorCenterX = anchorRect.left + anchorRect.width / 2 - zoneRect.left;
-    var anchorTop = anchorRect.top - zoneRect.top;
+    var spaceAbove = anchorRect.top - zoneRect.top;
 
     popup.style.position = 'absolute';
     popup.style.left = anchorCenterX + 'px';
-    popup.style.top = anchorTop + 'px';
-    popup.style.transform = 'translate(-50%, -100%) translateY(-10px)';
+
+    if (spaceAbove < 60) {
+      popup.style.top = (anchorRect.bottom - zoneRect.top) + 'px';
+      popup.style.transform = 'translate(-50%, 0) translateY(10px)';
+      popup.classList.add('below');
+    } else {
+      popup.style.top = (anchorRect.top - zoneRect.top) + 'px';
+      popup.style.transform = 'translate(-50%, -100%) translateY(-10px)';
+    }
 
     zone._popup = popup;
 
     // GSAP entrance
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(popup,
-        { scale: 0, opacity: 0, transformOrigin: 'bottom center' },
+        { scale: 0, opacity: 0, transformOrigin: popup.classList.contains('below') ? 'top center' : 'bottom center' },
         { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(1.7)' }
       );
     }
