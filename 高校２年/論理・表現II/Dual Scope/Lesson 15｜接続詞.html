@@ -2220,7 +2220,7 @@ function renderQuestion(q, si, qi) {
   let btnHtml = `<div class="qcard-buttons">
     <button class="toggle-btn vocab" onclick="toggle(this,'vocab')" aria-expanded="false">Words</button>`;
   if (q.hint) btnHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')" aria-expanded="false">Hint</button>`;
-  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button></div>`;
+  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer</button></div>`;
 
   let leftHtml = `<div class="qcard-left">
     <div class="toggle-btn-row">
@@ -2241,7 +2241,7 @@ function renderQuestion(q, si, qi) {
 
   let rightHtml = `<div class="qcard-right">
     <div class="toggle-btn-row">
-      <button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button>
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer</button>
     </div>
     <div class="collapsible" data-type="answer"><div class="box ans-box">
     </div></div></div>`;
