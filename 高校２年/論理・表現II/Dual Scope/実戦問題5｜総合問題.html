@@ -1058,19 +1058,6 @@
 
     /* Mobile nav drawer */
     @media (max-width: 768px) {
-      .mobile-nav-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        background: var(--card);
-        cursor: pointer;
-        font-size: 20px;
-      }
-
       .mobile-nav {
         position: fixed;
         bottom: 0;
@@ -2534,6 +2521,7 @@ function showNav() {
   navVisible = true;
   if (typeof gsap !== 'undefined') {
     gsap.to('.top-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+    gsap.to('.mobile-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     if (NavState.view === 'question') {
       gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
@@ -2546,6 +2534,7 @@ function hideNav() {
     if (typeof gsap !== 'undefined') {
       gsap.to('.top-nav', { y: '-100%', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
       gsap.to('#subNav', { y: '-100%', opacity: 0, pointerEvents: 'none', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      gsap.to('.mobile-nav', { y: '100%', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
   }, 300);
 }
