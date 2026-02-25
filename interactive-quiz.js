@@ -1168,7 +1168,6 @@
       var typed = input.value.trim();
       if (!typed || zone.classList.contains('locked')) return;
       var isCorrect = matchesCorrectText(typed, q.correctText);
-      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
 
       input.disabled = true;
       zone.classList.add('locked');
@@ -1187,8 +1186,7 @@
         input.parentNode.insertBefore(answer, input.nextSibling);
       }
 
-      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: input.value.trim(), type: 'correction' };
-      addScore(isCorrect, si);
+      recordAnswer(si, qi, isCorrect, input.value.trim(), 'correction');
       return { isCorrect: isCorrect, message: msg };
     }
 
@@ -1287,7 +1285,6 @@
         if (!isRight) allCorrect = false;
       });
 
-      if (window.UISound) UISound.play(allCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
 
       var display = q.correctAnswer.join(', ');
@@ -1295,8 +1292,7 @@
         ? 'Correct! ' + display
         : 'Incorrect. Correct answer: ' + display;
 
-      answeredKeys[getQKey(si, qi)] = { result: allCorrect ? 'correct' : 'wrong', userAnswer: Array.from(inputs).map(function(inp) { return inp.value.trim(); }), type: 'fillin' };
-      addScore(allCorrect, si);
+      recordAnswer(si, qi, allCorrect, Array.from(inputs).map(function(inp) { return inp.value.trim(); }), 'fillin');
       return { isCorrect: allCorrect, message: msg };
     }
 
