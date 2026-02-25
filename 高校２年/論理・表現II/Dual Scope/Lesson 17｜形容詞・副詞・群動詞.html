@@ -766,14 +766,14 @@
     }
 
     @media (max-width: 800px) {
-      [data-view="dual"] .qcard {
+      .qcard {
         grid-template-columns: 1fr;
         grid-template-areas:
           "question"
           "left"
           "right";
       }
-      [data-view="dual"] .qcard-left {
+      .qcard-left {
         border-right: none;
         border-bottom: 1px solid var(--border);
       }
@@ -978,10 +978,6 @@
         gap: 6px;
       }
 
-      .view-toggle-nav {
-        display: none;
-      }
-
       .sub-nav {
         padding: 12px 16px;
         gap: 10px;
@@ -1136,7 +1132,7 @@
     }
   </style>
 </head>
-<body data-view="single" data-exam-id="ds-lesson17-adjectives-adverbs">
+<body data-exam-id="ds-lesson17-adjectives-adverbs">
 
   <!-- ===== TOP NAVIGATION BAR ===== -->
   <nav class="top-nav" id="topNav">
@@ -1147,10 +1143,7 @@
       <button class="top-nav-link" data-nav="question" onclick="Router.navigate('question')" role="tab" aria-selected="false">Question</button>
     </div>
     <div class="top-nav-right">
-      <div class="view-toggle-nav">
-        <button class="view-btn-nav active" data-view="single" onclick="setView('single')">Single</button>
-        <button class="view-btn-nav" data-view="dual" onclick="setView('dual')">Split</button>
-      </div>
+
       <button class="top-nav-theme" onclick="toggleTheme()" title="Toggle theme">
         <span class="theme-icon">&#9728;&#65039;</span>
       </button>
