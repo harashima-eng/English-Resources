@@ -2120,6 +2120,7 @@ const Router = {
   },
 
   _postRender(view, mainContent, subNav) {
+    window.scrollTo(0, 0);
     if (view === 'home') {
       mainContent.classList.remove('has-subnav');
       initHomeEntrance();
@@ -2128,7 +2129,7 @@ const Router = {
       setTimeout(() => { initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
     } else if (view === 'question') {
       if (navVisible) {
-        gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+        gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
       }
       mainContent.classList.add('has-subnav');
       this.renderQuestionView();
@@ -2599,7 +2600,7 @@ function showNav() {
   if (typeof gsap !== 'undefined') {
     gsap.to('.top-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     if (NavState.view === 'question') {
-      gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
   }
 }
