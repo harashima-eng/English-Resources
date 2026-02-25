@@ -189,7 +189,7 @@
     if (typeof grammarData !== 'undefined' && grammarData.sections[si]) {
       var q = grammarData.sections[si].questions[qi];
       if (q && q.text) {
-        var t = q.text.replace(/\s+/g, ' ').trim();
+        var t = q.text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
         return t.length > 40 ? t.substring(0, 38) + '...' : t;
       }
     }
