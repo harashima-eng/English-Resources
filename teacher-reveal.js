@@ -622,14 +622,20 @@
     sessionSec.appendChild(sessionBtn);
     body.appendChild(sessionSec);
 
-    // Section controls
+    // Section controls — row layout with Q preview
     examIndex.sections.forEach(function(sec, si) {
       var secDiv = document.createElement('div');
       secDiv.className = 'tr-panel-section tr-section-group';
 
-      // Section header row: title + ALL button inline
+      // Section header row: collapse chevron + title + ALL button
       var headerRow = document.createElement('div');
       headerRow.className = 'tr-section-header-row';
+
+      var secToggle = document.createElement('button');
+      secToggle.className = 'tr-section-toggle';
+      secToggle.textContent = '\u25BC'; // ▼
+      secToggle.title = 'Collapse section';
+      headerRow.appendChild(secToggle);
 
       var secTitle = document.createElement('div');
       secTitle.className = 'tr-section-title';
@@ -651,7 +657,7 @@
         if (state.sectionRevealed[si]) return;
         state.sectionRevealed[si] = true;
         allBtn.classList.add('revealed');
-        qGrid.querySelectorAll('.tr-btn-q').forEach(function(qb) {
+        qContainer.querySelectorAll('.tr-btn-q').forEach(function(qb) {
           qb.classList.add('revealed');
         });
 
@@ -667,16 +673,25 @@
           });
         }
         examRef.update(updates);
-        showToast('セクション ' + (si + 1) + ' を公開しました');
+        showToast('\u30BB\u30AF\u30B7\u30E7\u30F3 ' + (si + 1) + ' \u3092\u516C\u958B\u3057\u307E\u3057\u305F');
       };
       headerRow.appendChild(allBtn);
       secDiv.appendChild(headerRow);
 
-      // Q buttons in equal grid
-      var qGrid = document.createElement('div');
-      qGrid.className = 'tr-q-grid';
+      // Questions container (collapsible via section toggle)
+      var qContainer = document.createElement('div');
+      qContainer.className = 'tr-q-container';
+
+      secToggle.onclick = function() {
+        qContainer.classList.toggle('collapsed');
+        secToggle.classList.toggle('collapsed');
+      };
 
       sec.questions.forEach(function(q, qi) {
+        // Q row: [Q button] [preview text] [answer chevron]
+        var qRow = document.createElement('div');
+        qRow.className = 'tr-q-row';
+
         var qBtn = document.createElement('button');
         qBtn.className = 'tr-btn tr-btn-q';
         qBtn.dataset.section = si;
@@ -700,10 +715,37 @@
             showAllToggles(getQEl(si, qi));
           }
         };
-        qGrid.appendChild(qBtn);
+        qRow.appendChild(qBtn);
+
+        var preview = document.createElement('div');
+        preview.className = 'tr-q-preview';
+        preview.textContent = getQuestionPreview(si, qi);
+        preview.title = preview.textContent;
+        qRow.appendChild(preview);
+
+        // Answer distribution toggle chevron
+        var ansToggle = document.createElement('button');
+        ansToggle.className = 'tr-answer-toggle';
+        ansToggle.textContent = '\u25BC'; // ▼
+        ansToggle.title = 'Show student responses';
+        qRow.appendChild(ansToggle);
+
+        qContainer.appendChild(qRow);
+
+        // Collapsible student response area
+        var ansArea = document.createElement('div');
+        ansArea.className = 'tr-q-answers';
+        ansArea.dataset.section = si;
+        ansArea.dataset.question = qi;
+        qContainer.appendChild(ansArea);
+
+        ansToggle.onclick = function() {
+          ansArea.classList.toggle('open');
+          ansToggle.classList.toggle('open');
+        };
       });
 
-      secDiv.appendChild(qGrid);
+      secDiv.appendChild(qContainer);
       body.appendChild(secDiv);
     });
 
@@ -726,7 +768,7 @@
           showAllToggles(qEl);
         });
       });
-      showToast('全解答を公開しました');
+      showToast('\u5168\u89E3\u7B54\u3092\u516C\u958B\u3057\u307E\u3057\u305F');
     };
     revealSec.appendChild(revealAllBtn);
     body.appendChild(revealSec);
