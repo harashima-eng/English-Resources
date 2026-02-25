@@ -2560,6 +2560,7 @@ function initHoverAnimations() {
     { sel: '.btn-primary', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, leave: { y: 0, boxShadow: '' }, dur: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.spring },
     { sel: '.btn-secondary', enter: { borderColor: 'var(--text)', backgroundColor: 'var(--card)', boxShadow: 'var(--shadow)' }, leave: { clearProps: 'borderColor,backgroundColor,boxShadow' } },
     { sel: '.box', enter: { y: -2, boxShadow: 'var(--shadow)', borderColor: 'var(--border-visible)' }, leave: { y: 0, boxShadow: 'var(--shadow-sm)', clearProps: 'borderColor' } },
+    { sel: '.toggle-btn', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: '0 6px 20px rgba(0,0,0,0.15)' }, leave: { y: 0, scale: 1, boxShadow: '0 2px 8px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08)' }, ease: GSAP_CONFIG.ease.spring },
     { sel: '.qcard', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, leave: { y: 0, boxShadow: 'var(--shadow)' } },
   ];
 
