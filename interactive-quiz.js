@@ -1216,7 +1216,12 @@
       if (!allBlanksFilled()) return;
       if (iqSessionActive) {
         document.dispatchEvent(new CustomEvent('iq:answer-selected', {
-          detail: { si: si, qi: qi, answer: Array.from(inputs).map(function(inp) { return inp.value.trim(); }).join(', '), type: 'fillin' }
+          detail: { si: si, qi: qi, answer: Array.from(inputs).map(function(inp, i) {
+            var val = inp.value.trim();
+            var expected = (q.correctAnswer[i] || '').toLowerCase();
+            if (!val && (expected === '×' || expected === 'x')) val = '×';
+            return val;
+          }).join(', '), type: 'fillin' }
         }));
         return;
       }
