@@ -1510,12 +1510,14 @@
   }
 
   // ── Re-apply on navigation (MutationObserver for SPA) ──
+  var iqObserver = null;
   function setupObserver() {
     var target = document.getElementById('questionsList');
     if (!target) return;
-    new MutationObserver(function() {
+    iqObserver = new MutationObserver(function() {
       enhanceVisibleCards();
-    }).observe(target, { childList: true });
+    });
+    iqObserver.observe(target, { childList: true });
   }
 
   // ── Restore answered state after re-render ──
