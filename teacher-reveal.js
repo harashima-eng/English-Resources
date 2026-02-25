@@ -583,7 +583,13 @@
     btn.className = 'tr-login-btn';
     btn.textContent = 'Teacher Login';
     btn.onclick = function() { teacherLogin(); };
-    document.body.appendChild(btn);
+    var topNavRight = document.querySelector('.top-nav-right');
+    if (topNavRight) {
+      btn.classList.add('tr-login-btn--nav');
+      topNavRight.appendChild(btn);
+    } else {
+      document.body.appendChild(btn);
+    }
     return btn;
   }
 
