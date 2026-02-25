@@ -942,6 +942,10 @@
     logoutBtn.textContent = 'Logout';
     logoutBtn.onclick = function() {
       auth.signOut().then(function() {
+        // Clean up Firebase listeners before reload
+        examRef.child('activeSession').off();
+        examRef.child('sections').off();
+        examRef.child('revealAll').off();
         state.isTeacher = false;
         state.teacherUid = null;
         initialized = false;

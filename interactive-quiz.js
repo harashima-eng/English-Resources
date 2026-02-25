@@ -69,12 +69,14 @@
 
   function saveProgress() {
     var key = 'iq-progress-' + (document.body.dataset.examId || 'default');
-    localStorage.setItem(key, JSON.stringify({
-      bestStreak: bestStreak,
-      badges: badges,
-      sectionScores: sectionScores,
-      answeredKeys: answeredKeys
-    }));
+    try {
+      localStorage.setItem(key, JSON.stringify({
+        bestStreak: bestStreak,
+        badges: badges,
+        sectionScores: sectionScores,
+        answeredKeys: answeredKeys
+      }));
+    } catch (e) { /* private browsing or quota exceeded */ }
   }
 
   function getAnswerResult(key) {
