@@ -356,10 +356,10 @@
     if (!qEl) return;
 
     if (state.isTeacher) {
-      // Teacher clicking answer toggle → also reveal to students
       var indices = findQIndices(qEl);
       if (indices) {
         var key = getQKey(indices.si, indices.qi);
+        // Reveal to students (Firebase write) — only on first click
         if (!state.revealed[key]) {
           state.revealed[key] = true;
           var updates = {};
@@ -369,15 +369,17 @@
             var panelQBtn = panelEl.querySelector('.tr-btn-q[data-section="' + indices.si + '"][data-question="' + indices.qi + '"]');
             if (panelQBtn) panelQBtn.classList.add('revealed');
           }
-          // Open all 3 collapsibles (vocab, hint, answer) on teacher's card
+        }
+        // Open all 3 if answer is currently closed; let toggle close if open
+        var ansBlock = qEl.querySelector(pattern.answerBoxSel);
+        if (ansBlock && !ansBlock.classList.contains('open')) {
           openAllCollapsibles(qEl);
-          // Stop propagation so inline onclick doesn't toggle answer closed
           e.stopImmediatePropagation();
           e.preventDefault();
           return;
         }
       }
-      return; // Already revealed — let click propagate for normal individual toggle
+      return; // Answer is open → let click propagate so toggle() closes it
     }
 
     // Student: check if revealed
