@@ -1209,7 +1209,11 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   .iq-progress-total-fill,
   .iq-fillin-input,
   .iq-progress-retry-btn,
-  .iq-progress-reset-btn {
+  .iq-progress-reset-btn,
+  .iq-error-option,
+  .iq-section-fill,
+  .iq-scramble-tile,
+  .iq-popup-check-btn {
     transition-duration: 0.01ms !important;
   }
   .iq-feedback,
