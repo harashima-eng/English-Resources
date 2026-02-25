@@ -227,13 +227,18 @@
     progressTabEl.addEventListener('mouseleave', function() {
       resetTabHideTimer();
     });
+    var tabProximityRafId = 0;
     document.addEventListener('mousemove', function(e) {
-      if (progressPanelOpen) return;
-      var nearTab = e.clientY > window.innerHeight - 100 && e.clientX < 150;
-      if (nearTab && tabIsHidden) {
-        showTabWithGsap();
-        clearTimeout(tabHideTimer);
-      }
+      if (progressPanelOpen || tabProximityRafId) return;
+      var cx = e.clientX, cy = e.clientY;
+      tabProximityRafId = requestAnimationFrame(function() {
+        tabProximityRafId = 0;
+        var nearTab = cy > window.innerHeight - 100 && cx < 150;
+        if (nearTab && tabIsHidden) {
+          showTabWithGsap();
+          clearTimeout(tabHideTimer);
+        }
+      });
     }, { passive: true });
     resetTabHideTimer();
 
