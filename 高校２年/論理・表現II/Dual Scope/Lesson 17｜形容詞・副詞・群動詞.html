@@ -2009,6 +2009,9 @@ const Router = {
   render() {
     const prevView = this._currentView || null;
     this._currentView = NavState.view;
+    if (prevView === 'home' && NavState.view !== 'home') {
+      document._homeEntrancePlayed = false;
+    }
 
     // -- Animation: Update nav active states --
     document.querySelectorAll('.top-nav-link').forEach(link => {
@@ -2422,6 +2425,8 @@ function initTypeCardTilt() {
 // ===== B1: HOME ENTRANCE (GSAP timeline) =====
 function initHomeEntrance() {
   if (typeof gsap === 'undefined') return;
+  if (document._homeEntrancePlayed) return;
+  document._homeEntrancePlayed = true;
   const els = ['.home-label', '.home-title', '.home-subtitle', '.home-cta'];
 
   if (UV_REDUCED) {
@@ -2430,10 +2435,10 @@ function initHomeEntrance() {
   }
 
   const tl = gsap.timeline({ defaults: { ease: GSAP_CONFIG.ease.default, duration: GSAP_CONFIG.duration.slow } });
-  tl.from('.home-label', { opacity: 0, y: 24 })
-    .from('.home-title', { opacity: 0, y: 24 }, '-=0.4')
-    .from('.home-subtitle', { opacity: 0, y: 24 }, '-=0.3')
-    .from('.home-cta', { opacity: 0, y: 24 }, '-=0.2');
+  tl.fromTo('.home-label', { opacity: 0, y: 24 }, { opacity: 1, y: 0 })
+    .fromTo('.home-title', { opacity: 0, y: 24 }, { opacity: 1, y: 0 }, '-=0.4')
+    .fromTo('.home-subtitle', { opacity: 0, y: 24 }, { opacity: 1, y: 0 }, '-=0.3')
+    .fromTo('.home-cta', { opacity: 0, y: 24 }, { opacity: 1, y: 0 }, '-=0.2');
 }
 
 // ===== C2: OVERVIEW SECTION SCROLL REVEALS + C3: CARD CONTENT STAGGER =====
