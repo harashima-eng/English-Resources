@@ -2098,6 +2098,12 @@ const Router = {
         document.querySelectorAll('.view-home, .view-overview, .view-question').forEach(v => {
           if (v !== oldViewEl) v.classList.remove('active');
         });
+        // Pre-hide entrance elements to prevent flash
+        if (NavState.view === 'home') {
+          gsap.set('.home-label, .home-title, .home-subtitle, .home-cta', { opacity: 0, y: 24 });
+        } else if (NavState.view === 'overview') {
+          gsap.set('.conj-section-header, .conj-card', { opacity: 0 });
+        }
         newViewEl.classList.add('active');
         gsap.fromTo(newViewEl, { opacity: 0, y: 20 }, {
           opacity: 1, y: 0,
