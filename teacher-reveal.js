@@ -1192,6 +1192,16 @@
         setupDynamicObserver();
       }
     });
+
+    // Cleanup Firebase listeners and observer on page unload
+    window.addEventListener('beforeunload', function() {
+      if (trObserver) { trObserver.disconnect(); trObserver = null; }
+      if (examRef) {
+        examRef.child('activeSession').off();
+        examRef.child('sections').off();
+        examRef.child('revealAll').off();
+      }
+    });
   }
 
   if (document.readyState === 'loading') {
