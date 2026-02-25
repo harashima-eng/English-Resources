@@ -216,7 +216,9 @@
       if (pattern.isDynamic) {
         var si = typeof NavState !== 'undefined' ? NavState.section : -1;
         if (si < 0) return null;
-        var cards = document.getElementById('questionsList').querySelectorAll('.qcard');
+        var container = document.getElementById('questionsList');
+        if (!container) return null;
+        var cards = container.querySelectorAll('.qcard');
         for (var qi = 0; qi < cards.length; qi++) {
           if (cards[qi] === qEl) return { si: si, qi: qi };
         }
@@ -273,6 +275,18 @@
     }
   }
 
+  // Animate a collapsible block open (shared by all open paths)
+  function animateOpen(block) {
+    block.classList.add('open');
+    if (typeof gsap !== 'undefined' && !prefersReducedMotion) {
+      gsap.fromTo(block, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+      var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
+      if (items.length > 1) {
+        gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
+      }
+    }
+  }
+
   // Open all collapsibles (vocab, hint, answer) on teacher's card
   function openAllCollapsibles(qEl) {
     if (!qEl) return;
@@ -280,14 +294,7 @@
       ['vocab', 'hint', 'answer'].forEach(function(type) {
         var block = qEl.querySelector('.collapsible[data-type="' + type + '"]');
         if (block && !block.classList.contains('open')) {
-          block.classList.add('open');
-          if (typeof gsap !== 'undefined') {
-            gsap.fromTo(block, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
-            var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
-            if (items.length > 1) {
-              gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
-            }
-          }
+          animateOpen(block);
         }
       });
       if (window.fetchAnswerForElement) {
@@ -375,14 +382,7 @@
           ['vocab', 'hint'].forEach(function(type) {
             var block = qEl.querySelector('.collapsible[data-type="' + type + '"]');
             if (block && !block.classList.contains('open')) {
-              block.classList.add('open');
-              if (typeof gsap !== 'undefined') {
-                gsap.fromTo(block, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
-                var items = block.querySelectorAll('.vocab-item, .hint-item');
-                if (items.length > 1) {
-                  gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
-                }
-              }
+              animateOpen(block);
             }
           });
         }
@@ -621,12 +621,20 @@
   function shiftContent(show) {
     var el = document.querySelector('.main-content') || document.querySelector('main');
     if (!el) el = document.body;
-    if (show && window.innerWidth >= 900) {
-      el.style.transition = 'padding-right 0.3s ease';
+    if (show && window.innerWidth >= DESKTOP_BREAKPOINT) {
       var w = panelEl ? panelEl.offsetWidth : 420;
-      el.style.paddingRight = (w + 40) + 'px';
+      var target = (w + PANEL_GUTTER) + 'px';
+      if (typeof gsap !== 'undefined' && !prefersReducedMotion) {
+        gsap.to(el, { paddingRight: target, duration: 0.3, ease: 'power2.out' });
+      } else {
+        el.style.paddingRight = target;
+      }
     } else {
-      el.style.paddingRight = '';
+      if (typeof gsap !== 'undefined' && !prefersReducedMotion) {
+        gsap.to(el, { paddingRight: '0px', duration: 0.3, ease: 'power2.out' });
+      } else {
+        el.style.paddingRight = '';
+      }
     }
   }
 
@@ -1025,6 +1033,7 @@
 
   // ── Presence ──
   function trackPresence() {
+    if (state.isTeacher) return;
     var connRef = examRef.child('connectedStudents').push();
     connRef.onDisconnect().remove();
     connRef.set(true);
