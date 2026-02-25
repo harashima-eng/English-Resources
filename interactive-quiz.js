@@ -379,6 +379,9 @@
   function openProgressPanel() {
     if (!progressPanelEl || progressPanelOpen) return;
     progressPanelOpen = true;
+    clearTimeout(tabHideTimer);
+    if (tabIsHidden) showTabWithGsap();
+    if (edgeTriggerEl) edgeTriggerEl.style.display = 'none';
     updateProgressPanel();
     if (typeof gsap !== 'undefined') {
       gsap.to(progressPanelEl, { x: 0, duration: 0.35, ease: 'power2.out' });
@@ -395,6 +398,8 @@
   function closeProgressPanel() {
     if (!progressPanelEl || !progressPanelOpen) return;
     progressPanelOpen = false;
+    resetTabHideTimer();
+    if (edgeTriggerEl) edgeTriggerEl.style.display = '';
     if (typeof gsap !== 'undefined') {
       gsap.to(progressPanelEl, { x: -320, duration: 0.3, ease: 'power2.inOut' });
       if (progressBackdropEl) {
