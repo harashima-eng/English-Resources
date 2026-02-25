@@ -770,6 +770,19 @@
     }
   }
 
+  function applyChoiceFeedback(zone, correctValue, userAnswer, wasCorrect, valueFn) {
+    zone.querySelectorAll('.iq-choice').forEach(function(b) {
+      var v = valueFn(b);
+      if (v === correctValue) {
+        b.classList.add('correct');
+      } else if (!wasCorrect && v === userAnswer) {
+        b.classList.add('selected', 'wrong');
+      } else {
+        b.classList.add('dimmed');
+      }
+    });
+  }
+
   // ── Apply post-answer visual state for restored cards ──
   function applyAnsweredVisualState(zone, q, entry, cardEl) {
     var result = entry.result || (typeof entry === 'string' ? entry : null);
@@ -783,28 +796,12 @@
 
     switch (type) {
       case 'pair': {
-        zone.querySelectorAll('.iq-choice').forEach(function(b) {
-          if (b.textContent === q.correctAnswer) {
-            b.classList.add('correct');
-          } else if (!wasCorrect && b.textContent === userAnswer) {
-            b.classList.add('selected', 'wrong');
-          } else {
-            b.classList.add('dimmed');
-          }
-        });
+        applyChoiceFeedback(zone, q.correctAnswer, userAnswer, wasCorrect, function(b) { return b.textContent; });
         break;
       }
 
       case 'choice': {
-        zone.querySelectorAll('.iq-choice').forEach(function(b) {
-          if (b.dataset.letter === q.correctAnswer) {
-            b.classList.add('correct');
-          } else if (!wasCorrect && b.dataset.letter === userAnswer) {
-            b.classList.add('selected', 'wrong');
-          } else {
-            b.classList.add('dimmed');
-          }
-        });
+        applyChoiceFeedback(zone, q.correctAnswer, userAnswer, wasCorrect, function(b) { return b.dataset.letter; });
         break;
       }
 
