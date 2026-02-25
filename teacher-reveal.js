@@ -346,7 +346,6 @@
 
   // ── Capture-phase click interceptor ──
   document.addEventListener('click', function(e) {
-    if (!state.sessionActive) return;
     var t = e.target;
     var isAnswerBtn = t.classList.contains('answer-btn') || t.classList.contains('ans-btn') ||
       (t.classList.contains('toggle-btn') && t.classList.contains('answer'));
@@ -354,6 +353,25 @@
 
     var qEl = t.closest(pattern.questionSel);
     if (!qEl) return;
+
+    // Normal mode (no session): open vocab + hint alongside answer
+    if (!state.sessionActive) {
+      if (pattern.name === 'dualscope') {
+        var ansBlock = qEl.querySelector(pattern.answerBoxSel);
+        if (ansBlock && !ansBlock.classList.contains('open')) {
+          ['vocab', 'hint'].forEach(function(type) {
+            var block = qEl.querySelector('.collapsible[data-type="' + type + '"]');
+            if (block && !block.classList.contains('open')) {
+              block.classList.add('open');
+              if (typeof gsap !== 'undefined') {
+                gsap.fromTo(block, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+              }
+            }
+          });
+        }
+      }
+      return; // Let inline toggle() handle the answer itself
+    }
 
     if (state.isTeacher) {
       var indices = findQIndices(qEl);
