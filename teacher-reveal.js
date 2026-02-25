@@ -861,6 +861,7 @@
             qBtn.classList.remove('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = false;
             examRef.update(updates);
+            if (window.UISound) UISound.play('click');
           } else {
             // Reveal to students
             state.revealed[key] = true;
@@ -868,6 +869,7 @@
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
             examRef.update(updates);
             openAllCollapsibles(getQEl(si, qi));
+            if (window.UISound) UISound.play('reveal');
           }
         };
         qRow.appendChild(qBtn);
