@@ -1822,12 +1822,33 @@
     }
   }
 
-  function exitRetryMode(allCorrect) {
+  function exitRetryMode() {
     retryMode = false;
+    var scrollY = window.scrollY;
 
-    // Show all cards
+    // Show hidden cards at opacity 0, then fade in
     var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
-    allCards.forEach(function(card) { card.style.display = ''; });
+    var hiddenCards = [];
+    allCards.forEach(function(card) {
+      if (card.style.display === 'none') {
+        hiddenCards.push(card);
+        card.style.display = '';
+        card.style.opacity = '0';
+      }
+    });
+
+    // Restore scroll position before browser reflows
+    window.scrollTo(0, scrollY);
+
+    // Fade in previously hidden cards
+    if (typeof gsap !== 'undefined' && hiddenCards.length > 0) {
+      gsap.to(hiddenCards, {
+        opacity: 1, duration: reducedMotion ? 0.01 : 0.3, stagger: 0.02, ease: 'power2.out',
+        onComplete: function() { hiddenCards.forEach(function(c) { c.style.opacity = ''; }); }
+      });
+    } else {
+      hiddenCards.forEach(function(c) { c.style.opacity = ''; });
+    }
 
     // Remove retry bar
     if (retryBarEl) {
@@ -1837,14 +1858,6 @@
         retryBarEl.remove();
         retryBarEl = null;
       }
-    }
-
-    // Count results
-    var correctCount = retryKeys.filter(function(k) { return answeredKeys[k] && answeredKeys[k].result === 'correct'; }).length;
-    if (allCorrect) {
-      showToast('All correct! Great job!');
-    } else {
-      showToast('Retry complete. ' + correctCount + '/' + retryKeys.length + ' correct.');
     }
 
     retryKeys = [];

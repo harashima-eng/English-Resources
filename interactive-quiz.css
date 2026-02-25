@@ -1826,6 +1826,78 @@ html.dark .iq-confirm-cancel:hover {
    Popup + Retry + Dialog: Reduced Motion
    ══════════════════════════════════════════════════════════ */
 
+/* ── Retry Summary Overlay ── */
+.iq-retry-summary-icon {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.iq-retry-summary-score {
+  text-align: center;
+  margin-bottom: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+}
+.iq-retry-summary-num {
+  font-size: 40px;
+  font-weight: 800;
+  color: #0D9488;
+}
+.iq-retry-summary-sep {
+  font-size: 28px;
+  font-weight: 300;
+  color: #A8A29E;
+  margin: 0 2px;
+}
+.iq-retry-summary-den {
+  font-size: 28px;
+  font-weight: 700;
+  color: #57534E;
+}
+.iq-retry-summary-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #78716C;
+  margin-left: 4px;
+}
+.iq-retry-summary-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.iq-retry-dot {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font: 700 11px -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.iq-retry-dot.correct {
+  background: rgba(22, 163, 74, 0.1);
+  color: #16A34A;
+}
+.iq-retry-dot.wrong {
+  background: rgba(220, 38, 38, 0.1);
+  color: #DC2626;
+}
+
+/* Retry Summary: Dark mode */
+[data-theme="dark"] .iq-retry-summary-num,
+html.dark .iq-retry-summary-num { color: #14B8A6; }
+[data-theme="dark"] .iq-retry-summary-den,
+html.dark .iq-retry-summary-den { color: #D6D3D1; }
+[data-theme="dark"] .iq-retry-summary-label,
+html.dark .iq-retry-summary-label { color: #A8A29E; }
+[data-theme="dark"] .iq-retry-dot.correct,
+html.dark .iq-retry-dot.correct {
+  background: rgba(22, 163, 74, 0.15);
+  color: #22C55E;
+}
+[data-theme="dark"] .iq-retry-dot.wrong,
+html.dark .iq-retry-dot.wrong {
+  background: rgba(220, 38, 38, 0.15);
+  color: #EF4444;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .iq-check-popup,
   .iq-retry-bar,
