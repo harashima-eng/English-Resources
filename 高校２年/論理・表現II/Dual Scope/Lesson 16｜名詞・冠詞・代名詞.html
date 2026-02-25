@@ -2281,8 +2281,11 @@ function initCardReveal() {
 // ===== B6: COLLAPSIBLE TOGGLE (GSAP) + C4: CHILD STAGGER + C5: ANSWER CELEBRATION =====
 function toggle(btn, type) {
   const card = btn.closest('.qcard');
+  if (!card) return;
   const block = card.querySelector(`.collapsible[data-type="${type}"]`);
   if (!block) return;
+  if (typeof gsap !== 'undefined') gsap.killTweensOf(block);
+  btn.setAttribute('aria-expanded', block.classList.contains('open') ? 'false' : 'true');
 
   const isOpen = block.classList.contains('open');
 
