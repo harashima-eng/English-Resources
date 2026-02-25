@@ -99,6 +99,10 @@
   var reviewNavEl = null;
   var retryBtnEl = null;
   var progressPanelOpen = false;
+  var tabHideTimer = null;
+  var tabIsHidden = false;
+  var edgeTriggerEl = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var CATEGORY_NAMES = { basic: '\u57FA\u672C\u554F\u984C', comm: 'FOR COMMUNICATION', advanced: '\u767A\u5C55\u554F\u984C' };
 
@@ -107,7 +111,7 @@
     progressTabEl = document.createElement('div');
     progressTabEl.className = 'iq-progress-tab';
     progressTabEl.onclick = function() { toggleProgressPanel(); };
-    progressTabEl.title = 'Progress';
+    progressTabEl.title = 'Click to open progress panel';
 
     tabScoreEl = document.createElement('span');
     tabScoreEl.className = 'iq-progress-tab-score';
