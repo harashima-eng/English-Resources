@@ -449,6 +449,7 @@
     if (edgeTriggerEl) edgeTriggerEl.style.display = 'none';
     updateProgressPanel();
     if (typeof gsap !== 'undefined') {
+      gsap.killTweensOf(progressPanelEl);
       gsap.to(progressPanelEl, { x: 0, duration: 0.35, ease: 'power2.out' });
       if (progressBackdropEl) {
         progressBackdropEl.style.display = '';
@@ -466,6 +467,7 @@
     resetTabHideTimer();
     if (edgeTriggerEl) edgeTriggerEl.style.display = '';
     if (typeof gsap !== 'undefined') {
+      gsap.killTweensOf(progressPanelEl);
       gsap.to(progressPanelEl, { x: -320, duration: 0.3, ease: 'power2.inOut' });
       if (progressBackdropEl) {
         gsap.to(progressBackdropEl, { opacity: 0, duration: 0.2, onComplete: function() {
@@ -493,6 +495,7 @@
     if (!progressTabEl || tabIsHidden || progressPanelOpen) return;
     tabIsHidden = true;
     if (typeof gsap !== 'undefined') {
+      gsap.killTweensOf(progressTabEl);
       gsap.to(progressTabEl, {
         opacity: 0, x: -20,
         duration: reducedMotion ? 0.01 : 0.3,
