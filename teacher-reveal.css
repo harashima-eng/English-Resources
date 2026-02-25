@@ -979,7 +979,6 @@ html.dark .tr-collapsed-tab:hover {
   .tr-answer-toggle,
   .tr-q-answers,
   .tr-resize-handle,
-  .tr-reveal-btn,
   .tr-btn-reset,
   .tr-btn-logout {
     transition-duration: 0.01ms !important;
