@@ -1144,14 +1144,21 @@
   }
 
   // ── MutationObserver for dynamic question rendering (dualscope SPA) ──
+  var trObserver = null;
   function setupDynamicObserver() {
     if (pattern.name !== 'dualscope' || !pattern.isDynamic) return;
     var qListEl = document.getElementById('questionsList');
     if (!qListEl) return;
-    new MutationObserver(function() {
-      if (!state.sessionActive || state.isTeacher) return;
-      applyLocksToVisibleDOM(false);
-    }).observe(qListEl, { childList: true });
+    var rafPending = false;
+    trObserver = new MutationObserver(function() {
+      if (!state.sessionActive || state.isTeacher || rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(function() {
+        rafPending = false;
+        applyLocksToVisibleDOM(false);
+      });
+    });
+    trObserver.observe(qListEl, { childList: true });
   }
 
   // ── Init ──
