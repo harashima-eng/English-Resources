@@ -470,84 +470,96 @@
   // ── Firebase listeners (student) ──
   function startStudentListener() {
     examRef.child('activeSession').on('value', function(snap) {
-      var wasActive = state.sessionActive;
-      state.sessionActive = !!snap.val();
+      try {
+        var wasActive = state.sessionActive;
+        state.sessionActive = !!snap.val();
 
-      if (state.sessionActive && !state.isTeacher) {
-        lockAllQuestions();
-        showSessionBadge();
-        document.dispatchEvent(new CustomEvent('tr:session-start'));
-      } else if (!state.sessionActive && wasActive) {
-        unlockAll();
-        state.revealed = {};
-        state.sectionRevealed = {};
-        hideSessionBadge();
-        showToast('練習セッション終了 — 自習モードに戻りました');
-        document.dispatchEvent(new CustomEvent('tr:session-end'));
+        if (state.sessionActive && !state.isTeacher) {
+          lockAllQuestions();
+          showSessionBadge();
+          document.dispatchEvent(new CustomEvent('tr:session-start'));
+        } else if (!state.sessionActive && wasActive) {
+          unlockAll();
+          state.revealed = {};
+          state.sectionRevealed = {};
+          hideSessionBadge();
+          showToast('練習セッション終了 — 自習モードに戻りました');
+          document.dispatchEvent(new CustomEvent('tr:session-end'));
+        }
+      } catch (e) {
+        console.error('[teacher-reveal] activeSession listener error:', e);
       }
     });
 
     examRef.child('sections').on('value', function(snap) {
-      if (!state.sessionActive || state.isTeacher) return;
-      var sections = snap.val();
-      if (!sections) return;
+      try {
+        if (!state.sessionActive || state.isTeacher) return;
+        var sections = snap.val();
+        if (!sections) return;
 
-      Object.keys(sections).forEach(function(si) {
-        var sec = sections[si];
-        if (!sec) return;
-        var secIdx = parseInt(si);
+        Object.keys(sections).forEach(function(si) {
+          var sec = sections[si];
+          if (!sec) return;
+          var secIdx = parseInt(si);
 
-        if (sec.revealAll && !state.sectionRevealed[si]) {
-          state.sectionRevealed[si] = true;
-          if (examIndex.sections[secIdx]) {
-            examIndex.sections[secIdx].questions.forEach(function(q) {
-              var key = getQKey(secIdx, q.index);
-              if (!state.revealed[key]) {
+          if (sec.revealAll && !state.sectionRevealed[si]) {
+            state.sectionRevealed[si] = true;
+            if (examIndex.sections[secIdx]) {
+              examIndex.sections[secIdx].questions.forEach(function(q) {
+                var key = getQKey(secIdx, q.index);
+                if (!state.revealed[key]) {
+                  state.revealed[key] = true;
+                  var qEl = getQEl(secIdx, q.index);
+                  revealQuestion(qEl);
+                  document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: q.index } }));
+                }
+              });
+            }
+          }
+
+          if (sec.questions) {
+            Object.keys(sec.questions).forEach(function(qi) {
+              var qData = sec.questions[qi];
+              var qIdx = parseInt(qi);
+              var key = getQKey(secIdx, qIdx);
+              if (qData && qData.revealed) {
+                if (state.revealed[key]) return;
                 state.revealed[key] = true;
-                var qEl = getQEl(secIdx, q.index);
+                var qEl = getQEl(secIdx, qIdx);
                 revealQuestion(qEl);
-                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: q.index } }));
+                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: qIdx } }));
+              } else if (qData && !qData.revealed && state.revealed[key]) {
+                // Teacher re-locked this question
+                state.revealed[key] = false;
+                var qEl = getQEl(secIdx, qIdx);
+                lockQuestion(qEl);
               }
             });
           }
-        }
-
-        if (sec.questions) {
-          Object.keys(sec.questions).forEach(function(qi) {
-            var qData = sec.questions[qi];
-            var qIdx = parseInt(qi);
-            var key = getQKey(secIdx, qIdx);
-            if (qData && qData.revealed) {
-              if (state.revealed[key]) return;
-              state.revealed[key] = true;
-              var qEl = getQEl(secIdx, qIdx);
-              revealQuestion(qEl);
-              document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: qIdx } }));
-            } else if (qData && !qData.revealed && state.revealed[key]) {
-              // Teacher re-locked this question
-              state.revealed[key] = false;
-              var qEl = getQEl(secIdx, qIdx);
-              lockQuestion(qEl);
-            }
-          });
-        }
-      });
+        });
+      } catch (e) {
+        console.error('[teacher-reveal] sections listener error:', e);
+      }
     });
 
     examRef.child('revealAll').on('value', function(snap) {
-      if (!state.sessionActive || state.isTeacher) return;
-      if (snap.val() === true) {
-        examIndex.sections.forEach(function(sec) {
-          sec.questions.forEach(function(q) {
-            var key = getQKey(sec.index, q.index);
-            if (!state.revealed[key]) {
-              state.revealed[key] = true;
-              var qEl = getQEl(sec.index, q.index);
-              revealQuestion(qEl);
-              document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: sec.index, qi: q.index } }));
-            }
+      try {
+        if (!state.sessionActive || state.isTeacher) return;
+        if (snap.val() === true) {
+          examIndex.sections.forEach(function(sec) {
+            sec.questions.forEach(function(q) {
+              var key = getQKey(sec.index, q.index);
+              if (!state.revealed[key]) {
+                state.revealed[key] = true;
+                var qEl = getQEl(sec.index, q.index);
+                revealQuestion(qEl);
+                document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: sec.index, qi: q.index } }));
+              }
+            });
           });
-        });
+        }
+      } catch (e) {
+        console.error('[teacher-reveal] revealAll listener error:', e);
       }
     });
   }

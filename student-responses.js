@@ -17,8 +17,7 @@
   var examId = document.body && document.body.dataset.examId;
   if (!examId) return;
 
-  if (typeof firebase === 'undefined' || !window.firebaseConfig) return;
-  if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+  if (typeof firebase === 'undefined' || !firebase.apps.length) return;
   var db = firebase.database();
 
   // ── Device ID (persistent per device) ──
@@ -70,22 +69,26 @@
     }
 
     listeners[key] = responsesRef.child(key).on('value', function(snap) {
-      var responses = snap.val();
-      if (!responses) {
-        updateDisplay(key, {}, 0, correctAnswer);
-        return;
+      try {
+        var responses = snap.val();
+        if (!responses) {
+          updateDisplay(key, {}, 0, correctAnswer);
+          return;
+        }
+
+        var counts = {};
+        var total = 0;
+        Object.keys(responses).forEach(function(devId) {
+          var answer = responses[devId].answer;
+          if (!counts[answer]) counts[answer] = 0;
+          counts[answer]++;
+          total++;
+        });
+
+        updateDisplay(key, counts, total, correctAnswer);
+      } catch (e) {
+        console.error('[student-responses] listener error:', e);
       }
-
-      var counts = {};
-      var total = 0;
-      Object.keys(responses).forEach(function(devId) {
-        var answer = responses[devId].answer;
-        if (!counts[answer]) counts[answer] = 0;
-        counts[answer]++;
-        total++;
-      });
-
-      updateDisplay(key, counts, total, correctAnswer);
     });
   }
 
