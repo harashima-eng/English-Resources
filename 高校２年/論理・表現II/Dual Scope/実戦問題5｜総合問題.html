@@ -1153,7 +1153,7 @@
     }
   </style>
 </head>
-<body data-view="single" data-exam-id="ds-practice5-comprehensive">
+<body data-exam-id="ds-practice5-comprehensive">
 
   <!-- ===== TOP NAVIGATION BAR ===== -->
   <nav class="top-nav" id="topNav">
@@ -1164,10 +1164,7 @@
       <button class="top-nav-link" data-nav="question" onclick="Router.navigate('question')" role="tab" aria-selected="false">Question</button>
     </div>
     <div class="top-nav-right">
-      <div class="view-toggle-nav">
-        <button class="view-btn-nav active" data-view="single" onclick="setView('single')">Single</button>
-        <button class="view-btn-nav" data-view="dual" onclick="setView('dual')">Split</button>
-      </div>
+
       <button class="top-nav-theme" onclick="toggleTheme()" title="Toggle theme">
         <span class="theme-icon">&#9728;&#65039;</span>
       </button>
@@ -2287,62 +2284,6 @@ function initCardReveal() {
   cards.forEach(card => revealObserver.observe(card));
 }
 
-// ===== B6: COLLAPSIBLE TOGGLE (GSAP) + C4: CHILD STAGGER + C5: ANSWER CELEBRATION =====
-function toggle(btn, type) {
-  const card = btn.closest('.qcard');
-  if (!card) return;
-  const block = card.querySelector(`.collapsible[data-type="${type}"]`);
-  if (!block) return;
-  if (typeof gsap !== 'undefined') gsap.killTweensOf(block);
-  btn.setAttribute('aria-expanded', block.classList.contains('open') ? 'false' : 'true');
-
-  const isOpen = block.classList.contains('open');
-
-  if (typeof gsap !== 'undefined' && !UV_REDUCED) {
-    if (isOpen) {
-      gsap.to(block, {
-        opacity: 0, y: -10,
-        duration: GSAP_CONFIG.duration.fast,
-        ease: GSAP_CONFIG.ease.default,
-        onComplete: () => { block.classList.remove('open'); gsap.set(block, { clearProps: 'all' }); }
-      });
-    } else {
-      block.classList.add('open');
-      gsap.fromTo(block, { opacity: 0, y: -10 }, {
-        opacity: 1, y: 0,
-        duration: 0.35,
-        ease: 'power2.out'
-      });
-
-      // -- C4: Stagger child elements --
-      const items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
-      if (items.length > 1) {
-        gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
-      }
-
-      // -- C5: Answer celebration --
-      if (type === 'answer') {
-        const ansBox = block.querySelector('.ans-box');
-        if (ansBox) {
-          gsap.fromTo(ansBox, { scale: 0.97 }, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)' });
-        }
-      }
-    }
-  } else {
-    block.classList.toggle('open');
-  }
-
-  updateProgress();
-}
-
-function setView(view) {
-  document.body.setAttribute('data-view', view);
-  try { localStorage.setItem('viewMode', view); } catch(e) {}
-  document.querySelectorAll('.view-btn-nav').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-view') === view);
-  });
-}
-
 // ===== B7: PROGRESS BAR (GSAP) + C6: GLOW ON 100% =====
 let progressBarEl = null;
 let progressTextEl = null;
@@ -2683,8 +2624,7 @@ window.addEventListener('DOMContentLoaded', () => {
       document.documentElement.setAttribute('data-theme', 'dark');
       document.querySelector('.theme-icon').textContent = '\u{1F319}';
     }
-    const savedView = localStorage.getItem('viewMode') || 'single';
-    setView(savedView);
+
   } catch(e) {}
 
   // Parse initial hash and render
