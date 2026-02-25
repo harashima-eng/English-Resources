@@ -14,6 +14,15 @@
 (function() {
   'use strict';
 
+  // ── Constants ──
+  var PANEL_MIN_WIDTH = 300;
+  var PANEL_MAX_WIDTH = 600;
+  var PANEL_GUTTER = 40;
+  var DESKTOP_BREAKPOINT = 900;
+  var SESSION_EXPIRY_MS = 4 * 60 * 60 * 1000; // 4 hours
+  var TOAST_DURATION_MS = 2500;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // ── Exam ID check ──
   var examId = document.body && document.body.dataset.examId;
   if (!examId) return;
