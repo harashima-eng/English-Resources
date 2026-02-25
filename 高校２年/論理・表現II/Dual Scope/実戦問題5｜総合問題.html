@@ -2722,6 +2722,7 @@ function initAutoHideNav() {
   let navRafId = 0;
   document.addEventListener('mousemove', (e) => {
     if (!hasScrolled) return;
+    if (e.target.closest && e.target.closest('.iq-progress-panel, .iq-progress-backdrop')) return;
     if (navRafId) return;
     const clientY = e.clientY;
     navRafId = requestAnimationFrame(() => {
