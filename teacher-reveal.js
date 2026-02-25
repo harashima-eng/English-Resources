@@ -706,7 +706,11 @@
         state.sectionRevealed[si] = true;
         allBtn.classList.add('revealed');
         qContainer.querySelectorAll('.tr-btn-q').forEach(function(qb) {
-          qb.classList.add('revealed');
+          qb.classList.add('previewed');
+        });
+        qContainer.querySelectorAll('.tr-reveal-btn').forEach(function(rb) {
+          rb.classList.add('revealed');
+          rb.textContent = '\u25CF'; // ●
         });
 
         var updates = {};
