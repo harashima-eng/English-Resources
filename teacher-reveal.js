@@ -264,16 +264,6 @@
     }
   }
 
-  // Open ALL toggles (answer + hint + words) on teacher reveal
-  function showAllToggles(qEl) {
-    if (!qEl) return;
-    showAnswerBox(qEl);
-    var hintBox = getHintBox(qEl);
-    if (hintBox) { hintBox.classList.add('show'); hintBox.classList.add('open'); }
-    var wordsBox = qEl.querySelector('.collapsible[data-type="words"]');
-    if (wordsBox) { wordsBox.classList.add('show'); wordsBox.classList.add('open'); }
-  }
-
   function unlockAll() {
     if (pattern.name === 'dualscope') {
       applyLocksToVisibleDOM(true);
