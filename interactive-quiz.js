@@ -1204,8 +1204,10 @@
 
     function allBlanksFilled() {
       var filled = true;
-      inputs.forEach(function(inp) {
-        if (!inp.value.trim()) filled = false;
+      inputs.forEach(function(inp, i) {
+        var expected = (q.correctAnswer[i] || '').toLowerCase();
+        var isXAnswer = expected === '×' || expected === 'x';
+        if (!inp.value.trim() && !isXAnswer) filled = false;
       });
       return filled;
     }
@@ -1229,7 +1231,9 @@
       inputs.forEach(function(inp, i) {
         var typed = inp.value.trim().toLowerCase();
         var expected = (q.correctAnswer[i] || '').toLowerCase();
-        var isRight = typed === expected;
+        var isRight = (expected === '×' || expected === 'x')
+          ? (typed === '' || typed === 'x' || typed === '×')
+          : typed === expected;
         inp.classList.add(isRight ? 'correct' : 'wrong');
         inp.disabled = true;
         if (!isRight) allCorrect = false;
