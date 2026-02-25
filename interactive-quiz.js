@@ -510,6 +510,7 @@
     tabIsHidden = false;
     progressTabEl.style.pointerEvents = '';
     if (typeof gsap !== 'undefined') {
+      gsap.killTweensOf(progressTabEl);
       gsap.to(progressTabEl, {
         opacity: 1, x: 0,
         duration: reducedMotion ? 0.01 : 0.25,
@@ -1787,6 +1788,7 @@
 
     document.body.appendChild(retryBarEl);
     if (typeof gsap !== 'undefined') {
+      gsap.killTweensOf(retryBarEl);
       gsap.fromTo(retryBarEl, { y: -44 }, { y: 0, duration: 0.3, ease: 'power2.out' });
     }
   }
