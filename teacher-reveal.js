@@ -729,11 +729,7 @@
         state.sectionRevealed[si] = true;
         allBtn.classList.add('revealed');
         qContainer.querySelectorAll('.tr-btn-q').forEach(function(qb) {
-          qb.classList.add('previewed');
-        });
-        qContainer.querySelectorAll('.tr-reveal-btn').forEach(function(rb) {
-          rb.classList.add('revealed');
-          rb.textContent = '\u25CF'; // ●
+          qb.classList.add('revealed');
         });
 
         var updates = {};
@@ -742,9 +738,7 @@
           examIndex.sections[si].questions.forEach(function(q) {
             state.revealed[getQKey(si, q.index)] = true;
             updates['sections/' + si + '/questions/' + q.index + '/revealed'] = true;
-            var qEl = getQEl(si, q.index);
-            revealQuestion(qEl);
-            showAllToggles(qEl);
+            showAnswerBox(getQEl(si, q.index));
           });
         }
         examRef.update(updates);
