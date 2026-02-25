@@ -919,7 +919,7 @@
     revealAllBtn.className = 'tr-btn tr-btn-danger';
     revealAllBtn.textContent = 'Reveal All Answers';
     revealAllBtn.onclick = function() {
-      examRef.update({ revealAll: true });
+      examRef.update({ revealAll: true }).catch(function(e) { showToast('Error: ' + e.message); });
       container.querySelectorAll('.tr-btn-q, .tr-btn-section').forEach(function(b) {
         b.classList.add('revealed');
       });
@@ -1028,7 +1028,7 @@
       sessionData.sections[sec.index] = secData;
     });
 
-    examRef.set(sessionData).then(function() {
+    examRef.set(sessionData).catch(function(e) { showToast('Error: ' + e.message); }).then(function() {
       state.sessionActive = true;
       state.revealed = {};
       state.sectionRevealed = {};
