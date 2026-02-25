@@ -1818,21 +1818,6 @@ html.dark .iq-confirm-cancel:hover {
   background: #3a3a3a;
 }
 
-@media (prefers-color-scheme: dark) {
-  .iq-confirm-dialog {
-    background: #1e1e1e;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-  }
-  .iq-confirm-title { color: #eee; }
-  .iq-confirm-text { color: #aaa; }
-  .iq-confirm-cancel {
-    background: #333;
-    border-color: #444;
-    color: #ccc;
-  }
-  .iq-confirm-cancel:hover { background: #3a3a3a; }
-}
-
 
 /* ══════════════════════════════════════════════════════════
    Popup + Retry + Dialog: Reduced Motion
