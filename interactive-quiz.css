@@ -1421,6 +1421,12 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   border-top: 7px solid rgba(255, 255, 255, 0.92);
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.08));
 }
+.iq-check-popup.below::after {
+  bottom: auto;
+  top: -7px;
+  border-top: none;
+  border-bottom: 7px solid rgba(255, 255, 255, 0.92);
+}
 
 .iq-popup-check-btn {
   padding: 6px 20px;
@@ -1459,8 +1465,14 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
 .iq-check-popup.result.correct::after {
   border-top-color: rgba(240, 253, 244, 0.95);
 }
+.iq-check-popup.result.correct.below::after {
+  border-bottom-color: rgba(240, 253, 244, 0.95);
+}
 .iq-check-popup.result.incorrect::after {
   border-top-color: rgba(254, 242, 242, 0.95);
+}
+.iq-check-popup.result.incorrect.below::after {
+  border-bottom-color: rgba(254, 242, 242, 0.95);
 }
 
 .iq-popup-icon {
