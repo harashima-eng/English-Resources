@@ -724,22 +724,12 @@
       contain: layout style;
     }
 
-    .qcard-question, .qcard-buttons, .qcard-left, .qcard-right {
+    .qcard-question, .qcard-left, .qcard-right {
       box-sizing: border-box;
     }
 
-    .qcard-buttons, .toggle-btn-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .qcard-buttons {
-      padding: 0 24px 20px;
-    }
-
-    /* Dual/Split view */
-    [data-view="dual"] .qcard {
+    /* Split layout */
+    .qcard {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto auto;
@@ -748,69 +738,29 @@
         "left right";
     }
 
-    [data-view="dual"] .qcard-buttons {
-      display: none;
-    }
-
-    [data-view="dual"] .qcard-question {
+    .qcard-question {
       grid-area: question;
       padding: 24px;
       border-bottom: 1px solid var(--border);
     }
 
-    [data-view="dual"] .qcard-left {
+    .qcard-left {
       grid-area: left;
       padding: 24px;
       border-right: 1px solid var(--border);
     }
 
-    [data-view="dual"] .qcard-right {
+    .qcard-right {
       grid-area: right;
       padding: 24px;
       background: var(--card);
     }
 
-    [data-view="dual"] .collapsible {
+    .collapsible {
       display: none;
     }
 
-    [data-view="dual"] .collapsible.open {
-      display: block;
-      margin-top: 16px;
-    }
-
-    /* Single view */
-    [data-view="single"] .qcard {
-      display: block;
-    }
-
-    [data-view="single"] .qcard-buttons {
-      display: flex;
-    }
-
-    [data-view="single"] .toggle-btn-row {
-      display: none;
-    }
-
-    [data-view="single"] .qcard-question {
-      padding: 24px 24px 16px;
-    }
-
-    [data-view="single"] .qcard-left {
-      padding: 0 24px 0;
-      border-right: none;
-    }
-
-    [data-view="single"] .qcard-right {
-      padding: 0 24px 24px;
-      background: transparent;
-    }
-
-    [data-view="single"] .collapsible {
-      display: none;
-    }
-
-    [data-view="single"] .collapsible.open {
+    .collapsible.open {
       display: block;
       margin-top: 16px;
     }
@@ -866,35 +816,6 @@
       background: var(--adj-light);
       border-left: 3px solid var(--adj);
       font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
-    }
-
-    .toggle-btn {
-      flex: 1;
-      min-width: 80px;
-      min-height: 44px;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12),
-                  0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    /* .toggle-btn hover handled by GSAP */
-
-    .toggle-btn.vocab { background: var(--quantity); color: white; }
-    .toggle-btn.hint { background: var(--adj); color: white; }
-    .toggle-btn.answer { background: var(--adv); color: white; }
-
-    @media (max-width: 768px) {
-      .toggle-btn {
-        min-height: 48px;
-        padding: 14px 28px;
-        font-size: 14px;
-      }
     }
 
     .box {
