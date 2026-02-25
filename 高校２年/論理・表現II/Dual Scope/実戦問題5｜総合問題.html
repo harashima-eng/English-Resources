@@ -1267,10 +1267,10 @@
   <!-- ===== TOP NAVIGATION BAR ===== -->
   <nav class="top-nav" id="topNav">
     <div class="top-nav-logo">DUAL SCOPE</div>
-    <div class="top-nav-center">
-      <button class="top-nav-link active" data-nav="home" onclick="Router.navigate('home')">Home</button>
-      <button class="top-nav-link" data-nav="overview" onclick="Router.navigate('overview')">Overview</button>
-      <button class="top-nav-link" data-nav="question" onclick="Router.navigate('question')">Question</button>
+    <div class="top-nav-center" role="tablist">
+      <button class="top-nav-link active" data-nav="home" onclick="Router.navigate('home')" role="tab" aria-selected="true">Home</button>
+      <button class="top-nav-link" data-nav="overview" onclick="Router.navigate('overview')" role="tab" aria-selected="false">Overview</button>
+      <button class="top-nav-link" data-nav="question" onclick="Router.navigate('question')" role="tab" aria-selected="false">Question</button>
     </div>
     <div class="top-nav-right">
       <div class="view-toggle-nav">
@@ -2166,7 +2166,9 @@ const Router = {
 
     // -- Animation: Update nav active states --
     document.querySelectorAll('.top-nav-link').forEach(link => {
-      link.classList.toggle('active', link.dataset.nav === NavState.view);
+      const isActive = link.dataset.nav === NavState.view;
+      link.classList.toggle('active', isActive);
+      link.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
     document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
       const isActive = btn.dataset.nav === NavState.view;
