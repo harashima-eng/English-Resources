@@ -323,7 +323,7 @@
 
   // ── Capture-phase click interceptor ──
   document.addEventListener('click', function(e) {
-    if (!state.sessionActive || state.isTeacher) return;
+    if (!state.sessionActive) return;
     var t = e.target;
     var isAnswerBtn = t.classList.contains('answer-btn') || t.classList.contains('ans-btn') ||
       (t.classList.contains('toggle-btn') && t.classList.contains('answer'));
@@ -332,29 +332,31 @@
     var qEl = t.closest(pattern.questionSel);
     if (!qEl) return;
 
+    if (state.isTeacher) {
+      // Teacher clicking answer toggle → also reveal to students
+      var indices = findQIndices(qEl);
+      if (indices) {
+        var key = getQKey(indices.si, indices.qi);
+        if (!state.revealed[key]) {
+          state.revealed[key] = true;
+          var updates = {};
+          updates['sections/' + indices.si + '/questions/' + indices.qi + '/revealed'] = true;
+          examRef.update(updates);
+          if (panelEl) {
+            var panelQBtn = panelEl.querySelector('.tr-btn-q[data-section="' + indices.si + '"][data-question="' + indices.qi + '"]');
+            if (panelQBtn) panelQBtn.classList.add('revealed');
+          }
+        }
+      }
+      return; // Don't block — let normal toggle behavior happen
+    }
+
+    // Student: check if revealed
     var revealed = false;
 
     if (pattern.name === 'dualscope') {
-      var si = -1, qi = -1;
-      if (pattern.isDynamic) {
-        si = typeof NavState !== 'undefined' ? NavState.section : -1;
-        var container = document.getElementById('questionsList');
-        if (container) {
-          var cards = container.querySelectorAll('.qcard');
-          for (var i = 0; i < cards.length; i++) {
-            if (cards[i] === qEl) { qi = i; break; }
-          }
-        }
-      } else {
-        var secEl = qEl.closest('.section');
-        if (secEl) {
-          var secs = document.querySelectorAll('.section');
-          for (var i = 0; i < secs.length; i++) if (secs[i] === secEl) { si = i; break; }
-          var sCards = secEl.querySelectorAll('.qcard');
-          for (var j = 0; j < sCards.length; j++) if (sCards[j] === qEl) { qi = j; break; }
-        }
-      }
-      if (si >= 0 && qi >= 0) revealed = !!state.revealed[getQKey(si, qi)];
+      var indices = findQIndices(qEl);
+      if (indices) revealed = !!state.revealed[getQKey(indices.si, indices.qi)];
     } else {
       examIndex.sections.forEach(function(sec) {
         sec.questions.forEach(function(q) {
