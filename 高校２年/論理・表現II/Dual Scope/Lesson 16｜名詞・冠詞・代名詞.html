@@ -2431,6 +2431,7 @@ function hideNav() {
     if (typeof gsap !== 'undefined') {
       gsap.to('.top-nav', { y: '-100%', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
       gsap.to('#subNav', { y: '-100%', opacity: 0, pointerEvents: 'none', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      gsap.to('.mobile-nav', { y: '100%', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
   }, 300);
 }
