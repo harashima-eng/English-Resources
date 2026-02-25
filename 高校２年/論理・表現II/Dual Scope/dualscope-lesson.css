@@ -1,0 +1,933 @@
+/* LESSON-SPECIFIC: define :root variables in per-lesson <style> */
+
+/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Dark mode gradient glassy background */
+/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+
+/* ===== TOP NAVIGATION BAR - Auto-Hide with Glassmorphism ===== */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Auto-hide: initial state hidden (GSAP handles animation) */
+  transform: translateY(-100%);
+  /* Glassmorphism effect */
+  background: rgba(250, 248, 245, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(28, 25, 23, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* .top-nav visibility controlled by GSAP */
+
+[data-theme="dark"] .top-nav {
+  background: rgba(15, 14, 13, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.top-nav-logo {
+  font-family: 'New York', 'Georgia', serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+
+.top-nav-center {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-warm);
+  padding: 4px;
+  border-radius: 100px;
+}
+
+.top-nav-link {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 100px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+}
+
+/* .top-nav-link hover handled by GSAP */
+
+.top-nav-link.active {
+  color: var(--text);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.top-nav-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.top-nav-theme {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* .top-nav-theme hover handled by GSAP */
+
+/* ===== SUB NAVIGATION - Auto-Hide with Glassmorphism ===== */
+.sub-nav {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  /* Auto-hide: initial state hidden (GSAP handles animation) */
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  /* Glassmorphism effect */
+  background: rgba(250, 248, 245, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(28, 25, 23, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* .sub-nav visibility controlled by GSAP */
+
+[data-theme="dark"] .sub-nav {
+  background: rgba(15, 14, 13, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.sub-nav-categories {
+  display: flex;
+  gap: 8px;
+}
+
+.sub-nav-cat {
+  padding: 10px 24px;
+  border: 2px solid var(--border);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.sub-nav-cat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.sub-nav-cat[data-cat="basic"] { --cat-color: var(--cat-basic); --cat-bg: var(--cat-basic-light); }
+.sub-nav-cat[data-cat="comm"] { --cat-color: var(--cat-comm); --cat-bg: var(--cat-comm-light); }
+.sub-nav-cat[data-cat="advanced"] { --cat-color: var(--cat-advanced); --cat-bg: var(--cat-advanced-light); }
+
+/* .sub-nav-cat hover handled by GSAP */
+
+.sub-nav-cat.active {
+  border-color: var(--cat-color);
+  background: var(--cat-bg);
+  color: var(--cat-color);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.sub-nav-sections {
+  display: flex;
+  gap: 6px;
+}
+
+.sub-nav-section {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Space Grotesk', monospace;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .sub-nav-section hover handled by GSAP */
+
+.sub-nav-section.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ===== MAIN CONTENT AREA ===== */
+.main-content {
+  padding-top: 60px;
+  min-height: 100vh;
+}
+
+.main-content.has-subnav {
+  padding-top: 152px;
+}
+
+/* ===== HOME VIEW ===== */
+.view-home {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, var(--cat-basic-light) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, var(--cat-comm-light) 0%, transparent 40%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, var(--cat-advanced-light) 0%, transparent 40%);
+  opacity: 0.6;
+}
+
+.home-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.home-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.home-title {
+  font-family: 'New York', 'Georgia', serif;
+  font-size: clamp(48px, 10vw, 120px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+/* LESSON-SPECIFIC: define .home-title em in per-lesson <style> */
+
+.home-subtitle {
+  font-size: 20px;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+
+.home-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn-primary {
+  padding: 18px 40px;
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* .btn-primary hover handled by GSAP */
+
+.btn-secondary {
+  padding: 18px 40px;
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* .btn-secondary hover handled by GSAP */
+
+/* ===== OVERVIEW VIEW ===== */
+.view-overview {
+  padding: 60px 48px 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.overview-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.overview-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.overview-title {
+  font-family: 'New York', 'Georgia', serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* LESSON-SPECIFIC: define /* Grammar Reference Sections */ in per-lesson <style> */
+.conj-section {
+  margin-bottom: 80px;
+}
+
+.conj-section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.conj-section-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+/* LESSON-SPECIFIC: define .conj-section.prep .conj-section-icon in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.noun .conj-section-icon in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.article .conj-section-icon in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.pronoun .conj-section-icon in per-lesson <style> */
+
+.conj-section-title {
+  font-family: 'New York', 'Georgia', serif;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 400;
+}
+
+.conj-section-title-jp {
+  font-family: 'Noto Serif JP', 'Yu Mincho', serif;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.conj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.conj-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-visible);
+  border-left: 4px solid var(--card-accent);
+  transform-style: preserve-3d;
+}
+
+/* .conj-card hover + entrance handled by GSAP */
+
+/* LESSON-SPECIFIC: define .conj-section.prep .conj-card in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.noun .conj-card in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.article .conj-card in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.pronoun .conj-card in per-lesson <style> */
+
+.conj-card-word {
+  font-family: 'New York', 'Georgia', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--card-accent);
+  margin-bottom: 4px;
+}
+
+.conj-card-meaning {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.conj-card-example {
+  margin-bottom: 16px;
+}
+
+.conj-card-example-en {
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+
+.conj-card-example-en strong {
+  color: var(--card-accent);
+  font-weight: 700;
+}
+
+.conj-card-example-jp {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.conj-card-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--bg-warm);
+  border-radius: var(--radius-sm);
+  margin-top: 16px;
+}
+
+/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+
+.conj-card-tip-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.conj-card-tip-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ===== QUESTION VIEW ===== */
+.view-question {
+  padding: 40px 48px 100px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.question-header {
+  margin-bottom: 32px;
+}
+
+.question-category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.question-category-badge.basic {
+  background: var(--cat-basic-light);
+  color: var(--cat-basic);
+}
+
+.question-category-badge.comm {
+  background: var(--cat-comm-light);
+  color: var(--cat-comm);
+}
+
+.question-category-badge.advanced {
+  background: var(--cat-advanced-light);
+  color: var(--cat-advanced);
+}
+
+.question-title {
+  font-family: 'New York', 'Georgia', serif;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.question-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+/* Progress */
+.progress-wrap {
+  margin-bottom: 32px;
+}
+
+.progress-bar-bg {
+  height: 6px;
+  background: var(--bg-warm);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+/* LESSON-SPECIFIC: define .progress-bar-fill in per-lesson <style> */
+
+.progress-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  text-align: right;
+}
+
+/* Search */
+.search-wrap {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 20px 16px 52px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text);
+}
+
+/* LESSON-SPECIFIC: define .search-input:focus in per-lesson <style> */
+.search-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 18px;
+}
+
+/* Questions List */
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  contain: content;
+}
+
+/* Question Card */
+/* .qcard reveal + hover handled by GSAP */
+.qcard {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-visible);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* Dark mode cards */
+/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+
+.qcard-question, .qcard-left, .qcard-right {
+  box-sizing: border-box;
+}
+
+/* Split layout */
+.qcard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "question question"
+    "left right";
+}
+
+.qcard-question {
+  grid-area: question;
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.qcard-left {
+  grid-area: left;
+  padding: 24px;
+  border-right: 1px solid var(--border);
+}
+
+.qcard-right {
+  grid-area: right;
+  padding: 24px;
+  background: var(--card);
+}
+
+.collapsible {
+  display: none;
+}
+
+.collapsible.open {
+  display: block;
+  margin-top: 16px;
+}
+
+.toggle-btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toggle-btn {
+  flex: 1;
+  min-width: 80px;
+  min-height: 44px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12),
+              0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* .toggle-btn hover handled by GSAP */
+
+/* LESSON-SPECIFIC: define .toggle-btn.vocab in per-lesson <style> */
+/* LESSON-SPECIFIC: define .toggle-btn.hint in per-lesson <style> */
+/* LESSON-SPECIFIC: define .toggle-btn.answer in per-lesson <style> */
+
+@media (max-width: 800px) {
+  .qcard {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "question"
+      "left"
+      "right";
+  }
+  .qcard-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+/* LESSON-SPECIFIC: define .qnum in per-lesson <style> */
+
+.qtext {
+  font-size: var(--fs-qtext);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.choices, .scramble {
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 17px;
+}
+
+.qcard-question .choices:last-child,
+.qcard-question .scramble:last-child {
+  margin-bottom: 0;
+}
+
+/* LESSON-SPECIFIC: define .choices in per-lesson <style> */
+
+/* LESSON-SPECIFIC: define .scramble in per-lesson <style> */
+
+.box {
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-size: 17px;
+  line-height: 1.7;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+/* .box hover handled by GSAP */
+
+/* LESSON-SPECIFIC: define .vocab-box in per-lesson <style> */
+
+/* LESSON-SPECIFIC: define .hint-box in per-lesson <style> */
+
+/* LESSON-SPECIFIC: define .hint-item in per-lesson <style> */
+
+.hint-item:last-child {
+  border-bottom: none;
+}
+
+/* LESSON-SPECIFIC: define .ans-box in per-lesson <style> */
+
+/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+
+/* dark .box hover handled by GSAP */
+
+.choice-explanations {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(90, 154, 110, 0.2);
+}
+
+/* LESSON-SPECIFIC: define .choice-exp in per-lesson <style> */
+
+.choice-exp:last-child {
+  border-bottom: none;
+}
+
+/* LESSON-SPECIFIC: define .choice-exp.correct in per-lesson <style> */
+
+.choice-exp.wrong {
+  color: var(--text-secondary);
+}
+
+.vocab-item {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(155,127,207,0.15);
+}
+
+.vocab-item:last-child { border-bottom: none; }
+
+/* LESSON-SPECIFIC: define .vocab-word in per-lesson <style> */
+
+.box-label {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* LESSON-SPECIFIC: define .jp-text in per-lesson <style> */
+
+.jp-text:last-child {
+  border-bottom: none;
+}
+
+/* LESSON-SPECIFIC: define .grammar-ref in per-lesson <style> */
+
+.no-match { display: none !important; }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== VIEW VISIBILITY ===== */
+.view-home,
+.view-overview,
+.view-question {
+  display: none;
+}
+
+.view-home.active { display: flex; }
+.view-overview.active { display: block; }
+.view-question.active { display: block; }
+
+/* All animations handled by GSAP - @keyframes removed */
+
+/* Reduced motion: GSAP handles animation skipping via UV_REDUCED flag */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .conj-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .top-nav {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .top-nav-logo {
+    font-size: 13px;
+  }
+
+  .top-nav-center {
+    display: none;
+  }
+
+  .top-nav-right {
+    gap: 6px;
+  }
+
+  .sub-nav {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .sub-nav-categories {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .sub-nav-cat {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .sub-nav-sections {
+    gap: 4px;
+  }
+
+  .sub-nav-section {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .main-content {
+    padding-top: 56px;
+  }
+
+  .main-content.has-subnav {
+    padding-top: 140px;
+  }
+
+  .view-home {
+    padding: 24px;
+  }
+
+  .home-title {
+    font-size: clamp(40px, 12vw, 80px);
+  }
+
+  .home-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    padding: 16px 32px;
+  }
+
+  .view-overview,
+  .view-question {
+    padding: 32px 20px 80px;
+  }
+
+  .toggle-btn {
+    min-height: 48px;
+    padding: 14px 28px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile nav drawer */
+/* LESSON-SPECIFIC: define @media (max-width: 768px) in per-lesson <style> */
+
+@media (min-width: 769px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+
+/* ===== LARGE SCREEN OPTIMIZATION ===== */
+@media (min-width: 1200px) {
+  .view-question {
+    max-width: 1100px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .view-question {
+    max-width: 1250px;
+    padding: 48px 56px 100px;
+  }
+  .view-overview {
+    max-width: 1500px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .view-question {
+    max-width: 1400px;
+    padding: 56px 64px 100px;
+  }
+  .view-overview {
+    max-width: 1600px;
+  }
+  .qtext {
+    font-size: 20px;
+  }
+}
