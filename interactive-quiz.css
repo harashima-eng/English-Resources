@@ -1422,48 +1422,58 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
 
 /* ── Gamification: Dark Mode ── */
 
-@media (prefers-color-scheme: dark) {
-  .iq-streak {
-    color: #ffab40;
-  }
-  .iq-badge-panel {
-    background: #1e1e1e;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  }
-  .iq-badge-header {
-    border-bottom-color: #333;
-  }
-  .iq-badge-count {
-    color: #aaa;
-  }
-  .iq-badge-card {
-    background: #2a2a2a;
-  }
-  .iq-badge-card.iq-badge-earned {
-    background: #3a3520;
-  }
-  .iq-badge-desc {
-    color: #999;
-  }
-  .iq-badge-reset {
-    border-color: #444;
-    color: #777;
-  }
-  .iq-badge-reset:hover {
-    color: #ef5350;
-    border-color: #ef5350;
-  }
-  .iq-badge-close {
-    color: #777;
-  }
-  .iq-badge-close:hover {
-    color: #ddd;
-  }
-  .iq-toast {
-    background: linear-gradient(135deg, #3a3520, #332d18);
-    color: #ffe0b2;
-    border-color: #8d6e00;
-  }
+[data-theme="dark"] .iq-streak,
+html.dark .iq-streak {
+  color: #ffab40;
+}
+[data-theme="dark"] .iq-badge-panel,
+html.dark .iq-badge-panel {
+  background: #1e1e1e;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+[data-theme="dark"] .iq-badge-header,
+html.dark .iq-badge-header {
+  border-bottom-color: #333;
+}
+[data-theme="dark"] .iq-badge-count,
+html.dark .iq-badge-count {
+  color: #aaa;
+}
+[data-theme="dark"] .iq-badge-card,
+html.dark .iq-badge-card {
+  background: #2a2a2a;
+}
+[data-theme="dark"] .iq-badge-card.iq-badge-earned,
+html.dark .iq-badge-card.iq-badge-earned {
+  background: #3a3520;
+}
+[data-theme="dark"] .iq-badge-desc,
+html.dark .iq-badge-desc {
+  color: #999;
+}
+[data-theme="dark"] .iq-badge-reset,
+html.dark .iq-badge-reset {
+  border-color: #444;
+  color: #777;
+}
+[data-theme="dark"] .iq-badge-reset:hover,
+html.dark .iq-badge-reset:hover {
+  color: #ef5350;
+  border-color: #ef5350;
+}
+[data-theme="dark"] .iq-badge-close,
+html.dark .iq-badge-close {
+  color: #777;
+}
+[data-theme="dark"] .iq-badge-close:hover,
+html.dark .iq-badge-close:hover {
+  color: #ddd;
+}
+[data-theme="dark"] .iq-toast,
+html.dark .iq-toast {
+  background: linear-gradient(135deg, #3a3520, #332d18);
+  color: #ffe0b2;
+  border-color: #8d6e00;
 }
 
 /* ── Gamification: Mobile ── */
