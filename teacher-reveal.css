@@ -40,6 +40,36 @@
 .tr-login-btn:active {
   transform: translateY(0) scale(0.97);
 }
+@media (hover: none) {
+  .tr-login-btn {
+    opacity: 0.7;
+  }
+}
+
+/* ── Nav bar teacher toggle ── */
+.tr-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border, rgba(0,0,0,0.08));
+  border-radius: 10px;
+  background: var(--card, rgba(255,253,250,0.85));
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}
+.tr-nav-toggle.visible {
+  display: flex;
+}
+[data-theme="dark"] .tr-nav-toggle,
+html.dark .tr-nav-toggle {
+  background: rgba(41, 37, 36, 0.85);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #E7E5E4;
+}
+
 [data-theme="dark"] .tr-login-btn,
 html.dark .tr-login-btn {
   background: rgba(41, 37, 36, 0.85);

@@ -650,6 +650,9 @@
     }
   }
 
+  // ── Nav toggle (top bar) ──
+  var navToggleEl = null;
+
   // ── Collapse / Expand ──
   var collapsedTabEl = null;
 
