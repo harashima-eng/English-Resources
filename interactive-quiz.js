@@ -1547,6 +1547,14 @@
     retryKeys = wrongKeys;
     retryBackup = {};
 
+    // Close all open toggles
+    document.querySelectorAll('.qcard .collapsible.open').forEach(function(block) {
+      block.classList.remove('open');
+      if (typeof gsap !== 'undefined') {
+        gsap.set(block, { clearProps: 'all' });
+      }
+    });
+
     // Backup and clear wrong entries
     retryKeys.forEach(function(k) {
       retryBackup[k] = answeredKeys[k];
