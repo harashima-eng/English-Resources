@@ -767,7 +767,7 @@
           examIndex.sections[si].questions.forEach(function(q) {
             state.revealed[getQKey(si, q.index)] = true;
             updates['sections/' + si + '/questions/' + q.index + '/revealed'] = true;
-            showAnswerBox(getQEl(si, q.index));
+            openAllCollapsibles(getQEl(si, q.index));
           });
         }
         examRef.update(updates);
@@ -810,8 +810,7 @@
             qBtn.classList.add('revealed');
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
             examRef.update(updates);
-            // Open answer on teacher's page (answer only, not words/hints)
-            showAnswerBox(getQEl(si, qi));
+            openAllCollapsibles(getQEl(si, qi));
           }
         };
         qRow.appendChild(qBtn);
@@ -862,7 +861,7 @@
       examIndex.sections.forEach(function(sec) {
         sec.questions.forEach(function(q) {
           state.revealed[getQKey(sec.index, q.index)] = true;
-          showAnswerBox(getQEl(sec.index, q.index));
+          openAllCollapsibles(getQEl(sec.index, q.index));
         });
       });
       showToast('\u5168\u89E3\u7B54\u3092\u516C\u958B\u3057\u307E\u3057\u305F');
@@ -1056,13 +1055,16 @@
         });
       }
 
-      // Restore panel Q button visuals for teacher
-      if (state.isTeacher && panelEl) {
+      // Restore panel Q button visuals + open all collapsibles for teacher
+      if (state.isTeacher) {
         Object.keys(state.revealed).forEach(function(key) {
           if (!state.revealed[key]) return;
           var parts = key.split('-');
-          var panelQBtn = panelEl.querySelector('.tr-btn-q[data-section="' + parts[0] + '"][data-question="' + parts[1] + '"]');
-          if (panelQBtn) panelQBtn.classList.add('revealed');
+          if (panelEl) {
+            var panelQBtn = panelEl.querySelector('.tr-btn-q[data-section="' + parts[0] + '"][data-question="' + parts[1] + '"]');
+            if (panelQBtn) panelQBtn.classList.add('revealed');
+          }
+          openAllCollapsibles(getQEl(parseInt(parts[0]), parseInt(parts[1])));
         });
       }
     });
