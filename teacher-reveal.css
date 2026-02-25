@@ -913,7 +913,12 @@ html.dark .tr-collapsed-tab:hover {
   .tr-panel-collapse-btn,
   .tr-collapsed-tab,
   .tr-login-btn,
-  .tr-toast {
+  .tr-toast,
+  .tr-q-container,
+  .tr-section-toggle,
+  .tr-answer-toggle,
+  .tr-q-answers,
+  .tr-resize-handle {
     transition-duration: 0.01ms !important;
   }
 
