@@ -1078,7 +1078,11 @@
       correctionInput.className = 'iq-correction-input';
       correctionInput.placeholder = 'Type the correct form...';
       correctionInput.oninput = function() {
-        if (!iqSessionActive && selectedLabel && correctionInput.value.trim()) {
+        if (iqSessionActive && selectedLabel && correctionInput.value.trim()) {
+          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+            detail: { si: si, qi: qi, answer: selectedLabel + ': ' + correctionInput.value.trim(), type: 'correction' }
+          }));
+        } else if (!iqSessionActive && selectedLabel && correctionInput.value.trim()) {
           tryShowPopup(correctionInput);
         }
       };
