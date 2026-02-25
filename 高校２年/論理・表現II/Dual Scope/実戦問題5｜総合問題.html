@@ -2740,7 +2740,7 @@ function initAutoHideNav() {
     navRafId = requestAnimationFrame(() => {
       navRafId = 0;
       var vw = window.innerWidth;
-      var inCenter = clientX > vw * 0.25 && clientX < vw * 0.75;
+      var inCenter = clientX > vw * 0.35 && clientX < vw * 0.65;
       if (clientY < 80 && inCenter) {
         if (!navVisible) showNav();
       } else if (clientY > 200 && navVisible) {
