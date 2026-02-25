@@ -486,10 +486,23 @@
     return btn;
   }
 
-  // ── Teacher login (redirect-based, avoids COOP popup block) ──
+  // ── Teacher login (popup-first, redirect fallback) ──
   function teacherLogin() {
     var provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithRedirect(provider);
+    auth.signInWithPopup(provider).then(function(result) {
+      if (result.user) {
+        handleAuthResult(result.user);
+      }
+    }).catch(function(err) {
+      if (err.code === 'auth/popup-blocked' ||
+          err.code === 'auth/popup-closed-by-user' ||
+          err.code === 'auth/cancelled-popup-request') {
+        showToast('\u30EA\u30C0\u30A4\u30EC\u30AF\u30C8\u3057\u307E\u3059...');
+        auth.signInWithRedirect(provider);
+      } else {
+        showToast('\u30ED\u30B0\u30A4\u30F3\u30A8\u30E9\u30FC: ' + err.message);
+      }
+    });
   }
 
   function handleAuthResult(user) {
