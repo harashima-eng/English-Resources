@@ -35,15 +35,28 @@
   var aggregateDisplays = {};
 
   // ── Student Side: Write responses to Firebase ──
+  var debounceTimers = {};
+  var TEXT_TYPES = { fillin: 1, correction: 1, compose: 1, scramble: 1 };
+
+  function writeResponse(key, d) {
+    responsesRef.child(key).child(deviceId).set({
+      answer: d.answer,
+      type: d.type || 'choice',
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    });
+  }
+
   document.addEventListener('iq:answer-selected', function(e) {
     if (isTeacher) return;
     var d = e.detail;
     var key = d.si + '-' + d.qi;
 
-    responsesRef.child(key).child(deviceId).set({
-      answer: d.answer,
-      timestamp: firebase.database.ServerValue.TIMESTAMP
-    });
+    if (TEXT_TYPES[d.type]) {
+      clearTimeout(debounceTimers[key]);
+      debounceTimers[key] = setTimeout(function() { writeResponse(key, d); }, 500);
+    } else {
+      writeResponse(key, d);
+    }
   });
 
   // ── Teacher Side: Listen and aggregate ──
