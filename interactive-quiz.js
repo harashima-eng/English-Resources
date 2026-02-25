@@ -552,6 +552,12 @@
   // ── Helpers ──
   function getQKey(si, qi) { return si + '-' + qi; }
 
+  function recordAnswer(si, qi, isCorrect, userAnswer, type) {
+    if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
+    answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: userAnswer, type: type };
+    addScore(isCorrect, si);
+  }
+
   function getQuestionData(si, qi) {
     var sec = grammarData.sections[si];
     return sec ? sec.questions[qi] : null;
