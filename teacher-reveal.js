@@ -264,6 +264,27 @@
     }
   }
 
+  // Open all collapsibles (vocab, hint, answer) on teacher's card
+  function openAllCollapsibles(qEl) {
+    if (!qEl) return;
+    if (pattern.name === 'dualscope') {
+      ['vocab', 'hint', 'answer'].forEach(function(type) {
+        var block = qEl.querySelector('.collapsible[data-type="' + type + '"]');
+        if (block && !block.classList.contains('open')) {
+          block.classList.add('open');
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo(block, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+          }
+        }
+      });
+      if (window.fetchAnswerForElement) {
+        window.fetchAnswerForElement(qEl);
+      }
+    } else {
+      showAnswerBox(qEl);
+    }
+  }
+
   function unlockAll() {
     if (pattern.name === 'dualscope') {
       applyLocksToVisibleDOM(true);
