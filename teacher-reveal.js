@@ -688,26 +688,26 @@
     var resizeHandle = document.createElement('div');
     resizeHandle.className = 'tr-resize-handle';
     panelEl.appendChild(resizeHandle);
-    var isResizing = false, resizeStartX, resizeStartW;
+    var resizeStartX, resizeStartW;
+    function onResizeMove(e) {
+      var newW = Math.min(PANEL_MAX_WIDTH, Math.max(PANEL_MIN_WIDTH, resizeStartW + (resizeStartX - e.clientX)));
+      panelEl.style.width = newW + 'px';
+    }
+    function onResizeUp() {
+      document.removeEventListener('mousemove', onResizeMove);
+      document.removeEventListener('mouseup', onResizeUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      shiftContent(true);
+    }
     resizeHandle.addEventListener('mousedown', function(e) {
-      isResizing = true;
       resizeStartX = e.clientX;
       resizeStartW = panelEl.offsetWidth;
       document.body.style.cursor = 'ew-resize';
       document.body.style.userSelect = 'none';
+      document.addEventListener('mousemove', onResizeMove);
+      document.addEventListener('mouseup', onResizeUp);
       e.preventDefault();
-    });
-    document.addEventListener('mousemove', function(e) {
-      if (!isResizing) return;
-      var newW = Math.min(600, Math.max(300, resizeStartW + (resizeStartX - e.clientX)));
-      panelEl.style.width = newW + 'px';
-    });
-    document.addEventListener('mouseup', function() {
-      if (!isResizing) return;
-      isResizing = false;
-      document.body.style.cursor = '';
-      document.body.style.userSelect = '';
-      shiftContent(true);
     });
 
     document.body.appendChild(panelEl);
