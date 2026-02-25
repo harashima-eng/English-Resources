@@ -1715,8 +1715,111 @@
   function checkRetryComplete() {
     var allDone = retryKeys.every(function(k) { return answeredKeys[k]; });
     if (!allDone) return;
-    var allCorrect = retryKeys.every(function(k) { return answeredKeys[k].result === 'correct'; });
-    exitRetryMode(allCorrect);
+    showRetrySummary();
+  }
+
+  function showRetrySummary() {
+    var correctCount = retryKeys.filter(function(k) {
+      return answeredKeys[k] && answeredKeys[k].result === 'correct';
+    }).length;
+    var totalCount = retryKeys.length;
+    var allCorrect = correctCount === totalCount;
+
+    var overlay = document.createElement('div');
+    overlay.className = 'iq-confirm-overlay';
+
+    var dialog = document.createElement('div');
+    dialog.className = 'iq-confirm-dialog';
+
+    var icon = document.createElement('div');
+    icon.className = 'iq-retry-summary-icon';
+    icon.textContent = allCorrect ? '\u2705' : '\uD83D\uDCCA';
+    dialog.appendChild(icon);
+
+    var title = document.createElement('div');
+    title.className = 'iq-confirm-title';
+    title.textContent = allCorrect ? 'Perfect!' : 'Retry Complete';
+    dialog.appendChild(title);
+
+    var scoreEl = document.createElement('div');
+    scoreEl.className = 'iq-retry-summary-score';
+    scoreEl.innerHTML = '<span class="iq-retry-summary-num">' + correctCount + '</span>' +
+      '<span class="iq-retry-summary-sep">/</span>' +
+      '<span class="iq-retry-summary-den">' + totalCount + '</span>' +
+      '<span class="iq-retry-summary-label"> correct</span>';
+    dialog.appendChild(scoreEl);
+
+    var breakdown = document.createElement('div');
+    breakdown.className = 'iq-retry-summary-breakdown';
+    retryKeys.forEach(function(k) {
+      var qi = parseInt(k.split('-')[1]);
+      var result = answeredKeys[k];
+      var dot = document.createElement('span');
+      dot.className = 'iq-retry-dot ' + (result.result === 'correct' ? 'correct' : 'wrong');
+      dot.textContent = 'Q' + (qi + 1);
+      breakdown.appendChild(dot);
+    });
+    dialog.appendChild(breakdown);
+
+    var text = document.createElement('div');
+    text.className = 'iq-confirm-text';
+    if (allCorrect) {
+      text.textContent = 'All retry questions answered correctly!';
+    } else {
+      var stillWrong = totalCount - correctCount;
+      text.textContent = stillWrong + ' question' + (stillWrong > 1 ? 's' : '') + ' still incorrect.';
+    }
+    dialog.appendChild(text);
+
+    var actions = document.createElement('div');
+    actions.className = 'iq-confirm-actions';
+
+    if (!allCorrect) {
+      var retryAgainBtn = document.createElement('button');
+      retryAgainBtn.className = 'iq-confirm-cancel';
+      retryAgainBtn.textContent = 'Retry Again';
+      retryAgainBtn.onclick = function() {
+        dismissOverlay(overlay, function() {
+          exitRetryMode();
+          startRetryMode();
+        });
+      };
+      actions.appendChild(retryAgainBtn);
+    }
+
+    var returnBtn = document.createElement('button');
+    returnBtn.className = 'iq-confirm-ok';
+    if (allCorrect) {
+      returnBtn.style.background = 'linear-gradient(135deg, #16A34A, #22C55E)';
+    }
+    returnBtn.textContent = 'Return to All Questions';
+    returnBtn.onclick = function() {
+      dismissOverlay(overlay, function() {
+        exitRetryMode();
+      });
+    };
+    actions.appendChild(returnBtn);
+
+    dialog.appendChild(actions);
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: reducedMotion ? 0.01 : 0.2 });
+      gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: reducedMotion ? 0.01 : 0.3, ease: 'back.out(1.7)' });
+    }
+  }
+
+  function dismissOverlay(overlay, callback) {
+    if (typeof gsap !== 'undefined') {
+      gsap.to(overlay, { opacity: 0, duration: reducedMotion ? 0.01 : 0.15, onComplete: function() {
+        overlay.remove();
+        if (callback) callback();
+      }});
+    } else {
+      overlay.remove();
+      if (callback) callback();
+    }
   }
 
   function exitRetryMode(allCorrect) {
