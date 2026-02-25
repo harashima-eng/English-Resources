@@ -152,12 +152,30 @@
 
   // ── Inject response displays into teacher panel ──
   function injectIntoPanel() {
+    // New layout: inject into per-question .tr-q-answers containers
+    var ansAreas = document.querySelectorAll('.tr-q-answers[data-section][data-question]');
+    if (ansAreas.length > 0) {
+      ansAreas.forEach(function(ansArea) {
+        var si = parseInt(ansArea.dataset.section);
+        var qi = parseInt(ansArea.dataset.question);
+        var key = si + '-' + qi;
+
+        var display = document.createElement('div');
+        display.className = 'sr-question-display';
+        display.dataset.key = key;
+        display.style.display = 'none';
+        ansArea.appendChild(display);
+        aggregateDisplays[key] = display;
+
+        startListening(si, qi);
+      });
+      return;
+    }
+
+    // Fallback: legacy grid layout (non-dualscope patterns)
     var sectionGroups = document.querySelectorAll('.tr-section-group');
     sectionGroups.forEach(function(secDiv) {
-      var qGrid = secDiv.querySelector('.tr-q-grid');
-      if (!qGrid) return;
-
-      var qBtns = qGrid.querySelectorAll('.tr-btn-q[data-section][data-question]');
+      var qBtns = secDiv.querySelectorAll('.tr-btn-q[data-section][data-question]');
       if (qBtns.length === 0) return;
 
       var si = parseInt(qBtns[0].dataset.section);
@@ -181,9 +199,7 @@
         startListening(si, qi);
       });
 
-      // Show response area when any question has responses
       var observer = new MutationObserver(function() {
-        var hasVisible = responseArea.querySelector('.sr-question-display[style*="display: block"], .sr-question-display:not([style*="display: none"])');
         var displays = responseArea.querySelectorAll('.sr-question-display');
         var anyShown = false;
         displays.forEach(function(d) {
