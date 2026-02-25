@@ -399,7 +399,7 @@
           state.revealed[key] = true;
           var updates = {};
           updates['sections/' + indices.si + '/questions/' + indices.qi + '/revealed'] = true;
-          examRef.update(updates);
+          examRef.update(updates).catch(function(e) { showToast('Error: ' + e.message); });
           if (panelEl) {
             var panelQBtn = panelEl.querySelector('.tr-btn-q[data-section="' + indices.si + '"][data-question="' + indices.qi + '"]');
             if (panelQBtn) panelQBtn.classList.add('revealed');
@@ -833,7 +833,7 @@
             openAllCollapsibles(getQEl(si, q.index));
           });
         }
-        examRef.update(updates);
+        examRef.update(updates).catch(function(e) { showToast('Error: ' + e.message); });
         showToast('\u30BB\u30AF\u30B7\u30E7\u30F3 ' + (si + 1) + ' \u3092\u516C\u958B\u3057\u307E\u3057\u305F');
       };
       headerRow.appendChild(allBtn);
