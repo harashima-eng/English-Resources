@@ -2132,21 +2132,28 @@ function renderQuestion(q, si, qi) {
   if (q.scramble) questionHtml += `<div class="scramble">${q.scramble}</div>`;
   questionHtml += `</div>`;
 
-  let leftHtml = `<div class="qcard-left">`;
+  let leftHtml = `<div class="qcard-left">
+    <div class="toggle-btn-row">
+      <button class="toggle-btn vocab" onclick="toggle(this,'vocab')" aria-expanded="false">Words</button>`;
+  if (q.hint) leftHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')" aria-expanded="false">Hint</button>`;
+  leftHtml += `</div>`;
   if (q.vocab) {
-    leftHtml += `<div class="collapsible open" data-type="vocab"><div class="box vocab-box">`;
+    leftHtml += `<div class="collapsible" data-type="vocab"><div class="box vocab-box">`;
     q.vocab.forEach(v => leftHtml += `<div class="vocab-item"><span class="vocab-word">${v[0]}</span>${v[1]}</div>`);
     leftHtml += `</div></div>`;
   }
   if (q.hint) {
-    leftHtml += `<div class="collapsible open" data-type="hint"><div class="box hint-box"><span class="box-label">Solution</span>`;
+    leftHtml += `<div class="collapsible" data-type="hint"><div class="box hint-box"><span class="box-label">Solution</span>`;
     q.hint.forEach(h => leftHtml += `<div class="hint-item">&#8594; ${h}</div>`);
     leftHtml += `</div></div>`;
   }
   leftHtml += `</div>`;
 
   let rightHtml = `<div class="qcard-right">
-    <div class="collapsible open" data-type="answer"><div class="box ans-box">
+    <div class="toggle-btn-row">
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer</button>
+    </div>
+    <div class="collapsible" data-type="answer"><div class="box ans-box">
     </div></div></div>`;
 
   return `<div class="qcard" data-si="${si}" data-qi="${qi}">${questionHtml}${leftHtml}${rightHtml}</div>`;
@@ -2402,6 +2409,7 @@ function initHoverAnimations() {
     { sel: '.btn-primary', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, leave: { y: 0, boxShadow: '' }, dur: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.spring },
     { sel: '.btn-secondary', enter: { borderColor: 'var(--text)', backgroundColor: 'var(--card)', boxShadow: 'var(--shadow)' }, leave: { clearProps: 'borderColor,backgroundColor,boxShadow' } },
     { sel: '.box', enter: { y: -2, boxShadow: 'var(--shadow)', borderColor: 'var(--border-visible)' }, leave: { y: 0, boxShadow: 'var(--shadow-sm)', clearProps: 'borderColor' } },
+    { sel: '.toggle-btn', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: '0 6px 20px rgba(0,0,0,0.15)' }, leave: { y: 0, scale: 1, boxShadow: '0 2px 8px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08)' }, ease: GSAP_CONFIG.ease.spring },
     { sel: '.qcard', enter: { y: GSAP_CONFIG.hover.lift, boxShadow: 'var(--shadow-lg)' }, leave: { y: 0, boxShadow: 'var(--shadow)' } },
   ];
 
