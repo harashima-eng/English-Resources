@@ -2123,6 +2123,54 @@ const Router = {
   }
 };
 
+// ===== B6: COLLAPSIBLE TOGGLE (GSAP) + C4: CHILD STAGGER + C5: ANSWER CELEBRATION =====
+function toggle(btn, type) {
+  const card = btn.closest('.qcard');
+  if (!card) return;
+  const block = card.querySelector(`.collapsible[data-type="${type}"]`);
+  if (!block) return;
+  if (typeof gsap !== 'undefined') gsap.killTweensOf(block);
+  btn.setAttribute('aria-expanded', block.classList.contains('open') ? 'false' : 'true');
+
+  const isOpen = block.classList.contains('open');
+
+  if (typeof gsap !== 'undefined' && !UV_REDUCED) {
+    if (isOpen) {
+      gsap.to(block, {
+        opacity: 0, y: -10,
+        duration: GSAP_CONFIG.duration.fast,
+        ease: GSAP_CONFIG.ease.default,
+        onComplete: () => { block.classList.remove('open'); gsap.set(block, { clearProps: 'all' }); }
+      });
+    } else {
+      block.classList.add('open');
+      gsap.fromTo(block, { opacity: 0, y: -10 }, {
+        opacity: 1, y: 0,
+        duration: 0.35,
+        ease: 'power2.out'
+      });
+
+      // -- C4: Stagger child elements --
+      const items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
+      if (items.length > 1) {
+        gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
+      }
+
+      // -- C5: Answer celebration --
+      if (type === 'answer') {
+        const ansBox = block.querySelector('.ans-box');
+        if (ansBox) {
+          gsap.fromTo(ansBox, { scale: 0.97 }, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)' });
+        }
+      }
+    }
+  } else {
+    block.classList.toggle('open');
+  }
+
+  updateProgress();
+}
+
 // ===== RENDER FUNCTIONS =====
 function renderQuestion(q, si, qi) {
   let questionHtml = `<div class="qcard-question">
