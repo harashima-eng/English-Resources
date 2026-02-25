@@ -635,26 +635,6 @@
       showReopenButton();
     };
 
-    var logoutBtn = document.createElement('button');
-    logoutBtn.className = 'tr-panel-close';
-    logoutBtn.textContent = '\u21A9'; // ↩
-    logoutBtn.title = 'Logout';
-    logoutBtn.onclick = function() {
-      auth.signOut().then(function() {
-        state.isTeacher = false;
-        state.teacherUid = null;
-        initialized = false;
-        container.remove();
-        panelEl = null;
-        shiftContent(false);
-        var loginBtn = document.querySelector('.tr-login-btn');
-        if (loginBtn) loginBtn.style.display = '';
-        showToast('\u30ED\u30B0\u30A2\u30A6\u30C8\u3057\u307E\u3057\u305F');
-        location.reload();
-      });
-    };
-
-    btnGroup.appendChild(logoutBtn);
     btnGroup.appendChild(collapseBtn);
     btnGroup.appendChild(closeBtn);
     header.appendChild(title);
