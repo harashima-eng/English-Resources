@@ -614,7 +614,7 @@
 
   function handleAuthResult(user) {
     if (user.email !== 'harashima@komagome.ed.jp') {
-      auth.signOut();
+      auth.signOut().catch(function() {});
       showToast('\u6A29\u9650\u304C\u3042\u308A\u307E\u305B\u3093');
       return;
     }
@@ -958,7 +958,7 @@
         if (loginBtn) loginBtn.style.display = '';
         showToast('\u30ED\u30B0\u30A2\u30A6\u30C8\u3057\u307E\u3057\u305F');
         location.reload();
-      });
+      }).catch(function(e) { showToast('Error: ' + e.message); });
     };
     logoutSec.appendChild(logoutBtn);
     body.appendChild(logoutSec);
@@ -1057,7 +1057,7 @@
     if (state.isTeacher) return;
     var connRef = examRef.child('connectedStudents').push();
     connRef.onDisconnect().remove();
-    connRef.set(true);
+    connRef.set(true).catch(function() {});
   }
 
   // ── Restore state on refresh ──
@@ -1069,7 +1069,7 @@
       // Auto-expire sessions older than 4 hours
       var sessionTime = new Date(data.activeSession).getTime();
       if (Date.now() - sessionTime > SESSION_EXPIRY_MS) {
-        examRef.update({ activeSession: null });
+        examRef.update({ activeSession: null }).catch(function() {});
         return;
       }
 
