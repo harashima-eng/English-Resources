@@ -54,10 +54,24 @@ html.dark .tr-login-btn:hover {
   background: rgba(41, 37, 36, 0.95);
 }
 
-/* ── Dualscope pages: move login/badge below auto-hide nav bar ── */
-body[data-view] .tr-login-btn,
-body[data-view] .tr-session-badge {
-  top: 72px;
+/* ── Login button inside nav bar (Dual Scope pages) ── */
+.tr-login-btn--nav {
+  position: static;
+  top: auto;
+  right: auto;
+  z-index: auto;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  padding: 6px 14px;
+  font-size: 11px;
+  opacity: 0.4;
+}
+.tr-login-btn--nav:hover,
+.tr-login-btn--nav:focus {
+  opacity: 1;
+  transform: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 /* ── Locked state (student answer buttons disabled) ── */

@@ -985,14 +985,20 @@
       reopenBtn = document.createElement('button');
       reopenBtn.className = 'tr-login-btn';
       reopenBtn.textContent = 'Panel';
-      reopenBtn.style.bottom = '24px';
-      reopenBtn.style.top = 'auto';
       reopenBtn.onclick = function() {
         reopenBtn.style.display = 'none';
         if (panelEl) panelEl.style.display = '';
         shiftContent(true);
       };
-      document.body.appendChild(reopenBtn);
+      var topNavRight = document.querySelector('.top-nav-right');
+      if (topNavRight) {
+        reopenBtn.classList.add('tr-login-btn--nav');
+        topNavRight.appendChild(reopenBtn);
+      } else {
+        reopenBtn.style.bottom = '24px';
+        reopenBtn.style.top = 'auto';
+        document.body.appendChild(reopenBtn);
+      }
     }
     reopenBtn.style.display = '';
   }
