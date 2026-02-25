@@ -916,10 +916,7 @@
 
     // Logout (bottom of panel, clearly labeled)
     var logoutSec = document.createElement('div');
-    logoutSec.className = 'tr-panel-section';
-    logoutSec.style.borderTop = '1px solid rgba(168, 162, 158, 0.15)';
-    logoutSec.style.marginTop = '8px';
-    logoutSec.style.paddingTop = '8px';
+    logoutSec.className = 'tr-panel-section tr-panel-logout';
     var logoutBtn = document.createElement('button');
     logoutBtn.className = 'tr-btn tr-btn-logout';
     logoutBtn.textContent = 'Logout';
@@ -930,6 +927,8 @@
         initialized = false;
         container.remove();
         panelEl = null;
+        if (collapsedTabEl) { collapsedTabEl.remove(); collapsedTabEl = null; }
+        if (reopenBtn) { reopenBtn.remove(); reopenBtn = null; }
         shiftContent(false);
         var loginBtn = document.querySelector('.tr-login-btn');
         if (loginBtn) loginBtn.style.display = '';
@@ -976,6 +975,12 @@
       document.body.appendChild(reopenBtn);
     }
     reopenBtn.style.display = '';
+  }
+
+  function resetPanelVisuals() {
+    if (!panelEl) return;
+    panelEl.querySelectorAll('.tr-btn-q').forEach(function(b) { b.classList.remove('revealed'); });
+    panelEl.querySelectorAll('.tr-btn-section').forEach(function(b) { b.classList.remove('revealed'); });
   }
 
   // ── Start session ──
