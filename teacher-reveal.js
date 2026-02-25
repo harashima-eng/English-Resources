@@ -810,6 +810,32 @@
     revealSec.appendChild(revealAllBtn);
     body.appendChild(revealSec);
 
+    // Logout (bottom of panel, clearly labeled)
+    var logoutSec = document.createElement('div');
+    logoutSec.className = 'tr-panel-section';
+    logoutSec.style.borderTop = '1px solid rgba(168, 162, 158, 0.15)';
+    logoutSec.style.marginTop = '8px';
+    logoutSec.style.paddingTop = '8px';
+    var logoutBtn = document.createElement('button');
+    logoutBtn.className = 'tr-btn tr-btn-logout';
+    logoutBtn.textContent = 'Logout';
+    logoutBtn.onclick = function() {
+      auth.signOut().then(function() {
+        state.isTeacher = false;
+        state.teacherUid = null;
+        initialized = false;
+        container.remove();
+        panelEl = null;
+        shiftContent(false);
+        var loginBtn = document.querySelector('.tr-login-btn');
+        if (loginBtn) loginBtn.style.display = '';
+        showToast('\u30ED\u30B0\u30A2\u30A6\u30C8\u3057\u307E\u3057\u305F');
+        location.reload();
+      });
+    };
+    logoutSec.appendChild(logoutBtn);
+    body.appendChild(logoutSec);
+
     container.appendChild(body);
   }
 
