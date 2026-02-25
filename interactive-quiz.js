@@ -237,6 +237,23 @@
     }, { passive: true });
     resetTabHideTimer();
 
+    // ── Edge trigger (left-edge hover zone) ──
+    edgeTriggerEl = document.createElement('div');
+    edgeTriggerEl.className = 'iq-edge-trigger';
+    document.body.appendChild(edgeTriggerEl);
+
+    edgeTriggerEl.addEventListener('mouseenter', function() {
+      if (progressPanelOpen) return;
+      if (tabIsHidden) showTabWithGsap();
+      clearTimeout(tabHideTimer);
+    });
+    edgeTriggerEl.addEventListener('click', function() {
+      if (!progressPanelOpen) openProgressPanel();
+    });
+    edgeTriggerEl.addEventListener('mouseleave', function() {
+      if (!progressPanelOpen) resetTabHideTimer();
+    });
+
     // Initial content
     updateProgressPanel();
   }
