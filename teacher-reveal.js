@@ -635,7 +635,7 @@
             updates['sections/' + si + '/questions/' + q.index + '/revealed'] = true;
             var qEl = getQEl(si, q.index);
             revealQuestion(qEl);
-            showAnswerBox(qEl);
+            showAllToggles(qEl);
           });
         }
         examRef.update(updates);
@@ -669,7 +669,7 @@
             updates['sections/' + si + '/questions/' + qi + '/revealed'] = true;
             examRef.update(updates);
             revealQuestion(getQEl(si, qi));
-            showAnswerBox(getQEl(si, qi));
+            showAllToggles(getQEl(si, qi));
           }
         };
         qGrid.appendChild(qBtn);
@@ -695,7 +695,7 @@
           state.revealed[getQKey(sec.index, q.index)] = true;
           var qEl = getQEl(sec.index, q.index);
           revealQuestion(qEl);
-          showAnswerBox(qEl);
+          showAllToggles(qEl);
         });
       });
       showToast('全解答を公開しました');
