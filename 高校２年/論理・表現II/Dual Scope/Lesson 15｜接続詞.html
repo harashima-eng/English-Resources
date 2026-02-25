@@ -2624,9 +2624,12 @@ function initAutoHideNav() {
     if (e.target.closest && e.target.closest('.iq-progress-panel, .iq-progress-backdrop')) return;
     if (navRafId) return;
     const clientY = e.clientY;
+    const clientX = e.clientX;
     navRafId = requestAnimationFrame(() => {
       navRafId = 0;
-      if (clientY < 80) {
+      var vw = window.innerWidth;
+      var inCenter = clientX > vw * 0.25 && clientX < vw * 0.75;
+      if (clientY < 80 && inCenter) {
         if (!navVisible) showNav();
       } else if (clientY > 200 && navVisible) {
         hideNav();
