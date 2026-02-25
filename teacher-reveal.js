@@ -990,7 +990,7 @@
           sec.questions.forEach(function(q) {
             var key = getQKey(sec.index, q.index);
             state.revealed[key] = true;
-            revealQuestion(getQEl(sec.index, q.index));
+            if (!state.isTeacher) revealQuestion(getQEl(sec.index, q.index));
             document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: sec.index, qi: q.index } }));
           });
         });
@@ -1009,7 +1009,7 @@
               examIndex.sections[secIdx].questions.forEach(function(q) {
                 var key = getQKey(secIdx, q.index);
                 state.revealed[key] = true;
-                revealQuestion(getQEl(secIdx, q.index));
+                if (!state.isTeacher) revealQuestion(getQEl(secIdx, q.index));
                 document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: q.index } }));
               });
             }
@@ -1019,11 +1019,21 @@
                 var qIdx = parseInt(qi);
                 var key = getQKey(secIdx, qIdx);
                 state.revealed[key] = true;
-                revealQuestion(getQEl(secIdx, qIdx));
+                if (!state.isTeacher) revealQuestion(getQEl(secIdx, qIdx));
                 document.dispatchEvent(new CustomEvent('tr:question-revealed', { detail: { si: secIdx, qi: qIdx } }));
               }
             });
           }
+        });
+      }
+
+      // Restore panel Q button visuals for teacher
+      if (state.isTeacher && panelEl) {
+        Object.keys(state.revealed).forEach(function(key) {
+          if (!state.revealed[key]) return;
+          var parts = key.split('-');
+          var panelQBtn = panelEl.querySelector('.tr-btn-q[data-section="' + parts[0] + '"][data-question="' + parts[1] + '"]');
+          if (panelQBtn) panelQBtn.classList.add('revealed');
         });
       }
     });

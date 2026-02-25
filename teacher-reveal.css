@@ -535,46 +535,6 @@ html.dark .tr-btn-q.revealed:hover {
     0 0 20px rgba(20, 184, 166, 0.2);
 }
 
-/* Q button preview state (teacher-only, no broadcast) */
-.tr-btn-q.previewed {
-  background: rgba(13, 148, 136, 0.12);
-  border-color: rgba(13, 148, 136, 0.3);
-  color: #0D9488;
-}
-[data-theme="dark"] .tr-btn-q.previewed,
-html.dark .tr-btn-q.previewed {
-  background: rgba(20, 184, 166, 0.15);
-  border-color: rgba(20, 184, 166, 0.35);
-  color: #14B8A6;
-}
-
-/* Reveal-to-students toggle (circle icon) */
-.tr-reveal-btn {
-  width: 20px;
-  height: 20px;
-  border: none;
-  background: none;
-  font-size: 14px;
-  line-height: 1;
-  color: #A8A29E;
-  cursor: pointer;
-  flex-shrink: 0;
-  padding: 0;
-  border-radius: 50%;
-  transition: color 0.15s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.tr-reveal-btn:hover { color: #0D9488; }
-.tr-reveal-btn.revealed { color: #0D9488; }
-[data-theme="dark"] .tr-reveal-btn,
-html.dark .tr-reveal-btn { color: #57534E; }
-[data-theme="dark"] .tr-reveal-btn:hover,
-html.dark .tr-reveal-btn:hover { color: #14B8A6; }
-[data-theme="dark"] .tr-reveal-btn.revealed,
-html.dark .tr-reveal-btn.revealed { color: #14B8A6; }
-
 /* Reset Responses button */
 .tr-btn-reset {
   width: 100%;
