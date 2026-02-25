@@ -1359,24 +1359,20 @@
       rightBtn.className = 'iq-eval-btn right';
       rightBtn.textContent = 'Got it right';
       rightBtn.onclick = function() {
-        if (window.UISound) UISound.play('correct');
         zone.classList.add('locked');
         evalDiv.remove();
         zone.appendChild(createFeedback(true, 'Correct!'));
-        answeredKeys[getQKey(si, qi)] = { result: 'correct', userAnswer: 'self-correct', type: 'compose' };
-        addScore(true, si);
+        recordAnswer(si, qi, true, 'self-correct', 'compose');
       };
 
       var wrongBtn = document.createElement('button');
       wrongBtn.className = 'iq-eval-btn wrong';
       wrongBtn.textContent = 'Got it wrong';
       wrongBtn.onclick = function() {
-        if (window.UISound) UISound.play('wrong');
         zone.classList.add('locked');
         evalDiv.remove();
         zone.appendChild(createFeedback(false, 'Answer: ' + q.correctAnswer));
-        answeredKeys[getQKey(si, qi)] = { result: 'wrong', userAnswer: 'self-wrong', type: 'compose' };
-        addScore(false, si);
+        recordAnswer(si, qi, false, 'self-wrong', 'compose');
       };
 
       evalDiv.appendChild(rightBtn);
@@ -1488,15 +1484,13 @@
       if (zone.classList.contains('locked')) return;
       var studentAnswer = placed.map(function(p) { return p.word; }).join(' ');
       var isCorrect = studentAnswer.toLowerCase() === q.correctAnswer.toLowerCase();
-      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
 
       var msg = isCorrect
         ? 'Correct!'
         : 'Incorrect. Answer: ' + q.correctAnswer;
 
-      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: null, type: 'scramble' };
-      addScore(isCorrect, si);
+      recordAnswer(si, qi, isCorrect, null, 'scramble');
       return { isCorrect: isCorrect, message: msg };
     }
 
