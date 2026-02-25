@@ -112,7 +112,10 @@
     totalLabel.textContent = total + ' responses';
     display.appendChild(totalLabel);
 
+    // Detect if answers are text-type (long/varied) or discrete (A/B/C/D)
     var answers = Object.keys(counts).sort();
+    var isTextType = answers.some(function(a) { return a.length > 3; });
+
     answers.forEach(function(answer) {
       var isCorrect = correctAnswer && answer.toLowerCase() === correctAnswer.toLowerCase();
       var bar = document.createElement('div');
@@ -120,7 +123,13 @@
 
       var label = document.createElement('span');
       label.className = 'sr-label ' + (isCorrect ? 'sr-correct' : 'sr-wrong');
-      label.textContent = answer.toUpperCase();
+      if (isTextType) {
+        label.classList.add('sr-text-label');
+        label.textContent = answer.length > 24 ? answer.substring(0, 22) + '...' : answer;
+        label.title = answer;
+      } else {
+        label.textContent = answer.toUpperCase();
+      }
 
       var track = document.createElement('div');
       track.className = 'sr-fill-track';

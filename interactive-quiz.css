@@ -1095,6 +1095,16 @@ html.dark .sr-section-responses {
 html.dark .sr-label {
   color: #D6D3D1;
 }
+.sr-label.sr-text-label {
+  width: auto;
+  max-width: 120px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .sr-fill-track {
   flex: 1;
