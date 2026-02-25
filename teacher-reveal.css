@@ -69,6 +69,15 @@ html.dark .tr-nav-toggle {
   border-color: rgba(255, 255, 255, 0.08);
   color: #E7E5E4;
 }
+.tr-nav-toggle--fixed {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 9999;
+}
+.nav-bar .tr-nav-toggle {
+  margin-left: auto;
+}
 
 [data-theme="dark"] .tr-login-btn,
 html.dark .tr-login-btn {
