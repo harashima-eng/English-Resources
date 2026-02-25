@@ -904,7 +904,6 @@
     function performCheck() {
       if (!selected || zone.classList.contains('locked')) return null;
       var isCorrect = selected === q.correctAnswer;
-      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
 
       choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
@@ -919,8 +918,7 @@
       });
 
       var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + q.correctAnswer;
-      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: selected, type: 'pair' };
-      addScore(isCorrect, si);
+      recordAnswer(si, qi, isCorrect, selected, 'pair');
       return { isCorrect: isCorrect, message: msg };
     }
 
@@ -965,7 +963,6 @@
     function performCheck() {
       if (!selectedLetter || zone.classList.contains('locked')) return null;
       var isCorrect = selectedLetter === q.correctAnswer;
-      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
 
       var correctText = '';
@@ -982,8 +979,7 @@
       });
 
       var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + correctText;
-      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: selectedLetter, type: 'choice' };
-      addScore(isCorrect, si);
+      recordAnswer(si, qi, isCorrect, selectedLetter, 'choice');
       return { isCorrect: isCorrect, message: msg };
     }
 
