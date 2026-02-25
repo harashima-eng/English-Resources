@@ -469,27 +469,33 @@
     return btn;
   }
 
-  // ── Teacher login ──
+  // ── Teacher login (redirect-based, avoids COOP popup block) ──
   function teacherLogin() {
     var provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(function(result) {
-      var allowed = 'harashima@komagome.ed.jp';
-      if (result.user.email !== allowed) {
-        auth.signOut();
-        showToast('権限がありません');
-        return;
-      }
-      state.isTeacher = true;
-      state.teacherUid = result.user.uid;
-      var loginBtn = document.querySelector('.tr-login-btn');
-      if (loginBtn) loginBtn.style.display = 'none';
-      showTeacherPanel();
-      showToast('ログインしました: ' + result.user.displayName);
-    }).catch(function(err) {
-      if (err.code !== 'auth/popup-closed-by-user') {
-        showToast('ログインエラー: ' + err.message);
-      }
-    });
+    auth.signInWithRedirect(provider);
+  }
+
+  function handleAuthResult(user) {
+    if (user.email !== 'harashima@komagome.ed.jp') {
+      auth.signOut();
+      showToast('\u6A29\u9650\u304C\u3042\u308A\u307E\u305B\u3093');
+      return;
+    }
+    if (state.isTeacher) return;
+    state.isTeacher = true;
+    state.teacherUid = user.uid;
+    var loginBtn = document.querySelector('.tr-login-btn');
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (badgeEl) badgeEl.style.display = 'none';
+    showTeacherPanel();
+    if (!initialized) {
+      initialized = true;
+      startStudentListener();
+      restoreState();
+      trackPresence();
+      setupDynamicObserver();
+    }
+    showToast('\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F: ' + user.displayName);
   }
 
   // ── Content shift (avoid panel overlap) ──
