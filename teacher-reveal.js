@@ -1028,7 +1028,7 @@
       sessionData.sections[sec.index] = secData;
     });
 
-    examRef.set(sessionData).catch(function(e) { showToast('Error: ' + e.message); }).then(function() {
+    examRef.set(sessionData).then(function() {
       state.sessionActive = true;
       state.revealed = {};
       state.sectionRevealed = {};
@@ -1036,7 +1036,7 @@
       document.dispatchEvent(new CustomEvent('tr:session-start'));
       showToast('セッションを開始しました');
       resetPanelVisuals();
-    });
+    }).catch(function(e) { showToast('Error: ' + e.message); });
   }
 
   // ── End session ──
@@ -1049,7 +1049,7 @@
       document.dispatchEvent(new CustomEvent('tr:session-end'));
       showToast('セッション終了');
       resetPanelVisuals();
-    });
+    }).catch(function(e) { showToast('Error: ' + e.message); });
   }
 
   // ── Presence ──
