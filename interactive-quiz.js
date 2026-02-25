@@ -1152,7 +1152,11 @@
     zone._performCheck = performCheck;
 
     input.oninput = function() {
-      if (!iqSessionActive && input.value.trim()) {
+      if (iqSessionActive && input.value.trim()) {
+        document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+          detail: { si: si, qi: qi, answer: input.value.trim(), type: 'fillin' }
+        }));
+      } else if (!iqSessionActive && input.value.trim()) {
         showCheckPopup(input, zone, performCheck);
       }
     };
