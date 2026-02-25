@@ -2136,9 +2136,11 @@ const Router = {
     const parts = hash.split('/');
 
     NavState.view = parts[0] || 'home';
+    if (!['home', 'overview', 'question'].includes(NavState.view)) NavState.view = 'home';
 
     if (NavState.view === 'question' && parts.length >= 3) {
       NavState.category = parts[1] || 'selection';
+      if (!NavState.categoryMap[NavState.category]) NavState.category = 'selection';
       const localIndex = parseInt(parts[2], 10) - 1 || 0;
       const sections = NavState.categoryMap[NavState.category] || [0];
       NavState.section = sections[Math.min(localIndex, sections.length - 1)] || 0;
