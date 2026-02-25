@@ -201,6 +201,26 @@
     return 'Q' + (qi + 1);
   }
 
+  // Resolve a question DOM element back to {si, qi} indices
+  function findQIndices(qEl) {
+    if (pattern.name === 'dualscope' && pattern.isDynamic) {
+      var si = typeof NavState !== 'undefined' ? NavState.section : -1;
+      if (si < 0) return null;
+      var cards = document.getElementById('questionsList').querySelectorAll('.qcard');
+      for (var qi = 0; qi < cards.length; qi++) {
+        if (cards[qi] === qEl) return { si: si, qi: qi };
+      }
+      return null;
+    }
+    for (var s = 0; s < examIndex.sections.length; s++) {
+      var sec = examIndex.sections[s];
+      for (var q = 0; q < sec.questions.length; q++) {
+        if (sec.questions[q].el === qEl) return { si: sec.index, qi: sec.questions[q].index };
+      }
+    }
+    return null;
+  }
+
   // ── Student mode: lock/unlock ──
   function lockQuestion(qEl) {
     if (!qEl) return;
