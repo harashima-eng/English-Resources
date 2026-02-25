@@ -943,7 +943,6 @@
         panelEl = null;
         if (collapsedTabEl) { collapsedTabEl.remove(); collapsedTabEl = null; }
         if (reopenBtn) { reopenBtn.remove(); reopenBtn = null; }
-        if (navToggleEl) { navToggleEl.classList.remove('visible'); }
         shiftContent(false);
         var loginBtn = document.querySelector('.tr-login-btn');
         if (loginBtn) loginBtn.style.display = '';

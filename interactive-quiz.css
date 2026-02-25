@@ -1198,6 +1198,7 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
+  .iq-nav-toggle,
   .iq-choice,
   .iq-chip,
   .iq-check-btn,
