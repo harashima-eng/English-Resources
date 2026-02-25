@@ -226,7 +226,33 @@
       var navToggle = document.createElement('button');
       navToggle.className = 'iq-nav-toggle';
       navToggle.title = 'Progress Panel';
-      navToggle.textContent = '\u{1F4CB}';  // 📋
+      // SVG clipboard icon (more reliable than emoji across platforms)
+      var svgNS = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('width', '16');
+      svg.setAttribute('height', '16');
+      svg.setAttribute('viewBox', '0 0 16 16');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+      svg.setAttribute('stroke-width', '1.5');
+      var rect = document.createElementNS(svgNS, 'rect');
+      rect.setAttribute('x', '3'); rect.setAttribute('y', '2');
+      rect.setAttribute('width', '10'); rect.setAttribute('height', '12');
+      rect.setAttribute('rx', '1.5');
+      var l1 = document.createElementNS(svgNS, 'line');
+      l1.setAttribute('x1', '5.5'); l1.setAttribute('y1', '5');
+      l1.setAttribute('x2', '10.5'); l1.setAttribute('y2', '5');
+      var l2 = document.createElementNS(svgNS, 'line');
+      l2.setAttribute('x1', '5.5'); l2.setAttribute('y1', '8');
+      l2.setAttribute('x2', '10.5'); l2.setAttribute('y2', '8');
+      var l3 = document.createElementNS(svgNS, 'line');
+      l3.setAttribute('x1', '5.5'); l3.setAttribute('y1', '11');
+      l3.setAttribute('x2', '8.5'); l3.setAttribute('y2', '11');
+      svg.appendChild(rect);
+      svg.appendChild(l1);
+      svg.appendChild(l2);
+      svg.appendChild(l3);
+      navToggle.appendChild(svg);
       navToggle.onclick = function() { toggleProgressPanel(); };
       topNavRight.insertBefore(navToggle, topNavRight.firstChild);
     }
