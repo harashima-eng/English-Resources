@@ -1038,19 +1038,6 @@
 
     /* Mobile nav drawer */
     @media (max-width: 768px) {
-      .mobile-nav-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        background: var(--card);
-        cursor: pointer;
-        font-size: 20px;
-      }
-
       .mobile-nav {
         position: fixed;
         bottom: 0;
@@ -1846,9 +1833,9 @@ const NavState = {
 
 // Category display info
 const categoryInfo = {
-  basic: { name: '基本問題', iconText: '\u{1F4DA}', class: 'basic' },
-  comm: { name: 'For Communication', iconText: '\u{1F4AC}', class: 'comm' },
-  advanced: { name: '発展問題', iconText: '\u{1F680}', class: 'advanced' }
+  basic: { name: '基本問題', iconText: '\u{1F4DA}', iconLabel: 'Basic problems', class: 'basic' },
+  comm: { name: 'For Communication', iconText: '\u{1F4AC}', iconLabel: 'Communication', class: 'comm' },
+  advanced: { name: '発展問題', iconText: '\u{1F680}', iconLabel: 'Advanced problems', class: 'advanced' }
 };
 
 // ===== ROUTER =====
@@ -2023,7 +2010,9 @@ const Router = {
     const info = categoryInfo[NavState.category];
     const badge = document.getElementById('categoryBadge');
     badge.className = 'question-category-badge ' + info.class;
-    document.getElementById('categoryIcon').textContent = info.iconText || '';
+    const iconEl = document.getElementById('categoryIcon');
+    iconEl.textContent = info.iconText || '';
+    iconEl.setAttribute('aria-label', info.iconLabel || '');
     document.getElementById('categoryName').textContent = info.name;
 
     const sectionData = grammarData.sections[NavState.section];
@@ -2381,6 +2370,7 @@ function showNav() {
   navVisible = true;
   if (typeof gsap !== 'undefined') {
     gsap.to('.top-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+    gsap.to('.mobile-nav', { y: 0, visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     if (NavState.view === 'question') {
       gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
@@ -2393,6 +2383,7 @@ function hideNav() {
     if (typeof gsap !== 'undefined') {
       gsap.to('.top-nav', { y: '-100%', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
       gsap.to('#subNav', { y: '-100%', opacity: 0, pointerEvents: 'none', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      gsap.to('.mobile-nav', { y: '100%', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
     }
   }, 300);
 }
