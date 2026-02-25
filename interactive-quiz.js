@@ -1037,7 +1037,6 @@
       }
 
       var isCorrect = selectionCorrect && textCorrect;
-      if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
       zone.classList.add('locked');
 
       underlines.forEach(function(u) {
@@ -1067,8 +1066,7 @@
         correctionInput.parentNode.insertBefore(answer, correctionInput.nextSibling);
       }
 
-      answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: { label: selectedLabel, correctionText: (correctionInput ? correctionInput.value.trim() : null) }, type: 'error' };
-      addScore(isCorrect, si);
+      recordAnswer(si, qi, isCorrect, { label: selectedLabel, correctionText: (correctionInput ? correctionInput.value.trim() : null) }, 'error');
       return { isCorrect: isCorrect, message: msg };
     }
 
