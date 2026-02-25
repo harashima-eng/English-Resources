@@ -1366,6 +1366,11 @@
         placed.push({ word: word, poolIdx: idx });
         if (window.UISound) UISound.play('click');
         renderAnswerZone();
+        if (iqSessionActive && placed.length > 0) {
+          document.dispatchEvent(new CustomEvent('iq:answer-selected', {
+            detail: { si: si, qi: qi, answer: placed.map(function(p) { return p.word; }).join(' '), type: 'scramble' }
+          }));
+        }
         if (!iqSessionActive && placed.length === shuffled.length) {
           showCheckPopup(ansDiv, zone, performCheck);
         } else {
