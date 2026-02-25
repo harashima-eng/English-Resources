@@ -950,10 +950,30 @@
   // ── Init ──
   function init() {
     createLoginButton();
-    startStudentListener();
-    restoreState();
-    trackPresence();
-    setupDynamicObserver();
+
+    // Check redirect result (user just returned from Google auth)
+    auth.getRedirectResult().then(function(result) {
+      if (result && result.user) {
+        handleAuthResult(result.user);
+      }
+    }).catch(function(err) {
+      if (err.code !== 'auth/popup-closed-by-user') {
+        showToast('\u30ED\u30B0\u30A4\u30F3\u30A8\u30E9\u30FC: ' + err.message);
+      }
+    });
+
+    // Persistent session: auto-detect returning teacher
+    auth.onAuthStateChanged(function(user) {
+      if (user && user.email === 'harashima@komagome.ed.jp') {
+        handleAuthResult(user);
+      } else if (!initialized) {
+        initialized = true;
+        startStudentListener();
+        restoreState();
+        trackPresence();
+        setupDynamicObserver();
+      }
+    });
   }
 
   if (document.readyState === 'loading') {
