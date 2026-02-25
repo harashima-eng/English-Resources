@@ -245,6 +245,10 @@
     // ── Edge trigger (left-edge hover zone) ──
     edgeTriggerEl = document.createElement('div');
     edgeTriggerEl.className = 'iq-edge-trigger';
+    var edgeHintEl = document.createElement('span');
+    edgeHintEl.className = 'iq-edge-hint';
+    edgeHintEl.textContent = 'Open panel';
+    edgeTriggerEl.appendChild(edgeHintEl);
     document.body.appendChild(edgeTriggerEl);
 
     edgeTriggerEl.addEventListener('mouseenter', function() {

@@ -687,6 +687,36 @@ html.dark .iq-progress-backdrop {
 html.dark .iq-edge-trigger:hover::after {
   background: rgba(20, 184, 166, 0.5);
 }
+/* ── Edge trigger hint label ── */
+.iq-edge-hint {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 11px;
+  color: rgba(13, 148, 136, 0);
+  background: var(--card, #fff);
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  pointer-events: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  opacity: 0;
+}
+.iq-edge-trigger:hover .iq-edge-hint {
+  color: rgba(13, 148, 136, 0.9);
+  opacity: 1;
+}
+[data-theme="dark"] .iq-edge-hint,
+html.dark .iq-edge-hint {
+  background: var(--card, #1e293b);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .iq-edge-trigger:hover .iq-edge-hint,
+html.dark .iq-edge-trigger:hover .iq-edge-hint {
+  color: rgba(20, 184, 166, 0.9);
+}
 
 
 /* ── Locked state (answered, no more interaction) ── */
