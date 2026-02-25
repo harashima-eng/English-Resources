@@ -184,6 +184,23 @@
     return q.el || findDOMQuestion(si, qi);
   }
 
+  // Get a short preview of question text for the teacher panel
+  function getQuestionPreview(si, qi) {
+    if (typeof grammarData !== 'undefined' && grammarData.sections[si]) {
+      var q = grammarData.sections[si].questions[qi];
+      if (q && q.text) {
+        var t = q.text.replace(/\s+/g, ' ').trim();
+        return t.length > 40 ? t.substring(0, 38) + '...' : t;
+      }
+    }
+    var el = getQEl(si, qi);
+    if (el) {
+      var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      return t.length > 40 ? t.substring(0, 38) + '...' : t;
+    }
+    return 'Q' + (qi + 1);
+  }
+
   // ── Student mode: lock/unlock ──
   function lockQuestion(qEl) {
     if (!qEl) return;
