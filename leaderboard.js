@@ -255,7 +255,7 @@
     }
     hidePanel();
     // Clean up leaderboard data for this session
-    lbRef.remove();
+    lbRef.remove().catch(function(err) { console.warn('[leaderboard] remove failed:', err.message); });
   }
 
   // ── Teacher control: listen for session events ──

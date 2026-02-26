@@ -43,7 +43,7 @@
       answer: d.answer,
       type: d.type || 'choice',
       timestamp: firebase.database.ServerValue.TIMESTAMP
-    });
+    }).catch(function(err) { console.warn('[student-responses] write failed:', err.message); });
   }
 
   document.addEventListener('iq:answer-selected', function(e) {
@@ -245,12 +245,12 @@
   });
 
   document.addEventListener('tr:session-end', function() {
-    responsesRef.remove();
+    responsesRef.remove().catch(function(err) { console.warn('[student-responses] remove failed:', err.message); });
     detachAllListeners();
   });
 
   document.addEventListener('tr:reset-responses', function() {
-    responsesRef.remove();
+    responsesRef.remove().catch(function(err) { console.warn('[student-responses] remove failed:', err.message); });
     Object.keys(aggregateDisplays).forEach(function(key) {
       var display = aggregateDisplays[key];
       if (display) {
