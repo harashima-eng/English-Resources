@@ -562,6 +562,24 @@
     if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
     answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: userAnswer, type: type };
     addScore(isCorrect, si);
+
+    // Dispatch wrong-answer event for spaced repetition
+    if (!isCorrect) {
+      var q = getQuestionData(si, qi);
+      var examId = (document.body && document.body.dataset.examId) || 'default';
+      var correctAnswer = q ? (q.correctAnswer || (q.correctText ? displayCorrectText(q.correctText) : '')) : '';
+      document.dispatchEvent(new CustomEvent('iq:wrong-answer', {
+        detail: {
+          examId: examId,
+          si: si,
+          qi: qi,
+          questionText: q ? (q.text || '').substring(0, 100) : '',
+          wrongAnswer: typeof userAnswer === 'string' ? userAnswer : JSON.stringify(userAnswer),
+          correctAnswer: Array.isArray(correctAnswer) ? correctAnswer.join(', ') : correctAnswer,
+          type: type
+        }
+      }));
+    }
   }
 
   function getQuestionData(si, qi) {
