@@ -15,6 +15,7 @@
     "responses": {
       "$examId": {
         ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+        ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
         "$questionKey": {
           "$deviceId": {
             ".write": "newData.hasChildren(['answer', 'timestamp']) && newData.child('answer').isString() && newData.child('answer').val().length < 20",
