@@ -27,7 +27,7 @@ body {
 }
 
 /* Dark mode gradient glassy background */
-/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+/* LESSON-SPECIFIC: define [data-theme="dark"] body in per-lesson <style> */
 
 /* ===== TOP NAVIGATION BAR - Auto-Hide with Glassmorphism ===== */
 .top-nav {
@@ -462,7 +462,9 @@ body {
   margin-top: 16px;
 }
 
-/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+[data-theme="dark"] .conj-card-tip {
+  background: var(--bg);
+}
 
 .conj-card-tip-icon {
   font-size: 16px;
