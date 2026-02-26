@@ -1798,14 +1798,22 @@
       block.style.opacity = '';
     });
 
-    // Backup and clear wrong entries
+    // Backup and clear wrong entries, adjust sectionScores
     retryKeys.forEach(function(k) {
       retryBackup[k] = answeredKeys[k];
+      // Decrement sectionScores to prevent double-counting on re-answer
+      var si = parseInt(k.split('-')[0]);
+      if (sectionScores[si]) {
+        sectionScores[si].total = Math.max(0, sectionScores[si].total - 1);
+        if (answeredKeys[k] && answeredKeys[k].result === 'correct') {
+          sectionScores[si].correct = Math.max(0, sectionScores[si].correct - 1);
+        }
+      }
       delete answeredKeys[k];
     });
 
     // Adjust score
-    score.answered -= retryKeys.length;
+    score.answered = Math.max(0, score.answered - retryKeys.length);
     streak = 0;
 
     // Clean up retry cards for re-enhancement
