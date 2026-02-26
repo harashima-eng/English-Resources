@@ -60,6 +60,22 @@ def generate_og_meta(title: str, description: str, canonical_path: str = "") -> 
 <link rel="canonical" href="{canonical}">'''
 
 
+def generate_jsonld_breadcrumb(rel_path: str) -> str:
+    """Generate JSON-LD BreadcrumbList structured data."""
+    import json
+    parts = rel_path.split('/') if rel_path else []
+    items = [{"@type": "ListItem", "position": 1, "name": "Home",
+              "item": f"{BASE_URL}/"}]
+    for i, part in enumerate(parts):
+        display = get_folder_name(part)
+        path = '/'.join(safe_quote(p) for p in parts[:i+1])
+        items.append({"@type": "ListItem", "position": i + 2, "name": display,
+                       "item": f"{BASE_URL}/{path}/"})
+    data = {"@context": "https://schema.org", "@type": "BreadcrumbList",
+            "itemListElement": items}
+    return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
+
+
 def get_css_path(depth: int, css_hash: str = "") -> str:
     """Get relative path to styles.css based on folder depth, with cache-busting hash."""
     suffix = f"?v={css_hash}" if css_hash else ""
@@ -263,6 +279,7 @@ def generate_folder_index(path: str, rel_path: str, name: str, parent_path: str 
         badge = "Empty"
 
     breadcrumb_html = build_breadcrumb(rel_path, depth)
+    jsonld = generate_jsonld_breadcrumb(rel_path) if rel_path else ''
     favicon_path = '../' * depth + 'favicon.svg'
     css_path = get_css_path(depth, css_hash)
     canonical_path = safe_quote(rel_path) + '/index.html' if rel_path else 'index.html'
@@ -277,6 +294,7 @@ def generate_folder_index(path: str, rel_path: str, name: str, parent_path: str 
 <title>{name} | English Resources</title>
 <meta name="description" content="英語学習教材ライブラリ - {name}">
 {og_meta}
+{jsonld}
 <link rel="icon" href="{favicon_path}" type="image/svg+xml">
 {FONT_LINK}
 <link rel="stylesheet" href="{css_path}">
