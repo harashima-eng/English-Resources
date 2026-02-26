@@ -608,6 +608,9 @@
 
   // ── Teacher login (popup-first, redirect fallback) ──
   function teacherLogin() {
+    var loginBtn = document.querySelector('.tr-login-btn');
+    if (loginBtn) loginBtn.classList.add('loading');
+
     var provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then(function(result) {
       if (result.user) {
@@ -620,13 +623,16 @@
         showToast('\u30EA\u30C0\u30A4\u30EC\u30AF\u30C8\u3057\u307E\u3059...');
         auth.signInWithRedirect(provider);
       } else {
+        if (loginBtn) loginBtn.classList.remove('loading');
         showToast('\u30ED\u30B0\u30A4\u30F3\u30A8\u30E9\u30FC: ' + err.message);
       }
     });
   }
 
   function handleAuthResult(user) {
+    var loginBtn = document.querySelector('.tr-login-btn');
     if (user.email !== 'harashima@komagome.ed.jp') {
+      if (loginBtn) loginBtn.classList.remove('loading');
       auth.signOut().catch(function() {});
       showToast('\u6A29\u9650\u304C\u3042\u308A\u307E\u305B\u3093');
       return;
