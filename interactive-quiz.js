@@ -2125,14 +2125,39 @@
     // Re-render current cards without answered state
     var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
     cards.forEach(function(card) {
-      // Restore fillin original HTML if stored
+      // Kill active GSAP tweens on card and its animated children
+      if (typeof gsap !== 'undefined') {
+        gsap.killTweensOf(card);
+        card.querySelectorAll('.collapsible, .iq-zone, .iq-check-popup').forEach(function(el) {
+          gsap.killTweensOf(el);
+        });
+      }
+      // Close all open collapsibles and clean state
+      card.querySelectorAll('.collapsible.open').forEach(function(block) {
+        block.classList.remove('open');
+        if (typeof gsap !== 'undefined') gsap.set(block, { clearProps: 'all' });
+        block.style.opacity = '';
+      });
+      // Reset aria-expanded on toggle buttons
+      card.querySelectorAll('.toggle-btn[aria-expanded="true"]').forEach(function(btn) {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      // Clear answer loaded state so re-fetch works
+      card.querySelectorAll('.collapsible[data-type="answer"]').forEach(function(c) {
+        delete c.dataset.loaded;
+        delete c.dataset.loading;
+        var ansBox = c.querySelector('.ans-box');
+        if (ansBox) ansBox.textContent = '';
+      });
+      // Restore fillin original qtext if stored (safe: restoring lesson HTML)
       if (card.dataset.originalQtext) {
         var qtext = card.querySelector('.qtext');
-        if (qtext) qtext.innerHTML = card.dataset.originalQtext;  // safe: restoring lesson HTML
+        if (qtext) qtext.innerHTML = card.dataset.originalQtext;
       }
       card.dataset.iqEnhanced = '';
       card.classList.remove('iq-wrong');
       card.style.display = '';
+      card.style.opacity = '';
       var zone = card.querySelector('.iq-zone');
       if (zone) zone.remove();
     });
