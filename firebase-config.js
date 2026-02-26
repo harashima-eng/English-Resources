@@ -42,4 +42,11 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
       }
     });
   })();
+
+  // ── Reconnect on visibility change (phone lock/unlock) ──
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+      firebase.database().goOnline();
+    }
+  });
 }
