@@ -6,18 +6,45 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
-## 2026-02-26 — Service Worker Fix + Documentation Improvements
+## 2026-02-26 — PWA, Accessibility, CI/CD & SEO Improvements
 
 ### sw.js
-- Fixed `cache.addAll()` failure on Firebase Hosting: replaced hardcoded `/English-Resources/` prefix with dynamic `BASE` derived from `self.location.pathname`
-- Now works on both GitHub Pages (`/English-Resources/sw.js`) and Firebase (`/sw.js`)
-- Bumped cache to `eng-res-v3` to force cleanup of broken `eng-res-v2` cache
+- Fixed `cache.addAll()` failure on Firebase Hosting: dynamic `BASE` from `self.location.pathname`
+- Added `offline.html` to pre-cached assets
+- Offline fallback: HTML requests now fall back to `offline.html` when no cache match
+- Bumped cache to `eng-res-v4`
+
+### offline.html (NEW)
+- Friendly offline fallback page matching 404.html design (Japanese messaging, dark mode, home link)
+
+### manifest.json
+- Added `screenshots` field (wide + narrow) for richer install prompts on Chromebooks
+- Added `shortcuts` for quick access to 高校2年 and 英検 from home screen
+
+### firebase-config.js
+- Added `beforeinstallprompt` handler with install banner (dismiss per session)
+
+### interactive-quiz.js
+- Added `aria-pressed` to pair and choice buttons (toggles on selection)
+
+### interactive-quiz.css
+- Added `.iq-install-banner` and `.iq-install-dismiss` styles
+
+### spaced-review.js
+- Review modal: added `role="dialog"`, `aria-modal="true"`, focus trap, focus restoration on close
+
+### leaderboard.js
+- Nickname dialog: added `role="dialog"`, `aria-modal="true"`, focus trap, Escape to close
 
 ### firebase.json
 - Added `rewrites` rule: `/favicon.ico` -> `/favicon.svg` (silences browser 404)
 
+### Generator (english-resources-generate.py)
+- Added JSON-LD `BreadcrumbList` structured data to all generated index pages
+
 ### Infrastructure
 - Added root CHANGELOG.md (this file)
+- Added GitHub Actions workflow: Lighthouse CI + broken link checker (`.github/workflows/quality.yml`)
 - Added session notes for Claude (`~/.claude/session-notes/english-resources.md`)
 - Added log rotation to autosync script (keeps last 1000 lines when log exceeds 5000)
 - Expanded troubleshooting section in SYSTEM-README.md
