@@ -51,6 +51,27 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
   });
 }
 
+// ── Client-side error monitoring → Firebase ──
+(function() {
+  if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+  var errRef = firebase.database().ref('errors');
+  var lastErr = '';
+  function reportError(msg) {
+    if (!msg || msg === lastErr) return;
+    lastErr = msg;
+    errRef.push({
+      msg: String(msg).substring(0, 499),
+      ts: firebase.database.ServerValue.TIMESTAMP,
+      url: location.pathname,
+      ua: navigator.userAgent.substring(0, 100)
+    }).catch(function() {});
+  }
+  window.onerror = function(msg) { reportError(msg); };
+  window.addEventListener('unhandledrejection', function(e) {
+    reportError(e.reason ? (e.reason.message || String(e.reason)) : 'unhandled rejection');
+  });
+})();
+
 // ── Service Worker update notification ──
 (function() {
   if (!('serviceWorker' in navigator)) return;
