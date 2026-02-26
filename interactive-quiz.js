@@ -2302,17 +2302,8 @@
     resetBtn.className = 'iq-badge-reset';
     resetBtn.textContent = 'Reset Progress';
     resetBtn.onclick = function() {
-      streak = 0;
-      bestStreak = 0;
-      badges = [];
-      sectionScores = {};
-      score.correct = 0;
-      score.answered = 0;
-      answeredKeys = {};
-      saveProgress();
       toggleBadgePanel();
-      updateProgressPanel();
-      updateStreakDisplay();
+      performFullReset();
     };
     badgePanelEl.appendChild(resetBtn);
 
