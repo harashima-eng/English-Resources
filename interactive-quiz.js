@@ -1860,10 +1860,22 @@
 
     var scoreEl = document.createElement('div');
     scoreEl.className = 'iq-retry-summary-score';
-    scoreEl.innerHTML = '<span class="iq-retry-summary-num">' + correctCount + '</span>' +
-      '<span class="iq-retry-summary-sep">/</span>' +
-      '<span class="iq-retry-summary-den">' + totalCount + '</span>' +
-      '<span class="iq-retry-summary-label"> correct</span>';
+    var numSpan = document.createElement('span');
+    numSpan.className = 'iq-retry-summary-num';
+    numSpan.textContent = correctCount;
+    var sepSpan = document.createElement('span');
+    sepSpan.className = 'iq-retry-summary-sep';
+    sepSpan.textContent = '/';
+    var denSpan = document.createElement('span');
+    denSpan.className = 'iq-retry-summary-den';
+    denSpan.textContent = totalCount;
+    var labelSpan = document.createElement('span');
+    labelSpan.className = 'iq-retry-summary-label';
+    labelSpan.textContent = ' correct';
+    scoreEl.appendChild(numSpan);
+    scoreEl.appendChild(sepSpan);
+    scoreEl.appendChild(denSpan);
+    scoreEl.appendChild(labelSpan);
     dialog.appendChild(scoreEl);
 
     var breakdown = document.createElement('div');
@@ -2387,6 +2399,7 @@
 
   // ── Init ──
   function init() {
+    pruneOldProgress();
     loadProgress();
 
     // Reconstruct score from loaded answeredKeys
