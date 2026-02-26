@@ -33,6 +33,7 @@
   var retryKeys = [];
   var retryBackup = {};
   var retryBarEl = null;
+  var retrySummaryTimer = null;
 
   // ── Gamification state ──
   var streak = 0;
@@ -474,6 +475,7 @@
       gsap.killTweensOf(progressPanelEl);
       gsap.to(progressPanelEl, { x: 0, duration: 0.35, ease: 'power2.out' });
       if (progressBackdropEl) {
+        gsap.killTweensOf(progressBackdropEl);
         progressBackdropEl.style.display = '';
         gsap.fromTo(progressBackdropEl, { opacity: 0 }, { opacity: 1, duration: 0.25 });
       }
@@ -492,6 +494,7 @@
       gsap.killTweensOf(progressPanelEl);
       gsap.to(progressPanelEl, { x: -320, duration: 0.3, ease: 'power2.inOut' });
       if (progressBackdropEl) {
+        gsap.killTweensOf(progressBackdropEl);
         gsap.to(progressBackdropEl, { opacity: 0, duration: 0.2, onComplete: function() {
           progressBackdropEl.style.display = 'none';
         }});
@@ -507,6 +510,7 @@
     if (tabIsHidden) showTabWithGsap();
     resetTabHideTimer();
     var color = isCorrect ? 'rgba(22, 163, 74, 0.4)' : 'rgba(220, 38, 38, 0.4)';
+    gsap.killTweensOf(progressTabEl);
     gsap.fromTo(progressTabEl,
       { boxShadow: '0 0 0 0 ' + color },
       { boxShadow: '0 0 12px 4px ' + color, duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.inOut' }
@@ -630,6 +634,7 @@
         blocks.forEach(function(block, i) {
           var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
           if (items.length > 0) {
+            gsap.killTweensOf(items);
             gsap.from(items, { opacity: 0, x: -8, stagger: 0.04, duration: 0.5, ease: 'power2.out', delay: 0.2 + i * 0.12 });
           }
         });
