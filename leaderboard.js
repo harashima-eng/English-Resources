@@ -69,7 +69,7 @@
     btn.textContent = 'Join';
     btn.disabled = true;
     btn.onclick = function() {
-      var name = input.value.trim();
+      var name = input.value.trim().replace(/[<>&"]/g, '');
       if (!name) return;
       nickname = name;
       localStorage.setItem(NICKNAME_KEY, nickname);
@@ -79,6 +79,7 @@
     dialog.appendChild(btn);
 
     input.addEventListener('input', function() {
+      input.value = input.value.replace(/[<>&"]/g, '');
       btn.disabled = !input.value.trim();
     });
     input.addEventListener('keydown', function(e) {
