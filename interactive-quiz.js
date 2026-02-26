@@ -622,6 +622,7 @@
       if (blocks.length === 0) return;
 
       if (typeof gsap !== 'undefined') {
+        blocks.forEach(function(b) { gsap.killTweensOf(b); });
         gsap.fromTo(blocks,
           { opacity: 0, y: -20 },
           { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12 }
@@ -1789,12 +1790,12 @@
     retryKeys = wrongKeys;
     retryBackup = {};
 
-    // Close all open toggles
+    // Close all open toggles — kill tweens first to prevent stale opacity
     document.querySelectorAll('.qcard .collapsible.open').forEach(function(block) {
+      if (typeof gsap !== 'undefined') gsap.killTweensOf(block);
       block.classList.remove('open');
-      if (typeof gsap !== 'undefined') {
-        gsap.set(block, { clearProps: 'all' });
-      }
+      if (typeof gsap !== 'undefined') gsap.set(block, { clearProps: 'all' });
+      block.style.opacity = '';
     });
 
     // Backup and clear wrong entries
