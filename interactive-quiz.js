@@ -112,7 +112,11 @@
     // ── Tab handle (always visible, bottom-left) ──
     progressTabEl = document.createElement('div');
     progressTabEl.className = 'iq-progress-tab';
+    progressTabEl.setAttribute('tabindex', '0');
+    progressTabEl.setAttribute('role', 'button');
+    progressTabEl.setAttribute('aria-label', 'Open progress panel');
     progressTabEl.onclick = function() { toggleProgressPanel(); };
+    progressTabEl.onkeydown = function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleProgressPanel(); } };
     progressTabEl.title = 'Click to open progress panel';
 
     tabScoreEl = document.createElement('span');
@@ -2230,6 +2234,123 @@
     document.body.appendChild(badgePanelEl);
   }
 
+  // ── Keyboard Navigation ──
+  function setupKeyboardNav() {
+    document.addEventListener('keydown', function(e) {
+      // Don't intercept when typing in an input/textarea
+      var tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+        // Allow Enter in correction/fillin inputs (already handled per-input)
+        // Allow Escape to blur inputs
+        if (e.key === 'Escape') {
+          e.target.blur();
+          e.preventDefault();
+        }
+        return;
+      }
+
+      // Escape: close open collapsible or progress panel
+      if (e.key === 'Escape') {
+        if (progressPanelOpen) {
+          closeProgressPanel();
+          e.preventDefault();
+          return;
+        }
+        // Close any open collapsible
+        var openCollapsible = document.querySelector('.collapsible.open');
+        if (openCollapsible) {
+          openCollapsible.classList.remove('open');
+          e.preventDefault();
+          return;
+        }
+      }
+
+      // 1-4 or a-d: select answer choice in the visible/focused question
+      var choiceIndex = -1;
+      if (e.key >= '1' && e.key <= '4') choiceIndex = parseInt(e.key) - 1;
+      else if (e.key >= 'a' && e.key <= 'd' && !e.ctrlKey && !e.metaKey && !e.altKey) choiceIndex = e.key.charCodeAt(0) - 97;
+      else if (e.key >= 'A' && e.key <= 'D' && !e.ctrlKey && !e.metaKey && !e.altKey) choiceIndex = e.key.charCodeAt(0) - 65;
+
+      if (choiceIndex >= 0) {
+        var activeZone = getVisibleActiveZone();
+        if (activeZone) {
+          var choices = activeZone.querySelectorAll('.iq-choice:not(.dimmed):not(.correct):not(.wrong)');
+          if (choiceIndex < choices.length) {
+            choices[choiceIndex].click();
+            e.preventDefault();
+          }
+        }
+        return;
+      }
+
+      // Enter: trigger check on the visible question
+      if (e.key === 'Enter') {
+        var zone = getVisibleActiveZone();
+        if (zone && zone._popup) {
+          var checkBtn = zone._popup.querySelector('.iq-popup-check-btn');
+          if (checkBtn) {
+            checkBtn.click();
+            e.preventDefault();
+          }
+        }
+        return;
+      }
+
+      // Arrow keys: navigate between questions (scroll to prev/next qcard)
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.qcard[data-si][data-qi]'));
+        cards = cards.filter(function(c) { return c.style.display !== 'none'; });
+        if (cards.length === 0) return;
+
+        var currentIdx = findNearestCardIndex(cards);
+        var nextIdx = e.key === 'ArrowDown'
+          ? Math.min(currentIdx + 1, cards.length - 1)
+          : Math.max(currentIdx - 1, 0);
+
+        if (nextIdx !== currentIdx) {
+          cards[nextIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          e.preventDefault();
+        }
+      }
+    });
+  }
+
+  // Find the iq-zone of the question card nearest the viewport center
+  function getVisibleActiveZone() {
+    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var viewMid = window.innerHeight / 2;
+    var best = null;
+    var bestDist = Infinity;
+
+    cards.forEach(function(card) {
+      if (card.style.display === 'none') return;
+      var zone = card.querySelector('.iq-zone');
+      if (!zone || zone.classList.contains('locked')) return;
+      var rect = card.getBoundingClientRect();
+      var dist = Math.abs(rect.top + rect.height / 2 - viewMid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = zone;
+      }
+    });
+    return best;
+  }
+
+  function findNearestCardIndex(cards) {
+    var viewMid = window.innerHeight / 2;
+    var bestIdx = 0;
+    var bestDist = Infinity;
+    cards.forEach(function(card, i) {
+      var rect = card.getBoundingClientRect();
+      var dist = Math.abs(rect.top + rect.height / 2 - viewMid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = i;
+      }
+    });
+    return bestIdx;
+  }
+
   // ── Init ──
   function init() {
     loadProgress();
@@ -2243,6 +2364,7 @@
     detectExistingSession();
     createProgressPanel();
     setupTeacherRevealListeners();
+    setupKeyboardNav();
     enhanceVisibleCards();
     setupObserver();
 
