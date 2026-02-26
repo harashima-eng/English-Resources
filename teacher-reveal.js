@@ -985,6 +985,39 @@
 
     body.appendChild(analyticsSec);
 
+    // ── Leaderboard toggle (only if leaderboard.js is loaded) ──
+    if (window.Leaderboard) {
+      var lbSec = document.createElement('div');
+      lbSec.className = 'tr-panel-section';
+
+      var lbTitle = document.createElement('div');
+      lbTitle.className = 'tr-section-title';
+      lbTitle.textContent = 'Leaderboard';
+      lbSec.appendChild(lbTitle);
+
+      var lbBtn = document.createElement('button');
+      lbBtn.className = 'tr-btn tr-btn-primary';
+      lbBtn.dataset.action = 'toggle-leaderboard';
+      lbBtn.textContent = window.Leaderboard.isActive() ? 'Stop Leaderboard' : 'Start Leaderboard';
+      lbBtn.onclick = function() {
+        if (window.Leaderboard.isActive()) {
+          window.Leaderboard.stop();
+          lbBtn.textContent = 'Start Leaderboard';
+          lbBtn.classList.remove('tr-btn-danger');
+          lbBtn.classList.add('tr-btn-primary');
+          showToast('\u30EA\u30FC\u30C0\u30FC\u30DC\u30FC\u30C9\u3092\u505C\u6B62\u3057\u307E\u3057\u305F');
+        } else {
+          window.Leaderboard.start();
+          lbBtn.textContent = 'Stop Leaderboard';
+          lbBtn.classList.remove('tr-btn-primary');
+          lbBtn.classList.add('tr-btn-danger');
+          showToast('\u30EA\u30FC\u30C0\u30FC\u30DC\u30FC\u30C9\u3092\u958B\u59CB\u3057\u307E\u3057\u305F');
+        }
+      };
+      lbSec.appendChild(lbBtn);
+      body.appendChild(lbSec);
+    }
+
     // Logout (bottom of panel, clearly labeled)
     var logoutSec = document.createElement('div');
     logoutSec.className = 'tr-panel-section tr-panel-logout';
