@@ -1229,7 +1229,11 @@
     });
   }
 
+  var sessionActionPending = false;
+
   function startSession() {
+    if (sessionActionPending) return;
+    sessionActionPending = true;
     var sessionData = {
       activeSession: new Date().toISOString(),
       revealAll: false,
@@ -1251,11 +1255,14 @@
       document.dispatchEvent(new CustomEvent('tr:session-start'));
       showToast('セッションを開始しました');
       resetPanelVisuals();
-    }).catch(function(e) { showToast('Error: ' + e.message); });
+      sessionActionPending = false;
+    }).catch(function(e) { showToast('Error: ' + e.message); sessionActionPending = false; });
   }
 
   // ── End session ──
   function endSession() {
+    if (sessionActionPending) return;
+    sessionActionPending = true;
     examRef.update({ activeSession: null }).then(function() {
       state.sessionActive = false;
       state.revealed = {};
@@ -1264,7 +1271,8 @@
       document.dispatchEvent(new CustomEvent('tr:session-end'));
       showToast('セッション終了');
       resetPanelVisuals();
-    }).catch(function(e) { showToast('Error: ' + e.message); });
+      sessionActionPending = false;
+    }).catch(function(e) { showToast('Error: ' + e.message); sessionActionPending = false; });
   }
 
   // ── Presence ──
