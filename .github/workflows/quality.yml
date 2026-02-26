@@ -1,0 +1,27 @@
+name: Quality Checks
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    name: Lighthouse Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://harashima-eng.github.io/English-Resources/
+          uploadArtifacts: true
+
+  links:
+    name: Broken Link Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --exclude-mail --timeout 30 --no-progress '**/*.html'
+          fail: false
