@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://harashima-eng.github.io/English-Resources/offline.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://harashima-eng.github.io/English-Resources/%E8%8B%B1%E6%A4%9C/index.html</loc>
     <lastmod>2026-02-26</lastmod>
     <priority>0.8</priority>

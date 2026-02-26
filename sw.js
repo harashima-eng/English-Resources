@@ -4,7 +4,7 @@
    - HTML pages: Network-first with cache fallback (always fresh content)
    - Firebase/API requests: Network-only (real-time data) */
 
-var CACHE_NAME = 'eng-res-v3';
+var CACHE_NAME = 'eng-res-v4';
 
 var BASE = self.location.pathname.replace(/sw\.js$/, '');
 // GitHub Pages: '/English-Resources/'
@@ -23,7 +23,8 @@ var STATIC_ASSETS = [
   BASE + 'leaderboard.js',
   BASE + 'favicon.svg',
   BASE + 'icon-192.png',
-  BASE + 'icon-512.png'
+  BASE + 'icon-512.png',
+  BASE + 'offline.html'
 ];
 
 // Install: pre-cache static assets

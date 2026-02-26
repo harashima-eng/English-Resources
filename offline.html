@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline — English Resources</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F5F0E6;--bg-warm:#EDE8DE;--card:#FFFFFF;
+  --text:#1C1917;--text-secondary:#57534E;--text-muted:#A3A09C;
+  --border:rgba(28,25,23,0.08);
+  --accent:#0D9488;--accent-light:#f0fdfa;
+  --shadow-sm:0 1px 2px rgba(61,67,64,0.05),0 4px 12px rgba(61,67,64,0.08);
+  --radius-md:16px;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --duration-fast:200ms
+}
+html.dark{
+  --bg:#0f0e0d;--bg-warm:#1a1816;--card:rgba(36,34,32,0.92);
+  --text:#F5F3F0;--text-secondary:#A3A09C;--text-muted:#666666;
+  --border:rgba(255,255,255,0.06);
+  --accent:#5BA8A0;--accent-light:rgba(91,168,160,0.12);
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.4)
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:0.01ms!important}}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;font-family:'Sora','Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;display:flex;align-items:center;justify-content:center}
+.container{max-width:480px;margin:0 auto;padding:40px 24px;text-align:center}
+.error-icon{width:80px;height:80px;margin:0 auto 24px;border-radius:20px;background:var(--bg-warm);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:36px;opacity:0;animation:fadeIn 0.6s var(--ease) forwards}
+.error-title{font-size:20px;font-weight:600;margin:8px 0 12px;opacity:0;animation:fadeIn 0.6s var(--ease) 0.1s forwards}
+.error-desc{font-size:15px;color:var(--text-secondary);margin-bottom:24px;opacity:0;animation:fadeIn 0.6s var(--ease) 0.2s forwards}
+.error-hint{font-size:14px;color:var(--text-muted);margin-bottom:32px;opacity:0;animation:fadeIn 0.6s var(--ease) 0.3s forwards}
+.home-link{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:white;text-decoration:none;border-radius:var(--radius-md);font-size:15px;font-weight:500;box-shadow:var(--shadow-sm);transition:transform var(--duration-fast) var(--ease),box-shadow var(--duration-fast) var(--ease);opacity:0;animation:fadeIn 0.6s var(--ease) 0.4s forwards}
+.home-link:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(13,148,136,0.3)}
+html.dark .home-link:hover{box-shadow:0 4px 16px rgba(91,168,160,0.3)}
+.home-link svg{width:16px;height:16px}
+.theme-btn{position:fixed;top:16px;right:16px;width:36px;height:36px;border:1px solid var(--border);background:var(--card);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:color var(--duration-fast) ease,border-color var(--duration-fast) ease}
+.theme-btn:hover{color:var(--text);border-color:rgba(28,25,23,0.15)}
+html.dark .theme-btn:hover{border-color:rgba(255,255,255,0.15)}
+.theme-btn svg{width:18px;height:18px}
+.theme-btn .sun-icon{display:block}
+.theme-btn .moon-icon{display:none}
+html.dark .theme-btn .sun-icon{display:none}
+html.dark .theme-btn .moon-icon{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<button class="theme-btn" aria-label="Toggle theme"><svg class="sun-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="moon-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+<div class="container">
+  <div class="error-icon">📡</div>
+  <h1 class="error-title">オフラインです</h1>
+  <p class="error-desc">インターネットに接続されていません。以前アクセスしたページはオフラインでも利用できます。</p>
+  <p class="error-hint">Wi-Fi または モバイルデータ通信を確認してください。</p>
+  <a href="/English-Resources/index.html" class="home-link"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/></svg>ホームに戻る</a>
+</div>
+<script>
+(function(){
+  var btn=document.querySelector('.theme-btn');
+  if(!btn)return;
+  var saved=localStorage.getItem('er-theme');
+  if(saved==='dark'){document.documentElement.classList.add('dark')}
+  btn.addEventListener('click',function(){
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('er-theme',document.documentElement.classList.contains('dark')?'dark':'light');
+  });
+})();
+</script>
+</body>
+</html>
