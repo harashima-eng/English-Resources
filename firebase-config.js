@@ -50,3 +50,26 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
     }
   });
 }
+
+// ── Service Worker update notification ──
+(function() {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'SW_UPDATED') {
+      var existing = document.querySelector('.iq-update-banner');
+      if (existing) return;
+      var banner = document.createElement('div');
+      banner.className = 'iq-update-banner';
+      banner.setAttribute('role', 'alert');
+      var text = document.createElement('span');
+      text.textContent = 'New version available';
+      var btn = document.createElement('button');
+      btn.className = 'iq-update-btn';
+      btn.textContent = 'Refresh';
+      btn.onclick = function() { location.reload(); };
+      banner.appendChild(text);
+      banner.appendChild(btn);
+      document.body.appendChild(banner);
+    }
+  });
+})();
