@@ -207,6 +207,59 @@ cat ~/.claude/logs/english-resources-backup.log
 - File: `/usr/local/bin/english-resources-generate.py`
 - After editing, changes apply on next file save in repo
 
+### fswatch stopped after sleep/lid close?
+The LaunchAgent may not restart after macOS sleep. Check and fix:
+```bash
+# Check if running
+launchctl list | grep english-resources
+
+# If not listed, re-bootstrap it
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.english-resources.autosync.plist
+
+# Verify it's running now
+launchctl list | grep english-resources
+```
+
+### Firebase deploy hangs or fails?
+```bash
+# Check if a stuck deploy process exists
+ps aux | grep firebase
+
+# Kill it if stuck
+pkill -f firebase-tools
+
+# Re-authenticate if token expired
+npx firebase-tools login --reauth
+
+# Retry deploy manually
+cd /Users/slimtetto/Projects/English-Resources
+firebase deploy --only hosting
+```
+
+### Firebase "PERMISSION_DENIED" error?
+Database rules may be out of sync between local and Firebase console:
+```bash
+# Deploy rules from local file
+firebase deploy --only database
+
+# Or check what's live in the console:
+# https://console.firebase.google.com/project/english-resources-reveal/database/rules
+```
+Common cause: new data node added in code but not in `database.rules.json`.
+
+### Health check: is everything working?
+Run these 3 commands to verify the full pipeline:
+```bash
+# 1. Is auto-sync running?
+launchctl list | grep english-resources
+
+# 2. Any recent errors in the log? (last 20 lines)
+tail -20 /tmp/english-resources-autosync.log
+
+# 3. Is the site live and up to date?
+curl -s -o /dev/null -w "%{http_code}" https://harashima-eng.github.io/English-Resources/
+```
+
 ---
 
 ## Files NOT to delete
