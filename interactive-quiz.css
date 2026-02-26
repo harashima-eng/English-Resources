@@ -1841,7 +1841,6 @@ html.dark .iq-retry-dot.wrong {
   .iq-retry-bar,
   .iq-confirm-overlay,
   .iq-confirm-dialog {
-    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
 }
@@ -2191,13 +2190,6 @@ html.dark .sr-modal-done {
   color: #22C55E;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .sr-review-btn,
-  .sr-modal-reveal-btn,
-  .sr-modal-eval-btn {
-    transition-duration: 0.01ms !important;
-  }
-}
 
 
 /* ══════════════════════════════════════════════════════════
@@ -2415,12 +2407,6 @@ html.dark .lb-dialog-input {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .lb-row,
-  .lb-dialog-btn {
-    transition-duration: 0.01ms !important;
-  }
-}
 
 /* ── Update banner ── */
 .iq-update-banner {
