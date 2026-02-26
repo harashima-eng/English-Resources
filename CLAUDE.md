@@ -76,6 +76,7 @@ All colored icons use **inline styles** from GRADE_COLORS, NOT CSS classes.
 - `.DS_Store` files are gitignored and must not be committed
 - Auto-sync script handles git operations automatically
 - After editing scripts in `/usr/local/bin/`, also update copies in `.scripts/`
+- After changing root-level shared modules or infrastructure, update `CHANGELOG.md` at repo root
 
 ## DUAL SCOPE Content Rules
 
