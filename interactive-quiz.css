@@ -1326,7 +1326,6 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   background: #f5f5f5;
   opacity: 0.45;
   filter: grayscale(1);
-  transition: opacity 0.2s, filter 0.2s;
 }
 .iq-badge-card.iq-badge-earned {
   opacity: 1;

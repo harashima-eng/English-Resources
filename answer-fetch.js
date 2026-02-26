@@ -149,6 +149,7 @@
     var collapsible = qEl.querySelector('.collapsible[data-type="answer"]');
     if (!collapsible) return;
     if (collapsible.dataset.loaded === 'true') return;
+    if (collapsible.dataset.loading === 'true') return;
 
     var ansBox = collapsible.querySelector('.ans-box');
     if (!ansBox) return;
@@ -166,9 +167,11 @@
       return;
     }
 
+    collapsible.dataset.loading = 'true';
     showLoading(ansBox);
 
     fetchSection(si, function(err) {
+      delete collapsible.dataset.loading;
       if (err) {
         showError(ansBox);
         return;
