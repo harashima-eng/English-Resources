@@ -2141,9 +2141,10 @@
     cancelBtn.textContent = 'Cancel';
     cancelBtn.onclick = function() {
       if (typeof gsap !== 'undefined') {
-        gsap.to(overlay, { opacity: 0, duration: 0.15, onComplete: function() { overlay.remove(); } });
+        gsap.to(overlay, { opacity: 0, duration: 0.15, onComplete: function() { overlay.remove(); if (previousFocus) previousFocus.focus(); } });
       } else {
         overlay.remove();
+        if (previousFocus) previousFocus.focus();
       }
     };
     actions.appendChild(cancelBtn);
@@ -2168,6 +2169,31 @@
       gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.2 });
       gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: 0.3, ease: 'back.out(1.7)' });
     }
+
+    // Focus trap + keyboard support
+    overlay.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (typeof gsap !== 'undefined') {
+          gsap.to(overlay, { opacity: 0, duration: 0.15, onComplete: function() { overlay.remove(); if (previousFocus) previousFocus.focus(); } });
+        } else {
+          overlay.remove();
+          if (previousFocus) previousFocus.focus();
+        }
+        return;
+      }
+      if (e.key === 'Tab') {
+        var focusable = dialog.querySelectorAll('button');
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+    });
+    cancelBtn.focus();
   }
 
   function performFullReset() {
