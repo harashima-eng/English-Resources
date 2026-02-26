@@ -107,9 +107,31 @@
     }
   }
 
-  // Show loading state in ans-box
+  // Show loading state in ans-box (spinner + skeleton)
   function showLoading(ansBox) {
-    ansBox.textContent = '\u8aad\u307f\u8fbc\u307f\u4e2d...';
+    ansBox.textContent = '';
+    var loading = document.createElement('div');
+    loading.className = 'iq-loading';
+    loading.setAttribute('role', 'status');
+    loading.setAttribute('aria-live', 'polite');
+    var spinner = document.createElement('div');
+    spinner.className = 'iq-spinner';
+    spinner.setAttribute('aria-hidden', 'true');
+    var text = document.createElement('span');
+    text.textContent = '\u8aad\u307f\u8fbc\u307f\u4e2d...';
+    loading.appendChild(spinner);
+    loading.appendChild(text);
+    ansBox.appendChild(loading);
+
+    var skeleton = document.createElement('div');
+    skeleton.className = 'iq-skeleton';
+    skeleton.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < 3; i++) {
+      var line = document.createElement('div');
+      line.className = 'iq-skeleton-line';
+      skeleton.appendChild(line);
+    }
+    ansBox.appendChild(skeleton);
   }
 
   // Show error state in ans-box
