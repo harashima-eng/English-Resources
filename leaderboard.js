@@ -99,7 +99,7 @@
       name: nickname,
       score: myScore,
       timestamp: firebase.database.ServerValue.TIMESTAMP
-    });
+    }).catch(function(err) { console.warn('[leaderboard] write failed:', err.message); });
   }
 
   // ── Listen for score changes from interactive-quiz ──

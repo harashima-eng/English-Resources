@@ -22,6 +22,23 @@
           }
         }
       }
+    },
+    "leaderboard": {
+      "$examId": {
+        ".read": true,
+        ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+        "$deviceId": {
+          ".write": "newData.hasChildren(['name', 'score', 'timestamp'])",
+          ".validate": "newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 12 && newData.child('score').isNumber()"
+        }
+      }
+    },
+    "errors": {
+      ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+      "$errorId": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['msg', 'ts']) && newData.child('msg').isString() && newData.child('msg').val().length < 500"
+      }
     }
   }
 }
