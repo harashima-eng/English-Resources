@@ -184,11 +184,16 @@
 
     var currentIdx = 0;
 
+    var previousFocus = document.activeElement;
+
     var overlay = document.createElement('div');
     overlay.className = 'sr-modal-overlay';
 
     var modal = document.createElement('div');
     modal.className = 'sr-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Spaced review');
 
     var header = document.createElement('div');
     header.className = 'sr-modal-header';
@@ -205,7 +210,11 @@
     closeBtn.className = 'sr-modal-close';
     closeBtn.textContent = '\u2715';
     closeBtn.setAttribute('aria-label', 'Close review');
-    closeBtn.onclick = function() { overlay.remove(); updateBadge(); };
+    closeBtn.onclick = function() {
+      overlay.remove();
+      updateBadge();
+      if (previousFocus) previousFocus.focus();
+    };
 
     header.appendChild(title);
     header.appendChild(counter);
@@ -295,11 +304,24 @@
 
     renderItem();
 
-    // Keyboard support
+    // Keyboard support: Escape + focus trap
     overlay.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         overlay.remove();
         updateBadge();
+        if (previousFocus) previousFocus.focus();
+        return;
+      }
+      if (e.key === 'Tab') {
+        var focusable = modal.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
       }
     });
     overlay.setAttribute('tabindex', '-1');

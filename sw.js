@@ -107,7 +107,9 @@ self.addEventListener('fetch', function(event) {
         }
         return response;
       }).catch(function() {
-        return caches.match(event.request);
+        return caches.match(event.request).then(function(cached) {
+          return cached || caches.match(BASE + 'offline.html');
+        });
       })
     );
     return;

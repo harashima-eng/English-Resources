@@ -29,5 +29,33 @@
   ],
   "categories": ["education"],
   "lang": "ja",
-  "dir": "ltr"
+  "dir": "ltr",
+  "screenshots": [
+    {
+      "src": "screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "\u9ad8\u6821\uff12\u5e74",
+      "short_name": "2\u5e74",
+      "url": "/English-Resources/%E9%AB%98%E6%A0%A1%EF%BC%92%E5%B9%B4/index.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "\u82f1\u691c",
+      "short_name": "\u82f1\u691c",
+      "url": "/English-Resources/%E8%8B%B1%E6%A4%9C/index.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }

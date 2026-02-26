@@ -40,11 +40,16 @@
       return;
     }
 
+    var previousFocus = document.activeElement;
+
     var overlay = document.createElement('div');
     overlay.className = 'lb-overlay';
 
     var dialog = document.createElement('div');
     dialog.className = 'lb-dialog';
+    dialog.setAttribute('role', 'dialog');
+    dialog.setAttribute('aria-modal', 'true');
+    dialog.setAttribute('aria-label', 'Enter nickname');
 
     var title = document.createElement('div');
     title.className = 'lb-dialog-title';
@@ -85,6 +90,25 @@
     input.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && input.value.trim()) {
         btn.click();
+      }
+    });
+
+    // Focus trap
+    overlay.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+        var focusable = dialog.querySelectorAll('input, button');
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+      if (e.key === 'Escape') {
+        overlay.remove();
+        if (previousFocus) previousFocus.focus();
       }
     });
 
