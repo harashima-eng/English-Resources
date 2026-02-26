@@ -2014,6 +2014,28 @@
       gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: reducedMotion ? 0.01 : 0.2 });
       gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: reducedMotion ? 0.01 : 0.3, ease: 'back.out(1.7)' });
     }
+
+    // Focus trap + keyboard support
+    overlay.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        dismissOverlay(overlay, function() { exitRetryMode(); });
+        if (previousFocus) previousFocus.focus();
+        return;
+      }
+      if (e.key === 'Tab') {
+        var focusable = dialog.querySelectorAll('button');
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+    });
+    var firstBtn = dialog.querySelector('button');
+    if (firstBtn) firstBtn.focus();
   }
 
   function dismissOverlay(overlay, callback) {
@@ -2090,11 +2112,16 @@
 
   // ── Reset with GSAP confirmation ──
   function confirmAndResetProgress() {
+    var previousFocus = document.activeElement;
+
     var overlay = document.createElement('div');
     overlay.className = 'iq-confirm-overlay';
 
     var dialog = document.createElement('div');
     dialog.className = 'iq-confirm-dialog';
+    dialog.setAttribute('role', 'dialog');
+    dialog.setAttribute('aria-modal', 'true');
+    dialog.setAttribute('aria-label', 'Reset progress confirmation');
 
     var title = document.createElement('div');
     title.className = 'iq-confirm-title';
