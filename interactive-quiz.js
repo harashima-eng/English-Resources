@@ -610,6 +610,9 @@
         var btn = card.querySelector('.toggle-btn.' + type);
         if (!block || !btn || block.classList.contains('open')) return;
         if (typeof window.toggle === 'function') window.toggle(btn, type);
+        if (type === 'answer' && typeof window.fetchAnswerForElement === 'function') {
+          window.fetchAnswerForElement(card);
+        }
       });
     }, 500);
   }
