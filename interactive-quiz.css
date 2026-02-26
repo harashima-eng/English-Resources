@@ -447,7 +447,6 @@ html.dark .iq-progress-header {
   padding: 4px 6px;
   border-radius: 6px;
   line-height: 1;
-  transition: background-color 0.15s ease, color 0.15s ease;
 }
 .iq-progress-close:hover {
   background: rgba(120, 113, 108, 0.1);
@@ -497,7 +496,6 @@ html.dark .iq-progress-total-bar {
   height: 100%;
   border-radius: 3px;
   background: linear-gradient(90deg, #0D9488, #14B8A6);
-  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   width: 0%;
 }
 
@@ -536,7 +534,6 @@ html.dark .iq-progress-category-name {
   padding: 8px 6px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.15s ease;
 }
 .iq-progress-section-row:hover {
   background: rgba(120, 113, 108, 0.06);
@@ -621,7 +618,6 @@ html.dark .iq-progress-footer {
   border-radius: 8px;
   font: 600 12px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .iq-progress-retry-btn:hover,
 .iq-progress-reset-btn:hover {
@@ -695,7 +691,6 @@ html.dark .iq-progress-backdrop {
   height: 32px;
   border-radius: 0 3px 3px 0;
   background: rgba(13, 148, 136, 0);
-  transition: background 0.2s ease, height 0.2s ease;
 }
 .iq-edge-trigger:hover::after {
   background: rgba(13, 148, 136, 0.5);
@@ -719,7 +714,6 @@ html.dark .iq-edge-trigger:hover::after {
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   pointer-events: none;
-  transition: color 0.2s ease, opacity 0.2s ease;
   opacity: 0;
 }
 .iq-edge-trigger:hover .iq-edge-hint {
@@ -785,7 +779,6 @@ html.dark .iq-edge-trigger:hover .iq-edge-hint {
   background: rgba(255, 255, 255, 0.7);
   font: 500 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
-  transition: border-color 0.15s ease;
 }
 .iq-correction-input:focus {
   outline: none;
@@ -864,7 +857,6 @@ html.dark .iq-error-highlight.wrong {
   margin: 0 2px;
   border-radius: 0;
   outline: none;
-  transition: border-color 0.15s ease;
 }
 .iq-fillin-input:focus {
   border-bottom-color: #0D9488;
@@ -913,7 +905,6 @@ html.dark .iq-fillin-input.wrong {
   font: 500 15px/1.5 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   resize: vertical;
-  transition: border-color 0.15s ease;
 }
 .iq-compose-input:focus {
   outline: none;
@@ -965,7 +956,6 @@ html.dark .iq-compose-reveal {
   font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: #fff;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .iq-eval-btn:hover {
   transform: translateY(-1px);
@@ -1060,7 +1050,6 @@ html.dark .iq-review-label {
   color: #DC2626;
   font: 600 11px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .iq-review-sec-btn:hover {
   background: rgba(220, 38, 38, 0.12);
@@ -1140,7 +1129,6 @@ html.dark .sr-fill-track {
   height: 100%;
   border-radius: 4px;
   background: linear-gradient(90deg, #0D9488, #14B8A6);
-  transition: width 0.3s ease;
   min-width: 2px;
 }
 
@@ -1185,27 +1173,6 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
 }
 
 
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .iq-nav-toggle,
-  .iq-choice,
-  .iq-chip,
-  .iq-check-btn,
-  .iq-progress-tab,
-  .iq-progress-tab-fill,
-  .iq-edge-trigger::after,
-  .iq-edge-hint,
-  .iq-progress-total-fill,
-  .iq-fillin-input,
-  .iq-progress-retry-btn,
-  .iq-progress-reset-btn,
-  .iq-error-option,
-  .iq-section-fill,
-  .iq-scramble-tile,
-  .iq-popup-check-btn {
-    transition-duration: 0.01ms !important;
-  }
-}
 
 @media (max-width: 600px) {
   .iq-review-nav {
@@ -1248,7 +1215,6 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   margin-left: 6px;
   line-height: 1;
   opacity: 0.7;
-  transition: opacity 0.2s, transform 0.2s;
 }
 .iq-trophy-btn:hover {
   opacity: 1;
@@ -1342,7 +1308,6 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   font-size: 11px;
   color: #999;
   cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
 }
 .iq-badge-reset:hover {
   color: #e53935;
@@ -1382,7 +1347,6 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   padding: 12px 20px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   z-index: 10002;
-  transition: bottom 0.4s ease-out, opacity 0.3s;
   white-space: nowrap;
 }
 .iq-toast-show {
