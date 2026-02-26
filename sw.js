@@ -4,7 +4,7 @@
    - HTML pages: Network-first with cache fallback (always fresh content)
    - Firebase/API requests: Network-only (real-time data) */
 
-var CACHE_NAME = 'eng-res-v1';
+var CACHE_NAME = 'eng-res-v2';
 
 var STATIC_ASSETS = [
   '/English-Resources/interactive-quiz.css',
