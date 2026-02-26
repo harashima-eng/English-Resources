@@ -2219,8 +2219,13 @@
 
     var header = document.createElement('div');
     header.className = 'iq-badge-header';
-    header.innerHTML = '<span>\uD83C\uDFC6 Achievements</span>' +
-      '<span class="iq-badge-count">' + badges.length + ' / ' + BADGES.length + '</span>';
+    var headerTitle = document.createElement('span');
+    headerTitle.textContent = '\uD83C\uDFC6 Achievements';
+    var headerCount = document.createElement('span');
+    headerCount.className = 'iq-badge-count';
+    headerCount.textContent = badges.length + ' / ' + BADGES.length;
+    header.appendChild(headerTitle);
+    header.appendChild(headerCount);
     badgePanelEl.appendChild(header);
 
     var grid = document.createElement('div');
