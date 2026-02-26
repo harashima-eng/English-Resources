@@ -953,6 +953,38 @@
     revealSec.appendChild(revealAllBtn);
     body.appendChild(revealSec);
 
+    // ── Analytics section ──
+    var analyticsSec = document.createElement('div');
+    analyticsSec.className = 'tr-panel-section tr-analytics-section';
+
+    var analyticsTitle = document.createElement('div');
+    analyticsTitle.className = 'tr-section-title';
+    analyticsTitle.textContent = 'Analytics';
+    analyticsSec.appendChild(analyticsTitle);
+
+    // Item analysis container (populated when responses exist)
+    var analysisDiv = document.createElement('div');
+    analysisDiv.className = 'tr-item-analysis';
+    analysisDiv.id = 'trItemAnalysis';
+    analyticsSec.appendChild(analysisDiv);
+
+    // CSV Export button
+    var exportBtn = document.createElement('button');
+    exportBtn.className = 'tr-btn tr-btn-export';
+    exportBtn.textContent = 'Export CSV';
+    exportBtn.onclick = function() { exportResponsesCSV(); };
+    analyticsSec.appendChild(exportBtn);
+
+    // Refresh analytics button
+    var refreshBtn = document.createElement('button');
+    refreshBtn.className = 'tr-btn tr-btn-secondary';
+    refreshBtn.textContent = 'Refresh Analysis';
+    refreshBtn.style.marginTop = '6px';
+    refreshBtn.onclick = function() { computeItemAnalysis(); };
+    analyticsSec.appendChild(refreshBtn);
+
+    body.appendChild(analyticsSec);
+
     // Logout (bottom of panel, clearly labeled)
     var logoutSec = document.createElement('div');
     logoutSec.className = 'tr-panel-section tr-panel-logout';
