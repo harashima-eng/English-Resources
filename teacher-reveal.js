@@ -824,10 +824,10 @@
     cleanupBtn.textContent = 'Clean Up Old Data';
     cleanupBtn.onclick = function() {
       if (!confirm('\u3053\u306e\u8a66\u9a13\u306e\u56de\u7b54\u30c7\u30fc\u30bf\u3068\u30ea\u30fc\u30c0\u30fc\u30dc\u30fc\u30c9\u3092\u524a\u9664\u3057\u307e\u3059\u304b\uff1f')) return;
-      var updates = {};
-      updates['responses/' + examId] = null;
-      updates['leaderboard/' + examId] = null;
-      db.ref().update(updates).then(function() {
+      Promise.all([
+        db.ref('responses/' + examId).remove(),
+        db.ref('leaderboard/' + examId).remove()
+      ]).then(function() {
         showToast('\u30c7\u30fc\u30bf\u3092\u524a\u9664\u3057\u307e\u3057\u305f');
       }).catch(function(e) { showToast('Error: ' + e.message); });
     };
