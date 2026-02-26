@@ -312,8 +312,21 @@
     getQueueSize: function() { return loadQueue().length; }
   };
 
+  // ── Prune old items (older than 90 days) ──
+  function pruneQueue() {
+    var queue = loadQueue();
+    var cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
+    var pruned = queue.filter(function(item) {
+      return (item.addedAt || item.nextReview || 0) > cutoff;
+    });
+    if (pruned.length < queue.length) {
+      saveQueue(pruned);
+    }
+  }
+
   // ── Init ──
   function init() {
+    pruneQueue();
     createReviewButton();
   }
 

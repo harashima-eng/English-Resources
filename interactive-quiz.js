@@ -74,9 +74,25 @@
         bestStreak: bestStreak,
         badges: badges,
         sectionScores: sectionScores,
-        answeredKeys: answeredKeys
+        answeredKeys: answeredKeys,
+        lastAccess: Date.now()
       }));
     } catch (e) { /* private browsing or quota exceeded */ }
+  }
+
+  function pruneOldProgress() {
+    var cutoff = Date.now() - 60 * 24 * 60 * 60 * 1000; // 60 days
+    try {
+      for (var i = localStorage.length - 1; i >= 0; i--) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf('iq-progress-') === 0) {
+          var data = JSON.parse(localStorage.getItem(k) || '{}');
+          if (data.lastAccess && data.lastAccess < cutoff) {
+            localStorage.removeItem(k);
+          }
+        }
+      }
+    } catch (e) { /* ignore */ }
   }
 
   function getAnswerResult(key) {
