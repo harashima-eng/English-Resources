@@ -72,6 +72,44 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
   });
 })();
 
+// ── PWA install prompt ──
+(function() {
+  var deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Don't show if already dismissed this session
+    if (sessionStorage.getItem('pwa-install-dismissed')) return;
+    var banner = document.createElement('div');
+    banner.className = 'iq-install-banner';
+    banner.setAttribute('role', 'alert');
+    var text = document.createElement('span');
+    text.textContent = 'Install as app for offline access';
+    var installBtn = document.createElement('button');
+    installBtn.className = 'iq-update-btn';
+    installBtn.textContent = 'Install';
+    installBtn.onclick = function() {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function() {
+        deferredPrompt = null;
+        banner.remove();
+      });
+    };
+    var dismissBtn = document.createElement('button');
+    dismissBtn.className = 'iq-install-dismiss';
+    dismissBtn.textContent = '\u2715';
+    dismissBtn.setAttribute('aria-label', 'Dismiss');
+    dismissBtn.onclick = function() {
+      banner.remove();
+      sessionStorage.setItem('pwa-install-dismissed', '1');
+    };
+    banner.appendChild(text);
+    banner.appendChild(installBtn);
+    banner.appendChild(dismissBtn);
+    document.body.appendChild(banner);
+  });
+})();
+
 // ── Service Worker update notification ──
 (function() {
   if (!('serviceWorker' in navigator)) return;

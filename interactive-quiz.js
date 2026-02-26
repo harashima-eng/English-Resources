@@ -1018,12 +1018,15 @@
       var btn = document.createElement('button');
       btn.className = 'iq-choice';
       btn.textContent = opt;
+      btn.setAttribute('aria-pressed', 'false');
       btn.onclick = function() {
         if (zone.classList.contains('locked')) return;
         choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
           b.classList.remove('selected');
+          b.setAttribute('aria-pressed', 'false');
         });
         btn.classList.add('selected');
+        btn.setAttribute('aria-pressed', 'true');
         selected = opt;
         if (window.UISound) UISound.play('click');
         if (iqSessionActive) {
@@ -1080,12 +1083,15 @@
       btn.className = 'iq-choice';
       btn.textContent = item.letter + '. ' + item.text;
       btn.dataset.letter = item.letter;
+      btn.setAttribute('aria-pressed', 'false');
       btn.onclick = function() {
         if (zone.classList.contains('locked')) return;
         choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
           b.classList.remove('selected');
+          b.setAttribute('aria-pressed', 'false');
         });
         btn.classList.add('selected');
+        btn.setAttribute('aria-pressed', 'true');
         selectedLetter = item.letter;
         if (window.UISound) UISound.play('click');
         if (iqSessionActive) {
