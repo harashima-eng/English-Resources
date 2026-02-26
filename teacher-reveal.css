@@ -1143,3 +1143,19 @@ html.dark .tr-btn-export {
 html.dark .tr-btn-export:hover {
   background: rgba(20, 184, 166, 0.15);
 }
+
+/* ── Presence counter ── */
+.tr-presence {
+  padding: 6px 12px;
+  margin-top: 4px;
+  font: 500 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: #64748B;
+  text-align: center;
+  border-radius: 6px;
+  background: rgba(100, 116, 139, 0.06);
+}
+[data-theme="dark"] .tr-presence,
+html.dark .tr-presence {
+  color: #94A3B8;
+  background: rgba(148, 163, 184, 0.08);
+}

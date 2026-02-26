@@ -792,6 +792,18 @@
     };
     sessionSec.appendChild(sessionBtn);
 
+    var presenceEl = document.createElement('div');
+    presenceEl.className = 'tr-presence';
+    presenceEl.textContent = '0 students connected';
+    sessionSec.appendChild(presenceEl);
+
+    // Listen for connected students
+    examRef.child('connectedStudents').on('value', function(snap) {
+      var data = snap.val();
+      var count = data ? Object.keys(data).length : 0;
+      presenceEl.textContent = count + ' student' + (count !== 1 ? 's' : '') + ' connected';
+    });
+
     var resetBtn = document.createElement('button');
     resetBtn.className = 'tr-btn tr-btn-reset';
     resetBtn.textContent = 'Reset Responses';
