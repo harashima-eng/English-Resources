@@ -11,6 +11,13 @@ cd "$REPO_DIR" || exit 1
 echo "Auto-sync started for: $REPO_DIR"
 echo "Watching for file changes..."
 
+# Log rotation: keep last 1000 lines when log exceeds 5000
+LOG="/tmp/english-resources-autosync.log"
+if [ -f "$LOG" ] && [ $(wc -l < "$LOG") -gt 5000 ]; then
+    tail -1000 "$LOG" > "$LOG.tmp" && mv "$LOG.tmp" "$LOG"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Log rotated (kept last 1000 lines)"
+fi
+
 /usr/local/bin/fswatch -o --exclude '.git' --exclude '.DS_Store' "$REPO_DIR" | while read -r event; do
     sleep 5  # Debounce: wait for file writes to settle
 
