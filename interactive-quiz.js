@@ -605,14 +605,16 @@
     setTimeout(function() {
       var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
       if (!card) return;
-      ['vocab', 'hint', 'answer'].forEach(function(type) {
-        var block = card.querySelector('.collapsible[data-type="' + type + '"]');
-        var btn = card.querySelector('.toggle-btn.' + type);
-        if (!block || !btn || block.classList.contains('open')) return;
-        if (typeof window.toggle === 'function') window.toggle(btn, type);
-        if (type === 'answer' && typeof window.fetchAnswerForElement === 'function') {
-          window.fetchAnswerForElement(card);
-        }
+      ['vocab', 'hint', 'answer'].forEach(function(type, i) {
+        setTimeout(function() {
+          var block = card.querySelector('.collapsible[data-type="' + type + '"]');
+          var btn = card.querySelector('.toggle-btn.' + type);
+          if (!block || !btn || block.classList.contains('open')) return;
+          if (typeof window.toggle === 'function') window.toggle(btn, type);
+          if (type === 'answer' && typeof window.fetchAnswerForElement === 'function') {
+            window.fetchAnswerForElement(card);
+          }
+        }, i * 300);
       });
     }, 500);
   }
