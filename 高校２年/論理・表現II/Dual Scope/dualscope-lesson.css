@@ -351,7 +351,7 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* LESSON-SPECIFIC: define /* Grammar Reference Sections */ in per-lesson <style> */
+/* LESSON-SPECIFIC: section type comment (e.g. "Conjunction/Grammar Reference Sections") in per-lesson <style> */
 .conj-section {
   margin-bottom: 80px;
 }
@@ -374,10 +374,7 @@ body {
   flex-shrink: 0;
 }
 
-/* LESSON-SPECIFIC: define .conj-section.prep .conj-section-icon in per-lesson <style> */
-/* LESSON-SPECIFIC: define .conj-section.noun .conj-section-icon in per-lesson <style> */
-/* LESSON-SPECIFIC: define .conj-section.article .conj-section-icon in per-lesson <style> */
-/* LESSON-SPECIFIC: define .conj-section.pronoun .conj-section-icon in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.[type] .conj-section-icon rules in per-lesson <style> */
 
 .conj-section-title {
   font-family: 'New York', 'Georgia', serif;
@@ -410,10 +407,7 @@ body {
 
 /* .conj-card hover + entrance handled by GSAP */
 
-/* LESSON-SPECIFIC: define .conj-section.prep .conj-card in per-lesson <style> */
-/* LESSON-SPECIFIC: define .conj-section.noun .conj-card in per-lesson <style> */
-/* LESSON-SPECIFIC: define .conj-section.article .conj-card in per-lesson <style> */
-/* LESSON-SPECIFIC: define .conj-section.pronoun .conj-card in per-lesson <style> */
+/* LESSON-SPECIFIC: define .conj-section.[type] .conj-card rules in per-lesson <style> */
 
 .conj-card-word {
   font-family: 'New York', 'Georgia', serif;
@@ -603,7 +597,12 @@ body {
 }
 
 /* Dark mode cards */
-/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+[data-theme="dark"] .qcard {
+  background: var(--card);
+  border: 1px solid var(--border-visible);
+  box-shadow: var(--shadow);
+  contain: layout style;
+}
 
 .qcard-question, .qcard-left, .qcard-right {
   box-sizing: border-box;
@@ -733,7 +732,12 @@ body {
 
 /* LESSON-SPECIFIC: define .ans-box in per-lesson <style> */
 
-/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+/* Dark mode box styling */
+[data-theme="dark"] .box {
+  background: var(--card);
+  border-color: var(--border-visible);
+  box-shadow: var(--shadow-sm);
+}
 
 /* dark .box hover handled by GSAP */
 
