@@ -36,7 +36,6 @@ html.dark .iq-zone {
   font: 500 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   user-select: none;
 }
 .iq-choice:hover {
@@ -112,7 +111,6 @@ html.dark .iq-choice.wrong {
   cursor: pointer;
   padding: 2px 4px;
   border-radius: 4px;
-  transition: background-color 0.15s ease;
 }
 .iq-error-option:hover {
   background: rgba(13, 148, 136, 0.1);
@@ -176,7 +174,6 @@ html.dark .iq-answer-zone {
   font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
   user-select: none;
 }
 .iq-chip:hover {
@@ -233,7 +230,6 @@ html.dark .iq-chip.placed {
   color: #fff;
   font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
   box-shadow: 0 1px 4px rgba(13, 148, 136, 0.2);
 }
 .iq-check-btn:hover {
@@ -302,7 +298,6 @@ html.dark .iq-feedback.incorrect {
   cursor: pointer;
   font-size: 16px;
   padding: 0;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .iq-nav-toggle:hover {
   transform: translateY(-1px);
@@ -339,7 +334,6 @@ html.dark .iq-nav-toggle {
   align-items: center;
   gap: 10px;
   user-select: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .iq-progress-tab:hover {
   transform: translateY(-1px);
@@ -385,7 +379,6 @@ html.dark .iq-progress-tab-bar {
   height: 100%;
   border-radius: 2px;
   background: linear-gradient(90deg, #0D9488, #14B8A6);
-  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   width: 0%;
 }
 

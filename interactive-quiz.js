@@ -1893,7 +1893,12 @@
     var allDone = retryKeys.every(function(k) { return answeredKeys[k]; });
     if (!allDone) return;
     // Delay so autoExpandToggles (500ms) + animation (700ms) finishes first
-    setTimeout(showRetrySummary, 1500);
+    if (retrySummaryTimer) clearTimeout(retrySummaryTimer);
+    retrySummaryTimer = setTimeout(function() {
+      retrySummaryTimer = null;
+      if (!retryMode) return;
+      showRetrySummary();
+    }, 1500);
   }
 
   function showRetrySummary() {
@@ -2014,6 +2019,7 @@
 
   function exitRetryMode() {
     retryMode = false;
+    if (retrySummaryTimer) { clearTimeout(retrySummaryTimer); retrySummaryTimer = null; }
     var scrollY = window.scrollY;
 
     // Show hidden cards at opacity 0, then fade in
@@ -2137,6 +2143,7 @@
     retryMode = false;
     retryKeys = [];
     retryBackup = {};
+    if (retrySummaryTimer) { clearTimeout(retrySummaryTimer); retrySummaryTimer = null; }
     if (retryBarEl) { retryBarEl.remove(); retryBarEl = null; }
     saveProgress();
     updateProgressPanel();
