@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ============================================================
+       DUAL SCOPE GRAMMAR TEMPLATE (SIMPLIFIED)
+       ============================================================
+
+       NOTE: This is a SIMPLIFIED template with basic rendering.
+       The actual lesson files (Lessons 15-17) use a more advanced
+       architecture with:
+       - NavState + Router (SPA-like navigation)
+       - Three views: Home, Overview, Question
+       - Category tabs (基本/FC/発展) with sub-navigation
+       - Hash-based URL routing (#question/basic/1)
+       - Auto-hide navigation, card reveal animations
+       - Firebase teacher-reveal integration (collapsible panel, auto-hide login)
+       - Interactive quiz module (interactive-quiz.js + interactive-quiz.css)
+       - Live student responses (student-responses.js — real-time answer aggregation)
+       - Gamification: streak counter, 7 achievement badges, toast notifications, localStorage persistence
+
+       FOR PRODUCTION: Copy the latest lesson file instead.
+       See README.md for full instructions.
+
+       HOW TO USE THIS TEMPLATE (for quick prototyping):
+       1. Copy this file and rename it
+       2. Update CSS color variables in :root
+       3. Replace the Overview section HTML with grammar reference cards
+       4. Replace grammarData.sections with your questions
+       5. Update the title, footer, etc.
+
+       ============================================================
+
+       COLOR THEME OPTIONS:
+
+       1. DEFAULT (Warm Coral/Blue/Purple/Green):
+          --cat1: #e8725c;  (Coral)
+          --cat2: #3d8bca;  (Blue)
+          --cat3: #9b7fcf;  (Purple)
+          --cat4: #5a9a6e;  (Green)
+
+       2. TEAL THEME (Cool Teal variations):
+          --cat1: #0D9488;  (Primary Teal)
+          --cat1-light: #f0fdfa;
+          --cat2: #14B8A6;  (Light Teal)
+          --cat2-light: #f0fdfa;
+          --cat3: #0F766E;  (Dark Teal)
+          --cat3-light: #ecfdf5;
+          --cat4: #2DD4BF;  (Bright Teal)
+          --cat4-light: #f0fdfa;
+
+          Dark mode teal:
+          --cat1: #2DD4BF;
+          --cat1-light: rgba(13, 148, 136, 0.12);
+          --cat2: #5EEAD4;
+          --cat2-light: rgba(20, 184, 166, 0.12);
+          --cat3: #14B8A6;
+          --cat3-light: rgba(15, 118, 110, 0.12);
+          --cat4: #99F6E4;
+          --cat4-light: rgba(45, 212, 191, 0.12);
+
+       ============================================================ -->
+
+  <title>{{LESSON_NUM}} {{TOPIC_JP}} | {{TOPIC_EN}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       CONFIGURATION - Edit these CSS variables for your lesson
+       ============================================================ */
+    :root {
+      /* Base colors - usually keep these */
+      --bg: #faf9f7;
+      --bg-warm: #f5f3ef;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --text-muted: #999999;
+      --border: rgba(0,0,0,0.08);
+      --border-visible: rgba(0, 0, 0, 0.12);
+      /* Enhanced shadows with soft inset glow */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05),
+                   0 4px 12px rgba(0, 0, 0, 0.08),
+                   inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      --shadow: 0 2px 4px rgba(0, 0, 0, 0.06),
+                0 8px 24px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.06),
+                   0 16px 48px rgba(0, 0, 0, 0.15),
+                   inset 0 2px 0 rgba(255, 255, 255, 0.7);
+      --radius: 20px;
+      /* Fluid typography */
+      --fs-qtext: clamp(17px, 1.3vw, 19px);
+      --fs-base: clamp(15px, 1.1vw, 17px);
+      --radius-sm: 12px;
+
+      /* ★ CATEGORY COLORS - Customize for your grammar topic ★ */
+      /* Category 1 (e.g., Type A) */
+      --cat1: #e8725c;
+      --cat1-light: #fef4f2;
+      /* Category 2 (e.g., Type B) */
+      --cat2: #3d8bca;
+      --cat2-light: #f0f7fc;
+      /* Category 3 (e.g., Type C) */
+      --cat3: #9b7fcf;
+      --cat3-light: #f8f5fc;
+      /* Category 4 (e.g., Type D) */
+      --cat4: #5a9a6e;
+      --cat4-light: #f3f9f5;
+      /* Accent color - usually same as cat1 */
+      --accent: var(--cat1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d0d0d;
+      --bg-warm: #141414;
+      --card: rgba(26, 26, 26, 0.92);
+      --text: #f5f5f5;
+      --text-secondary: #a0a0a0;
+      --text-muted: #666666;
+      --border: rgba(255,255,255,0.08);
+      --border-visible: rgba(255, 255, 255, 0.10);
+      /* Enhanced dark mode shadows */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35),
+                   0 0 0 1px rgba(255, 255, 255, 0.03),
+                   inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6),
+                   0 0 0 1px rgba(255, 255, 255, 0.05),
+                   inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      --cat1-light: rgba(232,114,92,0.12);
+      --cat2-light: rgba(61,139,202,0.12);
+      --cat3-light: rgba(155,127,207,0.12);
+      --cat4-light: rgba(90,154,110,0.12);
+    }
+
+    /* ============================================================
+       CORE STYLES - Usually don't need to edit below this line
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    #intro, #overview, #study { scroll-margin-top: 52px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Dark mode gradient background */
+    [data-theme="dark"] body {
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 100% 80% at 50% 0%, rgba(232, 114, 92, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 20% 100%, rgba(61, 139, 202, 0.05) 0%, transparent 40%),
+        linear-gradient(135deg, #0d0d0d 0%, #141414 50%, #0a0a0a 100%);
+      background-attachment: fixed;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(250, 249, 247, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    [data-theme="dark"] .top-nav { background: rgba(13, 13, 13, 0.95); }
+    .top-nav-logo { font-family: 'New York', 'Georgia', serif; font-size: 15px; color: var(--text-secondary); letter-spacing: 0.02em; }
+    .top-nav-center { display: flex; gap: 8px; }
+    .top-nav-link {
+      padding: 8px 20px; font-size: 14px; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none;
+      border-radius: 100px; transition: all 0.2s ease;
+    }
+    .top-nav-link:hover { color: var(--text); background: var(--bg-warm); }
+    .top-nav-link.active { color: var(--text); background: var(--card); box-shadow: var(--shadow-sm); }
+    [data-theme="dark"] .top-nav-link:hover { background: var(--card); }
+    .top-nav-theme {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--card);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; transition: all 0.2s ease;
+    }
+    .top-nav-theme:hover { transform: scale(1.05); box-shadow: var(--shadow-sm); }
+
+    /* Intro Section */
+    .intro {
+      min-height: 100vh; display: flex; flex-direction: column;
+      position: relative; overflow: hidden; padding-top: 52px;
+    }
+    .intro-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-warm); opacity: 0.5; }
+    .intro-hero {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 40px; position: relative; z-index: 10;
+    }
+    .intro-label {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease-out 0.1s both;
+    }
+    .intro-title {
+      font-family: 'New York', 'Georgia', serif;
+      font-size: clamp(64px, 12vw, 140px); font-weight: 400;
+      line-height: 1; letter-spacing: -0.03em; margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    .intro-title em { font-style: italic; color: var(--accent); }
+    .intro-subtitle {
+      font-size: 20px; color: var(--text-secondary);
+      max-width: 500px; margin-bottom: 48px;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+    .intro-cta { display: flex; gap: 16px; animation: fadeInUp 0.8s ease-out 0.4s both; }
+    .btn-primary {
+      padding: 16px 32px; background: var(--text); color: var(--bg);
+      border: none; border-radius: 100px; font-size: 15px; font-weight: 600;
+      font-family: inherit; cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .btn-secondary {
+      padding: 16px 32px; background: transparent; color: var(--text);
+      border: 1px solid var(--border); border-radius: 100px;
+      font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover { background: var(--card); border-color: transparent; box-shadow: var(--shadow); }
+    .intro-scroll {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--text-muted); font-size: 12px; letter-spacing: 0.1em;
+    }
+
+    /* Overview Section */
+    .overview { padding: 100px 48px; background: var(--bg-warm); }
+    .overview-header { text-align: center; margin-bottom: 60px; }
+    .overview-label { font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+    .overview-title { font-family: 'New York', 'Georgia', serif; font-size: clamp(32px, 5vw, 48px); font-weight: 400; letter-spacing: -0.02em; }
+
+    /* Grammar Cards Grid */
+    .gram-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+      max-width: 1400px; margin: 0 auto; perspective: 1000px;
+    }
+    @media (max-width: 900px) { .gram-grid { grid-template-columns: 1fr; } }
+    .gram-card {
+      background: var(--card); border-radius: var(--radius); padding: 28px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+      position: relative; border-left: 4px solid var(--card-accent);
+      transition: box-shadow 0.3s ease; animation: fadeIn 0.4s ease backwards;
+      transform-style: preserve-3d;
+    }
+    .gram-card:nth-child(1) { animation-delay: 0s; }
+    .gram-card:nth-child(2) { animation-delay: 0.05s; }
+    .gram-card:nth-child(3) { animation-delay: 0.1s; }
+    .gram-card:nth-child(4) { animation-delay: 0.15s; }
+    .gram-card:nth-child(5) { animation-delay: 0.2s; }
+    .gram-card:nth-child(6) { animation-delay: 0.25s; }
+
+    /* Category color mapping */
+    .gram-section.cat1 .gram-card { --card-accent: var(--cat1); }
+    .gram-section.cat2 .gram-card { --card-accent: var(--cat2); }
+    .gram-section.cat3 .gram-card { --card-accent: var(--cat3); }
+    .gram-section.cat4 .gram-card { --card-accent: var(--cat4); }
+
+    .gram-card-word { font-family: 'New York', 'Georgia', serif; font-size: 28px; font-weight: 400; color: var(--card-accent); margin-bottom: 4px; }
+    .gram-card-meaning { font-size: 15px; color: var(--text-secondary); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .gram-card-example { margin-bottom: 16px; }
+    .gram-card-example-en { font-size: 15px; line-height: 1.7; margin-bottom: 6px; }
+    .gram-card-example-en strong { color: var(--card-accent); font-weight: 700; }
+    .gram-card-example-jp { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .gram-card-tip { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; background: var(--bg-warm); border-radius: var(--radius-sm); margin-top: 16px; }
+    [data-theme="dark"] .gram-card-tip { background: var(--bg); }
+    .gram-card-tip-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .gram-card-tip-text { font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
+
+    .gram-section { padding: 80px 48px; max-width: 1400px; margin: 0 auto; }
+    @media (max-width: 600px) { .gram-section { padding: 48px 20px; } .overview { padding: 60px 24px; } }
+    .gram-section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+    .gram-section-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+    .gram-section.cat1 .gram-section-icon { background: var(--cat1-light); }
+    .gram-section.cat2 .gram-section-icon { background: var(--cat2-light); }
+    .gram-section.cat3 .gram-section-icon { background: var(--cat3-light); }
+    .gram-section.cat4 .gram-section-icon { background: var(--cat4-light); }
+    .gram-section-title { font-family: 'New York', 'Georgia', serif; font-size: clamp(24px, 4vw, 32px); font-weight: 400; }
+    .gram-section-title-jp { font-family: 'Noto Serif JP', 'Yu Mincho', serif; font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+
+    /* Study Section */
+    .study { padding: 80px 48px 120px; max-width: 1200px; margin: 0 auto; }
+    @media (max-width: 600px) { .study { padding: 40px 20px 80px; } }
+    .study-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+    .study-title { font-family: 'New York', 'Georgia', serif; font-size: 28px; }
+    .study-controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .view-toggle { display: flex; background: var(--bg-warm); border-radius: 100px; padding: 4px; }
+    .view-btn { padding: 10px 20px; border: none; border-radius: 100px; background: transparent; color: var(--text-secondary); font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.2s ease; }
+    .view-btn.active { background: var(--card); color: var(--text); box-shadow: var(--shadow-sm); }
+    .ctrl-btn { padding: 10px 20px; border: 1px solid var(--border); border-radius: 100px; background: var(--card); color: var(--text); font-size: 14px; font-weight: 500; font-family: inherit; cursor: pointer; transition: all 0.2s ease; }
+    .ctrl-btn:hover { border-color: var(--text); }
+
+    /* Progress */
+    .progress-wrap { margin-bottom: 32px; }
+    .progress-bar-bg { height: 6px; background: var(--bg-warm); border-radius: 100px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--cat1), var(--cat2)); border-radius: 100px; width: 0%; transition: width 0.3s ease; }
+    .progress-label { font-size: 13px; color: var(--text-muted); margin-top: 8px; text-align: right; }
+
+    /* Search */
+    .search-wrap { position: relative; margin-bottom: 32px; }
+    .search-input { width: 100%; padding: 16px 20px 16px 52px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); font-size: 15px; font-family: inherit; color: var(--text); transition: all 0.2s ease; }
+    .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--cat1-light); }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; }
+
+    /* Section */
+    .section { background: var(--card); border-radius: var(--radius); margin-bottom: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); overflow: hidden; }
+    .section-header { padding: 20px 28px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; }
+    .section-arrow { font-size: 12px; color: var(--text-muted); transition: transform 0.2s ease; }
+    .section-header.open .section-arrow { transform: rotate(180deg); }
+    .section-body { display: none; }
+    .section-body.open { display: block; border-top: 1px solid var(--border); padding: 20px; }
+    .questions-list { display: flex; flex-direction: column; gap: 16px; }
+
+    /* Question Card */
+    .qcard { background: var(--bg); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .qcard-question, .qcard-buttons, .qcard-left, .qcard-right { box-sizing: border-box; }
+    .qcard-buttons, .toggle-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .qcard-buttons { padding: 0 24px 16px; }
+
+    /* Dual/Split view */
+    [data-view="dual"] .qcard { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; grid-template-areas: "question question" "left right"; }
+    [data-view="dual"] .qcard-buttons { display: none; }
+    [data-view="dual"] .qcard-question { grid-area: question; padding: 24px; border-bottom: 1px solid var(--border); }
+    [data-view="dual"] .qcard-left { grid-area: left; padding: 24px; border-right: 1px solid var(--border); }
+    [data-view="dual"] .qcard-right { grid-area: right; padding: 24px; background: var(--bg-warm); }
+    [data-view="dual"] .collapsible { display: none; }
+    [data-view="dual"] .collapsible.open { display: block; margin-top: 16px; }
+
+    /* Single view */
+    [data-view="single"] .qcard { display: block; }
+    [data-view="single"] .qcard-buttons { display: flex; }
+    [data-view="single"] .toggle-btn-row { display: none; }
+    [data-view="single"] .qcard-question { padding: 24px 24px 16px; }
+    [data-view="single"] .qcard-left { padding: 0 24px 0; border-right: none; }
+    [data-view="single"] .qcard-right { padding: 0 24px 24px; background: transparent; }
+    [data-view="single"] .collapsible { display: none; }
+    [data-view="single"] .collapsible.open { display: block; margin-top: 16px; }
+
+    @media (max-width: 800px) {
+      [data-view="dual"] .qcard { grid-template-columns: 1fr; grid-template-areas: "question" "left" "right"; }
+      [data-view="dual"] .qcard-left { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    .qnum { display: inline-block; font-weight: 700; font-size: 12px; color: var(--accent); background: var(--cat1-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+    .qtext { font-size: var(--fs-qtext); line-height: 1.8; margin-bottom: 12px; }
+    .choices, .scramble { padding: 14px 16px; border-radius: var(--radius-sm); font-size: 14px; }
+    .qcard-question .choices:last-child, .qcard-question .scramble:last-child { margin-bottom: 0; }
+    .choices { background: var(--cat3-light); border-left: 3px solid var(--cat3); }
+    .scramble { background: var(--cat2-light); border-left: 3px solid var(--cat2); font-family: 'SF Mono', Monaco, monospace; }
+
+    .toggle-btn {
+      flex: 1;
+      min-width: 80px;
+      min-height: 44px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      /* Default shadow for elevated look */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12),
+                  0 4px 12px rgba(0, 0, 0, 0.08);
+      /* Spring effect transition */
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.2s ease,
+                  background-color 0.2s ease;
+    }
+    .toggle-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    .toggle-btn:active {
+      transform: translateY(0) scale(0.96);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .toggle-btn.vocab { background: var(--cat3); color: white; }
+    .toggle-btn.hint { background: var(--cat1); color: white; }
+    .toggle-btn.answer { background: var(--cat4); color: white; }
+
+    .box {
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-size: 17px;
+      line-height: 1.7;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .box:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: var(--border-visible);
+    }
+    [data-theme="dark"] .box {
+      background: var(--card);
+      border-color: var(--border-visible);
+      box-shadow: var(--shadow-sm);
+    }
+    [data-theme="dark"] .box:hover {
+      box-shadow: var(--shadow);
+    }
+    .vocab-box { background: var(--cat3-light); border-left: 3px solid var(--cat3); }
+    .hint-box { background: var(--cat1-light); border-left: 3px solid var(--cat1); }
+    .ans-box { background: var(--cat4-light); border-left: 3px solid var(--cat4); }
+    .vocab-item { padding: 8px 0; border-bottom: 1px solid rgba(155,127,207,0.15); }
+    .vocab-item:last-child { border-bottom: none; }
+    .hint-item { padding: 8px 0; border-bottom: 1px solid rgba(232, 114, 92, 0.15); }
+    .hint-item:last-child { border-bottom: none; }
+    .vocab-word { font-weight: 700; color: var(--cat3); margin-right: 8px; }
+    .box-label { font-weight: 700; font-size: 14px; margin-bottom: 12px; display: block; }
+    .jp-text {
+      color: var(--text-secondary);
+      margin-top: 12px;
+      padding-bottom: 12px;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(90, 154, 110, 0.15);
+    }
+    .jp-text:last-child { border-bottom: none; }
+    .grammar-ref { background: var(--cat2-light); border-left: 3px solid var(--cat2); padding: 12px 14px; border-radius: var(--radius-sm); font-size: 13px; margin-top: 12px; }
+    .no-match { display: none !important; }
+
+    /* Choice Explanations */
+    .choice-explanations { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(90, 154, 110, 0.2); }
+    .choice-exp {
+      padding: 8px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(90, 154, 110, 0.12);
+    }
+    .choice-exp:last-child { border-bottom: none; }
+    .choice-exp.correct { color: var(--cat4); font-weight: 600; }
+    .choice-exp.wrong { color: var(--text-secondary); }
+
+    /* Footer */
+    footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); }
+
+    /* FAB */
+    .fab { position: fixed; bottom: 32px; right: 32px; width: 56px; height: 56px; border-radius: 50%; background: var(--text); color: var(--bg); border: none; cursor: pointer; font-size: 24px; box-shadow: var(--shadow-lg); z-index: 100; }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .collapsible.open { animation: slideIn 0.2s ease; }
+
+    /* ===== LARGE SCREEN OPTIMIZATION - MAXIMIZED ===== */
+
+    /* iPad Pro Landscape / Small laptops */
+    @media (min-width: 1200px) {
+      .study {
+        max-width: min(1150px, 92%);
+        padding: 40px clamp(32px, 4vw, 56px) 100px;
+      }
+
+      [data-view="dual"] .qcard {
+        grid-template-columns: 1.1fr 1fr;
+      }
+    }
+
+    /* MacBook Air 13" / Pro 14" */
+    @media (min-width: 1440px) {
+      .study {
+        max-width: min(1350px, 94%);
+        padding: 48px clamp(40px, 4vw, 64px) 100px;
+      }
+
+      .gram-grid {
+        max-width: min(1550px, 96%);
+      }
+
+      [data-view="dual"] .qcard {
+        grid-template-columns: 1.15fr 1fr;
+      }
+
+      [data-view="dual"] .qcard-question,
+      [data-view="dual"] .qcard-left,
+      [data-view="dual"] .qcard-right {
+        padding: 28px;
+      }
+    }
+
+    /* MacBook Pro 16" / External displays */
+    @media (min-width: 1728px) {
+      .study {
+        max-width: min(1600px, 94%);
+        padding: 56px 72px 100px;
+      }
+
+      .gram-grid {
+        max-width: min(1700px, 96%);
+      }
+
+      [data-view="dual"] .qcard {
+        grid-template-columns: 1.2fr 1fr;
+      }
+
+      [data-view="dual"] .qcard-question,
+      [data-view="dual"] .qcard-left,
+      [data-view="dual"] .qcard-right {
+        padding: 32px;
+      }
+
+      .qtext {
+        font-size: 20px;
+        line-height: 1.85;
+      }
+
+      .choices, .scramble {
+        font-size: 18px;
+        padding: 16px 20px;
+      }
+    }
+
+    /* Ultra-wide / 4K displays */
+    @media (min-width: 2000px) {
+      .study {
+        max-width: 1800px;
+        padding: 64px 80px 120px;
+      }
+
+      .gram-grid {
+        max-width: 1900px;
+      }
+
+      [data-view="dual"] .qcard {
+        grid-template-columns: 1.25fr 1fr;
+      }
+
+      .qtext {
+        font-size: 21px;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<!-- NOTE: Production lessons use data-exam-id on <body> for:
+     - Gamification localStorage key: iq-progress-{examId}
+     - Student responses Firebase path: responses/{examId}/...
+     Example: <body data-view="single" data-exam-id="dual-scope-lesson-16"> -->
+<body data-view="single">
+
+  <!-- ============================================================
+       TOP NAVIGATION - Edit logo text if needed
+       ============================================================ -->
+  <nav class="top-nav" id="topNav">
+    <div class="top-nav-logo">DUAL SCOPE</div>
+    <div class="top-nav-center">
+      <a href="#intro" class="top-nav-link active" data-section="intro">Start</a>
+      <a href="#overview" class="top-nav-link" data-section="overview">Overview</a>
+      <a href="#study" class="top-nav-link" data-section="study">Questions</a>
+    </div>
+    <button class="top-nav-theme" onclick="toggleTheme()" title="Toggle theme">
+      <span class="theme-icon">☀️</span>
+    </button>
+  </nav>
+
+  <!-- ============================================================
+       INTRO SECTION - ★ CUSTOMIZE THIS ★
+       ============================================================ -->
+  <section class="intro" id="intro">
+    <div class="intro-bg"></div>
+    <div class="intro-hero">
+      <p class="intro-label">Lesson {{LESSON_NUM}}</p>
+      <h1 class="intro-title">{{TOPIC_JP}}</h1>
+      <p class="intro-subtitle">{{SUBTITLE}}</p>
+      <div class="intro-cta">
+        <button class="btn-primary" onclick="scrollToStudy()">Start Learning</button>
+        <button class="btn-secondary" onclick="scrollToOverview()">Overview</button>
+      </div>
+    </div>
+    <div class="intro-scroll">
+      <span>SCROLL</span>
+      <span>↓</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       OVERVIEW SECTION - ★ CUSTOMIZE GRAMMAR CARDS ★
+       Add/remove gram-section blocks as needed for your topic
+       ============================================================ -->
+  <div id="overview">
+    <!-- Category 1 -->
+    <section class="gram-section cat1">
+      <div class="gram-section-header">
+        <div class="gram-section-icon">📚</div>
+        <div>
+          <h2 class="gram-section-title">Category 1 English Name</h2>
+          <p class="gram-section-title-jp">カテゴリ1日本語名</p>
+        </div>
+      </div>
+      <div class="gram-grid">
+        <div class="gram-card">
+          <div class="gram-card-word">Word/Pattern</div>
+          <div class="gram-card-meaning">意味</div>
+          <div class="gram-card-example">
+            <p class="gram-card-example-en">Example sentence with <strong>word</strong> highlighted.</p>
+            <p class="gram-card-example-jp">例文の日本語訳</p>
+          </div>
+          <div class="gram-card-tip">
+            <span class="gram-card-tip-icon">💡</span>
+            <span class="gram-card-tip-text">Usage tip or important note about this grammar point.</span>
+          </div>
+        </div>
+        <!-- Add more gram-card elements as needed -->
+      </div>
+    </section>
+
+    <!-- Add more gram-section blocks for other categories -->
+  </div>
+
+  <!-- Study Section - Auto-generated from grammarData -->
+  <section class="study" id="study">
+    <div class="study-header">
+      <h2 class="study-title">Questions</h2>
+      <div class="study-controls">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('single')">Single</button>
+          <button class="view-btn" onclick="setView('dual')">Dual</button>
+        </div>
+        <button class="ctrl-btn" onclick="openAll()">Open All</button>
+        <button class="ctrl-btn" onclick="closeAll()">Close All</button>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 0</div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="Search questions..." oninput="filterQuestions(this.value)">
+    </div>
+    <div id="questionsContainer"></div>
+  </section>
+
+  <footer>DUAL SCOPE Grammar Study | Built with care</footer>
+  <button class="fab" onclick="scrollToTop()">↑</button>
+
+<script>
+/* ============================================================
+   GRAMMAR DATA - ★ REPLACE WITH YOUR QUESTIONS ★
+   ============================================================
+
+   Each question object can have these fields:
+   - num: Question number (e.g., "(1)")
+   - text: Question text with (   ) for blanks
+   - choices: Multiple choice options (optional)
+   - scramble: Word scramble for reordering (optional)
+   - type: Interactive quiz type — "pair", "choice", "error", "correction", "scramble", "translate", "compose" (optional)
+   - correctAnswer: Answer for interactive validation, e.g., "b" or "awake" (optional, required for pair/choice/error/scramble)
+   - correctText: Correct replacement text for error/correction types, e.g., "either" or ["Almost all", "Most of"] (optional)
+   - vocab: Array of [word, meaning] pairs (optional)
+   - hint: Array of hint strings (optional)
+   - answer: The correct answer (displayed in Answer box)
+   - translation: Japanese translation (optional)
+   - explanation: Why the answer is correct (optional)
+   - grammar: Grammar rule reference (optional)
+   - choiceExplanations: Object with explanations for each choice (optional)
+
+   CONTENT RULES:
+   - text: EXACT text from the PDF (never rephrase or invent)
+   - vocab: non-answer words only (don't leak the answer!)
+   - hint: 3 progressive prompts, NEVER state the answer
+   - answer/translation/explanation/grammar: write freely (hidden behind Answer button)
+
+   ============================================================ */
+const grammarData = {
+  sections: [
+    {
+      title: "[1] 基本問題 1｜Sample Topic (1)～(5)",
+      open: true,
+      questions: [
+        {
+          num: "(1)",
+          text: "Sample question with ( choice1, choice2, choice3 ) blank.",
+          choices: "選択肢: choice1, choice2, choice3",
+          type: "pair",               // Interactive quiz type: pair|choice|error|correction|fillin|compose|scramble
+          correctAnswer: "choice2",   // For interactive validation (string or array)
+          vocab: [["sample word", "サンプル単語（答えの単語はここに入れない）"]],
+          hint: ["文法のヒント（答えを言わない）", "もう少し具体的なヒント", "最後のヒント（それでも答えは言わない）"],
+          answer: "choice2",
+          translation: "サンプル問題の日本語訳",
+          explanation: "This is why choice2 is correct.",
+          grammar: "Grammar pattern = meaning",
+          choiceExplanations: {
+            "choice1": "× Wrong. Explanation of why this is incorrect.",
+            "choice2": "○ Correct. Explanation of why this is right.",
+            "choice3": "× Wrong. Explanation of why this is incorrect."
+          }
+        }
+        // === More type examples ===
+        // Fill-in (inline blank inputs):
+        //   { num: "(1)", type: "fillin", correctAnswer: ["both", "and"],
+        //     text: "She is (   ) smart (   ) kind.", ... }
+        //
+        // Compose (free-form writing, self-eval):
+        //   { num: "(1)", type: "compose", correctAnswer: "The trouble is that I don't have enough money.",
+        //     text: "困ったことに私は十分なお金を持っていません．", ... }
+        //
+        // Scramble (word reorder, with sentence frame):
+        //   { num: "(1)", type: "scramble", correctAnswer: "so that Ann can join us",
+        //     scramble: "Let's talk in English [ Ann, so, join, can, that, us ].", ... }
+      ]
+    }
+    // Add more sections here
+  ]
+};
+
+/* ============================================================
+   CORE FUNCTIONS - Usually don't need to edit below
+   ============================================================ */
+let openSections = new Set();
+
+function renderQuestion(q) {
+  let questionHtml = `<div class="qcard-question"><span class="qnum">${q.num}</span><div class="qtext">${q.text}</div>`;
+  if (q.choices) questionHtml += `<div class="choices">${q.choices}</div>`;
+  if (q.scramble) questionHtml += `<div class="scramble">${q.scramble}</div>`;
+  questionHtml += `</div>`;
+
+  let btnHtml = `<div class="qcard-buttons">`;
+  if (q.vocab && q.vocab.length) btnHtml += `<button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Vocab</button>`;
+  if (q.hint && q.hint.length) btnHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button>`;
+  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button></div>`;
+
+  let leftHtml = `<div class="qcard-left">`;
+  if (q.vocab && q.vocab.length) {
+    leftHtml += `<div class="toggle-btn-row"><button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Vocab</button></div>`;
+    leftHtml += `<div class="collapsible" data-type="vocab"><div class="box vocab-box"><span class="box-label">Vocabulary</span>`;
+    q.vocab.forEach(v => leftHtml += `<div class="vocab-item"><span class="vocab-word">${v[0]}</span>${v[1]}</div>`);
+    leftHtml += `</div></div>`;
+  }
+  if (q.hint && q.hint.length) {
+    leftHtml += `<div class="toggle-btn-row"><button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button></div>`;
+    leftHtml += `<div class="collapsible" data-type="hint"><div class="box hint-box"><span class="box-label">Hints</span>`;
+    q.hint.forEach(h => leftHtml += `<div class="hint-item">→ ${h}</div>`);
+    leftHtml += `</div></div>`;
+  }
+  leftHtml += `</div>`;
+
+  let rightHtml = `<div class="qcard-right">
+    <div class="toggle-btn-row">
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button>
+    </div>
+    <div class="collapsible" data-type="answer"><div class="box ans-box">
+      <span class="box-label">正解: ${q.answer}</span>`;
+  if (q.translation) rightHtml += `<div class="jp-text">${q.translation}</div>`;
+  if (q.explanation) rightHtml += `<div class="jp-text">${q.explanation}</div>`;
+  if (q.choiceExplanations) {
+    rightHtml += `<div class="choice-explanations">`;
+    for (const [choice, exp] of Object.entries(q.choiceExplanations)) {
+      const isCorrect = q.answer.includes(choice);
+      rightHtml += `<div class="choice-exp ${isCorrect ? 'correct' : 'wrong'}">${exp}</div>`;
+    }
+    rightHtml += `</div>`;
+  }
+  if (q.grammar) rightHtml += `<div class="grammar-ref">${q.grammar}</div>`;
+  rightHtml += `</div></div></div>`;
+
+  return `<div class="qcard">${questionHtml}${btnHtml}${leftHtml}${rightHtml}</div>`;
+}
+
+function renderSection(section, index) {
+  let html = `<div class="section" data-section="${index}">
+    <div class="section-header ${section.open ? 'open' : ''}" onclick="toggleSection(this)">
+      <span>${section.title}</span>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-body ${section.open ? 'open' : ''}">
+      <div class="questions-list">`;
+  section.questions.forEach(q => html += renderQuestion(q));
+  html += `</div></div></div>`;
+  return html;
+}
+
+function init() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = grammarData.sections.map((s, i) => renderSection(s, i)).join('');
+  grammarData.sections.forEach((s, i) => { if (s.open) openSections.add(i); });
+  updateProgress();
+}
+
+function toggle(btn, type) {
+  const card = btn.closest('.qcard');
+  const col = card.querySelector(`.collapsible[data-type="${type}"]`);
+  if (col) {
+    col.classList.toggle('open');
+    updateProgress();
+  }
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  const idx = parseInt(header.parentElement.dataset.section);
+  if (body.classList.contains('open')) openSections.add(idx); else openSections.delete(idx);
+}
+
+function setView(mode) {
+  document.body.setAttribute('data-view', mode);
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === mode));
+  try { localStorage.setItem('viewMode', mode); } catch(e) {}
+}
+
+function openAll() {
+  document.querySelectorAll('.section-header').forEach(h => { h.classList.add('open'); h.nextElementSibling.classList.add('open'); });
+  grammarData.sections.forEach((_, i) => openSections.add(i));
+  updateProgress();
+}
+
+function closeAll() {
+  document.querySelectorAll('.section-header').forEach(h => { h.classList.remove('open'); h.nextElementSibling.classList.remove('open'); });
+  openSections.clear();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.collapsible[data-type="answer"]').length;
+  const opened = document.querySelectorAll('.collapsible[data-type="answer"].open').length;
+  document.getElementById('progressFill').style.width = total ? `${(opened/total)*100}%` : '0%';
+  document.getElementById('progressLabel').textContent = `${opened} / ${total}`;
+}
+
+function filterQuestions(query) {
+  query = query.toLowerCase().trim();
+  grammarData.sections.forEach((section, si) => {
+    const sectionEl = document.querySelector(`[data-section="${si}"]`);
+    section.questions.forEach((q, qi) => {
+      const text = [q.text || '', q.choices || '', q.scramble || '', q.answer || '', q.translation || '', q.grammar || '', (q.vocab || []).flat().join(' '), (q.hint || []).join(' ')].join(' ').toLowerCase();
+      const cards = sectionEl.querySelectorAll('.qcard');
+      const card = cards[qi];
+      if (text.includes(query)) { card.classList.remove('no-match'); } else { card.classList.add('no-match'); }
+    });
+  });
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark');
+  document.querySelector('.theme-icon').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('theme', isDark ? '' : 'dark'); } catch(e) {}
+}
+
+function scrollToOverview() { document.getElementById('overview').scrollIntoView({ behavior: 'smooth' }); }
+function scrollToStudy() { document.getElementById('study').scrollIntoView({ behavior: 'smooth' }); }
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+// Smooth 3D tilt for grammar cards
+function initCardTilt() {
+  const cards = document.querySelectorAll('.gram-card');
+  if (!cards.length) return;
+  cards.forEach(card => {
+    let rafId = null;
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    card.addEventListener('mouseenter', () => { card.style.transition = 'box-shadow 0.3s ease'; });
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      const centerX = rect.width / 2, centerY = rect.height / 2;
+      targetX = (y - centerY) / 80; targetY = (centerX - x) / 80;
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          currentX += (targetX - currentX) * 0.15;
+          currentY += (targetY - currentY) * 0.15;
+          card.style.transform = `perspective(1000px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(-3px)`;
+          card.style.boxShadow = 'var(--shadow-lg)';
+          rafId = null;
+        });
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease';
+      card.style.transform = ''; card.style.boxShadow = '';
+      currentX = 0; currentY = 0; targetX = 0; targetY = 0;
+    });
+  });
+}
+
+// Nav highlight with Intersection Observer
+function initNavHighlight() {
+  const sections = document.querySelectorAll('#intro, #overview, #study');
+  const navLinks = document.querySelectorAll('.top-nav-link');
+  if (!sections.length || !navLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.id;
+        navLinks.forEach(link => { link.classList.toggle('active', link.dataset.section === sectionId); });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  sections.forEach(section => observer.observe(section));
+}
+
+// Init
+window.addEventListener('DOMContentLoaded', () => {
+  init();
+  initCardTilt();
+  initNavHighlight();
+  try {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.querySelector('.theme-icon').textContent = '🌙';
+    }
+    const savedView = localStorage.getItem('viewMode') || 'single';
+    setView(savedView);
+  } catch(e) {}
+  updateProgress();
+});
+</script>
+</body>
+</html>
