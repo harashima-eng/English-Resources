@@ -280,5 +280,5 @@ curl -s -o /dev/null -w "%{http_code}" https://harashima-eng.github.io/English-R
 ---
 
 Created: 2026-01-17
-Updated: 2026-01-27
+Updated: 2026-02-26
 System set up with Claude Code
