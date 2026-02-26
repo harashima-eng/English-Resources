@@ -2397,7 +2397,6 @@ html.dark .lb-dialog-input {
   color: #fff;
   font: 600 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .lb-dialog-btn:hover:not(:disabled) {
   transform: translateY(-1px);
