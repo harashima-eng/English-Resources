@@ -1499,7 +1499,6 @@ html.dark .iq-toast {
   color: #fff;
   font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
   box-shadow: 0 1px 4px rgba(13, 148, 136, 0.25);
 }
 .iq-popup-check-btn:hover {
@@ -1656,7 +1655,6 @@ html.dark .iq-check-popup.incorrect .iq-popup-msg {
   color: #fff;
   font: 600 12px -apple-system, BlinkMacSystemFont, sans-serif;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
 .iq-retry-bar button:hover {
   background: rgba(255, 255, 255, 0.25);
@@ -1715,7 +1713,6 @@ html.dark .iq-check-popup.incorrect .iq-popup-msg {
   color: #555;
   font: 600 13px -apple-system, BlinkMacSystemFont, sans-serif;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
 .iq-confirm-cancel:hover {
   background: #eee;
@@ -1729,7 +1726,6 @@ html.dark .iq-check-popup.incorrect .iq-popup-msg {
   color: #fff;
   font: 600 13px -apple-system, BlinkMacSystemFont, sans-serif;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.1s ease;
 }
 .iq-confirm-ok:hover {
   background: #B91C1C;
@@ -1983,7 +1979,6 @@ html.dark .iq-skeleton-line {
   color: var(--text, #1C1917);
   font: 600 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
-  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 .sr-review-btn:hover:not(:disabled) {
   transform: translateY(-2px);
@@ -2081,7 +2076,6 @@ html.dark .sr-modal-header {
   color: var(--text-muted, #A8A29E);
   padding: 4px 8px;
   border-radius: 6px;
-  transition: background-color 0.15s ease;
 }
 .sr-modal-close:hover {
   background: rgba(120, 113, 108, 0.1);
@@ -2140,7 +2134,6 @@ html.dark .sr-modal-wrong {
   color: #fff;
   font: 600 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .sr-modal-reveal-btn:hover {
   transform: translateY(-1px);
@@ -2176,7 +2169,6 @@ html.dark .sr-modal-answer {
   font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: #fff;
   cursor: pointer;
-  transition: transform 0.15s ease;
 }
 .sr-modal-eval-btn:hover {
   transform: translateY(-1px);
@@ -2277,7 +2269,6 @@ html.dark .lb-header {
   gap: 10px;
   padding: 8px 6px;
   border-radius: 8px;
-  transition: background-color 0.15s ease;
 }
 .lb-row--me {
   background: rgba(13, 148, 136, 0.06);
