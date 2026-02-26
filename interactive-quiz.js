@@ -1914,11 +1914,16 @@
     var totalCount = retryKeys.length;
     var allCorrect = correctCount === totalCount;
 
+    var previousFocus = document.activeElement;
+
     var overlay = document.createElement('div');
     overlay.className = 'iq-confirm-overlay';
 
     var dialog = document.createElement('div');
     dialog.className = 'iq-confirm-dialog';
+    dialog.setAttribute('role', 'dialog');
+    dialog.setAttribute('aria-modal', 'true');
+    dialog.setAttribute('aria-label', allCorrect ? 'Perfect score' : 'Retry summary');
 
     var icon = document.createElement('div');
     icon.className = 'iq-retry-summary-icon';
