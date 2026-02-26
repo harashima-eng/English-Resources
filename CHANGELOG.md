@@ -46,6 +46,7 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ### Generator (english-resources-generate.py)
 - Added JSON-LD `BreadcrumbList` structured data to all generated index pages
+- Wrapped breadcrumb in `<nav aria-label="Breadcrumb">` for semantic landmarks
 
 ### Infrastructure
 - Added root CHANGELOG.md (this file)
