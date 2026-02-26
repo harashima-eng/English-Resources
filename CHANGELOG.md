@@ -26,6 +26,11 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ### interactive-quiz.js
 - Added `aria-pressed` to pair and choice buttons (toggles on selection)
+- Retry summary dialog: added `role="dialog"`, `aria-modal="true"`, focus trap, Escape key, auto-focus
+- Reset confirmation dialog: added `role="dialog"`, `aria-modal="true"`, focus trap, Escape key, focus restoration
+
+### screenshot-wide.png / screenshot-narrow.png (NEW)
+- PWA screenshots for manifest (1280x720 wide, 390x844 narrow)
 
 ### interactive-quiz.css
 - Added `.iq-install-banner` and `.iq-install-dismiss` styles
