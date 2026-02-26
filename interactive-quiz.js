@@ -1743,6 +1743,9 @@
       reviewNavEl = document.createElement('div');
       reviewNavEl.className = 'iq-review-nav';
       document.body.appendChild(reviewNavEl);
+      if (typeof gsap !== 'undefined' && !reducedMotion) {
+        gsap.fromTo(reviewNavEl, { opacity: 0, y: -4 }, { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' });
+      }
     }
 
     reviewNavEl.textContent = '';
