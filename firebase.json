@@ -9,7 +9,8 @@
       "database.rules.json",
       "CLAUDE.md",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/Template & MD & LOG/**"
     ],
     "headers": [
       {

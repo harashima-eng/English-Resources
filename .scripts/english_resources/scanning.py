@@ -10,7 +10,7 @@ from datetime import datetime
 from urllib.parse import quote
 
 # Directories and files to ignore during scanning
-IGNORED_DIRS = {'.git', '.scripts', 'node_modules', '.DS_Store'}
+IGNORED_DIRS = {'.git', '.scripts', 'node_modules', '.DS_Store', 'Template & MD & LOG'}
 IGNORED_FILES = {
     'index.html', 'auto-sync.sh', 'data.json', '.nojekyll', '.DS_Store',
     'SYSTEM-README.md', 'CLAUDE.md', 'favicon.svg', 'og-image.svg', 'og-image.png',
