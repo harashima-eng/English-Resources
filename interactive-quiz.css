@@ -1040,7 +1040,6 @@ html.dark .iq-scramble-context {
   gap: 6px;
   align-items: center;
   max-width: 280px;
-  animation: iqFadeIn 0.25s ease;
 }
 [data-theme="dark"] .iq-review-nav,
 html.dark .iq-review-nav {
@@ -1212,10 +1211,6 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
   .iq-scramble-tile,
   .iq-popup-check-btn {
     transition-duration: 0.01ms !important;
-  }
-  .iq-feedback,
-  .iq-review-nav {
-    animation-duration: 0.01ms !important;
   }
 }
 
