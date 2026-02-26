@@ -471,6 +471,11 @@
 
   // ── Firebase listeners (student) ──
   function startStudentListener() {
+    // Detach any prior listeners to prevent stacking on rebuild
+    examRef.child('activeSession').off('value');
+    examRef.child('sections').off('value');
+    examRef.child('revealAll').off('value');
+
     examRef.child('activeSession').on('value', function(snap) {
       try {
         var wasActive = state.sessionActive;

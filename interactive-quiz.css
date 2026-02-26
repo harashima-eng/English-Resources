@@ -1444,9 +1444,6 @@ html.dark .iq-toast {
   .iq-streak-pulse {
     animation: none;
   }
-  .iq-toast {
-    transition: none;
-  }
   .iq-badge-panel {
     animation: none;
   }
