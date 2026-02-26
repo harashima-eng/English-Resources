@@ -579,6 +579,9 @@
     answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: userAnswer, type: type };
     addScore(isCorrect, si);
 
+    // Auto-expand vocab/hint/answer toggles after check
+    if (!iqSessionActive) autoExpandToggles(si, qi);
+
     // Dispatch wrong-answer event for spaced repetition
     if (!isCorrect) {
       var q = getQuestionData(si, qi);
@@ -596,6 +599,19 @@
         }
       }));
     }
+  }
+
+  function autoExpandToggles(si, qi) {
+    setTimeout(function() {
+      var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
+      if (!card) return;
+      ['vocab', 'hint', 'answer'].forEach(function(type) {
+        var block = card.querySelector('.collapsible[data-type="' + type + '"]');
+        var btn = card.querySelector('.toggle-btn.' + type);
+        if (!block || !btn || block.classList.contains('open')) return;
+        if (typeof window.toggle === 'function') window.toggle(btn, type);
+      });
+    }, 500);
   }
 
   function getQuestionData(si, qi) {
