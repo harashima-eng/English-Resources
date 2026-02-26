@@ -631,11 +631,7 @@
       blocks.forEach(function(b) { gsap.killTweensOf(b); });
       gsap.fromTo(blocks,
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12,
-          onComplete: function() {
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12 }
       );
       blocks.forEach(function(block, i) {
         var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
@@ -644,10 +640,10 @@
           gsap.from(items, { opacity: 0, x: -8, stagger: 0.04, duration: 0.5, ease: 'power2.out', delay: 0.2 + i * 0.12 });
         }
       });
-    } else {
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
+    // Scroll immediately — .open class already set, layout is final
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     if (typeof updateProgress === 'function') updateProgress();
   }
 
