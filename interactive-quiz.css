@@ -1678,12 +1678,19 @@ html.dark .iq-check-popup.incorrect .iq-popup-msg {
 }
 
 .iq-confirm-dialog {
+  position: relative;
   width: 340px;
   max-width: calc(100vw - 40px);
   background: #fff;
   border-radius: 14px;
   padding: 24px;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.iq-retry-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 
 .iq-confirm-title {

@@ -1928,6 +1928,15 @@
     dialog.setAttribute('aria-modal', 'true');
     dialog.setAttribute('aria-label', allCorrect ? 'Perfect score' : 'Retry summary');
 
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'sr-modal-close iq-retry-close';
+    closeBtn.textContent = '\u2715';
+    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.onclick = function() {
+      dismissOverlay(overlay, null);
+    };
+    dialog.appendChild(closeBtn);
+
     var icon = document.createElement('div');
     icon.className = 'iq-retry-summary-icon';
     icon.textContent = allCorrect ? '\u2705' : '\uD83D\uDCCA';
