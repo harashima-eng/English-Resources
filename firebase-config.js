@@ -10,4 +10,36 @@ var firebaseConfig = {
 
 if (typeof firebase !== 'undefined' && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+
+  // ── Offline / Online connection monitor ──
+  (function() {
+    var bannerEl = null;
+
+    function createBanner() {
+      bannerEl = document.createElement('div');
+      bannerEl.className = 'iq-offline-banner';
+      bannerEl.setAttribute('role', 'alert');
+      bannerEl.setAttribute('aria-live', 'assertive');
+      bannerEl.textContent = 'Offline — answers will sync when reconnected';
+      bannerEl.style.display = 'none';
+      document.body.appendChild(bannerEl);
+    }
+
+    function showOfflineBanner() {
+      if (!bannerEl) createBanner();
+      bannerEl.style.display = '';
+    }
+
+    function hideOfflineBanner() {
+      if (bannerEl) bannerEl.style.display = 'none';
+    }
+
+    firebase.database().ref('.info/connected').on('value', function(snap) {
+      if (snap.val() === true) {
+        hideOfflineBanner();
+      } else {
+        showOfflineBanner();
+      }
+    });
+  })();
 }

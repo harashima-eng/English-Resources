@@ -2002,3 +2002,22 @@ html.dark .iq-skeleton-line {
     animation-duration: 0.01ms !important;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   Offline Banner (Firebase connection monitor)
+   ══════════════════════════════════════════════════════════ */
+
+.iq-offline-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  padding: 8px 16px;
+  background: #92400E;
+  color: #FEF3C7;
+  font: 600 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
