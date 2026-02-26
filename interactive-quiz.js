@@ -1872,7 +1872,8 @@
   function checkRetryComplete() {
     var allDone = retryKeys.every(function(k) { return answeredKeys[k]; });
     if (!allDone) return;
-    showRetrySummary();
+    // Delay so autoExpandToggles (500ms) + animation (700ms) finishes first
+    setTimeout(showRetrySummary, 1500);
   }
 
   function showRetrySummary() {
