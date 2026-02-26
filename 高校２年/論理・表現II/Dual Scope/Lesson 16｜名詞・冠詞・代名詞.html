@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007aff">
+  <link rel="manifest" href="../../../manifest.json">
   <title>16 名詞・冠詞・代名詞 | Nouns, Articles & Pronouns</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1630,5 +1632,11 @@ window.addEventListener('popstate', () => {
 <script src="../../../ui-sounds.js" defer></script>
 <script src="../../../interactive-quiz.js" defer></script>
 <script src="../../../student-responses.js" defer></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../../../sw.js', { scope: '/English-Resources/' })
+    .catch(function() {});
+}
+</script>
 </body>
 </html>
