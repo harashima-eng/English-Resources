@@ -4,22 +4,26 @@
    - HTML pages: Network-first with cache fallback (always fresh content)
    - Firebase/API requests: Network-only (real-time data) */
 
-var CACHE_NAME = 'eng-res-v2';
+var CACHE_NAME = 'eng-res-v3';
+
+var BASE = self.location.pathname.replace(/sw\.js$/, '');
+// GitHub Pages: '/English-Resources/'
+// Firebase:     '/'
 
 var STATIC_ASSETS = [
-  '/English-Resources/interactive-quiz.css',
-  '/English-Resources/interactive-quiz.js',
-  '/English-Resources/teacher-reveal.css',
-  '/English-Resources/teacher-reveal.js',
-  '/English-Resources/student-responses.js',
-  '/English-Resources/answer-fetch.js',
-  '/English-Resources/firebase-config.js',
-  '/English-Resources/ui-sounds.js',
-  '/English-Resources/spaced-review.js',
-  '/English-Resources/leaderboard.js',
-  '/English-Resources/favicon.svg',
-  '/English-Resources/icon-192.png',
-  '/English-Resources/icon-512.png'
+  BASE + 'interactive-quiz.css',
+  BASE + 'interactive-quiz.js',
+  BASE + 'teacher-reveal.css',
+  BASE + 'teacher-reveal.js',
+  BASE + 'student-responses.js',
+  BASE + 'answer-fetch.js',
+  BASE + 'firebase-config.js',
+  BASE + 'ui-sounds.js',
+  BASE + 'spaced-review.js',
+  BASE + 'leaderboard.js',
+  BASE + 'favicon.svg',
+  BASE + 'icon-192.png',
+  BASE + 'icon-512.png'
 ];
 
 // Install: pre-cache static assets
