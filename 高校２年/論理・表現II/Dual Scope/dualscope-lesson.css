@@ -159,6 +159,7 @@ body {
 }
 
 .sub-nav-cat {
+  min-height: 44px;
   padding: 10px 24px;
   border: 2px solid var(--border);
   border-radius: 100px;
@@ -847,7 +848,8 @@ footer {
   }
 
   .sub-nav-cat {
-    padding: 8px 16px;
+    min-height: 44px;
+    padding: 10px 16px;
     font-size: 13px;
   }
 
@@ -856,8 +858,8 @@ footer {
   }
 
   .sub-nav-section {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     font-size: 13px;
   }
 
