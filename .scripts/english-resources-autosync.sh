@@ -48,6 +48,8 @@ echo "Watching for file changes..."
         FIREBASE_EXIT=$?
         if [ $FIREBASE_EXIT -eq 0 ]; then
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] Firebase Hosting deployed successfully"
+            # Clean up old hosting versions (keep 5)
+            /usr/local/bin/node /Users/slimtetto/Projects/English-Resources/.scripts/hosting-cleanup.js 5 2>&1 | head -3
         else
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] Firebase Hosting deploy failed (exit $FIREBASE_EXIT):"
             echo "$FIREBASE_OUTPUT" | tail -20
