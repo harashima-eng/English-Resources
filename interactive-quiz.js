@@ -698,6 +698,8 @@
   function transformToResult(popup, isCorrect, message) {
     if (!popup) return;
     popup.classList.add('result', isCorrect ? 'correct' : 'incorrect');
+    popup.setAttribute('role', 'status');
+    popup.setAttribute('aria-live', 'assertive');
 
     // Replace content
     popup.textContent = '';
