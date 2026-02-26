@@ -16,6 +16,7 @@ var STATIC_ASSETS = [
   '/English-Resources/firebase-config.js',
   '/English-Resources/ui-sounds.js',
   '/English-Resources/spaced-review.js',
+  '/English-Resources/leaderboard.js',
   '/English-Resources/favicon.svg',
   '/English-Resources/icon-192.png',
   '/English-Resources/icon-512.png'
