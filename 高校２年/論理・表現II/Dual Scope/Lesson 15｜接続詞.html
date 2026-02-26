@@ -1268,6 +1268,7 @@ function updateProgress() {
       gsap.to(progressBarEl, { width: pct + '%', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.default });
       // -- C6: Glow on 100% --
       if (pct === 100 && !UV_REDUCED) {
+        gsap.killTweensOf(progressBarEl, 'boxShadow');
         gsap.fromTo(progressBarEl,
           { boxShadow: '0 0 0px var(--accent)' },
           { boxShadow: '0 0 20px var(--accent)', duration: 0.6, yoyo: true, repeat: 1, ease: 'power2.inOut' }
