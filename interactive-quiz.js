@@ -117,6 +117,8 @@
 
     tabScoreEl = document.createElement('span');
     tabScoreEl.className = 'iq-progress-tab-score';
+    tabScoreEl.setAttribute('aria-live', 'polite');
+    tabScoreEl.setAttribute('aria-atomic', 'true');
 
     var tabBar = document.createElement('div');
     tabBar.className = 'iq-progress-tab-bar';
@@ -622,6 +624,8 @@
   function createFeedback(isCorrect, message) {
     var el = document.createElement('div');
     el.className = 'iq-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
     el.textContent = message;
     return el;
   }
