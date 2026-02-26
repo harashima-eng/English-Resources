@@ -445,6 +445,8 @@
     if (!toastEl) {
       toastEl = document.createElement('div');
       toastEl.className = 'tr-toast';
+      toastEl.setAttribute('role', 'status');
+      toastEl.setAttribute('aria-live', 'polite');
       document.body.appendChild(toastEl);
     }
     toastEl.textContent = msg;

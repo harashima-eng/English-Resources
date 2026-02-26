@@ -1945,6 +1945,8 @@
   function showToast(message) {
     var toast = document.createElement('div');
     toast.className = 'iq-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     toast.style.bottom = '80px';
     toast.textContent = message;
     document.body.appendChild(toast);
@@ -2123,8 +2125,20 @@
 
     var toast = document.createElement('div');
     toast.className = 'iq-toast';
-    toast.innerHTML = '<span class="iq-toast-icon">' + badge.icon + '</span>' +
-      '<span class="iq-toast-text"><strong>' + badge.name + '</strong><br>' + badge.desc + '</span>';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    var iconSpan = document.createElement('span');
+    iconSpan.className = 'iq-toast-icon';
+    iconSpan.textContent = badge.icon;
+    var textSpan = document.createElement('span');
+    textSpan.className = 'iq-toast-text';
+    var strong = document.createElement('strong');
+    strong.textContent = badge.name;
+    textSpan.appendChild(strong);
+    textSpan.appendChild(document.createElement('br'));
+    textSpan.appendChild(document.createTextNode(badge.desc));
+    toast.appendChild(iconSpan);
+    toast.appendChild(textSpan);
     document.body.appendChild(toast);
 
     // Trigger animation
