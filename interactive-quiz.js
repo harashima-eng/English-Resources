@@ -606,42 +606,49 @@
   }
 
   function autoExpandToggles(si, qi) {
-    setTimeout(function() {
-      var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
-      if (!card) return;
+    var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
+    if (!card) return;
 
-      var blocks = [];
-      ['vocab', 'hint', 'answer'].forEach(function(type) {
-        var block = card.querySelector('.collapsible[data-type="' + type + '"]');
-        var btn = card.querySelector('.toggle-btn.' + type);
-        if (!block || !btn || block.classList.contains('open')) return;
-        btn.setAttribute('aria-expanded', 'true');
-        block.classList.add('open');
-        blocks.push(block);
-        if (type === 'answer' && typeof window.fetchAnswerForElement === 'function') {
-          window.fetchAnswerForElement(card);
+    var blocks = [];
+    ['vocab', 'hint', 'answer'].forEach(function(type) {
+      var block = card.querySelector('.collapsible[data-type="' + type + '"]');
+      var btn = card.querySelector('.toggle-btn.' + type);
+      if (!block || !btn || block.classList.contains('open')) return;
+      btn.setAttribute('aria-expanded', 'true');
+      block.classList.add('open');
+      blocks.push(block);
+      if (type === 'answer' && typeof window.fetchAnswerForElement === 'function') {
+        window.fetchAnswerForElement(card);
+      }
+    });
+
+    if (blocks.length === 0) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    if (typeof gsap !== 'undefined') {
+      blocks.forEach(function(b) { gsap.killTweensOf(b); });
+      gsap.fromTo(blocks,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12,
+          onComplete: function() {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      );
+      blocks.forEach(function(block, i) {
+        var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
+        if (items.length > 0) {
+          gsap.killTweensOf(items);
+          gsap.from(items, { opacity: 0, x: -8, stagger: 0.04, duration: 0.5, ease: 'power2.out', delay: 0.2 + i * 0.12 });
         }
       });
+    } else {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 
-      if (blocks.length === 0) return;
-
-      if (typeof gsap !== 'undefined') {
-        blocks.forEach(function(b) { gsap.killTweensOf(b); });
-        gsap.fromTo(blocks,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12 }
-        );
-        blocks.forEach(function(block, i) {
-          var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
-          if (items.length > 0) {
-            gsap.killTweensOf(items);
-            gsap.from(items, { opacity: 0, x: -8, stagger: 0.04, duration: 0.5, ease: 'power2.out', delay: 0.2 + i * 0.12 });
-          }
-        });
-      }
-
-      if (typeof updateProgress === 'function') updateProgress();
-    }, 500);
+    if (typeof updateProgress === 'function') updateProgress();
   }
 
   function getQuestionData(si, qi) {
