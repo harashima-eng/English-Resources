@@ -261,7 +261,6 @@ html.dark .iq-check-btn {
   padding: 8px 12px;
   border-radius: 8px;
   font: 500 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
-  animation: iqFadeIn 0.25s ease;
 }
 
 .iq-feedback.correct {
@@ -288,10 +287,6 @@ html.dark .iq-feedback.incorrect {
   border-color: rgba(239, 68, 68, 0.2);
 }
 
-@keyframes iqFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 
 
 /* ── Nav bar progress toggle ── */
