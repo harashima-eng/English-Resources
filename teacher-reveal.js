@@ -1065,6 +1065,137 @@
   }
 
   // ── Start session ──
+  // ── Item Analysis & CSV Export ──
+  function computeItemAnalysis() {
+    var analysisDiv = document.getElementById('trItemAnalysis');
+    if (!analysisDiv) return;
+    analysisDiv.textContent = '';
+
+    var responsesRef = db.ref('responses/' + examId);
+    responsesRef.once('value').then(function(snap) {
+      var allResponses = snap.val();
+      if (!allResponses) {
+        analysisDiv.textContent = 'No responses yet.';
+        return;
+      }
+
+      Object.keys(allResponses).sort().forEach(function(key) {
+        var parts = key.split('-');
+        var si = parseInt(parts[0]);
+        var qi = parseInt(parts[1]);
+        var responses = allResponses[key];
+        if (!responses) return;
+
+        var correctAnswer = null;
+        if (typeof grammarData !== 'undefined' && grammarData.sections[si]) {
+          correctAnswer = grammarData.sections[si].questions[qi].correctAnswer;
+        }
+
+        var total = 0;
+        var correctCount = 0;
+        var counts = {};
+        Object.keys(responses).forEach(function(devId) {
+          var answer = responses[devId].answer;
+          total++;
+          if (!counts[answer]) counts[answer] = 0;
+          counts[answer]++;
+          if (correctAnswer && answer.toLowerCase() === correctAnswer.toLowerCase()) {
+            correctCount++;
+          }
+        });
+
+        // Item difficulty (% correct)
+        var difficulty = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+        // Most common wrong distractor
+        var wrongDistractor = null;
+        var wrongMax = 0;
+        Object.keys(counts).forEach(function(answer) {
+          if (correctAnswer && answer.toLowerCase() === correctAnswer.toLowerCase()) return;
+          if (counts[answer] > wrongMax) {
+            wrongMax = counts[answer];
+            wrongDistractor = answer;
+          }
+        });
+
+        var row = document.createElement('div');
+        row.className = 'tr-analysis-row';
+
+        var label = document.createElement('span');
+        label.className = 'tr-analysis-label';
+        label.textContent = 'S' + (si + 1) + ' Q' + (qi + 1);
+
+        var diffEl = document.createElement('span');
+        diffEl.className = 'tr-analysis-difficulty';
+        diffEl.classList.add(difficulty >= 70 ? 'easy' : difficulty >= 40 ? 'medium' : 'hard');
+        diffEl.textContent = difficulty + '% correct';
+        diffEl.title = correctCount + '/' + total + ' correct';
+
+        row.appendChild(label);
+        row.appendChild(diffEl);
+
+        if (wrongDistractor) {
+          var distractorEl = document.createElement('span');
+          distractorEl.className = 'tr-analysis-distractor';
+          distractorEl.textContent = wrongDistractor.toUpperCase() + ' (' + wrongMax + ')';
+          distractorEl.title = 'Most common wrong answer';
+          row.appendChild(distractorEl);
+        }
+
+        analysisDiv.appendChild(row);
+      });
+    });
+  }
+
+  function exportResponsesCSV() {
+    var responsesRef = db.ref('responses/' + examId);
+    responsesRef.once('value').then(function(snap) {
+      var allResponses = snap.val();
+      if (!allResponses) {
+        showToast('No data to export');
+        return;
+      }
+
+      var rows = [['Section', 'Question', 'DeviceID', 'Answer', 'Type', 'Timestamp', 'Correct']];
+
+      Object.keys(allResponses).sort().forEach(function(key) {
+        var parts = key.split('-');
+        var si = parseInt(parts[0]);
+        var qi = parseInt(parts[1]);
+        var responses = allResponses[key];
+
+        var correctAnswer = null;
+        if (typeof grammarData !== 'undefined' && grammarData.sections[si]) {
+          correctAnswer = grammarData.sections[si].questions[qi].correctAnswer;
+        }
+
+        Object.keys(responses).forEach(function(devId) {
+          var r = responses[devId];
+          var isCorrect = correctAnswer ? (r.answer.toLowerCase() === correctAnswer.toLowerCase() ? 'Y' : 'N') : '';
+          rows.push([
+            si + 1,
+            qi + 1,
+            devId,
+            '"' + (r.answer || '').replace(/"/g, '""') + '"',
+            r.type || '',
+            r.timestamp ? new Date(r.timestamp).toISOString() : '',
+            isCorrect
+          ]);
+        });
+      });
+
+      var csv = rows.map(function(r) { return r.join(','); }).join('\n');
+      var blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = examId + '-responses-' + new Date().toISOString().slice(0, 10) + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSV exported');
+    });
+  }
+
   function startSession() {
     var sessionData = {
       activeSession: new Date().toISOString(),
