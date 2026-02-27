@@ -210,6 +210,7 @@
         <div class="home-cta">
           <button class="btn-primary" onclick="Router.navigate('question')">Start Learning</button>
           <button class="btn-secondary" onclick="Router.navigate('overview')">Overview</button>
+          <button class="btn-secondary btn-print" onclick="printLesson()">Print</button>
         </div>
       </div>
     </section>
@@ -1204,7 +1205,7 @@ function renderQuestion(q, si, qi) {
 
   let rightHtml = `<div class="qcard-right">
     <div class="toggle-btn-row">
-      <button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer</button>
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer<span class="iq-kbd-hint">A</span></button>
     </div>
     <div class="collapsible" data-type="answer"><div class="box ans-box">
     </div></div></div>`;
