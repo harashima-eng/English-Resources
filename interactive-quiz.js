@@ -3049,7 +3049,11 @@
     focusAnimating = false;
     rebuildFocusCards();
     if (focusCards.length === 0) return;
-    if (typeof gsap !== 'undefined') gsap.set(focusCards, { opacity: 1, y: 0 });
+    // Kill any initCardReveal observer tweens before taking control of card visibility
+    if (typeof gsap !== 'undefined') {
+      focusCards.forEach(function(c) { gsap.killTweensOf(c); });
+      gsap.set(focusCards, { opacity: 1, y: 0 });
+    }
 
     if (focusPendingDirection === 'backward') {
       focusIndex = focusCards.length - 1;
