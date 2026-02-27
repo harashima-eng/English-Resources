@@ -2099,6 +2099,27 @@ html.dark .sr-modal-header {
   margin-bottom: 16px;
 }
 
+.sr-modal-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.sr-modal-choice-item {
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(120, 113, 108, 0.06);
+  color: var(--text, #1C1917);
+  font: 400 14px/1.4 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  border: 1px solid rgba(120, 113, 108, 0.12);
+}
+[data-theme="dark"] .sr-modal-choice-item,
+html.dark .sr-modal-choice-item {
+  background: rgba(168, 162, 158, 0.08);
+  color: var(--text, #E7E5E4);
+  border-color: rgba(168, 162, 158, 0.15);
+}
+
 .sr-modal-box {
   display: inline-block;
   padding: 4px 12px;

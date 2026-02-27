@@ -252,6 +252,21 @@
       qDiv.textContent = item.questionText || ('Q: ' + item.examId + ' S' + item.si + ' Q' + item.qi);
       body.appendChild(qDiv);
 
+      // Choices (if available)
+      if (item.choices) {
+        var choicesDiv = document.createElement('div');
+        choicesDiv.className = 'sr-modal-choices';
+        var parts = item.choices.split(/[\u3000\t]+/);
+        parts.forEach(function(part) {
+          if (!part.trim()) return;
+          var choiceEl = document.createElement('div');
+          choiceEl.className = 'sr-modal-choice-item';
+          choiceEl.textContent = part.trim();
+          choicesDiv.appendChild(choiceEl);
+        });
+        body.appendChild(choicesDiv);
+      }
+
       // Box level indicator
       var boxDiv = document.createElement('div');
       boxDiv.className = 'sr-modal-box';
