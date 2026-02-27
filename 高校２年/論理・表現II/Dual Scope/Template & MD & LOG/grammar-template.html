@@ -807,10 +807,21 @@ function init() {
 function printLesson() {
   var withAnswers = confirm('Include answers? (OK = yes, Cancel = questions only)');
   if (withAnswers) document.body.classList.add('print-answers');
+
+  // Force all sections open and override GSAP inline styles
+  var sectionBodies = document.querySelectorAll('.section-body');
+  sectionBodies.forEach(function(sb) { sb.classList.add('open'); });
+
+  var cards = document.querySelectorAll('.qcard');
+  cards.forEach(function(card) {
+    card.style.opacity = '1';
+    card.style.transform = 'none';
+  });
+
   setTimeout(function() {
     window.print();
     document.body.classList.remove('print-answers');
-  }, 300);
+  }, 100);
 }
 
 function toggle(btn, type) {

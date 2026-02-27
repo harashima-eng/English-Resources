@@ -1012,8 +1012,22 @@ footer {
   .home-subtitle { font-size: 10pt !important; color: #444 !important; }
   .home-label { font-size: 10pt !important; color: #666 !important; }
 
+  .view-question { display: block !important; }
+  .question-header { display: none !important; }
+
+  .print-section-title {
+    font: bold 14pt -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+    color: black !important;
+    margin: 16pt 0 8pt;
+    padding-bottom: 4pt;
+    border-bottom: 1px solid #999;
+    page-break-after: avoid;
+  }
+
   .qcard {
     display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
     box-shadow: none !important;
     border: 1px solid #ddd !important;
     border-radius: 0 !important;
