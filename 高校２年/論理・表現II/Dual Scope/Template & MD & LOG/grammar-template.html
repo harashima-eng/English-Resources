@@ -764,7 +764,7 @@ function renderQuestion(q) {
 
   let rightHtml = `<div class="qcard-right">
     <div class="toggle-btn-row">
-      <button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button>
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer<span class="iq-kbd-hint">A</span></button>
     </div>
     <div class="collapsible" data-type="answer"><div class="box ans-box">
       <span class="box-label">正解: ${q.answer}</span>`;
@@ -802,6 +802,15 @@ function init() {
   container.innerHTML = grammarData.sections.map((s, i) => renderSection(s, i)).join('');
   grammarData.sections.forEach((s, i) => { if (s.open) openSections.add(i); });
   updateProgress();
+}
+
+function printLesson() {
+  var withAnswers = confirm('Include answers? (OK = yes, Cancel = questions only)');
+  if (withAnswers) document.body.classList.add('print-answers');
+  setTimeout(function() {
+    window.print();
+    document.body.classList.remove('print-answers');
+  }, 300);
 }
 
 function toggle(btn, type) {
