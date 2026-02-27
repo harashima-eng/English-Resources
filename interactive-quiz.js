@@ -2818,6 +2818,9 @@
 
     createFocusOverlay();
 
+    // Force-clear reveal state (initCardReveal sets opacity:0, y:20)
+    if (typeof gsap !== 'undefined') gsap.set(focusCards, { opacity: 1, y: 0 });
+
     focusCards.forEach(function(card, i) {
       if (i !== focusIndex) {
         if (typeof gsap !== 'undefined' && !reducedMotion) {
@@ -2832,7 +2835,7 @@
 
     var focused = focusCards[focusIndex];
     if (typeof gsap !== 'undefined' && !reducedMotion) {
-      gsap.to(focused, { scale: 1.02, duration: 0.3, ease: 'back.out(1.4)' });
+      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.3, ease: 'back.out(1.4)' });
     }
     focused.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
