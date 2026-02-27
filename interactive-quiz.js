@@ -2446,13 +2446,61 @@
   }
 
   // ── Keyboard Navigation ──
+  function getVisibleCard() {
+    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var viewMid = window.innerHeight / 2;
+    var best = null;
+    var bestDist = Infinity;
+    cards.forEach(function(card) {
+      if (card.style.display === 'none') return;
+      var rect = card.getBoundingClientRect();
+      var dist = Math.abs(rect.top + rect.height / 2 - viewMid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = card;
+      }
+    });
+    return best;
+  }
+
+  function toggleOnNearestCard(type) {
+    var card = getVisibleCard();
+    if (!card) return;
+    var btn = card.querySelector('.toggle-btn.' + type);
+    if (btn) btn.click();
+  }
+
+  function scrollToCard(card) {
+    if (!card) return;
+    if (window.UISound) UISound.play('click');
+    if (typeof gsap !== 'undefined' && !reducedMotion) {
+      var target = card.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 2 + card.offsetHeight / 2;
+      var scrollObj = { y: window.pageYOffset };
+      gsap.to(scrollObj, {
+        y: target, duration: 0.4, ease: 'power2.out',
+        onUpdate: function() { window.scrollTo(0, scrollObj.y); }
+      });
+    } else {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  function navigateCards(direction) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.qcard[data-si][data-qi]'));
+    cards = cards.filter(function(c) { return c.style.display !== 'none'; });
+    if (cards.length === 0) return;
+    var currentIdx = findNearestCardIndex(cards);
+    var nextIdx = direction > 0
+      ? Math.min(currentIdx + 1, cards.length - 1)
+      : Math.max(currentIdx - 1, 0);
+    if (nextIdx !== currentIdx) scrollToCard(cards[nextIdx]);
+  }
+
   function setupKeyboardNav() {
     document.addEventListener('keydown', function(e) {
       // Don't intercept when typing in an input/textarea
       var tag = e.target.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
-        // Allow Enter in correction/fillin inputs (already handled per-input)
-        // Allow Escape to blur inputs
         if (e.key === 'Escape') {
           e.target.blur();
           e.preventDefault();
@@ -2460,34 +2508,85 @@
         return;
       }
 
-      // Escape: close open collapsible or progress panel
-      if (e.key === 'Escape') {
-        if (progressPanelOpen) {
-          closeProgressPanel();
-          e.preventDefault();
-          return;
+      var key = e.key;
+      var lower = key.toLowerCase();
+
+      // Escape: priority chain — badge panel > focus mode > review nav > progress panel > popup > collapsible
+      if (key === 'Escape') {
+        if (badgePanelEl) { toggleBadgePanel(); e.preventDefault(); return; }
+        if (focusMode) { exitFocusMode(); e.preventDefault(); return; }
+        if (reviewMode && reviewNavEl && reviewNavEl.style.display !== 'none') {
+          toggleReviewMode(); e.preventDefault(); return;
         }
-        // Close any open collapsible
+        if (progressPanelOpen) { closeProgressPanel(); e.preventDefault(); return; }
+        // Close popup on visible zone
+        var visZone = getVisibleActiveZone();
+        if (visZone && visZone._popup) { dismissPopup(visZone); e.preventDefault(); return; }
         var openCollapsible = document.querySelector('.collapsible.open');
-        if (openCollapsible) {
-          openCollapsible.classList.remove('open');
-          e.preventDefault();
+        if (openCollapsible) { openCollapsible.classList.remove('open'); e.preventDefault(); return; }
+        return;
+      }
+
+      // Focus mode navigation intercepts
+      if (focusMode) {
+        if (key === 'ArrowLeft' || lower === 'k') { navigateFocus(-1); e.preventDefault(); return; }
+        if (key === 'ArrowRight' || lower === 'j') { navigateFocus(1); e.preventDefault(); return; }
+      }
+
+      // 1-9: select choice or scramble chip
+      var numKey = -1;
+      if (key >= '1' && key <= '9') numKey = parseInt(key) - 1;
+
+      if (numKey >= 0) {
+        var activeZone = getVisibleActiveZone();
+        if (activeZone) {
+          // Check if scramble type (has pool chips)
+          var poolChips = activeZone.querySelectorAll('.iq-chip:not(.hidden)');
+          if (poolChips.length > 0 && numKey < poolChips.length) {
+            poolChips[numKey].click();
+            e.preventDefault();
+            return;
+          }
+          // Regular choice (1-4 only)
+          if (numKey < 4) {
+            var choices = activeZone.querySelectorAll('.iq-choice:not(.dimmed):not(.correct):not(.wrong)');
+            if (numKey < choices.length) {
+              choices[numKey].click();
+              e.preventDefault();
+            }
+          }
+        }
+        return;
+      }
+
+      // a-d: select choice OR toggle answer (collision logic)
+      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+        var choiceIndex = -1;
+        if (lower >= 'a' && lower <= 'd') choiceIndex = lower.charCodeAt(0) - 97;
+
+        if (choiceIndex >= 0 && choiceIndex < 4) {
+          var zone = getVisibleActiveZone();
+          if (zone) {
+            var ch = zone.querySelectorAll('.iq-choice:not(.dimmed):not(.correct):not(.wrong)');
+            if (choiceIndex < ch.length) {
+              ch[choiceIndex].click();
+              e.preventDefault();
+              return;
+            }
+          }
+          // No active zone or no choices — 'a' toggles answer
+          if (lower === 'a') { toggleOnNearestCard('answer'); e.preventDefault(); return; }
           return;
         }
       }
 
-      // 1-4 or a-d: select answer choice in the visible/focused question
-      var choiceIndex = -1;
-      if (e.key >= '1' && e.key <= '4') choiceIndex = parseInt(e.key) - 1;
-      else if (e.key >= 'a' && e.key <= 'd' && !e.ctrlKey && !e.metaKey && !e.altKey) choiceIndex = e.key.charCodeAt(0) - 97;
-      else if (e.key >= 'A' && e.key <= 'D' && !e.ctrlKey && !e.metaKey && !e.altKey) choiceIndex = e.key.charCodeAt(0) - 65;
-
-      if (choiceIndex >= 0) {
-        var activeZone = getVisibleActiveZone();
-        if (activeZone) {
-          var choices = activeZone.querySelectorAll('.iq-choice:not(.dimmed):not(.correct):not(.wrong)');
-          if (choiceIndex < choices.length) {
-            choices[choiceIndex].click();
+      // Backspace: undo last scramble chip
+      if (key === 'Backspace') {
+        var sz = getVisibleActiveZone();
+        if (sz) {
+          var placedChips = sz.querySelectorAll('.iq-answer-zone .iq-chip.placed');
+          if (placedChips.length > 0) {
+            placedChips[placedChips.length - 1].click();
             e.preventDefault();
           }
         }
@@ -2495,35 +2594,133 @@
       }
 
       // Enter: trigger check on the visible question
-      if (e.key === 'Enter') {
-        var zone = getVisibleActiveZone();
-        if (zone && zone._popup) {
-          var checkBtn = zone._popup.querySelector('.iq-popup-check-btn');
-          if (checkBtn) {
-            checkBtn.click();
-            e.preventDefault();
-          }
+      if (key === 'Enter') {
+        var ez = getVisibleActiveZone();
+        if (ez && ez._popup) {
+          var checkBtn = ez._popup.querySelector('.iq-popup-check-btn');
+          if (checkBtn) { checkBtn.click(); e.preventDefault(); }
         }
         return;
       }
 
+      // Navigation & toggles (case-insensitive, no modifiers)
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      if (lower === 'j') { if (!focusMode) navigateCards(1); e.preventDefault(); return; }
+      if (lower === 'k') { if (!focusMode) navigateCards(-1); e.preventDefault(); return; }
+      if (lower === 'h') { toggleOnNearestCard('hint'); e.preventDefault(); return; }
+      if (lower === 'w') { toggleOnNearestCard('vocab'); e.preventDefault(); return; }
+      if (lower === 'p') { toggleProgressPanel(); e.preventDefault(); return; }
+      if (lower === 'f') { toggleFocusMode(); e.preventDefault(); return; }
+
       // Arrow keys: navigate between questions (scroll to prev/next qcard)
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        var cards = Array.prototype.slice.call(document.querySelectorAll('.qcard[data-si][data-qi]'));
-        cards = cards.filter(function(c) { return c.style.display !== 'none'; });
-        if (cards.length === 0) return;
-
-        var currentIdx = findNearestCardIndex(cards);
-        var nextIdx = e.key === 'ArrowDown'
-          ? Math.min(currentIdx + 1, cards.length - 1)
-          : Math.max(currentIdx - 1, 0);
-
-        if (nextIdx !== currentIdx) {
-          cards[nextIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (key === 'ArrowDown' || key === 'ArrowUp') {
+        if (!focusMode) {
+          navigateCards(key === 'ArrowDown' ? 1 : -1);
           e.preventDefault();
         }
       }
     });
+  }
+
+  // ── Keyboard hint badges ──
+  var kbdHintsVisible = false;
+
+  function createKbdToggle() {
+    var topNavRight = document.querySelector('.top-nav-right');
+    if (!topNavRight) return;
+
+    // Restore preference
+    try { kbdHintsVisible = localStorage.getItem('iq-kbd-hints') === '1'; } catch (e) {}
+    if (kbdHintsVisible) document.body.classList.add('iq-kbd-hints-visible');
+
+    var btn = document.createElement('button');
+    btn.className = 'iq-kbd-toggle' + (kbdHintsVisible ? ' active' : '');
+    btn.title = 'Keyboard shortcuts';
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', '16');
+    svg.setAttribute('height', '16');
+    svg.setAttribute('viewBox', '0 0 16 16');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.5');
+    var r = document.createElementNS(svgNS, 'rect');
+    r.setAttribute('x', '1'); r.setAttribute('y', '4');
+    r.setAttribute('width', '14'); r.setAttribute('height', '9');
+    r.setAttribute('rx', '2');
+    var l1 = document.createElementNS(svgNS, 'line');
+    l1.setAttribute('x1', '4'); l1.setAttribute('y1', '7.5');
+    l1.setAttribute('x2', '6'); l1.setAttribute('y2', '7.5');
+    var l2 = document.createElementNS(svgNS, 'line');
+    l2.setAttribute('x1', '7'); l2.setAttribute('y1', '7.5');
+    l2.setAttribute('x2', '9'); l2.setAttribute('y2', '7.5');
+    var l3 = document.createElementNS(svgNS, 'line');
+    l3.setAttribute('x1', '10'); l3.setAttribute('y1', '7.5');
+    l3.setAttribute('x2', '12'); l3.setAttribute('y2', '7.5');
+    var l4 = document.createElementNS(svgNS, 'line');
+    l4.setAttribute('x1', '5'); l4.setAttribute('y1', '10.5');
+    l4.setAttribute('x2', '11'); l4.setAttribute('y2', '10.5');
+    svg.appendChild(r); svg.appendChild(l1); svg.appendChild(l2); svg.appendChild(l3); svg.appendChild(l4);
+    btn.appendChild(svg);
+
+    btn.onclick = function() {
+      kbdHintsVisible = !kbdHintsVisible;
+      btn.classList.toggle('active', kbdHintsVisible);
+      document.body.classList.toggle('iq-kbd-hints-visible', kbdHintsVisible);
+      try { localStorage.setItem('iq-kbd-hints', kbdHintsVisible ? '1' : '0'); } catch (e) {}
+    };
+
+    topNavRight.insertBefore(btn, topNavRight.firstChild);
+  }
+
+  // ── Sound mute toggle ──
+  function createMuteToggle() {
+    var topNavRight = document.querySelector('.top-nav-right');
+    if (!topNavRight || typeof window.UISound === 'undefined') return;
+
+    var btn = document.createElement('button');
+    btn.className = 'iq-mute-toggle' + (UISound.muted ? ' muted' : '');
+    btn.title = 'Toggle sound';
+    updateMuteIcon(btn, UISound.muted);
+
+    btn.onclick = function() {
+      var nowMuted = UISound.toggleMute();
+      btn.classList.toggle('muted', nowMuted);
+      updateMuteIcon(btn, nowMuted);
+    };
+
+    topNavRight.insertBefore(btn, topNavRight.firstChild);
+  }
+
+  function updateMuteIcon(btn, isMuted) {
+    var svgNS = 'http://www.w3.org/2000/svg';
+    btn.textContent = '';
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', '16');
+    svg.setAttribute('height', '16');
+    svg.setAttribute('viewBox', '0 0 16 16');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.5');
+    // Speaker body
+    var poly = document.createElementNS(svgNS, 'polygon');
+    poly.setAttribute('points', '2,6 5,6 8,3 8,13 5,10 2,10');
+    svg.appendChild(poly);
+    if (isMuted) {
+      var x1 = document.createElementNS(svgNS, 'line');
+      x1.setAttribute('x1', '10'); x1.setAttribute('y1', '6');
+      x1.setAttribute('x2', '14'); x1.setAttribute('y2', '10');
+      var x2 = document.createElementNS(svgNS, 'line');
+      x2.setAttribute('x1', '14'); x2.setAttribute('y1', '6');
+      x2.setAttribute('x2', '10'); x2.setAttribute('y2', '10');
+      svg.appendChild(x1); svg.appendChild(x2);
+    } else {
+      var arc = document.createElementNS(svgNS, 'path');
+      arc.setAttribute('d', 'M10,5.5 Q13,8 10,10.5');
+      svg.appendChild(arc);
+    }
+    btn.appendChild(svg);
   }
 
   // Find the iq-zone of the question card nearest the viewport center
