@@ -3021,6 +3021,28 @@
     if (focusNextBtn) focusNextBtn.disabled = !canGoNext;
   }
 
+  // Re-initialize focus mode when a new section is rendered (cross-section nav or tab click)
+  document.addEventListener('iq:section-rendered', function() {
+    if (!focusMode) return;
+    focusAnimating = false;
+    rebuildFocusCards();
+    if (focusCards.length === 0) return;
+    if (typeof gsap !== 'undefined') gsap.set(focusCards, { opacity: 1, y: 0 });
+
+    if (focusPendingDirection === 'backward') {
+      focusIndex = focusCards.length - 1;
+    } else {
+      focusIndex = 0;
+    }
+    focusPendingDirection = null;
+
+    focusCards.forEach(function(card, i) {
+      card.style.display = (i === focusIndex) ? '' : 'none';
+    });
+    focusCards[focusIndex].scrollIntoView({ behavior: 'auto', block: 'center' });
+    updateFocusIndicator();
+  });
+
   function setupFocusSwipe() {
     var container = document.getElementById('questionsList');
     if (!container) return;
