@@ -1218,6 +1218,9 @@ const Router = {
     // Initialize card reveal
     initCardReveal();
 
+    // Notify interactive-quiz.js that new section DOM is ready (focus mode cross-section nav)
+    document.dispatchEvent(new Event('iq:section-rendered'));
+
     // Reset search
     const searchInput = document.getElementById('searchInput');
     if (searchInput) searchInput.value = '';
