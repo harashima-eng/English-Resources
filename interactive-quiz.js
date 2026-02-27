@@ -2925,10 +2925,11 @@
 
     // At boundary — try advancing to adjacent section
     if (newIdx < 0 || newIdx >= focusCards.length) {
-      if (typeof NavState !== 'undefined' && typeof Router !== 'undefined') {
-        var sections = NavState.categoryMap[NavState.category];
+      console.warn('[focus] At boundary. NavState:', !!window.NavState, 'Router:', !!window.Router);
+      if (window.NavState && window.Router && window.Router.setSection) {
+        var sections = window.NavState.categoryMap[window.NavState.category];
         if (sections) {
-          var localIdx = sections.indexOf(NavState.section);
+          var localIdx = sections.indexOf(window.NavState.section);
           var nextLocalIdx = localIdx + direction;
           if (nextLocalIdx >= 0 && nextLocalIdx < sections.length) {
             focusPendingDirection = direction > 0 ? 'forward' : 'backward';
@@ -2940,12 +2941,12 @@
                 opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
                 onComplete: function() {
                   current.style.display = 'none';
-                  Router.setSection(sections[nextLocalIdx]);
+                  window.Router.setSection(sections[nextLocalIdx]);
                 }
               });
             } else {
               current.style.display = 'none';
-              Router.setSection(sections[nextLocalIdx]);
+              window.Router.setSection(sections[nextLocalIdx]);
             }
             if (window.UISound) UISound.play('click');
             return;
