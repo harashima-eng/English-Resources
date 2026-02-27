@@ -2548,8 +2548,8 @@
 
       // Focus mode navigation intercepts
       if (focusMode) {
-        if (key === 'ArrowLeft' || lower === 'k') { navigateFocus(-1); e.preventDefault(); return; }
-        if (key === 'ArrowRight' || lower === 'j') { navigateFocus(1); e.preventDefault(); return; }
+        if (key === 'ArrowLeft' || key === 'ArrowUp' || lower === 'k') { navigateFocus(-1); e.preventDefault(); return; }
+        if (key === 'ArrowRight' || key === 'ArrowDown' || lower === 'j') { navigateFocus(1); e.preventDefault(); return; }
       }
 
       // 1-9: select choice or scramble chip
