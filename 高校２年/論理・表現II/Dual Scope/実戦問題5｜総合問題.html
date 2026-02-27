@@ -1230,6 +1230,10 @@ const Router = {
   }
 };
 
+// Expose for interactive-quiz.js cross-section navigation
+window.NavState = NavState;
+window.Router = Router;
+
 // ===== B6: COLLAPSIBLE TOGGLE (GSAP) + C4: CHILD STAGGER + C5: ANSWER CELEBRATION =====
 function printLesson() {
   var withAnswers = confirm('Include answers? (OK = yes, Cancel = questions only)');
