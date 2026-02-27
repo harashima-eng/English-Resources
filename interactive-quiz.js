@@ -2943,11 +2943,13 @@
                 overwrite: true,
                 onComplete: function() {
                   current.style.display = 'none';
-                  // Defer to next frame — Router.setSection triggers heavy DOM rebuild
-                  // that must not run inside GSAP's own requestAnimationFrame tick
-                  requestAnimationFrame(function() {
+                  try {
                     window.Router.setSection(nextSection);
-                  });
+                  } catch (e) {
+                    console.error('[focus] Cross-section navigation error:', e);
+                    focusAnimating = false;
+                    focusPendingDirection = null;
+                  }
                 }
               });
               // Safety: if onComplete never fires, unblock after 2s
