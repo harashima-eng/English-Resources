@@ -1196,8 +1196,8 @@ function renderQuestion(q, si, qi) {
 
   let leftHtml = `<div class="qcard-left">
     <div class="toggle-btn-row">
-      <button class="toggle-btn vocab" onclick="toggle(this,'vocab')" aria-expanded="false">Words</button>`;
-  if (q.hint) leftHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')" aria-expanded="false">Hint</button>`;
+      <button class="toggle-btn vocab" onclick="toggle(this,'vocab')" aria-expanded="false">Words<span class="iq-kbd-hint">W</span></button>`;
+  if (q.hint) leftHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')" aria-expanded="false">Hint<span class="iq-kbd-hint">H</span></button>`;
   leftHtml += `</div>`;
   if (q.vocab) {
     leftHtml += `<div class="collapsible" data-type="vocab"><div class="box vocab-box">`;
@@ -1213,7 +1213,7 @@ function renderQuestion(q, si, qi) {
 
   let rightHtml = `<div class="qcard-right">
     <div class="toggle-btn-row">
-      <button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer</button>
+      <button class="toggle-btn answer" onclick="toggle(this,'answer')" aria-expanded="false">Answer<span class="iq-kbd-hint">A</span></button>
     </div>
     <div class="collapsible" data-type="answer"><div class="box ans-box">
     </div></div></div>`;
