@@ -735,6 +735,7 @@
   function showCheckPopup(anchorEl, zone, onCheck) {
     if (iqSessionActive) return null;
     dismissPopup(zone);
+    if (window.UISound) UISound.play('button');
 
     var popup = document.createElement('div');
     popup.className = 'iq-check-popup';
@@ -1096,7 +1097,7 @@
         btn.classList.add('selected');
         btn.setAttribute('aria-pressed', 'true');
         selectedLetter = item.letter;
-        if (window.UISound) UISound.play('click');
+        if (window.UISound) UISound.play('select');
         if (iqSessionActive) {
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: item.letter, type: 'choice' }
@@ -2343,6 +2344,10 @@
   function showBadgeToast(id) {
     var badge = findBadge(id);
     if (!badge) return;
+    if (window.UISound) {
+      UISound.play('correct');
+      setTimeout(function() { UISound.play('notify'); }, 200);
+    }
 
     var toast = document.createElement('div');
     toast.className = 'iq-toast';
