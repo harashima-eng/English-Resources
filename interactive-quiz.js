@@ -1737,6 +1737,8 @@
     } else {
       removeReviewFilter();
     }
+
+    if (focusMode) { rebuildFocusCards(); focusIndex = 0; updateFocusIndicator(); }
   }
 
   function applyReviewFilter() {
@@ -1876,6 +1878,9 @@
     saveProgress();
     updateProgressPanel();
     closeProgressPanel();
+
+    // Rebuild focus mode if active
+    if (focusMode) { rebuildFocusCards(); focusIndex = 0; updateFocusIndicator(); }
   }
 
   function showRetryBar(count) {
