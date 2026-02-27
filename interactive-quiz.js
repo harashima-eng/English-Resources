@@ -2728,6 +2728,263 @@
     btn.appendChild(svg);
   }
 
+  // ── Focus Mode ──
+  var focusMode = false;
+  var focusIndex = 0;
+  var focusCards = [];
+  var focusAnimating = false;
+  var focusTouchStartX = 0;
+  var focusTouchStartY = 0;
+  var focusOverlayEl = null;
+  var focusIndicatorEl = null;
+  var focusPrevBtn = null;
+  var focusNextBtn = null;
+
+  function createFocusToggle() {
+    var topNavRight = document.querySelector('.top-nav-right');
+    if (!topNavRight) return;
+
+    var btn = document.createElement('button');
+    btn.className = 'iq-focus-toggle';
+    btn.title = 'Focus mode (F)';
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', '16');
+    svg.setAttribute('height', '16');
+    svg.setAttribute('viewBox', '0 0 16 16');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.5');
+    var c = document.createElementNS(svgNS, 'circle');
+    c.setAttribute('cx', '8'); c.setAttribute('cy', '8'); c.setAttribute('r', '5');
+    var l1 = document.createElementNS(svgNS, 'line');
+    l1.setAttribute('x1', '8'); l1.setAttribute('y1', '1'); l1.setAttribute('x2', '8'); l1.setAttribute('y2', '4');
+    var l2 = document.createElementNS(svgNS, 'line');
+    l2.setAttribute('x1', '8'); l2.setAttribute('y1', '12'); l2.setAttribute('x2', '8'); l2.setAttribute('y2', '15');
+    var l3 = document.createElementNS(svgNS, 'line');
+    l3.setAttribute('x1', '1'); l3.setAttribute('y1', '8'); l3.setAttribute('x2', '4'); l3.setAttribute('y2', '8');
+    var l4 = document.createElementNS(svgNS, 'line');
+    l4.setAttribute('x1', '12'); l4.setAttribute('y1', '8'); l4.setAttribute('x2', '15'); l4.setAttribute('y2', '8');
+    svg.appendChild(c); svg.appendChild(l1); svg.appendChild(l2); svg.appendChild(l3); svg.appendChild(l4);
+    btn.appendChild(svg);
+
+    btn.onclick = function() { toggleFocusMode(); };
+    topNavRight.insertBefore(btn, topNavRight.firstChild);
+  }
+
+  function createFocusOverlay() {
+    if (focusOverlayEl) return;
+    focusOverlayEl = document.createElement('div');
+    focusOverlayEl.className = 'iq-focus-overlay';
+
+    focusPrevBtn = document.createElement('button');
+    focusPrevBtn.className = 'iq-focus-arrow iq-focus-prev';
+    focusPrevBtn.textContent = '\u2039';
+    focusPrevBtn.onclick = function() { navigateFocus(-1); };
+
+    focusNextBtn = document.createElement('button');
+    focusNextBtn.className = 'iq-focus-arrow iq-focus-next';
+    focusNextBtn.textContent = '\u203A';
+    focusNextBtn.onclick = function() { navigateFocus(1); };
+
+    focusIndicatorEl = document.createElement('div');
+    focusIndicatorEl.className = 'iq-focus-indicator';
+
+    focusOverlayEl.appendChild(focusPrevBtn);
+    focusOverlayEl.appendChild(focusNextBtn);
+    focusOverlayEl.appendChild(focusIndicatorEl);
+    document.body.appendChild(focusOverlayEl);
+  }
+
+  function toggleFocusMode() {
+    if (focusMode) exitFocusMode();
+    else enterFocusMode();
+  }
+
+  function enterFocusMode() {
+    if (focusMode) return;
+    if (typeof NavState !== 'undefined' && NavState.view !== 'question') return;
+
+    rebuildFocusCards();
+    if (focusCards.length === 0) return;
+
+    focusMode = true;
+    focusIndex = findNearestCardIndex(focusCards);
+
+    createFocusOverlay();
+
+    focusCards.forEach(function(card, i) {
+      if (i !== focusIndex) {
+        if (typeof gsap !== 'undefined' && !reducedMotion) {
+          gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.25, ease: 'power2.in',
+            onComplete: function() { card.style.display = 'none'; }
+          });
+        } else {
+          card.style.display = 'none';
+        }
+      }
+    });
+
+    var focused = focusCards[focusIndex];
+    if (typeof gsap !== 'undefined' && !reducedMotion) {
+      gsap.to(focused, { scale: 1.02, duration: 0.3, ease: 'back.out(1.4)' });
+    }
+    focused.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    focusOverlayEl.classList.add('active');
+    if (typeof gsap !== 'undefined' && !reducedMotion) {
+      gsap.fromTo(focusOverlayEl, { opacity: 0 }, { opacity: 1, duration: 0.25 });
+    }
+
+    document.body.classList.add('iq-focus-active');
+    updateFocusIndicator();
+
+    var toggle = document.querySelector('.iq-focus-toggle');
+    if (toggle) toggle.classList.add('active');
+
+    if (window.UISound) UISound.play('transUp');
+
+    try {
+      var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
+      localStorage.setItem(fKey, '1');
+    } catch (e) {}
+  }
+
+  function exitFocusMode() {
+    if (!focusMode) return;
+    focusMode = false;
+
+    var previousCard = focusCards[focusIndex];
+
+    var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    allCards.forEach(function(card) {
+      if (retryMode) {
+        var key = card.dataset.si + '-' + card.dataset.qi;
+        card.style.display = retryKeys.indexOf(key) !== -1 ? '' : 'none';
+      } else if (reviewMode) {
+        var rkey = getQKey(card.dataset.si, card.dataset.qi);
+        card.style.display = (getAnswerResult(rkey) === 'wrong') ? '' : 'none';
+      } else {
+        card.style.display = '';
+      }
+    });
+
+    if (typeof gsap !== 'undefined' && !reducedMotion) {
+      var visibleCards = Array.prototype.slice.call(allCards).filter(function(c) { return c.style.display !== 'none'; });
+      gsap.fromTo(visibleCards,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.3, stagger: 0.03, ease: 'power2.out' }
+      );
+    } else {
+      allCards.forEach(function(c) {
+        if (c.style.display !== 'none') { c.style.opacity = ''; c.style.transform = ''; }
+      });
+    }
+
+    if (previousCard) {
+      setTimeout(function() {
+        previousCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+    }
+
+    if (focusOverlayEl) focusOverlayEl.classList.remove('active');
+    document.body.classList.remove('iq-focus-active');
+
+    var toggle = document.querySelector('.iq-focus-toggle');
+    if (toggle) toggle.classList.remove('active');
+
+    if (window.UISound) UISound.play('transDown');
+
+    try {
+      var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
+      localStorage.removeItem(fKey);
+    } catch (e) {}
+  }
+
+  function navigateFocus(direction) {
+    if (!focusMode || focusAnimating) return;
+    var newIdx = focusIndex + direction;
+    if (newIdx < 0 || newIdx >= focusCards.length) return;
+
+    focusAnimating = true;
+    var current = focusCards[focusIndex];
+    var next = focusCards[newIdx];
+    var slideX = direction > 0 ? -60 : 60;
+
+    if (typeof gsap !== 'undefined' && !reducedMotion) {
+      gsap.to(current, {
+        opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
+        onComplete: function() {
+          current.style.display = 'none';
+          next.style.display = '';
+          gsap.fromTo(next,
+            { opacity: 0, x: -slideX, scale: 0.95 },
+            { opacity: 1, x: 0, scale: 1.02, duration: 0.3, ease: 'power2.out',
+              onComplete: function() { focusAnimating = false; }
+            }
+          );
+          next.scrollIntoView({ behavior: 'auto', block: 'center' });
+        }
+      });
+    } else {
+      current.style.display = 'none';
+      next.style.display = '';
+      next.scrollIntoView({ behavior: 'auto', block: 'center' });
+      focusAnimating = false;
+    }
+
+    focusIndex = newIdx;
+    updateFocusIndicator();
+    if (window.UISound) UISound.play('click');
+  }
+
+  function rebuildFocusCards() {
+    focusCards = Array.prototype.slice.call(
+      document.querySelectorAll('.qcard[data-si][data-qi]')
+    ).filter(function(c) {
+      if (c.style.display === 'none' && !focusMode) return false;
+      if (retryMode) {
+        var key = c.dataset.si + '-' + c.dataset.qi;
+        return retryKeys.indexOf(key) !== -1;
+      }
+      if (reviewMode) {
+        var rkey = getQKey(c.dataset.si, c.dataset.qi);
+        return getAnswerResult(rkey) === 'wrong';
+      }
+      return true;
+    });
+    if (focusMode && focusIndex >= focusCards.length) {
+      focusIndex = Math.max(0, focusCards.length - 1);
+    }
+  }
+
+  function updateFocusIndicator() {
+    if (!focusIndicatorEl) return;
+    focusIndicatorEl.textContent = 'Q ' + (focusIndex + 1) + ' / ' + focusCards.length;
+    if (focusPrevBtn) focusPrevBtn.disabled = focusIndex === 0;
+    if (focusNextBtn) focusNextBtn.disabled = focusIndex >= focusCards.length - 1;
+  }
+
+  function setupFocusSwipe() {
+    var container = document.getElementById('questionsList');
+    if (!container) return;
+
+    container.addEventListener('touchstart', function(e) {
+      if (!focusMode) return;
+      focusTouchStartX = e.touches[0].clientX;
+      focusTouchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    container.addEventListener('touchend', function(e) {
+      if (!focusMode) return;
+      var dx = e.changedTouches[0].clientX - focusTouchStartX;
+      var dy = e.changedTouches[0].clientY - focusTouchStartY;
+      if (Math.abs(dx) > 50 && Math.abs(dy) < Math.abs(dx) * 0.7) {
+        navigateFocus(dx < 0 ? 1 : -1);
+      }
+    }, { passive: true });
+  }
+
   // Find the iq-zone of the question card nearest the viewport center
   function getVisibleActiveZone() {
     var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
