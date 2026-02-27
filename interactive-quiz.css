@@ -2474,3 +2474,172 @@ html.dark .lb-dialog-input {
 .iq-install-dismiss:hover {
   color: #F1F5F9;
 }
+
+/* ── Keyboard hint badges ── */
+.iq-kbd-hint {
+  display: none;
+  font: 600 10px/1 -apple-system, BlinkMacSystemFont, sans-serif;
+  background: rgba(0, 0, 0, 0.08);
+  color: #64748B;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+  pointer-events: none;
+}
+body.iq-kbd-hints-visible .iq-kbd-hint {
+  display: inline;
+}
+html.dark .iq-kbd-hint {
+  background: rgba(255, 255, 255, 0.1);
+  color: #94A3B8;
+}
+@media (hover: none) {
+  .iq-kbd-hint { display: none !important; }
+  .iq-kbd-toggle { display: none !important; }
+}
+
+/* ── Nav toggle buttons (keyboard, mute, focus) ── */
+.iq-kbd-toggle,
+.iq-mute-toggle,
+.iq-focus-toggle {
+  background: none;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.iq-kbd-toggle:hover,
+.iq-mute-toggle:hover,
+.iq-focus-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #334155;
+}
+html.dark .iq-kbd-toggle,
+html.dark .iq-mute-toggle,
+html.dark .iq-focus-toggle {
+  color: #94A3B8;
+}
+html.dark .iq-kbd-toggle:hover,
+html.dark .iq-mute-toggle:hover,
+html.dark .iq-focus-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #E2E8F0;
+}
+.iq-kbd-toggle.active,
+.iq-focus-toggle.active {
+  border-color: #0D9488;
+  background: rgba(13, 148, 136, 0.08);
+  color: #0D9488;
+}
+html.dark .iq-kbd-toggle.active,
+html.dark .iq-focus-toggle.active {
+  border-color: #2DD4BF;
+  background: rgba(45, 212, 191, 0.1);
+  color: #2DD4BF;
+}
+.iq-mute-toggle.muted {
+  color: #DC2626;
+}
+html.dark .iq-mute-toggle.muted {
+  color: #F87171;
+}
+
+/* ── Focus mode overlay ── */
+.iq-focus-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 998;
+  pointer-events: none;
+  display: none;
+}
+.iq-focus-overlay.active {
+  display: block;
+}
+.iq-focus-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  font-size: 24px;
+  color: #334155;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+html.dark .iq-focus-arrow {
+  background: rgba(30, 41, 59, 0.85);
+  color: #E2E8F0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+.iq-focus-prev { left: 16px; }
+.iq-focus-next { right: 16px; }
+.iq-focus-arrow:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+}
+html.dark .iq-focus-arrow:hover:not(:disabled) {
+  background: rgba(30, 41, 59, 1);
+}
+.iq-focus-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.iq-focus-indicator {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font: 600 13px/1 -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #334155;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+  z-index: 999;
+}
+html.dark .iq-focus-indicator {
+  background: rgba(30, 41, 59, 0.9);
+  color: #E2E8F0;
+}
+
+/* ── Focus mode body state ── */
+body.iq-focus-active .search-wrap,
+body.iq-focus-active .sub-nav {
+  display: none !important;
+}
+
+/* ── Focus mode mobile ── */
+@media (max-width: 768px) {
+  .iq-focus-prev,
+  .iq-focus-next {
+    top: auto;
+    bottom: 80px;
+    transform: none;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+  .iq-focus-prev { left: 16px; }
+  .iq-focus-next { right: 16px; }
+  .iq-focus-indicator {
+    bottom: 84px;
+  }
+}
