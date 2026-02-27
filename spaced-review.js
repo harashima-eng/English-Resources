@@ -252,11 +252,17 @@
       qDiv.textContent = item.questionText || ('Q: ' + item.examId + ' S' + item.si + ' Q' + item.qi);
       body.appendChild(qDiv);
 
-      // Choices (if available)
-      if (item.choices) {
+      // Choices — fallback to grammarData if item was saved before choices were added
+      var choices = item.choices;
+      if (!choices && typeof grammarData !== 'undefined') {
+        var sec = grammarData.sections[item.si];
+        var q = sec && sec.questions[item.qi];
+        if (q) choices = q.choices || '';
+      }
+      if (choices) {
         var choicesDiv = document.createElement('div');
         choicesDiv.className = 'sr-modal-choices';
-        var parts = item.choices.split(/[\u3000\t]+/);
+        var parts = choices.split(/[\u3000\t]+/);
         parts.forEach(function(part) {
           if (!part.trim()) return;
           var choiceEl = document.createElement('div');
