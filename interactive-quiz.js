@@ -599,6 +599,7 @@
           questionText: q ? (q.text || '').substring(0, 100) : '',
           wrongAnswer: typeof userAnswer === 'string' ? userAnswer : JSON.stringify(userAnswer),
           correctAnswer: Array.isArray(correctAnswer) ? correctAnswer.join(', ') : correctAnswer,
+          choices: q ? (q.choices || '') : '',
           type: type
         }
       }));
@@ -2926,8 +2927,8 @@
           current.style.display = 'none';
           next.style.display = '';
           gsap.fromTo(next,
-            { opacity: 0, x: -slideX, scale: 0.95 },
-            { opacity: 1, x: 0, scale: 1.02, duration: 0.3, ease: 'power2.out',
+            { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
+            { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.3, ease: 'power2.out',
               onComplete: function() { focusAnimating = false; }
             }
           );
