@@ -1,5 +1,54 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-02-27 — Dual Scope Upgrade: Keyboard, Sounds, Focus Mode, Print
+
+### Keyboard Shortcuts (interactive-quiz.js)
+- J/K: navigate between questions (GSAP proxy scroll)
+- H/W/A: toggle Hint/Words/Answer on nearest card
+- P: toggle progress panel, F: toggle focus mode
+- Escape priority chain: badge panel > focus mode > review nav > progress > popup > collapsible
+- 1-9: select scramble pool chips, Backspace: undo last scramble chip
+- `a` key collision: selects choice when unlocked zone exists, toggles answer otherwise
+- Keyboard hint badges (`<span class="iq-kbd-hint">`) injected in toggle buttons
+- Toggle button in top-nav-right (keyboard icon), hidden on touch devices
+- Preference stored in localStorage('iq-kbd-hints')
+
+### Enhanced Sound Design (ui-sounds.js)
+- New sound mappings: select, toggleOff, button, notify, disabled, transUp, transDown
+- Choice selection now plays SELECT (was TAP)
+- Toggle close plays TOGGLE_OFF, check popup plays BUTTON
+- Badge unlock plays CELEBRATION + NOTIFICATION double-play
+- Nav clicks play TRANSITION_UP, locked zone clicks play DISABLED
+- Mute toggle button in top-nav-right, persisted in localStorage
+- Public API: UISound.muted, UISound.toggleMute()
+
+### Focus Mode (interactive-quiz.js + interactive-quiz.css)
+- Single-question view with prev/next navigation
+- Toggle via F key or crosshair button in top-nav-right
+- GSAP slide transitions between questions (opacity + x + scale)
+- Navigation overlay: fixed arrows (left/right), position indicator pill (bottom center)
+- Mobile swipe support (horizontal threshold 50px)
+- Integrates with retry/review modes (rebuilds card list on mode change)
+- localStorage persistence per exam
+- Escape exits focus mode
+
+### Print-Friendly Stylesheet (dualscope-lesson.css)
+- @media print section hides interactive UI, resets colors
+- Clean single-column card layout with borders, page-break-inside: avoid
+- body.print-answers class shows answer sections
+- Print button on Home view (all 4 lessons) with answers dialog
+- 2-column layout for overview/conjugation grids
+
+### Files Changed
+- interactive-quiz.js: +350 lines (keyboard, sounds, focus mode)
+- interactive-quiz.css: +150 lines (kbd hints, focus overlay, nav toggles)
+- ui-sounds.js: rewritten with expanded sound map + mute toggle
+- dualscope-lesson.css: +55 lines (@media print)
+- Lesson 15, 16, 17, 実戦問題5: kbd hint spans + print button + printLesson()
+- grammar-template.html: kbd hint spans + printLesson()
+
+---
+
 ## 2026-02-26 — Stability Fixes + Feature Roadmap
 
 ### Infrastructure (Batch 1-4, implemented)
