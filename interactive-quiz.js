@@ -2925,7 +2925,7 @@
 
     // At boundary — try advancing to adjacent section
     if (newIdx < 0 || newIdx >= focusCards.length) {
-      console.warn('[focus] At boundary. NavState:', !!window.NavState, 'Router:', !!window.Router);
+      // Cross-section boundary navigation
       if (window.NavState && window.Router && window.Router.setSection) {
         var sections = window.NavState.categoryMap[window.NavState.category];
         if (sections) {
