@@ -2914,8 +2914,40 @@
   function navigateFocus(direction) {
     if (!focusMode || focusAnimating) return;
     var newIdx = focusIndex + direction;
-    if (newIdx < 0 || newIdx >= focusCards.length) return;
 
+    // At boundary — try advancing to adjacent section
+    if (newIdx < 0 || newIdx >= focusCards.length) {
+      if (typeof NavState !== 'undefined' && typeof Router !== 'undefined') {
+        var sections = NavState.categoryMap[NavState.category];
+        if (sections) {
+          var localIdx = sections.indexOf(NavState.section);
+          var nextLocalIdx = localIdx + direction;
+          if (nextLocalIdx >= 0 && nextLocalIdx < sections.length) {
+            focusPendingDirection = direction > 0 ? 'forward' : 'backward';
+            focusAnimating = true;
+            var current = focusCards[focusIndex];
+            var slideX = direction > 0 ? -60 : 60;
+            if (typeof gsap !== 'undefined' && !reducedMotion) {
+              gsap.to(current, {
+                opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
+                onComplete: function() {
+                  current.style.display = 'none';
+                  Router.setSection(sections[nextLocalIdx]);
+                }
+              });
+            } else {
+              current.style.display = 'none';
+              Router.setSection(sections[nextLocalIdx]);
+            }
+            if (window.UISound) UISound.play('click');
+            return;
+          }
+        }
+      }
+      return; // at absolute boundary (first/last section)
+    }
+
+    // Normal within-section navigation
     focusAnimating = true;
     var current = focusCards[focusIndex];
     var next = focusCards[newIdx];
@@ -2971,8 +3003,22 @@
   function updateFocusIndicator() {
     if (!focusIndicatorEl) return;
     focusIndicatorEl.textContent = 'Q ' + (focusIndex + 1) + ' / ' + focusCards.length;
-    if (focusPrevBtn) focusPrevBtn.disabled = focusIndex === 0;
-    if (focusNextBtn) focusNextBtn.disabled = focusIndex >= focusCards.length - 1;
+
+    var canGoPrev = focusIndex > 0;
+    var canGoNext = focusIndex < focusCards.length - 1;
+
+    // Check for adjacent sections so arrows stay enabled at section boundaries
+    if (typeof NavState !== 'undefined') {
+      var sections = NavState.categoryMap[NavState.category];
+      if (sections) {
+        var localIdx = sections.indexOf(NavState.section);
+        if (!canGoPrev && localIdx > 0) canGoPrev = true;
+        if (!canGoNext && localIdx < sections.length - 1) canGoNext = true;
+      }
+    }
+
+    if (focusPrevBtn) focusPrevBtn.disabled = !canGoPrev;
+    if (focusNextBtn) focusNextBtn.disabled = !canGoNext;
   }
 
   function setupFocusSwipe() {
