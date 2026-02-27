@@ -743,19 +743,19 @@ function renderQuestion(q) {
   questionHtml += `</div>`;
 
   let btnHtml = `<div class="qcard-buttons">`;
-  if (q.vocab && q.vocab.length) btnHtml += `<button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Vocab</button>`;
-  if (q.hint && q.hint.length) btnHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button>`;
-  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer</button></div>`;
+  if (q.vocab && q.vocab.length) btnHtml += `<button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Vocab<span class="iq-kbd-hint">W</span></button>`;
+  if (q.hint && q.hint.length) btnHtml += `<button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint<span class="iq-kbd-hint">H</span></button>`;
+  btnHtml += `<button class="toggle-btn answer" onclick="toggle(this,'answer')">Answer<span class="iq-kbd-hint">A</span></button></div>`;
 
   let leftHtml = `<div class="qcard-left">`;
   if (q.vocab && q.vocab.length) {
-    leftHtml += `<div class="toggle-btn-row"><button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Vocab</button></div>`;
+    leftHtml += `<div class="toggle-btn-row"><button class="toggle-btn vocab" onclick="toggle(this,'vocab')">Vocab<span class="iq-kbd-hint">W</span></button></div>`;
     leftHtml += `<div class="collapsible" data-type="vocab"><div class="box vocab-box"><span class="box-label">Vocabulary</span>`;
     q.vocab.forEach(v => leftHtml += `<div class="vocab-item"><span class="vocab-word">${v[0]}</span>${v[1]}</div>`);
     leftHtml += `</div></div>`;
   }
   if (q.hint && q.hint.length) {
-    leftHtml += `<div class="toggle-btn-row"><button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint</button></div>`;
+    leftHtml += `<div class="toggle-btn-row"><button class="toggle-btn hint" onclick="toggle(this,'hint')">Hint<span class="iq-kbd-hint">H</span></button></div>`;
     leftHtml += `<div class="collapsible" data-type="hint"><div class="box hint-box"><span class="box-label">Hints</span>`;
     q.hint.forEach(h => leftHtml += `<div class="hint-item">→ ${h}</div>`);
     leftHtml += `</div></div>`;
