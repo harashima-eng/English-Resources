@@ -1231,11 +1231,40 @@ const Router = {
 function printLesson() {
   var withAnswers = confirm('Include answers? (OK = yes, Cancel = questions only)');
   if (withAnswers) document.body.classList.add('print-answers');
-  Router.navigate('question');
+
+  // Render ALL sections (trusted grammarData — no user input)
+  var container = document.getElementById('questionsList');
+  var allHtml = '';
+  grammarData.sections.forEach(function(section, si) {
+    allHtml += '<div class="print-section-title">' + section.title + '</div>';
+    allHtml += section.questions.map(function(q, qi) { return renderQuestion(q, si, qi); }).join('');
+  });
+  container.innerHTML = allHtml;
+
+  // Force question view visible and override GSAP inline styles
+  var questionView = document.querySelector('.view-question');
+  var prevDisplay = questionView ? questionView.style.display : '';
+  if (questionView) questionView.style.display = 'block';
+
+  var header = document.querySelector('.question-header');
+  var prevHeaderDisplay = header ? header.style.display : '';
+  if (header) header.style.display = 'none';
+
+  var cards = document.querySelectorAll('.qcard');
+  cards.forEach(function(card) {
+    card.style.opacity = '1';
+    card.style.transform = 'none';
+  });
+
   setTimeout(function() {
     window.print();
     document.body.classList.remove('print-answers');
-  }, 300);
+    // Restore: re-render current section
+    if (questionView) questionView.style.display = prevDisplay;
+    if (header) header.style.display = prevHeaderDisplay;
+    renderQuestions(NavState.section);
+    initCardReveal();
+  }, 100);
 }
 
 function toggle(btn, type) {
