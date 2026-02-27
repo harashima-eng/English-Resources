@@ -2936,17 +2936,30 @@
             focusAnimating = true;
             var current = focusCards[focusIndex];
             var slideX = direction > 0 ? -60 : 60;
+            var nextSection = sections[nextLocalIdx];
             if (typeof gsap !== 'undefined' && !reducedMotion) {
               gsap.to(current, {
                 opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
+                overwrite: true,
                 onComplete: function() {
                   current.style.display = 'none';
-                  window.Router.setSection(sections[nextLocalIdx]);
+                  // Defer to next frame — Router.setSection triggers heavy DOM rebuild
+                  // that must not run inside GSAP's own requestAnimationFrame tick
+                  requestAnimationFrame(function() {
+                    window.Router.setSection(nextSection);
+                  });
                 }
               });
+              // Safety: if onComplete never fires, unblock after 2s
+              setTimeout(function() {
+                if (focusAnimating && focusPendingDirection) {
+                  focusAnimating = false;
+                  focusPendingDirection = null;
+                }
+              }, 2000);
             } else {
               current.style.display = 'none';
-              window.Router.setSection(sections[nextLocalIdx]);
+              window.Router.setSection(nextSection);
             }
             if (window.UISound) UISound.play('click');
             return;
