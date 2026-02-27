@@ -2646,6 +2646,9 @@ body.iq-focus-active .search-wrap,
 body.iq-focus-active .sub-nav {
   display: none !important;
 }
+body.iq-focus-active .questions-list {
+  contain: layout style;
+}
 
 /* ── Focus mode mobile ── */
 @media (max-width: 768px) {
