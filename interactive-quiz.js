@@ -3017,10 +3017,10 @@
     var canGoNext = focusIndex < focusCards.length - 1;
 
     // Check for adjacent sections so arrows stay enabled at section boundaries
-    if (typeof NavState !== 'undefined') {
-      var sections = NavState.categoryMap[NavState.category];
+    if (window.NavState) {
+      var sections = window.NavState.categoryMap[window.NavState.category];
       if (sections) {
-        var localIdx = sections.indexOf(NavState.section);
+        var localIdx = sections.indexOf(window.NavState.section);
         if (!canGoPrev && localIdx > 0) canGoPrev = true;
         if (!canGoNext && localIdx < sections.length - 1) canGoNext = true;
       }
