@@ -1032,7 +1032,7 @@
         btn.classList.add('selected');
         btn.setAttribute('aria-pressed', 'true');
         selected = opt;
-        if (window.UISound) UISound.play('click');
+        if (window.UISound) UISound.play('select');
         if (iqSessionActive) {
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: opt, type: 'pair' }
@@ -1197,7 +1197,7 @@
         underlines.forEach(function(uu) { uu.classList.remove('selected'); });
         u.classList.add('selected');
         selectedLabel = label;
-        if (window.UISound) UISound.play('click');
+        if (window.UISound) UISound.play('select');
         if (iqSessionActive) {
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: label, type: 'error' }
