@@ -2777,15 +2777,28 @@
 
     detectExistingSession();
     createProgressPanel();
+    createKbdToggle();
+    createMuteToggle();
+    createFocusToggle();
     setupTeacherRevealListeners();
     setupKeyboardNav();
+    setupFocusSwipe();
     enhanceVisibleCards();
     setupObserver();
+
+    // Restore focus mode from localStorage
+    try {
+      var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
+      if (localStorage.getItem(fKey) === '1') {
+        setTimeout(function() { enterFocusMode(); }, 300);
+      }
+    } catch (e) {}
 
     window.addEventListener('hashchange', function() {
       setTimeout(function() {
         enhanceVisibleCards();
         if (reviewMode) filterVisibleCards();
+        if (focusMode) rebuildFocusCards();
       }, 50);
     });
   }
