@@ -979,3 +979,66 @@ footer {
     font-size: 20px;
   }
 }
+
+/* ===== PRINT STYLESHEET ===== */
+@media print {
+  .top-nav, .sub-nav, .mobile-nav,
+  .iq-progress-tab, .iq-progress-panel, .iq-progress-backdrop,
+  .iq-focus-overlay, .iq-zone, .iq-kbd-toggle, .iq-focus-toggle,
+  .iq-mute-toggle, .iq-nav-toggle, .iq-edge-trigger,
+  .toggle-btn-row, .collapsible:not(.open),
+  .search-wrap, .progress-wrap, .home-cta,
+  .top-nav-theme, .btn-print, .home-bg,
+  .iq-retry-bar, .iq-review-nav, .iq-toast,
+  .iq-badge-panel, .iq-install-banner { display: none !important; }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .main-content { padding: 0 !important; margin: 0 !important; }
+  .view-question { max-width: 100% !important; padding: 0 !important; }
+  .view-home { display: block !important; }
+  .view-home .home-content { display: block !important; text-align: center; }
+  .home-title {
+    font-size: 18pt !important;
+    color: black !important;
+    -webkit-text-fill-color: black !important;
+    background: none !important;
+  }
+  .home-subtitle { font-size: 10pt !important; color: #444 !important; }
+  .home-label { font-size: 10pt !important; color: #666 !important; }
+
+  .qcard {
+    display: block !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    border-radius: 0 !important;
+    padding: 12pt !important;
+    margin-bottom: 8pt !important;
+    page-break-inside: avoid;
+    background: white !important;
+  }
+  .qcard-question { margin-bottom: 6pt; }
+  .qcard-left, .qcard-right { display: none; }
+
+  body.print-answers .qcard-right { display: block !important; }
+  body.print-answers .collapsible[data-type="answer"] { display: block !important; }
+  body.print-answers .ans-box {
+    border: none !important;
+    padding: 6pt 0 !important;
+    box-shadow: none !important;
+  }
+  body.print-answers .toggle-btn-row { display: none !important; }
+
+  .conj-grid { columns: 2; column-gap: 12pt; }
+  .conj-card {
+    break-inside: avoid;
+    margin-bottom: 8pt;
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+  }
+}
