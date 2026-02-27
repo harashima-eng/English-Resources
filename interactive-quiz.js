@@ -467,6 +467,10 @@
   function openProgressPanel() {
     if (!progressPanelEl || progressPanelOpen) return;
     progressPanelOpen = true;
+    // Pause focus mode — hide overlay but keep state
+    if (focusMode && focusOverlayEl) {
+      focusOverlayEl.classList.remove('active');
+    }
     clearTimeout(tabHideTimer);
     if (tabIsHidden) showTabWithGsap();
     if (edgeTriggerEl) edgeTriggerEl.style.display = 'none';
@@ -488,6 +492,10 @@
   function closeProgressPanel() {
     if (!progressPanelEl || !progressPanelOpen) return;
     progressPanelOpen = false;
+    // Resume focus mode if it was active
+    if (focusMode && focusOverlayEl) {
+      focusOverlayEl.classList.add('active');
+    }
     resetTabHideTimer();
     if (edgeTriggerEl) edgeTriggerEl.style.display = '';
     if (typeof gsap !== 'undefined') {
