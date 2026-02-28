@@ -2748,6 +2748,7 @@
   var focusCards = [];
   var focusAnimating = false;
   var focusPendingDirection = null;
+  var focusNavGeneration = 0;
   var focusTouchStartX = 0;
   var focusTouchStartY = 0;
   var focusOverlayEl = null;
