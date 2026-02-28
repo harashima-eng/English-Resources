@@ -3012,6 +3012,7 @@
                 window.Router.setCategory(nextCat);
                 if (direction < 0) {
                   var newSections = window.NavState.categoryMap[nextCat];
+                  focusPendingDirection = 'backward';
                   window.Router.setSection(newSections[newSections.length - 1]);
                 }
               }
