@@ -3096,8 +3096,11 @@
     rebuildFocusCards();
     if (focusCards.length === 0) return;
 
+    dbg.log('state', 'focusMode', 'false -> true [enterFocusMode]'); dbg.setState('focusMode', true);
     focusMode = true;
-    focusIndex = findNearestCardIndex(focusCards);
+    var _fi = findNearestCardIndex(focusCards);
+    dbg.log('state', 'focusIndex', focusIndex + ' -> ' + _fi + ' [enterFocusMode]'); dbg.setState('focusIndex', _fi);
+    focusIndex = _fi;
 
     createFocusOverlay();
 
@@ -3143,6 +3146,7 @@
 
   function exitFocusMode() {
     if (!focusMode) return;
+    dbg.log('state', 'focusMode', 'true -> false [exitFocusMode]'); dbg.setState('focusMode', false);
     focusMode = false;
 
     var previousCard = focusCards[focusIndex];
