@@ -3,7 +3,12 @@
     "exams": {
       "$examId": {
         ".read": true,
-        ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
+        ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+        "connectedStudents": {
+          "$pushId": {
+            ".write": "newData.val() === true || newData.val() === null"
+          }
+        }
       }
     },
     "answers": {
