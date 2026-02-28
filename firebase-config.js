@@ -40,6 +40,7 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
       } else {
         showOfflineBanner();
       }
+      if (window.IQDebug) window.IQDebug.log('event', 'firebase', snap.val() ? 'connected' : 'disconnected');
     });
   })();
 
@@ -79,6 +80,7 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
   var lastReportTime = 0;
   var THROTTLE = 300000; // 5 minutes between reports per device
   var deviceId = localStorage.getItem('iq-device-id') || 'unknown';
+  var sessionId = Math.random().toString(36).slice(2, 10);
 
   window.BugReport = function(type, data) {
     var now = Date.now();
@@ -86,13 +88,20 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
     lastReportTime = now;
     var report = {
       type: String(type).substring(0, 50),
+      sessionId: sessionId,
       examId: (document.body && document.body.dataset.examId) || 'unknown',
       deviceId: deviceId.substring(0, 30),
       url: location.pathname,
       ua: navigator.userAgent.substring(0, 100),
       ts: firebase.database.ServerValue.TIMESTAMP,
       state: data.state || {},
-      trace: (data.trace || []).slice(-30)
+      trace: (data.trace || []).slice(-30),
+      steps: (window.IQDebug && window.IQDebug.reproSteps ? window.IQDebug.reproSteps() : []),
+      perf: {
+        domNodes: document.querySelectorAll('*').length,
+        memory: (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) : null),
+        fps: (window.IQDebug && window.IQDebug.getFps ? window.IQDebug.getFps() : null)
+      }
     };
     ref.push(report).catch(function() {});
   };

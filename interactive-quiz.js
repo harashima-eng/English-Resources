@@ -97,6 +97,68 @@
     lastWrites[entry.tag] = { t: entry.t, msg: entry.msg };
   });
 
+  // ── Interaction breadcrumbs (click + touch) ──
+  document.addEventListener('click', function(e) {
+    var el = e.target;
+    var desc = el.tagName.toLowerCase();
+    if (el.className && typeof el.className === 'string') desc += '.' + el.className.split(' ')[0];
+    var text = (el.textContent || '').substring(0, 20).trim();
+    if (text) desc += ' "' + text + '"';
+    log('ui', 'click', desc);
+  }, true);
+
+  document.addEventListener('touchstart', function(e) {
+    if (e.touches.length > 1) return;
+    var el = e.target;
+    var desc = el.tagName.toLowerCase();
+    if (el.className && typeof el.className === 'string') desc += '.' + el.className.split(' ')[0];
+    log('ui', 'touch', desc);
+  }, { capture: true, passive: true });
+
+  // ── Rapid interaction detector ──
+  var tapTimes = [];
+  detectors.push(function(entry) {
+    if (entry.ch !== 'ui') return;
+    tapTimes.push(entry.t);
+    if (tapTimes.length > 5) tapTimes.shift();
+    if (tapTimes.length >= 5 && tapTimes[4] - tapTimes[0] < 1000) {
+      log('error', 'DETECTOR', 'Rapid interaction: 5 taps in ' + (tapTimes[4] - tapTimes[0]) + 'ms');
+      report('rapid_interaction');
+      tapTimes = [];
+    }
+  });
+
+  // ── LoAF detection (Chrome-only, feature-gated) ──
+  if (typeof PerformanceObserver !== 'undefined' &&
+      PerformanceObserver.supportedEntryTypes &&
+      PerformanceObserver.supportedEntryTypes.indexOf('long-animation-frame') !== -1) {
+    new PerformanceObserver(function(list) {
+      list.getEntries().forEach(function(entry) {
+        if (entry.duration > 150) {
+          var scripts = (entry.scripts || []).slice(0, 3).map(function(s) {
+            return (s.sourceFunctionName || 'anonymous') + '(' + Math.round(s.duration) + 'ms)';
+          }).join(', ');
+          log('timer', 'LoAF', Math.round(entry.duration) + 'ms' + (scripts ? ': ' + scripts : ''));
+        }
+      });
+    }).observe({ type: 'long-animation-frame' });
+  }
+
+  // ── FPS estimator ──
+  var fpsEstimate = 60;
+  var fpsFrames = 0;
+  var fpsLast = performance.now();
+  (function fpsTick() {
+    fpsFrames++;
+    var now = performance.now();
+    if (now - fpsLast >= 1000) {
+      fpsEstimate = fpsFrames;
+      fpsFrames = 0;
+      fpsLast = now;
+    }
+    requestAnimationFrame(fpsTick);
+  })();
+
   window.IQDebug = {
     log: log,
     setState: setState,
@@ -112,7 +174,14 @@
       document.body.appendChild(overlayEl);
       updateOverlay();
     },
-    addDetector: function(fn) { detectors.push(fn); }
+    addDetector: function(fn) { detectors.push(fn); },
+    _t0: t0,
+    reproSteps: function() {
+      return buf.filter(function(e) { return e.ch === 'ui'; }).slice(-15).map(function(e, i) {
+        return (i + 1) + '. ' + e.tag + ' ' + e.msg;
+      });
+    },
+    getFps: function() { return fpsEstimate; }
   };
 
   if (DEBUG) {
