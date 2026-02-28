@@ -1308,6 +1308,7 @@
     });
 
     examRef.set(sessionData).then(function() {
+      examRef.child('activeSession').onDisconnect().set(null);
       state.sessionActive = true;
       state.revealed = {};
       state.sectionRevealed = {};
@@ -1323,6 +1324,7 @@
   function endSession() {
     if (sessionActionPending) return;
     sessionActionPending = true;
+    examRef.child('activeSession').onDisconnect().cancel();
     examRef.update({ activeSession: null }).then(function() {
       state.sessionActive = false;
       state.revealed = {};
@@ -1477,15 +1479,23 @@
       }
     });
 
-    // Cleanup Firebase listeners and observer on page unload
-    window.addEventListener('beforeunload', function() {
+    // Cleanup on page close: trigger onDisconnect, sign out, detach listeners
+    function cleanupOnClose() {
+      if (state.isTeacher && state.sessionActive) {
+        firebase.database().goOffline();
+      }
+      if (state.isTeacher) {
+        auth.signOut().catch(function() {});
+      }
       if (trObserver) { trObserver.disconnect(); trObserver = null; }
       if (examRef) {
         examRef.child('activeSession').off();
         examRef.child('sections').off();
         examRef.child('revealAll').off();
       }
-    });
+    }
+    window.addEventListener('beforeunload', cleanupOnClose);
+    window.addEventListener('pagehide', cleanupOnClose);
   }
 
   if (document.readyState === 'loading') {
