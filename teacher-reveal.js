@@ -1049,6 +1049,20 @@
       body.appendChild(lbSec);
     }
 
+    // ── Bug Reports link ──
+    var bugSec = document.createElement('div');
+    bugSec.className = 'tr-panel-section';
+    var bugLink = document.createElement('a');
+    bugLink.href = '/English-Resources/bug-dashboard.html';
+    bugLink.target = '_blank';
+    bugLink.className = 'tr-btn';
+    bugLink.textContent = 'Bug Reports';
+    bugLink.style.display = 'block';
+    bugLink.style.textAlign = 'center';
+    bugLink.style.textDecoration = 'none';
+    bugSec.appendChild(bugLink);
+    body.appendChild(bugSec);
+
     // Logout (bottom of panel, clearly labeled)
     var logoutSec = document.createElement('div');
     logoutSec.className = 'tr-panel-section tr-panel-logout';
