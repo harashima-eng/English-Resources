@@ -2036,8 +2036,8 @@ html.dark .sr-review-btn--due {
 }
 
 .sr-modal {
-  width: 420px;
-  max-width: calc(100vw - 32px);
+  width: 90vw;
+  max-width: 1000px;
   max-height: 80vh;
   background: var(--card, #fff);
   border-radius: 16px;
@@ -2088,7 +2088,7 @@ html.dark .sr-modal-header {
 }
 
 .sr-modal-body {
-  padding: 24px 20px;
+  padding: 32px 40px;
   overflow-y: auto;
   flex: 1;
 }

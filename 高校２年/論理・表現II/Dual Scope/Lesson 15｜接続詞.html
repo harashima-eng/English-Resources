@@ -1275,6 +1275,9 @@ function initCardReveal() {
   const cards = document.querySelectorAll('.qcard');
   if (!cards.length) return;
 
+  // Focus mode manages card visibility — skip reveal animation
+  if (document.body.classList.contains('iq-focus-active')) return;
+
   if (UV_REDUCED) {
     gsap.set(cards, { opacity: 1, y: 0 });
     return;
