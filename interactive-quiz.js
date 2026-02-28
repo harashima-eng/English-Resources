@@ -2943,6 +2943,8 @@
           if (nextLocalIdx >= 0 && nextLocalIdx < sections.length) {
             focusPendingDirection = direction > 0 ? 'forward' : 'backward';
             focusAnimating = true;
+            focusNavGeneration++;
+            var gen = focusNavGeneration;
             var current = focusCards[focusIndex];
             var slideX = direction > 0 ? -60 : 60;
             var nextSection = sections[nextLocalIdx];
@@ -2963,7 +2965,7 @@
               });
               // Safety: if onComplete never fires, unblock after 2s
               setTimeout(function() {
-                if (focusAnimating && focusPendingDirection) {
+                if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
                   focusAnimating = false;
                   focusPendingDirection = null;
                 }
@@ -3107,7 +3109,11 @@
     if (!focusMode) return;
     focusAnimating = false;
     rebuildFocusCards();
-    if (focusCards.length === 0) return;
+    if (focusCards.length === 0) {
+      focusPendingDirection = null;
+      updateFocusIndicator();
+      return;
+    }
     // Kill any initCardReveal observer tweens before taking control of card visibility
     if (typeof gsap !== 'undefined') {
       focusCards.forEach(function(c) { gsap.killTweensOf(c); });
