@@ -1319,6 +1319,7 @@
         selected = opt;
         if (window.UISound) UISound.play('select');
         if (iqSessionActive) {
+          dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=pair');
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: opt, type: 'pair' }
           }));
