@@ -1385,6 +1385,7 @@
         selectedLetter = item.letter;
         if (window.UISound) UISound.play('select');
         if (iqSessionActive) {
+          dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=choice');
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: item.letter, type: 'choice' }
           }));
@@ -1485,6 +1486,7 @@
         selectedLabel = label;
         if (window.UISound) UISound.play('select');
         if (iqSessionActive) {
+          dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=error');
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: label, type: 'error' }
           }));
@@ -1508,6 +1510,7 @@
       correctionInput.placeholder = 'Type the correct form...';
       correctionInput.oninput = function() {
         if (iqSessionActive && selectedLabel && correctionInput.value.trim()) {
+          dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=correction');
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: selectedLabel + ': ' + correctionInput.value.trim(), type: 'correction' }
           }));
@@ -1580,6 +1583,7 @@
 
     input.oninput = function() {
       if (iqSessionActive && input.value.trim()) {
+        dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=fillin');
         document.dispatchEvent(new CustomEvent('iq:answer-selected', {
           detail: { si: si, qi: qi, answer: input.value.trim(), type: 'fillin' }
         }));
@@ -1642,6 +1646,7 @@
     function tryShowFillinPopup() {
       if (!allBlanksFilled()) return;
       if (iqSessionActive) {
+        dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=fillin-multi');
         document.dispatchEvent(new CustomEvent('iq:answer-selected', {
           detail: { si: si, qi: qi, answer: Array.from(inputs).map(function(inp, i) {
             var val = inp.value.trim();
@@ -1721,6 +1726,7 @@
 
     textarea.addEventListener('input', function() {
       if (iqSessionActive && textarea.value.trim()) {
+        dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=compose');
         document.dispatchEvent(new CustomEvent('iq:answer-selected', {
           detail: { si: si, qi: qi, answer: textarea.value.trim(), type: 'compose' }
         }));
