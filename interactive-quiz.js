@@ -3324,6 +3324,7 @@
     }
 
     // Normal within-section navigation
+    dbg.log('state', 'focusAnimating', 'false -> true [navigateFocus normal]'); dbg.setState('focusAnimating', true);
     focusAnimating = true;
     var current = focusCards[focusIndex];
     var next = focusCards[newIdx];
@@ -3338,7 +3339,7 @@
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
             { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.3, ease: 'power2.out', overwrite: true,
-              onComplete: function() { focusAnimating = false; }
+              onComplete: function() { dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false; }
             }
           );
           next.scrollIntoView({ behavior: 'auto', block: 'center' });
@@ -3348,6 +3349,7 @@
       current.style.display = 'none';
       next.style.display = '';
       next.scrollIntoView({ behavior: 'auto', block: 'center' });
+      dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus no-gsap]'); dbg.setState('focusAnimating', false);
       focusAnimating = false;
     }
 
@@ -3410,9 +3412,11 @@
   // Re-initialize focus mode when a new section is rendered (cross-section nav or tab click)
   document.addEventListener('iq:section-rendered', function() {
     if (!focusMode) return;
+    dbg.log('state', 'focusAnimating', focusAnimating + ' -> false [section-rendered]'); dbg.setState('focusAnimating', false);
     focusAnimating = false;
     rebuildFocusCards();
     if (focusCards.length === 0) {
+      dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [section-rendered empty]'); dbg.setState('focusPendingDirection', null);
       focusPendingDirection = null;
       updateFocusIndicator();
       return;
