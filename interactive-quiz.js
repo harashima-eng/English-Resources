@@ -1804,6 +1804,7 @@
         if (window.UISound) UISound.play('click');
         renderAnswerZone();
         if (iqSessionActive && placed.length > 0) {
+          dbg.log('event', 'dispatch', 'iq:answer-selected si=' + si + ' qi=' + qi + ' type=scramble');
           document.dispatchEvent(new CustomEvent('iq:answer-selected', {
             detail: { si: si, qi: qi, answer: placed.map(function(p) { return p.word; }).join(' '), type: 'scramble' }
           }));
@@ -2208,6 +2209,7 @@
     if (!allDone) return;
     // Delay so autoExpandToggles (500ms) + animation (700ms) finishes first
     if (retrySummaryTimer) clearTimeout(retrySummaryTimer);
+    dbg.log('timer', 'setTimeout', 'retrySummary 1500ms');
     retrySummaryTimer = setTimeout(function() {
       retrySummaryTimer = null;
       if (!retryMode) return;
