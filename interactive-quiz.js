@@ -2981,7 +2981,7 @@
       kbdHintsVisible = !kbdHintsVisible;
       btn.classList.toggle('active', kbdHintsVisible);
       document.body.classList.toggle('iq-kbd-hints-visible', kbdHintsVisible);
-      try { localStorage.setItem('iq-kbd-hints', kbdHintsVisible ? '1' : '0'); } catch (e) {}
+      try { localStorage.setItem('iq-kbd-hints', kbdHintsVisible ? '1' : '0'); } catch (e) { dbg.log('error', 'kbdHintsSave', e.message || String(e)); }
     };
 
     topNavRight.insertBefore(btn, topNavRight.firstChild);
@@ -3163,7 +3163,7 @@
     try {
       var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
       localStorage.setItem(fKey, '1');
-    } catch (e) {}
+    } catch (e) { dbg.log('error', 'focusSave', e.message || String(e)); }
   }
 
   function exitFocusMode() {
@@ -3215,7 +3215,7 @@
     try {
       var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
       localStorage.removeItem(fKey);
-    } catch (e) {}
+    } catch (e) { dbg.log('error', 'focusClear', e.message || String(e)); }
   }
 
   function getAdjacentCategory(currentCat, direction) {
@@ -3544,7 +3544,7 @@
         dbg.log('timer', 'setTimeout', 'focus restore from localStorage 300ms');
         setTimeout(function() { enterFocusMode(); }, 300);
       }
-    } catch (e) {}
+    } catch (e) { dbg.log('error', 'focusRestore', e.message || String(e)); }
 
     window.addEventListener('hashchange', function() {
       dbg.log('timer', 'setTimeout', 'hashchange rebuild 50ms');
