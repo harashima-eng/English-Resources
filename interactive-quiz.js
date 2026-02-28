@@ -1910,6 +1910,7 @@
   // ── Teacher Reveal integration ──
   function setupTeacherRevealListeners() {
     document.addEventListener('tr:session-start', function() {
+      dbg.log('state', 'iqSessionActive', 'false -> true [tr:session-start]'); dbg.setState('iqSessionActive', true);
       iqSessionActive = true;
       // Dismiss any open popups and hide remaining Check buttons (compose)
       document.querySelectorAll('.iq-zone').forEach(function(zone) {
@@ -2007,10 +2008,13 @@
   }
 
   function toggleReviewMode() {
+    var _prev = reviewMode;
     reviewMode = !reviewMode;
+    dbg.log('state', 'reviewMode', _prev + ' -> ' + reviewMode + ' [toggleReviewMode]'); dbg.setState('reviewMode', reviewMode);
 
     if (reviewMode) {
       if (getTotalWrong() === 0) {
+        dbg.log('state', 'reviewMode', 'true -> false [toggleReviewMode guard]'); dbg.setState('reviewMode', false);
         reviewMode = false;
         return;
       }
@@ -2090,6 +2094,7 @@
       return;
     }
 
+    dbg.log('state', 'retryMode', 'false -> true [startRetryMode]'); dbg.setState('retryMode', true);
     retryMode = true;
     retryKeys = wrongKeys;
     retryBackup = {};
@@ -2350,6 +2355,7 @@
   }
 
   function exitRetryMode() {
+    dbg.log('state', 'retryMode', 'true -> false [exitRetryMode]'); dbg.setState('retryMode', false);
     retryMode = false;
     if (retrySummaryTimer) { clearTimeout(retrySummaryTimer); retrySummaryTimer = null; }
     var scrollY = window.scrollY;
@@ -2503,6 +2509,7 @@
     score.correct = 0;
     score.answered = 0;
     answeredKeys = {};
+    dbg.log('state', 'retryMode', retryMode + ' -> false [performFullReset]'); dbg.setState('retryMode', false);
     retryMode = false;
     retryKeys = [];
     retryBackup = {};
