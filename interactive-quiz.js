@@ -10,6 +10,115 @@
    - tr:session-end    → show Check buttons for unanswered questions
    - tr:question-revealed → auto-trigger feedback for that question */
 
+// ── IQDebug: Ring buffer + bug detectors + dev console ──
+(function() {
+  var DEBUG = /[?&]debug=1/.test(location.search);
+  var BUF_SIZE = 30;
+  var buf = [];
+  var t0 = Date.now();
+  var stateSnap = {};
+  var detectors = [];
+  var overlayEl = null;
+
+  var COLORS = {
+    state: 'color:#2196F3;font-weight:bold',
+    anim:  'color:#FF9800;font-weight:bold',
+    event: 'color:#9C27B0;font-weight:bold',
+    timer: 'color:#607D8B;font-weight:bold',
+    error: 'color:#F44336;font-weight:bold'
+  };
+
+  function log(ch, tag, msg) {
+    var entry = { ch: ch, tag: tag, msg: msg, t: Date.now() - t0 };
+    buf.push(entry);
+    if (buf.length > BUF_SIZE) buf.shift();
+    if (DEBUG) {
+      console.log('%c[' + ch + ']%c ' + tag + ' — ' + msg,
+        COLORS[ch] || '', 'color:inherit');
+    }
+    for (var i = 0; i < detectors.length; i++) {
+      try { detectors[i](entry, buf, stateSnap); } catch (_) {}
+    }
+  }
+
+  function setState(key, val) {
+    stateSnap[key] = val;
+    if (DEBUG && overlayEl) updateOverlay();
+  }
+
+  function report(type) {
+    if (typeof window.BugReport === 'function') {
+      window.BugReport(type, { state: JSON.parse(JSON.stringify(stateSnap)), trace: buf.slice() });
+    }
+  }
+
+  function updateOverlay() {
+    if (!overlayEl) return;
+    var lines = Object.keys(stateSnap).map(function(k) { return k + ': ' + JSON.stringify(stateSnap[k]); });
+    overlayEl.textContent = lines.join('\n');
+  }
+
+  // ── Bug detectors ──
+
+  // Stuck focusAnimating: true for >5s
+  var animTrueAt = 0;
+  detectors.push(function(entry) {
+    if (entry.ch === 'state' && entry.tag === 'focusAnimating') {
+      if (entry.msg.indexOf('-> true') !== -1) {
+        animTrueAt = entry.t;
+      } else if (entry.msg.indexOf('-> false') !== -1) {
+        animTrueAt = 0;
+      }
+    }
+    if (animTrueAt && entry.t - animTrueAt > 5000) {
+      animTrueAt = 0;
+      log('error', 'DETECTOR', 'focusAnimating stuck true >5s');
+      report('stuck_animating');
+    }
+  });
+
+  // Silent error: any error-channel entry
+  detectors.push(function(entry) {
+    if (entry.ch === 'error' && entry.tag !== 'DETECTOR') {
+      report('silent_error');
+    }
+  });
+
+  // State race: same state var written twice within 50ms by different sources
+  var lastWrites = {};
+  detectors.push(function(entry) {
+    if (entry.ch !== 'state') return;
+    var prev = lastWrites[entry.tag];
+    if (prev && entry.t - prev.t < 50 && entry.msg !== prev.msg) {
+      log('error', 'DETECTOR', 'State race on ' + entry.tag + ': ' + prev.msg + ' vs ' + entry.msg);
+      report('state_race');
+    }
+    lastWrites[entry.tag] = { t: entry.t, msg: entry.msg };
+  });
+
+  window.IQDebug = {
+    log: log,
+    setState: setState,
+    report: report,
+    isOn: function() { return DEBUG; },
+    snapshot: function() { return { state: JSON.parse(JSON.stringify(stateSnap)), trace: buf.slice() }; },
+    enable: function() { DEBUG = true; if (!overlayEl) window.IQDebug.showOverlay(); },
+    disable: function() { DEBUG = false; if (overlayEl) { overlayEl.remove(); overlayEl = null; } },
+    showOverlay: function() {
+      if (overlayEl) return;
+      overlayEl = document.createElement('pre');
+      overlayEl.style.cssText = 'position:fixed;bottom:8px;right:8px;z-index:99999;background:rgba(0,0,0,0.85);color:#0f0;font:11px/1.4 monospace;padding:8px 12px;border-radius:6px;max-width:320px;max-height:200px;overflow:auto;pointer-events:none';
+      document.body.appendChild(overlayEl);
+      updateOverlay();
+    },
+    addDetector: function(fn) { detectors.push(fn); }
+  };
+
+  if (DEBUG) {
+    document.addEventListener('DOMContentLoaded', function() { window.IQDebug.showOverlay(); });
+  }
+})();
+
 (function() {
   'use strict';
 
