@@ -3229,7 +3229,9 @@
           var localIdx = sections.indexOf(window.NavState.section);
           var nextLocalIdx = localIdx + direction;
           if (nextLocalIdx >= 0 && nextLocalIdx < sections.length) {
+            dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> ' + (direction > 0 ? 'forward' : 'backward') + ' [navigateFocus cross-section]'); dbg.setState('focusPendingDirection', direction > 0 ? 'forward' : 'backward');
             focusPendingDirection = direction > 0 ? 'forward' : 'backward';
+            dbg.log('state', 'focusAnimating', 'false -> true [navigateFocus cross-section]'); dbg.setState('focusAnimating', true);
             focusAnimating = true;
             focusNavGeneration++;
             var gen = focusNavGeneration;
@@ -3245,8 +3247,10 @@
                   try {
                     window.Router.setSection(nextSection);
                   } catch (e) {
-                    console.error('[focus] Cross-section navigation error:', e);
+                    dbg.log('error', 'navigateFocus', 'Cross-section nav: ' + (e.message || String(e)));
+                    dbg.log('state', 'focusAnimating', 'true -> false [cross-section error]'); dbg.setState('focusAnimating', false);
                     focusAnimating = false;
+                    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [cross-section error]'); dbg.setState('focusPendingDirection', null);
                     focusPendingDirection = null;
                   }
                 }
@@ -3254,7 +3258,9 @@
               // Safety: if onComplete never fires, unblock after 2s
               setTimeout(function() {
                 if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
+                  dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-section]'); dbg.setState('focusAnimating', false);
                   focusAnimating = false;
+                  dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [2s safety]'); dbg.setState('focusPendingDirection', null);
                   focusPendingDirection = null;
                 }
               }, 2000);
@@ -3268,7 +3274,9 @@
             // Cross-tier: jump to adjacent category
             var nextCat = getAdjacentCategory(window.NavState.category, direction);
             if (nextCat) {
+              dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> ' + (direction > 0 ? 'forward' : 'backward') + ' [navigateFocus cross-tier]'); dbg.setState('focusPendingDirection', direction > 0 ? 'forward' : 'backward');
               focusPendingDirection = direction > 0 ? 'forward' : 'backward';
+              dbg.log('state', 'focusAnimating', 'false -> true [navigateFocus cross-tier]'); dbg.setState('focusAnimating', true);
               focusAnimating = true;
               focusNavGeneration++;
               var gen = focusNavGeneration;
@@ -3286,15 +3294,19 @@
                     try {
                       window.Router.navigate('question', nextCat, targetSection);
                     } catch (e) {
-                      console.error('[focus] Cross-tier navigation error:', e);
+                      dbg.log('error', 'navigateFocus', 'Cross-tier nav: ' + (e.message || String(e)));
+                      dbg.log('state', 'focusAnimating', 'true -> false [cross-tier error]'); dbg.setState('focusAnimating', false);
                       focusAnimating = false;
+                      dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [cross-tier error]'); dbg.setState('focusPendingDirection', null);
                       focusPendingDirection = null;
                     }
                   }
                 });
                 setTimeout(function() {
                   if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
+                    dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-tier]'); dbg.setState('focusAnimating', false);
                     focusAnimating = false;
+                    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [2s safety]'); dbg.setState('focusPendingDirection', null);
                     focusPendingDirection = null;
                   }
                 }, 2000);
