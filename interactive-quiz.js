@@ -2028,7 +2028,7 @@
       removeReviewFilter();
     }
 
-    if (focusMode) { rebuildFocusCards(); focusIndex = 0; updateFocusIndicator(); }
+    if (focusMode) { rebuildFocusCards(); dbg.log('state', 'focusIndex', focusIndex + ' -> 0 [toggleReviewMode]'); dbg.setState('focusIndex', 0); focusIndex = 0; updateFocusIndicator(); }
   }
 
   function applyReviewFilter() {
@@ -2171,7 +2171,7 @@
     closeProgressPanel();
 
     // Rebuild focus mode if active
-    if (focusMode) { rebuildFocusCards(); focusIndex = 0; updateFocusIndicator(); }
+    if (focusMode) { rebuildFocusCards(); dbg.log('state', 'focusIndex', focusIndex + ' -> 0 [startRetryMode]'); dbg.setState('focusIndex', 0); focusIndex = 0; updateFocusIndicator(); }
   }
 
   function showRetryBar(count) {
@@ -3339,6 +3339,7 @@
       focusAnimating = false;
     }
 
+    dbg.log('state', 'focusIndex', focusIndex + ' -> ' + newIdx + ' [navigateFocus]'); dbg.setState('focusIndex', newIdx);
     focusIndex = newIdx;
     updateFocusIndicator();
     if (window.UISound) UISound.play('click');
@@ -3360,7 +3361,9 @@
       return true;
     });
     if (focusMode && focusIndex >= focusCards.length) {
-      focusIndex = Math.max(0, focusCards.length - 1);
+      var _clamped = Math.max(0, focusCards.length - 1);
+      dbg.log('state', 'focusIndex', focusIndex + ' -> ' + _clamped + ' [rebuildFocusCards clamp]'); dbg.setState('focusIndex', _clamped);
+      focusIndex = _clamped;
     }
   }
 
@@ -3411,10 +3414,14 @@
     }
 
     if (focusPendingDirection === 'backward') {
-      focusIndex = focusCards.length - 1;
+      var _bi = focusCards.length - 1;
+      dbg.log('state', 'focusIndex', focusIndex + ' -> ' + _bi + ' [section-rendered backward]'); dbg.setState('focusIndex', _bi);
+      focusIndex = _bi;
     } else {
+      dbg.log('state', 'focusIndex', focusIndex + ' -> 0 [section-rendered forward]'); dbg.setState('focusIndex', 0);
       focusIndex = 0;
     }
+    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [section-rendered]'); dbg.setState('focusPendingDirection', null);
     focusPendingDirection = null;
 
     focusCards.forEach(function(card, i) {
