@@ -334,7 +334,7 @@
           answeredKeys[k] = (typeof v === 'string') ? { result: v } : v;
         });
       }
-    } catch (e) { /* ignore corrupt data */ }
+    } catch (e) { dbg.log('error', 'loadProgress', e.message || String(e)); }
   }
 
   function saveProgress() {
@@ -347,7 +347,7 @@
         answeredKeys: answeredKeys,
         lastAccess: Date.now()
       }));
-    } catch (e) { /* private browsing or quota exceeded */ }
+    } catch (e) { dbg.log('error', 'saveProgress', e.message || String(e)); }
   }
 
   function pruneOldProgress() {
@@ -362,7 +362,7 @@
           }
         }
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) { dbg.log('error', 'pruneOldProgress', e.message || String(e)); }
   }
 
   function getAnswerResult(key) {
@@ -2944,7 +2944,7 @@
     if (!topNavRight) return;
 
     // Restore preference
-    try { kbdHintsVisible = localStorage.getItem('iq-kbd-hints') === '1'; } catch (e) {}
+    try { kbdHintsVisible = localStorage.getItem('iq-kbd-hints') === '1'; } catch (e) { dbg.log('error', 'kbdHints', e.message || String(e)); }
     if (kbdHintsVisible) document.body.classList.add('iq-kbd-hints-visible');
 
     var btn = document.createElement('button');
@@ -3313,6 +3313,7 @@
                     }
                   }
                 });
+                dbg.log('timer', 'setTimeout', '2s safety unblock cross-tier');
                 setTimeout(function() {
                   if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
                     dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-tier]'); dbg.setState('focusAnimating', false);
