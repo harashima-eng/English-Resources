@@ -3114,7 +3114,9 @@
       updateFocusIndicator();
       return;
     }
-    // Kill any initCardReveal observer tweens before taking control of card visibility
+    // Disconnect the initCardReveal IntersectionObserver so it can't re-animate cards
+    if (typeof revealObserver !== 'undefined' && revealObserver) revealObserver.disconnect();
+    // Kill any lingering reveal tweens before taking control of card visibility
     if (typeof gsap !== 'undefined') {
       focusCards.forEach(function(c) { gsap.killTweensOf(c); });
       gsap.set(focusCards, { opacity: 1, y: 0 });
