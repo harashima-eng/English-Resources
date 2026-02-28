@@ -25,7 +25,8 @@
     anim:  'color:#FF9800;font-weight:bold',
     event: 'color:#9C27B0;font-weight:bold',
     timer: 'color:#607D8B;font-weight:bold',
-    error: 'color:#F44336;font-weight:bold'
+    error: 'color:#F44336;font-weight:bold',
+    ui:    'color:#E91E63;font-weight:bold'
   };
 
   function log(ch, tag, msg) {
