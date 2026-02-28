@@ -617,6 +617,13 @@
     if (loginBtn) loginBtn.classList.add('loading');
 
     var provider = new firebase.auth.GoogleAuthProvider();
+    var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (isStandalone) {
+      auth.signInWithRedirect(provider);
+      return;
+    }
+
     auth.signInWithPopup(provider).then(function(result) {
       if (result.user) {
         handleAuthResult(result.user);
