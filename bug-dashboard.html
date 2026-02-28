@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bug Reports Dashboard</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; }
+.login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.login-card { background: #fff; border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.08); max-width: 360px; width: 90%; }
+.login-card h1 { font-size: 20px; margin-bottom: 8px; color: #7A9BA8; }
+.login-card p { font-size: 14px; color: #888; margin-bottom: 24px; }
+.login-btn { background: #7A9BA8; color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; transition: background 0.15s; }
+.login-btn:hover { background: #6A8B98; }
+.login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.login-error { color: #d32f2f; font-size: 13px; margin-top: 12px; }
+
+.dashboard { display: none; max-width: 1100px; margin: 0 auto; padding: 16px; }
+.dash-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.dash-header h1 { font-size: 22px; color: #7A9BA8; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.header-actions button { background: #eee; border: 1px solid #ddd; padding: 6px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+.header-actions button:hover { background: #ddd; }
+.prune-btn { color: #d32f2f !important; }
+.user-email { font-size: 12px; color: #999; }
+
+.stats-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-card { background: #fff; border-radius: 8px; padding: 16px 20px; flex: 1; min-width: 140px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.stat-card .label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-card .value { font-size: 28px; font-weight: 700; color: #333; margin-top: 4px; }
+
+.bar-chart { background: #fff; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.bar-chart h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.bar-row { display: flex; align-items: center; margin-bottom: 6px; }
+.bar-label { width: 120px; font-size: 12px; color: #666; text-align: right; padding-right: 10px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { flex: 1; height: 20px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px; font-size: 11px; color: #fff; font-weight: 600; min-width: 24px; }
+
+.filters { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+.filters select, .filters input { padding: 6px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; background: #fff; }
+
+.report-table { width: 100%; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.report-table th { background: #fafafa; text-align: left; padding: 10px 12px; font-size: 12px; color: #888; border-bottom: 1px solid #eee; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+.report-table td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; font-size: 13px; vertical-align: top; }
+.report-table tr.clickable:hover td { background: #fafafa; cursor: pointer; }
+.report-table tr.expanded td { background: #f9f9f9; }
+
+.type-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.badge-anim_conflict { background: #FFF3E0; color: #E65100; }
+.badge-stuck_animating { background: #FCE4EC; color: #C62828; }
+.badge-rapid_interaction { background: #E8EAF6; color: #283593; }
+.badge-state_race { background: #F3E5F5; color: #6A1B9A; }
+.badge-silent_error { background: #FFEBEE; color: #B71C1C; }
+
+.detail-row { display: none; }
+.detail-row td { padding: 0 !important; }
+.detail-content { padding: 12px 16px; background: #fafafa; }
+.detail-section { margin-bottom: 12px; }
+.detail-section h4 { font-size: 12px; color: #7A9BA8; text-transform: uppercase; margin-bottom: 6px; }
+.detail-pre { font-size: 12px; line-height: 1.5; background: #fff; border: 1px solid #eee; border-radius: 6px; padding: 8px 10px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; font-family: 'SF Mono', Monaco, Consolas, monospace; }
+.detail-section ol { padding-left: 20px; font-size: 13px; }
+.detail-section ol li { margin-bottom: 2px; }
+
+.trace-line { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 11px; line-height: 1.6; }
+
+.empty-state { text-align: center; padding: 60px 20px; color: #999; }
+.empty-state p { font-size: 15px; }
+
+@media (max-width: 600px) {
+  .bar-label { width: 80px; font-size: 11px; }
+  .report-table th:nth-child(4), .report-table td:nth-child(4) { display: none; }
+  .filters { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <h1>Bug Reports</h1>
+    <p>Sign in with your teacher account</p>
+    <button class="login-btn" id="loginBtn">Sign in with Google</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<div class="dashboard" id="dashboard">
+  <div class="dash-header">
+    <div>
+      <h1>Bug Reports</h1>
+      <span class="user-email" id="userEmail"></span>
+    </div>
+    <div class="header-actions">
+      <button id="refreshBtn">Refresh</button>
+      <button class="prune-btn" id="pruneBtn">Prune &gt;30 days</button>
+      <button id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+
+  <div class="stats-row" id="statsRow"></div>
+  <div class="bar-chart" id="barChart"></div>
+
+  <div class="filters">
+    <select id="filterType"><option value="">All types</option></select>
+    <select id="filterExam"><option value="">All lessons</option></select>
+    <input type="date" id="filterFrom" title="From date">
+    <input type="date" id="filterTo" title="To date">
+  </div>
+
+  <table class="report-table">
+    <thead>
+      <tr><th>Type</th><th>Lesson</th><th>Device</th><th>Session</th><th>Time</th></tr>
+    </thead>
+    <tbody id="reportBody"></tbody>
+  </table>
+  <div class="empty-state" id="emptyState" style="display:none"><p>No bug reports found.</p></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  firebase.initializeApp({
+    apiKey: "AIzaSyD-U-cS30gdz1D-p4KqoYRni9nQdnJZ_L0",
+    authDomain: "english-resources-reveal.firebaseapp.com",
+    databaseURL: "https://english-resources-reveal-default-rtdb.firebaseio.com",
+    projectId: "english-resources-reveal",
+    storageBucket: "english-resources-reveal.firebasestorage.app",
+    messagingSenderId: "141460166135",
+    appId: "1:141460166135:web:fae3691002f92c89ec0af2"
+  });
+
+  var ALLOWED_EMAIL = 'harashima@komagome.ed.jp';
+  var auth = firebase.auth();
+  var db = firebase.database();
+  var allReports = [];
+
+  var TRACE_COLORS = { state: '#2196F3', anim: '#FF9800', event: '#9C27B0', timer: '#607D8B', error: '#F44336', ui: '#E91E63' };
+  var BAR_COLORS = { anim_conflict: '#E65100', stuck_animating: '#C62828', rapid_interaction: '#283593', state_race: '#6A1B9A', silent_error: '#B71C1C' };
+
+  // ── Helpers ──
+  function esc(s) {
+    var d = document.createElement('span');
+    d.textContent = String(s);
+    return d.innerHTML;
+  }
+
+  function formatTime(ts) {
+    if (!ts) return '?';
+    var d = new Date(ts);
+    return (d.getMonth() + 1) + '/' + d.getDate() + ' ' +
+      String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  // ── Auth ──
+  $('loginBtn').onclick = function() {
+    this.disabled = true;
+    var self = this;
+    var provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(function(result) {
+      if (result.user.email !== ALLOWED_EMAIL) {
+        auth.signOut();
+        $('loginError').textContent = 'Permission denied. Use your school account.';
+        self.disabled = false;
+        return;
+      }
+      showDashboard(result.user);
+    }).catch(function(err) {
+      if (err.code === 'auth/popup-blocked') {
+        auth.signInWithRedirect(provider);
+      } else {
+        $('loginError').textContent = err.message;
+        self.disabled = false;
+      }
+    });
+  };
+
+  $('logoutBtn').onclick = function() {
+    auth.signOut();
+    $('dashboard').style.display = 'none';
+    $('loginScreen').style.display = 'flex';
+  };
+
+  $('refreshBtn').onclick = loadReports;
+  $('pruneBtn').onclick = pruneOld;
+  $('filterType').onchange = applyFilters;
+  $('filterExam').onchange = applyFilters;
+  $('filterFrom').onchange = applyFilters;
+  $('filterTo').onchange = applyFilters;
+
+  auth.onAuthStateChanged(function(user) {
+    if (user && user.email === ALLOWED_EMAIL) showDashboard(user);
+  });
+
+  function showDashboard(user) {
+    $('loginScreen').style.display = 'none';
+    $('dashboard').style.display = 'block';
+    $('userEmail').textContent = user.email;
+    loadReports();
+  }
+
+  // ── Data ──
+  function loadReports() {
+    db.ref('bug-reports').orderByChild('ts').limitToLast(100).once('value').then(function(snap) {
+      allReports = [];
+      snap.forEach(function(child) {
+        var r = child.val();
+        r._key = child.key;
+        allReports.push(r);
+      });
+      allReports.sort(function(a, b) { return (b.ts || 0) - (a.ts || 0); });
+      populateFilters();
+      renderStats();
+      applyFilters();
+    });
+  }
+
+  function populateFilters() {
+    var types = {};
+    var exams = {};
+    allReports.forEach(function(r) {
+      if (r.type) types[r.type] = true;
+      if (r.examId) exams[r.examId] = true;
+    });
+
+    rebuildSelect($('filterType'), types, 'All types');
+    rebuildSelect($('filterExam'), exams, 'All lessons');
+  }
+
+  function rebuildSelect(sel, map, placeholder) {
+    var prev = sel.value;
+    sel.textContent = '';
+    var opt = document.createElement('option');
+    opt.value = ''; opt.textContent = placeholder;
+    sel.appendChild(opt);
+    Object.keys(map).sort().forEach(function(k) {
+      var o = document.createElement('option');
+      o.value = k; o.textContent = k;
+      sel.appendChild(o);
+    });
+    sel.value = prev;
+  }
+
+  // ── Stats ──
+  function renderStats() {
+    var total = allReports.length;
+    var typeCounts = {};
+    var examCounts = {};
+    var uniqueDevices = {};
+    allReports.forEach(function(r) {
+      typeCounts[r.type || 'unknown'] = (typeCounts[r.type || 'unknown'] || 0) + 1;
+      examCounts[r.examId || 'unknown'] = (examCounts[r.examId || 'unknown'] || 0) + 1;
+      if (r.deviceId) uniqueDevices[r.deviceId] = true;
+    });
+
+    var statsEl = $('statsRow');
+    statsEl.textContent = '';
+    [['Total Reports', total], ['Unique Devices', Object.keys(uniqueDevices).length],
+     ['Bug Types', Object.keys(typeCounts).length], ['Lessons Affected', Object.keys(examCounts).length]
+    ].forEach(function(pair) {
+      var card = document.createElement('div');
+      card.className = 'stat-card';
+      var lbl = document.createElement('div'); lbl.className = 'label'; lbl.textContent = pair[0];
+      var val = document.createElement('div'); val.className = 'value'; val.textContent = pair[1];
+      card.appendChild(lbl); card.appendChild(val);
+      statsEl.appendChild(card);
+    });
+
+    // Bar chart
+    var sorted = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
+    var maxCount = sorted.length > 0 ? typeCounts[sorted[0]] : 0;
+
+    var chartEl = $('barChart');
+    chartEl.textContent = '';
+    var h3 = document.createElement('h3'); h3.textContent = 'Reports by Type';
+    chartEl.appendChild(h3);
+
+    sorted.forEach(function(t) {
+      var pct = maxCount > 0 ? Math.round(typeCounts[t] / maxCount * 100) : 0;
+      var row = document.createElement('div'); row.className = 'bar-row';
+      var label = document.createElement('div'); label.className = 'bar-label'; label.textContent = t;
+      var track = document.createElement('div'); track.className = 'bar-track';
+      var fill = document.createElement('div'); fill.className = 'bar-fill';
+      fill.style.width = pct + '%';
+      fill.style.background = BAR_COLORS[t] || '#7A9BA8';
+      fill.textContent = typeCounts[t];
+      track.appendChild(fill);
+      row.appendChild(label); row.appendChild(track);
+      chartEl.appendChild(row);
+    });
+  }
+
+  // ── Filters ──
+  function applyFilters() {
+    var typeF = $('filterType').value;
+    var examF = $('filterExam').value;
+    var fromF = $('filterFrom').value;
+    var toF = $('filterTo').value;
+    var fromTs = fromF ? new Date(fromF).getTime() : 0;
+    var toTs = toF ? new Date(toF + 'T23:59:59').getTime() : Infinity;
+
+    var filtered = allReports.filter(function(r) {
+      if (typeF && r.type !== typeF) return false;
+      if (examF && r.examId !== examF) return false;
+      var ts = r.ts || 0;
+      return ts >= fromTs && ts <= toTs;
+    });
+
+    renderTable(filtered);
+  }
+
+  // ── Table ──
+  function renderTable(reports) {
+    var body = $('reportBody');
+    body.textContent = '';
+    $('emptyState').style.display = reports.length === 0 ? '' : 'none';
+
+    reports.forEach(function(r) {
+      var tr = document.createElement('tr');
+      tr.className = 'clickable';
+
+      var tdType = document.createElement('td');
+      var badge = document.createElement('span');
+      badge.className = 'type-badge badge-' + (r.type || 'unknown');
+      badge.textContent = r.type || '?';
+      tdType.appendChild(badge);
+
+      var tdExam = document.createElement('td');
+      tdExam.textContent = r.examId || '?';
+
+      var tdDevice = document.createElement('td');
+      tdDevice.textContent = (r.deviceId || '').substring(0, 12);
+      tdDevice.title = r.deviceId || '';
+
+      var tdSession = document.createElement('td');
+      tdSession.textContent = r.sessionId || '-';
+
+      var tdTime = document.createElement('td');
+      tdTime.textContent = formatTime(r.ts);
+
+      tr.appendChild(tdType);
+      tr.appendChild(tdExam);
+      tr.appendChild(tdDevice);
+      tr.appendChild(tdSession);
+      tr.appendChild(tdTime);
+
+      var detailTr = document.createElement('tr');
+      detailTr.className = 'detail-row';
+      var detailTd = document.createElement('td');
+      detailTd.colSpan = 5;
+      buildDetail(r, detailTd);
+      detailTr.appendChild(detailTd);
+
+      tr.onclick = function() {
+        var isOpen = detailTr.style.display === 'table-row';
+        detailTr.style.display = isOpen ? 'none' : 'table-row';
+        tr.classList.toggle('expanded', !isOpen);
+      };
+
+      body.appendChild(tr);
+      body.appendChild(detailTr);
+    });
+  }
+
+  function buildDetail(r, container) {
+    var wrap = document.createElement('div');
+    wrap.className = 'detail-content';
+
+    // State snapshot
+    if (r.state && Object.keys(r.state).length > 0) {
+      var sec = makeSection('State Snapshot');
+      var pre = document.createElement('pre');
+      pre.className = 'detail-pre';
+      pre.textContent = JSON.stringify(r.state, null, 2);
+      sec.appendChild(pre);
+      wrap.appendChild(sec);
+    }
+
+    // Trace timeline
+    if (r.trace && r.trace.length > 0) {
+      var sec = makeSection('Trace Timeline');
+      var pre = document.createElement('pre');
+      pre.className = 'detail-pre';
+      r.trace.forEach(function(e) {
+        var line = document.createElement('span');
+        line.className = 'trace-line';
+
+        var ch = document.createElement('span');
+        ch.style.color = TRACE_COLORS[e.ch] || '#666';
+        ch.style.fontWeight = 'bold';
+        ch.textContent = '[' + (e.ch || '?') + '] ';
+
+        var tag = document.createElement('b');
+        tag.textContent = (e.tag || '') + ' ';
+
+        var msg = document.createTextNode((e.msg || '') + ' ');
+
+        var time = document.createElement('span');
+        time.style.color = '#999';
+        time.textContent = '+' + (e.t || 0) + 'ms';
+
+        line.appendChild(ch);
+        line.appendChild(tag);
+        line.appendChild(msg);
+        line.appendChild(time);
+        pre.appendChild(line);
+        pre.appendChild(document.createTextNode('\n'));
+      });
+      sec.appendChild(pre);
+      wrap.appendChild(sec);
+    }
+
+    // Reproduction steps
+    if (r.steps && r.steps.length > 0) {
+      var sec = makeSection('Reproduction Steps');
+      var ol = document.createElement('ol');
+      r.steps.forEach(function(s) {
+        var li = document.createElement('li');
+        li.textContent = String(s).replace(/^\d+\.\s*/, '');
+        ol.appendChild(li);
+      });
+      sec.appendChild(ol);
+      wrap.appendChild(sec);
+    }
+
+    // Perf data
+    if (r.perf) {
+      var sec = makeSection('Performance');
+      var pre = document.createElement('pre');
+      pre.className = 'detail-pre';
+      pre.textContent = 'DOM Nodes: ' + (r.perf.domNodes || '?') + '    ' +
+        'Memory: ' + (r.perf.memory ? r.perf.memory + 'MB' : 'N/A') + '    ' +
+        'FPS: ' + (r.perf.fps || 'N/A');
+      sec.appendChild(pre);
+      wrap.appendChild(sec);
+    }
+
+    // Context
+    var sec = makeSection('Context');
+    var pre = document.createElement('pre');
+    pre.className = 'detail-pre';
+    pre.textContent = 'URL: ' + (r.url || '?') + '\nUA: ' + (r.ua || '?');
+    sec.appendChild(pre);
+    wrap.appendChild(sec);
+
+    container.appendChild(wrap);
+  }
+
+  function makeSection(title) {
+    var div = document.createElement('div');
+    div.className = 'detail-section';
+    var h4 = document.createElement('h4');
+    h4.textContent = title;
+    div.appendChild(h4);
+    return div;
+  }
+
+  // ── Prune ──
+  function pruneOld() {
+    if (!confirm('Delete bug reports older than 30 days? This cannot be undone.')) return;
+    var cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    var toDelete = allReports.filter(function(r) { return (r.ts || 0) < cutoff; });
+    if (toDelete.length === 0) { alert('No reports older than 30 days.'); return; }
+
+    var updates = {};
+    toDelete.forEach(function(r) { updates[r._key] = null; });
+    db.ref('bug-reports').update(updates).then(function() {
+      alert('Deleted ' + toDelete.length + ' old reports.');
+      loadReports();
+    }).catch(function(err) {
+      alert('Error: ' + err.message);
+    });
+  }
+})();
+</script>
+</body>
+</html>
