@@ -1,5 +1,23 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-02-28 — Focus Mode Card Fix + Review Modal Enlargement
+
+### Bug Fix: Invisible Cards in Focus Mode (Lesson 15, Lesson 17)
+- `initCardReveal()` now skips when `iq-focus-active` is on the body
+- Prevents `opacity: 0` being set on cards that focus mode manages independently
+- Fixes blank card area when navigating sections via progress panel during focus mode
+
+### Review Modal Sizing (interactive-quiz.css)
+- `.sr-modal` width: `420px` → `90vw / max-width: 1000px` (matches `.view-question`)
+- Added responsive breakpoints at 1200px (1100px), 1440px (1250px), 1728px (1400px)
+- `.sr-modal-body` padding: `24px 20px` → `32px 40px`
+- `.sr-modal-question` font-size: `17px` → `18px` (matches `.q-text`)
+
+### Files Changed
+- `Lesson 17｜形容詞・副詞・群動詞.html` — focus-active guard in initCardReveal
+- `Lesson 15｜接続詞.html` — same fix
+- `interactive-quiz.css` — modal sizing + responsive breakpoints
+
 ## 2026-02-27 — Dual Scope Upgrade: Keyboard, Sounds, Focus Mode, Print
 
 ### Keyboard Shortcuts (interactive-quiz.js)
