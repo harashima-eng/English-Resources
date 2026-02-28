@@ -2218,6 +2218,22 @@ html.dark .sr-modal-done {
   color: #22C55E;
 }
 
+/* ── Review modal card override ── */
+.sr-review-card {
+  margin: 0;
+  border: 1px solid var(--border-visible, rgba(120, 113, 108, 0.15));
+  border-radius: var(--radius, 20px);
+  box-shadow: none;
+}
+.sr-review-card .qcard-question {
+  border-bottom: none;
+}
+.sr-review-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
 
 
 /* ══════════════════════════════════════════════════════════
