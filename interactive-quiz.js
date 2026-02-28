@@ -2973,10 +2973,55 @@
             }
             if (window.UISound) UISound.play('click');
             return;
+          } else {
+            // Cross-tier: jump to adjacent category
+            var nextCat = getAdjacentCategory(window.NavState.category, direction);
+            if (nextCat) {
+              focusPendingDirection = direction > 0 ? 'forward' : 'backward';
+              focusAnimating = true;
+              var current = focusCards[focusIndex];
+              var slideX = direction > 0 ? -60 : 60;
+              if (typeof gsap !== 'undefined' && !reducedMotion) {
+                gsap.to(current, {
+                  opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
+                  overwrite: true,
+                  onComplete: function() {
+                    current.style.display = 'none';
+                    try {
+                      window.Router.setCategory(nextCat);
+                      if (direction < 0) {
+                        var newSections = window.NavState.categoryMap[nextCat];
+                        focusPendingDirection = 'backward';
+                        window.Router.setSection(newSections[newSections.length - 1]);
+                      }
+                    } catch (e) {
+                      console.error('[focus] Cross-tier navigation error:', e);
+                      focusAnimating = false;
+                      focusPendingDirection = null;
+                    }
+                  }
+                });
+                setTimeout(function() {
+                  if (focusAnimating && focusPendingDirection) {
+                    focusAnimating = false;
+                    focusPendingDirection = null;
+                  }
+                }, 2000);
+              } else {
+                current.style.display = 'none';
+                window.Router.setCategory(nextCat);
+                if (direction < 0) {
+                  var newSections = window.NavState.categoryMap[nextCat];
+                  window.Router.setSection(newSections[newSections.length - 1]);
+                }
+              }
+              if (window.UISound) UISound.play('click');
+              return;
+            }
           }
         }
       }
-      return; // at absolute boundary (first/last section)
+      return; // at absolute boundary (first/last across all tiers)
     }
 
     // Normal within-section navigation
@@ -3039,13 +3084,20 @@
     var canGoPrev = focusIndex > 0;
     var canGoNext = focusIndex < focusCards.length - 1;
 
-    // Check for adjacent sections so arrows stay enabled at section boundaries
+    // Check for adjacent sections/tiers so arrows stay enabled at boundaries
     if (window.NavState) {
       var sections = window.NavState.categoryMap[window.NavState.category];
       if (sections) {
         var localIdx = sections.indexOf(window.NavState.section);
         if (!canGoPrev && localIdx > 0) canGoPrev = true;
         if (!canGoNext && localIdx < sections.length - 1) canGoNext = true;
+        // Cross-tier: check adjacent categories
+        if (!canGoPrev && localIdx === 0) {
+          canGoPrev = !!getAdjacentCategory(window.NavState.category, -1);
+        }
+        if (!canGoNext && localIdx === sections.length - 1) {
+          canGoNext = !!getAdjacentCategory(window.NavState.category, 1);
+        }
       }
     }
 
