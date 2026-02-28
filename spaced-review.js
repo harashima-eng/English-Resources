@@ -20,13 +20,13 @@
   function loadQueue() {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    } catch (e) { return []; }
+    } catch (e) { if (window.IQDebug) window.IQDebug.log('error', 'loadQueue', e.message); return []; }
   }
 
   function saveQueue(queue) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(queue));
-    } catch (e) { /* private browsing or quota exceeded */ }
+    } catch (e) { if (window.IQDebug) window.IQDebug.log('error', 'saveQueue', e.message); }
   }
 
   function addToQueue(item) {
@@ -59,6 +59,7 @@
     }
 
     saveQueue(queue);
+    if (window.IQDebug) window.IQDebug.log('state', 'reviewQueue', 'add ' + item.examId + ' s' + item.si + 'q' + item.qi);
     updateBadge();
   }
 
@@ -93,6 +94,7 @@
     }
 
     saveQueue(queue);
+    if (window.IQDebug) window.IQDebug.log('state', 'reviewQueue', 'promote ' + examId + ' box=' + (item.box !== undefined ? item.box : 'mastered'));
     updateBadge();
   }
 
@@ -114,6 +116,7 @@
   document.addEventListener('iq:wrong-answer', function(e) {
     var d = e.detail;
     if (!d || !d.examId) return;
+    if (window.IQDebug) window.IQDebug.log('event', 'spaced-review', 'iq:wrong-answer ' + d.examId);
     addToQueue(d);
   });
 
