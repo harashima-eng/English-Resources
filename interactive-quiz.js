@@ -607,7 +607,10 @@
           questionText: q ? (q.text || '').substring(0, 100) : '',
           wrongAnswer: typeof userAnswer === 'string' ? userAnswer : JSON.stringify(userAnswer),
           correctAnswer: Array.isArray(correctAnswer) ? correctAnswer.join(', ') : correctAnswer,
-          choices: q ? (q.choices || '') : '',
+          choices: q ? (q.choices || (type === 'error' ? (function() {
+            var m = (q.text || '').match(/<u[^>]*>([^<]+)<\/u>/g);
+            return m ? m.map(function(s) { return s.replace(/<\/?u[^>]*>/g, ''); }).join('\u3000') : '';
+          })() : '')) : '',
           type: type
         }
       }));
@@ -3031,13 +3034,13 @@
 
     if (typeof gsap !== 'undefined' && !reducedMotion) {
       gsap.to(current, {
-        opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
+        opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in', overwrite: true,
         onComplete: function() {
           current.style.display = 'none';
           next.style.display = '';
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
-            { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.3, ease: 'power2.out',
+            { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.3, ease: 'power2.out', overwrite: true,
               onComplete: function() { focusAnimating = false; }
             }
           );

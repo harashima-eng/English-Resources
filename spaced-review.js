@@ -246,10 +246,21 @@
       counter.textContent = (currentIdx + 1) + ' / ' + items.length;
       body.textContent = '';
 
-      // Question text
+      // Question text — preserve <u> and <br> tags safely (no raw innerHTML)
       var qDiv = document.createElement('div');
       qDiv.className = 'sr-modal-question';
-      qDiv.textContent = item.questionText || ('Q: ' + item.examId + ' S' + item.si + ' Q' + item.qi);
+      var rawText = item.questionText || ('Q: ' + item.examId + ' S' + item.si + ' Q' + item.qi);
+      var tempDoc = new DOMParser().parseFromString(rawText, 'text/html');
+      (function appendSafe(src, dest) {
+        src.childNodes.forEach(function(node) {
+          if (node.nodeType === 3) { dest.appendChild(document.createTextNode(node.textContent)); }
+          else if (node.nodeType === 1 && (node.tagName === 'U' || node.tagName === 'BR')) {
+            var el = document.createElement(node.tagName.toLowerCase());
+            appendSafe(node, el);
+            dest.appendChild(el);
+          } else { appendSafe(node, dest); }
+        });
+      })(tempDoc.body, qDiv);
       body.appendChild(qDiv);
 
       // Choices — fallback to grammarData if item was saved before choices were added
