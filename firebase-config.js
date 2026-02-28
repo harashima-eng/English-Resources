@@ -72,6 +72,32 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
   });
 })();
 
+// ── Structured bug reports → Firebase ──
+(function() {
+  if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+  var ref = firebase.database().ref('bug-reports');
+  var lastReportTime = 0;
+  var THROTTLE = 300000; // 5 minutes between reports per device
+  var deviceId = localStorage.getItem('iq-device-id') || 'unknown';
+
+  window.BugReport = function(type, data) {
+    var now = Date.now();
+    if (now - lastReportTime < THROTTLE) return;
+    lastReportTime = now;
+    var report = {
+      type: String(type).substring(0, 50),
+      examId: (document.body && document.body.dataset.examId) || 'unknown',
+      deviceId: deviceId.substring(0, 30),
+      url: location.pathname,
+      ua: navigator.userAgent.substring(0, 100),
+      ts: firebase.database.ServerValue.TIMESTAMP,
+      state: data.state || {},
+      trace: (data.trace || []).slice(-30)
+    };
+    ref.push(report).catch(function() {});
+  };
+})();
+
 // ── PWA install prompt ──
 (function() {
   var deferredPrompt = null;
