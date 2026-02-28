@@ -735,6 +735,7 @@
 
   function openProgressPanel() {
     if (!progressPanelEl || progressPanelOpen) return;
+    dbg.log('state', 'progressPanelOpen', 'false -> true [openProgressPanel]'); dbg.setState('progressPanelOpen', true);
     progressPanelOpen = true;
     // Pause focus mode — hide overlay but keep state
     if (focusMode && focusOverlayEl) {
@@ -760,6 +761,7 @@
 
   function closeProgressPanel() {
     if (!progressPanelEl || !progressPanelOpen) return;
+    dbg.log('state', 'progressPanelOpen', 'true -> false [closeProgressPanel]'); dbg.setState('progressPanelOpen', false);
     progressPanelOpen = false;
     // Resume focus mode if it was active
     if (focusMode && focusOverlayEl) {
@@ -829,6 +831,7 @@
   }
 
   function addScore(isCorrect, si) {
+    dbg.log('state', 'score', (isCorrect ? 'correct' : 'wrong') + ' si=' + si + ' streak=' + streak + '->' + (isCorrect ? streak + 1 : 0));
     score.answered++;
     if (isCorrect) {
       score.correct++;
@@ -1922,6 +1925,7 @@
     });
 
     document.addEventListener('tr:session-end', function() {
+      dbg.log('state', 'iqSessionActive', 'true -> false [tr:session-end]'); dbg.setState('iqSessionActive', false);
       iqSessionActive = false;
       // Re-enable compose Check buttons for unanswered questions
       document.querySelectorAll('.iq-zone').forEach(function(zone) {
@@ -1983,6 +1987,7 @@
   function detectExistingSession() {
     if (document.querySelector('.tr-session-badge') ||
         document.querySelector('.tr-locked')) {
+      dbg.log('state', 'iqSessionActive', 'false -> true [detectExistingSession]'); dbg.setState('iqSessionActive', true);
       iqSessionActive = true;
     }
   }
