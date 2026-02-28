@@ -2094,7 +2094,7 @@ html.dark .sr-modal-header {
 }
 
 .sr-modal-question {
-  font: 500 17px/1.6 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  font: 500 18px/1.6 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: var(--text, #1C1917);
   margin-bottom: 16px;
 }
@@ -2648,6 +2648,17 @@ body.iq-focus-active .sub-nav {
 }
 body.iq-focus-active .questions-list {
   contain: layout style;
+}
+
+/* ── Review modal responsive sizing ── */
+@media (min-width: 1200px) {
+  .sr-modal { max-width: 1100px; }
+}
+@media (min-width: 1440px) {
+  .sr-modal { max-width: 1250px; }
+}
+@media (min-width: 1728px) {
+  .sr-modal { max-width: 1400px; }
 }
 
 /* ── Focus mode mobile ── */
