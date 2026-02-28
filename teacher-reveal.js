@@ -1054,12 +1054,20 @@
     bugSec.className = 'tr-panel-section';
     var bugLink = document.createElement('a');
     bugLink.href = '/bug-dashboard.html';
-    bugLink.target = '_blank';
     bugLink.className = 'tr-btn';
     bugLink.textContent = 'Bug Reports';
     bugLink.style.display = 'block';
     bugLink.style.textAlign = 'center';
     bugLink.style.textDecoration = 'none';
+    bugLink.addEventListener('click', function(e) {
+      var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+      if (isStandalone) {
+        e.preventDefault();
+        window.location.href = this.href;
+      } else {
+        bugLink.target = '_blank';
+      }
+    });
     bugSec.appendChild(bugLink);
     body.appendChild(bugSec);
 
