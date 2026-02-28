@@ -230,6 +230,96 @@
     { id: 'lesson-master', name: 'Lesson Master', desc: '100% entire lesson', icon: '\uD83C\uDFC6' }
   ];
 
+  var dbg = window.IQDebug;
+
+  // GSAP proxy — wraps gsap.to/fromTo/set/killTweensOf for logging + conflict detection
+  (function() {
+    if (typeof gsap === 'undefined' || !dbg) return;
+    var tweenId = 0;
+    var activeTweens = {}; // elementDesc → { id, t }
+
+    function elName(target) {
+      if (!target) return '?';
+      if (typeof target === 'string') return target;
+      if (target.className && typeof target.className === 'string') return '.' + target.className.split(' ')[0];
+      if (target.id) return '#' + target.id;
+      return target.tagName ? target.tagName.toLowerCase() : '?';
+    }
+
+    function getName(targets) {
+      if (Array.isArray(targets)) return targets.map(elName).join(',');
+      if (targets && targets.length !== undefined && typeof targets !== 'string') {
+        return Array.prototype.slice.call(targets, 0, 3).map(elName).join(',');
+      }
+      return elName(targets);
+    }
+
+    var origTo = gsap.to.bind(gsap);
+    var origFromTo = gsap.fromTo.bind(gsap);
+    var origSet = gsap.set.bind(gsap);
+    var origKill = gsap.killTweensOf.bind(gsap);
+
+    gsap.to = function(targets, vars) {
+      var id = ++tweenId;
+      var name = getName(targets);
+      var ow = vars && vars.overwrite;
+      var dur = vars && vars.duration !== undefined ? vars.duration : 0.5;
+      dbg.log('anim', 'to#' + id, name + (ow ? ' OW' : '') + ' dur=' + dur);
+      if (!ow && activeTweens[name]) {
+        var prev = activeTweens[name];
+        var ago = ((Date.now() - dbg._t0) - prev.t) / 1000;
+        dbg.log('anim', 'CONFLICT', name + ' has active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)');
+        dbg.report('anim_conflict');
+      }
+      activeTweens[name] = { id: id, t: Date.now() - dbg._t0 };
+      var origComplete = vars && vars.onComplete;
+      if (vars) {
+        vars.onComplete = function() {
+          if (activeTweens[name] && activeTweens[name].id === id) delete activeTweens[name];
+          if (origComplete) origComplete.apply(this, arguments);
+        };
+      }
+      return origTo(targets, vars);
+    };
+
+    gsap.fromTo = function(targets, fromVars, toVars) {
+      var id = ++tweenId;
+      var name = getName(targets);
+      var ow = toVars && toVars.overwrite;
+      var dur = toVars && toVars.duration !== undefined ? toVars.duration : 0.5;
+      dbg.log('anim', 'fromTo#' + id, name + (ow ? ' OW' : '') + ' dur=' + dur);
+      if (!ow && activeTweens[name]) {
+        var prev = activeTweens[name];
+        var ago = ((Date.now() - dbg._t0) - prev.t) / 1000;
+        dbg.log('anim', 'CONFLICT', name + ' has active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)');
+        dbg.report('anim_conflict');
+      }
+      activeTweens[name] = { id: id, t: Date.now() - dbg._t0 };
+      var origComplete = toVars && toVars.onComplete;
+      if (toVars) {
+        toVars.onComplete = function() {
+          if (activeTweens[name] && activeTweens[name].id === id) delete activeTweens[name];
+          if (origComplete) origComplete.apply(this, arguments);
+        };
+      }
+      return origFromTo(targets, fromVars, toVars);
+    };
+
+    gsap.set = function(targets, vars) {
+      var name = getName(targets);
+      dbg.log('anim', 'set', name);
+      delete activeTweens[name];
+      return origSet(targets, vars);
+    };
+
+    gsap.killTweensOf = function(targets, props) {
+      var name = getName(targets);
+      dbg.log('anim', 'kill', name);
+      delete activeTweens[name];
+      return origKill(targets, props);
+    };
+  })();
+
   function loadProgress() {
     var key = 'iq-progress-' + (document.body.dataset.examId || 'default');
     try {
