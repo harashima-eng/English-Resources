@@ -871,6 +871,7 @@
       var q = getQuestionData(si, qi);
       var examId = (document.body && document.body.dataset.examId) || 'default';
       var correctAnswer = q ? (q.correctAnswer || (q.correctText ? displayCorrectText(q.correctText) : '')) : '';
+      dbg.log('event', 'dispatch', 'iq:wrong-answer si=' + si + ' qi=' + qi);
       document.dispatchEvent(new CustomEvent('iq:wrong-answer', {
         detail: {
           examId: examId,
