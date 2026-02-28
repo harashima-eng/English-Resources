@@ -2980,8 +2980,13 @@
             if (nextCat) {
               focusPendingDirection = direction > 0 ? 'forward' : 'backward';
               focusAnimating = true;
+              focusNavGeneration++;
+              var gen = focusNavGeneration;
               var current = focusCards[focusIndex];
               var slideX = direction > 0 ? -60 : 60;
+              var targetSection = direction < 0
+                ? window.NavState.categoryMap[nextCat][window.NavState.categoryMap[nextCat].length - 1]
+                : window.NavState.categoryMap[nextCat][0];
               if (typeof gsap !== 'undefined' && !reducedMotion) {
                 gsap.to(current, {
                   opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
@@ -2989,12 +2994,7 @@
                   onComplete: function() {
                     current.style.display = 'none';
                     try {
-                      window.Router.setCategory(nextCat);
-                      if (direction < 0) {
-                        var newSections = window.NavState.categoryMap[nextCat];
-                        focusPendingDirection = 'backward';
-                        window.Router.setSection(newSections[newSections.length - 1]);
-                      }
+                      window.Router.navigate('question', nextCat, targetSection);
                     } catch (e) {
                       console.error('[focus] Cross-tier navigation error:', e);
                       focusAnimating = false;
@@ -3003,19 +3003,14 @@
                   }
                 });
                 setTimeout(function() {
-                  if (focusAnimating && focusPendingDirection) {
+                  if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
                     focusAnimating = false;
                     focusPendingDirection = null;
                   }
                 }, 2000);
               } else {
                 current.style.display = 'none';
-                window.Router.setCategory(nextCat);
-                if (direction < 0) {
-                  var newSections = window.NavState.categoryMap[nextCat];
-                  focusPendingDirection = 'backward';
-                  window.Router.setSection(newSections[newSections.length - 1]);
-                }
+                window.Router.navigate('question', nextCat, targetSection);
               }
               if (window.UISound) UISound.play('click');
               return;
