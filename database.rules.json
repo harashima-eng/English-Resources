@@ -40,6 +40,13 @@
         ".write": true,
         ".validate": "newData.hasChildren(['msg', 'ts']) && newData.child('msg').isString() && newData.child('msg').val().length < 500"
       }
+    },
+    "bug-reports": {
+      ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+      "$reportId": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['type', 'ts', 'deviceId']) && newData.child('type').isString() && newData.child('type').val().length < 50"
+      }
     }
   }
 }
