@@ -3266,6 +3266,7 @@
                 }
               });
               // Safety: if onComplete never fires, unblock after 2s
+              dbg.log('timer', 'setTimeout', '2s safety unblock cross-section');
               setTimeout(function() {
                 if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
                   dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-section]'); dbg.setState('focusAnimating', false);
@@ -3539,11 +3540,13 @@
     try {
       var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
       if (localStorage.getItem(fKey) === '1') {
+        dbg.log('timer', 'setTimeout', 'focus restore from localStorage 300ms');
         setTimeout(function() { enterFocusMode(); }, 300);
       }
     } catch (e) {}
 
     window.addEventListener('hashchange', function() {
+      dbg.log('timer', 'setTimeout', 'hashchange rebuild 50ms');
       setTimeout(function() {
         enhanceVisibleCards();
         if (reviewMode) filterVisibleCards();
