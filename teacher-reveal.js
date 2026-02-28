@@ -1053,7 +1053,7 @@
     var bugSec = document.createElement('div');
     bugSec.className = 'tr-panel-section';
     var bugLink = document.createElement('a');
-    bugLink.href = '/English-Resources/bug-dashboard.html';
+    bugLink.href = '/bug-dashboard.html';
     bugLink.target = '_blank';
     bugLink.className = 'tr-btn';
     bugLink.textContent = 'Bug Reports';
