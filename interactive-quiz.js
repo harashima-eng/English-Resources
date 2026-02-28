@@ -2919,6 +2919,14 @@
     } catch (e) {}
   }
 
+  function getAdjacentCategory(currentCat, direction) {
+    var cats = Object.keys(window.NavState.categoryMap);
+    var idx = cats.indexOf(currentCat);
+    var nextIdx = idx + direction;
+    if (nextIdx >= 0 && nextIdx < cats.length) return cats[nextIdx];
+    return null;
+  }
+
   function navigateFocus(direction) {
     if (!focusMode || focusAnimating) return;
     var newIdx = focusIndex + direction;
