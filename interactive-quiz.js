@@ -3247,6 +3247,9 @@
 
     if (window.UISound) UISound.play('transDown');
 
+    // Re-init card reveal observer for current section
+    if (typeof initCardReveal === 'function') initCardReveal();
+
     try {
       var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
       localStorage.removeItem(fKey);
@@ -3371,6 +3374,7 @@
     }
 
     // Normal within-section navigation
+    focusNavGeneration++;
     dbg.log('state', 'focusAnimating', 'false -> true [navigateFocus normal]'); dbg.setState('focusAnimating', true);
     focusAnimating = true;
     var current = focusCards[focusIndex];
@@ -3378,6 +3382,7 @@
     var slideX = direction > 0 ? -60 : 60;
 
     if (typeof gsap !== 'undefined' && !reducedMotion) {
+      var _navGen = focusNavGeneration;
       gsap.to(current, {
         opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in', overwrite: true,
         onComplete: function() {
@@ -3392,6 +3397,12 @@
           next.scrollIntoView({ behavior: 'auto', block: 'center' });
         }
       });
+      setTimeout(function() {
+        if (_navGen === focusNavGeneration && focusAnimating) {
+          dbg.log('state', 'focusAnimating', 'true -> false [2s safety normal]'); dbg.setState('focusAnimating', false);
+          focusAnimating = false;
+        }
+      }, 2000);
     } else {
       current.style.display = 'none';
       next.style.display = '';
