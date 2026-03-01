@@ -2425,6 +2425,20 @@
     retryKeys = [];
     retryBackup = {};
     updateProgressPanel();
+
+    if (focusMode) {
+      rebuildFocusCards();
+      if (focusCards.length === 0) {
+        exitFocusMode();
+      } else {
+        focusIndex = Math.min(focusIndex, focusCards.length - 1);
+        focusCards.forEach(function(card, i) {
+          card.style.display = (i === focusIndex) ? '' : 'none';
+        });
+        if (typeof gsap !== 'undefined') gsap.set(focusCards[focusIndex], { opacity: 1, y: 0, scale: 1.02 });
+        updateFocusIndicator();
+      }
+    }
   }
 
   function showToast(message) {
