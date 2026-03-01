@@ -2037,7 +2037,20 @@
       removeReviewFilter();
     }
 
-    if (focusMode) { rebuildFocusCards(); dbg.log('state', 'focusIndex', focusIndex + ' -> 0 [toggleReviewMode]'); dbg.setState('focusIndex', 0); focusIndex = 0; updateFocusIndicator(); }
+    if (focusMode) {
+      rebuildFocusCards();
+      focusIndex = 0;
+      if (focusCards.length === 0) {
+        exitFocusMode();
+      } else {
+        focusCards.forEach(function(card, i) {
+          card.style.display = (i === 0) ? '' : 'none';
+        });
+        if (typeof gsap !== 'undefined') gsap.set(focusCards[0], { opacity: 1, y: 0, scale: 1.02 });
+        focusCards[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        updateFocusIndicator();
+      }
+    }
   }
 
   function applyReviewFilter() {
@@ -2517,6 +2530,8 @@
   }
 
   function performFullReset() {
+    if (focusMode) exitFocusMode();
+    if (reviewMode) { reviewMode = false; removeReviewFilter(); }
     streak = 0;
     bestStreak = 0;
     badges = [];
@@ -3170,6 +3185,12 @@
     if (!focusMode) return;
     dbg.log('state', 'focusMode', 'true -> false [exitFocusMode]'); dbg.setState('focusMode', false);
     focusMode = false;
+    focusAnimating = false;
+    focusPendingDirection = null;
+    // Kill any in-flight GSAP tweens on focus cards
+    if (typeof gsap !== 'undefined') {
+      focusCards.forEach(function(c) { gsap.killTweensOf(c); });
+    }
 
     var previousCard = focusCards[focusIndex];
 
