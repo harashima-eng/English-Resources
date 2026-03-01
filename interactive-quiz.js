@@ -3583,6 +3583,15 @@
     enhanceVisibleCards();
     setupObserver();
 
+    // Exit focus mode when leaving question view
+    if (window.Router && Router.navigate) {
+      var _origNav = Router.navigate.bind(Router);
+      Router.navigate = function(view, cat, sec) {
+        if (focusMode && view !== 'question') exitFocusMode();
+        return _origNav(view, cat, sec);
+      };
+    }
+
     // Restore focus mode from localStorage
     try {
       var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
