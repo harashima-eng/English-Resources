@@ -3247,9 +3247,6 @@
 
     if (window.UISound) UISound.play('transDown');
 
-    // Re-init card reveal observer for current section
-    if (typeof initCardReveal === 'function') initCardReveal();
-
     try {
       var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
       localStorage.removeItem(fKey);

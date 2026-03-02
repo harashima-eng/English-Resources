@@ -308,6 +308,9 @@
           btn.className = 'iq-choice';
           btn.textContent = match[1] + '. ' + match[2];
           btn.dataset.letter = match[1];
+          if (match[1] === item.wrongAnswer) {
+            btn.classList.add('sr-prev-wrong');
+          }
           btn.onclick = function() {
             if (zone.classList.contains('locked')) return;
             choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
