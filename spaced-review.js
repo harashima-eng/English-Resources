@@ -751,7 +751,7 @@
         return;
       }
       if (e.key === 'Tab') {
-        var focusable = modal.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+        var focusable = modal.querySelectorAll('button, input, textarea, [tabindex]:not([tabindex="-1"])');
         if (focusable.length === 0) return;
         var first = focusable[0];
         var last = focusable[focusable.length - 1];
