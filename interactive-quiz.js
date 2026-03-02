@@ -3217,7 +3217,7 @@
 
     var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
     if (typeof gsap !== 'undefined') {
-      allCards.forEach(function(card) { gsap.set(card, { clearProps: 'x' }); });
+      allCards.forEach(function(card) { gsap.set(card, { clearProps: 'all' }); });
     }
     allCards.forEach(function(card) {
       if (retryMode) {
@@ -3235,7 +3235,7 @@
       var visibleCards = Array.prototype.slice.call(allCards).filter(function(c) { return c.style.display !== 'none'; });
       gsap.fromTo(visibleCards,
         { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.3, stagger: 0.03, ease: 'power2.out' }
+        { opacity: 1, y: 0, scale: 1, duration: 0.3, stagger: 0.03, ease: 'power2.out', overwrite: true }
       );
     } else {
       allCards.forEach(function(c) {
