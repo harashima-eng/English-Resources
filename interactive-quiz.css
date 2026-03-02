@@ -2243,6 +2243,69 @@ html.dark .sr-modal-done {
   margin-top: 16px;
 }
 
+/* ── Scramble chips in review modal ── */
+.sr-scramble-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.sr-scramble-chip {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border, #E7E5E4);
+  background: var(--card, #fff);
+  cursor: pointer;
+  font: 500 14px/1 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text, #1C1917);
+}
+.sr-scramble-chip:hover {
+  background: rgba(13, 148, 136, 0.06);
+  border-color: #0D9488;
+}
+.sr-scramble-chip.used {
+  opacity: 0.3;
+  pointer-events: none;
+}
+[data-theme="dark"] .sr-scramble-chip,
+html.dark .sr-scramble-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text, #F5F3F0);
+}
+[data-theme="dark"] .sr-scramble-chip:hover,
+html.dark .sr-scramble-chip:hover {
+  background: rgba(20, 184, 166, 0.1);
+  border-color: #14B8A6;
+}
+.sr-scramble-answer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 44px;
+  padding: 12px;
+  border: 2px dashed var(--border, #E7E5E4);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+[data-theme="dark"] .sr-scramble-answer,
+html.dark .sr-scramble-answer {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.sr-scramble-placed {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(13, 148, 136, 0.08);
+  color: #0D9488;
+  cursor: pointer;
+  font: 500 14px/1 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+}
+[data-theme="dark"] .sr-scramble-placed,
+html.dark .sr-scramble-placed {
+  background: rgba(20, 184, 166, 0.12);
+  color: #14B8A6;
+}
+
 
 /* ══════════════════════════════════════════════════════════
    Leaderboard
