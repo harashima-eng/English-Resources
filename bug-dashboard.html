@@ -52,6 +52,30 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .badge-rapid_interaction { background: #E8EAF6; color: #283593; }
 .badge-state_race { background: #F3E5F5; color: #6A1B9A; }
 .badge-silent_error { background: #FFEBEE; color: #B71C1C; }
+.badge-unknown { background: #E0E0E0; color: #424242; }
+
+.tab-bar { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid #eee; }
+.tab-btn { background: none; border: none; padding: 10px 20px; font-size: 14px; font-weight: 600; color: #999; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; position: relative; }
+.tab-btn:hover { color: #666; }
+.tab-btn.active { color: #7A9BA8; border-bottom-color: #7A9BA8; }
+.tab-badge { display: inline-block; background: #eee; color: #666; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 10px; margin-left: 6px; }
+.tab-btn.active .tab-badge { background: #7A9BA8; color: #fff; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.error-banner { background: #FFEBEE; border: 1px solid #FFCDD2; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: 13px; color: #C62828; font-family: 'SF Mono', Monaco, Consolas, monospace; }
+
+.quiz-info, .screen-info { font-size: 13px; color: #555; margin-bottom: 4px; }
+.quiz-info strong, .screen-info strong { color: #333; }
+
+.state-table { width: 100%; font-size: 12px; border-collapse: collapse; font-family: 'SF Mono', Monaco, Consolas, monospace; }
+.state-table td { padding: 3px 8px; border-bottom: 1px solid #f0f0f0; }
+.state-table td:first-child { color: #7A9BA8; font-weight: 600; white-space: nowrap; width: 180px; }
+
+.copy-btn { background: #f5f5f5; border: 1px solid #ddd; padding: 4px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; float: right; margin-bottom: 8px; }
+.copy-btn:hover { background: #eee; }
+.copy-btn.copied { background: #E8F5E9; border-color: #A5D6A7; color: #2E7D32; }
 
 .detail-row { display: none; }
 .detail-row td { padding: 0 !important; }
@@ -101,20 +125,37 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <div class="stats-row" id="statsRow"></div>
   <div class="bar-chart" id="barChart"></div>
 
-  <div class="filters">
-    <select id="filterType"><option value="">All types</option></select>
-    <select id="filterExam"><option value="">All lessons</option></select>
-    <input type="date" id="filterFrom" title="From date">
-    <input type="date" id="filterTo" title="To date">
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="bugs">Bug Reports <span class="tab-badge" id="bugCount">0</span></button>
+    <button class="tab-btn" data-tab="errors">JS Errors <span class="tab-badge" id="errorCount">0</span></button>
   </div>
 
-  <table class="report-table">
-    <thead>
-      <tr><th>Type</th><th>Lesson</th><th>Device</th><th>Session</th><th>Time</th></tr>
-    </thead>
-    <tbody id="reportBody"></tbody>
-  </table>
-  <div class="empty-state" id="emptyState" style="display:none"><p>No bug reports found.</p></div>
+  <div class="tab-panel active" id="bugsPanel">
+    <div class="filters">
+      <select id="filterType"><option value="">All types</option></select>
+      <select id="filterExam"><option value="">All lessons</option></select>
+      <input type="date" id="filterFrom" title="From date">
+      <input type="date" id="filterTo" title="To date">
+    </div>
+
+    <table class="report-table">
+      <thead>
+        <tr><th>Type</th><th>Lesson</th><th>Device</th><th>Session</th><th>Time</th></tr>
+      </thead>
+      <tbody id="reportBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none"><p>No bug reports found.</p></div>
+  </div>
+
+  <div class="tab-panel" id="errorsPanel">
+    <table class="report-table">
+      <thead>
+        <tr><th>Message</th><th>URL</th><th>Time</th></tr>
+      </thead>
+      <tbody id="errorsBody"></tbody>
+    </table>
+    <div class="empty-state" id="errorsEmpty" style="display:none"><p>No JS errors found.</p></div>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
@@ -138,6 +179,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   var auth = firebase.auth();
   var db = firebase.database();
   var allReports = [];
+  var allErrors = [];
+  var activeTab = 'bugs';
 
   var TRACE_COLORS = { state: '#2196F3', anim: '#FF9800', event: '#9C27B0', timer: '#607D8B', error: '#F44336', ui: '#E91E63' };
   var BAR_COLORS = { anim_conflict: '#E65100', stuck_animating: '#C62828', rapid_interaction: '#283593', state_race: '#6A1B9A', silent_error: '#B71C1C' };
