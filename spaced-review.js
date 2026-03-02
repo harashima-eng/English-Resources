@@ -387,27 +387,314 @@
         };
         body.appendChild(checkBtn);
 
+      } else if (item.type === 'correction' || item.type === 'error' || item.type === 'fillin') {
+        // ── Correction / Error / Fillin: text input + auto-check ──
+
+        var card = document.createElement('div');
+        card.className = 'qcard sr-review-card';
+
+        var questionArea = document.createElement('div');
+        questionArea.className = 'qcard-question';
+
+        var qnum = document.createElement('span');
+        qnum.className = 'qnum';
+        qnum.textContent = (currentIdx + 1);
+        questionArea.appendChild(qnum);
+
+        var qtext = document.createElement('div');
+        qtext.className = 'qtext';
+        appendSafe(tempDoc.body, qtext);
+        questionArea.appendChild(qtext);
+
+        var zone = document.createElement('div');
+        zone.className = 'iq-zone';
+
+        var hintLabel = document.createElement('div');
+        hintLabel.className = 'iq-scramble-label';
+        hintLabel.textContent = 'Type the correct form';
+        zone.appendChild(hintLabel);
+
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'iq-correction-input';
+        // Extract <u> word for placeholder hint
+        var uMatch = rawText.match(/<u>([^<]+)<\/u>/);
+        input.placeholder = uMatch ? uMatch[1] + ' → ...' : 'Your answer...';
+        zone.appendChild(input);
+
+        questionArea.appendChild(zone);
+        card.appendChild(questionArea);
+        body.appendChild(card);
+
+        // Previous wrong answer
+        var metaDiv = document.createElement('div');
+        metaDiv.className = 'sr-review-meta';
+        var wrongDiv = document.createElement('div');
+        wrongDiv.className = 'sr-modal-wrong';
+        wrongDiv.textContent = 'Your answer: ' + (item.wrongAnswer || '—');
+        metaDiv.appendChild(wrongDiv);
+        body.appendChild(metaDiv);
+
+        var checkBtn = document.createElement('button');
+        checkBtn.className = 'sr-modal-reveal-btn';
+        checkBtn.textContent = 'Check';
+
+        var correctionAnswered = false;
+        function checkCorrectionAnswer() {
+          if (correctionAnswered) return;
+          var typed = input.value.trim();
+          if (!typed) return;
+          correctionAnswered = true;
+          input.disabled = true;
+
+          // Support alternatives separated by /
+          var correct = String(item.correctAnswer || '');
+          var alternatives = correct.split('/').map(function(s) { return s.trim().toLowerCase(); });
+          var isCorrect = alternatives.indexOf(typed.toLowerCase()) !== -1;
+
+          if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
+
+          if (isCorrect) {
+            promoteItem(item.examId, item.si, item.qi);
+          } else {
+            demoteItem(item.examId, item.si, item.qi);
+          }
+
+          checkBtn.style.display = 'none';
+
+          var resultDiv = document.createElement('div');
+          resultDiv.className = 'sr-modal-answer';
+          resultDiv.textContent = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + (item.correctAnswer || '—');
+          resultDiv.style.color = isCorrect ? '#16A34A' : '#DC2626';
+          body.appendChild(resultDiv);
+
+          var nextBtn = document.createElement('button');
+          nextBtn.className = 'sr-modal-reveal-btn';
+          nextBtn.textContent = currentIdx < items.length - 1 ? 'Next' : 'Done';
+          nextBtn.onclick = function() { currentIdx++; renderItem(); };
+          body.appendChild(nextBtn);
+        }
+
+        checkBtn.onclick = checkCorrectionAnswer;
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') checkCorrectionAnswer();
+        });
+        body.appendChild(checkBtn);
+
+        setTimeout(function() { input.focus(); }, 50);
+
+      } else if (item.type === 'scramble') {
+        // ── Scramble: word chips + auto-check ──
+
+        var card = document.createElement('div');
+        card.className = 'qcard sr-review-card';
+
+        var questionArea = document.createElement('div');
+        questionArea.className = 'qcard-question';
+
+        var qnum = document.createElement('span');
+        qnum.className = 'qnum';
+        qnum.textContent = (currentIdx + 1);
+        questionArea.appendChild(qnum);
+
+        var qtext = document.createElement('div');
+        qtext.className = 'qtext';
+        appendSafe(tempDoc.body, qtext);
+        questionArea.appendChild(qtext);
+
+        var zone = document.createElement('div');
+        zone.className = 'iq-zone';
+
+        // Answer drop zone
+        var answerZone = document.createElement('div');
+        answerZone.className = 'sr-scramble-answer';
+        zone.appendChild(answerZone);
+
+        // Word pool (shuffled)
+        var correctWords = String(item.correctAnswer || '').split(/\s+/);
+        var shuffled = correctWords.slice();
+        for (var i = shuffled.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+        }
+
+        var placed = [];
+        var chipButtons = [];
+
+        var pool = document.createElement('div');
+        pool.className = 'sr-scramble-pool';
+
+        shuffled.forEach(function(word, idx) {
+          var chip = document.createElement('button');
+          chip.className = 'sr-scramble-chip';
+          chip.textContent = word;
+          chip.dataset.idx = idx;
+          chip.onclick = function() {
+            if (chip.classList.contains('used') || zone.classList.contains('locked')) return;
+            chip.classList.add('used');
+            placed.push({ word: word, chipIdx: idx });
+            renderPlaced();
+            if (window.UISound) UISound.play('select');
+          };
+          chipButtons.push(chip);
+          pool.appendChild(chip);
+        });
+
+        zone.appendChild(pool);
+        questionArea.appendChild(zone);
+        card.appendChild(questionArea);
+        body.appendChild(card);
+
+        function renderPlaced() {
+          answerZone.textContent = '';
+          placed.forEach(function(p, pIdx) {
+            var el = document.createElement('span');
+            el.className = 'sr-scramble-placed';
+            el.textContent = p.word;
+            el.onclick = function() {
+              if (zone.classList.contains('locked')) return;
+              chipButtons[p.chipIdx].classList.remove('used');
+              placed.splice(pIdx, 1);
+              renderPlaced();
+            };
+            answerZone.appendChild(el);
+          });
+        }
+
+        // Previous wrong answer
+        var metaDiv = document.createElement('div');
+        metaDiv.className = 'sr-review-meta';
+        var wrongDiv = document.createElement('div');
+        wrongDiv.className = 'sr-modal-wrong';
+        wrongDiv.textContent = 'Your answer: ' + (item.wrongAnswer || '—');
+        metaDiv.appendChild(wrongDiv);
+        body.appendChild(metaDiv);
+
+        var checkBtn = document.createElement('button');
+        checkBtn.className = 'sr-modal-reveal-btn';
+        checkBtn.textContent = 'Check';
+        checkBtn.onclick = function() {
+          if (placed.length === 0 || zone.classList.contains('locked')) return;
+          zone.classList.add('locked');
+
+          var answer = placed.map(function(p) { return p.word; }).join(' ');
+          var isCorrect = answer.toLowerCase() === String(item.correctAnswer || '').toLowerCase();
+
+          if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
+
+          if (isCorrect) {
+            promoteItem(item.examId, item.si, item.qi);
+          } else {
+            demoteItem(item.examId, item.si, item.qi);
+          }
+
+          checkBtn.style.display = 'none';
+
+          var resultDiv = document.createElement('div');
+          resultDiv.className = 'sr-modal-answer';
+          resultDiv.textContent = isCorrect ? 'Correct!' : 'Correct order: ' + (item.correctAnswer || '—');
+          resultDiv.style.color = isCorrect ? '#16A34A' : '#DC2626';
+          body.appendChild(resultDiv);
+
+          var nextBtn = document.createElement('button');
+          nextBtn.className = 'sr-modal-reveal-btn';
+          nextBtn.textContent = currentIdx < items.length - 1 ? 'Next' : 'Done';
+          nextBtn.onclick = function() { currentIdx++; renderItem(); };
+          body.appendChild(nextBtn);
+        };
+        body.appendChild(checkBtn);
+
+      } else if (item.type === 'compose') {
+        // ── Compose: text area + self-eval (can't auto-grade free text) ──
+
+        var card = document.createElement('div');
+        card.className = 'qcard sr-review-card';
+
+        var questionArea = document.createElement('div');
+        questionArea.className = 'qcard-question';
+
+        var qnum = document.createElement('span');
+        qnum.className = 'qnum';
+        qnum.textContent = (currentIdx + 1);
+        questionArea.appendChild(qnum);
+
+        var qtext = document.createElement('div');
+        qtext.className = 'qtext';
+        appendSafe(tempDoc.body, qtext);
+        questionArea.appendChild(qtext);
+
+        var zone = document.createElement('div');
+        zone.className = 'iq-zone';
+
+        var textarea = document.createElement('textarea');
+        textarea.className = 'iq-correction-input';
+        textarea.rows = 3;
+        textarea.placeholder = 'Write your answer...';
+        textarea.style.maxWidth = '100%';
+        textarea.style.resize = 'vertical';
+        zone.appendChild(textarea);
+
+        questionArea.appendChild(zone);
+        card.appendChild(questionArea);
+        body.appendChild(card);
+
+        // Previous wrong answer
+        var metaDiv = document.createElement('div');
+        metaDiv.className = 'sr-review-meta';
+        var wrongDiv = document.createElement('div');
+        wrongDiv.className = 'sr-modal-wrong';
+        wrongDiv.textContent = 'Your answer: ' + (item.wrongAnswer || '—');
+        metaDiv.appendChild(wrongDiv);
+        body.appendChild(metaDiv);
+
+        var revealBtn = document.createElement('button');
+        revealBtn.className = 'sr-modal-reveal-btn';
+        revealBtn.textContent = 'Show Answer';
+        revealBtn.onclick = function() {
+          revealBtn.style.display = 'none';
+          textarea.disabled = true;
+
+          var ansDiv = document.createElement('div');
+          ansDiv.className = 'sr-modal-answer';
+          ansDiv.textContent = 'Correct: ' + (item.correctAnswer || '—');
+          body.appendChild(ansDiv);
+
+          var evalDiv = document.createElement('div');
+          evalDiv.className = 'sr-modal-eval';
+
+          var gotIt = document.createElement('button');
+          gotIt.className = 'sr-modal-eval-btn sr-correct';
+          gotIt.textContent = 'Got it right';
+          gotIt.onclick = function() {
+            promoteItem(item.examId, item.si, item.qi);
+            currentIdx++;
+            renderItem();
+          };
+
+          var missed = document.createElement('button');
+          missed.className = 'sr-modal-eval-btn sr-wrong';
+          missed.textContent = 'Got it wrong';
+          missed.onclick = function() {
+            demoteItem(item.examId, item.si, item.qi);
+            currentIdx++;
+            renderItem();
+          };
+
+          evalDiv.appendChild(gotIt);
+          evalDiv.appendChild(missed);
+          body.appendChild(evalDiv);
+        };
+        body.appendChild(revealBtn);
+
+        setTimeout(function() { textarea.focus(); }, 50);
+
       } else {
-        // ── Non-choice items: original Show Answer + self-eval flow ──
+        // ── Fallback: passive Show Answer + self-eval ──
 
         var qDiv = document.createElement('div');
         qDiv.className = 'sr-modal-question';
         appendSafe(tempDoc.body, qDiv);
         body.appendChild(qDiv);
-
-        if (choices) {
-          var choicesDiv = document.createElement('div');
-          choicesDiv.className = 'sr-modal-choices';
-          var parts = choices.split(/[\u3000\t]+/);
-          parts.forEach(function(part) {
-            if (!part.trim()) return;
-            var choiceEl = document.createElement('div');
-            choiceEl.className = 'sr-modal-choice-item';
-            choiceEl.textContent = part.trim();
-            choicesDiv.appendChild(choiceEl);
-          });
-          body.appendChild(choicesDiv);
-        }
 
         var wrongDiv = document.createElement('div');
         wrongDiv.className = 'sr-modal-wrong';
