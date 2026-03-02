@@ -691,6 +691,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       alert('Error: ' + err.message);
     });
   }
+
+  // ── Purge anim_conflict ──
+  function purgeAnimConflict() {
+    var toDelete = allReports.filter(function(r) { return r.type === 'anim_conflict'; });
+    if (toDelete.length === 0) { alert('No anim_conflict reports found.'); return; }
+    if (!confirm('Delete all ' + toDelete.length + ' anim_conflict reports? This cannot be undone.')) return;
+
+    var updates = {};
+    toDelete.forEach(function(r) { updates[r._key] = null; });
+    db.ref('bug-reports').update(updates).then(function() {
+      alert('Deleted ' + toDelete.length + ' anim_conflict reports.');
+      loadReports();
+    }).catch(function(err) {
+      alert('Error: ' + err.message);
+    });
+  }
 })();
 </script>
 </body>

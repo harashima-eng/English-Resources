@@ -6,6 +6,20 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-02 — GSAP Proxy False Positive Fix + Bug Dashboard Purge
+
+### interactive-quiz.js
+- Fixed GSAP debug proxy `elName()` false positives: unique per-element IDs via `_gsapUid` counter (replaces generic tag-based names)
+- Added `overwrite: true` to 3 legitimate animation overlaps (section transitions, score updates, card entrance/exit)
+
+### bug-dashboard.html
+- Added "Purge anim_conflict" button for bulk-deleting false positive reports from Firebase
+
+### CLAUDE.md
+- Added "Debug & Monitoring System" section documenting GSAP debug proxy, Firebase bug reporter, and bug dashboard
+
+---
+
 ## 2026-02-26 — PWA, Accessibility, CI/CD & SEO Improvements
 
 ### sw.js
