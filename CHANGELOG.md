@@ -6,6 +6,21 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-02 — Focus Mode Visibility Fix + Accessibility
+
+### interactive-quiz.js
+- Fixed Focus mode cards not appearing: clear `.no-match` class (search filter conflict with `display:none!important`) and GSAP residual inline styles (`clearProps`) on card transitions
+- Empty section graceful exit: `iq:section-rendered` now calls `exitFocusMode()` instead of trapping user in overlay
+- Added accessibility: `aria-label` on focus toggle/arrows, `aria-pressed` on toggle, `aria-live="polite"` on indicator
+
+### Lesson 16 (名詞・冠詞・代名詞)
+- Standardized script loading order to match Lessons 15/17 (interactive-quiz.css before teacher-reveal.css, snd.js before Firebase)
+
+### Cleanup
+- Deleted 5 orphaned `.bak` files from 英検/準１級/
+
+---
+
 ## 2026-03-02 — GSAP Proxy False Positive Fix + Bug Dashboard Purge
 
 ### interactive-quiz.js
