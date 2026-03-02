@@ -3209,6 +3209,9 @@
     var previousCard = focusCards[focusIndex];
 
     var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    if (typeof gsap !== 'undefined') {
+      allCards.forEach(function(card) { gsap.set(card, { clearProps: 'x' }); });
+    }
     allCards.forEach(function(card) {
       if (retryMode) {
         var key = card.dataset.si + '-' + card.dataset.qi;
