@@ -3155,13 +3155,20 @@
 
     createFocusOverlay();
 
+    // Disconnect reveal observer so it can't override focus opacity
+    if (typeof revealObserver !== 'undefined' && revealObserver) revealObserver.disconnect();
+    // Kill any active reveal tweens before setting focus state
+    if (typeof gsap !== 'undefined') {
+      focusCards.forEach(function(c) { gsap.killTweensOf(c); });
+    }
+
     // Force-clear reveal state (initCardReveal sets opacity:0, y:20)
     if (typeof gsap !== 'undefined') gsap.set(focusCards, { opacity: 1, y: 0 });
 
     focusCards.forEach(function(card, i) {
       if (i !== focusIndex) {
         if (typeof gsap !== 'undefined' && !reducedMotion) {
-          gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.25, ease: 'power2.in',
+          gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.25, ease: 'power2.in', overwrite: true,
             onComplete: function() { card.style.display = 'none'; }
           });
         } else {
@@ -3172,7 +3179,7 @@
 
     var focused = focusCards[focusIndex];
     if (typeof gsap !== 'undefined' && !reducedMotion) {
-      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.3, ease: 'back.out(1.4)' });
+      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.3, ease: 'back.out(1.4)', overwrite: true });
     }
     focused.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
