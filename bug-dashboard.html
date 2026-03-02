@@ -118,6 +118,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     <div class="header-actions">
       <button id="refreshBtn">Refresh</button>
       <button class="prune-btn" id="pruneBtn">Prune &gt;30 days</button>
+      <button class="prune-btn" id="purgeAnimBtn">Purge anim_conflict</button>
       <button id="logoutBtn">Sign out</button>
     </div>
   </div>
@@ -232,6 +233,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
   $('refreshBtn').onclick = function() { loadReports(); loadErrors(); };
   $('pruneBtn').onclick = pruneOld;
+  $('purgeAnimBtn').onclick = purgeAnimConflict;
 
   // Tab switching
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
