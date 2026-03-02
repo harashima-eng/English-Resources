@@ -3178,6 +3178,13 @@
     if (focusMode) return;
     if (typeof NavState !== 'undefined' && NavState.view !== 'question') return;
 
+    // Clear search filter — .no-match CSS uses display:none!important which
+    // overrides inline styles, making cards invisible in focus mode
+    var allQCards = document.querySelectorAll('.qcard');
+    allQCards.forEach(function(c) { c.classList.remove('no-match'); });
+    var searchInput = document.querySelector('#searchInput');
+    if (searchInput) searchInput.value = '';
+
     rebuildFocusCards();
     if (focusCards.length === 0) return;
 
