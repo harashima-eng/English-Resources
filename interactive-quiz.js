@@ -47,9 +47,11 @@
     if (DEBUG && overlayEl) updateOverlay();
   }
 
-  function report(type) {
+  function report(type, extra) {
     if (typeof window.BugReport === 'function') {
-      window.BugReport(type, { state: JSON.parse(JSON.stringify(stateSnap)), trace: buf.slice() });
+      var data = { state: JSON.parse(JSON.stringify(stateSnap)), trace: buf.slice() };
+      if (extra) { for (var k in extra) data[k] = extra[k]; }
+      window.BugReport(type, data);
     }
   }
 
