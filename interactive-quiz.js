@@ -3155,15 +3155,18 @@
     focusPrevBtn = document.createElement('button');
     focusPrevBtn.className = 'iq-focus-arrow iq-focus-prev';
     focusPrevBtn.textContent = '\u2039';
+    focusPrevBtn.setAttribute('aria-label', 'Previous question');
     focusPrevBtn.onclick = function() { navigateFocus(-1); };
 
     focusNextBtn = document.createElement('button');
     focusNextBtn.className = 'iq-focus-arrow iq-focus-next';
     focusNextBtn.textContent = '\u203A';
+    focusNextBtn.setAttribute('aria-label', 'Next question');
     focusNextBtn.onclick = function() { navigateFocus(1); };
 
     focusIndicatorEl = document.createElement('div');
     focusIndicatorEl.className = 'iq-focus-indicator';
+    focusIndicatorEl.setAttribute('aria-live', 'polite');
 
     focusOverlayEl.appendChild(focusPrevBtn);
     focusOverlayEl.appendChild(focusNextBtn);
@@ -3235,7 +3238,7 @@
     updateFocusIndicator();
 
     var toggle = document.querySelector('.iq-focus-toggle');
-    if (toggle) toggle.classList.add('active');
+    if (toggle) { toggle.classList.add('active'); toggle.setAttribute('aria-pressed', 'true'); }
 
     if (window.UISound) UISound.play('transUp');
 
@@ -3296,7 +3299,7 @@
     document.body.classList.remove('iq-focus-active');
 
     var toggle = document.querySelector('.iq-focus-toggle');
-    if (toggle) toggle.classList.remove('active');
+    if (toggle) { toggle.classList.remove('active'); toggle.setAttribute('aria-pressed', 'false'); }
 
     if (window.UISound) UISound.play('transDown');
 
