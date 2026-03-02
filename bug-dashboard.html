@@ -230,8 +230,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     $('loginScreen').style.display = 'flex';
   };
 
-  $('refreshBtn').onclick = loadReports;
+  $('refreshBtn').onclick = function() { loadReports(); loadErrors(); };
   $('pruneBtn').onclick = pruneOld;
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.onclick = function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var tab = btn.dataset.tab;
+      activeTab = tab;
+      $(tab === 'bugs' ? 'bugsPanel' : 'errorsPanel').classList.add('active');
+    };
+  });
   $('filterType').onchange = applyFilters;
   $('filterExam').onchange = applyFilters;
   $('filterFrom').onchange = applyFilters;
@@ -246,6 +258,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     $('dashboard').style.display = 'block';
     $('userEmail').textContent = user.email;
     loadReports();
+    loadErrors();
   }
 
   // ── Data ──
@@ -261,6 +274,68 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       populateFilters();
       renderStats();
       applyFilters();
+    });
+  }
+
+  function loadErrors() {
+    db.ref('errors').orderByChild('ts').limitToLast(100).once('value').then(function(snap) {
+      allErrors = [];
+      snap.forEach(function(child) {
+        var e = child.val();
+        e._key = child.key;
+        allErrors.push(e);
+      });
+      allErrors.sort(function(a, b) { return (b.ts || 0) - (a.ts || 0); });
+      $('errorCount').textContent = allErrors.length;
+      renderErrorsTable();
+    });
+  }
+
+  function renderErrorsTable() {
+    var body = $('errorsBody');
+    body.textContent = '';
+    $('errorsEmpty').style.display = allErrors.length === 0 ? '' : 'none';
+
+    allErrors.forEach(function(e) {
+      var tr = document.createElement('tr');
+      tr.className = 'clickable';
+
+      var tdMsg = document.createElement('td');
+      tdMsg.textContent = (e.msg || '?').substring(0, 80);
+      tdMsg.title = e.msg || '';
+
+      var tdUrl = document.createElement('td');
+      tdUrl.textContent = e.url || '?';
+
+      var tdTime = document.createElement('td');
+      tdTime.textContent = formatTime(e.ts);
+
+      tr.appendChild(tdMsg);
+      tr.appendChild(tdUrl);
+      tr.appendChild(tdTime);
+
+      var detailTr = document.createElement('tr');
+      detailTr.className = 'detail-row';
+      var detailTd = document.createElement('td');
+      detailTd.colSpan = 3;
+      var wrap = document.createElement('div');
+      wrap.className = 'detail-content';
+
+      var pre = document.createElement('pre');
+      pre.className = 'detail-pre';
+      pre.textContent = 'Message: ' + (e.msg || '?') + '\nURL: ' + (e.url || '?') + '\nUA: ' + (e.ua || '?') + '\nTime: ' + formatTime(e.ts);
+      wrap.appendChild(pre);
+      detailTd.appendChild(wrap);
+      detailTr.appendChild(detailTd);
+
+      tr.onclick = function() {
+        var isOpen = detailTr.style.display === 'table-row';
+        detailTr.style.display = isOpen ? 'none' : 'table-row';
+        tr.classList.toggle('expanded', !isOpen);
+      };
+
+      body.appendChild(tr);
+      body.appendChild(detailTr);
     });
   }
 
@@ -301,6 +376,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       examCounts[r.examId || 'unknown'] = (examCounts[r.examId || 'unknown'] || 0) + 1;
       if (r.deviceId) uniqueDevices[r.deviceId] = true;
     });
+
+    $('bugCount').textContent = total;
 
     var statsEl = $('statsRow');
     statsEl.textContent = '';
