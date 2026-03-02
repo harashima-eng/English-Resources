@@ -3081,6 +3081,31 @@
   var focusPrevBtn = null;
   var focusNextBtn = null;
 
+  // Expose quiz context for bug reports
+  if (dbg) {
+    dbg.quizContext = function() {
+      var ctx = {
+        session: !!iqSessionActive,
+        mode: retryMode ? 'retry' : reviewMode ? 'review' : focusMode ? 'focus' : 'normal',
+        focusAnimating: !!focusAnimating
+      };
+      if (focusMode && focusCards[focusIndex]) {
+        ctx.si = parseInt(focusCards[focusIndex].dataset.si);
+        ctx.qi = parseInt(focusCards[focusIndex].dataset.qi);
+      } else {
+        var active = document.querySelector('.iq-zone.locked:last-of-type, .iq-zone:last-of-type');
+        if (active && active.dataset.si) {
+          ctx.si = parseInt(active.dataset.si);
+          ctx.qi = parseInt(active.dataset.qi);
+        }
+      }
+      ctx.activeEl = document.activeElement
+        ? document.activeElement.tagName + (document.activeElement.className ? '.' + document.activeElement.className.split(' ')[0] : '')
+        : 'none';
+      return ctx;
+    };
+  }
+
   function createFocusToggle() {
     var topNavRight = document.querySelector('.top-nav-right');
     if (!topNavRight) return;
