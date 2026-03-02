@@ -240,12 +240,19 @@
     var tweenId = 0;
     var activeTweens = {}; // elementDesc → { id, t }
 
+    var uidCounter = 0;
     function elName(target) {
       if (!target) return '?';
       if (typeof target === 'string') return target;
-      if (target.className && typeof target.className === 'string') return '.' + target.className.split(' ')[0];
-      if (target.id) return '#' + target.id;
-      return target.tagName ? target.tagName.toLowerCase() : '?';
+      if (!target._gsapUid) {
+        var desc = '';
+        if (target.id) desc = '#' + target.id;
+        else if (target.className && typeof target.className === 'string') desc = '.' + target.className.split(' ')[0];
+        else if (target.tagName) desc = target.tagName.toLowerCase();
+        else desc = '?';
+        target._gsapUid = desc + ':' + (++uidCounter);
+      }
+      return target._gsapUid;
     }
 
     function getName(targets) {
@@ -1095,7 +1102,7 @@
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(popup,
         { scale: 0.9 },
-        { scale: 1, duration: 0.2, ease: 'back.out(1.4)' }
+        { scale: 1, duration: 0.2, ease: 'back.out(1.4)', overwrite: true }
       );
     }
   }
@@ -2453,7 +2460,7 @@
     document.body.appendChild(toast);
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(toast, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
-      gsap.to(toast, { opacity: 0, y: -10, duration: 0.3, delay: 2, onComplete: function() { toast.remove(); } });
+      gsap.to(toast, { opacity: 0, y: -10, duration: 0.3, delay: 2, overwrite: true, onComplete: function() { toast.remove(); } });
     } else {
       setTimeout(function() { toast.remove(); }, 2500);
     }
@@ -3212,7 +3219,7 @@
 
     focusOverlayEl.classList.add('active');
     if (typeof gsap !== 'undefined' && !reducedMotion) {
-      gsap.fromTo(focusOverlayEl, { opacity: 0 }, { opacity: 1, duration: 0.25 });
+      gsap.fromTo(focusOverlayEl, { opacity: 0 }, { opacity: 1, duration: 0.25, overwrite: true });
     }
 
     document.body.classList.add('iq-focus-active');
