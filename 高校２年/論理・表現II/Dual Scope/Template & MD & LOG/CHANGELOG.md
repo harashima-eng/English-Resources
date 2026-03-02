@@ -1,5 +1,24 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-02 — Focus Mode Visibility Fix + Accessibility
+
+### Bug Fix: Cards Not Shown in Focus Mode
+- Cleared `.no-match` CSS class on focus mode entry and card navigation (search filter's `display:none!important` was overriding inline styles)
+- Added `gsap.set(clearProps)` before card entrance animations to wipe residual GSAP inline styles
+- Empty section handler now calls `exitFocusMode()` instead of leaving user trapped in overlay
+
+### Accessibility
+- Focus toggle: `aria-label="Focus mode (F)"`, `aria-pressed` toggled on enter/exit
+- Nav arrows: `aria-label="Previous/Next question"`
+- Focus indicator: `aria-live="polite"` for screen reader announcements
+
+### Lesson 16 Script Order
+- Reordered `<link>` and `<script>` tags to match standard loading order (Lessons 15/17)
+
+### Files Changed
+- `interactive-quiz.js` — search conflict fix, clearProps, empty section exit, aria attributes
+- `Lesson 16｜名詞・冠詞・代名詞.html` — script loading order
+
 ## 2026-02-28 — Focus Mode Card Fix + Review Modal Enlargement
 
 ### Bug Fix: Invisible Cards in Focus Mode (Lesson 15, Lesson 17)
