@@ -76,14 +76,14 @@
     if (animTrueAt && entry.t - animTrueAt > 5000) {
       animTrueAt = 0;
       log('error', 'DETECTOR', 'focusAnimating stuck true >5s');
-      report('stuck_animating');
+      report('stuck_animating', { errorMsg: 'focusAnimating stuck true >5s' });
     }
   });
 
   // Silent error: any error-channel entry
   detectors.push(function(entry) {
     if (entry.ch === 'error' && entry.tag !== 'DETECTOR') {
-      report('silent_error');
+      report('silent_error', { errorMsg: entry.tag + ': ' + entry.msg });
     }
   });
 
@@ -94,7 +94,7 @@
     var prev = lastWrites[entry.tag];
     if (prev && entry.t - prev.t < 50 && entry.msg !== prev.msg) {
       log('error', 'DETECTOR', 'State race on ' + entry.tag + ': ' + prev.msg + ' vs ' + entry.msg);
-      report('state_race');
+      report('state_race', { errorMsg: 'State race on ' + entry.tag + ': ' + prev.msg + ' vs ' + entry.msg });
     }
     lastWrites[entry.tag] = { t: entry.t, msg: entry.msg };
   });
@@ -125,7 +125,7 @@
     if (tapTimes.length > 5) tapTimes.shift();
     if (tapTimes.length >= 5 && tapTimes[4] - tapTimes[0] < 1000) {
       log('error', 'DETECTOR', 'Rapid interaction: 5 taps in ' + (tapTimes[4] - tapTimes[0]) + 'ms');
-      report('rapid_interaction');
+      report('rapid_interaction', { errorMsg: '5 taps in ' + (tapTimes[4] - tapTimes[0]) + 'ms' });
       tapTimes = [];
     }
   });
@@ -271,7 +271,7 @@
         var prev = activeTweens[name];
         var ago = ((Date.now() - dbg._t0) - prev.t) / 1000;
         dbg.log('anim', 'CONFLICT', name + ' has active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)');
-        dbg.report('anim_conflict');
+        dbg.report('anim_conflict', { errorMsg: 'Conflict on ' + name + ': active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)' });
       }
       activeTweens[name] = { id: id, t: Date.now() - dbg._t0 };
       var origComplete = vars && vars.onComplete;
@@ -294,7 +294,7 @@
         var prev = activeTweens[name];
         var ago = ((Date.now() - dbg._t0) - prev.t) / 1000;
         dbg.log('anim', 'CONFLICT', name + ' has active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)');
-        dbg.report('anim_conflict');
+        dbg.report('anim_conflict', { errorMsg: 'Conflict on ' + name + ': active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)' });
       }
       activeTweens[name] = { id: id, t: Date.now() - dbg._t0 };
       var origComplete = toVars && toVars.onComplete;
