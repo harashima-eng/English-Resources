@@ -3120,6 +3120,8 @@
     var btn = document.createElement('button');
     btn.className = 'iq-focus-toggle';
     btn.title = 'Focus mode (F)';
+    btn.setAttribute('aria-label', 'Focus mode (F)');
+    btn.setAttribute('aria-pressed', 'false');
     var svgNS = 'http://www.w3.org/2000/svg';
     var svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('width', '16');
@@ -3549,7 +3551,7 @@
 
     focusCards.forEach(function(card, i) {
       card.classList.remove('no-match');
-      gsap.set(card, { clearProps: 'opacity,transform' });
+      if (typeof gsap !== 'undefined') gsap.set(card, { clearProps: 'opacity,transform' });
       card.style.display = (i === focusIndex) ? '' : 'none';
     });
     focusCards[focusIndex].scrollIntoView({ behavior: 'auto', block: 'center' });
