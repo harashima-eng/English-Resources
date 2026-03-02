@@ -3435,6 +3435,8 @@
         opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in', overwrite: true,
         onComplete: function() {
           current.style.display = 'none';
+          next.classList.remove('no-match');
+          gsap.set(next, { clearProps: 'opacity,transform' });
           next.style.display = '';
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
@@ -3453,6 +3455,7 @@
       }, 2000);
     } else {
       current.style.display = 'none';
+      next.classList.remove('no-match');
       next.style.display = '';
       next.scrollIntoView({ behavior: 'auto', block: 'center' });
       dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus no-gsap]'); dbg.setState('focusAnimating', false);
@@ -3522,9 +3525,7 @@
     focusAnimating = false;
     rebuildFocusCards();
     if (focusCards.length === 0) {
-      dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [section-rendered empty]'); dbg.setState('focusPendingDirection', null);
-      focusPendingDirection = null;
-      updateFocusIndicator();
+      exitFocusMode();
       return;
     }
     // Disconnect the initCardReveal IntersectionObserver so it can't re-animate cards
@@ -3547,6 +3548,8 @@
     focusPendingDirection = null;
 
     focusCards.forEach(function(card, i) {
+      card.classList.remove('no-match');
+      gsap.set(card, { clearProps: 'opacity,transform' });
       card.style.display = (i === focusIndex) ? '' : 'none';
     });
     focusCards[focusIndex].scrollIntoView({ behavior: 'auto', block: 'center' });
