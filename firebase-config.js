@@ -101,7 +101,16 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
         domNodes: document.querySelectorAll('*').length,
         memory: (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) : null),
         fps: (window.IQDebug && window.IQDebug.getFps ? window.IQDebug.getFps() : null)
-      }
+      },
+      screen: {
+        w: window.innerWidth,
+        h: window.innerHeight,
+        dpr: window.devicePixelRatio || 1,
+        orientation: (screen.orientation ? screen.orientation.type : 'unknown'),
+        touch: 'ontouchstart' in window
+      },
+      quiz: (window.IQDebug && window.IQDebug.quizContext ? window.IQDebug.quizContext() : {}),
+      errorMsg: data.errorMsg || ''
     };
     ref.push(report).catch(function() {});
   };
