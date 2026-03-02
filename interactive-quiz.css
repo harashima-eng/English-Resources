@@ -2150,6 +2150,14 @@ html.dark .sr-modal-wrong {
   border-color: rgba(239, 68, 68, 0.2);
   color: #EF4444;
 }
+.iq-choice.sr-prev-wrong {
+  opacity: 0.45;
+  border-style: dashed;
+}
+[data-theme="dark"] .iq-choice.sr-prev-wrong,
+html.dark .iq-choice.sr-prev-wrong {
+  opacity: 0.4;
+}
 
 .sr-modal-reveal-btn {
   display: block;
