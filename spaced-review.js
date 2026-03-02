@@ -328,14 +328,9 @@
         card.appendChild(questionArea);
         body.appendChild(card);
 
-        // Box level + previous wrong answer (below card)
+        // Previous wrong answer (below card)
         var metaDiv = document.createElement('div');
         metaDiv.className = 'sr-review-meta';
-
-        var boxDiv = document.createElement('div');
-        boxDiv.className = 'sr-modal-box';
-        boxDiv.textContent = 'Box ' + (item.box + 1) + ' / ' + BOX_INTERVALS.length;
-        metaDiv.appendChild(boxDiv);
 
         var wrongDiv = document.createElement('div');
         wrongDiv.className = 'sr-modal-wrong';
@@ -413,11 +408,6 @@
           });
           body.appendChild(choicesDiv);
         }
-
-        var boxDiv = document.createElement('div');
-        boxDiv.className = 'sr-modal-box';
-        boxDiv.textContent = 'Box ' + (item.box + 1) + ' / ' + BOX_INTERVALS.length;
-        body.appendChild(boxDiv);
 
         var wrongDiv = document.createElement('div');
         wrongDiv.className = 'sr-modal-wrong';
