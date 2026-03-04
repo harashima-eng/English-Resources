@@ -3218,6 +3218,7 @@
 
     // Force-clear reveal state (initCardReveal sets opacity:0, y:20)
     if (typeof gsap !== 'undefined') gsap.set(focusCards, { clearProps: 'opacity,transform', opacity: 1, y: 0, x: 0, scale: 1 });
+    focusAnimating = true;
 
     focusCards.forEach(function(card, i) {
       if (i !== focusIndex) {
@@ -3233,9 +3234,12 @@
 
     var focused = focusCards[focusIndex];
     if (typeof gsap !== 'undefined' && !reducedMotion) {
-      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.3, ease: 'back.out(1.4)', overwrite: true });
+      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.3, ease: 'back.out(1.4)', overwrite: true,
+        onComplete: function() { focusAnimating = false; }
+      });
     }
     focused.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (typeof gsap === 'undefined' || reducedMotion) focusAnimating = false;
 
     focusOverlayEl.classList.add('active');
     if (typeof gsap !== 'undefined' && !reducedMotion) {
@@ -3461,7 +3465,10 @@
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
             { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.3, ease: 'power2.out', overwrite: true,
-              onComplete: function() { dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false; }
+              onComplete: function() {
+                gsap.set(next, { opacity: 1, x: 0, y: 0, scale: 1 });
+                dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false;
+              }
             }
           );
           next.scrollIntoView({ behavior: 'auto', block: 'center' });
