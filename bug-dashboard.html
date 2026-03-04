@@ -185,8 +185,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   var allErrors = [];
   var activeTab = 'bugs';
 
-  var TRACE_COLORS = { state: '#2196F3', anim: '#FF9800', event: '#9C27B0', timer: '#607D8B', error: '#F44336', ui: '#E91E63' };
-  var BAR_COLORS = { anim_conflict: '#E65100', stuck_animating: '#C62828', rapid_interaction: '#283593', state_race: '#6A1B9A', silent_error: '#B71C1C' };
+  var TRACE_COLORS = { state: '#2196F3', anim: '#FF9800', event: '#9C27B0', timer: '#607D8B', error: '#F44336', ui: '#E91E63', heal: '#4CAF50' };
+  var BAR_COLORS = { anim_conflict: '#E65100', stuck_animating: '#C62828', rapid_interaction: '#283593', state_race: '#6A1B9A', silent_error: '#B71C1C', blank_card: '#F57F17', invisible_focus_card: '#E65100' };
 
   // ── Helpers ──
   function esc(s) {
@@ -452,7 +452,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       var tdType = document.createElement('td');
       var badge = document.createElement('span');
       var badgeType = r.type || 'unknown';
-      var knownTypes = ['anim_conflict', 'stuck_animating', 'rapid_interaction', 'state_race', 'silent_error'];
+      var knownTypes = ['anim_conflict', 'stuck_animating', 'rapid_interaction', 'state_race', 'silent_error', 'blank_card', 'invisible_focus_card'];
       badge.className = 'type-badge badge-' + (knownTypes.indexOf(badgeType) !== -1 ? badgeType : 'unknown');
       badge.textContent = badgeType;
       tdType.appendChild(badge);
