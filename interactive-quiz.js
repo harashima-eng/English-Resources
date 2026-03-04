@@ -3441,7 +3441,7 @@
         onComplete: function() {
           current.style.display = 'none';
           next.classList.remove('no-match');
-          gsap.set(next, { clearProps: 'opacity,transform' });
+          gsap.set(next, { clearProps: 'all' });
           next.style.display = '';
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },

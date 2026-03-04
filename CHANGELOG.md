@@ -6,6 +6,19 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-04 — Teacher Login Persistence + Focus Mode Hardening
+
+### teacher-reveal.js
+- Teacher login now persists across page closes (removed `auth.signOut()` from `cleanupOnClose`)
+- Class mode (active session) resets on new tab via `sessionStorage` flag — refresh mid-lesson preserves session, opening a new tab starts fresh
+- `goOffline()` still fires on tab close for student-side cleanup
+
+### interactive-quiz.js
+- Hardened `clearProps: 'all'` in `enterFocusMode()` with explicit `x: 0, scale: 1` reset — prevents residual GSAP state from hiding cards
+- Upgraded `navigateFocus` entrance `clearProps` from `'opacity,transform'` to `'all'`
+
+---
+
 ## 2026-03-02 — Focus Mode Visibility Fix + Accessibility
 
 ### interactive-quiz.js
