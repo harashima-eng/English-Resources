@@ -239,6 +239,7 @@
     if (typeof gsap === 'undefined' || !dbg) return;
     var tweenId = 0;
     var activeTweens = {}; // elementDesc → { id, t }
+    var conflictAllowlist = ['#subNav', '.top-nav', '#progressBar'];
 
     var uidCounter = 0;
     function elName(target) {
