@@ -2607,7 +2607,11 @@
       card.dataset.iqEnhanced = '';
       card.classList.remove('iq-wrong');
       card.style.display = '';
-      card.style.opacity = '';
+      if (typeof gsap !== 'undefined') {
+        gsap.set(card, { clearProps: 'opacity,transform' });
+      } else {
+        card.style.opacity = '';
+      }
       var zone = card.querySelector('.iq-zone');
       if (zone) zone.remove();
     });
@@ -3248,7 +3252,7 @@
     } catch (e) { dbg.log('error', 'focusSave', e.message || String(e)); }
   }
 
-  function exitFocusMode() {
+  function exitFocusMode(skipAnimation) {
     if (!focusMode) return;
     dbg.log('state', 'focusMode', 'true -> false [exitFocusMode]'); dbg.setState('focusMode', false);
     focusMode = false;
