@@ -3217,7 +3217,7 @@
     }
 
     // Force-clear reveal state (initCardReveal sets opacity:0, y:20)
-    if (typeof gsap !== 'undefined') gsap.set(focusCards, { clearProps: 'all', opacity: 1, y: 0, x: 0, scale: 1 });
+    if (typeof gsap !== 'undefined') gsap.set(focusCards, { clearProps: 'opacity,transform', opacity: 1, y: 0, x: 0, scale: 1 });
 
     focusCards.forEach(function(card, i) {
       if (i !== focusIndex) {
@@ -3271,7 +3271,7 @@
 
     var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
     if (typeof gsap !== 'undefined') {
-      allCards.forEach(function(card) { gsap.set(card, { clearProps: 'all' }); });
+      allCards.forEach(function(card) { gsap.set(card, { clearProps: 'opacity,transform' }); });
     }
     allCards.forEach(function(card) {
       if (retryMode) {
@@ -3455,7 +3455,8 @@
         onComplete: function() {
           current.style.display = 'none';
           next.classList.remove('no-match');
-          gsap.set(next, { clearProps: 'all' });
+          gsap.killTweensOf(next);
+          gsap.set(next, { clearProps: 'opacity,transform' });
           next.style.display = '';
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
