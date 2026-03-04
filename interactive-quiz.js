@@ -1035,7 +1035,7 @@
     if (!existing) return;
     zone._popup = null;
     if (typeof gsap !== 'undefined') {
-      gsap.to(existing, { scale: 0, opacity: 0, duration: 0.15, ease: 'power2.in', onComplete: function() { existing.remove(); } });
+      gsap.to(existing, { scale: 0, opacity: 0, duration: 0.15, ease: 'power2.in', overwrite: true, onComplete: function() { existing.remove(); } });
     } else {
       existing.remove();
     }
@@ -1088,7 +1088,7 @@
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(popup,
         { scale: 0, opacity: 0, transformOrigin: popup.classList.contains('below') ? 'top center' : 'bottom center' },
-        { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(1.7)' }
+        { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(1.7)', overwrite: true }
       );
     }
 
