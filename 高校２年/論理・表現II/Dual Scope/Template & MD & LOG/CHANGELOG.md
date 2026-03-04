@@ -1,5 +1,19 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-04 — Teacher Login Persistence + Focus Mode Hardening
+
+### Teacher Login
+- Login persists across page closes — no more re-authentication when navigating between lessons
+- Class mode resets on new tab open (sessionStorage-based detection: refresh = keep, new tab = fresh)
+
+### Focus Mode Fix
+- `enterFocusMode()`: `clearProps: 'all'` + explicit `x: 0, scale: 1` to prevent residual GSAP styles hiding cards
+- `navigateFocus`: upgraded `clearProps` from `'opacity,transform'` to `'all'`
+
+### Files Changed
+- `teacher-reveal.js` — signOut removal, sessionStorage flags, restore gate
+- `interactive-quiz.js` — clearProps hardening
+
 ## 2026-03-02 — Focus Mode Visibility Fix + Accessibility
 
 ### Bug Fix: Cards Not Shown in Focus Mode
