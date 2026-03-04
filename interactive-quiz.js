@@ -3209,7 +3209,7 @@
     }
 
     // Force-clear reveal state (initCardReveal sets opacity:0, y:20)
-    if (typeof gsap !== 'undefined') gsap.set(focusCards, { opacity: 1, y: 0 });
+    if (typeof gsap !== 'undefined') gsap.set(focusCards, { clearProps: 'all', opacity: 1, y: 0, x: 0, scale: 1 });
 
     focusCards.forEach(function(card, i) {
       if (i !== focusIndex) {

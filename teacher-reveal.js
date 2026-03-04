@@ -1312,6 +1312,7 @@
       state.sessionActive = true;
       state.revealed = {};
       state.sectionRevealed = {};
+      try { sessionStorage.setItem('tr-session-' + examId, '1'); } catch(e) {}
       lockAllQuestions();
       document.dispatchEvent(new CustomEvent('tr:session-start'));
       showToast('セッションを開始しました');
@@ -1329,6 +1330,7 @@
       state.sessionActive = false;
       state.revealed = {};
       state.sectionRevealed = {};
+      try { sessionStorage.removeItem('tr-session-' + examId); } catch(e) {}
       unlockAll();
       document.dispatchEvent(new CustomEvent('tr:session-end'));
       showToast('セッション終了');
@@ -1356,6 +1358,16 @@
       if (Date.now() - sessionTime > SESSION_EXPIRY_MS) {
         examRef.update({ activeSession: null }).catch(function() {});
         return;
+      }
+
+      // Only restore session for teacher if this is a page refresh (not a new tab)
+      if (state.isTeacher) {
+        try {
+          if (!sessionStorage.getItem('tr-session-' + examId)) {
+            examRef.update({ activeSession: null }).catch(function() {});
+            return;
+          }
+        } catch(e) {}
       }
 
       state.sessionActive = true;
