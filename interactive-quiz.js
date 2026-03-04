@@ -3414,6 +3414,7 @@
                 if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
                   dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-section]'); dbg.setState('focusAnimating', false);
                   focusAnimating = false;
+                  if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
                   dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [2s safety]'); dbg.setState('focusPendingDirection', null);
                   focusPendingDirection = null;
                 }
@@ -3461,6 +3462,7 @@
                   if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
                     dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-tier]'); dbg.setState('focusAnimating', false);
                     focusAnimating = false;
+                    if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
                     dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [2s safety]'); dbg.setState('focusPendingDirection', null);
                     focusPendingDirection = null;
                   }
@@ -3513,6 +3515,7 @@
         if (_navGen === focusNavGeneration && focusAnimating) {
           dbg.log('state', 'focusAnimating', 'true -> false [2s safety normal]'); dbg.setState('focusAnimating', false);
           focusAnimating = false;
+          if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
         }
       }, 2000);
     } else {
