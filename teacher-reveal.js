@@ -1484,9 +1484,6 @@
       if (state.isTeacher && state.sessionActive) {
         firebase.database().goOffline();
       }
-      if (state.isTeacher) {
-        auth.signOut().catch(function() {});
-      }
       if (trObserver) { trObserver.disconnect(); trObserver = null; }
       if (examRef) {
         examRef.child('activeSession').off();
