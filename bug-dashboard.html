@@ -537,6 +537,74 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       wrap.appendChild(sec);
     }
 
+    // Card visibility
+    if (r.cardVisibility) {
+      var sec = makeSection('Card Visibility');
+      var cv = r.cardVisibility;
+      var isInvisible = cv.opacity <= 0 || cv.display === 'none' || cv.visibility === 'hidden' || cv.height <= 0;
+      var statusBadge = document.createElement('span');
+      statusBadge.style.cssText = 'display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-right:8px;';
+      if (isInvisible) {
+        statusBadge.style.background = '#FFEBEE'; statusBadge.style.color = '#C62828';
+        statusBadge.textContent = 'INVISIBLE';
+      } else {
+        statusBadge.style.background = '#E8F5E9'; statusBadge.style.color = '#2E7D32';
+        statusBadge.textContent = 'VISIBLE';
+      }
+      sec.appendChild(statusBadge);
+      if (r.healApplied) {
+        var healBadge = document.createElement('span');
+        healBadge.style.cssText = 'display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;background:#E8F5E9;color:#2E7D32;';
+        healBadge.textContent = 'AUTO-HEALED';
+        sec.appendChild(healBadge);
+      }
+      if (r.cardId) {
+        var idInfo = document.createElement('div');
+        idInfo.className = 'quiz-info';
+        idInfo.style.marginTop = '6px';
+        var idParts = [];
+        if (r.cardId.si !== null) idParts.push('Section ' + r.cardId.si);
+        if (r.cardId.qi !== null) idParts.push('Question ' + r.cardId.qi);
+        idParts.push('Focus ' + r.cardId.focusIndex + '/' + r.cardId.focusTotal);
+        idInfo.textContent = idParts.join(' / ');
+        sec.appendChild(idInfo);
+      }
+      var tbl = document.createElement('table');
+      tbl.style.cssText = 'width:100%;margin-top:8px;font-size:12px;border-collapse:collapse;';
+      var props = [
+        ['opacity', cv.opacity, cv.opacity <= 0],
+        ['display', cv.display, cv.display === 'none'],
+        ['visibility', cv.visibility, cv.visibility === 'hidden'],
+        ['transform', cv.transform || 'none', false],
+        ['offsetWidth', cv.width, cv.width <= 0],
+        ['offsetHeight', cv.height, cv.height <= 0]
+      ];
+      props.forEach(function(p) {
+        var row = document.createElement('tr');
+        var tdK = document.createElement('td');
+        tdK.style.cssText = 'padding:2px 8px;font-weight:600;color:#555;';
+        tdK.textContent = p[0];
+        var tdV = document.createElement('td');
+        tdV.style.cssText = 'padding:2px 8px;font-family:monospace;' + (p[2] ? 'color:#C62828;font-weight:700;' : '');
+        tdV.textContent = String(p[1]);
+        row.appendChild(tdK); row.appendChild(tdV);
+        tbl.appendChild(row);
+      });
+      if (cv.classList) {
+        var row = document.createElement('tr');
+        var tdK = document.createElement('td');
+        tdK.style.cssText = 'padding:2px 8px;font-weight:600;color:#555;';
+        tdK.textContent = 'classList';
+        var tdV = document.createElement('td');
+        tdV.style.cssText = 'padding:2px 8px;font-family:monospace;font-size:11px;';
+        tdV.textContent = cv.classList;
+        row.appendChild(tdK); row.appendChild(tdV);
+        tbl.appendChild(row);
+      }
+      sec.appendChild(tbl);
+      wrap.appendChild(sec);
+    }
+
     // Screen info
     if (r.screen && r.screen.w) {
       var sec = makeSection('Screen');
@@ -660,6 +728,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     if (r.screen && r.screen.w) {
       var s = r.screen;
       lines.push('Screen: ' + s.w + '\u00D7' + s.h + (s.dpr !== 1 ? ' @' + s.dpr + 'x' : '') + ', ' + (s.touch ? 'touch' : 'mouse'));
+    }
+    if (r.cardVisibility) {
+      lines.push('Card Visibility: opacity=' + r.cardVisibility.opacity + ', display=' + r.cardVisibility.display + ', h=' + r.cardVisibility.height);
+      if (r.healApplied) lines.push('(auto-healed)');
+    }
+    if (r.cardId) {
+      lines.push('Card: S' + r.cardId.si + '/Q' + r.cardId.qi + ' (focus ' + r.cardId.focusIndex + '/' + r.cardId.focusTotal + ')');
     }
     if (r.state && Object.keys(r.state).length > 0) {
       lines.push('State: ' + JSON.stringify(r.state));
