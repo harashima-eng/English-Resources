@@ -279,7 +279,10 @@
         var prev = activeTweens[name];
         var ago = ((Date.now() - dbg._t0) - prev.t) / 1000;
         dbg.log('anim', 'CONFLICT', name + ' has active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)');
-        dbg.report('anim_conflict', { errorMsg: 'Conflict on ' + name + ': active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)' });
+        var baseEl = name.split(':')[0];
+        if (conflictAllowlist.indexOf(baseEl) === -1) {
+          dbg.report('anim_conflict', { errorMsg: 'Conflict on ' + name + ': active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)' });
+        }
       }
       activeTweens[name] = { id: id, t: Date.now() - dbg._t0 };
       var origComplete = vars && vars.onComplete;
@@ -302,7 +305,10 @@
         var prev = activeTweens[name];
         var ago = ((Date.now() - dbg._t0) - prev.t) / 1000;
         dbg.log('anim', 'CONFLICT', name + ' has active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)');
-        dbg.report('anim_conflict', { errorMsg: 'Conflict on ' + name + ': active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)' });
+        var baseEl = name.split(':')[0];
+        if (conflictAllowlist.indexOf(baseEl) === -1) {
+          dbg.report('anim_conflict', { errorMsg: 'Conflict on ' + name + ': active tween #' + prev.id + ' (' + ago.toFixed(2) + 's ago)' });
+        }
       }
       activeTweens[name] = { id: id, t: Date.now() - dbg._t0 };
       var origComplete = toVars && toVars.onComplete;
