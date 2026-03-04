@@ -2553,7 +2553,7 @@
   }
 
   function performFullReset() {
-    if (focusMode) exitFocusMode();
+    if (focusMode) exitFocusMode(true);
     if (reviewMode) { reviewMode = false; removeReviewFilter(); }
     streak = 0;
     bestStreak = 0;
@@ -3187,6 +3187,10 @@
     if (focusMode) return;
     if (typeof NavState !== 'undefined' && NavState.view !== 'question') return;
 
+    // Defensive: clear stale animation state from interrupted previous session
+    focusAnimating = false;
+    focusPendingDirection = null;
+
     // Clear search filter — .no-match CSS uses display:none!important which
     // overrides inline styles, making cards invisible in focus mode
     var allQCards = document.querySelectorAll('.qcard');
@@ -3281,7 +3285,13 @@
       }
     });
 
-    if (typeof gsap !== 'undefined' && !reducedMotion) {
+    if (skipAnimation) {
+      allCards.forEach(function(card) {
+        if (card.style.display !== 'none' && typeof gsap !== 'undefined') {
+          gsap.set(card, { opacity: 1, y: 0, scale: 1 });
+        }
+      });
+    } else if (typeof gsap !== 'undefined' && !reducedMotion) {
       var visibleCards = Array.prototype.slice.call(allCards).filter(function(c) { return c.style.display !== 'none'; });
       gsap.fromTo(visibleCards,
         { opacity: 0, y: 10 },
