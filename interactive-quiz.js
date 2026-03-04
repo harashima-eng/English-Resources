@@ -3092,6 +3092,40 @@
   var focusPrevBtn = null;
   var focusNextBtn = null;
 
+  function verifyCardVisible(card, context) {
+    if (!card || !card.parentNode) return;
+    var computed = window.getComputedStyle(card);
+    var opacity = parseFloat(computed.opacity);
+    var display = computed.display;
+    var visibility = computed.visibility;
+    var transform = computed.transform || computed.webkitTransform || '';
+    var w = card.offsetWidth;
+    var h = card.offsetHeight;
+    if (opacity > 0 && display !== 'none' && visibility !== 'hidden' && h > 0) return;
+
+    var reasons = [];
+    if (opacity <= 0) reasons.push('opacity:' + opacity);
+    if (display === 'none') reasons.push('display:none');
+    if (visibility === 'hidden') reasons.push('visibility:hidden');
+    if (h <= 0) reasons.push('offsetHeight:' + h);
+    var msg = 'Blank card: ' + reasons.join(', ') + ' [' + context + ']';
+    dbg.log('error', 'DETECTOR', msg);
+
+    if (typeof gsap !== 'undefined') {
+      gsap.set(card, { opacity: 1, x: 0, y: 0, scale: 1 });
+    }
+    card.style.display = '';
+    card.style.visibility = '';
+    dbg.log('heal', 'verifyCardVisible', 'Forced card visible');
+
+    dbg.report(context === 'enterFocusMode' ? 'invisible_focus_card' : 'blank_card', {
+      errorMsg: msg,
+      cardVisibility: { opacity: opacity, display: display, visibility: visibility, transform: transform, width: w, height: h, classList: Array.prototype.slice.call(card.classList).join(' '), inlineStyle: card.style.cssText.substring(0, 200) },
+      cardId: { si: card.dataset.si ? parseInt(card.dataset.si) : null, qi: card.dataset.qi ? parseInt(card.dataset.qi) : null, focusIndex: focusIndex, focusTotal: focusCards.length },
+      healApplied: true
+    });
+  }
+
   // Expose quiz context for bug reports
   if (dbg) {
     dbg.quizContext = function() {
