@@ -3413,10 +3413,7 @@
       allCards.forEach(function(card) { gsap.set(card, { clearProps: 'opacity,transform' }); });
     }
     allCards.forEach(function(card) {
-      if (retryMode) {
-        var key = card.dataset.si + '-' + card.dataset.qi;
-        card.style.display = retryKeys.indexOf(key) !== -1 ? '' : 'none';
-      } else if (reviewMode) {
+      if (reviewMode) {
         var rkey = getQKey(card.dataset.si, card.dataset.qi);
         card.style.display = (getAnswerResult(rkey) === 'wrong') ? '' : 'none';
       } else {
@@ -3852,6 +3849,16 @@
     setupFocusSwipe();
     enhanceVisibleCards();
     setupObserver();
+
+    // Listen for retry view ready event from Router
+    document.addEventListener('iq:retry-view-ready', function() {
+      renderRetryView();
+    });
+
+    // Expose interface for Router integration
+    window.IQ = window.IQ || {};
+    window.IQ.renderRetryView = renderRetryView;
+    window.IQ.cleanupRetryState = cleanupRetryState;
 
     // Exit focus mode when leaving question view
     if (window.Router && Router.navigate) {
