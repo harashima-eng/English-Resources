@@ -808,6 +808,73 @@ footer {
 .view-question.active { display: block; }
 .view-retry.active { display: block; }
 
+/* ===== RETRY VIEW ===== */
+.retry-view-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(185, 28, 28, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  box-shadow: 0 2px 12px rgba(185, 28, 28, 0.3);
+}
+.retry-view-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.retry-view-badge {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.retry-view-count {
+  font-size: 13px;
+  opacity: 0.9;
+}
+.retry-view-exit {
+  padding: 6px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font: 600 13px -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+}
+.retry-view-exit:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.retry-section-header {
+  padding: 16px 0 8px;
+  margin: 24px 0 8px;
+  font: 600 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+.retry-section-header:first-child {
+  margin-top: 8px;
+}
+
+[data-theme="dark"] .retry-view-header,
+html.dark .retry-view-header {
+  background: rgba(153, 27, 27, 0.95);
+  box-shadow: 0 2px 12px rgba(153, 27, 27, 0.4);
+}
+[data-theme="dark"] .retry-section-header,
+html.dark .retry-section-header {
+  color: var(--text-muted);
+  border-bottom-color: var(--border);
+}
+
 /* All animations handled by GSAP - @keyframes removed */
 
 /* Reduced motion: GSAP handles animation skipping via UV_REDUCED flag */
