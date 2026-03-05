@@ -1936,6 +1936,7 @@
     if (!target) return;
     iqObserver = new MutationObserver(function() {
       try {
+        invalidateCardCache();
         enhanceVisibleCards();
       } catch (e) {
         console.error('[interactive-quiz] observer error:', e);
@@ -3672,6 +3673,7 @@
 
   // Re-initialize focus mode when a new section is rendered (cross-section nav or tab click)
   document.addEventListener('iq:section-rendered', function() {
+    invalidateCardCache();
     if (!focusMode) return;
     dbg.log('state', 'focusAnimating', focusAnimating + ' -> false [section-rendered]'); dbg.setState('focusAnimating', false);
     focusAnimating = false;
@@ -3732,7 +3734,7 @@
 
   // Find the iq-zone of the question card nearest the viewport center
   function getVisibleActiveZone() {
-    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var cards = getCachedCards();
     var viewMid = window.innerHeight / 2;
     var best = null;
     var bestDist = Infinity;
