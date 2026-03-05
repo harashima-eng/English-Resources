@@ -699,10 +699,16 @@
       retryBtnEl.style.display = wrongCount > 0 ? '' : 'none';
     }
 
-    // Rebuild body
+    // Update body — incremental update if rows exist, full rebuild if empty
     if (!progressBodyEl) return;
-    progressBodyEl.textContent = '';
 
+    var existingRows = progressBodyEl.querySelectorAll('.iq-progress-section-row[data-si]');
+    if (existingRows.length > 0) {
+      existingRows.forEach(function(row) { updateSectionRow(row); });
+      return;
+    }
+
+    progressBodyEl.textContent = '';
     var categoryMap = (typeof NavState !== 'undefined' && NavState.categoryMap) ? NavState.categoryMap : null;
 
     if (categoryMap) {
@@ -750,6 +756,7 @@
 
     var row = document.createElement('div');
     row.className = 'iq-progress-section-row';
+    row.dataset.si = si;
     row.onclick = function() {
       if (typeof Router !== 'undefined' && Router.navigate) {
         Router.navigate('question', cat, si);
