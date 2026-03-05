@@ -3272,7 +3272,7 @@
     focusCards.forEach(function(card, i) {
       if (i !== focusIndex) {
         if (typeof gsap !== 'undefined' && !reducedMotion) {
-          gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.25, ease: 'power2.in', overwrite: true,
+          gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.15, ease: 'power2.in', overwrite: true,
             onComplete: function() { card.style.display = 'none'; }
           });
         } else {
@@ -3283,11 +3283,11 @@
 
     var focused = focusCards[focusIndex];
     if (typeof gsap !== 'undefined' && !reducedMotion) {
-      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.3, ease: 'back.out(1.4)', overwrite: true,
+      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.2, ease: 'back.out(1.4)', overwrite: true,
         onComplete: function() { focusAnimating = false; verifyCardVisible(focused, 'enterFocusMode'); }
       });
     }
-    focused.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    focused.scrollIntoView({ behavior: 'auto', block: 'center' });
     if (typeof gsap === 'undefined' || reducedMotion) focusAnimating = false;
 
     focusOverlayEl.classList.add('active');
@@ -3408,7 +3408,7 @@
             var nextSection = sections[nextLocalIdx];
             if (typeof gsap !== 'undefined' && !reducedMotion) {
               gsap.to(current, {
-                opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
+                opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: 'power2.in',
                 overwrite: true,
                 onComplete: function() {
                   current.style.display = 'none';
