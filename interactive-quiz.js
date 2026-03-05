@@ -2218,7 +2218,7 @@
     enhanceVisibleCards();
 
     // Hide non-retry cards
-    var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var allCards = getCachedCards();
     allCards.forEach(function(card) {
       var key = card.dataset.si + '-' + card.dataset.qi;
       if (retryKeys.indexOf(key) === -1) {
@@ -2446,7 +2446,7 @@
     var scrollY = window.scrollY;
 
     // Show hidden cards at opacity 0, then fade in
-    var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var allCards = getCachedCards();
     var hiddenCards = [];
     allCards.forEach(function(card) {
       if (card.style.display === 'none') {
@@ -2621,7 +2621,7 @@
     updateStreakDisplay();
     closeProgressPanel();
     // Re-render current cards without answered state
-    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var cards = getCachedCards();
     cards.forEach(function(card) {
       // Kill active GSAP tweens on card and its animated children
       if (typeof gsap !== 'undefined') {
@@ -2850,7 +2850,7 @@
 
   // ── Keyboard Navigation ──
   function getVisibleCard() {
-    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var cards = getCachedCards();
     var viewMid = window.innerHeight / 2;
     var best = null;
     var bestDist = Infinity;
@@ -2889,7 +2889,7 @@
   }
 
   function navigateCards(direction) {
-    var cards = Array.prototype.slice.call(document.querySelectorAll('.qcard[data-si][data-qi]'));
+    var cards = getCachedCards();
     cards = cards.filter(function(c) { return c.style.display !== 'none'; });
     if (cards.length === 0) return;
     var currentIdx = findNearestCardIndex(cards);
@@ -3362,7 +3362,7 @@
 
     var previousCard = focusCards[focusIndex];
 
-    var allCards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var allCards = getCachedCards();
     if (typeof gsap !== 'undefined') {
       allCards.forEach(function(card) { gsap.set(card, { clearProps: 'opacity,transform' }); });
     }
@@ -3623,9 +3623,7 @@
   }
 
   function rebuildFocusCards() {
-    focusCards = Array.prototype.slice.call(
-      document.querySelectorAll('.qcard[data-si][data-qi]')
-    ).filter(function(c) {
+    focusCards = getCachedCards().filter(function(c) {
       if (c.style.display === 'none' && !focusMode) return false;
       if (retryMode) {
         var key = c.dataset.si + '-' + c.dataset.qi;
