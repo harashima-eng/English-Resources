@@ -6,6 +6,18 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-05 — Stability & Performance Improvements
+
+### interactive-quiz.js
+- DOM query caching: 11 `querySelectorAll('.qcard[data-si][data-qi]')` calls → `getCachedCards()` with invalidation on section render, mutation, hashchange
+- Shared `IQ_EASE` config: 23 hardcoded ease strings → centralized object (`out`, `in`, `inOut`, `pop`, `soft`, `heavy`)
+
+### Lesson HTML files (L15, L16, L17, 実戦問題5)
+- Dynamic SW scope: `{ scope: '/English-Resources/' }` → computed from `sw.js` URL (works on GitHub Pages and Firebase)
+- ScrollTrigger `kill(true)` consistency in L16, L17, 実戦問題5 (matches L15 fix)
+
+---
+
 ## 2026-03-05 — Retry Wrong Fix + Focus Exit Button
 
 ### interactive-quiz.js
