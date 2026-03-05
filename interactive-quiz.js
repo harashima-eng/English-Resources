@@ -1924,7 +1924,7 @@
 
   // ── Enhance all visible cards ──
   function enhanceVisibleCards() {
-    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var cards = getCachedCards();
     cards.forEach(function(card) { enhanceCard(card); });
   }
 
@@ -2092,7 +2092,7 @@
   }
 
   function filterVisibleCards() {
-    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var cards = getCachedCards();
     cards.forEach(function(card) {
       var key = getQKey(card.dataset.si, card.dataset.qi);
       card.style.display = (reviewMode && getAnswerResult(key) !== 'wrong') ? 'none' : '';
@@ -2138,7 +2138,7 @@
 
   function removeReviewFilter() {
     if (reviewNavEl) reviewNavEl.style.display = 'none';
-    var cards = document.querySelectorAll('.qcard[data-si][data-qi]');
+    var cards = getCachedCards();
     cards.forEach(function(card) { card.style.display = ''; });
   }
 
