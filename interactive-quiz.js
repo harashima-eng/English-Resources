@@ -369,6 +369,7 @@
     } catch (e) { dbg.log('error', 'loadProgress', e.message || String(e)); }
   }
 
+  var _saveWarned = false;
   function saveProgress() {
     var key = 'iq-progress-' + (document.body.dataset.examId || 'default');
     try {
@@ -379,7 +380,22 @@
         answeredKeys: answeredKeys,
         lastAccess: Date.now()
       }));
-    } catch (e) { dbg.log('error', 'saveProgress', e.message || String(e)); }
+    } catch (e) {
+      dbg.log('error', 'saveProgress', e.message || String(e));
+      if (!_saveWarned && e.name === 'QuotaExceededError') {
+        _saveWarned = true;
+        pruneOldProgress();
+        try {
+          localStorage.setItem(key, JSON.stringify({
+            bestStreak: bestStreak, badges: badges,
+            sectionScores: sectionScores, answeredKeys: answeredKeys,
+            lastAccess: Date.now()
+          }));
+        } catch (_) {
+          dbg.log('error', 'saveProgress', 'Storage full even after prune');
+        }
+      }
+    }
   }
 
   function pruneOldProgress() {
@@ -3818,12 +3834,15 @@
       };
     }
 
-    // Restore focus mode from localStorage
+    // Restore focus mode from localStorage (wait for enhanceVisibleCards to complete)
     try {
       var fKey = 'iq-focus-' + (document.body.dataset.examId || 'default');
       if (localStorage.getItem(fKey) === '1') {
-        dbg.log('timer', 'setTimeout', 'focus restore from localStorage 300ms');
-        setTimeout(function() { enterFocusMode(); }, 300);
+        dbg.log('timer', 'setTimeout', 'focus restore from localStorage 600ms');
+        setTimeout(function() {
+          if (getCachedCards().length > 0) enterFocusMode();
+          else dbg.log('error', 'focusRestore', 'No cards available yet, skipping');
+        }, 600);
       }
     } catch (e) { dbg.log('error', 'focusRestore', e.message || String(e)); }
 
