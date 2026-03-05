@@ -1018,6 +1018,7 @@ const Router = {
           opacity: 0, y: -20,
           duration: GSAP_CONFIG.duration.fast,
           ease: GSAP_CONFIG.ease.default,
+          overwrite: true,
           onComplete: () => { oldViewEl.classList.remove('active'); gsap.set(oldViewEl, { clearProps: 'all' }); }
         });
       }
@@ -1037,6 +1038,7 @@ const Router = {
           opacity: 1, y: 0,
           duration: GSAP_CONFIG.duration.view,
           ease: GSAP_CONFIG.ease.default,
+          overwrite: true,
           onComplete: () => this._postRender(NavState.view, mainContent, subNav)
         });
       }, UV_REDUCED ? 0 : 200);
