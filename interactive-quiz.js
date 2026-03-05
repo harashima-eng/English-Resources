@@ -3147,6 +3147,7 @@
   var focusTouchStartY = 0;
   var focusOverlayEl = null;
   var focusIndicatorEl = null;
+  var focusIndicatorText = null;
   var focusPrevBtn = null;
   var focusNextBtn = null;
 
