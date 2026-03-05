@@ -3430,10 +3430,10 @@
                   dbg.log('state', 'focusAnimating', 'true -> false [600ms safety cross-section]'); dbg.setState('focusAnimating', false);
                   focusAnimating = false;
                   if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
-                  dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [2s safety]'); dbg.setState('focusPendingDirection', null);
+                  dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]'); dbg.setState('focusPendingDirection', null);
                   focusPendingDirection = null;
                 }
-              }, 2000);
+              }, 600);
             } else {
               current.style.display = 'none';
               window.Router.setSection(nextSection);
@@ -3472,16 +3472,16 @@
                     }
                   }
                 });
-                dbg.log('timer', 'setTimeout', '2s safety unblock cross-tier');
+                dbg.log('timer', 'setTimeout', '600ms safety unblock cross-tier');
                 setTimeout(function() {
                   if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
-                    dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-tier]'); dbg.setState('focusAnimating', false);
+                    dbg.log('state', 'focusAnimating', 'true -> false [600ms safety cross-tier]'); dbg.setState('focusAnimating', false);
                     focusAnimating = false;
                     if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
-                    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [2s safety]'); dbg.setState('focusPendingDirection', null);
+                    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]'); dbg.setState('focusPendingDirection', null);
                     focusPendingDirection = null;
                   }
-                }, 2000);
+                }, 600);
               } else {
                 current.style.display = 'none';
                 window.Router.navigate('question', nextCat, targetSection);
@@ -3527,11 +3527,11 @@
       });
       setTimeout(function() {
         if (_navGen === focusNavGeneration && focusAnimating) {
-          dbg.log('state', 'focusAnimating', 'true -> false [2s safety normal]'); dbg.setState('focusAnimating', false);
+          dbg.log('state', 'focusAnimating', 'true -> false [600ms safety normal]'); dbg.setState('focusAnimating', false);
           focusAnimating = false;
           if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
         }
-      }, 2000);
+      }, 600);
     } else {
       current.style.display = 'none';
       next.classList.remove('no-match');
