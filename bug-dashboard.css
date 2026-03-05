@@ -543,6 +543,8 @@ body {
   font-size: 12px;
   cursor: pointer;
 }
+#bulkCopy { background: var(--accent); }
+#bulkCopy.copied { background: var(--success); }
 
 .select-all-cb {
   cursor: pointer;

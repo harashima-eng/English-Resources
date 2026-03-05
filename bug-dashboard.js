@@ -179,6 +179,7 @@
   };
 
   // Bulk actions
+  $('bulkCopy').onclick = bulkCopy;
   $('bulkDelete').onclick = bulkDelete;
   $('selectAll').onchange = function() {
     var checked = this.checked;
@@ -616,6 +617,19 @@
     } else {
       bar.classList.remove('visible');
     }
+  }
+
+  function bulkCopy() {
+    var keys = Object.keys(selectedKeys);
+    if (keys.length === 0) return;
+    var reports = allReports.filter(function(r) { return selectedKeys[r._key]; });
+    var text = reports.map(formatCopyReport).join('\n\n---\n\n');
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = $('bulkCopy');
+      btn.textContent = 'Copied ' + reports.length + '!';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy selected'; btn.classList.remove('copied'); }, 2000);
+    });
   }
 
   function bulkDelete() {
