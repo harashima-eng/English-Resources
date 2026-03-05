@@ -3457,7 +3457,7 @@
                 : window.NavState.categoryMap[nextCat][0];
               if (typeof gsap !== 'undefined' && !reducedMotion) {
                 gsap.to(current, {
-                  opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in',
+                  opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: 'power2.in',
                   overwrite: true,
                   onComplete: function() {
                     current.style.display = 'none';
@@ -3506,7 +3506,7 @@
     if (typeof gsap !== 'undefined' && !reducedMotion) {
       var _navGen = focusNavGeneration;
       gsap.to(current, {
-        opacity: 0, x: slideX, scale: 0.95, duration: 0.25, ease: 'power2.in', overwrite: true,
+        opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: 'power2.in', overwrite: true,
         onComplete: function() {
           current.style.display = 'none';
           next.classList.remove('no-match');
@@ -3515,7 +3515,7 @@
           next.style.display = '';
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
-            { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.3, ease: 'power2.out', overwrite: true,
+            { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.2, ease: 'power2.out', overwrite: true,
               onComplete: function() {
                 gsap.set(next, { opacity: 1, x: 0, y: 0, scale: 1 });
                 dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false;
@@ -3563,7 +3563,7 @@
       }
       return true;
     });
-    if (focusMode && focusIndex >= focusCards.length) {
+    if (focusMode && focusIndex >= focusCards.length && !focusPendingDirection) {
       var _clamped = Math.max(0, focusCards.length - 1);
       dbg.log('state', 'focusIndex', focusIndex + ' -> ' + _clamped + ' [rebuildFocusCards clamp]'); dbg.setState('focusIndex', _clamped);
       focusIndex = _clamped;
