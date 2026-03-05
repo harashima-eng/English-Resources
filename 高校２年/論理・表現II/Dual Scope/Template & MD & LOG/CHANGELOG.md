@@ -1,5 +1,17 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-05 — Focus Exit Button Visibility
+
+### UI Improvement
+- Focus exit button now shows "× Exit" label instead of bare "×" character
+- Increased tap target: `padding: 4px 8px 4px 10px`, `margin-left: 8px`
+- Raised default opacity from 0.5 → 0.7 for better discoverability
+- Reduced font-size from 18px → 13px to match indicator text scale
+- Added hover background for light and dark modes
+- **Files:** `interactive-quiz.js`, `interactive-quiz.css`
+
+---
+
 ## 2026-03-05 — focusAnimating state_race Fix
 
 ### Bug Fix: state_race on focusAnimating

@@ -6,6 +6,16 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-05 — Focus Exit Button Visibility
+
+### interactive-quiz.js
+- Button text changed from "×" to "× Exit" for discoverability
+
+### interactive-quiz.css
+- `.iq-focus-exit`: font-size 18→13px, padding 0→4px 8px, margin-left 4→8px, opacity 0.5→0.7, added hover background (light + dark)
+
+---
+
 ## 2026-03-05 — focusAnimating state_race Fix
 
 ### interactive-quiz.js
