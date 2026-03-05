@@ -3518,7 +3518,7 @@
               onComplete: function() {
                 gsap.set(next, { opacity: 1, x: 0, y: 0, scale: 1 });
                 dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false;
-                verifyCardVisible(next, 'navigateFocus');
+                requestAnimationFrame(function() { verifyCardVisible(next, 'navigateFocus'); });
               }
             }
           );
