@@ -130,6 +130,57 @@
     }
   });
 
+  // ── Detector 11: Rage Click — same element clicked 3+ times in 1s ──
+  var rageClicks = [];
+  document.addEventListener('click', function(e) {
+    var now = Date.now();
+    var el = e.target;
+    var x = e.clientX, y = e.clientY;
+    rageClicks.push({ el: el, x: x, y: y, t: now });
+    // Keep only clicks in last 1000ms
+    while (rageClicks.length && now - rageClicks[0].t > 1000) rageClicks.shift();
+    // Count clicks on same target (within 30px radius)
+    var count = 0;
+    for (var i = 0; i < rageClicks.length; i++) {
+      var c = rageClicks[i];
+      if (c.el === el || (Math.abs(c.x - x) < 30 && Math.abs(c.y - y) < 30)) count++;
+    }
+    if (count >= 3) {
+      var desc = el.tagName.toLowerCase();
+      if (el.className && typeof el.className === 'string') desc += '.' + el.className.split(' ')[0];
+      var text = (el.textContent || '').substring(0, 20).trim();
+      if (text) desc += ' "' + text + '"';
+      var span = rageClicks[rageClicks.length - 1].t - rageClicks[0].t;
+      log('error', 'DETECTOR', 'Rage click on ' + desc + ' (' + count + 'x in ' + span + 'ms)');
+      report('rage_click', { errorMsg: 'Rage click on ' + desc + ' (' + count + 'x in ' + span + 'ms)' });
+      rageClicks = [];
+    }
+  }, true);
+
+  // ── Detector 12: Dead Click — clicking non-interactive elements ──
+  var lastDeadClickReport = 0;
+  document.addEventListener('click', function(e) {
+    var now = Date.now();
+    if (now - lastDeadClickReport < 30000) return; // 30s local throttle
+    var el = e.target;
+    // Walk up 3 levels checking for interactive elements
+    for (var node = el, depth = 0; node && depth < 4; node = node.parentElement, depth++) {
+      var tag = node.tagName.toLowerCase();
+      if (tag === 'a' || tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea') return;
+      if (node.getAttribute('onclick') || node.getAttribute('role') === 'button') return;
+      if (node.classList && node.classList.contains('clickable')) return;
+      // Also skip common interactive patterns
+      if (node.getAttribute('tabindex') === '0' || tag === 'label' || tag === 'summary') return;
+    }
+    lastDeadClickReport = now;
+    var desc = el.tagName.toLowerCase();
+    if (el.className && typeof el.className === 'string') desc += '.' + el.className.split(' ')[0];
+    var text = (el.textContent || '').substring(0, 30).trim();
+    if (text) desc += ' "' + text + '"';
+    log('error', 'DETECTOR', 'Dead click on ' + desc);
+    report('dead_click', { errorMsg: 'Dead click on ' + desc });
+  }, true);
+
   // ── LoAF detection (Chrome-only, feature-gated) ──
   if (typeof PerformanceObserver !== 'undefined' &&
       PerformanceObserver.supportedEntryTypes &&

@@ -131,6 +131,23 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
     };
     ref.push(report).catch(function() {});
   };
+
+  // Detector 15: Resource Load Failure (CSS, scripts, images, audio)
+  var lastResourceReport = 0;
+  window.addEventListener('error', function(e) {
+    var el = e.target;
+    if (!el || !el.tagName) return;
+    var tag = el.tagName.toLowerCase();
+    if (tag !== 'link' && tag !== 'script' && tag !== 'img' && tag !== 'audio') return;
+    var src = el.src || el.href || '';
+    if (!src) return;
+    var now = Date.now();
+    if (now - lastResourceReport < 5000) return; // 5s local debounce
+    lastResourceReport = now;
+    window.BugReport('resource_load_fail', {
+      errorMsg: 'Failed to load: ' + src.split('/').pop().substring(0, 80)
+    });
+  }, true);
 })();
 
 // ── PWA install prompt ──
