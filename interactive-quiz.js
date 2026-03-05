@@ -804,6 +804,34 @@
     return row;
   }
 
+  function updateSectionRow(row) {
+    var si = parseInt(row.dataset.si);
+    var sec = grammarData.sections[si];
+    if (!sec) return;
+    var interactiveCount = 0, correctCount = 0, answeredCount = 0;
+    sec.questions.forEach(function(q, qi) {
+      if (q.type && (q.correctAnswer || q.correctText)) {
+        interactiveCount++;
+        var key = si + '-' + qi;
+        if (answeredKeys[key]) {
+          answeredCount++;
+          if (getAnswerResult(key) === 'correct') correctCount++;
+        }
+      }
+    });
+    var fraction = row.querySelector('.iq-progress-section-fraction');
+    if (fraction) fraction.textContent = correctCount + '/' + interactiveCount;
+    var fill = row.querySelector('.iq-progress-section-fill');
+    if (fill) fill.style.width = (interactiveCount > 0 ? (correctCount / interactiveCount) * 100 : 0) + '%';
+    var status = row.querySelector('.iq-progress-section-status');
+    if (status) {
+      status.classList.remove('not-started', 'all-correct', 'partial');
+      if (answeredCount === 0) status.classList.add('not-started');
+      else if (correctCount === interactiveCount) status.classList.add('all-correct');
+      else status.classList.add('partial');
+    }
+  }
+
   // ── Panel open/close ──
   function toggleProgressPanel() {
     if (progressPanelOpen) closeProgressPanel();
