@@ -1064,7 +1064,7 @@ html.dark .retry-section-header {
   .toggle-btn-row, .collapsible:not(.open),
   .search-wrap, .progress-wrap, .home-cta,
   .top-nav-theme, .btn-print, .home-bg,
-  .iq-retry-bar, .iq-review-nav, .iq-toast,
+  .iq-review-nav, .iq-toast,
   .iq-badge-panel, .iq-install-banner { display: none !important; }
 
   body {
