@@ -1,5 +1,31 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-05 — Stability & Performance Improvements
+
+### ScrollTrigger kill(true) Consistency
+- `t.kill()` → `t.kill(true)` in Lessons 16, 17, 実戦問題5 — matches Lesson 15 fix, prevents stale timelines
+
+### DOM Query Caching
+- `interactive-quiz.js`: Cached `.qcard[data-si][data-qi]` selector (11 call sites → `getCachedCards()`)
+- Invalidated on `iq:section-rendered`, `MutationObserver`, `hashchange`
+
+### Shared IQ_EASE Config
+- `interactive-quiz.js`: 23 hardcoded ease strings → `IQ_EASE.*` references
+- Config: `out`, `in`, `inOut`, `pop`, `soft`, `heavy`
+
+### Dynamic Service Worker Scope
+- All 4 lesson files: hardcoded `/English-Resources/` scope → computed from `sw.js` path
+- Works on both GitHub Pages (`/English-Resources/`) and Firebase (`/`)
+
+### Files Changed
+- `Lesson 15｜接続詞.html` — dynamic SW scope
+- `Lesson 16｜名詞・冠詞・代名詞.html` — kill(true), dynamic SW scope
+- `Lesson 17｜形容詞・副詞・群動詞.html` — kill(true), dynamic SW scope
+- `実戦問題5｜総合問題.html` — kill(true), dynamic SW scope
+- `interactive-quiz.js` — card cache, IQ_EASE config
+
+---
+
 ## 2026-03-05 — conj-card Conflict Fix + Retry Wrong Bug + Focus Exit Button
 
 ### Bug Fix: conj-card anim_conflict (Lesson 15)
