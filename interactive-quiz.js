@@ -3525,10 +3525,10 @@
                 dbg.log('timer', 'setTimeout', '600ms safety unblock cross-tier');
                 setTimeout(function() {
                   if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
-                    dbg.log('state', 'focusAnimating', 'true -> false [600ms safety cross-tier]'); dbg.setState('focusAnimating', false);
+                    dbg.log('state', 'focusAnimating', 'true -> false [600ms safety cross-tier]');
                     focusAnimating = false;
                     if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
-                    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]'); dbg.setState('focusPendingDirection', null);
+                    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]');
                     focusPendingDirection = null;
                   }
                 }, 600);
@@ -3606,7 +3606,7 @@
       // Safety timer — also cleans up absolute positioning if animation stalled
       setTimeout(function() {
         if (_navGen === focusNavGeneration && focusAnimating) {
-          dbg.log('state', 'focusAnimating', 'true -> false [600ms safety normal]'); dbg.setState('focusAnimating', false);
+          dbg.log('state', 'focusAnimating', 'true -> false [600ms safety normal]');
           focusAnimating = false;
           current.style.position = '';
           current.style.width = '';
