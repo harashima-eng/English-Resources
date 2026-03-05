@@ -205,6 +205,8 @@
   }
 
   // ── Detector 14: Layout Shift — reports if CLS > 0.25 once per page load ──
+  var lastClickForCLS = 0;
+  document.addEventListener('click', function() { lastClickForCLS = performance.now(); }, true);
   var clsTotal = 0;
   var clsLargestSource = '';
   var clsLargestValue = 0;
@@ -215,6 +217,7 @@
     new PerformanceObserver(function(list) {
       list.getEntries().forEach(function(entry) {
         if (entry.hadRecentInput) return; // exclude user-initiated shifts
+        if (performance.now() - lastClickForCLS < 1000) return; // extended user-action window
         clsTotal += entry.value;
         if (entry.value > clsLargestValue) {
           clsLargestValue = entry.value;
