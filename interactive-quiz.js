@@ -80,9 +80,10 @@
     }
   });
 
-  // Silent error: any error-channel entry
+  // Silent error: any error-channel entry (excluding known-benign sources)
+  var BENIGN_TAGS = ['loadProgress','saveProgress','pruneOldProgress','kbdHints','kbdHintsSave','focusSave','focusClear'];
   detectors.push(function(entry) {
-    if (entry.ch === 'error' && entry.tag !== 'DETECTOR') {
+    if (entry.ch === 'error' && entry.tag !== 'DETECTOR' && BENIGN_TAGS.indexOf(entry.tag) === -1) {
       report('silent_error', { errorMsg: entry.tag + ': ' + entry.msg });
     }
   });

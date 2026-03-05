@@ -141,6 +141,10 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
     if (tag !== 'link' && tag !== 'script' && tag !== 'img' && tag !== 'audio') return;
     var src = el.src || el.href || '';
     if (!src) return;
+    // Skip extension-injected and non-HTTP resources
+    if (src.indexOf('http') !== 0) return;
+    // Only report same-origin resources
+    try { if (new URL(src).origin !== location.origin) return; } catch(_) { return; }
     var now = Date.now();
     if (now - lastResourceReport < 5000) return; // 5s local debounce
     lastResourceReport = now;
