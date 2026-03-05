@@ -64,7 +64,7 @@ GPU rasterization is OFF (user preference). This only affects paint-to-bitmap. A
 Wraps `gsap.to/fromTo/set/killTweensOf` for logging and conflict detection. Uses `activeTweens` map keyed by unique per-element IDs (`_gsapUid` via `elName()`). When a new tween targets the same element+property as an active tween, it fires `BugReport('anim_conflict', ...)`. Enable with `?debug=1` URL param. Legitimate overlaps (e.g., section exit → entrance) use `overwrite: true` to suppress false positives.
 
 ### Firebase Bug Reports (`firebase-config.js`)
-`window.BugReport(type, data)` writes to `/bug-reports/` in Firebase RTDB. Throttled to 1 report per type per 5 min per device. Report types: `anim_conflict`, `stuck_animating`, `rapid_interaction`, `state_race`, `silent_error`. Each report includes quiz context, screen info, state snapshot, trace timeline, and performance data.
+`window.BugReport(type, data)` writes to `/bug-reports/` in Firebase RTDB. Throttled to 1 report per type per 5 min per device (per-type throttle — multiple detector types can fire independently). Report types: `anim_conflict`, `stuck_animating`, `rapid_interaction`, `state_race`, `silent_error`, `cdn_fallback`, `quiz_load_failure`, `connectivity_loss`, `dom_missing`, `rage_click`, `dead_click`, `slow_interaction`, `layout_shift`, `resource_load_fail`. Each report includes quiz context, screen info, state snapshot, trace timeline, and performance data.
 
 ### Bug Dashboard (`bug-dashboard.html`)
 Teacher-only dashboard (Google Auth, restricted to `harashima@komagome.ed.jp`). Features:
