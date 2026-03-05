@@ -3899,7 +3899,7 @@
     if (window.Router && Router.navigate) {
       var _origNav = Router.navigate.bind(Router);
       Router.navigate = function(view, cat, sec) {
-        if (focusMode && view !== 'question') exitFocusMode();
+        if (focusMode && view !== 'question' && view !== 'retry') exitFocusMode();
         return _origNav(view, cat, sec);
       };
     }

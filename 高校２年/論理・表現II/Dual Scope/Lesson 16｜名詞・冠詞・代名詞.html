@@ -1284,6 +1284,7 @@ function renderQuestion(q, si, qi) {
 
   return `<div class="qcard" data-si="${si}" data-qi="${qi}">${questionHtml}${leftHtml}${rightHtml}</div>`;
 }
+window.renderQuestion = renderQuestion;
 
 function renderQuestions(sectionIndex) {
   const section = grammarData.sections[sectionIndex];
