@@ -2648,6 +2648,7 @@
   function performFullReset() {
     if (focusMode) exitFocusMode(true);
     if (reviewMode) { reviewMode = false; removeReviewFilter(); }
+    var wasRetry = retryMode;
     streak = 0;
     bestStreak = 0;
     badges = [];
@@ -2664,6 +2665,12 @@
     var retryContainer = document.getElementById('retryQuestionsList');
     if (retryContainer) retryContainer.innerHTML = '';  // clear retry cards
     if (retryObserver) { retryObserver.disconnect(); retryObserver = null; }
+    // Navigate back to question view if we were in retry
+    if (wasRetry && window.Router && window.NavState && window.NavState.view === 'retry') {
+      invalidateCardCache();
+      Router.navigate('question');
+      return;
+    }
     saveProgress();
     updateProgressPanel();
     updateStreakDisplay();
