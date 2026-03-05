@@ -6,6 +6,20 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-06 — Focus Mode Exit Opacity Fix
+
+### interactive-quiz.js
+- **Bug fix:** Competing GSAP tweens between `exitFocusMode` stagger animation and `revealObserver`'s reveal tweens caused cards to freeze at partial/zero opacity after exiting focus mode
+- `exitFocusMode()`: disconnect `revealObserver` before exit animation (prevents observer interference)
+- `exitFocusMode()`: `gsap.killTweensOf()` on ALL cards before `clearProps` (was only killing stale `focusCards` subset)
+- `exitFocusMode()`: clean up `position/width/top/left/zIndex` from interrupted `navigateFocus`
+- `exitFocusMode()`: added `onComplete` safety net on stagger animation — guarantees all visible cards reach `opacity: 1`
+
+### Lesson HTML files (L15, L16, L17, 実戦問題5)
+- Added `overwrite: true` to `revealObserver`'s `gsap.to` in `initCardReveal` — prevents competing tweens from producing intermediate opacity values
+
+---
+
 ## 2026-03-05 — Focus Exit Button Visibility
 
 ### interactive-quiz.js
