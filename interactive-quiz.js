@@ -3246,6 +3246,13 @@
     focusIndicatorEl.className = 'iq-focus-indicator';
     focusIndicatorEl.setAttribute('aria-live', 'polite');
 
+    var focusExitBtn = document.createElement('button');
+    focusExitBtn.className = 'iq-focus-exit';
+    focusExitBtn.textContent = '\u00D7';
+    focusExitBtn.setAttribute('aria-label', 'Exit focus mode');
+    focusExitBtn.onclick = function() { exitFocusMode(); };
+    focusIndicatorEl.appendChild(focusExitBtn);
+
     focusOverlayEl.appendChild(focusPrevBtn);
     focusOverlayEl.appendChild(focusNextBtn);
     focusOverlayEl.appendChild(focusIndicatorEl);
