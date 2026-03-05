@@ -225,7 +225,13 @@
   var _cachedCards = null;
   var _cardMap = null;
   function getCachedCards() {
-    if (!_cachedCards) _cachedCards = Array.prototype.slice.call(document.querySelectorAll('.qcard[data-si][data-qi]'));
+    if (!_cachedCards) {
+      var containerId = retryMode ? 'retryQuestionsList' : 'questionsList';
+      var container = document.getElementById(containerId);
+      _cachedCards = container
+        ? Array.prototype.slice.call(container.querySelectorAll('.qcard[data-si][data-qi]'))
+        : [];
+    }
     return _cachedCards;
   }
   function getCardByKey(si, qi) {
