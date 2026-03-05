@@ -1143,6 +1143,9 @@
   function enhanceCard(cardEl) {
     var si = parseInt(cardEl.dataset.si);
     var qi = parseInt(cardEl.dataset.qi);
+    if (isNaN(si) || isNaN(qi) || si < 0 || si >= grammarData.sections.length) return;
+    var sec = grammarData.sections[si];
+    if (!sec || qi < 0 || qi >= sec.questions.length) return;
     var key = getQKey(si, qi);
 
     if (cardEl.dataset.iqEnhanced) return;
@@ -2051,6 +2054,7 @@
       var parts = key.split('-');
       var si = parseInt(parts[0]);
       var qi = parseInt(parts[1]);
+      if (isNaN(si) || isNaN(qi) || si < 0 || si >= grammarData.sections.length) return;
       if (!groups[si]) groups[si] = [];
       groups[si].push(qi);
     });
