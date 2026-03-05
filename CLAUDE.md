@@ -61,10 +61,10 @@ GPU rasterization is OFF (user preference). This only affects paint-to-bitmap. A
 ## Debug & Monitoring System
 
 ### GSAP Debug Proxy (`interactive-quiz.js`)
-Wraps `gsap.to/fromTo/set/killTweensOf` for logging and conflict detection. Uses `activeTweens` map keyed by unique per-element IDs (`_gsapUid` via `elName()`). When a new tween targets the same element+property as an active tween, it fires `BugReport.send('anim_conflict', ...)`. Enable with `?debug=1` URL param. Legitimate overlaps (e.g., section exit → entrance) use `overwrite: true` to suppress false positives.
+Wraps `gsap.to/fromTo/set/killTweensOf` for logging and conflict detection. Uses `activeTweens` map keyed by unique per-element IDs (`_gsapUid` via `elName()`). When a new tween targets the same element+property as an active tween, it fires `BugReport('anim_conflict', ...)`. Enable with `?debug=1` URL param. Legitimate overlaps (e.g., section exit → entrance) use `overwrite: true` to suppress false positives.
 
 ### Firebase Bug Reports (`firebase-config.js`)
-`window.BugReport.send(type, data)` writes to `/bug-reports/` in Firebase RTDB. Throttled to 1 report per type per 5 min per device. Report types: `anim_conflict`, `stuck_animating`, `rapid_interaction`, `state_race`, `silent_error`. Each report includes quiz context, screen info, state snapshot, trace timeline, and performance data.
+`window.BugReport(type, data)` writes to `/bug-reports/` in Firebase RTDB. Throttled to 1 report per type per 5 min per device. Report types: `anim_conflict`, `stuck_animating`, `rapid_interaction`, `state_race`, `silent_error`. Each report includes quiz context, screen info, state snapshot, trace timeline, and performance data.
 
 ### Bug Dashboard (`bug-dashboard.html`)
 Teacher-only dashboard (Google Auth, restricted to `harashima@komagome.ed.jp`). Features:
@@ -79,7 +79,7 @@ Teacher-only dashboard (Google Auth, restricted to `harashima@komagome.ed.jp`). 
 | File | Role |
 |------|------|
 | `interactive-quiz.js` | GSAP debug proxy, conflict detection |
-| `firebase-config.js` | `BugReport.send()` reporter, throttling |
+| `firebase-config.js` | `BugReport()` reporter, throttling |
 | `bug-dashboard.html` | Teacher dashboard for viewing/managing reports |
 
 ## Color System (Nordic Palette)
