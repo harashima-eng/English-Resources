@@ -122,10 +122,10 @@
   detectors.push(function(entry) {
     if (entry.ch !== 'ui') return;
     tapTimes.push(entry.t);
-    if (tapTimes.length > 5) tapTimes.shift();
-    if (tapTimes.length >= 5 && tapTimes[4] - tapTimes[0] < 1000) {
-      log('error', 'DETECTOR', 'Rapid interaction: 5 taps in ' + (tapTimes[4] - tapTimes[0]) + 'ms');
-      report('rapid_interaction', { errorMsg: '5 taps in ' + (tapTimes[4] - tapTimes[0]) + 'ms' });
+    if (tapTimes.length > 8) tapTimes.shift();
+    if (tapTimes.length >= 8 && tapTimes[7] - tapTimes[0] < 800) {
+      log('error', 'DETECTOR', 'Rapid interaction: 8 taps in ' + (tapTimes[7] - tapTimes[0]) + 'ms');
+      report('rapid_interaction', { errorMsg: '8 taps in ' + (tapTimes[7] - tapTimes[0]) + 'ms' });
       tapTimes = [];
     }
   });
@@ -195,6 +195,23 @@
     document.addEventListener('DOMContentLoaded', function() { window.IQDebug.showOverlay(); });
   }
 })();
+
+// GSAP CDN fallback — provides no-op stub so quizzes work without animations
+if (typeof gsap === 'undefined') {
+  window.gsap = {
+    to: function() { return { kill: function() {} }; },
+    fromTo: function() { return { kill: function() {} }; },
+    from: function() { return { kill: function() {} }; },
+    set: function() {},
+    killTweensOf: function() {},
+    timeline: function() {
+      var noop = { to: function() { return noop; }, fromTo: function() { return noop; }, set: function() { return noop; }, play: function() { return noop; }, kill: function() {} };
+      return noop;
+    },
+    registerPlugin: function() {},
+    config: function() {}
+  };
+}
 
 (function() {
   'use strict';

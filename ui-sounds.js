@@ -27,6 +27,8 @@
 
   snd.load(Snd.KITS.SND01).then(function() {
     ready = true;
+  }).catch(function() {
+    // SND.dev load failed (autoplay restriction, codec issue) — sounds stay disabled
   });
 
   var soundMap = {
