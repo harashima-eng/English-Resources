@@ -1,5 +1,24 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-06 — Focus Mode Exit Opacity Fix
+
+### Bug Fix: Cards Invisible/Faded After Exiting Focus Mode
+- **Root cause**: 4 defensive gaps allowed competing GSAP tweens to freeze cards at intermediate opacity
+- Gap 1: `revealObserver`'s `gsap.to` lacked `overwrite: true` — added to all 4 lesson files' `initCardReveal`
+- Gap 2: `exitFocusMode` killed tweens on stale `focusCards` subset — now kills on ALL cards via `getCachedCards()`
+- Gap 3: `revealObserver` not disconnected during exit — now disconnected at start of `exitFocusMode`
+- Gap 4: No `onComplete` safety net on stagger animation — added to guarantee `opacity: 1` on all visible cards
+- Bonus: Clean up `position/width/top/left/zIndex` from interrupted `navigateFocus` animations
+
+### Files Changed
+- `interactive-quiz.js` — 4 edits in `exitFocusMode()`
+- `Lesson 15｜接続詞.html` — `overwrite: true` in revealObserver
+- `Lesson 16｜名詞・冠詞・代名詞.html` — same
+- `Lesson 17｜形容詞・副詞・群動詞.html` — same
+- `実戦問題5｜総合問題.html` — same
+
+---
+
 ## 2026-03-05 — Comprehensive Improvement Pass
 
 ### HIGH Priority Fixes (interactive-quiz.js)
