@@ -216,6 +216,14 @@
   var retryBarEl = null;
   var retrySummaryTimer = null;
 
+  // ── Cached .qcard selector ──
+  var _cachedCards = null;
+  function getCachedCards() {
+    if (!_cachedCards) _cachedCards = Array.prototype.slice.call(document.querySelectorAll('.qcard[data-si][data-qi]'));
+    return _cachedCards;
+  }
+  function invalidateCardCache() { _cachedCards = null; }
+
   // ── Gamification state ──
   var streak = 0;
   var bestStreak = 0;
