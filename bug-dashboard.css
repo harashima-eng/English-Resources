@@ -546,9 +546,12 @@ body {
 #bulkCopy { background: var(--accent); }
 #bulkCopy.copied { background: var(--success); }
 
-.select-all-cb {
+.select-all-cb,
+.row-cb {
   cursor: pointer;
   accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
 }
 
 /* ── Error Grouping Table ── */
