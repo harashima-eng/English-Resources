@@ -36,13 +36,17 @@
     silent_error: '#B71C1C', blank_card: '#F57F17',
     invisible_focus_card: '#E65100', cdn_fallback: '#F9A825',
     quiz_load_failure: '#C62828', connectivity_loss: '#E65100',
-    dom_missing: '#B71C1C'
+    dom_missing: '#B71C1C',
+    rage_click: '#E91E63', dead_click: '#78909C',
+    slow_interaction: '#7B1FA2', layout_shift: '#3949AB',
+    resource_load_fail: '#FF8F00'
   };
 
   var KNOWN_TYPES = [
     'anim_conflict', 'stuck_animating', 'rapid_interaction', 'state_race',
     'silent_error', 'blank_card', 'invisible_focus_card',
-    'cdn_fallback', 'quiz_load_failure', 'connectivity_loss', 'dom_missing'
+    'cdn_fallback', 'quiz_load_failure', 'connectivity_loss', 'dom_missing',
+    'rage_click', 'dead_click', 'slow_interaction', 'layout_shift', 'resource_load_fail'
   ];
 
   var DETECTORS = [
@@ -53,7 +57,12 @@
     { name: 'GSAP CDN Fallback', type: 'cdn_fallback', threshold: 'CDN load fail' },
     { name: 'Quiz Load Failure', type: 'quiz_load_failure', threshold: 'no grammarData' },
     { name: 'Connectivity Loss', type: 'connectivity_loss', threshold: '>30s disconnected' },
-    { name: 'Critical DOM Missing', type: 'dom_missing', threshold: '#questionsList absent' }
+    { name: 'Critical DOM Missing', type: 'dom_missing', threshold: '#questionsList absent' },
+    { name: 'Rage Click', type: 'rage_click', threshold: '3x same element / 1s' },
+    { name: 'Dead Click', type: 'dead_click', threshold: 'non-interactive element' },
+    { name: 'Slow Interaction', type: 'slow_interaction', threshold: '>300ms LoAF' },
+    { name: 'Layout Shift', type: 'layout_shift', threshold: 'CLS > 0.25' },
+    { name: 'Resource Load Fail', type: 'resource_load_fail', threshold: 'CSS/img/audio 404' }
   ];
 
   // ── Helpers ──

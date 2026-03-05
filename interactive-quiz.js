@@ -182,6 +182,8 @@
   }, true);
 
   // ── LoAF detection (Chrome-only, feature-gated) ──
+  // Detector 13: Slow Interaction — reports truly bad frames (>300ms) once per session
+  var slowInteractionReported = false;
   if (typeof PerformanceObserver !== 'undefined' &&
       PerformanceObserver.supportedEntryTypes &&
       PerformanceObserver.supportedEntryTypes.indexOf('long-animation-frame') !== -1) {
@@ -192,9 +194,47 @@
             return (s.sourceFunctionName || 'anonymous') + '(' + Math.round(s.duration) + 'ms)';
           }).join(', ');
           log('timer', 'LoAF', Math.round(entry.duration) + 'ms' + (scripts ? ': ' + scripts : ''));
+          // Report truly bad frames (>300ms) once per session
+          if (!slowInteractionReported && entry.duration > 300 && scripts) {
+            slowInteractionReported = true;
+            report('slow_interaction', { errorMsg: 'Long frame ' + Math.round(entry.duration) + 'ms: ' + scripts });
+          }
         }
       });
     }).observe({ type: 'long-animation-frame' });
+  }
+
+  // ── Detector 14: Layout Shift — reports if CLS > 0.25 once per page load ──
+  var clsTotal = 0;
+  var clsLargestSource = '';
+  var clsLargestValue = 0;
+  var clsReported = false;
+  if (typeof PerformanceObserver !== 'undefined' &&
+      PerformanceObserver.supportedEntryTypes &&
+      PerformanceObserver.supportedEntryTypes.indexOf('layout-shift') !== -1) {
+    new PerformanceObserver(function(list) {
+      list.getEntries().forEach(function(entry) {
+        if (entry.hadRecentInput) return; // exclude user-initiated shifts
+        clsTotal += entry.value;
+        if (entry.value > clsLargestValue) {
+          clsLargestValue = entry.value;
+          var sources = entry.sources || [];
+          if (sources.length && sources[0].node) {
+            var n = sources[0].node;
+            var desc = n.tagName ? n.tagName.toLowerCase() : '';
+            if (n.className && typeof n.className === 'string') desc = '.' + n.className.split(' ')[0];
+            clsLargestSource = desc;
+          }
+        }
+        if (!clsReported && clsTotal > 0.25) {
+          clsReported = true;
+          var msg = 'High CLS: ' + clsTotal.toFixed(2);
+          if (clsLargestSource) msg += ' (largest shift: ' + clsLargestSource + ' element at +' + (entry.startTime / 1000).toFixed(1) + 's)';
+          log('error', 'DETECTOR', msg);
+          report('layout_shift', { errorMsg: msg });
+        }
+      });
+    }).observe({ type: 'layout-shift', buffered: true });
   }
 
   // ── FPS estimator (only runs in debug mode) ──
