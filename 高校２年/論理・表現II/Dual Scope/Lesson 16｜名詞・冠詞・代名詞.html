@@ -991,7 +991,7 @@ const Router = {
     const parts = hash.split('/');
 
     NavState.view = parts[0] || 'home';
-    if (!['home', 'overview', 'question'].includes(NavState.view)) NavState.view = 'home';
+    if (!['home', 'overview', 'question', 'retry'].includes(NavState.view)) NavState.view = 'home';
 
     if (NavState.view === 'question' && parts.length >= 3) {
       NavState.category = parts[1] || 'basic';
@@ -1024,7 +1024,7 @@ const Router = {
       }
     });
 
-    const viewMap = { home: 'viewHome', overview: 'viewOverview', question: 'viewQuestion' };
+    const viewMap = { home: 'viewHome', overview: 'viewOverview', question: 'viewQuestion', retry: 'viewRetry' };
     const mainContent = document.getElementById('mainContent');
     const subNav = document.getElementById('subNav');
 
@@ -1044,7 +1044,7 @@ const Router = {
       }
       // Show new view with entrance
       setTimeout(() => {
-        document.querySelectorAll('.view-home, .view-overview, .view-question').forEach(v => {
+        document.querySelectorAll('.view-home, .view-overview, .view-question, .view-retry').forEach(v => {
           if (v !== oldViewEl) v.classList.remove('active');
         });
         // Pre-hide entrance elements to prevent flash
@@ -1063,7 +1063,7 @@ const Router = {
       }, UV_REDUCED ? 0 : 200);
     } else {
       // First render or reduced motion: instant
-      document.querySelectorAll('.view-home, .view-overview, .view-question').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.view-home, .view-overview, .view-question, .view-retry').forEach(v => v.classList.remove('active'));
       newViewEl.classList.add('active');
       this._postRender(NavState.view, mainContent, subNav);
     }
@@ -1080,11 +1080,16 @@ const Router = {
       mainContent.classList.remove('has-subnav');
       setTimeout(() => { initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
     } else if (view === 'question') {
+      if (window.IQ && window.IQ.cleanupRetryState) window.IQ.cleanupRetryState();
       if (navVisible) {
         gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
       }
       mainContent.classList.add('has-subnav');
       this.renderQuestionView();
+    } else if (view === 'retry') {
+      mainContent.classList.remove('has-subnav');
+      gsap.to('#subNav', { y: -60, opacity: 0, pointerEvents: 'none', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      document.dispatchEvent(new Event('iq:retry-view-ready'));
     }
     // Re-init hover after view change
     setTimeout(initHoverAnimations, 100);
