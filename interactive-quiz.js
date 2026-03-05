@@ -3455,6 +3455,12 @@ if (typeof gsap === 'undefined') {
       } else {
         card.style.display = '';
       }
+      // Clean up absolute positioning left by interrupted navigateFocus
+      card.style.position = '';
+      card.style.width = '';
+      card.style.top = '';
+      card.style.left = '';
+      card.style.zIndex = '';
     });
 
     if (skipAnimation) {
@@ -3467,7 +3473,13 @@ if (typeof gsap === 'undefined') {
       var visibleCards = Array.prototype.slice.call(allCards).filter(function(c) { return c.style.display !== 'none'; });
       gsap.fromTo(visibleCards,
         { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.3, stagger: 0.03, ease: IQ_EASE.out, overwrite: true }
+        { opacity: 1, y: 0, scale: 1, duration: 0.3, stagger: 0.03, ease: IQ_EASE.out, overwrite: true,
+          onComplete: function() {
+            visibleCards.forEach(function(c) {
+              if (c.style.display !== 'none') gsap.set(c, { opacity: 1, y: 0, scale: 1 });
+            });
+          }
+        }
       );
     } else {
       allCards.forEach(function(c) {

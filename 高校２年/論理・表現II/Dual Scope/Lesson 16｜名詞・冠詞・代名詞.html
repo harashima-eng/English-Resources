@@ -1320,7 +1320,8 @@ function initCardReveal() {
         gsap.to(entry.target, {
           opacity: 1, y: 0,
           duration: GSAP_CONFIG.duration.normal,
-          ease: GSAP_CONFIG.ease.default
+          ease: GSAP_CONFIG.ease.default,
+          overwrite: true
         });
         revealObserver.unobserve(entry.target);
       }
