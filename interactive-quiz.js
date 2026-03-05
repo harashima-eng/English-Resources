@@ -3668,10 +3668,6 @@
   function rebuildFocusCards() {
     focusCards = getCachedCards().filter(function(c) {
       if (c.style.display === 'none' && !focusMode) return false;
-      if (retryMode) {
-        var key = c.dataset.si + '-' + c.dataset.qi;
-        return retryKeys.indexOf(key) !== -1;
-      }
       if (reviewMode) {
         var rkey = getQKey(c.dataset.si, c.dataset.qi);
         return getAnswerResult(rkey) === 'wrong';
