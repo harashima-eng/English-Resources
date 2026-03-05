@@ -1253,7 +1253,7 @@
     var wasCorrect = result === 'correct';
 
     // Lock zone and hide check/show buttons
-    zone.classList.add('locked');
+    lockZone(zone);
     zone.querySelectorAll('.iq-check-btn').forEach(function(btn) { btn.style.display = 'none'; });
 
     switch (type) {

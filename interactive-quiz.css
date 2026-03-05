@@ -1374,6 +1374,10 @@ html.dark .sr-label.sr-wrong { color: #EF4444; }
 html.dark .iq-streak {
   color: #ffab40;
 }
+[data-theme="dark"] .iq-streak-pulse,
+html.dark .iq-streak-pulse {
+  color: #ffab40;
+}
 [data-theme="dark"] .iq-badge-panel,
 html.dark .iq-badge-panel {
   background: #1e1e1e;
