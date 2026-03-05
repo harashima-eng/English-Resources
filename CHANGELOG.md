@@ -6,6 +6,18 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-05 — Retry Wrong Fix + Focus Exit Button
+
+### interactive-quiz.js
+- Fixed Retry Wrong showing no questions: `startRetryMode()` now auto-navigates to a section with wrong answers when current section has none
+- Fixed focus mode + retry: properly hides non-focused cards after retry rebuild (was showing all retry cards simultaneously)
+- Added `×` exit button inside focus indicator bar (`aria-label="Exit focus mode"`)
+
+### interactive-quiz.css
+- Added `.iq-focus-exit` styles (border separator, opacity hover, inherits color)
+
+---
+
 ## 2026-03-04 — Teacher Login Persistence + Focus Mode Hardening
 
 ### teacher-reveal.js

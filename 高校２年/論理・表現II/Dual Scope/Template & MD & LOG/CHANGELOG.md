@@ -1,5 +1,25 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-05 — conj-card Conflict Fix + Retry Wrong Bug + Focus Exit Button
+
+### Bug Fix: conj-card anim_conflict (Lesson 15)
+- `initOverviewScrollReveals()`: `t.kill()` → `t.kill(true)` — kills both ScrollTrigger AND its associated timeline, preventing stale tweens on `.conj-card` re-initialization
+
+### Bug Fix: Retry Wrong shows no question
+- `startRetryMode()` now navigates to a section containing wrong answers if current section has none (cards are per-section in DOM)
+- Focus mode + retry: properly hides non-focused cards and scrolls to first retry card (was showing all retry cards at once)
+- Empty retry in focus mode gracefully exits focus mode
+
+### Feature: Focus exit button
+- Added `×` button inside `.iq-focus-indicator` bar (next to "Q 3 / 15" text)
+- Separated by thin border, fades in on hover, calls `exitFocusMode()`
+- Accessible: `aria-label="Exit focus mode"`
+
+### Files Changed
+- `Lesson 15｜接続詞.html` — `t.kill(true)` in overview ScrollTrigger cleanup
+- `interactive-quiz.js` — retry section navigation, focus card visibility, exit button
+- `interactive-quiz.css` — `.iq-focus-exit` styles
+
 ## 2026-03-04 — Teacher Login Persistence + Focus Mode Hardening
 
 ### Teacher Login
