@@ -297,6 +297,50 @@ During teacher sessions (授業モード), the interactive quiz adapts:
 - Hash-based routing (#question/basic/1)
 - Overview card tilt effect on hover (gsap.quickTo)
 
+### Keyboard Shortcuts
+
+Toggle keyboard hint badges via keyboard icon in top-nav-right (hidden on touch devices). Preference persisted to `localStorage('iq-kbd-hints')`.
+
+| Key | Action |
+|-----|--------|
+| **J / K** | Navigate to next / previous question (GSAP proxy scroll) |
+| **H** | Toggle Hint on nearest card |
+| **W** | Toggle Words on nearest card |
+| **A** | Toggle Answer on nearest card (or select choice if unlocked zone exists) |
+| **P** | Toggle progress panel |
+| **F** | Toggle focus mode |
+| **Escape** | Priority chain: badge panel > focus mode > review nav > progress > popup > collapsible |
+| **1-9** | Select scramble pool chips |
+| **Backspace** | Undo last scramble chip |
+
+### Focus Mode
+
+Single-question view for distraction-free study:
+- Toggle via **F** key or crosshair button in top-nav-right
+- GSAP slide transitions between questions (opacity + x + scale)
+- Navigation overlay: fixed arrows (left/right), position indicator pill (bottom center), exit button in indicator bar
+- Mobile swipe support (horizontal threshold 50px)
+- Cross-section navigation (arrows continue into next/previous section)
+- Integrates with retry/review modes (rebuilds card list on mode change)
+- `localStorage` persistence per exam (`iq-focus-{examId}`)
+- Escape exits focus mode
+
+### Print Support
+
+Print-friendly stylesheet in `dualscope-lesson.css`:
+- `@media print` section hides interactive UI (nav, buttons, overlays), resets colors to black/white
+- Clean single-column card layout with borders, `page-break-inside: avoid`
+- `body.print-answers` class shows answer sections in printout
+- Print button on Home view (all 4 lessons) opens dialog to choose with/without answers
+- 2-column layout preserved for overview/conjugation grids
+
+### Bug Monitoring
+
+Automated error detection and reporting system:
+- **GSAP debug proxy** (`interactive-quiz.js`): Wraps `gsap.to/fromTo/set/killTweensOf`, detects animation conflicts via `activeTweens` map with unique per-element IDs (`_gsapUid`). Enable with `?debug=1`.
+- **Firebase bug reports** (`firebase-config.js`): `BugReport(type, data)` writes to `/bug-reports/` in RTDB. Throttled to 1 per type per 5 min per device. Report types include `anim_conflict`, `stuck_animating`, `rapid_interaction`, `state_race`, `dom_missing`, `dead_click`, and more.
+- **Bug dashboard** (`bug-dashboard.html`): Teacher-only dashboard with report table, filters, bar chart, JS error log, prune/purge controls.
+
 ---
 
 ## Animation System (GSAP-First)
