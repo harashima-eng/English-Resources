@@ -2727,6 +2727,21 @@ html.dark .iq-focus-indicator {
   background: rgba(30, 41, 59, 0.9);
   color: #E2E8F0;
 }
+.iq-focus-exit {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 0 0 12px;
+  margin-left: 4px;
+  cursor: pointer;
+  opacity: 0.5;
+  border-left: 1px solid currentColor;
+}
+.iq-focus-exit:hover {
+  opacity: 1;
+}
 
 /* ── Focus mode body state ── */
 body.iq-focus-active .search-wrap,
