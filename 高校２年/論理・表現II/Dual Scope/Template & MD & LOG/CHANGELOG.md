@@ -1,5 +1,15 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-05 — focusAnimating state_race Fix
+
+### Bug Fix: state_race on focusAnimating
+- Removed `dbg.setState()` from all 3 safety timers (normal, cross-section, cross-tier) in `navigateFocus()`
+- Safety timers are recovery fallbacks — they should not feed the race detector
+- `dbg.log()` and actual state assignments remain; only race-detector input removed
+- **File:** `interactive-quiz.js`
+
+---
+
 ## 2026-03-05 — Stability & Performance Improvements
 
 ### ScrollTrigger kill(true) Consistency

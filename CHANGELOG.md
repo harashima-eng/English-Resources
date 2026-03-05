@@ -6,6 +6,13 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 
 ---
 
+## 2026-03-05 — focusAnimating state_race Fix
+
+### interactive-quiz.js
+- Removed `dbg.setState()` from 3 safety timers in `navigateFocus()` to prevent false state_race reports when safety recovery coincides with new navigation
+
+---
+
 ## 2026-03-05 — Stability & Performance Improvements
 
 ### interactive-quiz.js
