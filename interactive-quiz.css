@@ -2738,7 +2738,6 @@ html.dark .iq-focus-indicator {
   margin-left: 8px;
   cursor: pointer;
   opacity: 0.7;
-  border-left: 1px solid currentColor;
   border-radius: 4px;
   letter-spacing: 0.02em;
 }
