@@ -94,15 +94,15 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
 (function() {
   if (typeof firebase === 'undefined' || !firebase.apps.length) return;
   var ref = firebase.database().ref('bug-reports');
-  var lastReportTime = 0;
-  var THROTTLE = 300000; // 5 minutes between reports per device
+  var lastReportTimes = {};
+  var THROTTLE = 300000; // 5 minutes between reports per type per device
   var deviceId = localStorage.getItem('iq-device-id') || 'unknown';
   var sessionId = Math.random().toString(36).slice(2, 10);
 
   window.BugReport = function(type, data) {
     var now = Date.now();
-    if (now - lastReportTime < THROTTLE) return;
-    lastReportTime = now;
+    if (lastReportTimes[type] && now - lastReportTimes[type] < THROTTLE) return;
+    lastReportTimes[type] = now;
     var report = {
       type: String(type).substring(0, 50),
       sessionId: sessionId,
