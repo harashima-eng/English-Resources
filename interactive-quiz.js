@@ -3368,7 +3368,7 @@
 
   function enterFocusMode() {
     if (focusMode) return;
-    if (typeof NavState !== 'undefined' && NavState.view !== 'question') return;
+    if (typeof NavState !== 'undefined' && NavState.view !== 'question' && NavState.view !== 'retry') return;
 
     // Defensive: clear stale animation state from interrupted previous session
     focusAnimating = false;
