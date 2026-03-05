@@ -928,6 +928,13 @@
   // ── Helpers ──
   function getQKey(si, qi) { return si + '-' + qi; }
 
+  function lockZone(zone) {
+    zone.classList.add('locked');
+    zone.querySelectorAll('button.iq-choice, button.iq-error-option, .iq-chip').forEach(function(b) {
+      b.setAttribute('aria-disabled', 'true');
+    });
+  }
+
   function recordAnswer(si, qi, isCorrect, userAnswer, type) {
     if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
     answeredKeys[getQKey(si, qi)] = { result: isCorrect ? 'correct' : 'wrong', userAnswer: userAnswer, type: type };
@@ -1356,7 +1363,7 @@
     function performCheck() {
       if (!selected || zone.classList.contains('locked')) return null;
       var isCorrect = selected === q.correctAnswer;
-      zone.classList.add('locked');
+      lockZone(zone);
 
       choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
         if (b.textContent === q.correctAnswer) {
@@ -1419,7 +1426,7 @@
     function performCheck() {
       if (!selectedLetter || zone.classList.contains('locked')) return null;
       var isCorrect = selectedLetter === q.correctAnswer;
-      zone.classList.add('locked');
+      lockZone(zone);
 
       var correctText = '';
       choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
@@ -1497,7 +1504,7 @@
       }
 
       var isCorrect = selectionCorrect && textCorrect;
-      zone.classList.add('locked');
+      lockZone(zone);
 
       underlines.forEach(function(u) {
         if (!u.dataset.label) return;
@@ -1632,7 +1639,7 @@
       var isCorrect = matchesCorrectText(typed, q.correctText);
 
       input.disabled = true;
-      zone.classList.add('locked');
+      lockZone(zone);
 
       if (underline) underline.classList.add(isCorrect ? 'correct' : 'wrong');
 
@@ -1749,7 +1756,7 @@
         if (!isRight) allCorrect = false;
       });
 
-      zone.classList.add('locked');
+      lockZone(zone);
 
       var display = q.correctAnswer.join(', ');
       var msg = allCorrect
@@ -1824,7 +1831,7 @@
       rightBtn.className = 'iq-eval-btn right';
       rightBtn.textContent = 'Got it right';
       rightBtn.onclick = function() {
-        zone.classList.add('locked');
+        lockZone(zone);
         evalDiv.remove();
         zone.appendChild(createFeedback(true, 'Correct!'));
         recordAnswer(si, qi, true, 'self-correct', 'compose');
@@ -1834,7 +1841,7 @@
       wrongBtn.className = 'iq-eval-btn wrong';
       wrongBtn.textContent = 'Got it wrong';
       wrongBtn.onclick = function() {
-        zone.classList.add('locked');
+        lockZone(zone);
         evalDiv.remove();
         zone.appendChild(createFeedback(false, 'Answer: ' + q.correctAnswer));
         recordAnswer(si, qi, false, 'self-wrong', 'compose');
@@ -1950,7 +1957,7 @@
       if (zone.classList.contains('locked')) return;
       var studentAnswer = placed.map(function(p) { return p.word; }).join(' ');
       var isCorrect = studentAnswer.toLowerCase() === q.correctAnswer.toLowerCase();
-      zone.classList.add('locked');
+      lockZone(zone);
 
       var msg = isCorrect
         ? 'Correct!'
