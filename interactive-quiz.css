@@ -1650,41 +1650,6 @@ html.dark .iq-check-popup.incorrect .iq-popup-msg {
   color: #FECACA;
 }
 
-/* ══════════════════════════════════════════════════════════
-   Retry Bar (fixed top banner during retry mode)
-   ══════════════════════════════════════════════════════════ */
-
-.iq-retry-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: rgba(185, 28, 28, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: #fff;
-  font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
-  z-index: 9999;
-  box-shadow: 0 2px 12px rgba(185, 28, 28, 0.3);
-}
-.iq-retry-bar button {
-  padding: 4px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font: 600 12px -apple-system, BlinkMacSystemFont, sans-serif;
-  cursor: pointer;
-}
-.iq-retry-bar button:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
 
 /* ══════════════════════════════════════════════════════════
    Confirmation Dialog (GSAP-animated overlay)
