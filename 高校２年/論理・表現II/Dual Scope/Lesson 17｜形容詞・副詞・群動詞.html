@@ -1042,11 +1042,16 @@ const Router = {
       mainContent.classList.remove('has-subnav');
       setTimeout(() => { initTypeCardTilt(); initOverviewScrollReveals(); }, 50);
     } else if (view === 'question') {
+      if (window.IQ && window.IQ.cleanupRetryState) window.IQ.cleanupRetryState();
       if (navVisible) {
         gsap.to('#subNav', { y: 0, opacity: 1, pointerEvents: 'auto', visibility: 'visible', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
       }
       mainContent.classList.add('has-subnav');
       this.renderQuestionView();
+    } else if (view === 'retry') {
+      mainContent.classList.remove('has-subnav');
+      gsap.to('#subNav', { y: -60, opacity: 0, pointerEvents: 'none', visibility: 'hidden', duration: GSAP_CONFIG.duration.nav, ease: GSAP_CONFIG.ease.nav });
+      document.dispatchEvent(new Event('iq:retry-view-ready'));
     }
     // Re-init hover after view change
     setTimeout(initHoverAnimations, 100);
@@ -1241,6 +1246,7 @@ function renderQuestion(q, si, qi) {
 
   return `<div class="qcard" data-si="${si}" data-qi="${qi}">${questionHtml}${leftHtml}${rightHtml}</div>`;
 }
+window.renderQuestion = renderQuestion;
 
 function renderQuestions(sectionIndex) {
   const section = grammarData.sections[sectionIndex];
