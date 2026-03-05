@@ -218,7 +218,6 @@
   var retryMode = false;
   var retryKeys = [];
   var retryBackup = {};
-  var retryBarEl = null;
   var retrySummaryTimer = null;
 
   // ── Cached .qcard selector ──
@@ -2474,7 +2473,7 @@
     returnBtn.textContent = 'Return to All Questions';
     returnBtn.onclick = function() {
       dismissOverlay(overlay, function() {
-        exitRetryMode();
+        exitRetryView();
       });
     };
     actions.appendChild(returnBtn);
@@ -2491,7 +2490,7 @@
     // Focus trap + keyboard support
     overlay.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        dismissOverlay(overlay, function() { exitRetryMode(); });
+        dismissOverlay(overlay, function() { exitRetryView(); });
         if (previousFocus) previousFocus.focus();
         return;
       }
@@ -2656,7 +2655,10 @@
     retryKeys = [];
     retryBackup = {};
     if (retrySummaryTimer) { clearTimeout(retrySummaryTimer); retrySummaryTimer = null; }
-    if (retryBarEl) { retryBarEl.remove(); retryBarEl = null; }
+    // Clean up retry view
+    var retryContainer = document.getElementById('retryQuestionsList');
+    if (retryContainer) retryContainer.innerHTML = '';  // clear retry cards
+    if (retryObserver) { retryObserver.disconnect(); retryObserver = null; }
     saveProgress();
     updateProgressPanel();
     updateStreakDisplay();
