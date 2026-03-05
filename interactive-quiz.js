@@ -147,6 +147,9 @@
       if (c.el === el || (Math.abs(c.x - x) < 30 && Math.abs(c.y - y) < 30)) count++;
     }
     if (count >= 3) {
+      // Skip if user is selecting text (e.g., triple-click to select paragraph)
+      var sel = window.getSelection();
+      if (sel && sel.toString().length > 0) { rageClicks = []; return; }
       var desc = el.tagName.toLowerCase();
       if (el.className && typeof el.className === 'string') desc += '.' + el.className.split(' ')[0];
       var text = (el.textContent || '').substring(0, 20).trim();
