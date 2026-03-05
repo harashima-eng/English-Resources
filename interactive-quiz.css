@@ -1835,7 +1835,6 @@ html.dark .iq-retry-dot.wrong {
 
 @media (prefers-reduced-motion: reduce) {
   .iq-check-popup,
-  .iq-retry-bar,
   .iq-confirm-overlay,
   .iq-confirm-dialog {
     animation-duration: 0.01ms !important;
