@@ -3505,30 +3505,65 @@
 
     if (typeof gsap !== 'undefined' && !reducedMotion) {
       var _navGen = focusNavGeneration;
+      var container = current.parentNode;
+
+      // Freeze container height to prevent collapse when current goes absolute
+      container.style.minHeight = container.offsetHeight + 'px';
+
+      // Lift exiting card out of flow (overlays entering card)
+      var cardW = current.offsetWidth;
+      current.style.position = 'absolute';
+      current.style.width = cardW + 'px';
+      current.style.top = '0';
+      current.style.left = '0';
+      current.style.zIndex = '1';
+
+      // Show entering card in flow (appears under the absolute card)
+      next.classList.remove('no-match');
+      gsap.killTweensOf(next);
+      next.style.display = '';
+
+      // Exit: current card fades out on top
       gsap.to(current, {
-        opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: 'power2.in', overwrite: true,
+        opacity: 0, x: slideX, scale: 0.95,
+        duration: 0.2, ease: 'power2.in', overwrite: true,
         onComplete: function() {
           current.style.display = 'none';
-          next.classList.remove('no-match');
-          gsap.killTweensOf(next);
-          next.style.display = '';
-          gsap.fromTo(next,
-            { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
-            { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.2, ease: 'power2.out', overwrite: true,
-              onComplete: function() {
-                gsap.set(next, { opacity: 1, x: 0, y: 0, scale: 1 });
-                dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false;
-                requestAnimationFrame(function() { verifyCardVisible(next, 'navigateFocus'); });
-              }
-            }
-          );
-          next.scrollIntoView({ behavior: 'auto', block: 'center' });
+          current.style.position = '';
+          current.style.width = '';
+          current.style.top = '';
+          current.style.left = '';
+          current.style.zIndex = '';
+          container.style.minHeight = '';
         }
       });
+
+      // Entrance: next card fades in underneath, 50ms stagger
+      gsap.fromTo(next,
+        { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
+        { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.2, delay: 0.05,
+          ease: 'power2.out', overwrite: true,
+          onComplete: function() {
+            gsap.set(next, { opacity: 1, x: 0, y: 0, scale: 1 });
+            dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false;
+            requestAnimationFrame(function() { verifyCardVisible(next, 'navigateFocus'); });
+          }
+        }
+      );
+
+      next.scrollIntoView({ behavior: 'auto', block: 'center' });
+
+      // Safety timer — also cleans up absolute positioning if animation stalled
       setTimeout(function() {
         if (_navGen === focusNavGeneration && focusAnimating) {
           dbg.log('state', 'focusAnimating', 'true -> false [600ms safety normal]'); dbg.setState('focusAnimating', false);
           focusAnimating = false;
+          current.style.position = '';
+          current.style.width = '';
+          current.style.top = '';
+          current.style.left = '';
+          current.style.zIndex = '';
+          container.style.minHeight = '';
           if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
         }
       }, 600);
