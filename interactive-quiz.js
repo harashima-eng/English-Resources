@@ -3424,10 +3424,10 @@
                 }
               });
               // Safety: if onComplete never fires, unblock after 2s
-              dbg.log('timer', 'setTimeout', '2s safety unblock cross-section');
+              dbg.log('timer', 'setTimeout', '600ms safety unblock cross-section');
               setTimeout(function() {
                 if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
-                  dbg.log('state', 'focusAnimating', 'true -> false [2s safety cross-section]'); dbg.setState('focusAnimating', false);
+                  dbg.log('state', 'focusAnimating', 'true -> false [600ms safety cross-section]'); dbg.setState('focusAnimating', false);
                   focusAnimating = false;
                   if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
                   dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [2s safety]'); dbg.setState('focusPendingDirection', null);
@@ -3511,7 +3511,6 @@
           current.style.display = 'none';
           next.classList.remove('no-match');
           gsap.killTweensOf(next);
-          gsap.set(next, { clearProps: 'opacity,transform' });
           next.style.display = '';
           gsap.fromTo(next,
             { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
