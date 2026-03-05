@@ -2148,6 +2148,17 @@
     dbg.log('state', 'retryMode', 'false -> true [startRetryMode]'); dbg.setState('retryMode', true);
     retryMode = true;
     retryKeys = wrongKeys;
+
+    // Navigate to a section with wrong answers if current section has none
+    var currentSection = window.NavState ? window.NavState.section : null;
+    var retryInCurrentSection = retryKeys.some(function(k) {
+      return parseInt(k.split('-')[0]) === currentSection;
+    });
+    if (!retryInCurrentSection && window.Router && window.Router.setSection) {
+      var firstRetrySi = parseInt(retryKeys[0].split('-')[0]);
+      window.Router.setSection(firstRetrySi);
+    }
+
     retryBackup = {};
 
     // Close all open toggles — kill tweens first to prevent stale opacity
@@ -2217,7 +2228,21 @@
     closeProgressPanel();
 
     // Rebuild focus mode if active
-    if (focusMode) { rebuildFocusCards(); dbg.log('state', 'focusIndex', focusIndex + ' -> 0 [startRetryMode]'); dbg.setState('focusIndex', 0); focusIndex = 0; updateFocusIndicator(); }
+    if (focusMode) {
+      rebuildFocusCards();
+      if (focusCards.length === 0) {
+        exitFocusMode();
+      } else {
+        dbg.log('state', 'focusIndex', focusIndex + ' -> 0 [startRetryMode]');
+        dbg.setState('focusIndex', 0);
+        focusIndex = 0;
+        focusCards.forEach(function(card, i) {
+          card.style.display = (i === 0) ? '' : 'none';
+        });
+        focusCards[0].scrollIntoView({ behavior: 'auto', block: 'center' });
+        updateFocusIndicator();
+      }
+    }
   }
 
   function showRetryBar(count) {
