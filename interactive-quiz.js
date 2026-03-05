@@ -2458,8 +2458,13 @@
       retryAgainBtn.textContent = 'Retry Again';
       retryAgainBtn.onclick = function() {
         dismissOverlay(overlay, function() {
-          exitRetryView();
-          startRetryMode();
+          // Reset retry state and re-render in place (already in retry view)
+          retryMode = false;
+          retryKeys = [];
+          retryBackup = {};
+          if (retrySummaryTimer) { clearTimeout(retrySummaryTimer); retrySummaryTimer = null; }
+          invalidateCardCache();
+          renderRetryView();
         });
       };
       actions.appendChild(retryAgainBtn);
