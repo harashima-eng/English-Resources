@@ -172,8 +172,8 @@
     report: report,
     isOn: function() { return DEBUG; },
     snapshot: function() { return { state: JSON.parse(JSON.stringify(stateSnap)), trace: buf.slice() }; },
-    enable: function() { DEBUG = true; if (!overlayEl) window.IQDebug.showOverlay(); },
-    disable: function() { DEBUG = false; if (overlayEl) { overlayEl.remove(); overlayEl = null; } },
+    enable: function() { DEBUG = true; if (!fpsRunning) { fpsRunning = true; fpsLast = performance.now(); fpsFrames = 0; requestAnimationFrame(fpsTick); } if (!overlayEl) window.IQDebug.showOverlay(); },
+    disable: function() { DEBUG = false; fpsRunning = false; if (overlayEl) { overlayEl.remove(); overlayEl = null; } },
     showOverlay: function() {
       if (overlayEl) return;
       overlayEl = document.createElement('pre');
@@ -3826,6 +3826,21 @@
       score.answered++;
       if (getAnswerResult(key) === 'correct') score.correct++;
     });
+
+    // Validate categoryMap against sections
+    if (typeof NavState !== 'undefined' && NavState.categoryMap) {
+      var maxSi = grammarData.sections.length;
+      Object.keys(NavState.categoryMap).forEach(function(cat) {
+        var indices = NavState.categoryMap[cat];
+        if (!Array.isArray(indices)) return;
+        for (var i = indices.length - 1; i >= 0; i--) {
+          if (indices[i] < 0 || indices[i] >= maxSi) {
+            dbg.log('error', 'categoryMap', 'Invalid section index ' + indices[i] + ' in category "' + cat + '" (max=' + (maxSi - 1) + ')');
+            indices.splice(i, 1);
+          }
+        }
+      });
+    }
 
     detectExistingSession();
     createProgressPanel();
