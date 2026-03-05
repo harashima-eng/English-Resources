@@ -2731,16 +2731,23 @@ html.dark .iq-focus-indicator {
   background: none;
   border: none;
   color: inherit;
-  font-size: 18px;
+  font-size: 13px;
+  font-weight: 500;
   line-height: 1;
-  padding: 0 0 0 12px;
-  margin-left: 4px;
+  padding: 4px 8px 4px 10px;
+  margin-left: 8px;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.7;
   border-left: 1px solid currentColor;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
 }
 .iq-focus-exit:hover {
   opacity: 1;
+  background: rgba(0, 0, 0, 0.06);
+}
+html.dark .iq-focus-exit:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* ── Focus mode body state ── */

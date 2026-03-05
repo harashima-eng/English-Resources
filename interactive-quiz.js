@@ -3266,7 +3266,7 @@
 
     var focusExitBtn = document.createElement('button');
     focusExitBtn.className = 'iq-focus-exit';
-    focusExitBtn.textContent = '\u00D7';
+    focusExitBtn.textContent = '\u00D7 Exit';
     focusExitBtn.setAttribute('aria-label', 'Exit focus mode');
     focusExitBtn.onclick = function() { exitFocusMode(); };
     focusIndicatorEl.appendChild(focusExitBtn);
