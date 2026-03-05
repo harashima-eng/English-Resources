@@ -1,5 +1,31 @@
 # DUAL SCOPE Grammar Breakdown - Changelog
 
+## 2026-03-05 — Comprehensive Improvement Pass
+
+### HIGH Priority Fixes (interactive-quiz.js)
+- **Init guard:** Added `_initDone` flag to prevent double-initialization (listener accumulation)
+- **Bounds validation:** `enhanceCard()` and `getWrongBySec()` now validate si/qi against `grammarData.sections.length`
+- **Storage resilience:** `saveProgress()` retries after `pruneOldProgress()` on `QuotaExceededError`
+
+### MEDIUM Priority UX & Performance (interactive-quiz.js + interactive-quiz.css)
+- **Focus restore timing:** Increased focus restore delay from 300ms to 600ms; validates cards exist before entering
+- **Dark mode streak pulse:** Added dark mode override for `.iq-streak-pulse`
+- **Progress panel:** Incremental DOM updates via `updateSectionRow()` instead of full rebuild on every answer
+- **Selector caching:** Added `getCardByKey(si, qi)` map for O(1) lookups; replaced 3 `querySelector` calls
+- **FPS estimator:** Now only runs when `?debug=1` is active; `IQDebug.enable()/disable()` controls it
+- **Tablet breakpoint:** Added `@media (601px-1024px)` with optimized sizes for choices, chips, panel, focus arrows
+- **Accent color:** `.iq-progress-total-num` uses `var(--accent)` instead of hardcoded `#0D9488`
+
+### LOW Priority Accessibility (interactive-quiz.js)
+- **aria-disabled on lock:** New `lockZone()` helper sets `aria-disabled="true"` on all choice/error/chip buttons when zone locks
+- **categoryMap validation:** Init validates `NavState.categoryMap` indices against section count, logs and removes invalid entries
+
+### Files Changed
+- `interactive-quiz.js` — 10 improvements
+- `interactive-quiz.css` — 3 improvements
+
+---
+
 ## 2026-03-05 — Focus Exit Button Visibility
 
 ### Bug Fix + UI Improvement
