@@ -9,6 +9,7 @@ Root-level shared modules and infrastructure changes. Content-area changes are t
 ## 2026-03-05 — Focus Exit Button Visibility
 
 ### interactive-quiz.js
+- **Bug fix:** `updateFocusIndicator()` used `.textContent` which nuked the exit button child every update — replaced with `TextNode.nodeValue`
 - Button text changed from "×" to "× Exit" for discoverability
 
 ### interactive-quiz.css
