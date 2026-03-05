@@ -34,11 +34,28 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
       if (bannerEl) bannerEl.style.display = 'none';
     }
 
+    // Detector 7: Connectivity Monitor — report if disconnected >30s
+    var disconnectedAt = 0;
+    var connectivityReported = false;
+
     firebase.database().ref('.info/connected').on('value', function(snap) {
       if (snap.val() === true) {
         hideOfflineBanner();
+        disconnectedAt = 0;
       } else {
         showOfflineBanner();
+        if (!disconnectedAt) disconnectedAt = Date.now();
+        if (!connectivityReported) {
+          setTimeout(function() {
+            if (disconnectedAt && !connectivityReported && Date.now() - disconnectedAt >= 30000) {
+              connectivityReported = true;
+              var duration = Math.round((Date.now() - disconnectedAt) / 1000);
+              if (typeof BugReport === 'function') {
+                BugReport('connectivity_loss', { errorMsg: 'Firebase disconnected for ' + duration + 's' });
+              }
+            }
+          }, 31000);
+        }
       }
       if (window.IQDebug) window.IQDebug.log('event', 'firebase', snap.val() ? 'connected' : 'disconnected');
     });

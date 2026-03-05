@@ -199,6 +199,7 @@
 // GSAP CDN fallback — provides no-op stub so quizzes work without animations
 if (typeof gsap === 'undefined') {
   window.gsap = {
+    _isStub: true,
     to: function() { return { kill: function() {} }; },
     fromTo: function() { return { kill: function() {} }; },
     from: function() { return { kill: function() {} }; },
@@ -213,10 +214,23 @@ if (typeof gsap === 'undefined') {
   };
 }
 
+// Detector 5: GSAP CDN Fallback — report if stub is active
+if (typeof gsap !== 'undefined' && gsap._isStub) {
+  if (typeof BugReport === 'function') {
+    BugReport('cdn_fallback', { errorMsg: 'GSAP CDN failed to load, using no-op stub' });
+  }
+}
+
 (function() {
   'use strict';
 
-  if (typeof grammarData === 'undefined' || !grammarData.sections) return;
+  // Detector 6: Quiz Data Load Failure
+  if (typeof grammarData === 'undefined' || !grammarData.sections) {
+    if (typeof BugReport === 'function') {
+      BugReport('quiz_load_failure', { errorMsg: 'grammarData missing or has no sections' });
+    }
+    return;
+  }
 
   // Count interactive questions
   var totalInteractive = 0;
@@ -226,6 +240,16 @@ if (typeof gsap === 'undefined') {
     });
   });
   if (totalInteractive === 0) return;
+
+  // Detector 8: Critical DOM Missing — check #questionsList after 3s
+  setTimeout(function() {
+    var ql = document.getElementById('questionsList');
+    if (!ql || ql.children.length === 0) {
+      if (typeof BugReport === 'function') {
+        BugReport('dom_missing', { errorMsg: 'Critical element #questionsList missing or empty after 3s' });
+      }
+    }
+  }, 3000);
 
   // ── State ──
   var score = { correct: 0, answered: 0, total: totalInteractive };
