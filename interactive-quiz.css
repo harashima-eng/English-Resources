@@ -466,12 +466,12 @@ html.dark .iq-progress-close:hover {
 }
 
 .iq-progress-total-num {
-  color: #0D9488;
+  color: var(--accent, #0D9488);
   font-weight: 700;
 }
 [data-theme="dark"] .iq-progress-total-num,
 html.dark .iq-progress-total-num {
-  color: #14B8A6;
+  color: var(--accent-light, #14B8A6);
 }
 
 .iq-progress-total-answered {
@@ -740,6 +740,27 @@ html.dark .iq-edge-trigger:hover .iq-edge-hint {
 
 
 /* ── Responsive ── */
+/* ── Tablet (768-1024px) ── */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .iq-choice {
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+  .iq-chip {
+    padding: 7px 14px;
+    font-size: 14px;
+  }
+  .iq-progress-panel {
+    width: 340px;
+  }
+  .iq-focus-arrow {
+    font-size: 28px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
 @media (max-width: 600px) {
   .iq-progress-tab {
     bottom: 12px;
