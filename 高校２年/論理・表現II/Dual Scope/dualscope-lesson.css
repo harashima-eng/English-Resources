@@ -798,13 +798,15 @@ footer {
 /* ===== VIEW VISIBILITY ===== */
 .view-home,
 .view-overview,
-.view-question {
+.view-question,
+.view-retry {
   display: none;
 }
 
 .view-home.active { display: flex; }
 .view-overview.active { display: block; }
 .view-question.active { display: block; }
+.view-retry.active { display: block; }
 
 /* All animations handled by GSAP - @keyframes removed */
 
