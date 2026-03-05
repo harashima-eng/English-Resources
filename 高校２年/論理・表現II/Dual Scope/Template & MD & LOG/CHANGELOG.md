@@ -2,7 +2,9 @@
 
 ## 2026-03-05 — Focus Exit Button Visibility
 
-### UI Improvement
+### Bug Fix + UI Improvement
+- **Bug:** `updateFocusIndicator()` used `textContent` which destroyed the exit button child on every update — button was invisible in practice
+- **Fix:** Use a dedicated `TextNode` for counter text, update via `.nodeValue` instead — preserves button child
 - Focus exit button now shows "× Exit" label instead of bare "×" character
 - Increased tap target: `padding: 4px 8px 4px 10px`, `margin-left: 8px`
 - Raised default opacity from 0.5 → 0.7 for better discoverability

@@ -3264,6 +3264,8 @@
     focusIndicatorEl = document.createElement('div');
     focusIndicatorEl.className = 'iq-focus-indicator';
     focusIndicatorEl.setAttribute('aria-live', 'polite');
+    focusIndicatorText = document.createTextNode('');
+    focusIndicatorEl.appendChild(focusIndicatorText);
 
     var focusExitBtn = document.createElement('button');
     focusExitBtn.className = 'iq-focus-exit';
@@ -3655,7 +3657,7 @@
 
   function updateFocusIndicator() {
     if (!focusIndicatorEl) return;
-    focusIndicatorEl.textContent = 'Q ' + (focusIndex + 1) + ' / ' + focusCards.length;
+    focusIndicatorText.nodeValue = 'Q ' + (focusIndex + 1) + ' / ' + focusCards.length;
 
     var canGoPrev = focusIndex > 0;
     var canGoNext = focusIndex < focusCards.length - 1;
