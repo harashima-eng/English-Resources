@@ -812,7 +812,7 @@
     if (edgeTriggerEl) edgeTriggerEl.style.display = '';
     if (typeof gsap !== 'undefined') {
       gsap.killTweensOf(progressPanelEl);
-      gsap.to(progressPanelEl, { x: -320, duration: 0.3, ease: 'power2.inOut' });
+      gsap.to(progressPanelEl, { x: -320, duration: 0.3, ease: IQ_EASE.inOut });
       if (progressBackdropEl) {
         gsap.killTweensOf(progressBackdropEl);
         gsap.to(progressBackdropEl, { opacity: 0, duration: 0.2, onComplete: function() {
@@ -833,7 +833,7 @@
     gsap.killTweensOf(progressTabEl);
     gsap.fromTo(progressTabEl,
       { boxShadow: '0 0 0 0 ' + color },
-      { boxShadow: '0 0 12px 4px ' + color, duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.inOut' }
+      { boxShadow: '0 0 12px 4px ' + color, duration: 0.3, yoyo: true, repeat: 1, ease: IQ_EASE.inOut }
     );
   }
 
@@ -845,7 +845,7 @@
       gsap.to(progressTabEl, {
         opacity: 0, x: -20,
         duration: reducedMotion ? 0.01 : 0.3,
-        ease: 'power2.inOut',
+        ease: IQ_EASE.inOut,
         onComplete: function() { progressTabEl.style.pointerEvents = 'none'; }
       });
     }
@@ -957,7 +957,7 @@
       blocks.forEach(function(b) { gsap.killTweensOf(b); });
       gsap.fromTo(blocks,
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12 }
+        { opacity: 1, y: 0, duration: 0.7, ease: IQ_EASE.heavy, stagger: 0.12 }
       );
       blocks.forEach(function(block, i) {
         var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
@@ -1052,7 +1052,7 @@
     if (!existing) return;
     zone._popup = null;
     if (typeof gsap !== 'undefined') {
-      gsap.to(existing, { scale: 0, opacity: 0, duration: 0.15, ease: 'power2.in', overwrite: true, onComplete: function() { existing.remove(); } });
+      gsap.to(existing, { scale: 0, opacity: 0, duration: 0.15, ease: IQ_EASE.in, overwrite: true, onComplete: function() { existing.remove(); } });
     } else {
       existing.remove();
     }
@@ -1105,7 +1105,7 @@
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(popup,
         { scale: 0, opacity: 0, transformOrigin: popup.classList.contains('below') ? 'top center' : 'bottom center' },
-        { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(1.7)', overwrite: true }
+        { scale: 1, opacity: 1, duration: 0.25, ease: IQ_EASE.pop, overwrite: true }
       );
     }
 
@@ -1134,7 +1134,7 @@
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(popup,
         { scale: 0.9 },
-        { scale: 1, duration: 0.2, ease: 'back.out(1.4)', overwrite: true }
+        { scale: 1, duration: 0.2, ease: IQ_EASE.soft, overwrite: true }
       );
     }
   }
@@ -2411,7 +2411,7 @@
 
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: reducedMotion ? 0.01 : 0.2 });
-      gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: reducedMotion ? 0.01 : 0.3, ease: 'back.out(1.7)' });
+      gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: reducedMotion ? 0.01 : 0.3, ease: IQ_EASE.pop });
     }
 
     // Focus trap + keyboard support
@@ -2581,7 +2581,7 @@
 
     if (typeof gsap !== 'undefined') {
       gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.2 });
-      gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: 0.3, ease: 'back.out(1.7)' });
+      gsap.fromTo(dialog, { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: 0.3, ease: IQ_EASE.pop });
     }
 
     // Focus trap + keyboard support
@@ -3322,7 +3322,7 @@
     focusCards.forEach(function(card, i) {
       if (i !== focusIndex) {
         if (typeof gsap !== 'undefined' && !reducedMotion) {
-          gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.15, ease: 'power2.in', overwrite: true,
+          gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.15, ease: IQ_EASE.in, overwrite: true,
             onComplete: function() { card.style.display = 'none'; }
           });
         } else {
@@ -3333,7 +3333,7 @@
 
     var focused = focusCards[focusIndex];
     if (typeof gsap !== 'undefined' && !reducedMotion) {
-      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.2, ease: 'back.out(1.4)', overwrite: true,
+      gsap.to(focused, { opacity: 1, y: 0, scale: 1.02, duration: 0.2, ease: IQ_EASE.soft, overwrite: true,
         onComplete: function() { focusAnimating = false; verifyCardVisible(focused, 'enterFocusMode'); }
       });
     }
@@ -3458,7 +3458,7 @@
             var nextSection = sections[nextLocalIdx];
             if (typeof gsap !== 'undefined' && !reducedMotion) {
               gsap.to(current, {
-                opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: 'power2.in',
+                opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: IQ_EASE.in,
                 overwrite: true,
                 onComplete: function() {
                   current.style.display = 'none';
@@ -3507,7 +3507,7 @@
                 : window.NavState.categoryMap[nextCat][0];
               if (typeof gsap !== 'undefined' && !reducedMotion) {
                 gsap.to(current, {
-                  opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: 'power2.in',
+                  opacity: 0, x: slideX, scale: 0.95, duration: 0.15, ease: IQ_EASE.in,
                   overwrite: true,
                   onComplete: function() {
                     current.style.display = 'none';
@@ -3576,7 +3576,7 @@
       // Exit: current card fades out on top
       gsap.to(current, {
         opacity: 0, x: slideX, scale: 0.95,
-        duration: 0.2, ease: 'power2.in', overwrite: true,
+        duration: 0.2, ease: IQ_EASE.in, overwrite: true,
         onComplete: function() {
           current.style.display = 'none';
           current.style.position = '';
