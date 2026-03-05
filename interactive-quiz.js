@@ -3436,16 +3436,17 @@ if (typeof gsap === 'undefined') {
     focusMode = false;
     focusAnimating = false;
     focusPendingDirection = null;
-    // Kill any in-flight GSAP tweens on focus cards
-    if (typeof gsap !== 'undefined') {
-      focusCards.forEach(function(c) { gsap.killTweensOf(c); });
-    }
+    // Disconnect reveal observer so it can't interfere with exit animation
+    if (typeof revealObserver !== 'undefined' && revealObserver) revealObserver.disconnect();
 
     var previousCard = focusCards[focusIndex];
 
     var allCards = getCachedCards();
     if (typeof gsap !== 'undefined') {
-      allCards.forEach(function(card) { gsap.set(card, { clearProps: 'opacity,transform' }); });
+      allCards.forEach(function(card) {
+        gsap.killTweensOf(card);
+        gsap.set(card, { clearProps: 'opacity,transform' });
+      });
     }
     allCards.forEach(function(card) {
       if (reviewMode) {
