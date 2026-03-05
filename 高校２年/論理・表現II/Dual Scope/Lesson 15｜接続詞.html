@@ -1292,7 +1292,9 @@ function initCardReveal() {
   if (revealObserver) revealObserver.disconnect();
   if (typeof gsap === 'undefined') return;
 
-  const cards = document.querySelectorAll('.qcard');
+  const activeList = document.getElementById('questionsList');
+  if (!activeList) return;
+  const cards = activeList.querySelectorAll('.qcard');
   if (!cards.length) return;
 
   // Focus mode manages card visibility — skip reveal animation
