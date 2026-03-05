@@ -3781,7 +3781,10 @@
   }
 
   // ── Init ──
+  var _initDone = false;
   function init() {
+    if (_initDone) return;
+    _initDone = true;
     pruneOldProgress();
     loadProgress();
 
