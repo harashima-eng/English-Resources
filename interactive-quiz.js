@@ -173,6 +173,9 @@
       if (tag === 'a' || tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea') return;
       if (node.getAttribute('onclick') || node.getAttribute('role') === 'button') return;
       if (node.classList && node.classList.contains('clickable')) return;
+      if (node.getAttribute('aria-expanded') !== null) return;
+      if (node.getAttribute('data-action')) return;
+      if (node.className && typeof node.className === 'string' && node.className.indexOf('iq-') !== -1) return;
       // Also skip common interactive patterns
       if (node.getAttribute('tabindex') === '0' || tag === 'label' || tag === 'summary') return;
     }
@@ -187,7 +190,7 @@
 
   // ── LoAF detection (Chrome-only, feature-gated) ──
   // Detector 13: Slow Interaction — reports truly bad frames (>300ms) once per session
-  var slowInteractionReported = false;
+  var slowInteractionCount = 0;
   if (typeof PerformanceObserver !== 'undefined' &&
       PerformanceObserver.supportedEntryTypes &&
       PerformanceObserver.supportedEntryTypes.indexOf('long-animation-frame') !== -1) {
@@ -198,9 +201,9 @@
             return (s.sourceFunctionName || 'anonymous') + '(' + Math.round(s.duration) + 'ms)';
           }).join(', ');
           log('timer', 'LoAF', Math.round(entry.duration) + 'ms' + (scripts ? ': ' + scripts : ''));
-          // Report truly bad frames (>300ms) once per session
-          if (!slowInteractionReported && entry.duration > 300 && scripts) {
-            slowInteractionReported = true;
+          // Report truly bad frames (>300ms) up to 3 per session
+          if (slowInteractionCount < 3 && entry.duration > 300 && scripts) {
+            slowInteractionCount++;
             report('slow_interaction', { errorMsg: 'Long frame ' + Math.round(entry.duration) + 'ms: ' + scripts });
           }
         }
