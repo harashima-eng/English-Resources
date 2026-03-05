@@ -478,6 +478,11 @@ body {
 .badge-quiz_load_failure { background: #FFEBEE10; color: #EF5350; }
 .badge-connectivity_loss { background: #FFF3E010; color: #FF9800; }
 .badge-dom_missing { background: #FFEBEE10; color: #E53935; }
+.badge-rage_click { background: #FCE4EC10; color: #F06292; }
+.badge-dead_click { background: #ECEFF110; color: #90A4AE; }
+.badge-slow_interaction { background: #F3E5F510; color: #BA68C8; }
+.badge-layout_shift { background: #E8EAF610; color: #7986CB; }
+.badge-resource_load_fail { background: #FFF8E110; color: #FFB300; }
 .badge-unknown { background: var(--border); color: var(--text-muted); }
 
 .light-mode .badge-anim_conflict { background: #FFF3E0; color: #E65100; }
@@ -491,6 +496,11 @@ body {
 .light-mode .badge-quiz_load_failure { background: #FFEBEE; color: #C62828; }
 .light-mode .badge-connectivity_loss { background: #FFF3E0; color: #E65100; }
 .light-mode .badge-dom_missing { background: #FFCDD2; color: #B71C1C; }
+.light-mode .badge-rage_click { background: #FCE4EC; color: #C2185B; }
+.light-mode .badge-dead_click { background: #ECEFF1; color: #546E7A; }
+.light-mode .badge-slow_interaction { background: #F3E5F5; color: #7B1FA2; }
+.light-mode .badge-layout_shift { background: #E8EAF6; color: #3949AB; }
+.light-mode .badge-resource_load_fail { background: #FFF8E1; color: #FF8F00; }
 .light-mode .badge-unknown { background: #E0E0E0; color: #424242; }
 
 /* ── Delete / Bulk Actions ── */
