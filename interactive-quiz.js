@@ -2459,7 +2459,7 @@
       retryAgainBtn.textContent = 'Retry Again';
       retryAgainBtn.onclick = function() {
         dismissOverlay(overlay, function() {
-          exitRetryMode();
+          exitRetryView();
           startRetryMode();
         });
       };
@@ -2523,63 +2523,20 @@
     }
   }
 
-  function exitRetryMode() {
-    dbg.log('state', 'retryMode', 'true -> false [exitRetryMode]'); dbg.setState('retryMode', false);
+  // cleanupRetryState: reset retry state without navigating (called by Router on back-to-question)
+  function cleanupRetryState() {
+    if (!retryMode) return;
+    dbg.log('state', 'retryMode', 'true -> false [cleanupRetryState]'); dbg.setState('retryMode', false);
     retryMode = false;
     if (retrySummaryTimer) { clearTimeout(retrySummaryTimer); retrySummaryTimer = null; }
-    var scrollY = window.scrollY;
-
-    // Show hidden cards at opacity 0, then fade in
-    var allCards = getCachedCards();
-    var hiddenCards = [];
-    allCards.forEach(function(card) {
-      if (card.style.display === 'none') {
-        hiddenCards.push(card);
-        card.style.display = '';
-        card.style.opacity = '0';
-      }
-    });
-
-    // Restore scroll position before browser reflows
-    window.scrollTo(0, scrollY);
-
-    // Fade in previously hidden cards
-    if (typeof gsap !== 'undefined' && hiddenCards.length > 0) {
-      gsap.to(hiddenCards, {
-        opacity: 1, duration: reducedMotion ? 0.01 : 0.3, stagger: 0.02, ease: IQ_EASE.out,
-        onComplete: function() { hiddenCards.forEach(function(c) { c.style.opacity = ''; }); }
-      });
-    } else {
-      hiddenCards.forEach(function(c) { c.style.opacity = ''; });
-    }
-
-    // Remove retry bar
-    if (retryBarEl) {
-      if (typeof gsap !== 'undefined') {
-        gsap.to(retryBarEl, { y: -44, duration: 0.2, onComplete: function() { retryBarEl.remove(); retryBarEl = null; } });
-      } else {
-        retryBarEl.remove();
-        retryBarEl = null;
-      }
-    }
-
     retryKeys = [];
     retryBackup = {};
+    var container = document.getElementById('retryQuestionsList');
+    if (container) container.innerHTML = '';  // clear retry cards
+    if (retryObserver) { retryObserver.disconnect(); retryObserver = null; }
+    invalidateCardCache();
+    if (focusMode) exitFocusMode(true);
     updateProgressPanel();
-
-    if (focusMode) {
-      rebuildFocusCards();
-      if (focusCards.length === 0) {
-        exitFocusMode();
-      } else {
-        focusIndex = Math.min(focusIndex, focusCards.length - 1);
-        focusCards.forEach(function(card, i) {
-          card.style.display = (i === focusIndex) ? '' : 'none';
-        });
-        if (typeof gsap !== 'undefined') gsap.set(focusCards[focusIndex], { opacity: 1, y: 0, scale: 1.02 });
-        updateFocusIndicator();
-      }
-    }
   }
 
   function showToast(message) {
