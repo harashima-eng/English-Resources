@@ -2233,9 +2233,10 @@
     cards.forEach(function(card) { card.style.display = ''; });
   }
 
-  // ── Retry Wrong ──
+  // ── Retry Wrong (Router View) ──
+  var retryObserver = null;
+
   function startRetryMode() {
-    // Collect wrong keys
     var wrongKeys = Object.keys(answeredKeys).filter(function(k) {
       return answeredKeys[k].result === 'wrong';
     });
@@ -2243,35 +2244,30 @@
       showToast('No wrong answers to retry!');
       return;
     }
+    if (focusMode) exitFocusMode(true);
+    closeProgressPanel();
+    if (window.Router) Router.navigate('retry');
+  }
 
-    dbg.log('state', 'retryMode', 'false -> true [startRetryMode]'); dbg.setState('retryMode', true);
-    retryMode = true;
-    retryKeys = wrongKeys;
-
-    // Navigate to a section with wrong answers if current section has none
-    var currentSection = window.NavState ? window.NavState.section : null;
-    var retryInCurrentSection = retryKeys.some(function(k) {
-      return parseInt(k.split('-')[0]) === currentSection;
+  // Called when retry view is ready (dispatched by Router._postRender)
+  function renderRetryView() {
+    var wrongKeys = Object.keys(answeredKeys).filter(function(k) {
+      return answeredKeys[k].result === 'wrong';
     });
-    if (!retryInCurrentSection && window.Router && window.Router.setSection) {
-      var firstRetrySi = parseInt(retryKeys[0].split('-')[0]);
-      window.Router.setSection(firstRetrySi);
+    if (wrongKeys.length === 0) {
+      showToast('No wrong answers to retry!');
+      if (window.Router) Router.navigate('question');
+      return;
     }
 
+    dbg.log('state', 'retryMode', 'false -> true [renderRetryView]'); dbg.setState('retryMode', true);
+    retryMode = true;
+    retryKeys = wrongKeys;
     retryBackup = {};
-
-    // Close all open toggles — kill tweens first to prevent stale opacity
-    document.querySelectorAll('.qcard .collapsible.open').forEach(function(block) {
-      if (typeof gsap !== 'undefined') gsap.killTweensOf(block);
-      block.classList.remove('open');
-      if (typeof gsap !== 'undefined') gsap.set(block, { clearProps: 'all' });
-      block.style.opacity = '';
-    });
 
     // Backup and clear wrong entries, adjust sectionScores
     retryKeys.forEach(function(k) {
       retryBackup[k] = answeredKeys[k];
-      // Decrement sectionScores to prevent double-counting on re-answer
       var si = parseInt(k.split('-')[0]);
       if (sectionScores[si]) {
         sectionScores[si].total = Math.max(0, sectionScores[si].total - 1);
@@ -2282,87 +2278,84 @@
       delete answeredKeys[k];
     });
 
-    // Adjust score
     score.answered = Math.max(0, score.answered - retryKeys.length);
     streak = 0;
 
-    // Clean up retry cards for re-enhancement
+    // Group wrong keys by section index
+    var sectionGroups = {};
     retryKeys.forEach(function(k) {
-      var parts = k.split('-');
-      var si = parts[0], qi = parts[1];
-      var card = getCardByKey(si, qi);
-      if (!card) return;
-
-      // Restore fillin original HTML if stored
-      if (card.dataset.originalQtext) {
-        var qtext = card.querySelector('.qtext');
-        if (qtext) qtext.innerHTML = card.dataset.originalQtext;  // safe: restoring lesson HTML
-      }
-
-      card.dataset.iqEnhanced = '';
-      card.classList.remove('iq-wrong');
-      var zone = card.querySelector('.iq-zone');
-      if (zone) zone.remove();
+      var si = parseInt(k.split('-')[0]);
+      if (!sectionGroups[si]) sectionGroups[si] = [];
+      sectionGroups[si].push(k);
     });
 
-    // Re-enhance cleared cards
+    // Build HTML: section headers + cards (uses trusted grammarData, no user input)
+    var html = '';
+    var sortedSections = Object.keys(sectionGroups).map(Number).sort(function(a, b) { return a - b; });
+    sortedSections.forEach(function(si) {
+      var sec = grammarData.sections[si];
+      var sectionName = sec ? (sec.name || sec.title || ('Section ' + (si + 1))) : ('Section ' + (si + 1));
+      html += '<div class="retry-section-header">' + sectionName + '</div>';
+      sectionGroups[si].forEach(function(k) {
+        var qi = parseInt(k.split('-')[1]);
+        var q = sec.questions[qi];
+        if (q && window.renderQuestion) {
+          html += window.renderQuestion(q, si, qi);
+        }
+      });
+    });
+
+    var container = document.getElementById('retryQuestionsList');
+    if (container) container.innerHTML = html;  // safe: trusted grammarData HTML
+
+    // Update header count
+    var countEl = document.getElementById('retryCount');
+    if (countEl) countEl.textContent = retryKeys.length + ' question' + (retryKeys.length > 1 ? 's' : '');
+
+    // Wire exit button
+    var exitBtn = document.getElementById('retryExitBtn');
+    if (exitBtn) exitBtn.onclick = function() { exitRetryView(); };
+
+    // Invalidate card cache so getCachedCards() picks up retry container
+    invalidateCardCache();
     enhanceVisibleCards();
 
-    // Hide non-retry cards
-    var allCards = getCachedCards();
-    allCards.forEach(function(card) {
-      var key = card.dataset.si + '-' + card.dataset.qi;
-      if (retryKeys.indexOf(key) === -1) {
-        card.style.display = 'none';
-      } else {
-        card.style.display = '';
-      }
-    });
-
-    // Show retry bar
-    showRetryBar(retryKeys.length);
+    // Setup MutationObserver on retry container
+    if (retryObserver) { retryObserver.disconnect(); retryObserver = null; }
+    if (container) {
+      retryObserver = new MutationObserver(function() {
+        try {
+          invalidateCardCache();
+          enhanceVisibleCards();
+        } catch (e) {
+          console.error('[interactive-quiz] retry observer error:', e);
+        }
+      });
+      retryObserver.observe(container, { childList: true });
+    }
 
     saveProgress();
     updateProgressPanel();
-    closeProgressPanel();
-
-    // Rebuild focus mode if active
-    if (focusMode) {
-      rebuildFocusCards();
-      if (focusCards.length === 0) {
-        exitFocusMode();
-      } else {
-        dbg.log('state', 'focusIndex', focusIndex + ' -> 0 [startRetryMode]');
-        dbg.setState('focusIndex', 0);
-        focusIndex = 0;
-        focusCards.forEach(function(card, i) {
-          card.style.display = (i === 0) ? '' : 'none';
-        });
-        focusCards[0].scrollIntoView({ behavior: 'auto', block: 'center' });
-        updateFocusIndicator();
-      }
-    }
   }
 
-  function showRetryBar(count) {
-    if (retryBarEl) retryBarEl.remove();
-    retryBarEl = document.createElement('div');
-    retryBarEl.className = 'iq-retry-bar';
+  function exitRetryView() {
+    dbg.log('state', 'retryMode', 'true -> false [exitRetryView]'); dbg.setState('retryMode', false);
+    retryMode = false;
+    if (retrySummaryTimer) { clearTimeout(retrySummaryTimer); retrySummaryTimer = null; }
 
-    var text = document.createElement('span');
-    text.textContent = 'Retrying ' + count + ' wrong answer' + (count > 1 ? 's' : '');
-    retryBarEl.appendChild(text);
+    retryKeys = [];
+    retryBackup = {};
 
-    var exitBtn = document.createElement('button');
-    exitBtn.textContent = 'Exit';
-    exitBtn.onclick = function() { exitRetryMode(false); };
-    retryBarEl.appendChild(exitBtn);
+    var container = document.getElementById('retryQuestionsList');
+    if (container) container.innerHTML = '';  // clear retry cards
 
-    document.body.appendChild(retryBarEl);
-    if (typeof gsap !== 'undefined') {
-      gsap.killTweensOf(retryBarEl);
-      gsap.fromTo(retryBarEl, { y: -44 }, { y: 0, duration: 0.3, ease: IQ_EASE.out });
-    }
+    if (retryObserver) { retryObserver.disconnect(); retryObserver = null; }
+
+    invalidateCardCache();
+    if (focusMode) exitFocusMode(true);
+    updateProgressPanel();
+
+    if (window.Router) Router.navigate('question');
   }
 
   function checkRetryComplete() {
