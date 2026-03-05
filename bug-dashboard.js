@@ -543,9 +543,10 @@
       cb.type = 'checkbox';
       cb.className = 'row-cb';
       cb.dataset.key = r._key;
-      cb.onclick = function(e) {
+      tdCb.onclick = function(e) {
         e.stopPropagation();
-        if (this.checked) selectedKeys[r._key] = true;
+        if (e.target !== cb) cb.checked = !cb.checked;
+        if (cb.checked) selectedKeys[r._key] = true;
         else delete selectedKeys[r._key];
         updateBulkBar();
       };
