@@ -424,6 +424,15 @@
   var edgeTriggerEl = null;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  var IQ_EASE = {
+    out: 'power2.out',
+    in: 'power2.in',
+    inOut: 'power2.inOut',
+    pop: 'back.out(1.7)',
+    soft: 'back.out(1.4)',
+    heavy: 'power3.out'
+  };
+
   var CATEGORY_NAMES = { basic: '\u57FA\u672C\u554F\u984C', comm: 'FOR COMMUNICATION', advanced: '\u767A\u5C55\u554F\u984C' };
 
   function createProgressPanel() {
@@ -779,7 +788,7 @@
     updateProgressPanel();
     if (typeof gsap !== 'undefined') {
       gsap.killTweensOf(progressPanelEl);
-      gsap.to(progressPanelEl, { x: 0, duration: 0.35, ease: 'power2.out' });
+      gsap.to(progressPanelEl, { x: 0, duration: 0.35, ease: IQ_EASE.out });
       if (progressBackdropEl) {
         gsap.killTweensOf(progressBackdropEl);
         progressBackdropEl.style.display = '';
@@ -851,7 +860,7 @@
       gsap.to(progressTabEl, {
         opacity: 1, x: 0,
         duration: reducedMotion ? 0.01 : 0.25,
-        ease: 'power2.out'
+        ease: IQ_EASE.out
       });
     }
   }
@@ -954,7 +963,7 @@
         var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
         if (items.length > 0) {
           gsap.killTweensOf(items);
-          gsap.from(items, { opacity: 0, x: -8, stagger: 0.04, duration: 0.5, ease: 'power2.out', delay: 0.2 + i * 0.12 });
+          gsap.from(items, { opacity: 0, x: -8, stagger: 0.04, duration: 0.5, ease: IQ_EASE.out, delay: 0.2 + i * 0.12 });
         }
       });
     }
@@ -1032,7 +1041,7 @@
     el.setAttribute('aria-live', 'polite');
     el.textContent = message;
     if (typeof gsap !== 'undefined' && !reducedMotion) {
-      gsap.fromTo(el, { opacity: 0, y: -4 }, { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' });
+      gsap.fromTo(el, { opacity: 0, y: -4 }, { opacity: 1, y: 0, duration: 0.25, ease: IQ_EASE.out });
     }
     return el;
   }
@@ -2106,7 +2115,7 @@
       reviewNavEl.className = 'iq-review-nav';
       document.body.appendChild(reviewNavEl);
       if (typeof gsap !== 'undefined' && !reducedMotion) {
-        gsap.fromTo(reviewNavEl, { opacity: 0, y: -4 }, { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' });
+        gsap.fromTo(reviewNavEl, { opacity: 0, y: -4 }, { opacity: 1, y: 0, duration: 0.25, ease: IQ_EASE.out });
       }
     }
 
@@ -2271,7 +2280,7 @@
     document.body.appendChild(retryBarEl);
     if (typeof gsap !== 'undefined') {
       gsap.killTweensOf(retryBarEl);
-      gsap.fromTo(retryBarEl, { y: -44 }, { y: 0, duration: 0.3, ease: 'power2.out' });
+      gsap.fromTo(retryBarEl, { y: -44 }, { y: 0, duration: 0.3, ease: IQ_EASE.out });
     }
   }
 
@@ -2463,7 +2472,7 @@
     // Fade in previously hidden cards
     if (typeof gsap !== 'undefined' && hiddenCards.length > 0) {
       gsap.to(hiddenCards, {
-        opacity: 1, duration: reducedMotion ? 0.01 : 0.3, stagger: 0.02, ease: 'power2.out',
+        opacity: 1, duration: reducedMotion ? 0.01 : 0.3, stagger: 0.02, ease: IQ_EASE.out,
         onComplete: function() { hiddenCards.forEach(function(c) { c.style.opacity = ''; }); }
       });
     } else {
@@ -2881,7 +2890,7 @@
       var target = card.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 2 + card.offsetHeight / 2;
       var scrollObj = { y: window.pageYOffset };
       gsap.to(scrollObj, {
-        y: target, duration: 0.4, ease: 'power2.out',
+        y: target, duration: 0.4, ease: IQ_EASE.out,
         onUpdate: function() { window.scrollTo(0, scrollObj.y); }
       });
     } else {
@@ -3389,7 +3398,7 @@
       var visibleCards = Array.prototype.slice.call(allCards).filter(function(c) { return c.style.display !== 'none'; });
       gsap.fromTo(visibleCards,
         { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.3, stagger: 0.03, ease: 'power2.out', overwrite: true }
+        { opacity: 1, y: 0, scale: 1, duration: 0.3, stagger: 0.03, ease: IQ_EASE.out, overwrite: true }
       );
     } else {
       allCards.forEach(function(c) {
@@ -3583,7 +3592,7 @@
       gsap.fromTo(next,
         { opacity: 0, x: -slideX, y: 0, scale: 0.95 },
         { opacity: 1, x: 0, y: 0, scale: 1.02, duration: 0.2, delay: 0.05,
-          ease: 'power2.out', overwrite: true,
+          ease: IQ_EASE.out, overwrite: true,
           onComplete: function() {
             gsap.set(next, { opacity: 1, x: 0, y: 0, scale: 1 });
             dbg.log('state', 'focusAnimating', 'true -> false [navigateFocus complete]'); dbg.setState('focusAnimating', false); focusAnimating = false;
@@ -3811,6 +3820,7 @@
     window.addEventListener('hashchange', function() {
       dbg.log('timer', 'setTimeout', 'hashchange rebuild 50ms');
       setTimeout(function() {
+        invalidateCardCache();
         enhanceVisibleCards();
         if (reviewMode) filterVisibleCards();
         if (focusMode) rebuildFocusCards();
