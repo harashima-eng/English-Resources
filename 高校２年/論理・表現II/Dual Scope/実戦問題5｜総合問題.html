@@ -1583,7 +1583,7 @@ function initOverviewScrollReveals() {
 
   // Kill previous overview ScrollTriggers to prevent accumulation
   ScrollTrigger.getAll().forEach(t => {
-    if (t.vars.id && t.vars.id.startsWith('overview-')) t.kill();
+    if (t.vars.id && t.vars.id.startsWith('overview-')) t.kill(true);
   });
 
   gsap.utils.toArray('.conj-section').forEach((section, si) => {
@@ -1788,7 +1788,8 @@ window.addEventListener('popstate', () => {
 <script src="../../../spaced-review.js" defer></script>
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('../../../sw.js', { scope: '/English-Resources/' })
+  var swScope = new URL('../../../sw.js', location.href).pathname.replace(/sw\.js$/, '');
+  navigator.serviceWorker.register('../../../sw.js', { scope: swScope })
     .catch(function() {});
 }
 </script>
