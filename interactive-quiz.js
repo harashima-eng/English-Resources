@@ -2319,6 +2319,12 @@
     invalidateCardCache();
     enhanceVisibleCards();
 
+    // Ensure retry cards are fully visible (initCardReveal only scopes to #questionsList)
+    if (typeof gsap !== 'undefined' && container) {
+      var retryCards = container.querySelectorAll('.qcard');
+      gsap.set(retryCards, { opacity: 1, y: 0 });
+    }
+
     // Setup MutationObserver on retry container
     if (retryObserver) { retryObserver.disconnect(); retryObserver = null; }
     if (container) {
