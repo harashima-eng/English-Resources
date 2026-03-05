@@ -146,11 +146,12 @@
     }).observe({ type: 'long-animation-frame' });
   }
 
-  // ── FPS estimator ──
+  // ── FPS estimator (only runs in debug mode) ──
   var fpsEstimate = 60;
   var fpsFrames = 0;
   var fpsLast = performance.now();
-  (function fpsTick() {
+  var fpsRunning = false;
+  function fpsTick() {
     fpsFrames++;
     var now = performance.now();
     if (now - fpsLast >= 1000) {
@@ -158,8 +159,12 @@
       fpsFrames = 0;
       fpsLast = now;
     }
+    if (fpsRunning) requestAnimationFrame(fpsTick);
+  }
+  if (DEBUG) {
+    fpsRunning = true;
     requestAnimationFrame(fpsTick);
-  })();
+  }
 
   window.IQDebug = {
     log: log,
@@ -2237,7 +2242,7 @@
     retryKeys.forEach(function(k) {
       var parts = k.split('-');
       var si = parts[0], qi = parts[1];
-      var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
+      var card = getCardByKey(si, qi);
       if (!card) return;
 
       // Restore fillin original HTML if stored
