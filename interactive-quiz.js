@@ -218,11 +218,19 @@
 
   // ── Cached .qcard selector ──
   var _cachedCards = null;
+  var _cardMap = null;
   function getCachedCards() {
     if (!_cachedCards) _cachedCards = Array.prototype.slice.call(document.querySelectorAll('.qcard[data-si][data-qi]'));
     return _cachedCards;
   }
-  function invalidateCardCache() { _cachedCards = null; }
+  function getCardByKey(si, qi) {
+    if (!_cardMap) {
+      _cardMap = {};
+      getCachedCards().forEach(function(c) { _cardMap[c.dataset.si + '-' + c.dataset.qi] = c; });
+    }
+    return _cardMap[si + '-' + qi] || null;
+  }
+  function invalidateCardCache() { _cachedCards = null; _cardMap = null; }
 
   // ── Gamification state ──
   var streak = 0;
@@ -948,7 +956,7 @@
   }
 
   function autoExpandToggles(si, qi) {
-    var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
+    var card = getCardByKey(si, qi);
     if (!card) return;
 
     var blocks = [];
@@ -2017,7 +2025,7 @@
       var key = getQKey(si, qi);
       if (answeredKeys[key]) return;
 
-      var card = document.querySelector('.qcard[data-si="' + si + '"][data-qi="' + qi + '"]');
+      var card = getCardByKey(si, qi);
       if (!card) return;
       var zone = card.querySelector('.iq-zone');
       if (!zone || zone.classList.contains('locked')) return;
