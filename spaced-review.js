@@ -539,8 +539,8 @@
 
         if (corrInput) setTimeout(function() { corrInput.focus(); }, 50);
 
-      } else if (item.type === 'correction' || item.type === 'fillin') {
-        // ── Correction / Fillin: text input + auto-check ──
+      } else if (item.type === 'correction' || item.type === 'fillin' || (item.type === 'error' && !choices)) {
+        // ── Correction / Fillin (+ error fallback without choices): text input + auto-check ──
 
         var card = document.createElement('div');
         card.className = 'qcard sr-review-card';
