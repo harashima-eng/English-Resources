@@ -256,7 +256,13 @@
       if (!choices && typeof grammarData !== 'undefined') {
         var sec = grammarData.sections[item.si];
         var q = sec && sec.questions[item.qi];
-        if (q) choices = q.choices || '';
+        if (q) {
+          choices = q.choices || '';
+          if (!choices && item.type === 'error' && q.text) {
+            var um = q.text.match(/<u[^>]*>([^<]+)<\/u>/g);
+            if (um) choices = um.map(function(s) { return s.replace(/<\/?u[^>]*>/g, ''); }).join('\u3000');
+          }
+        }
       }
 
       // Safe HTML parser for <u> and <br> tags
@@ -600,7 +606,7 @@
           input.disabled = true;
 
           // Support alternatives separated by /
-          var correct = String(item.correctAnswer || '');
+          var correct = String(item.type === 'error' && item.correctText ? item.correctText : (item.correctAnswer || ''));
           var alternatives = correct.split('/').map(function(s) { return s.trim().toLowerCase(); });
           var isCorrect = alternatives.indexOf(typed.toLowerCase()) !== -1;
 
