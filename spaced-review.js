@@ -504,8 +504,10 @@
           var textCorrect = true;
           if (hasTextReq && corrInput) {
             var typed = corrInput.value.trim();
-            var alts = item.correctText.split('/').map(function(s) { return s.trim().toLowerCase(); });
-            textCorrect = alts.indexOf(typed.toLowerCase()) !== -1;
+            if (item.correctText) {
+              var alts = item.correctText.split('/').map(function(s) { return s.trim().toLowerCase(); });
+              textCorrect = alts.indexOf(typed.toLowerCase()) !== -1;
+            }
             corrInput.disabled = true;
           }
           var isCorrect = labelCorrect && textCorrect;

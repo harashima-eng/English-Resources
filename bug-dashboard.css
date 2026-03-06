@@ -723,6 +723,212 @@ body {
 
 .empty-state p { font-size: 15px; }
 
+/* ── AI Triage Panel ── */
+.ai-analyze-btn {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent) !important;
+  font-weight: 600;
+}
+
+.ai-analyze-btn:hover {
+  background: var(--accent-hover) !important;
+}
+
+.ai-analyze-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.triage-panel {
+  margin-bottom: 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.triage-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.triage-panel-header h3 {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.triage-toggle-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.triage-status {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 8px 0;
+}
+
+.triage-error {
+  color: var(--danger);
+}
+
+.triage-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.triage-meta {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.triage-section {
+  margin-bottom: 16px;
+}
+
+.triage-section h3 {
+  font-size: 12px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.triage-group {
+  background: var(--surface-hover);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--text-dim);
+}
+
+.triage-critical { border-left-color: var(--danger); }
+.triage-high { border-left-color: var(--warning); }
+.triage-medium { border-left-color: var(--accent); }
+.triage-low { border-left-color: var(--text-dim); }
+
+.triage-group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.triage-priority-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.triage-critical .triage-priority-badge {
+  background: var(--danger-dim);
+  color: var(--danger);
+}
+
+.triage-high .triage-priority-badge {
+  background: var(--warning-dim);
+  color: var(--warning);
+}
+
+.triage-medium .triage-priority-badge {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.triage-low .triage-priority-badge {
+  background: var(--border);
+  color: var(--text-muted);
+}
+
+.triage-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.triage-detail {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+.triage-detail strong {
+  color: var(--text);
+}
+
+.triage-fix {
+  background: var(--success-dim);
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-top: 6px;
+}
+
+.triage-types {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.triage-type-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  background: var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.triage-list {
+  list-style: none;
+  padding: 0;
+}
+
+.triage-list li {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+
+.triage-list li:last-child {
+  border-bottom: none;
+}
+
+.triage-quick-wins li::before {
+  content: '\2713 ';
+  color: var(--success);
+  font-weight: 700;
+}
+
+.triage-investigate li::before {
+  content: '? ';
+  color: var(--warning);
+  font-weight: 700;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .stats-row {
