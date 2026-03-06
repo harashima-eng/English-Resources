@@ -344,7 +344,10 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
   if (totalInteractive === 0) return;
 
   // Detector 8: Critical DOM Missing — check #questionsList after 3s
+  // Only fire if Question view is active (Home/Overview leave it empty by design)
   setTimeout(function() {
+    var questionView = document.getElementById('viewQuestion');
+    if (!questionView || !questionView.classList.contains('active')) return;
     var ql = document.getElementById('questionsList');
     if (!ql || ql.children.length === 0) {
       if (typeof BugReport === 'function') {
