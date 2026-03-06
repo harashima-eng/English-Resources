@@ -389,8 +389,158 @@
         };
         body.appendChild(checkBtn);
 
-      } else if (item.type === 'correction' || item.type === 'error' || item.type === 'fillin') {
-        // ── Correction / Error / Fillin: text input + auto-check ──
+      } else if (item.type === 'error' && choices) {
+        // ── Error: select error part + type correction ──
+
+        var card = document.createElement('div');
+        card.className = 'qcard sr-review-card';
+
+        var questionArea = document.createElement('div');
+        questionArea.className = 'qcard-question';
+
+        var qnum = document.createElement('span');
+        qnum.className = 'qnum';
+        qnum.textContent = (currentIdx + 1);
+        questionArea.appendChild(qnum);
+
+        var qtext = document.createElement('div');
+        qtext.className = 'qtext';
+        appendSafe(tempDoc.body, qtext);
+        questionArea.appendChild(qtext);
+
+        var zone = document.createElement('div');
+        zone.className = 'iq-zone';
+
+        // Choice buttons for selecting error part
+        var choicesDiv = document.createElement('div');
+        choicesDiv.className = 'iq-choices';
+        var selectedLabel = null;
+
+        var parts = choices.split(/\u3000|\t/);
+        parts.forEach(function(part) {
+          part = part.trim();
+          if (!part) return;
+          var match = part.match(/^([a-z])\.\s*(.+)/);
+          if (!match) return;
+
+          var btn = document.createElement('button');
+          btn.className = 'iq-choice';
+          btn.textContent = match[1] + '. ' + match[2];
+          btn.dataset.letter = match[1];
+          btn.onclick = function() {
+            if (zone.classList.contains('locked')) return;
+            choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
+              b.classList.remove('selected');
+            });
+            btn.classList.add('selected');
+            selectedLabel = match[1];
+            if (window.UISound) UISound.play('select');
+          };
+          choicesDiv.appendChild(btn);
+        });
+        zone.appendChild(choicesDiv);
+
+        // Correction text input (if correctText is available)
+        var hasTextReq = !!item.correctText;
+        var corrInput = null;
+        if (hasTextReq) {
+          var hintLabel = document.createElement('div');
+          hintLabel.className = 'iq-scramble-label';
+          hintLabel.textContent = 'Type the correct form';
+          zone.appendChild(hintLabel);
+
+          corrInput = document.createElement('input');
+          corrInput.type = 'text';
+          corrInput.className = 'iq-correction-input';
+          var uMatch = rawText.match(/<u>([^<]+)<\/u>/);
+          corrInput.placeholder = uMatch ? uMatch[1] + ' → ...' : 'Your answer...';
+          zone.appendChild(corrInput);
+        }
+
+        questionArea.appendChild(zone);
+        card.appendChild(questionArea);
+        body.appendChild(card);
+
+        // Previous wrong answer (parse JSON if needed)
+        var metaDiv = document.createElement('div');
+        metaDiv.className = 'sr-review-meta';
+        var wrongDiv = document.createElement('div');
+        wrongDiv.className = 'sr-modal-wrong';
+        var wrongDisplay = '—';
+        try {
+          var parsed = JSON.parse(item.wrongAnswer);
+          if (parsed && parsed.label) {
+            wrongDisplay = 'Selected: ' + parsed.label;
+            if (parsed.correctionText) wrongDisplay += ', typed: ' + parsed.correctionText;
+          } else {
+            wrongDisplay = item.wrongAnswer || '—';
+          }
+        } catch(e) {
+          wrongDisplay = item.wrongAnswer || '—';
+        }
+        wrongDiv.textContent = 'Your answer: ' + wrongDisplay;
+        metaDiv.appendChild(wrongDiv);
+        body.appendChild(metaDiv);
+
+        var checkBtn = document.createElement('button');
+        checkBtn.className = 'sr-modal-reveal-btn';
+        checkBtn.textContent = 'Check';
+        checkBtn.onclick = function() {
+          if (!selectedLabel || zone.classList.contains('locked')) return;
+          if (hasTextReq && corrInput && !corrInput.value.trim()) return;
+          zone.classList.add('locked');
+
+          var labelCorrect = selectedLabel === item.correctAnswer;
+          var textCorrect = true;
+          if (hasTextReq && corrInput) {
+            var typed = corrInput.value.trim();
+            var alts = item.correctText.split('/').map(function(s) { return s.trim().toLowerCase(); });
+            textCorrect = alts.indexOf(typed.toLowerCase()) !== -1;
+            corrInput.disabled = true;
+          }
+          var isCorrect = labelCorrect && textCorrect;
+
+          choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
+            if (b.dataset.letter === item.correctAnswer) {
+              b.classList.remove('selected');
+              b.classList.add('correct');
+            } else if (b.classList.contains('selected')) {
+              b.classList.add('wrong');
+            } else {
+              b.classList.add('dimmed');
+            }
+          });
+
+          if (window.UISound) UISound.play(isCorrect ? 'correct' : 'wrong');
+
+          if (isCorrect) {
+            promoteItem(item.examId, item.si, item.qi);
+          } else {
+            demoteItem(item.examId, item.si, item.qi);
+          }
+
+          checkBtn.style.display = 'none';
+
+          var msg = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + item.correctAnswer;
+          if (!isCorrect && hasTextReq) msg += ' → ' + item.correctText;
+          var resultDiv = document.createElement('div');
+          resultDiv.className = 'sr-modal-answer';
+          resultDiv.textContent = msg;
+          resultDiv.style.color = isCorrect ? '#16A34A' : '#DC2626';
+          body.appendChild(resultDiv);
+
+          var nextBtn = document.createElement('button');
+          nextBtn.className = 'sr-modal-reveal-btn';
+          nextBtn.textContent = currentIdx < items.length - 1 ? 'Next' : 'Done';
+          nextBtn.onclick = function() { currentIdx++; renderItem(); };
+          body.appendChild(nextBtn);
+        };
+        body.appendChild(checkBtn);
+
+        if (corrInput) setTimeout(function() { corrInput.focus(); }, 50);
+
+      } else if (item.type === 'correction' || item.type === 'fillin') {
+        // ── Correction / Fillin: text input + auto-check ──
 
         var card = document.createElement('div');
         card.className = 'qcard sr-review-card';
