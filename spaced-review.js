@@ -425,6 +425,12 @@
         var prevWrongLabel = null;
         try { var pw = JSON.parse(item.wrongAnswer); prevWrongLabel = pw && pw.label; } catch(e) {}
 
+        // Detect correction requirement from stored correctText OR from wrongAnswer JSON
+        var hasTextReq = !!item.correctText;
+        if (!hasTextReq) {
+          try { var pw2 = JSON.parse(item.wrongAnswer); if (pw2 && pw2.correctionText) hasTextReq = true; } catch(e) {}
+        }
+
         underlines.forEach(function(u) {
           var text = u.textContent.trim();
           var match = text.match(/^([a-d])\./);
@@ -433,7 +439,7 @@
           u.classList.add('iq-error-option');
           u.dataset.label = label;
           u.style.cursor = 'pointer';
-          if (label === prevWrongLabel) u.classList.add('sr-prev-wrong');
+          if (!hasTextReq && label === prevWrongLabel) u.classList.add('sr-prev-wrong');
           u.onclick = function() {
             if (zone.classList.contains('locked')) return;
             underlines.forEach(function(uu) { uu.classList.remove('selected'); });
@@ -444,7 +450,6 @@
         });
 
         // Instruction hint
-        var hasTextReq = !!item.correctText;
         var corrInput = null;
         var hint = document.createElement('div');
         hint.className = 'iq-scramble-label';

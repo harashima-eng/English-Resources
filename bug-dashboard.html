@@ -24,6 +24,7 @@
       <span class="user-email" id="userEmail"></span>
     </div>
     <div class="header-actions">
+      <button class="ai-analyze-btn" id="aiAnalyzeBtn" style="display:none">AI Analyze</button>
       <button id="themeToggle" class="theme-toggle" title="Toggle dark/light mode"></button>
       <button class="prune-btn" id="pruneBtn">Prune >30 days</button>
       <button class="prune-btn" id="purgeAnimBtn">Purge anim_conflict</button>
@@ -32,6 +33,17 @@
   </div>
 
   <div class="stats-row" id="statsRow"></div>
+
+  <div class="triage-panel" id="triagePanel" style="display:none">
+    <div class="triage-panel-header">
+      <h3>AI Triage Analysis</h3>
+      <button id="triageToggle" class="triage-toggle-btn">Hide</button>
+    </div>
+    <div id="triageBody">
+      <div class="triage-status" id="triageStatus"></div>
+      <div id="triageContent"></div>
+    </div>
+  </div>
 
   <div class="charts-row">
     <div class="chart-card">
@@ -108,5 +120,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script src="bug-dashboard.js"></script>
+<script type="module" src="bug-dashboard-ai.js"></script>
 </body>
 </html>
