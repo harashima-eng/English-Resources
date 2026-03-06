@@ -419,48 +419,41 @@
         var zone = document.createElement('div');
         zone.className = 'iq-zone';
 
-        // Choice buttons for selecting error part
-        var choicesDiv = document.createElement('div');
-        choicesDiv.className = 'iq-choices';
+        // Make <u> elements clickable for selecting error part
+        var underlines = qtext.querySelectorAll('u');
         var selectedLabel = null;
         var prevWrongLabel = null;
         try { var pw = JSON.parse(item.wrongAnswer); prevWrongLabel = pw && pw.label; } catch(e) {}
 
-        var parts = choices.split(/\u3000|\t/);
-        parts.forEach(function(part) {
-          part = part.trim();
-          if (!part) return;
-          var match = part.match(/^([a-z])\.\s*(.+)/);
+        underlines.forEach(function(u) {
+          var text = u.textContent.trim();
+          var match = text.match(/^([a-d])\./);
           if (!match) return;
-
-          var btn = document.createElement('button');
-          btn.className = 'iq-choice';
-          if (match[1] === prevWrongLabel) {
-            btn.classList.add('sr-prev-wrong');
-          }
-          btn.textContent = match[1] + '. ' + match[2];
-          btn.dataset.letter = match[1];
-          btn.onclick = function() {
+          var label = match[1];
+          u.classList.add('iq-error-option');
+          u.dataset.label = label;
+          u.style.cursor = 'pointer';
+          if (label === prevWrongLabel) u.classList.add('sr-prev-wrong');
+          u.onclick = function() {
             if (zone.classList.contains('locked')) return;
-            choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
-              b.classList.remove('selected');
-            });
-            btn.classList.add('selected');
-            selectedLabel = match[1];
+            underlines.forEach(function(uu) { uu.classList.remove('selected'); });
+            u.classList.add('selected');
+            selectedLabel = label;
             if (window.UISound) UISound.play('select');
           };
-          choicesDiv.appendChild(btn);
         });
-        zone.appendChild(choicesDiv);
 
-        // Correction text input (if correctText is available)
+        // Instruction hint
         var hasTextReq = !!item.correctText;
         var corrInput = null;
+        var hint = document.createElement('div');
+        hint.className = 'iq-scramble-label';
+        hint.textContent = hasTextReq
+          ? 'Click the error, then type the correct form'
+          : 'Click the underlined part with an error';
+        zone.appendChild(hint);
+
         if (hasTextReq) {
-          var hintLabel = document.createElement('div');
-          hintLabel.className = 'iq-scramble-label';
-          hintLabel.textContent = 'Type the correct form';
-          zone.appendChild(hintLabel);
 
           corrInput = document.createElement('input');
           corrInput.type = 'text';
