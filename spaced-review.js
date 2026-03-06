@@ -421,6 +421,8 @@
         var choicesDiv = document.createElement('div');
         choicesDiv.className = 'iq-choices';
         var selectedLabel = null;
+        var prevWrongLabel = null;
+        try { var pw = JSON.parse(item.wrongAnswer); prevWrongLabel = pw && pw.label; } catch(e) {}
 
         var parts = choices.split(/\u3000|\t/);
         parts.forEach(function(part) {
@@ -431,6 +433,9 @@
 
           var btn = document.createElement('button');
           btn.className = 'iq-choice';
+          if (match[1] === prevWrongLabel) {
+            btn.classList.add('sr-prev-wrong');
+          }
           btn.textContent = match[1] + '. ' + match[2];
           btn.dataset.letter = match[1];
           btn.onclick = function() {
