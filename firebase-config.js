@@ -37,6 +37,10 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
     // Detector 7: Connectivity Monitor — report if disconnected >30s
     var disconnectedAt = 0;
     var connectivityReported = false;
+    var tabHiddenAt = document.hidden ? Date.now() : 0;
+    document.addEventListener('visibilitychange', function() {
+      tabHiddenAt = document.hidden ? Date.now() : 0;
+    });
 
     firebase.database().ref('.info/connected').on('value', function(snap) {
       if (snap.val() === true) {
@@ -48,6 +52,9 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
         if (!connectivityReported) {
           setTimeout(function() {
             if (disconnectedAt && !connectivityReported && Date.now() - disconnectedAt >= 30000) {
+              // Skip if tab is backgrounded or was hidden within 5s of disconnect
+              if (document.hidden) return;
+              if (tabHiddenAt && tabHiddenAt < disconnectedAt + 5000) return;
               connectivityReported = true;
               var duration = Math.round((Date.now() - disconnectedAt) / 1000);
               if (typeof BugReport === 'function') {
