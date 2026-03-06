@@ -594,7 +594,17 @@
         metaDiv.className = 'sr-review-meta';
         var wrongDiv = document.createElement('div');
         wrongDiv.className = 'sr-modal-wrong';
-        wrongDiv.textContent = 'Your answer: ' + (item.wrongAnswer || '—');
+        var wrongDisplay = item.wrongAnswer || '—';
+        if (item.type === 'error') {
+          try {
+            var pw = JSON.parse(item.wrongAnswer);
+            if (pw && pw.label) {
+              wrongDisplay = pw.label;
+              if (pw.correctionText) wrongDisplay += ' → ' + pw.correctionText;
+            }
+          } catch(e) {}
+        }
+        wrongDiv.textContent = 'Your answer: ' + wrongDisplay;
         metaDiv.appendChild(wrongDiv);
         body.appendChild(metaDiv);
 
@@ -627,7 +637,10 @@
 
           var resultDiv = document.createElement('div');
           resultDiv.className = 'sr-modal-answer';
-          resultDiv.textContent = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + (item.correctAnswer || '—');
+          var answerDisplay = item.type === 'error' && item.correctText
+            ? item.correctAnswer + ' → ' + item.correctText
+            : (item.correctAnswer || '—');
+          resultDiv.textContent = isCorrect ? 'Correct!' : 'Incorrect. Answer: ' + answerDisplay;
           resultDiv.style.color = isCorrect ? '#16A34A' : '#DC2626';
           body.appendChild(resultDiv);
 
