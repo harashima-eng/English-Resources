@@ -42,6 +42,7 @@
       queue[existing].nextReview = nextReviewDate(0);
       queue[existing].wrongAnswer = item.wrongAnswer;
       queue[existing].choices = item.choices || queue[existing].choices || '';
+      if (item.correctText) queue[existing].correctText = item.correctText;
     } else {
       queue.push({
         examId: item.examId,
@@ -50,6 +51,7 @@
         questionText: item.questionText,
         wrongAnswer: item.wrongAnswer,
         correctAnswer: item.correctAnswer,
+        correctText: item.correctText || '',
         choices: item.choices || '',
         type: item.type,
         box: 0,

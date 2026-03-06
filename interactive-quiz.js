@@ -178,7 +178,7 @@
       if (node.className && typeof node.className === 'string' && node.className.indexOf('iq-') !== -1) return;
       // Also skip common interactive patterns
       if (node.getAttribute('tabindex') === '0' || tag === 'label' || tag === 'summary') return;
-      if (tag === 'nav' || (node.className && typeof node.className === 'string' && node.className.indexOf('top-nav') !== -1)) return;
+      if (tag === 'nav' || (node.className && typeof node.className === 'string' && (node.className.indexOf('top-nav') !== -1 || node.className.indexOf('sr-review') !== -1))) return;
     }
     lastDeadClickReport = now;
     var desc = el.tagName.toLowerCase();
@@ -1147,6 +1147,7 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
             var m = (q.text || '').match(/<u[^>]*>([^<]+)<\/u>/g);
             return m ? m.map(function(s) { return s.replace(/<\/?u[^>]*>/g, ''); }).join('\u3000') : '';
           })() : '')) : '',
+          correctText: (type === 'error' && q && q.correctText) ? displayCorrectText(q.correctText) : '',
           type: type
         }
       }));
