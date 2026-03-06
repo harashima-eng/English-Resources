@@ -1063,4 +1063,17 @@
       alert('Deleted ' + toDelete.length + ' anim_conflict reports.');
     }).catch(function(err) { alert('Error: ' + err.message); });
   }
+
+  // ── Bridge for AI Module ──
+  window._bugDashboard = {
+    getReports: function() { return allReports; },
+    getErrors: function() { return allErrors; },
+    isAuthenticated: function() { return !!auth.currentUser; },
+    writeTriageResult: function(data) {
+      return db.ref('triage').push(data);
+    },
+    loadTriageHistory: function(callback) {
+      db.ref('triage').orderByChild('timestamp').limitToLast(1).once('value', callback);
+    }
+  };
 })();

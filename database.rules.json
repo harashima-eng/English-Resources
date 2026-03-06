@@ -52,6 +52,10 @@
         ".write": true,
         ".validate": "newData.hasChildren(['type', 'ts', 'deviceId']) && newData.child('type').isString() && newData.child('type').val().length < 50"
       }
+    },
+    "triage": {
+      ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+      ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
     }
   }
 }
