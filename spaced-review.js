@@ -253,16 +253,18 @@
 
       // Choices — fallback to grammarData if item was saved before choices were added
       var choices = item.choices;
-      if (!choices && typeof grammarData !== 'undefined') {
+      // Error-type: always re-extract from <u> tags (item.choices may be stale)
+      if (item.type === 'error' && typeof grammarData !== 'undefined') {
         var sec = grammarData.sections[item.si];
         var q = sec && sec.questions[item.qi];
-        if (q) {
-          choices = q.choices || '';
-          if (!choices && item.type === 'error' && q.text) {
-            var um = q.text.match(/<u[^>]*>([^<]+)<\/u>/g);
-            if (um) choices = um.map(function(s) { return s.replace(/<\/?u[^>]*>/g, ''); }).join('\u3000');
-          }
+        if (q && q.text) {
+          var um = q.text.match(/<u[^>]*>([^<]+)<\/u>/g);
+          if (um) choices = um.map(function(s) { return s.replace(/<\/?u[^>]*>/g, ''); }).join('\u3000');
         }
+      } else if (!choices && typeof grammarData !== 'undefined') {
+        var sec = grammarData.sections[item.si];
+        var q = sec && sec.questions[item.qi];
+        if (q) choices = q.choices || '';
       }
 
       // Safe HTML parser for <u> and <br> tags
