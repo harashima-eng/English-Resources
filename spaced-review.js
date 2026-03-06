@@ -458,8 +458,7 @@
           corrInput = document.createElement('input');
           corrInput.type = 'text';
           corrInput.className = 'iq-correction-input';
-          var uMatch = rawText.match(/<u>([^<]+)<\/u>/);
-          corrInput.placeholder = uMatch ? uMatch[1] + ' → ...' : 'Your answer...';
+          corrInput.placeholder = 'Type the correct form...';
           zone.appendChild(corrInput);
         }
 
@@ -506,14 +505,14 @@
           }
           var isCorrect = labelCorrect && textCorrect;
 
-          choicesDiv.querySelectorAll('.iq-choice').forEach(function(b) {
-            if (b.dataset.letter === item.correctAnswer) {
-              b.classList.remove('selected');
-              b.classList.add('correct');
-            } else if (b.classList.contains('selected')) {
-              b.classList.add('wrong');
-            } else {
-              b.classList.add('dimmed');
+          underlines.forEach(function(u) {
+            if (!u.dataset.label) return;
+            u.style.cursor = 'default';
+            if (u.dataset.label === item.correctAnswer) {
+              u.classList.remove('selected');
+              u.classList.add('correct');
+            } else if (u.classList.contains('selected')) {
+              u.classList.add('wrong');
             }
           });
 

@@ -2147,6 +2147,15 @@ html.dark .sr-modal-wrong {
 html.dark .iq-choice.sr-prev-wrong {
   opacity: 0.4;
 }
+.iq-error-option.sr-prev-wrong {
+  opacity: 0.45;
+  outline: 2px dashed rgba(220, 38, 38, 0.4);
+  outline-offset: 1px;
+}
+[data-theme="dark"] .iq-error-option.sr-prev-wrong,
+html.dark .iq-error-option.sr-prev-wrong {
+  opacity: 0.4;
+}
 
 .sr-modal-reveal-btn {
   display: block;
