@@ -178,6 +178,7 @@
       if (node.className && typeof node.className === 'string' && node.className.indexOf('iq-') !== -1) return;
       // Also skip common interactive patterns
       if (node.getAttribute('tabindex') === '0' || tag === 'label' || tag === 'summary') return;
+      if (tag === 'nav' || (node.className && typeof node.className === 'string' && node.className.indexOf('top-nav') !== -1)) return;
     }
     lastDeadClickReport = now;
     var desc = el.tagName.toLowerCase();
