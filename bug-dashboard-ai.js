@@ -6,26 +6,69 @@ var MODEL_CHAIN = ['gemini-2.5-flash-lite', 'gemini-2.0-flash-lite-001'];
 var activeModelName = MODEL_CHAIN[0];
 var _apiKey = null;
 
+function getApiKey() {
+  if (_apiKey) return _apiKey;
+  _apiKey = localStorage.getItem('gemini-api-key');
+  return _apiKey;
+}
+
+function setApiKey(key) {
+  _apiKey = key;
+  localStorage.setItem('gemini-api-key', key);
+}
+
 async function initAI() {
-  if (model) return true;
-  try {
-    var appMod = await import(CDN + '/firebase-app.js');
-    _aiMod = await import(CDN + '/firebase-ai.js');
+  var key = getApiKey();
+  if (key) return true;
 
-    var aiApp;
-    try { aiApp = appMod.initializeApp(FIREBASE_CONFIG, 'ai-triage'); }
-    catch (_) { aiApp = appMod.getApp('ai-triage'); }
+  key = prompt(
+    'Enter your personal Gemini API key.\n\n' +
+    'Get one free at: https://aistudio.google.com/apikeys\n' +
+    '(Use a personal Gmail, not school account)'
+  );
+  if (!key || !key.trim()) return false;
+  setApiKey(key.trim());
+  return true;
+}
 
-    _ai = _aiMod.getAI(aiApp, { backend: new _aiMod.GoogleAIBackend() });
-    model = _aiMod.getGenerativeModel(_ai, {
-      model: activeModelName,
-      generationConfig: { responseMimeType: 'application/json' }
+async function callGemini(promptText) {
+  var key = getApiKey();
+  for (var i = MODEL_CHAIN.indexOf(activeModelName); i < MODEL_CHAIN.length; i++) {
+    activeModelName = MODEL_CHAIN[i];
+    var url = GEMINI_API + '/models/' + activeModelName + ':generateContent?key=' + key;
+    var resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: promptText }] }],
+        generationConfig: { responseMimeType: 'application/json' }
+      })
     });
-    return true;
-  } catch (err) {
-    console.error('Firebase AI Logic init failed:', err);
-    return false;
+
+    if (resp.ok) {
+      var data = await resp.json();
+      return data.candidates[0].content.parts[0].text;
+    }
+
+    if (resp.status === 429 && i < MODEL_CHAIN.length - 1) {
+      console.warn(activeModelName + ' returned 429, trying next model...');
+      continue;
+    }
+
+    var errBody = await resp.json().catch(function() { return {}; });
+    var errMsg = (errBody.error && errBody.error.message) || 'HTTP ' + resp.status;
+    if (resp.status === 403) {
+      errMsg = 'API key invalid or Generative Language API not enabled: ' + errMsg;
+    } else if (resp.status === 429) {
+      errMsg = 'All models quota exceeded. Wait a few minutes.';
+    } else if (resp.status === 401) {
+      localStorage.removeItem('gemini-api-key');
+      _apiKey = null;
+      errMsg = 'Invalid API key. Click AI Analyze again to enter a new one.';
+    }
+    throw new Error(errMsg);
   }
+  throw new Error('All models exhausted');
 }
 
 // ── Data Preparation ──
@@ -284,7 +327,7 @@ async function runAnalysis() {
 
   var ready = await initAI();
   if (!ready) {
-    status.textContent = 'Failed to initialize Firebase AI Logic. Enable it in your Firebase Console (Project Settings > AI Logic).';
+    status.textContent = 'No API key provided. Click AI Analyze to try again.';
     status.className = 'triage-status triage-error';
     btn.disabled = false;
     btn.textContent = 'AI Analyze';
