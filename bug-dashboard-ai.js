@@ -1181,6 +1181,33 @@ function init() {
     compareBtn.addEventListener('click', runDeltaAnalysis);
   }
 
+  // NL Query panel
+  var nlSendBtn = document.getElementById('nlSendBtn');
+  var nlInput = document.getElementById('nlInput');
+  var nlClearBtn = document.getElementById('nlClearBtn');
+  var nlResetFilters = document.getElementById('nlResetFilters');
+
+  if (nlSendBtn && nlInput) {
+    nlSendBtn.addEventListener('click', function() {
+      var text = nlInput.value.trim();
+      if (text) sendNLQuery(text);
+    });
+    nlInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        var text = nlInput.value.trim();
+        if (text) sendNLQuery(text);
+      }
+    });
+  }
+  if (nlClearBtn) nlClearBtn.addEventListener('click', resetNLConversation);
+  if (nlResetFilters) nlResetFilters.addEventListener('click', function() {
+    document.getElementById('nlFilterBadge').style.display = 'none';
+    var bridge = window._bugDashboard;
+    if (bridge && bridge.applyFilterValues) {
+      bridge.applyFilterValues({ type: '', exam: '', dateFrom: '', dateTo: '', search: '' });
+    }
+  });
+
   // Sessions tab: init when activated
   var sessionsTabBtn = document.querySelector('.tab-btn[data-tab="sessions"]');
   if (sessionsTabBtn) {
@@ -1207,9 +1234,11 @@ function init() {
     if (attempts > 30) { clearInterval(check); return; }
     if (window._bugDashboard && window._bugDashboard.isAuthenticated()) {
       clearInterval(check);
-      // Show the buttons once bridge is ready
+      // Show the buttons/panels once bridge is ready
       if (btn) btn.style.display = '';
       if (compareBtn) compareBtn.style.display = '';
+      var nlPanel = document.getElementById('nlPanel');
+      if (nlPanel) nlPanel.style.display = '';
       loadTriageHistory();
     }
   }, 1000);

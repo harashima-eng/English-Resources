@@ -1088,6 +1088,17 @@
     loadTriageHistory: function(callback) {
       db.ref('triage').orderByChild('timestamp').limitToLast(1).once('value', callback);
     },
+    applyFilterValues: function(filters) {
+      if (filters.type !== undefined) $('filterType').value = filters.type || '';
+      if (filters.exam !== undefined) $('filterExam').value = filters.exam || '';
+      if (filters.dateFrom !== undefined) $('filterFrom').value = filters.dateFrom || '';
+      if (filters.dateTo !== undefined) $('filterTo').value = filters.dateTo || '';
+      if (filters.search !== undefined) {
+        $('searchInput').value = filters.search || '';
+        searchTerm = (filters.search || '').toLowerCase().trim();
+      }
+      applyFilters();
+    },
     switchTab: function(tabName) {
       document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
       document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
