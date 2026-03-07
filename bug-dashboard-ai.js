@@ -426,6 +426,214 @@ async function runAnalysis() {
   btn.textContent = 'AI Analyze';
 }
 
+// ── Trend Delta Analysis (Feature C) ──
+
+function buildDeltaPrompt(currentSummary, previousTriage) {
+  var prevDate = previousTriage.analysis_date || 'unknown';
+  var prevReports = previousTriage.total_reports || previousTriage.input_reports || '?';
+
+  var prevGroups = (previousTriage.priority_groups || []).map(function(g) {
+    return '  - [' + g.priority + '] ' + g.title + ' (' + g.count + ' reports)';
+  }).join('\n');
+
+  var prevPatterns = (previousTriage.patterns || []).map(function(p) {
+    return '  - ' + p;
+  }).join('\n');
+
+  var prevQuickWins = (previousTriage.quick_wins || []).map(function(q) {
+    return '  - ' + q;
+  }).join('\n');
+
+  var typeList = Object.keys(currentSummary.reportsByType)
+    .sort(function(a, b) { return currentSummary.reportsByType[b] - currentSummary.reportsByType[a]; })
+    .map(function(t) { return '  - ' + t + ': ' + currentSummary.reportsByType[t]; })
+    .join('\n');
+
+  var examList = Object.keys(currentSummary.examDistribution)
+    .sort(function(a, b) { return currentSummary.examDistribution[b] - currentSummary.examDistribution[a]; })
+    .slice(0, 10)
+    .map(function(e) { return '  - ' + e + ': ' + currentSummary.examDistribution[e]; })
+    .join('\n');
+
+  return 'You are a bug triage agent comparing two snapshots of bug report data from a web-based English exam platform.\n\n' +
+    '## Previous Triage (' + prevDate + ', ' + prevReports + ' reports)\n\n' +
+    '### Priority Groups:\n' + (prevGroups || '  (none)') + '\n\n' +
+    '### Patterns:\n' + (prevPatterns || '  (none)') + '\n\n' +
+    '### Quick Wins:\n' + (prevQuickWins || '  (none)') + '\n\n' +
+    '## Current Data (today, ' + currentSummary.totalReports + ' reports, ' + currentSummary.totalErrors + ' errors)\n\n' +
+    '### Reports by Type:\n' + typeList + '\n\n' +
+    '### Top Affected Lessons:\n' + (examList || '  (none)') + '\n\n' +
+    '## Instructions\n' +
+    'Compare the current data against the previous triage. Identify what improved, what worsened, what is new, and what was resolved.\n\n' +
+    'Return a JSON object:\n' +
+    '{\n' +
+    '  "comparison_date": "YYYY-MM-DD (today)",\n' +
+    '  "previous_date": "' + prevDate + '",\n' +
+    '  "overall_trend": "improving|stable|degrading",\n' +
+    '  "summary": "1-2 sentence overview",\n' +
+    '  "improved": [{"title": "string", "detail": "string", "previous_count": number, "current_count": number}],\n' +
+    '  "worsened": [{"title": "string", "detail": "string", "previous_count": number, "current_count": number}],\n' +
+    '  "new_issues": [{"title": "string", "detail": "string", "count": number}],\n' +
+    '  "resolved": [{"title": "string", "detail": "string"}]\n' +
+    '}\n\n' +
+    'Each array can be empty if nothing applies. Be specific about counts and root causes.';
+}
+
+function renderDeltaResults(delta, container) {
+  container.innerHTML = '';
+
+  // Header with trend badge
+  var header = document.createElement('div');
+  header.className = 'triage-result-header';
+  var dateSpan = document.createElement('span');
+  dateSpan.textContent = 'Comparing: ' + (delta.previous_date || '?') + ' \u2192 ' + (delta.comparison_date || 'today');
+  header.appendChild(dateSpan);
+
+  var trendBadge = document.createElement('span');
+  trendBadge.className = 'delta-trend-badge delta-trend-' + (delta.overall_trend || 'stable');
+  var trendArrow = delta.overall_trend === 'improving' ? '\u2191' : delta.overall_trend === 'degrading' ? '\u2193' : '\u2192';
+  trendBadge.textContent = trendArrow + ' ' + (delta.overall_trend || 'stable').toUpperCase();
+  header.appendChild(trendBadge);
+  container.appendChild(header);
+
+  // Summary
+  if (delta.summary) {
+    var summaryDiv = document.createElement('div');
+    summaryDiv.className = 'delta-summary';
+    summaryDiv.textContent = delta.summary;
+    container.appendChild(summaryDiv);
+  }
+
+  // Improved
+  renderDeltaList(container, 'Improved', delta.improved, 'delta-improved', function(item) {
+    var text = item.title;
+    if (item.previous_count !== undefined && item.current_count !== undefined) {
+      text += ' (' + item.previous_count + ' \u2192 ' + item.current_count + ')';
+    }
+    if (item.detail) text += ' \u2014 ' + item.detail;
+    return text;
+  });
+
+  // Worsened
+  renderDeltaList(container, 'Worsened', delta.worsened, 'delta-worsened', function(item) {
+    var text = item.title;
+    if (item.previous_count !== undefined && item.current_count !== undefined) {
+      text += ' (' + item.previous_count + ' \u2192 ' + item.current_count + ')';
+    }
+    if (item.detail) text += ' \u2014 ' + item.detail;
+    return text;
+  });
+
+  // New issues
+  renderDeltaList(container, 'New Issues', delta.new_issues, 'delta-new', function(item) {
+    var text = item.title;
+    if (item.count !== undefined) text += ' (' + item.count + ' reports)';
+    if (item.detail) text += ' \u2014 ' + item.detail;
+    return text;
+  });
+
+  // Resolved
+  renderDeltaList(container, 'Resolved', delta.resolved, 'delta-resolved', function(item) {
+    var text = item.title;
+    if (item.detail) text += ' \u2014 ' + item.detail;
+    return text;
+  });
+}
+
+function renderDeltaList(container, title, items, className, formatter) {
+  if (!items || items.length === 0) return;
+  var sec = makeSection(title);
+  var ul = document.createElement('ul');
+  ul.className = 'triage-list ' + className;
+  items.forEach(function(item) {
+    var li = document.createElement('li');
+    li.textContent = formatter(item);
+    ul.appendChild(li);
+  });
+  sec.appendChild(ul);
+  container.appendChild(sec);
+}
+
+async function runDeltaAnalysis() {
+  var btn = document.getElementById('aiCompareBtn');
+  var panel = document.getElementById('triagePanel');
+  var content = document.getElementById('triageContent');
+  var status = document.getElementById('triageStatus');
+  if (!btn || !panel) return;
+
+  panel.style.display = 'block';
+  btn.disabled = true;
+  btn.textContent = 'Comparing\u2026';
+  status.textContent = 'Loading previous triage\u2026';
+  status.className = 'triage-status';
+  status.style.display = 'block';
+  content.innerHTML = '';
+
+  var ready = await initAI();
+  if (!ready) {
+    status.textContent = 'No API key provided.';
+    status.className = 'triage-status triage-error';
+    btn.disabled = false;
+    btn.textContent = 'Compare with Previous';
+    return;
+  }
+
+  var bridge = window._bugDashboard;
+  if (!bridge || !bridge.isAuthenticated()) {
+    status.textContent = 'Not authenticated.';
+    status.className = 'triage-status triage-error';
+    btn.disabled = false;
+    btn.textContent = 'Compare with Previous';
+    return;
+  }
+
+  // Load previous triage
+  var previousTriage = null;
+  try {
+    previousTriage = await bridge.loadTriageForDelta();
+  } catch (e) {
+    // ignore
+  }
+
+  if (!previousTriage) {
+    status.textContent = 'No previous triage found. Run "AI Analyze" first to create a baseline.';
+    status.className = 'triage-status triage-error';
+    btn.disabled = false;
+    btn.textContent = 'Compare with Previous';
+    return;
+  }
+
+  var reports = bridge.getReports();
+  var errors = bridge.getErrors();
+
+  if (reports.length === 0 && errors.length === 0) {
+    status.textContent = 'No current bug reports to compare.';
+    status.className = 'triage-status triage-error';
+    btn.disabled = false;
+    btn.textContent = 'Compare with Previous';
+    return;
+  }
+
+  status.textContent = 'Comparing current data against triage from ' + (previousTriage.analysis_date || '?') + '\u2026';
+
+  try {
+    var summary = prepareBugSummary(reports, errors);
+    var prompt = buildDeltaPrompt(summary, previousTriage);
+    var text = await callGemini(prompt);
+    var delta = JSON.parse(text);
+
+    renderDeltaResults(delta, content);
+    status.style.display = 'none';
+  } catch (err) {
+    console.error('Delta analysis failed:', err);
+    status.textContent = 'Comparison failed: ' + (err.message || String(err));
+    status.className = 'triage-status triage-error';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Compare with Previous';
+}
+
 // ── Load Previous Triage ──
 
 function loadTriageHistory() {
