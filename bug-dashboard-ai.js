@@ -1,25 +1,10 @@
-// Bug Triage AI — Firebase AI Logic (Gemini) client-side integration
-// ES Module loaded via <script type="module">
-// Requires: Firebase AI Logic enabled in Firebase Console
+// Bug Triage AI — Gemini REST API integration (direct fetch, no Firebase AI SDK)
+// Uses personal API key stored in localStorage to bypass school domain restrictions
 
-var SDK_VER = '12.5.0';
-var CDN = 'https://www.gstatic.com/firebasejs/' + SDK_VER;
-
-var FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyD-U-cS30gdz1D-p4KqoYRni9nQdnJZ_L0',
-  authDomain: 'english-resources-reveal.firebaseapp.com',
-  databaseURL: 'https://english-resources-reveal-default-rtdb.firebaseio.com',
-  projectId: 'english-resources-reveal',
-  storageBucket: 'english-resources-reveal.firebasestorage.app',
-  messagingSenderId: '141460166135',
-  appId: '1:141460166135:web:fae3691002f92c89ec0af2'
-};
-
-var model = null;
+var GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 var MODEL_CHAIN = ['gemini-2.5-flash-lite', 'gemini-2.0-flash-lite-001'];
 var activeModelName = MODEL_CHAIN[0];
-var _aiMod = null;
-var _ai = null;
+var _apiKey = null;
 
 async function initAI() {
   if (model) return true;
