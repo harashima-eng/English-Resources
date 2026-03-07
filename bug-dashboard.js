@@ -812,6 +812,19 @@
     };
     wrap.appendChild(copyBtn);
 
+    if (r.sessionId) {
+      var viewSessionBtn = document.createElement('button');
+      viewSessionBtn.className = 'copy-btn view-session-btn';
+      viewSessionBtn.textContent = 'View Session';
+      viewSessionBtn.onclick = function(e) {
+        e.stopPropagation();
+        if (window._bugDashboardAI && window._bugDashboardAI.viewSession) {
+          window._bugDashboardAI.viewSession(r.sessionId, r.deviceId);
+        }
+      };
+      wrap.appendChild(viewSessionBtn);
+    }
+
     if (r.errorMsg) {
       var banner = document.createElement('div');
       banner.className = 'error-banner';
@@ -1074,6 +1087,15 @@
     },
     loadTriageHistory: function(callback) {
       db.ref('triage').orderByChild('timestamp').limitToLast(1).once('value', callback);
+    },
+    switchTab: function(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      var btn = document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
+      if (btn) btn.classList.add('active');
+      var panel = $(tabName + 'Panel');
+      if (panel) panel.classList.add('active');
+      activeTab = tabName;
     },
     loadTriageForDelta: function() {
       return db.ref('triage').orderByChild('timestamp').limitToLast(2).once('value').then(function(snap) {

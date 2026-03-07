@@ -989,6 +989,14 @@ function init() {
     compareBtn.addEventListener('click', runDeltaAnalysis);
   }
 
+  // Sessions tab: init when activated
+  var sessionsTabBtn = document.querySelector('.tab-btn[data-tab="sessions"]');
+  if (sessionsTabBtn) {
+    sessionsTabBtn.addEventListener('click', function() {
+      initSessionsTab();
+    });
+  }
+
   var toggle = document.getElementById('triageToggle');
   if (toggle) {
     toggle.addEventListener('click', function() {
