@@ -634,6 +634,198 @@ async function runDeltaAnalysis() {
   btn.textContent = 'Compare with Previous';
 }
 
+// ── Natural Language Query (Feature E) ──
+
+var nlConversation = [];
+var nlDataContext = null;
+
+async function callGeminiChat(messages, systemContext) {
+  var key = getApiKey();
+  var contents = messages.map(function(m) {
+    return { role: m.role === 'model' ? 'model' : 'user', parts: [{ text: m.text }] };
+  });
+
+  for (var i = MODEL_CHAIN.indexOf(activeModelName); i < MODEL_CHAIN.length; i++) {
+    activeModelName = MODEL_CHAIN[i];
+    var url = GEMINI_API + '/models/' + activeModelName + ':generateContent?key=' + key;
+    var body = {
+      contents: contents,
+      generationConfig: { responseMimeType: 'application/json' }
+    };
+    if (systemContext) {
+      body.systemInstruction = { parts: [{ text: systemContext }] };
+    }
+
+    var resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (resp.ok) {
+      var data = await resp.json();
+      return data.candidates[0].content.parts[0].text;
+    }
+
+    if (resp.status === 429 && i < MODEL_CHAIN.length - 1) {
+      console.warn(activeModelName + ' returned 429, trying next model...');
+      continue;
+    }
+
+    var errBody = await resp.json().catch(function() { return {}; });
+    var errMsg = (errBody.error && errBody.error.message) || 'HTTP ' + resp.status;
+    if (resp.status === 429) errMsg = 'All models quota exceeded. Wait a few minutes.';
+    if (resp.status === 401) {
+      localStorage.removeItem('gemini-api-key');
+      _apiKey = null;
+      errMsg = 'Invalid API key.';
+    }
+    throw new Error(errMsg);
+  }
+  throw new Error('All models exhausted');
+}
+
+function buildNLSystemContext() {
+  var bridge = window._bugDashboard;
+  if (!bridge) return '';
+  var reports = bridge.getReports();
+  var errors = bridge.getErrors();
+  var summary = prepareBugSummary(reports, errors);
+
+  var typeNames = Object.keys(summary.reportsByType).sort();
+  var examIds = Object.keys(summary.examDistribution).sort();
+
+  var typeList = typeNames.map(function(t) { return t + ': ' + summary.reportsByType[t]; }).join(', ');
+  var examList = examIds.map(function(e) { return e + ': ' + summary.examDistribution[e]; }).join(', ');
+  var browserList = Object.keys(summary.browserDistribution).map(function(b) {
+    return b + ': ' + summary.browserDistribution[b];
+  }).join(', ');
+
+  // Date range
+  var earliest = Infinity, latest = 0;
+  reports.forEach(function(r) {
+    if (r.ts && r.ts < earliest) earliest = r.ts;
+    if (r.ts && r.ts > latest) latest = r.ts;
+  });
+  var dateRange = earliest < Infinity ?
+    new Date(earliest).toISOString().split('T')[0] + ' to ' + new Date(latest).toISOString().split('T')[0] :
+    'unknown';
+
+  return 'You are an AI assistant for a bug dashboard of a web-based English exam platform used by Japanese high school students.\n\n' +
+    '## Current Data\n' +
+    '- Total reports: ' + summary.totalReports + '\n' +
+    '- Total JS errors: ' + summary.totalErrors + '\n' +
+    '- Unique devices: ' + summary.uniqueDevices + '\n' +
+    '- Date range: ' + dateRange + '\n' +
+    '- Reports by type: ' + typeList + '\n' +
+    '- Reports by exam: ' + examList + '\n' +
+    '- Browser distribution: ' + browserList + '\n\n' +
+    '## Available Filter Values\n' +
+    '- type: ' + typeNames.join(', ') + '\n' +
+    '- exam: ' + examIds.join(', ') + '\n\n' +
+    '## Response Format\n' +
+    'Always return JSON:\n' +
+    '{"answer": "your text answer", "filters": {"type": "value_or_null", "exam": "value_or_null", "dateFrom": "YYYY-MM-DD_or_null", "dateTo": "YYYY-MM-DD_or_null", "search": "text_or_null"}}\n\n' +
+    'Rules:\n' +
+    '- "answer" is a helpful text response to the question\n' +
+    '- "filters" should be set when the query implies filtering the table (e.g., "show me dead clicks" -> type: "dead_click")\n' +
+    '- Set a filter to null to leave it unchanged, or "" to clear it\n' +
+    '- If the question is conversational and does not imply filtering, set all filters to null\n' +
+    '- Use exact filter values from the list above (type names and exam IDs must match exactly)';
+}
+
+async function sendNLQuery(userText) {
+  var bridge = window._bugDashboard;
+  var sendBtn = document.getElementById('nlSendBtn');
+  var input = document.getElementById('nlInput');
+  var messagesDiv = document.getElementById('nlMessages');
+  if (!bridge || !sendBtn) return;
+
+  sendBtn.disabled = true;
+  input.disabled = true;
+
+  // Render user message
+  renderNLMessage('user', userText, messagesDiv);
+
+  var ready = await initAI();
+  if (!ready) {
+    renderNLMessage('model', 'No API key provided. Click AI Analyze to set one.', messagesDiv);
+    sendBtn.disabled = false;
+    input.disabled = false;
+    return;
+  }
+
+  // Build context on first message
+  if (!nlDataContext) {
+    nlDataContext = buildNLSystemContext();
+  }
+
+  nlConversation.push({ role: 'user', text: userText });
+
+  // Trim to last 10 messages
+  if (nlConversation.length > 10) {
+    nlConversation = nlConversation.slice(-10);
+  }
+
+  try {
+    var rawResponse = await callGeminiChat(nlConversation, nlDataContext);
+    var parsed = JSON.parse(rawResponse);
+
+    nlConversation.push({ role: 'model', text: rawResponse });
+
+    // Render answer
+    renderNLMessage('model', parsed.answer || rawResponse, messagesDiv);
+
+    // Apply filters if provided
+    if (parsed.filters && bridge.applyFilterValues) {
+      var hasFilter = false;
+      var f = parsed.filters;
+      if (f.type !== null && f.type !== undefined) hasFilter = true;
+      if (f.exam !== null && f.exam !== undefined) hasFilter = true;
+      if (f.dateFrom !== null && f.dateFrom !== undefined) hasFilter = true;
+      if (f.dateTo !== null && f.dateTo !== undefined) hasFilter = true;
+      if (f.search !== null && f.search !== undefined) hasFilter = true;
+
+      if (hasFilter) {
+        bridge.applyFilterValues(parsed.filters);
+        bridge.switchTab('bugs');
+        document.getElementById('nlFilterBadge').style.display = 'flex';
+      }
+    }
+  } catch (err) {
+    console.error('NL query failed:', err);
+    renderNLMessage('model', 'Error: ' + (err.message || String(err)), messagesDiv);
+    nlConversation.push({ role: 'model', text: '{"answer":"Error occurred","filters":null}' });
+  }
+
+  sendBtn.disabled = false;
+  input.disabled = false;
+  input.value = '';
+  input.focus();
+}
+
+function renderNLMessage(role, text, container) {
+  var msg = document.createElement('div');
+  msg.className = role === 'user' ? 'nl-message nl-message-user' : 'nl-message nl-message-ai';
+  msg.textContent = text;
+  container.appendChild(msg);
+  container.scrollTop = container.scrollHeight;
+}
+
+function resetNLConversation() {
+  nlConversation = [];
+  nlDataContext = null;
+  var messagesDiv = document.getElementById('nlMessages');
+  if (messagesDiv) messagesDiv.innerHTML = '';
+  document.getElementById('nlFilterBadge').style.display = 'none';
+
+  // Reset filters
+  var bridge = window._bugDashboard;
+  if (bridge && bridge.applyFilterValues) {
+    bridge.applyFilterValues({ type: '', exam: '', dateFrom: '', dateTo: '', search: '' });
+  }
+}
+
 // ── Session Reconstruction (Feature B) ──
 
 var sessionCache = {};
