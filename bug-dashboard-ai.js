@@ -676,6 +676,11 @@ function init() {
     btn.parentNode.insertBefore(changeKey, btn.nextSibling);
   }
 
+  var compareBtn = document.getElementById('aiCompareBtn');
+  if (compareBtn) {
+    compareBtn.addEventListener('click', runDeltaAnalysis);
+  }
+
   var toggle = document.getElementById('triageToggle');
   if (toggle) {
     toggle.addEventListener('click', function() {
@@ -694,8 +699,9 @@ function init() {
     if (attempts > 30) { clearInterval(check); return; }
     if (window._bugDashboard && window._bugDashboard.isAuthenticated()) {
       clearInterval(check);
-      // Show the button once bridge is ready
+      // Show the buttons once bridge is ready
       if (btn) btn.style.display = '';
+      if (compareBtn) compareBtn.style.display = '';
       loadTriageHistory();
     }
   }, 1000);

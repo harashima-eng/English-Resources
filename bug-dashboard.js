@@ -1074,6 +1074,18 @@
     },
     loadTriageHistory: function(callback) {
       db.ref('triage').orderByChild('timestamp').limitToLast(1).once('value', callback);
+    },
+    loadTriageForDelta: function() {
+      return db.ref('triage').orderByChild('timestamp').limitToLast(2).once('value').then(function(snap) {
+        var val = snap.val();
+        if (!val) return null;
+        var keys = Object.keys(val);
+        if (keys.length < 1) return null;
+        // If 2 entries exist, return the older one (previous); if only 1, return it
+        if (keys.length === 1) return val[keys[0]];
+        // Keys are ordered by push ID (chronological), so first is older
+        return val[keys[0]];
+      });
     }
   };
 })();
