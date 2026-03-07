@@ -18,38 +18,25 @@ var FIREBASE_CONFIG = {
 var model = null;
 var MODEL_CHAIN = ['gemini-2.5-flash-lite', 'gemini-2.0-flash-lite-001'];
 var activeModelName = MODEL_CHAIN[0];
+var _aiMod = null;
+var _ai = null;
 
 async function initAI() {
   if (model) return true;
   try {
     var appMod = await import(CDN + '/firebase-app.js');
-    var aiMod = await import(CDN + '/firebase-ai.js');
+    _aiMod = await import(CDN + '/firebase-ai.js');
 
     var aiApp;
     try { aiApp = appMod.initializeApp(FIREBASE_CONFIG, 'ai-triage'); }
     catch (_) { aiApp = appMod.getApp('ai-triage'); }
 
-    var ai = aiMod.getAI(aiApp, { backend: new aiMod.GoogleAIBackend() });
-
-    // Try each model in the chain
-    for (var i = 0; i < MODEL_CHAIN.length; i++) {
-      try {
-        activeModelName = MODEL_CHAIN[i];
-        model = aiMod.getGenerativeModel(ai, {
-          model: activeModelName,
-          generationConfig: { responseMimeType: 'application/json' }
-        });
-        // Test with a trivial request to verify quota
-        await model.generateContent('Reply with: {"ok":true}');
-        console.log('AI model ready:', activeModelName);
-        return true;
-      } catch (err) {
-        console.warn('Model ' + activeModelName + ' failed:', err.message);
-        model = null;
-        if (i === MODEL_CHAIN.length - 1) throw err;
-      }
-    }
-    return false;
+    _ai = _aiMod.getAI(aiApp, { backend: new _aiMod.GoogleAIBackend() });
+    model = _aiMod.getGenerativeModel(_ai, {
+      model: activeModelName,
+      generationConfig: { responseMimeType: 'application/json' }
+    });
+    return true;
   } catch (err) {
     console.error('Firebase AI Logic init failed:', err);
     return false;
