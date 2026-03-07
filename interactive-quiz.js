@@ -174,6 +174,7 @@
 
   // ── Detector 12: Dead Click — clicking non-interactive elements ──
   var lastDeadClickReport = 0;
+  var deadClickClasses = ['iq-', 'toggle-btn', 'collapsible', 'conj-card', 'qcard', 'view-btn', 'sub-nav', 'top-nav', 'sr-review'];
   document.addEventListener('click', function(e) {
     var now = Date.now();
     if (now - lastDeadClickReport < 30000) return; // 30s local throttle
@@ -185,11 +186,15 @@
       if (node.getAttribute('onclick') || node.getAttribute('role') === 'button') return;
       if (node.classList && node.classList.contains('clickable')) return;
       if (node.getAttribute('aria-expanded') !== null) return;
-      if (node.getAttribute('data-action')) return;
-      if (node.className && typeof node.className === 'string' && node.className.indexOf('iq-') !== -1) return;
-      // Also skip common interactive patterns
+      if (node.getAttribute('data-action') || node.getAttribute('data-label')) return;
+      // Skip known interactive class patterns
+      if (node.className && typeof node.className === 'string') {
+        for (var ci = 0; ci < deadClickClasses.length; ci++) {
+          if (node.className.indexOf(deadClickClasses[ci]) !== -1) return;
+        }
+      }
       if (node.getAttribute('tabindex') === '0' || tag === 'label' || tag === 'summary') return;
-      if (tag === 'nav' || (node.className && typeof node.className === 'string' && (node.className.indexOf('top-nav') !== -1 || node.className.indexOf('sr-review') !== -1))) return;
+      if (tag === 'nav') return;
     }
     lastDeadClickReport = now;
     var desc = el.tagName.toLowerCase();
