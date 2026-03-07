@@ -311,6 +311,7 @@ if (typeof gsap === 'undefined') {
       var noop = { to: function() { return noop; }, fromTo: function() { return noop; }, set: function() { return noop; }, play: function() { return noop; }, kill: function() {} };
       return noop;
     },
+    quickTo: function() { return function() {}; },
     registerPlugin: function() {},
     config: function() {}
   };

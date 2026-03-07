@@ -91,9 +91,17 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
       ua: navigator.userAgent.substring(0, 100)
     }).catch(function() {});
   }
-  window.onerror = function(msg) { reportError(msg); };
+  function isNoiseError(msg) {
+    if (!msg) return false;
+    var s = String(msg);
+    return s.indexOf('AudioSource') !== -1 || s.indexOf('_createAudioBuffer') !== -1 ||
+           s.indexOf('Indexed Database') !== -1 || s.indexOf('IDBDatabase') !== -1 ||
+           s.indexOf('indexedDB') !== -1;
+  }
+  window.onerror = function(msg) { if (!isNoiseError(msg)) reportError(msg); };
   window.addEventListener('unhandledrejection', function(e) {
-    reportError(e.reason ? (e.reason.message || String(e.reason)) : 'unhandled rejection');
+    var msg = e.reason ? (e.reason.message || String(e.reason)) : 'unhandled rejection';
+    if (!isNoiseError(msg)) reportError(msg);
   });
 })();
 
