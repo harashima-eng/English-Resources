@@ -2,7 +2,7 @@
 // Uses personal API key stored in localStorage to bypass school domain restrictions
 
 var GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
-var MODEL_CHAIN = ['gemini-2.5-flash-lite', 'gemini-2.0-flash-lite-001'];
+var MODEL_CHAIN = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
 var activeModelName = MODEL_CHAIN[0];
 var _apiKey = null;
 
