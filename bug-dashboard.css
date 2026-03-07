@@ -929,6 +929,84 @@ body {
   font-weight: 700;
 }
 
+/* ── Compare / Delta Analysis ── */
+.ai-compare-btn {
+  background: var(--surface) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+.ai-compare-btn:hover {
+  background: var(--accent-dim) !important;
+}
+
+.ai-compare-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.delta-trend-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.delta-trend-improving {
+  background: var(--success-dim);
+  color: var(--success);
+}
+
+.delta-trend-stable {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.delta-trend-degrading {
+  background: var(--danger-dim);
+  color: var(--danger);
+}
+
+.delta-summary {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.delta-improved li::before {
+  content: '\2193 ';
+  color: var(--success);
+  font-weight: 700;
+}
+
+.delta-worsened li::before {
+  content: '\2191 ';
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.delta-new li::before {
+  content: '\25CF ';
+  color: var(--warning);
+  font-weight: 700;
+}
+
+.delta-resolved li {
+  text-decoration: line-through;
+  color: var(--text-dim);
+}
+
+.delta-resolved li::before {
+  content: '\2713 ';
+  color: var(--success);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .stats-row {
