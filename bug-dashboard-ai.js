@@ -343,7 +343,11 @@ async function runAnalysis() {
     bridge.writeTriageResult(triage);
   } catch (err) {
     console.error('AI analysis failed:', err);
-    status.textContent = 'Analysis failed: ' + (err.message || String(err));
+    var msg = err.message || String(err);
+    if (msg.indexOf('429') !== -1 || msg.indexOf('quota') !== -1) {
+      msg = 'Gemini API quota exceeded. Ensure the Gemini Developer API is enabled in Firebase Console → AI Logic → Get Started → select "Gemini Developer API".';
+    }
+    status.textContent = 'Analysis failed: ' + msg;
     status.className = 'triage-status triage-error';
   }
 
