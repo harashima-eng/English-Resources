@@ -16,6 +16,8 @@ var FIREBASE_CONFIG = {
 };
 
 var model = null;
+var MODEL_CHAIN = ['gemini-2.5-flash-lite', 'gemini-2.0-flash-lite-001'];
+var activeModelName = MODEL_CHAIN[0];
 
 async function initAI() {
   if (model) return true;
@@ -28,11 +30,26 @@ async function initAI() {
     catch (_) { aiApp = appMod.getApp('ai-triage'); }
 
     var ai = aiMod.getAI(aiApp, { backend: new aiMod.GoogleAIBackend() });
-    model = aiMod.getGenerativeModel(ai, {
-      model: 'gemini-2.5-flash-lite',
-      generationConfig: { responseMimeType: 'application/json' }
-    });
-    return true;
+
+    // Try each model in the chain
+    for (var i = 0; i < MODEL_CHAIN.length; i++) {
+      try {
+        activeModelName = MODEL_CHAIN[i];
+        model = aiMod.getGenerativeModel(ai, {
+          model: activeModelName,
+          generationConfig: { responseMimeType: 'application/json' }
+        });
+        // Test with a trivial request to verify quota
+        await model.generateContent('Reply with: {"ok":true}');
+        console.log('AI model ready:', activeModelName);
+        return true;
+      } catch (err) {
+        console.warn('Model ' + activeModelName + ' failed:', err.message);
+        model = null;
+        if (i === MODEL_CHAIN.length - 1) throw err;
+      }
+    }
+    return false;
   } catch (err) {
     console.error('Firebase AI Logic init failed:', err);
     return false;
@@ -333,7 +350,7 @@ async function runAnalysis() {
     var triage = JSON.parse(text);
 
     triage.timestamp = Date.now();
-    triage.model = 'gemini-2.5-flash-lite';
+    triage.model = activeModelName;
     triage.input_reports = reports.length;
     triage.input_errors = errors.length;
 
