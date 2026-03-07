@@ -123,19 +123,30 @@
   detectors.push(function(entry) {
     if (entry.ch !== 'ui') return;
     tapTimes.push(entry.t);
-    if (tapTimes.length > 8) tapTimes.shift();
-    if (tapTimes.length >= 8 && tapTimes[7] - tapTimes[0] < 800) {
-      log('error', 'DETECTOR', 'Rapid interaction: 8 taps in ' + (tapTimes[7] - tapTimes[0]) + 'ms');
-      report('rapid_interaction', { errorMsg: '8 taps in ' + (tapTimes[7] - tapTimes[0]) + 'ms' });
+    if (tapTimes.length > 12) tapTimes.shift();
+    if (tapTimes.length >= 12 && tapTimes[11] - tapTimes[0] < 800) {
+      log('error', 'DETECTOR', 'Rapid interaction: 12 taps in ' + (tapTimes[11] - tapTimes[0]) + 'ms');
+      report('rapid_interaction', { errorMsg: '12 taps in ' + (tapTimes[11] - tapTimes[0]) + 'ms' });
       tapTimes = [];
     }
   });
 
   // ── Detector 11: Rage Click — same element clicked 3+ times in 1s ──
   var rageClicks = [];
+  var rageWhitelist = ['toggle-btn', 'iq-option', 'iq-error-option', 'view-btn-nav', 'sub-nav-item', 'sub-nav-btn', 'sub-nav-link'];
+  function isRageWhitelisted(el) {
+    for (var node = el, d = 0; node && d < 3; node = node.parentElement, d++) {
+      if (!node.className || typeof node.className !== 'string') continue;
+      for (var i = 0; i < rageWhitelist.length; i++) {
+        if (node.className.indexOf(rageWhitelist[i]) !== -1) return true;
+      }
+    }
+    return false;
+  }
   document.addEventListener('click', function(e) {
     var now = Date.now();
     var el = e.target;
+    if (isRageWhitelisted(el)) return;
     var x = e.clientX, y = e.clientY;
     rageClicks.push({ el: el, x: x, y: y, t: now });
     // Keep only clicks in last 1000ms
@@ -344,18 +355,43 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
   });
   if (totalInteractive === 0) return;
 
-  // Detector 8: Critical DOM Missing — check #questionsList after 3s
-  // Only fire if Question view is active (Home/Overview leave it empty by design)
-  setTimeout(function() {
+  // Detector 8: Critical DOM Missing — check #questionsList after view is stable
+  // Uses MutationObserver: only fires if viewQuestion has been active for 5s with an empty list
+  (function() {
     var questionView = document.getElementById('viewQuestion');
-    if (!questionView || !questionView.classList.contains('active')) return;
-    var ql = document.getElementById('questionsList');
-    if (!ql || ql.children.length === 0) {
-      if (typeof BugReport === 'function') {
-        BugReport('dom_missing', { errorMsg: 'Critical element #questionsList missing or empty after 3s' });
+    if (!questionView) return;
+    var reported = false;
+    var activeTimer = null;
+
+    function checkIfEmpty() {
+      if (reported) return;
+      if (!questionView.classList.contains('active')) return;
+      var ql = document.getElementById('questionsList');
+      if (!ql || ql.children.length === 0) {
+        reported = true;
+        if (typeof BugReport === 'function') {
+          BugReport('dom_missing', { errorMsg: 'Critical element #questionsList missing or empty after 5s active' });
+        }
       }
     }
-  }, 3000);
+
+    function onViewChange() {
+      clearTimeout(activeTimer);
+      if (questionView.classList.contains('active')) {
+        // Wait 5s of continuous active state before reporting
+        activeTimer = setTimeout(checkIfEmpty, 5000);
+      }
+    }
+
+    var observer = new MutationObserver(function(mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        if (mutations[i].attributeName === 'class') { onViewChange(); break; }
+      }
+    });
+    observer.observe(questionView, { attributes: true, attributeFilter: ['class'] });
+    // Also check initial state
+    onViewChange();
+  })();
 
   // ── State ──
   var score = { correct: 0, answered: 0, total: totalInteractive };
