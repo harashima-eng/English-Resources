@@ -46,6 +46,22 @@
     </div>
   </div>
 
+  <div class="nl-query-panel" id="nlPanel" style="display:none">
+    <div class="nl-header">
+      <h3>Ask about your data</h3>
+      <button id="nlClearBtn" class="triage-toggle-btn">Clear</button>
+    </div>
+    <div class="nl-messages" id="nlMessages"></div>
+    <div class="nl-input-row">
+      <input type="text" id="nlInput" class="nl-input" placeholder="e.g., Which exams had the most dead clicks?">
+      <button id="nlSendBtn" class="nl-send-btn">Send</button>
+    </div>
+    <div class="nl-filter-badge" id="nlFilterBadge" style="display:none">
+      <span>Filters applied by AI</span>
+      <button id="nlResetFilters" class="nl-reset-btn">Reset filters</button>
+    </div>
+  </div>
+
   <div class="charts-row">
     <div class="chart-card">
       <h3>Reports by Type</h3>

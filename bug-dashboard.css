@@ -929,6 +929,108 @@ body {
   font-weight: 700;
 }
 
+/* ── Session Reconstruction ── */
+.session-analyze-btn {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.session-analyze-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.session-analyze-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.view-session-btn {
+  margin-right: 8px;
+}
+
+.session-result {
+  padding: 16px;
+}
+
+.session-risk-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.session-risk-high {
+  background: var(--danger-dim);
+  color: var(--danger);
+}
+
+.session-risk-medium {
+  background: var(--warning-dim);
+  color: var(--warning);
+}
+
+.session-risk-low {
+  background: var(--success-dim);
+  color: var(--success);
+}
+
+.session-narrative {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.session-timeline {
+  margin-bottom: 16px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border);
+}
+
+.session-event {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.session-event-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.session-event-info .session-event-dot { background: var(--accent); }
+.session-event-warning .session-event-dot { background: var(--warning); }
+.session-event-high .session-event-dot { background: var(--danger); }
+
+.session-impact {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.session-impact strong {
+  color: var(--text);
+}
+
 /* ── Compare / Delta Analysis ── */
 .ai-compare-btn {
   background: var(--surface) !important;
