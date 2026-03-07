@@ -634,6 +634,314 @@ async function runDeltaAnalysis() {
   btn.textContent = 'Compare with Previous';
 }
 
+// ── Session Reconstruction (Feature B) ──
+
+var sessionCache = {};
+
+function groupReportsBySession(reports) {
+  var bySession = {};
+  reports.forEach(function(r) {
+    if (!r.sessionId) return;
+    if (!bySession[r.sessionId]) {
+      bySession[r.sessionId] = {
+        sessionId: r.sessionId,
+        deviceId: r.deviceId || '?',
+        reports: [],
+        startTs: Infinity,
+        endTs: 0,
+        reportCount: 0,
+        types: {},
+        examIds: {}
+      };
+    }
+    var s = bySession[r.sessionId];
+    s.reports.push(r);
+    s.reportCount++;
+    if ((r.ts || 0) < s.startTs) s.startTs = r.ts || 0;
+    if ((r.ts || 0) > s.endTs) s.endTs = r.ts || 0;
+    if (r.type) s.types[r.type] = true;
+    if (r.examId) s.examIds[r.examId] = true;
+  });
+
+  return Object.keys(bySession)
+    .map(function(k) {
+      var s = bySession[k];
+      s.types = Object.keys(s.types);
+      s.examIds = Object.keys(s.examIds);
+      s.reports.sort(function(a, b) { return (a.ts || 0) - (b.ts || 0); });
+      return s;
+    })
+    .filter(function(s) { return s.reportCount >= 2; })
+    .sort(function(a, b) { return b.endTs - a.endTs; });
+}
+
+function buildSessionPrompt(session) {
+  var events = session.reports.slice(0, 20).map(function(r, i) {
+    var time = r.ts ? new Date(r.ts).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '?';
+    var parts = ['[' + time + '] ' + (r.type || 'unknown')];
+    if (r.examId) parts.push('Exam: ' + r.examId);
+    if (r.errorMsg) parts.push('Error: "' + r.errorMsg + '"');
+    if (r.quiz && r.quiz.si !== undefined) parts.push('Section ' + r.quiz.si + ', Q' + (r.quiz.qi !== undefined ? r.quiz.qi : '?'));
+    if (r.quiz && r.quiz.mode) parts.push('Mode: ' + r.quiz.mode);
+    if (r.state) {
+      var stateStr = Object.keys(r.state).map(function(k) { return k + '=' + r.state[k]; }).join(', ');
+      if (stateStr) parts.push('State: ' + stateStr);
+    }
+    // Include last 5 trace entries
+    if (r.trace && r.trace.length > 0) {
+      var traceLines = r.trace.slice(-5).map(function(t) {
+        return '    [' + (t.ch || '?') + '] ' + (t.tag || '') + ' ' + (t.msg || '') + ' +' + (t.t || 0) + 'ms';
+      });
+      parts.push('\n  Trace:\n' + traceLines.join('\n'));
+    }
+    return parts.join(' | ');
+  });
+
+  return 'You are analyzing a single student session on a web-based English exam platform (interactive quizzes with GSAP animations, Firebase RTDB, used by Japanese high school students on school iPads).\n\n' +
+    '## Session Info\n' +
+    '- Device: ' + session.deviceId + '\n' +
+    '- Duration: ' + new Date(session.startTs).toLocaleTimeString() + ' to ' + new Date(session.endTs).toLocaleTimeString() + '\n' +
+    '- Reports: ' + session.reportCount + '\n' +
+    '- Bug types: ' + session.types.join(', ') + '\n' +
+    '- Exams: ' + session.examIds.join(', ') + '\n\n' +
+    '## Chronological Events\n' + events.join('\n\n') + '\n\n' +
+    '## Instructions\n' +
+    'Reconstruct what the student likely experienced. Write a narrative, list timeline events, and assess risk.\n\n' +
+    'Return JSON:\n' +
+    '{\n' +
+    '  "narrative": "2-3 sentence story of what happened",\n' +
+    '  "events": [{"time": "HH:MM", "what_happened": "string", "severity": "info|warning|high"}],\n' +
+    '  "risk_level": "high|medium|low",\n' +
+    '  "risk_reason": "why this risk level",\n' +
+    '  "likely_impact": "what the student experienced",\n' +
+    '  "suggested_fix": "string or null"\n' +
+    '}';
+}
+
+function renderSessionsTab(sessions, container) {
+  container.innerHTML = '';
+
+  if (sessions.length === 0) {
+    document.getElementById('sessionsEmpty').style.display = '';
+    return;
+  }
+  document.getElementById('sessionsEmpty').style.display = 'none';
+
+  var table = document.createElement('table');
+  table.className = 'report-table';
+  var thead = document.createElement('thead');
+  thead.innerHTML = '<tr><th>Device</th><th>Date</th><th>Reports</th><th>Types</th><th></th></tr>';
+  table.appendChild(thead);
+
+  var tbody = document.createElement('tbody');
+  sessions.forEach(function(s) {
+    var tr = document.createElement('tr');
+    tr.className = 'clickable';
+
+    var tdDevice = document.createElement('td');
+    tdDevice.textContent = (s.deviceId || '?').substring(0, 12);
+    tdDevice.title = s.deviceId || '';
+
+    var tdDate = document.createElement('td');
+    var d = new Date(s.endTs);
+    tdDate.textContent = (d.getMonth() + 1) + '/' + d.getDate() + ' ' +
+      String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+
+    var tdCount = document.createElement('td');
+    tdCount.textContent = s.reportCount;
+    tdCount.style.fontVariantNumeric = 'tabular-nums';
+
+    var tdTypes = document.createElement('td');
+    s.types.slice(0, 3).forEach(function(t) {
+      var tag = document.createElement('span');
+      tag.className = 'triage-type-tag';
+      tag.textContent = t;
+      tdTypes.appendChild(tag);
+    });
+    if (s.types.length > 3) {
+      var more = document.createElement('span');
+      more.className = 'triage-type-tag';
+      more.textContent = '+' + (s.types.length - 3);
+      tdTypes.appendChild(more);
+    }
+
+    var tdAction = document.createElement('td');
+    var analyzeBtn = document.createElement('button');
+    analyzeBtn.className = 'session-analyze-btn';
+    analyzeBtn.textContent = 'Analyze';
+    analyzeBtn.onclick = function(e) {
+      e.stopPropagation();
+      analyzeSession(s, tr);
+    };
+    tdAction.appendChild(analyzeBtn);
+
+    tr.appendChild(tdDevice);
+    tr.appendChild(tdDate);
+    tr.appendChild(tdCount);
+    tr.appendChild(tdTypes);
+    tr.appendChild(tdAction);
+
+    // Detail row for AI result
+    var detailTr = document.createElement('tr');
+    detailTr.className = 'detail-row session-detail-row';
+    detailTr.dataset.sessionId = s.sessionId;
+    var detailTd = document.createElement('td');
+    detailTd.colSpan = 5;
+    detailTr.appendChild(detailTd);
+
+    tr.onclick = function() {
+      var isOpen = detailTr.style.display === 'table-row';
+      detailTr.style.display = isOpen ? 'none' : 'table-row';
+      tr.classList.toggle('expanded', !isOpen);
+    };
+
+    tbody.appendChild(tr);
+    tbody.appendChild(detailTr);
+  });
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+function renderSessionPanel(session, aiResult, detailTd) {
+  var wrap = document.createElement('div');
+  wrap.className = 'detail-content session-result';
+
+  // Risk badge
+  var riskBadge = document.createElement('span');
+  riskBadge.className = 'session-risk-badge session-risk-' + (aiResult.risk_level || 'low');
+  riskBadge.textContent = (aiResult.risk_level || 'low').toUpperCase() + ' RISK';
+  wrap.appendChild(riskBadge);
+
+  // Narrative
+  var narrative = document.createElement('div');
+  narrative.className = 'session-narrative';
+  narrative.textContent = aiResult.narrative || '';
+  wrap.appendChild(narrative);
+
+  // Timeline
+  if (aiResult.events && aiResult.events.length > 0) {
+    var timeline = document.createElement('div');
+    timeline.className = 'session-timeline';
+    aiResult.events.forEach(function(evt) {
+      var item = document.createElement('div');
+      item.className = 'session-event session-event-' + (evt.severity || 'info');
+      var dot = document.createElement('span');
+      dot.className = 'session-event-dot';
+      var text = document.createElement('span');
+      text.textContent = (evt.time || '?') + ' \u2014 ' + (evt.what_happened || '');
+      item.appendChild(dot);
+      item.appendChild(text);
+      timeline.appendChild(item);
+    });
+    wrap.appendChild(timeline);
+  }
+
+  // Impact
+  if (aiResult.likely_impact) {
+    var impact = document.createElement('div');
+    impact.className = 'session-impact';
+    impact.innerHTML = '<strong>Impact:</strong> ' + esc(aiResult.likely_impact);
+    wrap.appendChild(impact);
+  }
+
+  // Risk reason
+  if (aiResult.risk_reason) {
+    var reason = document.createElement('div');
+    reason.className = 'session-impact';
+    reason.innerHTML = '<strong>Risk:</strong> ' + esc(aiResult.risk_reason);
+    wrap.appendChild(reason);
+  }
+
+  // Suggested fix
+  if (aiResult.suggested_fix) {
+    var fix = document.createElement('div');
+    fix.className = 'triage-detail triage-fix';
+    fix.innerHTML = '<strong>Fix:</strong> ' + esc(aiResult.suggested_fix);
+    wrap.appendChild(fix);
+  }
+
+  detailTd.innerHTML = '';
+  detailTd.appendChild(wrap);
+}
+
+async function analyzeSession(session, triggerRow) {
+  if (sessionCache[session.sessionId]) {
+    // Show cached result
+    var detailRow = triggerRow.nextElementSibling;
+    if (detailRow) {
+      renderSessionPanel(session, sessionCache[session.sessionId], detailRow.querySelector('td'));
+      detailRow.style.display = 'table-row';
+      triggerRow.classList.add('expanded');
+    }
+    return;
+  }
+
+  var btn = triggerRow.querySelector('.session-analyze-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Analyzing\u2026'; }
+
+  var ready = await initAI();
+  if (!ready) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Analyze'; }
+    return;
+  }
+
+  try {
+    var prompt = buildSessionPrompt(session);
+    var text = await callGemini(prompt);
+    var result = JSON.parse(text);
+    sessionCache[session.sessionId] = result;
+
+    var detailRow = triggerRow.nextElementSibling;
+    if (detailRow) {
+      renderSessionPanel(session, result, detailRow.querySelector('td'));
+      detailRow.style.display = 'table-row';
+      triggerRow.classList.add('expanded');
+    }
+  } catch (err) {
+    console.error('Session analysis failed:', err);
+    var detailRow = triggerRow.nextElementSibling;
+    if (detailRow) {
+      detailRow.querySelector('td').innerHTML = '<div class="detail-content"><span class="triage-error">Analysis failed: ' + esc(err.message || String(err)) + '</span></div>';
+      detailRow.style.display = 'table-row';
+    }
+  }
+
+  if (btn) { btn.disabled = false; btn.textContent = 'Analyze'; }
+}
+
+function initSessionsTab() {
+  var bridge = window._bugDashboard;
+  if (!bridge) return;
+  var reports = bridge.getReports();
+  var sessions = groupReportsBySession(reports);
+  document.getElementById('sessionCount').textContent = sessions.length;
+  var container = document.getElementById('sessionsContent');
+  if (container) renderSessionsTab(sessions, container);
+}
+
+// Expose viewSession for the bridge
+window._bugDashboardAI = {
+  viewSession: function(sessionId, deviceId) {
+    var bridge = window._bugDashboard;
+    if (bridge && bridge.switchTab) bridge.switchTab('sessions');
+    // Ensure tab is populated
+    initSessionsTab();
+    // Find and auto-analyze the session
+    setTimeout(function() {
+      var detailRow = document.querySelector('.session-detail-row[data-session-id="' + sessionId + '"]');
+      if (detailRow) {
+        var triggerRow = detailRow.previousElementSibling;
+        if (triggerRow) {
+          var reports = bridge.getReports();
+          var sessions = groupReportsBySession(reports);
+          var session = sessions.find(function(s) { return s.sessionId === sessionId; });
+          if (session) analyzeSession(session, triggerRow);
+        }
+      }
+    }, 100);
+  }
+};
+
 // ── Load Previous Triage ──
 
 function loadTriageHistory() {
