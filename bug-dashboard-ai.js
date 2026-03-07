@@ -360,8 +360,7 @@ async function runAnalysis() {
     var summary = prepareBugSummary(reports, errors);
     var prompt = buildPrompt(summary);
 
-    var result = await model.generateContent(prompt);
-    var text = result.response.text();
+    var text = await callGemini(prompt);
     var triage = JSON.parse(text);
 
     triage.timestamp = Date.now();
@@ -371,49 +370,10 @@ async function runAnalysis() {
 
     renderTriageResults(triage, content);
     status.style.display = 'none';
-
     bridge.writeTriageResult(triage);
   } catch (err) {
     console.error('AI analysis failed:', err);
-    console.error('Full error details:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
-    var msg = err.message || String(err);
-
-    // Try fallback model on quota error
-    if ((msg.indexOf('429') !== -1 || msg.indexOf('quota') !== -1) && _aiMod && _ai) {
-      var idx = MODEL_CHAIN.indexOf(activeModelName);
-      if (idx < MODEL_CHAIN.length - 1) {
-        activeModelName = MODEL_CHAIN[idx + 1];
-        model = _aiMod.getGenerativeModel(_ai, {
-          model: activeModelName,
-          generationConfig: { responseMimeType: 'application/json' }
-        });
-        console.log('Retrying with fallback model:', activeModelName);
-        status.textContent = 'Retrying with ' + activeModelName + '\u2026';
-        try {
-          var result2 = await model.generateContent(prompt);
-          var text2 = result2.response.text();
-          var triage2 = JSON.parse(text2);
-          triage2.timestamp = Date.now();
-          triage2.model = activeModelName;
-          triage2.input_reports = reports.length;
-          triage2.input_errors = errors.length;
-          renderTriageResults(triage2, content);
-          status.style.display = 'none';
-          bridge.writeTriageResult(triage2);
-          btn.disabled = false;
-          btn.textContent = 'AI Analyze';
-          return;
-        } catch (err2) {
-          console.error('Fallback model also failed:', err2);
-          msg = err2.message || String(err2);
-        }
-      }
-    }
-
-    if (msg.indexOf('429') !== -1 || msg.indexOf('quota') !== -1) {
-      msg = 'Gemini API quota exceeded. Check Google Cloud Console > APIs & Services that "Generative Language API" is enabled for project english-resources-reveal.';
-    }
-    status.textContent = 'Analysis failed: ' + msg;
+    status.textContent = 'Analysis failed: ' + (err.message || String(err));
     status.className = 'triage-status triage-error';
   }
 
@@ -449,7 +409,19 @@ function loadTriageHistory() {
 
 function init() {
   var btn = document.getElementById('aiAnalyzeBtn');
-  if (btn) btn.addEventListener('click', runAnalysis);
+  if (btn) {
+    btn.addEventListener('click', runAnalysis);
+    var changeKey = document.createElement('a');
+    changeKey.href = '#';
+    changeKey.textContent = 'Change API Key';
+    changeKey.style.cssText = 'font-size:12px;margin-left:10px;color:#7A9BA8';
+    changeKey.addEventListener('click', function(e) {
+      e.preventDefault();
+      var key = prompt('Enter new Gemini API key:');
+      if (key && key.trim()) setApiKey(key.trim());
+    });
+    btn.parentNode.insertBefore(changeKey, btn.nextSibling);
+  }
 
   var toggle = document.getElementById('triageToggle');
   if (toggle) {
