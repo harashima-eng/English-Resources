@@ -196,6 +196,41 @@ function buildPrompt(summary) {
     '}';
 }
 
+// ── Text Export ──
+
+function triageToText(triage) {
+  var lines = [];
+  lines.push('AI Triage Analysis — ' + (triage.analysis_date || new Date().toISOString().split('T')[0]));
+  lines.push((triage.total_reports || '?') + ' reports · ' + (triage.model || 'gemini'));
+  lines.push('');
+
+  if (triage.priority_groups && triage.priority_groups.length) {
+    lines.push('## Priority Groups');
+    triage.priority_groups.forEach(function(g) {
+      lines.push('');
+      lines.push('[' + (g.priority || 'low').toUpperCase() + '] ' + (g.title || 'Unknown'));
+      lines.push('  ' + (g.count || 0) + ' reports · ~' + (g.affected_devices || '?') + ' devices');
+      if (g.root_cause_hypothesis) lines.push('  Root cause: ' + g.root_cause_hypothesis);
+      if (g.suggested_fix) lines.push('  Fix: ' + g.suggested_fix);
+      if (g.related_bug_types && g.related_bug_types.length)
+        lines.push('  Types: ' + g.related_bug_types.join(', '));
+    });
+    lines.push('');
+  }
+
+  ['patterns', 'quick_wins', 'needs_investigation'].forEach(function(key) {
+    if (triage[key] && triage[key].length) {
+      var title = key === 'quick_wins' ? 'Quick Wins'
+        : key === 'needs_investigation' ? 'Needs Investigation' : 'Patterns';
+      lines.push('## ' + title);
+      triage[key].forEach(function(item) { lines.push('- ' + item); });
+      lines.push('');
+    }
+  });
+
+  return lines.join('\n');
+}
+
 // ── UI Rendering ──
 
 function esc(s) {
@@ -217,6 +252,16 @@ function renderTriageResults(triage, container) {
   metaSpan.textContent = (triage.total_reports || '?') + ' reports \u00B7 ' + (triage.model || 'gemini');
   header.appendChild(dateSpan);
   header.appendChild(metaSpan);
+  var copyBtn = document.createElement('button');
+  copyBtn.textContent = 'Copy';
+  copyBtn.className = 'triage-toggle-btn';
+  copyBtn.addEventListener('click', function() {
+    navigator.clipboard.writeText(triageToText(triage)).then(function() {
+      copyBtn.textContent = 'Copied!';
+      setTimeout(function() { copyBtn.textContent = 'Copy'; }, 1500);
+    });
+  });
+  header.appendChild(copyBtn);
   container.appendChild(header);
 
   // Priority groups
