@@ -349,6 +349,39 @@ async function runAnalysis() {
     console.error('AI analysis failed:', err);
     console.error('Full error details:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
     var msg = err.message || String(err);
+
+    // Try fallback model on quota error
+    if ((msg.indexOf('429') !== -1 || msg.indexOf('quota') !== -1) && _aiMod && _ai) {
+      var idx = MODEL_CHAIN.indexOf(activeModelName);
+      if (idx < MODEL_CHAIN.length - 1) {
+        activeModelName = MODEL_CHAIN[idx + 1];
+        model = _aiMod.getGenerativeModel(_ai, {
+          model: activeModelName,
+          generationConfig: { responseMimeType: 'application/json' }
+        });
+        console.log('Retrying with fallback model:', activeModelName);
+        status.textContent = 'Retrying with ' + activeModelName + '\u2026';
+        try {
+          var result2 = await model.generateContent(prompt);
+          var text2 = result2.response.text();
+          var triage2 = JSON.parse(text2);
+          triage2.timestamp = Date.now();
+          triage2.model = activeModelName;
+          triage2.input_reports = reports.length;
+          triage2.input_errors = errors.length;
+          renderTriageResults(triage2, content);
+          status.style.display = 'none';
+          bridge.writeTriageResult(triage2);
+          btn.disabled = false;
+          btn.textContent = 'AI Analyze';
+          return;
+        } catch (err2) {
+          console.error('Fallback model also failed:', err2);
+          msg = err2.message || String(err2);
+        }
+      }
+    }
+
     if (msg.indexOf('429') !== -1 || msg.indexOf('quota') !== -1) {
       msg = 'Gemini API quota exceeded. Check Google Cloud Console > APIs & Services that "Generative Language API" is enabled for project english-resources-reveal.';
     }
