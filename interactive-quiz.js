@@ -3730,10 +3730,10 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
               dbg.log('timer', 'setTimeout', '600ms safety unblock cross-section');
               setTimeout(function() {
                 if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
-                  dbg.log('state', 'focusAnimating', 'true -> false [600ms safety cross-section]');
+                  dbg.log('event', 'focusAnimating', 'true -> false [600ms safety cross-section]');
                   focusAnimating = false;
                   if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
-                  dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]');
+                  dbg.log('event', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]');
                   focusPendingDirection = null;
                 }
               }, 600);
@@ -3778,10 +3778,10 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
                 dbg.log('timer', 'setTimeout', '600ms safety unblock cross-tier');
                 setTimeout(function() {
                   if (gen === focusNavGeneration && focusAnimating && focusPendingDirection) {
-                    dbg.log('state', 'focusAnimating', 'true -> false [600ms safety cross-tier]');
+                    dbg.log('event', 'focusAnimating', 'true -> false [600ms safety cross-tier]');
                     focusAnimating = false;
                     if (focusCards[focusIndex]) verifyCardVisible(focusCards[focusIndex], 'navigateFocus');
-                    dbg.log('state', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]');
+                    dbg.log('event', 'focusPendingDirection', focusPendingDirection + ' -> null [600ms safety]');
                     focusPendingDirection = null;
                   }
                 }, 600);
@@ -3859,7 +3859,7 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
       // Safety timer — also cleans up absolute positioning if animation stalled
       setTimeout(function() {
         if (_navGen === focusNavGeneration && focusAnimating) {
-          dbg.log('state', 'focusAnimating', 'true -> false [600ms safety normal]');
+          dbg.log('event', 'focusAnimating', 'true -> false [600ms safety normal]');
           focusAnimating = false;
           current.style.position = '';
           current.style.width = '';
