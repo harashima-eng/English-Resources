@@ -2,7 +2,7 @@
 // ES Module loaded via <script type="module">
 // Requires: Firebase AI Logic enabled in Firebase Console
 
-var SDK_VER = '11.8.0';
+var SDK_VER = '12.5.0';
 var CDN = 'https://www.gstatic.com/firebasejs/' + SDK_VER;
 
 var FIREBASE_CONFIG = {
