@@ -70,7 +70,7 @@
         ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
         "$sanitizedEmail": {
           ".read": "auth != null && auth.token.email != null",
-          ".write": "auth != null && !data.exists()",
+          ".write": "auth != null && (!data.exists() || (data.exists() && !data.child('correction').exists() && data.child('studentEmail').val() === auth.token.email))",
           "correction": {
             ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
           }
