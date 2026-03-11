@@ -56,6 +56,26 @@
     "triage": {
       ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
       ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
+    },
+    "eiken-folders": {
+      ".read": "auth != null && auth.token.email.endsWith('@komagome.ed.jp')",
+      ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
+    },
+    "eiken-assignments": {
+      ".read": "auth != null && auth.token.email.endsWith('@komagome.ed.jp')",
+      ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
+    },
+    "eiken-submissions": {
+      "$assignmentId": {
+        ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+        "$sanitizedEmail": {
+          ".read": "auth != null && auth.token.email != null",
+          ".write": "auth != null && !data.exists()",
+          "correction": {
+            ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'"
+          }
+        }
+      }
     }
   }
 }
