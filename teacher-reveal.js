@@ -492,6 +492,13 @@
           hideSessionBadge();
           showToast('練習セッション終了 — 自習モードに戻りました');
           document.dispatchEvent(new CustomEvent('tr:session-end'));
+          // Tear down persistent listeners, resume polling
+          if (!state.isTeacher) {
+            detachStudentListeners();
+            stopPresence();
+            window.__fbSessionActive = false;
+            scheduleSessionPoll();
+          }
         }
       } catch (e) {
         console.error('[teacher-reveal] activeSession listener error:', e);
@@ -1533,9 +1540,8 @@
         handleAuthResult(user);
       } else if (!initialized) {
         initialized = true;
-        startStudentListener();
+        checkForActiveSession();
         restoreState();
-        trackPresence();
         setupDynamicObserver();
       }
     });
