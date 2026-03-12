@@ -1404,9 +1404,9 @@
   }
 
   function detachStudentListeners() {
-    examRef.child('activeSession').off('value');
-    examRef.child('sections').off('value');
-    examRef.child('revealAll').off('value');
+    if (_cbActiveSession) { examRef.child('activeSession').off('value', _cbActiveSession); _cbActiveSession = null; }
+    if (_cbSections) { examRef.child('sections').off('value', _cbSections); _cbSections = null; }
+    if (_cbRevealAll) { examRef.child('revealAll').off('value', _cbRevealAll); _cbRevealAll = null; }
   }
 
   // ── Restore state on refresh ──
