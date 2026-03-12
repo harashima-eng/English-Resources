@@ -1372,14 +1372,22 @@
 
   // ── Lazy activation: poll until session exists, then subscribe ──
   var sessionPollTimer = null;
+  var studentListenerActive = false;
   var SESSION_POLL_INTERVAL = 15000; // 15 seconds
+
+  function activateStudentMode() {
+    if (studentListenerActive) return;
+    studentListenerActive = true;
+    if (sessionPollTimer) { clearInterval(sessionPollTimer); sessionPollTimer = null; }
+    startStudentListener();
+    trackPresence();
+    window.__fbSessionActive = true;
+  }
 
   function checkForActiveSession() {
     examRef.child('activeSession').once('value', function(snap) {
       if (snap.val()) {
-        startStudentListener();
-        trackPresence();
-        window.__fbSessionActive = true;
+        activateStudentMode();
       } else {
         window.__fbSessionActive = false;
         scheduleSessionPoll();
@@ -1393,11 +1401,7 @@
       if (document.hidden) return;
       examRef.child('activeSession').once('value', function(snap) {
         if (snap.val()) {
-          clearInterval(sessionPollTimer);
-          sessionPollTimer = null;
-          startStudentListener();
-          trackPresence();
-          window.__fbSessionActive = true;
+          activateStudentMode();
         }
       });
     }, SESSION_POLL_INTERVAL);
@@ -1575,11 +1579,7 @@
       if (document.visibilityState === 'visible' && sessionPollTimer && !state.isTeacher) {
         examRef.child('activeSession').once('value', function(snap) {
           if (snap.val()) {
-            clearInterval(sessionPollTimer);
-            sessionPollTimer = null;
-            startStudentListener();
-            trackPresence();
-            window.__fbSessionActive = true;
+            activateStudentMode();
           }
         });
       }
