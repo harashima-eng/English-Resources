@@ -1565,6 +1565,21 @@
     }
     window.addEventListener('beforeunload', cleanupOnClose);
     window.addEventListener('pagehide', cleanupOnClose);
+
+    // Fast-check on tab return: if polling, immediately check for session
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible' && sessionPollTimer && !state.isTeacher) {
+        examRef.child('activeSession').once('value', function(snap) {
+          if (snap.val()) {
+            clearInterval(sessionPollTimer);
+            sessionPollTimer = null;
+            startStudentListener();
+            trackPresence();
+            window.__fbSessionActive = true;
+          }
+        });
+      }
+    });
   }
 
   if (document.readyState === 'loading') {
