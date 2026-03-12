@@ -1357,6 +1357,45 @@
     }
   }
 
+  // ── Lazy activation: poll until session exists, then subscribe ──
+  var sessionPollTimer = null;
+  var SESSION_POLL_INTERVAL = 15000; // 15 seconds
+
+  function checkForActiveSession() {
+    examRef.child('activeSession').once('value', function(snap) {
+      if (snap.val()) {
+        startStudentListener();
+        trackPresence();
+        window.__fbSessionActive = true;
+      } else {
+        window.__fbSessionActive = false;
+        scheduleSessionPoll();
+      }
+    });
+  }
+
+  function scheduleSessionPoll() {
+    if (sessionPollTimer) return;
+    sessionPollTimer = setInterval(function() {
+      if (document.hidden) return;
+      examRef.child('activeSession').once('value', function(snap) {
+        if (snap.val()) {
+          clearInterval(sessionPollTimer);
+          sessionPollTimer = null;
+          startStudentListener();
+          trackPresence();
+          window.__fbSessionActive = true;
+        }
+      });
+    }, SESSION_POLL_INTERVAL);
+  }
+
+  function detachStudentListeners() {
+    examRef.child('activeSession').off('value');
+    examRef.child('sections').off('value');
+    examRef.child('revealAll').off('value');
+  }
+
   // ── Restore state on refresh ──
   function restoreState() {
     examRef.once('value', function(snap) {
