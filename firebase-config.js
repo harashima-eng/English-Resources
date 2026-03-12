@@ -68,10 +68,15 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
     });
   })();
 
-  // ── Reconnect on visibility change (phone lock/unlock) ──
+  // ── Reconnect/disconnect on visibility change (phone lock/unlock) ──
   document.addEventListener('visibilitychange', function() {
     if (document.visibilityState === 'visible') {
       firebase.database().goOnline();
+    } else {
+      // Disconnect idle tabs (no active session) to free connections
+      if (!window.__fbSessionActive) {
+        firebase.database().goOffline();
+      }
     }
   });
 }
