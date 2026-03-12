@@ -241,9 +241,10 @@
 
   // ── Cleanup ──
   function detachAllListeners() {
-    Object.keys(listeners).forEach(function(key) {
-      responsesRef.child(key).off('value', listeners[key]);
-    });
+    if (parentListener) {
+      responsesRef.off('value', parentListener);
+      parentListener = null;
+    }
     listeners = {};
     aggregateDisplays = {};
     sectionObservers.forEach(function(obs) { obs.disconnect(); });
