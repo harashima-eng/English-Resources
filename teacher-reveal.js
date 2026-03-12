@@ -667,9 +667,9 @@
       initialized = true;
       startStudentListener();
       restoreState();
-      trackPresence();
       setupDynamicObserver();
     }
+    window.__fbSessionActive = true;
     showToast('\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F: ' + user.displayName);
   }
 
