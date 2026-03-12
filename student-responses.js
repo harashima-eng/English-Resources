@@ -60,37 +60,54 @@
   });
 
   // ── Teacher Side: Listen and aggregate ──
-  function startListening(si, qi) {
+  var parentListener = null;
+
+  function registerQuestion(si, qi) {
     var key = si + '-' + qi;
     if (listeners[key]) return;
+    listeners[key] = true; // mark as registered (no individual listener)
+  }
 
-    var correctAnswer = null;
-    if (typeof grammarData !== 'undefined' && grammarData.sections[si]) {
-      correctAnswer = grammarData.sections[si].questions[qi].correctAnswer;
-    }
-
-    listeners[key] = responsesRef.child(key).on('value', function(snap) {
+  function startParentListener() {
+    if (parentListener) return;
+    parentListener = responsesRef.on('value', function(snap) {
       try {
-        var responses = snap.val();
-        if (!responses) {
-          updateDisplay(key, {}, 0, correctAnswer);
-          return;
-        }
+        var allData = snap.val() || {};
+        Object.keys(aggregateDisplays).forEach(function(key) {
+          var responses = allData[key];
+          var parts = key.split('-');
+          var si = parseInt(parts[0]);
+          var qi = parseInt(parts[1]);
+          var correctAnswer = null;
+          if (typeof grammarData !== 'undefined' && grammarData.sections[si]) {
+            correctAnswer = grammarData.sections[si].questions[qi].correctAnswer;
+          }
 
-        var counts = {};
-        var total = 0;
-        Object.keys(responses).forEach(function(devId) {
-          var answer = responses[devId].answer;
-          if (!counts[answer]) counts[answer] = 0;
-          counts[answer]++;
-          total++;
+          if (!responses) {
+            updateDisplay(key, {}, 0, correctAnswer);
+            return;
+          }
+
+          var counts = {};
+          var total = 0;
+          Object.keys(responses).forEach(function(devId) {
+            var answer = responses[devId].answer;
+            if (!counts[answer]) counts[answer] = 0;
+            counts[answer]++;
+            total++;
+          });
+
+          updateDisplay(key, counts, total, correctAnswer);
         });
-
-        updateDisplay(key, counts, total, correctAnswer);
       } catch (e) {
-        console.error('[student-responses] listener error:', e);
+        console.error('[student-responses] parent listener error:', e);
       }
     });
+  }
+
+  // Legacy alias — kept for compatibility with injectIntoPanel
+  function startListening(si, qi) {
+    registerQuestion(si, qi);
   }
 
   function updateDisplay(key, counts, total, correctAnswer) {
