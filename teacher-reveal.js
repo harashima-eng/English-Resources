@@ -1340,11 +1340,21 @@
   }
 
   // ── Presence ──
+  var presenceRef = null;
+
   function trackPresence() {
-    if (state.isTeacher) return;
-    var connRef = examRef.child('connectedStudents').push();
-    connRef.onDisconnect().remove();
-    connRef.set(true).catch(function() {});
+    if (state.isTeacher || presenceRef) return;
+    presenceRef = examRef.child('connectedStudents').push();
+    presenceRef.onDisconnect().remove();
+    presenceRef.set(true).catch(function() {});
+  }
+
+  function stopPresence() {
+    if (presenceRef) {
+      presenceRef.onDisconnect().cancel();
+      presenceRef.remove().catch(function() {});
+      presenceRef = null;
+    }
   }
 
   // ── Restore state on refresh ──
@@ -1496,6 +1506,8 @@
       if (state.isTeacher && state.sessionActive) {
         firebase.database().goOffline();
       }
+      stopPresence();
+      if (sessionPollTimer) { clearInterval(sessionPollTimer); sessionPollTimer = null; }
       if (trObserver) { trObserver.disconnect(); trObserver = null; }
       if (examRef) {
         examRef.child('activeSession').off();
@@ -1504,6 +1516,7 @@
         examRef.child('connectedStudents').off();
       }
       firebase.database().ref('.info/connected').off();
+      window.__fbSessionActive = false;
     }
     window.addEventListener('beforeunload', cleanupOnClose);
     window.addEventListener('pagehide', cleanupOnClose);
