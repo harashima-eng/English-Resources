@@ -1501,7 +1501,9 @@
         examRef.child('activeSession').off();
         examRef.child('sections').off();
         examRef.child('revealAll').off();
+        examRef.child('connectedStudents').off();
       }
+      firebase.database().ref('.info/connected').off();
     }
     window.addEventListener('beforeunload', cleanupOnClose);
     window.addEventListener('pagehide', cleanupOnClose);
