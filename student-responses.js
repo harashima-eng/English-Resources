@@ -190,6 +190,7 @@
 
         startListening(si, qi);
       });
+      startParentListener();
       return;
     }
 
