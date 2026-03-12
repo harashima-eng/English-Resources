@@ -1558,16 +1558,14 @@
         firebase.database().goOffline();
       }
       stopPresence();
+      detachStudentListeners();
       if (sessionPollTimer) { clearInterval(sessionPollTimer); sessionPollTimer = null; }
       if (trObserver) { trObserver.disconnect(); trObserver = null; }
       if (examRef) {
-        examRef.child('activeSession').off();
-        examRef.child('sections').off();
-        examRef.child('revealAll').off();
         examRef.child('connectedStudents').off();
       }
-      firebase.database().ref('.info/connected').off();
       window.__fbSessionActive = false;
+      studentListenerActive = false;
     }
     window.addEventListener('beforeunload', cleanupOnClose);
     window.addEventListener('pagehide', cleanupOnClose);
