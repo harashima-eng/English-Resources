@@ -236,6 +236,7 @@
       observer.observe(responseArea, { childList: true, subtree: true, attributes: true });
       sectionObservers.push(observer);
     });
+    startParentListener();
   }
 
   // ── Cleanup ──
