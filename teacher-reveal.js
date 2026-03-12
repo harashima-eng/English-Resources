@@ -499,15 +499,17 @@
             detachStudentListeners();
             stopPresence();
             window.__fbSessionActive = false;
+            studentListenerActive = false;
             scheduleSessionPoll();
           }
         }
       } catch (e) {
         console.error('[teacher-reveal] activeSession listener error:', e);
       }
-    });
+    };
+    examRef.child('activeSession').on('value', _cbActiveSession);
 
-    examRef.child('sections').on('value', function(snap) {
+    _cbSections = function(snap) {
       try {
         if (!state.sessionActive || state.isTeacher) return;
         var sections = snap.val();
@@ -556,9 +558,10 @@
       } catch (e) {
         console.error('[teacher-reveal] sections listener error:', e);
       }
-    });
+    };
+    examRef.child('sections').on('value', _cbSections);
 
-    examRef.child('revealAll').on('value', function(snap) {
+    _cbRevealAll = function(snap) {
       try {
         if (!state.sessionActive || state.isTeacher) return;
         if (snap.val() === true) {
@@ -577,7 +580,8 @@
       } catch (e) {
         console.error('[teacher-reveal] revealAll listener error:', e);
       }
-    });
+    };
+    examRef.child('revealAll').on('value', _cbRevealAll);
   }
 
   // ── Session badge ──
