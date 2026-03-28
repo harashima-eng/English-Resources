@@ -133,3 +133,11 @@ After completing any Dual Scope work (new features, bug fixes, data changes), up
 Location: `高校２年/論理・表現II/Dual Scope/Template & MD & LOG/`
 
 These files also exist at: `/Users/slimtetto/Desktop/Claude Code/論理・表現Ⅱ/DUAL SCOPE/問題＆解答解説/Template & MD & LOG/`
+
+## Co-Pilot CEO Review System
+
+Two-session workflow: one session executes code, one reviews as CEO.
+- CEO suggestions file: `CO-PILOT-CEO-SUGGESTIONS.md` (repo root)
+- CEO session writes suggestions there; executing session reads and applies them
+- CEO never edits project source code directly
+- Review protocol: 18 categories covering correctness, completeness, architecture, UX, and project-specific concerns
