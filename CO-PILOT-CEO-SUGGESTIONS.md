@@ -72,6 +72,12 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 | Date | Task | Lesson |
 |------|------|--------|
+| 2026-03-29 | Migration plan | Serwist needs `@serwist/turbopack` for Next.js 16 Turbopack — plain `@serwist/next` won't work |
+| 2026-03-29 | Migration plan | localStorage is per-origin — domain change = data loss. Use custom domain to eliminate the problem |
+| 2026-03-29 | Migration plan | Always count actual files before planning migration — plan said 19, reality was 28 |
+| 2026-03-29 | Migration plan | Zustand + persist > useReducer + Context for complex quiz state (eliminates re-render cascade, free localStorage) |
+| 2026-03-29 | Migration plan | Firebase auth proxy (`/__/auth/*` rewrite) must exist from day one on Vercel — eiken-correction past mistake |
+| 2026-03-29 | Migration plan | When extracting data from HTML to TypeScript, verify extraction with diff script — content accuracy is non-negotiable |
 
 ---
 ---
