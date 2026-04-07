@@ -44,21 +44,21 @@ Three parallel deep analyses (HTML patterns, JS runtime, CSS rendering) identifi
   - Files: All `英検/準１級/eiken_pre1_part*.html`
   - Fix: Replace cosmicPulse/marqueeGlow/headerBreathe with opacity-based alternatives
 
-- [ ] **2E. styles.css — filter:blur(80px) + infinite animation**
+- [x] **2E. styles.css — filter:blur(80px) + infinite animation**
   - File: `styles.css:30-32`
   - Fix: Add `filter: none` in reduced-motion query
 
 ### Batch 3: Safety/Correctness (P2)
 
-- [ ] **3A. `gsap.from({ opacity: 0 })` violations**
+- [x] **3A. `gsap.from({ opacity: 0 })` violations**
   - Files: `interactive-quiz.js:1231`, `teacher-reveal.js:284`
   - Fix: Replace with `gsap.fromTo()`
 
-- [ ] **3B. Forced reflow `void streakEl.offsetWidth`**
+- [x] **3B. Forced reflow `void streakEl.offsetWidth`**
   - File: `interactive-quiz.js:2933`
   - Fix: Replace CSS animation with GSAP tween
 
-- [ ] **3C. rageClicks stores DOM element references**
+- [x] **3C. rageClicks stores DOM element references**
   - File: `interactive-quiz.js:151`
   - Fix: Store coordinates + tag string instead
 
@@ -75,9 +75,9 @@ Three parallel deep analyses (HTML patterns, JS runtime, CSS rendering) identifi
 
 ### Batch 5: Minor (P4)
 
-- [ ] **5A. Eiken phrase bank — stacked sticky backdrop-filters**
-- [ ] **5B. Missing prefers-reduced-motion** (bug-dashboard.css, Chuo 2022)
-- [ ] **5C. filter:blur persists in reduced-motion** (styles.css)
+- [x] **5A. Eiken phrase bank — stacked sticky backdrop-filters**
+- [x] **5B. Missing prefers-reduced-motion** (bug-dashboard.css, Chuo 2022)
+- [x] **5C. filter:blur persists in reduced-motion** (styles.css)
 
 ### Out of Scope
 
