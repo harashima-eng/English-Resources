@@ -14,9 +14,7 @@
   padding: 8px 18px;
   border: 1px solid rgba(120, 113, 108, 0.2);
   border-radius: 9999px;
-  background: rgba(255, 253, 250, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 253, 250, 0.95);
   font: 500 12px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   color: #44403C;
   cursor: pointer;
