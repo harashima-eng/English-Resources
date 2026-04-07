@@ -2662,9 +2662,7 @@ html.dark .iq-mute-toggle.muted {
   height: 48px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   font-size: 24px;
   color: #334155;
@@ -2676,7 +2674,7 @@ html.dark .iq-mute-toggle.muted {
   justify-content: center;
 }
 html.dark .iq-focus-arrow {
-  background: rgba(30, 41, 59, 0.85);
+  background: rgba(30, 41, 59, 0.95);
   color: #E2E8F0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
@@ -2698,9 +2696,7 @@ html.dark .iq-focus-arrow:hover:not(:disabled) {
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.95);
   padding: 6px 16px;
   border-radius: 20px;
   font: 600 13px/1 -apple-system, BlinkMacSystemFont, sans-serif;
