@@ -1002,11 +1002,12 @@
 
       // -- Card entrance stagger --
       if (typeof gsap !== 'undefined' && !UV_REDUCED) {
-        gsap.killTweensOf('.sentence-card');
-        gsap.fromTo('.sentence-card',
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: GSAP_CONFIG.duration.fast, ease: GSAP_CONFIG.ease.default, stagger: GSAP_CONFIG.stagger.tight }
-        );
+        gsap.from('.sentence-card', {
+          opacity: 0, y: 15,
+          duration: GSAP_CONFIG.duration.fast,
+          ease: GSAP_CONFIG.ease.default,
+          stagger: GSAP_CONFIG.stagger.tight
+        });
       }
 
       // Re-init hovers after render

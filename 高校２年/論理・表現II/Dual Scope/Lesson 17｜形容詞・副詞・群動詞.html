@@ -1078,7 +1078,8 @@ const Router = {
 
     // -- Animation: C10 Section number stagger --
     if (typeof gsap !== 'undefined' && !UV_REDUCED) {
-      gsap.from('.sub-nav-section', { scale: 0, opacity: 0, stagger: 0.04, duration: 0.3, ease: GSAP_CONFIG.ease.spring });
+      gsap.killTweensOf('.sub-nav-section');
+      gsap.fromTo('.sub-nav-section', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.04, duration: 0.3, ease: GSAP_CONFIG.ease.spring });
     }
 
     // Update header
