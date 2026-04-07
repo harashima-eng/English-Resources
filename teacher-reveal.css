@@ -102,10 +102,9 @@ html.dark .tr-login-btn:hover {
   display: flex;
   flex-direction: column;
 
-  /* Glass morphism — single backdrop-filter, safe */
-  background: rgba(255, 253, 250, 0.78);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  background: rgba(255, 253, 250, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 
   border-radius: 16px;
   border: 1px solid rgba(168, 162, 158, 0.25);
@@ -750,9 +749,7 @@ html.dark .tr-btn-danger:hover {
   transform: translateX(-50%) translateY(12px);
   z-index: 10001;
   padding: 10px 22px;
-  background: rgba(28, 25, 23, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(28, 25, 23, 0.95);
   color: #F5F5F4;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -929,9 +926,7 @@ html.dark .tr-panel-collapse-btn:hover {
   height: 44px;
   border: 1px solid rgba(168, 162, 158, 0.25);
   border-radius: 12px;
-  background: rgba(255, 253, 250, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 253, 250, 0.95);
   cursor: pointer;
   display: flex;
   align-items: center;
