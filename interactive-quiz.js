@@ -148,14 +148,16 @@
     var el = e.target;
     if (isRageWhitelisted(el)) return;
     var x = e.clientX, y = e.clientY;
-    rageClicks.push({ el: el, x: x, y: y, t: now });
+    var tag = el.tagName.toLowerCase();
+    if (el.className && typeof el.className === 'string') tag += '.' + el.className.split(' ')[0];
+    rageClicks.push({ tag: tag, x: x, y: y, t: now });
     // Keep only clicks in last 1000ms
     while (rageClicks.length && now - rageClicks[0].t > 1000) rageClicks.shift();
     // Count clicks on same target (within 30px radius)
     var count = 0;
     for (var i = 0; i < rageClicks.length; i++) {
       var c = rageClicks[i];
-      if (c.el === el || (Math.abs(c.x - x) < 30 && Math.abs(c.y - y) < 30)) count++;
+      if (c.tag === tag || (Math.abs(c.x - x) < 30 && Math.abs(c.y - y) < 30)) count++;
     }
     if (count >= 3) {
       // Skip if user is selecting text (e.g., triple-click to select paragraph)
@@ -1228,7 +1230,7 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
         var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
         if (items.length > 0) {
           gsap.killTweensOf(items);
-          gsap.from(items, { opacity: 0, x: -8, stagger: 0.04, duration: 0.5, ease: IQ_EASE.out, delay: 0.2 + i * 0.12 });
+          gsap.fromTo(items, { opacity: 0, x: -8 }, { opacity: 1, x: 0, stagger: 0.04, duration: 0.5, ease: IQ_EASE.out, delay: 0.2 + i * 0.12 });
         }
       });
     }

@@ -326,9 +326,11 @@
   }
 
   // MutationObserver on the score element
+  var _observeRetries = 0;
   function observeScore() {
     var tabScore = document.querySelector('.iq-progress-tab-score');
     if (!tabScore) {
+      if (++_observeRetries > 10) return;
       setTimeout(observeScore, 1000);
       return;
     }
