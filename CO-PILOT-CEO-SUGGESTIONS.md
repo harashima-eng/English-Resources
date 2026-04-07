@@ -88,9 +88,21 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 ---
 
-**All 11 items applied by executing session (2026-03-29).** Active Zone cleared.
+## Current Task: Fix HTML Page Crashes (2026-04-07)
 
-No active task.
+**Plan file:** `CRASH-FIX-PLAN.md` (repo root) — has full details + progress checkboxes
+
+**Summary:** 18 issues across 20+ files causing browser crashes/freezes. Three parallel analyses identified:
+- **P0 (Crash):** Engoo Day 6 has 12 stacked backdrop-filter layers (same pattern that crashed Dual Scope), querySelectorAll('*') in BugReport fires up to 16 DOM scans, Firebase listeners stack in teacher panel
+- **P1 (Freeze):** Bug dashboard rebuilds Chart.js on every Firebase push, leaderboard observer retries forever, trReveal animates filter:blur(), 7 Eiken files run infinite box-shadow animations, styles.css has 3 large blur(80px) elements
+- **P2 (Safety):** 2 gsap.from({opacity:0}) violations, forced reflow pattern, DOM refs in rageClicks
+- **P3 (Size):** 3 Tokyo Rika files over 200KB with extractable inline CSS/JS
+
+**CEO: Please review `CRASH-FIX-PLAN.md` and write suggestions below before Batch 2 begins.**
+
+### CEO Suggestions
+
+_Write bugs, missing items, and improvements here._
 
 ---
 
