@@ -1485,9 +1485,7 @@ html.dark .iq-toast {
   justify-content: center;
   gap: 8px;
   padding: 8px 18px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.97);
   border: 1px solid rgba(13, 148, 136, 0.25);
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(13, 148, 136, 0.1);
@@ -1659,9 +1657,7 @@ html.dark .iq-check-popup.incorrect .iq-popup-msg {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.55);
   z-index: 10000;
 }
 
@@ -2016,9 +2012,7 @@ html.dark .sr-review-btn--due {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.55);
   z-index: 10000;
 }
 
@@ -2313,9 +2307,7 @@ html.dark .sr-scramble-placed {
   right: 16px;
   width: 260px;
   z-index: 9998;
-  background: rgba(255, 253, 250, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 253, 250, 0.97);
   border: 1px solid rgba(168, 162, 158, 0.15);
   border-radius: 14px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
@@ -2324,7 +2316,7 @@ html.dark .sr-scramble-placed {
 }
 [data-theme="dark"] .lb-panel,
 html.dark .lb-panel {
-  background: rgba(28, 25, 23, 0.95);
+  background: rgba(28, 25, 23, 0.97);
   border-color: rgba(255, 255, 255, 0.06);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
@@ -2434,9 +2426,7 @@ html.dark .lb-score {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.55);
   z-index: 10000;
 }
 
