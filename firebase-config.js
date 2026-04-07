@@ -86,9 +86,11 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
   if (typeof firebase === 'undefined' || !firebase.apps.length) return;
   var errRef = firebase.database().ref('errors');
   var lastErr = '';
+  var errCount = 0;
   function reportError(msg) {
-    if (!msg || msg === lastErr) return;
+    if (!msg || msg === lastErr || errCount >= 10) return;
     lastErr = msg;
+    errCount++;
     errRef.push({
       msg: String(msg).substring(0, 499),
       ts: firebase.database.ServerValue.TIMESTAMP,
