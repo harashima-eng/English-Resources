@@ -78,6 +78,13 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 | 2026-03-29 | Migration plan | Zustand + persist > useReducer + Context for complex quiz state (eliminates re-render cascade, free localStorage) |
 | 2026-03-29 | Migration plan | Firebase auth proxy (`/__/auth/*` rewrite) must exist from day one on Vercel — eiken-correction past mistake |
 | 2026-03-29 | Migration plan | When extracting data from HTML to TypeScript, verify extraction with diff script — content accuracy is non-negotiable |
+| 2026-04-07 | v1 crash triage | Firebase database rules can silently get overwritten by other project deploys — check rules after ANY deploy |
+| 2026-04-07 | v1 crash triage | CSP `connect-src` must include `fonts.gstatic.com` for service worker font fetches (not just `font-src`) |
+| 2026-04-07 | v1 crash triage | `gsap.from({opacity:0})` spreads faster than expected — audit found 19 locations, not the 2 originally planned |
+| 2026-04-07 | v1 crash triage | Max 2 `backdrop-filter` per page — v1 had 10 in one CSS file, 12 on one Engoo page |
+| 2026-04-08 | v2 scaffold | Serwist production build requires `next build --webpack` (Turbopack doesn't support Serwist) |
+| 2026-04-08 | v2 scaffold | Zustand persist middleware has a bug in v5.0.5-5.0.9 — always use v5.0.10+ |
+| 2026-04-08 | v2 scaffold | `tw-animate-css` may be pulled in by shadcn — verify before removing (GSAP-First exemption if needed) |
 
 ---
 ---
