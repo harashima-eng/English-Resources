@@ -1109,6 +1109,9 @@
         examRef.child('activeSession').off();
         examRef.child('sections').off();
         examRef.child('revealAll').off();
+        examRef.child('connectedStudents').off();
+        _cbPanelActiveSession = null;
+        _cbPanelConnectedStudents = null;
         state.isTeacher = false;
         state.teacherUid = null;
         initialized = false;
