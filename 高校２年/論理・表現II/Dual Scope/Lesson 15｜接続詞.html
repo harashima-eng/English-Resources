@@ -1128,8 +1128,10 @@ const Router = {
 
     // -- Animation: C9 Badge entrance --
     if (typeof gsap !== 'undefined' && !UV_REDUCED) {
-      gsap.from('#categoryBadge', { scale: 0.8, opacity: 0, duration: 0.4, ease: GSAP_CONFIG.ease.spring });
-      gsap.from('#sectionTitle', { opacity: 0, y: 10, duration: 0.4, delay: 0.1, ease: GSAP_CONFIG.ease.default });
+      gsap.killTweensOf('#categoryBadge');
+      gsap.fromTo('#categoryBadge', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: GSAP_CONFIG.ease.spring });
+      gsap.killTweensOf('#sectionTitle');
+      gsap.fromTo('#sectionTitle', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, delay: 0.1, ease: GSAP_CONFIG.ease.default });
     }
 
     // Render questions
@@ -1224,7 +1226,8 @@ function toggle(btn, type) {
       // -- C4: Stagger child elements --
       const items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
       if (items.length > 1) {
-        gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
+        gsap.killTweensOf(items);
+        gsap.fromTo(items, { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
       }
 
       // -- C5: Answer celebration --
