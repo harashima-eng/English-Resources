@@ -205,7 +205,10 @@
     listenErrors();
   }
 
-  // ── Real-time Data ──
+  // ── Real-time Data (debounced to avoid cascade rebuilds) ──
+  var _reportsDebounce = null;
+  var _errorsDebounce = null;
+
   function listenReports() {
     reportsListener = db.ref('bug-reports').orderByChild('ts').limitToLast(500).on('value', function(snap) {
       allReports = [];
@@ -215,13 +218,16 @@
         allReports.push(r);
       });
       allReports.sort(function(a, b) { return (b.ts || 0) - (a.ts || 0); });
-      populateFilters();
-      renderStats();
-      renderCharts();
-      renderBrowserBreakdown();
-      applyFilters();
-      renderDetectionHealth();
-      pulseCards();
+      clearTimeout(_reportsDebounce);
+      _reportsDebounce = setTimeout(function() {
+        populateFilters();
+        renderStats();
+        renderCharts();
+        renderBrowserBreakdown();
+        applyFilters();
+        renderDetectionHealth();
+        pulseCards();
+      }, 500);
     });
   }
 
@@ -234,8 +240,11 @@
         allErrors.push(e);
       });
       allErrors.sort(function(a, b) { return (b.ts || 0) - (a.ts || 0); });
-      $('errorCount').textContent = allErrors.length;
-      renderErrorsGrouped();
+      clearTimeout(_errorsDebounce);
+      _errorsDebounce = setTimeout(function() {
+        $('errorCount').textContent = allErrors.length;
+        renderErrorsGrouped();
+      }, 500);
     });
   }
 
