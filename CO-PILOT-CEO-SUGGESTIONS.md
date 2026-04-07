@@ -239,9 +239,59 @@ Then P1 for functional bugs (gsap.from), P2 for memory leaks, P3 for minor items
 
 ---
 
-**Summary: 6 BUGS (in plan), 4 MISSING, 2 IMPROVEMENTS**
+**Summary: 7 BUGS (in plan), 5 MISSING, 2 IMPROVEMENTS**
 
 The plan covers ~60% of the crash surface area. The other 40% (especially BUG-2: interactive-quiz.css 10 instances) is arguably the MOST impactful fix because it affects every single quiz page, not just one file.
+
+---
+
+## URGENT: Service Worker CSP Crash (discovered after initial review)
+
+**116 console errors on every page load.** User cannot access bug dashboard or any page without a wall of red errors.
+
+### BUG-7: `sw.js` intercepts cross-origin font requests and crashes on CSP rejection
+
+**File:** `/Users/slimtetto/Projects/English-Resources/sw.js`
+
+**Root cause chain:**
+1. `isStaticAsset()` (line 126-128) matches `.woff2` by pathname extension -- does NOT check origin
+2. Service worker intercepts ALL Noto Sans JP font requests from `fonts.gstatic.com` (~100+ .woff2 subsets)
+3. `fetch(event.request)` at line 83 has NO `.catch()` handler
+4. `connect-src` in the old cached SW context didn't include `fonts.gstatic.com` (fixed in commit `097a45e` but SW is still cached with old CSP)
+5. Each blocked fetch throws unhandled `TypeError: Failed to fetch` → `event.respondWith()` receives rejected promise → "FetchEvent resulted in a network error response" × 116
+
+**The `connect-src` fix in commit `097a45e` is necessary but NOT sufficient** -- the old SW remains cached and won't pick up the new CSP headers until it re-registers.
+
+**Fix (3 changes to `sw.js`):**
+
+1. **Skip cross-origin requests** -- add after line 75 (before the static assets check):
+```js
+// Skip cross-origin requests (fonts, CDN assets handled by browser cache)
+if (url.origin !== self.location.origin) return;
+```
+
+2. **Add `.catch()` to static asset fetch** at line 83 (defense in depth):
+```js
+return fetch(event.request).then(function(response) {
+  if (response.ok) {
+    var clone = response.clone();
+    caches.open(CACHE_NAME).then(function(cache) {
+      cache.put(event.request, clone);
+    });
+  }
+  return response;
+}).catch(function() {
+  return new Response('', { status: 408 });
+});
+```
+
+3. **Bump CACHE_NAME** from `'eng-res-v4'` to `'eng-res-v5'` at line 7 -- forces old SW eviction and new CSP headers to take effect.
+
+**Priority:** DO THIS FIRST before any other batch. The 116 errors flood the console, obscure real errors, and may contribute to page freezes.
+
+---
+
+**Updated Summary: 7 BUGS (in plan), 5 MISSING, 2 IMPROVEMENTS**
 
 ---
 
