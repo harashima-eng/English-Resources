@@ -52,8 +52,8 @@ Content HTML files (lessons, exams) are manually authored. They are standalone s
 ### transition: all - OK to use
 `transition: all` is used throughout this project and works fine on the target machine (MacBook Pro 16", i9, Radeon Pro 5500M). The elements being transitioned are simple (cards, buttons, arrows) with few animatable properties, so `transition: all` has negligible performance impact here. No need to replace with specific properties.
 
-### backdrop-filter - OK to use
-`backdrop-filter` is used for nav bars and glass morphism effects. Single instances per page are fine. The only crash risk would be mass stacked `backdrop-filter` (many overlapping blurred elements), which this project doesn't do. Current usage is safe.
+### backdrop-filter - Use sparingly
+`backdrop-filter` is used for nav bars and the teacher panel. Keep to max 2 simultaneous instances per page. After the 2026-04-07 crash fix, most glass morphism was replaced with high-opacity solid backgrounds (0.95-0.97). Only `interactive-quiz.css` (.iq-progress-tab, .iq-progress-panel) and `teacher-reveal.css` (.tr-panel) retain `backdrop-filter`. Do NOT add new `backdrop-filter` without checking existing count.
 
 ### GPU Rasterization
 GPU rasterization is OFF (user preference). This only affects paint-to-bitmap. All compositing, WebGL, Canvas, video remain GPU-accelerated.

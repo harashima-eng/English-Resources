@@ -297,6 +297,8 @@
       }
     });
     panelCheck.observe(document.body, { childList: true, subtree: true });
+    // Stop observing if teacher never logs in (avoid watching every DOM mutation indefinitely)
+    setTimeout(function() { if (!isTeacher) panelCheck.disconnect(); }, 60000);
   }
 
   if (document.readyState === 'loading') {
