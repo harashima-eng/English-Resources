@@ -88,7 +88,174 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 ---
 
-## CEO Strategic Recommendation (2026-04-07)
+## CEO Review: v2 Migration Plan (2026-04-08, Opus 4.6 max effort)
+
+**Plan reviewed:** `/Users/slimtetto/Projects/English-Resources-v2/MIGRATION-PLAN.md`
+**Current state:** Phase 0 complete, Phase 1 partially done (25/28 HTML files copied, route pages built)
+**Methodology:** Web search for dependency compatibility + code audit of v2 scaffold + cross-reference with eiken-correction
+
+---
+
+### BUGS (will break in production)
+
+#### BUG-1: Build script missing `--webpack` flag -- Serwist won't generate service worker
+
+**File:** `package.json` scripts
+
+Current: `"build": "next build"`
+Required: `"build": "next build --webpack"`
+
+Serwist does not support Turbopack for production builds. Without `--webpack`, `next build` uses Turbopack (Next.js 16 default), and the service worker is never generated. The dev script correctly uses `--turbo` (Serwist isn't needed in dev), but production build MUST use webpack.
+
+Source: [Serwist Turbopack docs](https://serwist.pages.dev/docs/next/turbo), [Turbopack build feedback](https://github.com/vercel/next.js/discussions/77721)
+
+#### BUG-2: `tw-animate-css` violates GSAP-First standard
+
+**Files:** `package.json` + `app/globals.css` line 2
+
+`tw-animate-css: ^1.4.0` is installed AND imported (`@import 'tw-animate-css'`). This provides Tailwind `animate-*` classes. The project's own CLAUDE.md line 78 says: **"Prohibited: Tailwind `animate-*` classes"**.
+
+**Fix:** Remove `tw-animate-css` from package.json. Remove `@import 'tw-animate-css'` from globals.css. If shadcn components need animation, they should use GSAP via `useGSAP` or be exempted as "shadcn internal CSS" per the standard.
+
+**Note:** shadcn v4 may have been installed with `tw-animate-css` as a peer dependency. Check if removing it breaks any shadcn components -- if so, the shadcn exemption applies and keep it, but add a comment explaining why.
+
+#### BUG-3: `zustand: ^5.0.5` has a persist middleware bug -- upgrade to `^5.0.10`
+
+**File:** `package.json`
+
+A critical bug in Zustand v5.0.9 and earlier causes state inconsistencies with the persist middleware. Fixed in v5.0.10 (January 2026). Since Zustand persist is the FOUNDATION of quiz state (score, answeredKeys, badges, streaks), this bug would cause random state loss.
+
+**Fix:** `npm install zustand@^5.0.10`
+
+Source: [Zustand persist docs](https://zustand.docs.pmnd.rs/reference/middlewares/persist), [v5 migration](https://github.com/pmndrs/zustand/blob/main/docs/migrations/migrating-to-v5.md)
+
+#### BUG-4: `vercel.json` disables auto-deployment
+
+**File:** `vercel.json` line 4-5
+
+`"deploymentEnabled": false` means pushes to GitHub won't trigger Vercel builds. This contradicts Phase 7 requirement: "Push to main triggers full deploy pipeline."
+
+**Fix:** Remove the `"git": { "deploymentEnabled": false }` block, or change to `true`. If this was intentional during scaffold (to prevent deploying incomplete work), add a TODO to re-enable before Phase 7.
+
+---
+
+### BUGS (will crash on user machines)
+
+#### BUG-5: v1 crash bugs are copied verbatim into v2's `public/`
+
+**Files:** `public/interactive-quiz.css` (65KB), `public/interactive-quiz.js` (157KB), `public/teacher-reveal.js`, `public/teacher-reveal.css`, etc.
+
+These are exact copies of v1 files -- they still have:
+- 10 stacked `backdrop-filter` in interactive-quiz.css
+- `gsap.from({opacity:0})` without killTweensOf in teacher-reveal.js
+- Memory leaks in leaderboard.js and student-responses.js
+- No `.catch()` on service worker fetches
+
+Phase 1 students using the standalone HTML files in `public/content/` will experience the same crashes as v1.
+
+**Fix:** Apply the 3 emergency triage fixes from the v1 CEO suggestions to the v2 public/ copies too:
+1. `public/interactive-quiz.css` -- strip 8 of 10 `backdrop-filter` instances
+2. `public/interactive-quiz.js` -- no sw.js issue here (Serwist handles it), but fix the other JS bugs
+3. Or better: after v1 triage, just re-copy the fixed files to v2's public/
+
+---
+
+### MISSING
+
+#### MISSING-1: No CSP headers in `vercel.json`
+
+v1's CSP caused 116 service worker errors. v2 has NO CSP at all -- wide open for XSS.
+
+**Fix:** Add CSP to vercel.json headers. Include `fonts.gstatic.com` in BOTH `font-src` AND `connect-src` from day one (v1 lesson learned). For Next.js 16, consider nonce-based CSP via middleware for inline scripts, but be aware this disables static optimization.
+
+Recommended starting CSP (add to vercel.json headers array):
+```json
+{
+  "key": "Content-Security-Policy",
+  "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.firebaseio.com https://*.googleapis.com https://apis.google.com https://www.gstatic.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://fonts.gstatic.com https://fonts.googleapis.com; frame-src https://*.firebaseapp.com https://accounts.google.com; img-src 'self' data: blob:;"
+}
+```
+
+Source: [Next.js CSP guide](https://nextjs.org/docs/pages/guides/content-security-policy), [Vercel security headers](https://vercel.com/docs/headers/security-headers)
+
+#### MISSING-2: No middleware.ts for auth -- CVE-2025-29927 awareness
+
+The migration plan mentions teacher Google Sign-In but has no Next.js middleware for route protection. When middleware IS added (Phase 4), be aware of [CVE-2025-29927](https://www.authgear.com/post/nextjs-security-best-practices) -- a CVSS 9.1 vulnerability where attackers bypass middleware by sending an `x-middleware-subrequest` header. Ensure Next.js 16.1.6 includes the fix (it should, as the CVE was patched in 15.x).
+
+#### MISSING-3: Zustand middleware order matters
+
+The migration plan shows `persist(immer(...))`. The correct middleware order for Zustand v5 is:
+```typescript
+create()(devtools(persist(immer((set) => ({...})))))
+```
+Outermost → innermost: `devtools` → `persist` → `immer`. If reversed, persist serialization will capture immer drafts instead of finalized state.
+
+Source: [Zustand middleware guide](https://medium.com/@skyshots/taking-zustand-further-persist-immer-and-devtools-explained-ab4493083ca1)
+
+#### MISSING-4: GSAP 3.14 SplitText breaking change
+
+Not currently used, but Phase 6 (visual polish) might add text animations. GSAP 3.14 has a known issue where SplitText causes text elements to go missing when used with `useGSAP` in React. If SplitText is ever added, use 3.13 or verify the fix.
+
+Source: [GSAP issue #636](https://github.com/greensock/GSAP/issues/636)
+
+#### MISSING-5: Firebase compat deprecation timeline
+
+The standalone HTML files in `public/` use Firebase compat SDK (`firebase/compat/`). Firebase has stated compat will be **removed in a future major version**. While v12 still supports compat, this is a ticking clock. The migration plan correctly uses modular Firebase for React components, but the public/ files will need eventual migration or removal (Phase 8).
+
+Source: [Firebase compat deprecation RFC](https://github.com/firebase/firebase-js-sdk/discussions/7611)
+
+---
+
+### IMPROVEMENTS
+
+#### IMP-1: Add `HSTS` preload to vercel.json -- DONE (already present, good)
+
+The vercel.json already has `Strict-Transport-Security` with preload. Good.
+
+#### IMP-2: Consider `next/font` `display: 'swap'` for Noto Sans JP
+
+`layout.tsx` loads Noto Sans JP with default display. For a Japanese education site, explicit `display: 'swap'` ensures text is immediately visible with fallback font while CJK glyphs load. This prevents invisible Japanese text on slow connections.
+
+#### IMP-3: Add `@next/bundle-analyzer` like eiken-correction
+
+eiken-correction has `@next/bundle-analyzer: ^16.2.1`. v2 doesn't. Add it now so Phase 3 (quiz engine, the biggest component tree) can be monitored for bundle size regressions.
+
+---
+
+### Priority Table
+
+| # | Type | Severity | Fix effort |
+|---|------|----------|-----------|
+| BUG-1 | Build | CRITICAL (no SW in prod) | 1 min (add `--webpack`) |
+| BUG-2 | Standard violation | HIGH | 5 min (remove package + import) |
+| BUG-3 | State corruption | HIGH | 1 min (npm install) |
+| BUG-4 | Deploy broken | MEDIUM | 1 min (change flag) |
+| BUG-5 | Crash in public/ files | HIGH | 30 min (re-copy after v1 triage) |
+| MISSING-1 | Security | HIGH | 10 min (add CSP header) |
+| MISSING-2 | Security awareness | LOW | 0 min (just know about it) |
+| MISSING-3 | State corruption | MEDIUM | 2 min (check middleware order) |
+| MISSING-4 | Future awareness | LOW | 0 min (just know about it) |
+| MISSING-5 | Deprecation | LOW | 0 min (Phase 8 handles it) |
+
+**Summary: 5 BUGS, 5 MISSING, 3 IMPROVEMENTS**
+**Estimated fix time: ~50 min (mostly BUG-5 re-copy)**
+
+---
+
+### What the plan got RIGHT
+
+- Auth proxy in `next.config.ts` from day one (eiken-correction lesson learned)
+- `@serwist/turbopack` (not plain Serwist)
+- Zustand + immer over useReducer + Context
+- `gsap.fromTo()` enforced in CLAUDE.md
+- 25 static files already copied to public/content/
+- Firebase modular API for React components
+- Same Firebase project (no data migration needed)
+- AGENTS.md warning about Next.js 16 API differences
+
+---
+
+## Previous: CEO Strategic Recommendation (2026-04-07)
 
 ### The Verdict: Stop patching v1. Emergency triage + pivot to v2.
 
