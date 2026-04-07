@@ -43,10 +43,7 @@ body {
   justify-content: space-between;
   /* Auto-hide: initial state hidden (GSAP handles animation) */
   transform: translateY(-100%);
-  /* Glassmorphism effect */
-  background: rgba(250, 248, 245, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(250, 248, 245, 0.97);
   border-bottom: 1px solid rgba(28, 25, 23, 0.08);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
@@ -54,9 +51,7 @@ body {
 /* .top-nav visibility controlled by GSAP */
 
 [data-theme="dark"] .top-nav {
-  background: rgba(15, 14, 13, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(15, 14, 13, 0.97);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
@@ -818,9 +813,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   padding: 12px 20px;
-  background: rgba(185, 28, 28, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(185, 28, 28, 0.97);
   color: #fff;
   font: 600 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
   box-shadow: 0 2px 12px rgba(185, 28, 28, 0.3);
