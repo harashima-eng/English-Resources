@@ -1034,9 +1034,7 @@ html.dark .iq-scramble-context {
   z-index: 9997;
   padding: 10px 14px;
   border-radius: 12px;
-  background: rgba(255, 253, 250, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 253, 250, 0.97);
   border: 1px solid rgba(220, 38, 38, 0.2);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   display: flex;
