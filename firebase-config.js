@@ -135,7 +135,7 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
       trace: (data.trace || []).slice(-30),
       steps: (window.IQDebug && window.IQDebug.reproSteps ? window.IQDebug.reproSteps() : []),
       perf: {
-        domNodes: document.querySelectorAll('*').length,
+        domNodes: document.getElementsByTagName('*').length,
         memory: (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) : null),
         fps: (window.IQDebug && window.IQDebug.getFps ? window.IQDebug.getFps() : null)
       },
