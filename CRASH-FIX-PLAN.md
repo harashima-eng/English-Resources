@@ -1,6 +1,6 @@
 # Crash Fix Plan — English-Resources
 
-> **Status:** In Progress
+> **Status:** Nearly Complete (P0-P4 all done, only Tokyo Rika extraction remaining)
 > **Date:** 2026-04-07
 > **Session:** Executing session writes fixes, CEO session reviews via CO-PILOT-CEO-SUGGESTIONS.md
 
@@ -14,33 +14,33 @@ Three parallel deep analyses (HTML patterns, JS runtime, CSS rendering) identifi
 
 ### Batch 1: Crash-Risk Patterns (P0)
 
-- [ ] **1A. Engoo Day 6 — 12 simultaneous backdrop-filter layers**
+- [x] **1A. Engoo Day 6 — 12 simultaneous backdrop-filter layers**
   - File: `高校２年/論理・表現II/Engoo/Day 6｜Local Problems and possible solutions.html`
   - Fix: Remove `backdrop-filter` from `.c` cards → `background: var(--card)`
 
-- [ ] **1B. `querySelectorAll('*')` in BugReport**
+- [x] **1B. `querySelectorAll('*')` in BugReport**
   - File: `firebase-config.js:138`
   - Fix: Replace with `getElementsByTagName('*').length`
 
-- [ ] **1C. Firebase listener accumulation in teacher panel**
+- [x] **1C. Firebase listener accumulation in teacher panel**
   - Files: `teacher-reveal.js:766, 826`
   - Fix: Store callback refs, detach before re-attaching
 
 ### Batch 2: Freeze/Performance (P1)
 
-- [ ] **2A. Bug dashboard full-rebuild cascade**
+- [x] **2A. Bug dashboard full-rebuild cascade**
   - File: `bug-dashboard.js:210-225`
   - Fix: Debounce Firebase callback (500ms)
 
-- [ ] **2B. Leaderboard MutationObserver infinite retry**
+- [x] **2B. Leaderboard MutationObserver infinite retry**
   - File: `leaderboard.js:329-332`
   - Fix: Add retry cap or remove observer (event already handles it)
 
-- [ ] **2C. `@keyframes trReveal` animates `filter: blur()`**
+- [x] **2C. `@keyframes trReveal` animates `filter: blur()`**
   - File: `teacher-reveal.css:730-741`
   - Fix: Remove filter:blur from keyframes
 
-- [ ] **2D. Eiken infinite box-shadow animations (7 files)**
+- [x] **2D. Eiken infinite box-shadow animations (7 files)**
   - Files: All `英検/準１級/eiken_pre1_part*.html`
   - Fix: Replace cosmicPulse/marqueeGlow/headerBreathe with opacity-based alternatives
 
