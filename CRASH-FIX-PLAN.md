@@ -79,6 +79,19 @@ Three parallel deep analyses (HTML patterns, JS runtime, CSS rendering) identifi
 - [x] **5B. Missing prefers-reduced-motion** (bug-dashboard.css, Chuo 2022)
 - [x] **5C. filter:blur persists in reduced-motion** (styles.css)
 
+### CEO-Discovered Items (Fixed)
+
+- [x] **CEO-1.** `interactive-quiz.css` 10 backdrop-filter instances → reduced to 2
+- [x] **CEO-2.** `dualscope-lesson.css` top-nav + retry-view-header backdrop-filter → removed
+- [x] **CEO-3.** `templates.py` glow animations → removed (styles.css is generated)
+- [x] **CEO-4.** Eiken `cosmicWarpIn` filter:brightness on page wrapper → removed
+- [x] **CEO-5.** Eiken `cosmicRise` filter:blur → removed
+- [x] **CEO-6.** 17 additional `gsap.from` in 5 Dual Scope files → all converted to `gsap.fromTo`
+- [x] **CEO-7.** `teacher-reveal.css` compound backdrop-filter → simplified to blur(16px) only
+- [x] **CEO-8.** `student-responses.js` MutationObserver → auto-disconnect after 60s
+- [x] **CEO-9.** Eiken phrase bank scroll listener → added `{ passive: true }`
+- [x] **CEO-10.** CLAUDE.md backdrop-filter docs → updated
+
 ### Out of Scope
 
 - 5 exam files exceed 1,500 DOM nodes (requires lazy rendering — separate project)
