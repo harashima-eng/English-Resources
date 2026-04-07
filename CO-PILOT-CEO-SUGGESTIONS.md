@@ -88,7 +88,102 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 ---
 
-## CEO Review: v2 Migration Plan (2026-04-08, Opus 4.6 max effort)
+## CEO Sign-Off: v1 Crash Triage + v2 Phase 0-1 (2026-04-08)
+
+### Verdict: APPROVED. Exceptional execution.
+
+The executing session shipped 25+ file fixes across v1 and completed Phase 0 + Phase 1 of v2 in a single session. Quality is high -- every CEO crash bug was addressed, and the session found additional issues the CEO audit missed.
+
+### v1 Triage Scorecard
+
+| CEO Item | Result |
+|----------|--------|
+| BUG-1 (templates.py glow animations) | FIXED |
+| BUG-2 (interactive-quiz.css 10 backdrop-filters → 2) | FIXED |
+| BUG-3 (dualscope-lesson.css stacked navbars) | FIXED |
+| BUG-4 (eiken cosmicWarpIn filter on page-wrap) | FIXED |
+| BUG-5 (eiken cosmicRise filter:blur + transform) | FIXED |
+| BUG-6 (gsap.from → fromTo, CEO found 10 locations) | FIXED — found **19** locations across 7 files |
+| BUG-7 (sw.js CSP / connect-src) | FIXED (CSP headers deployed) |
+| MISSING-1 (student-responses.js MutationObserver timeout) | FIXED |
+| MISSING-2 (teacher-reveal.css compound backdrop-filter) | FIXED (5 → 1) |
+| MISSING-3 (passive scroll listener) | FIXED |
+| MISSING-4 (CLAUDE.md backdrop-filter docs) | FIXED |
+
+**Bonus fixes the CEO missed:**
+- Database rules overwritten by eiken-correction subset — broke ALL Firebase reads/writes (40 days broken!)
+- Bug dashboard double Firebase init + debounced rebuild cascade
+- Error reporter per-session cap (10 max)
+- `.info/connected` timer cleanup on phone lock/unlock
+- Tokyo Rika CSS extracted to shared file (240KB → 196KB, 232KB → 196KB)
+- Chuo 2022 missing prefers-reduced-motion
+
+### v2 Migration Scorecard
+
+| CEO Item | Result |
+|----------|--------|
+| BUG-1 (build --webpack for Serwist) | FIXED |
+| BUG-2 (tw-animate-css GSAP-First violation) | PENDING — check if shadcn needs it |
+| BUG-3 (Zustand ^5.0.5 persist bug) | FIXED — upgraded to 5.0.12 |
+| BUG-4 (deploymentEnabled: false) | FIXED |
+| BUG-5 (v1 crash bugs in public/ copies) | PENDING |
+| MISSING-1 (CSP headers in vercel.json) | PENDING |
+| MISSING-3 (Zustand middleware order) | PENDING |
+
+### v2 Production: https://english-resources-v2.vercel.app
+Phase 0 (scaffold) + Phase 1 (25 static files, folder nav) complete and deployed.
+
+---
+
+### Remaining Items for Next Session (6 items, ~1 hour)
+
+**Priority order:**
+
+1. **BUG-5 (HIGH): Re-copy v1 triage fixes to v2 `public/` files**
+   - v2's `public/interactive-quiz.css`, `public/teacher-reveal.js`, etc. are pre-triage copies
+   - Students on v2 will crash on the same bugs until these are updated
+   - Simplest: re-copy all shared JS/CSS from v1 after triage to v2's public/
+
+2. **MISSING-1 (HIGH): Add CSP headers to v2 `vercel.json`**
+   - Currently wide open — no CSP at all
+   - Use the CSP from the v2 migration review (includes fonts.gstatic.com in connect-src)
+   - Test that Google Fonts, Firebase, GSAP CDN all still work after adding CSP
+
+3. **BUG-2 (MEDIUM): Check if shadcn needs `tw-animate-css`**
+   - `@import 'tw-animate-css'` in globals.css line 2 violates GSAP-First
+   - Run `npx shadcn@latest diff` or check if any shadcn components use `animate-*` classes
+   - If shadcn needs it: keep it but document the exemption in CLAUDE.md
+   - If shadcn doesn't need it: remove package + import
+
+4. **MISSING-3 (MEDIUM): Verify Zustand middleware order**
+   - Correct order: `devtools(persist(immer(...)))` — outermost to innermost
+   - Check `lib/stores/quiz-store.ts` when it's created in Phase 3
+   - Not urgent until Phase 3 (quiz engine) begins
+
+5. **IMP-3 (LOW): Add `@next/bundle-analyzer`**
+   - eiken-correction has it, v2 doesn't
+   - Useful for Phase 3 when building the quiz component tree
+   - `npm install -D @next/bundle-analyzer@^16.2.1`
+
+6. **IMP-2 (LOW): Consider `display: 'swap'` for Noto Sans JP**
+   - Prevents invisible Japanese text on slow connections
+   - In `layout.tsx`: `Noto_Sans_JP({ subsets: ['latin'], variable: '--font-noto', display: 'swap' })`
+
+---
+
+### Lessons Learned (add to v2 CLAUDE.md if not already there)
+
+| Lesson | Source |
+|--------|--------|
+| Database rules can silently get overwritten by other project deploys | v1 triage — 40 days broken |
+| Always check `connect-src` AND `font-src` for Google Fonts in CSP | v1 sw.js 116 errors |
+| `gsap.from({opacity:0})` was in **19** locations, not the 2 the original plan found | Pattern spreads faster than expected |
+| Serwist production build requires `--webpack` flag with Next.js 16 | v2 CEO BUG-1 |
+| Zustand persist middleware had a bug in v5.0.5-5.0.9 | v2 CEO BUG-3 |
+
+---
+
+## Previous: v2 Migration Plan Review (2026-04-08)
 
 **Plan reviewed:** `/Users/slimtetto/Projects/English-Resources-v2/MIGRATION-PLAN.md`
 **Current state:** Phase 0 complete, Phase 1 partially done (25/28 HTML files copied, route pages built)
