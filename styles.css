@@ -27,13 +27,10 @@ html{font-size:16px;-webkit-font-smoothing:antialiased}
 body{min-height:100vh;font-family:'Sora','Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;position:relative}
 .bg-glow{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 0.5s ease}
 html.dark .bg-glow{opacity:1}
-.bg-glow::before{content:'';position:absolute;top:-20%;left:-10%;width:50%;height:60%;background:radial-gradient(ellipse at center,rgba(160,80,32,0.12) 0%,transparent 70%);filter:blur(80px);animation:glowPulse1 8s ease-in-out infinite}
-.bg-glow::after{content:'';position:absolute;top:30%;right:-10%;width:45%;height:50%;background:radial-gradient(ellipse at center,rgba(122,155,168,0.10) 0%,transparent 70%);filter:blur(80px);animation:glowPulse2 10s ease-in-out infinite}
-.bg-glow-accent{position:fixed;bottom:-10%;left:30%;width:40%;height:45%;background:radial-gradient(ellipse at center,rgba(51,112,88,0.10) 0%,transparent 70%);filter:blur(80px);z-index:-1;pointer-events:none;opacity:0;transition:opacity 0.5s ease;animation:glowPulse3 12s ease-in-out infinite}
+.bg-glow::before{content:'';position:absolute;top:-20%;left:-10%;width:50%;height:60%;background:radial-gradient(ellipse at center,rgba(160,80,32,0.12) 0%,transparent 70%);filter:blur(80px)}
+.bg-glow::after{content:'';position:absolute;top:30%;right:-10%;width:45%;height:50%;background:radial-gradient(ellipse at center,rgba(122,155,168,0.10) 0%,transparent 70%);filter:blur(80px)}
+.bg-glow-accent{position:fixed;bottom:-10%;left:30%;width:40%;height:45%;background:radial-gradient(ellipse at center,rgba(51,112,88,0.10) 0%,transparent 70%);filter:blur(80px);z-index:-1;pointer-events:none;opacity:0;transition:opacity 0.5s ease}
 html.dark .bg-glow-accent{opacity:1}
-@keyframes glowPulse1{0%,100%{transform:translate(0,0) scale(1);opacity:0.8}50%{transform:translate(5%,10%) scale(1.1);opacity:1}}
-@keyframes glowPulse2{0%,100%{transform:translate(0,0) scale(1);opacity:0.7}50%{transform:translate(-5%,-5%) scale(1.15);opacity:0.9}}
-@keyframes glowPulse3{0%,100%{transform:translate(0,0) scale(1);opacity:0.6}50%{transform:translate(10%,-10%) scale(1.2);opacity:0.8}}
 .header{position:sticky;top:0;z-index:100;padding:16px 24px;background:var(--bg-warm);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 html.dark .header{background:rgba(26,24,22,0.8)}
 .header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:16px}
