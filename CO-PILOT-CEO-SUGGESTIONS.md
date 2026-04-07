@@ -230,7 +230,7 @@ Then P1 for functional bugs (gsap.from), P2 for memory leaks, P3 for minor items
 
 - 1B: `querySelectorAll('*')` in BugReport -- confirmed legitimate, good catch
 - 1C: Firebase listener accumulation -- confirmed, adding connectedStudents cleanup
-- 2A: Bug dashboard rebuild cascade -- good catch (I didn't audit bug-dashboard.js deeply)
+- 2A: Bug dashboard rebuild cascade -- confirmed and UPGRADED to HIGH priority. `on('value')` at line 210 triggers 7 function calls including 2x Chart.js destroy/create on every Firebase push. With `limitToLast(500)` initial load + rapid incoming reports, the page freezes before it even renders. The fix (debounce 500ms) in the plan is correct but may not be enough -- also add `requestAnimationFrame` guard so `renderCharts` can't overlap itself
 - 2B: Leaderboard infinite retry -- confirmed at line 329
 - 2C: trReveal filter:blur -- confirmed at lines 730-740
 - 3B: Forced reflow void offsetWidth -- valid concern
