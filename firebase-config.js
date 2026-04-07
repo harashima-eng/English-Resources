@@ -42,15 +42,18 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
       tabHiddenAt = document.hidden ? Date.now() : 0;
     });
 
+    var _connectTimer = null;
     firebase.database().ref('.info/connected').on('value', function(snap) {
       if (snap.val() === true) {
         hideOfflineBanner();
         disconnectedAt = 0;
+        if (_connectTimer) { clearTimeout(_connectTimer); _connectTimer = null; }
       } else {
         showOfflineBanner();
         if (!disconnectedAt) disconnectedAt = Date.now();
         if (!connectivityReported) {
-          setTimeout(function() {
+          if (_connectTimer) clearTimeout(_connectTimer);
+          _connectTimer = setTimeout(function() {
             if (disconnectedAt && !connectivityReported && Date.now() - disconnectedAt >= 30000) {
               // Skip if tab is backgrounded or was hidden within 5s of disconnect
               if (document.hidden) return;
