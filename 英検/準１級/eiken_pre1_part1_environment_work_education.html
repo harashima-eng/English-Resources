@@ -159,8 +159,7 @@ body {
   border: 3px solid var(--gold);
   border-radius: 4px;
   background: var(--surface);
-  animation: heroMaterialize 1.6s cubic-bezier(0.22,0.61,0.36,1) 0.8s both,
-             headerBreathe 6s ease-in-out 3.5s infinite;
+  animation: heroMaterialize 1.6s cubic-bezier(0.22,0.61,0.36,1) 0.8s both;
 }
 
 @keyframes heroMaterialize {
@@ -170,10 +169,7 @@ body {
   100% { opacity: 1; transform: translateY(0) scale(1); border-color: var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
 }
 
-@keyframes headerBreathe {
-  0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 rgba(157,92,246,0); }
-  50% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 40px rgba(157,92,246,0.12), 0 0 80px rgba(0,207,255,0.06); }
-}
+/* headerBreathe removed — infinite box-shadow animation causes continuous CPU repaint */
 
 /* Marquee Lights — traveling dots around the border */
 .cinema-header::before {
@@ -186,9 +182,9 @@ body {
 }
 
 @keyframes marqueeGlow {
-  0%, 100% { border-color: var(--gold-dim); box-shadow: 0 0 8px var(--gold-glow), 0 0 0 rgba(157,92,246,0); }
-  33% { border-color: var(--cosmic); box-shadow: 0 0 12px rgba(157,92,246,0.3), 0 0 24px rgba(157,92,246,0.1); }
-  66% { border-color: var(--energy); box-shadow: 0 0 12px rgba(0,207,255,0.3), 0 0 24px rgba(0,207,255,0.1); }
+  0%, 100% { border-color: var(--gold-dim); }
+  33% { border-color: var(--cosmic); }
+  66% { border-color: var(--energy); }
 }
 
 /* Traveling light dots */
