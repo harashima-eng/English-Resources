@@ -281,7 +281,7 @@
       gsap.fromTo(block, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
       var items = block.querySelectorAll('.vocab-item, .hint-item, .ans-box > *');
       if (items.length > 1) {
-        gsap.from(items, { opacity: 0, x: -10, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
+        gsap.fromTo(items, { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 });
       }
     }
   }

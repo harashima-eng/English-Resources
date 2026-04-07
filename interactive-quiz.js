@@ -2931,9 +2931,7 @@ if (typeof gsap !== 'undefined' && gsap._isStub) {
 
     // Milestone pulse at 3, 5, 10
     if (streak === 3 || streak === 5 || streak === 10) {
-      streakEl.classList.remove('iq-streak-pulse');
-      void streakEl.offsetWidth;  // reflow to restart animation
-      streakEl.classList.add('iq-streak-pulse');
+      gsap.fromTo(streakEl, { scale: 1 }, { scale: 1.2, duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.out' });
     }
   }
 
