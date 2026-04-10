@@ -105,6 +105,11 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 | 2026-04-10 | Phase 6 review | Mirror `next-themes` `.dark` class to `data-theme` attribute for compat with v1 CSS — one-line useEffect |
 | 2026-04-10 | Phase 6 review | FeedbackPopup: Portal + absolute positioning from `getBoundingClientRect()` = React-safe + looks in-place |
 | 2026-04-10 | Phase 6 review | Self-host third-party assets (SND.dev sounds) for student apps — privacy + reliability + CSP simplicity |
+| 2026-04-10 | Phase 6 v2 review | Multi-file CSS ports must include inline `<style>` blocks — never assume a shared .css file is standalone if the original was loaded alongside inline tokens |
+| 2026-04-10 | Phase 6 v2 review | `@scope (parent)` CANNOT match `body`/`html`/ancestor elements — those must be extracted before wrapping |
+| 2026-04-10 | Phase 6 v2 review | Per-lesson content in v1 often has per-lesson CSS — don't try to unify variable names; port the originals |
+| 2026-04-10 | Phase 6 v2 review | Bundle analyzer baseline must be measured BEFORE changes start, not at the end of the setup phase |
+| 2026-04-10 | Phase 6 v2 review | next-themes FOUT prevention requires a blocking inline `<script>` in `<head>` — not just a useEffect |
 
 ---
 ---
