@@ -85,6 +85,12 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 | 2026-04-08 | v2 scaffold | Serwist production build requires `next build --webpack` (Turbopack doesn't support Serwist) |
 | 2026-04-08 | v2 scaffold | Zustand persist middleware has a bug in v5.0.5-5.0.9 — always use v5.0.10+ |
 | 2026-04-08 | v2 scaffold | `tw-animate-css` may be pulled in by shadcn — verify before removing (GSAP-First exemption if needed) |
+| 2026-04-10 | Post-triage audit | Batch fixes that target "all eiken files" can miss non-numbered files (universal_phrases, speaking_phrase_bank) — always glob-verify |
+| 2026-04-10 | Post-triage audit | CSS page-load fades (`@keyframes fadeIn`) are acceptable GSAP-First exceptions — they fire before JS loads |
+| 2026-04-10 | Post-triage audit | Theme crossfade `transition:` on `*` is acceptable — document it, don't fight it |
+| 2026-04-10 | Security audit | Next.js 16.1.6 is patched for CVE-2026-23864 (DoS), CVE-2025-66478 (RCE), CVE-2025-29927 (middleware bypass) |
+| 2026-04-10 | Security audit | `poweredByHeader: false` should be in every Next.js project's config — reveals framework to attackers |
+| 2026-04-10 | Security audit | Firebase client API keys are safe to expose IF: domain-restricted in Console + Security Rules enforced |
 
 ---
 ---
