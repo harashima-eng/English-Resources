@@ -99,6 +99,12 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 | 2026-04-10 | Phase 5 review | Plan test counts become stale fast (96 → 129 in one session) — always verify with `npx vitest run`, not plan text |
 | 2026-04-10 | Phase 5 review | Exhaustive switch with `never` check must be in EVERY type-discriminated render path, not just the main one |
 | 2026-04-10 | Phase 5 review | Dynamic import chains need `.catch()` — silent code-split failures drop user actions in production |
+| 2026-04-10 | Phase 6 review | CSS `@scope` at-rule is baseline (Dec 2025) — use it instead of find-replace or CSS Modules for verbatim CSS ports |
+| 2026-04-10 | Phase 6 review | Next.js `<Script>` `onReady` callback is more reliable than defensive try/catch for window globals |
+| 2026-04-10 | Phase 6 review | Route-boundary `<Script>` tags > root layout — don't ship 8KB to pages that don't need it |
+| 2026-04-10 | Phase 6 review | Mirror `next-themes` `.dark` class to `data-theme` attribute for compat with v1 CSS — one-line useEffect |
+| 2026-04-10 | Phase 6 review | FeedbackPopup: Portal + absolute positioning from `getBoundingClientRect()` = React-safe + looks in-place |
+| 2026-04-10 | Phase 6 review | Self-host third-party assets (SND.dev sounds) for student apps — privacy + reliability + CSP simplicity |
 
 ---
 ---
