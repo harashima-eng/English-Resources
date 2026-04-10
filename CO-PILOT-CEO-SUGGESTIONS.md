@@ -91,6 +91,10 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 | 2026-04-10 | Security audit | Next.js 16.1.6 is patched for CVE-2026-23864 (DoS), CVE-2025-66478 (RCE), CVE-2025-29927 (middleware bypass) |
 | 2026-04-10 | Security audit | `poweredByHeader: false` should be in every Next.js project's config — reveals framework to attackers |
 | 2026-04-10 | Security audit | Firebase client API keys are safe to expose IF: domain-restricted in Console + Security Rules enforced |
+| 2026-04-10 | Phase 2 review | `correction` type has NO `correctAnswer` — only `correctText`. `error` has BOTH. Critical distinction. |
+| 2026-04-10 | Phase 2 review | `choices` field appears as instruction text on fillin/error/pair — not just on choice type |
+| 2026-04-10 | Phase 2 review | Extended answer fields (answer/translation/explanation/grammar) in 実戦問題5 apply to ALL types, not just choice |
+| 2026-04-10 | Phase 2 review | NavState.categoryMap keys vary per file — use `Record<string, number[]>`, not fixed keys |
 
 ---
 ---
