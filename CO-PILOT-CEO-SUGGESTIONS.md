@@ -101,7 +101,281 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 ---
 
-## CEO Fresh Audit: v1 + v2 Post-Triage State (2026-04-10, Opus 4.6 max effort)
+## CEO Review: Phase 2 Type System + Data Extraction (2026-04-10, Opus 4.6 max effort)
+
+**Plan reviewed:** `~/.claude/plans/nifty-dancing-graham.md` (Phase 2 section)
+**Methodology:** Opus agent read all 5 source HTML files and verified every field, type, and edge case claim against actual grammarData. Web search for TypeScript discriminated union best practices and Zustand middleware patterns.
+
+---
+
+### BUGS in the Phase 2 Plan (will cause broken components in Phase 3)
+
+#### BUG-1: `choices` field exists on non-choice types — plan doesn't account for this
+
+The plan assumes `choices` is a choice-type-only field. **Wrong.** It appears as instruction text on other types:
+
+- **`fillin` in Lesson 16**: `choices: "空欄に冠詞を入れなさい"` (line 671) — instruction string
+- **`error` in Lesson 16**: `choices: "下線部 a～d の中から誤りを1つ選び、正しく直しなさい。"` (line 900) — instruction string
+- **`pair` in Lesson 16**: `choices: "選択肢: is, are"` (lines 615-661) — instruction string
+
+But Lesson 15 and 17 `fillin`/`error`/`pair` questions do NOT have `choices`. So it's optional and file-specific.
+
+**Fix:** Add `choices?: string` to the base question type (shared across ALL types), not just the `choice` discriminant. In the `choice` type, `choices` is required and contains the option labels. In other types, it's optional instruction text.
+
+#### BUG-2: `correction` type has NO `correctAnswer` field — plan doesn't state this
+
+The plan groups `correction` with other types that have `correctAnswer`. **`correction` ONLY has `correctText`.**
+
+- `error` type: `correctAnswer` (which underlined part is wrong) + `correctText` (the fix)
+- `correction` type: ONLY `correctText` (the underlined word IS the error, no selection needed)
+
+**Fix:** The `correction` discriminant must NOT include `correctAnswer`. It should be:
+```typescript
+interface CorrectionQuestion {
+  type: 'correction'
+  num: string
+  text: string
+  correctText: string | string[]  // the fix
+  vocab: [string, string][]
+  hint: string[]
+  // NO correctAnswer
+}
+```
+
+#### BUG-3: Extended answer fields apply to ALL types in 実戦問題5, not just choice
+
+The plan says "実戦問題5 adds `answer`, `translation`, `explanation`, `grammar`, `choiceExplanations` to choice questions." This is **partially wrong:**
+
+- `answer`, `translation`, `explanation`, `grammar` → appear on **ALL 4 types** in 実戦問題5 (choice, fillin, scramble, error)
+- `choiceExplanations` → appears ONLY on `choice` type
+
+**Fix:** These 4 fields must be optional on the base question type or handled via a `PracticeQuestion` extension:
+```typescript
+// Option A: optional on base
+interface BaseQuestion {
+  // ...common fields
+  answer?: string
+  translation?: string
+  explanation?: string
+  grammar?: string
+}
+
+// Option B: intersection type for practice5
+type Practice5Question = BaseQuestion & {
+  answer: string
+  translation: string
+  explanation: string
+  grammar: string
+}
+```
+
+CEO recommendation: **Option A** (optional on base) — simpler, avoids a separate type hierarchy for one file.
+
+#### BUG-4: `choiceExplanations` type should be `Record<string, string>`, not "object"
+
+The plan says `choiceExplanations` without specifying the type. The actual structure is:
+```typescript
+choiceExplanations?: Record<string, string>
+// Example: { "a. into": "○ 正解。be made into ～ で...", "b. of": "× be made of ～ は..." }
+```
+
+Keys are the choice labels (e.g., `"a. into"`), values are explanation strings.
+
+#### BUG-5: `open` field on sections not mentioned
+
+Every section in grammarData has `open: boolean` — `true` for the first section, `false` for rest. Controls initial accordion state.
+
+**Fix:** Add to Section type:
+```typescript
+interface Section {
+  title: string
+  open: boolean
+  questions: Question[]
+}
+```
+
+#### BUG-6: NavState.categoryMap keys vary dramatically between files
+
+The plan doesn't flag that 実戦問題5 uses **completely different category keys**:
+- Lessons 15/16/17: `{ basic: [...], comm: [...], advanced: [...] }`
+- 実戦問題5: `{ selection: [...], completion: [...], ordering: [...], correction: [...] }`
+
+The LessonMeta type must use `Record<string, number[]>` for categoryMap, not a fixed key set.
+
+---
+
+### MISSING from the Phase 2 Plan
+
+#### MISSING-1: `hint` should be explicitly optional
+
+The plan says "usually 3 items, sometimes omitted on compose questions." But it's also absent on some choice and pair questions. The type should be:
+```typescript
+hint?: string[]  // not hint: string[]
+```
+
+#### MISSING-2: Exhaustive switch with `never` for discriminated union
+
+When Phase 3 builds the quiz renderer, a switch on `question.type` must use exhaustive checking:
+```typescript
+function renderQuestion(q: Question) {
+  switch (q.type) {
+    case 'choice': return <ChoiceInput question={q} />
+    // ...all 7 types
+    default: {
+      const _exhaustive: never = q
+      throw new Error(`Unknown question type: ${(q as any).type}`)
+    }
+  }
+}
+```
+
+Add a note in `quiz.ts` recommending this pattern for Phase 3.
+
+#### MISSING-3: `scramble` field documentation
+
+The plan mentions `scramble` as a question type but doesn't document that it has a unique `scramble: string` field containing the jumbled words (e.g., `scramble: "[ so / Ann / that / us / can / join ]"`). This field only exists on scramble-type questions.
+
+#### MISSING-4: `pair` answer extraction from text
+
+`pair` questions embed choices in the `text` string using parentheses (e.g., `"( awake, wake )"` within the sentence). There is no separate `choices` field for the actual pair options — they must be parsed from `text`. The plan should note this for Phase 3's PairInput component.
+
+#### MISSING-5: Interactive file type needs its own `satisfies` check
+
+The interactive file (`dualscope-lesson16-interactive.html`) has a completely different data model:
+```typescript
+interface InteractiveSentence {
+  number: string
+  english: string
+  keywords: string[]
+  japanese: string
+  grammar: { term: string; meaning: string; note: string }
+  special?: boolean
+}
+```
+
+The plan mentions `interactive.ts` types but doesn't show the actual structure. Confirm this matches.
+
+---
+
+### IMPROVEMENTS
+
+#### IMP-1: Use a base interface + discriminated union pattern
+
+Rather than repeating common fields, use:
+```typescript
+interface BaseQuestion {
+  num: string
+  text: string
+  vocab: [string, string][]
+  hint?: string[]
+  choices?: string  // instruction text (optional on all types)
+  // 実戦問題5 extended fields (optional)
+  answer?: string
+  translation?: string
+  explanation?: string
+  grammar?: string
+}
+
+interface ChoiceQuestion extends BaseQuestion {
+  type: 'choice'
+  correctAnswer: string
+  choices: string  // required for choice (overrides optional)
+  choiceExplanations?: Record<string, string>
+}
+
+interface CorrectionQuestion extends BaseQuestion {
+  type: 'correction'
+  correctText: string | string[]
+  // NO correctAnswer
+}
+
+// ... etc for all 7 types
+
+type Question = ChoiceQuestion | PairQuestion | FillinQuestion | ScrambleQuestion | ComposeQuestion | ErrorQuestion | CorrectionQuestion
+```
+
+Source: [TypeScript discriminated unions](https://learntypescript.dev/07/l8-discriminated-union/), [Exhaustive checking](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html)
+
+#### IMP-2: Zustand store setup note for Phase 3
+
+When Phase 3 creates the quiz store, use the curried TypeScript form and correct middleware order:
+```typescript
+export const useQuizStore = create<QuizState>()(
+  devtools(
+    persist(
+      immer((set) => ({ /* state + actions */ })),
+      { name: 'iq-progress', skipHydration: true }  // skipHydration for SSR
+    ),
+    { name: 'QuizStore' }
+  )
+)
+```
+
+`skipHydration: true` prevents hydration mismatch in Next.js SSR. Hydrate manually in a `useEffect`.
+
+Source: [Zustand TypeScript guide](https://sanjewa.com/blogs/zustand-typescript-type-safe-state-management/), [Zustand persist docs](https://zustand.docs.pmnd.rs/reference/middlewares/persist)
+
+---
+
+### COMPLETE FIELD INVENTORY (verified against actual data)
+
+| Type | Required | Optional |
+|------|----------|----------|
+| ALL | `num`, `type`, `text`, `vocab` | `hint`, `choices` (instruction), `answer`, `translation`, `explanation`, `grammar` |
+| `choice` | + `correctAnswer` (string), `choices` (required string) | `choiceExplanations` (Record) |
+| `pair` | + `correctAnswer` (string) | |
+| `fillin` | + `correctAnswer` (string[]) | |
+| `scramble` | + `correctAnswer` (string), `scramble` (string) | |
+| `compose` | + `correctAnswer` (string) | |
+| `error` | + `correctAnswer` (string) | `correctText` (string \| string[]) |
+| `correction` | + `correctText` (string \| string[]) | NO correctAnswer |
+
+**Section:** `{ title: string, open: boolean, questions: Question[] }`
+**categoryMap:** `Record<string, number[]>` (keys vary per file)
+
+---
+
+### Priority Table
+
+| # | Type | Severity | Impact |
+|---|------|----------|--------|
+| BUG-1 | Type design | HIGH | Phase 3 ChoiceInput won't render instruction text on fillin/error |
+| BUG-2 | Type design | HIGH | Phase 3 CorrectionInput will try to access non-existent correctAnswer |
+| BUG-3 | Type design | HIGH | Phase 3 won't show answer/explanation on non-choice questions in 実戦問題5 |
+| BUG-4 | Type design | MEDIUM | choiceExplanations will be untyped |
+| BUG-5 | Type design | MEDIUM | Section accordion state lost |
+| BUG-6 | Type design | MEDIUM | CategoryMap type too rigid for 実戦問題5 |
+| MISSING-1 | Type design | MEDIUM | TypeScript errors on questions without hint |
+| MISSING-2 | Architecture | LOW | Nice-to-have for Phase 3 |
+| MISSING-3-5 | Completeness | LOW | Documentation gaps |
+
+**Summary: 6 BUGS, 5 MISSING, 2 IMPROVEMENTS**
+
+---
+
+### v1 + v2 Remaining Items (from previous audit, still open)
+
+**v1 (3 items):**
+- 2 eiken files (`universal_phrases`, `speaking_phrase_bank_simple`) still have `filter:blur` in @keyframes
+- `sw.js` CACHE_NAME still v4, cross-origin fix never applied
+- Engoo Day 6 `.hdr` still has compound `backdrop-filter`
+
+**v2 (6 items):**
+- No CSP headers in vercel.json (SEC-1)
+- `poweredByHeader: false` not set (SEC-2)
+- `tw-animate-css` still installed (GSAP-3)
+- globals.css @keyframes/transition violations need CLAUDE.md exemptions (GSAP-1/2)
+- CLAUDE.md build command wrong + legacy HTML undocumented (DOC-1/2)
+
+These are independent of Phase 2 and can be done in parallel or after.
+
+---
+
+**File:** `/Users/slimtetto/Projects/English-Resources/CO-PILOT-CEO-SUGGESTIONS.md`
+
+---
+
+## Previous: CEO Fresh Audit: v1 + v2 Post-Triage State (2026-04-10, Opus 4.6 max effort)
 
 **Methodology:** 2 parallel deep-analysis agents (v1 state + v2 state) + 5 web searches (Next.js CVEs, Firebase security, Vercel CSP, service worker patterns, security headers). Every finding verified against current code.
 
