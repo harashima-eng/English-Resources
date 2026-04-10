@@ -109,7 +109,346 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 ---
 
-## CEO Post-Implementation Review: Phase 5 Spaced Review (2026-04-10, Opus 4.6 max effort)
+## CEO Review: Phase 6 Pixel-Perfect v1 Dualscope Parity (2026-04-10, Opus 4.6 max effort)
+
+**Plan reviewed:** `~/.claude/plans/nifty-dancing-graham.md` (Phase 6: Pixel-Perfect v1 Parity)
+**Status:** Pre-execution. Phase 5 shipped (133/133 tests passing confirmed). Phase 6 is a dedicated presentation-layer rebuild to adopt v1's exact CSS + DOM + class names.
+
+**Methodology:** Read the full plan. Web searches for (a) CSS `@scope` baseline status, (b) Next.js Script `afterInteractive` race conditions, (c) PostCSS scoping alternatives. Verified test count with `npx vitest run`.
+
+---
+
+### THE BIG ONE: Use CSS `@scope` at-rule instead of find-replace
+
+**The plan's biggest risk is the CSS scoping strategy.** It proposes mechanical find-replace of every selector in `dualscope-lesson.css` (3,000+ lines) to prepend `.quiz-root`. This is fragile for at least 6 reasons:
+
+- `body`, `html`, `:root`, `*` selectors need special handling
+- `@keyframes`, `@font-face`, `@media`, `@supports` must NOT be scoped
+- `::selection`, `::-webkit-scrollbar` pseudo-elements need exceptions
+- CSS custom property cascade breaks if `:root` is rewritten to `.quiz-root:root`
+- Attribute selectors like `[data-theme="dark"] .x` need to become `[data-theme="dark"] .quiz-root .x` — requires structural parsing, not find-replace
+- Any third-party CSS imported via `@import` would leak
+
+**CEO recommendation: Use CSS `@scope` at-rule.** As of December 2025, `@scope` is **Baseline: Newly Available** — supported in Chrome 118+, Safari 17.5+, Firefox 146+. This is 100% clean, zero build tooling, and handles all the above edge cases correctly:
+
+```css
+@scope (.quiz-root) {
+  /* All v1 dualscope-lesson.css rules go here unchanged */
+  .view-home { ... }
+  .qcard { ... }
+  :scope {  /* replaces :root */
+    --bg: #F5F0E6;
+  }
+}
+```
+
+Source: [CSS @scope baseline 2026](https://web-standards.dev/news/2026/01/scope-css-baseline/), [MDN @scope](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@scope), [Smashing Magazine guide](https://www.smashingmagazine.com/2026/02/css-scope-alternative-naming-conventions/)
+
+**Browser support caveat:** Chrome 118 / Safari 17.5 / Firefox 146 cover ~97% of current users but not older installs. The target audience (Japanese high school students on school Chromebooks / tablets) should be verified. If older browsers need support, fall back to PostCSS with `postcss-prefix-selector` + explicit exclusions.
+
+**If you choose `@scope`:** Reduces Phase 6A from find-replace work to literally wrapping the v1 CSS in `@scope (.quiz-root) { ... }`. Maybe 10 minutes instead of an hour of mechanical edits.
+
+---
+
+### BUGS in the Phase 6 Plan
+
+#### BUG-1 (HIGH): CSP + `ui-sounds.js` contradiction
+
+**The plan says:** "CSP already allows `cdn.jsdelivr.net` in script-src + connect-src (already done)"
+
+**Reality:** The CEO audit from 2026-04-10 (Part B) found that **v2 has NO CSP header at all** in `vercel.json` (item SEC-1, still open). This claim in the Phase 6 plan is wrong.
+
+**Fix:**
+1. Add the CSP header to `vercel.json` (from previous CEO review, item SEC-1) BEFORE shipping Phase 6
+2. Ensure the CSP includes `cdn.jsdelivr.net` in both `script-src` and `connect-src`
+3. Also allow `https://sound-effects.bhptn.com` if that's where SND.dev serves from — verify by inspecting `public/ui-sounds.js`
+
+Without CSP set up, Phase 6 will work (no restrictions), but Phase 6 + a later security hardening will break sounds.
+
+#### BUG-2 (HIGH): Sound loading race despite `try/catch` defense
+
+**The plan says:** "If React tries to call `window.UISound.play()` before `ui-sounds.js` finishes loading, it throws. The hook wraps it defensively: `try { window.UISound?.play(name) } catch {}`"
+
+**The real problem:** Defensive try/catch means sounds are **silently dropped** during initial interaction. A user who clicks a choice in the first 500ms after page load gets no sound feedback — confusing and hard to debug.
+
+**Better fix:** Use Next.js `<Script>` component's `onReady` callback (which does work with `afterInteractive`, per Next.js docs):
+
+```tsx
+// app/layout.tsx — or better, QuizClient.tsx (see BUG-3)
+<Script
+  src="/ui-sounds.js"
+  strategy="afterInteractive"
+  onReady={() => {
+    useSoundStore.setState({ ready: true })
+    // Apply persisted mute state NOW that UISound exists
+    const muted = localStorage.getItem('iq-sound-muted') === '1'
+    if (window.UISound) window.UISound.muted = muted
+  }}
+  onError={(e) => errorLogger.log('ui-sounds-load-failed', e)}
+/>
+```
+
+Then `useSound()` returns no-op **until** `ready === true`, and a subtle visual hint shows "Sound loading..." if needed.
+
+Source: [Next.js Script component docs](https://nextjs.org/docs/app/api-reference/components/script), [afterInteractive behavior](https://lightrun.com/answers/vercel-next-js-nextscript-does-not-trigger-onload-callback-when-used-with-beforeinteractive-strategy)
+
+#### BUG-3 (MEDIUM): `<Script>` in root layout loads for all pages
+
+**The plan proposes:** Adding `<Script src="/ui-sounds.js" strategy="afterInteractive" />` to `app/layout.tsx`.
+
+**Problem:** This loads the sound library on every page — landing page, grade index pages, eiken pages, etc. Only the 4 Dual Scope quiz routes actually use sound. That's ~8KB of script + network request on pages that don't need it.
+
+**Fix:** Move the `<Script>` tag into `app/grade2/dualscope/[slug]/QuizClient.tsx` (the quiz route boundary). Route-level scripts work with `afterInteractive` strategy and only load on matching routes.
+
+This also answers plan CEO question #4 ("Is the ~8KB overhead acceptable?") — **No, load route-conditionally.**
+
+#### BUG-4 (MEDIUM): `[data-theme="dark"]` vs `.dark` class mismatch
+
+**The plan says:** v1 toggles dark mode via `[data-theme="dark"]` on `<html>`. v2 uses next-themes which toggles `.dark` class. The plan proposes a triple selector:
+```css
+.quiz-root.dark, [data-theme="dark"] .quiz-root, html.dark .quiz-root { ... }
+```
+
+**Problem:** This only fixes the top-level theme selector. The copied `dualscope-lesson.css` has **many internal selectors** like `[data-theme="dark"] .card { ... }`, `[data-theme="dark"] .top-nav { ... }`, etc. Those won't match because v2 never sets `[data-theme="dark"]`.
+
+**Fix options (pick one):**
+
+**Option A (recommended):** Add a sync effect in `QuizClient.tsx` that mirrors next-themes' `.dark` class to `data-theme` attribute:
+```tsx
+'use client'
+import { useTheme } from 'next-themes'
+useEffect(() => {
+  document.documentElement.dataset.theme = resolvedTheme === 'dark' ? 'dark' : 'light'
+}, [resolvedTheme])
+```
+This keeps the copied CSS untouched and works for the whole app.
+
+**Option B:** Find-replace `[data-theme="dark"]` → `html.dark` in the copied CSS. Less invasive but creates drift from upstream v1 CSS.
+
+CEO recommendation: **Option A** — one line of TS vs thousands of CSS edits.
+
+#### BUG-5 (MEDIUM): Store's `collapsibleState` field is internally contradictory
+
+**The plan adds:** `collapsibleState: Record<string, { vocab: boolean, hint: boolean, answer: boolean }>` to quiz-store.
+
+**But then the gotcha section says:** "Not persisted: panels close on view switch (matches v1?)" and "Keep ephemeral."
+
+**Contradiction:** If it's ephemeral (not persisted across reloads AND resets on view switch), it should be **local component state in `QuestionCard`**, not store state. Putting it in the store adds complexity for no benefit.
+
+**Fix:** Remove `collapsibleState` from the store plan. Use `useState` in `CollapsiblePanel.tsx`. When the parent `QuestionView` unmounts (on view switch), local state is lost — matching v1 behavior.
+
+#### BUG-6 (MEDIUM): FeedbackPopup in-place morph risks React reconciliation
+
+**The plan says:** "Rewrite FeedbackPopup to morph the Check button in place using GSAP timeline. Remove the Portal."
+
+**The risk:** If the button is inside a React tree that re-renders during the morph animation (e.g., a Zustand subscription fires), React will reset inline styles applied by GSAP, causing flicker or broken animation.
+
+**Mitigation:** 
+1. Wrap the morph in `useGSAP` from `@gsap/react` (auto-cleanup)
+2. Use `gsap.context()` scoped to a ref
+3. Memoize the parent component with `React.memo` so it doesn't re-render on unrelated state changes during the morph
+4. Set a ref-based "isMorphing" flag and skip re-renders during that window
+
+Even with mitigation, Portal is architecturally safer. CEO recommendation on plan question #2: **Keep Portal**. Position it via CSS `position: absolute` with coordinates from `button.getBoundingClientRect()` so it LOOKS in-place but renders in a Portal. Best of both worlds.
+
+---
+
+### MISSING from the Phase 6 Plan
+
+#### MISSING-1: Lesson-specific accent colors (plan CEO question #3)
+
+The plan punts on this with option (a): "use Lesson 15's palette as a universal default across all 4 lessons." **This causes visual regression on Lessons 16/17/実戦問題5** which have different accent colors for `--coord`, `--subord`, etc.
+
+**CEO recommendation: Option (b)** — extract per-lesson color maps to a new field in LessonMeta (from Phase 2 type system). Apply via CSS custom properties at the `.quiz-root` level:
+
+```tsx
+<div 
+  className="quiz-root" 
+  data-exam-id={meta.examId}
+  style={meta.colorTokens as React.CSSProperties}
+>
+```
+
+Where `meta.colorTokens = { '--coord': '#3a7a8c', '--subord': '#...' }`. 20 minutes of data extraction per lesson. Matches v1 fidelity.
+
+#### MISSING-2: SND.dev privacy / third-party concerns
+
+**Context:** This is a student app for Japanese high schoolers. SND.dev loads sound files from a third-party CDN. The plan doesn't discuss:
+- What does SND.dev log? (requests, IPs, user-agents?)
+- Does it set cookies?
+- Is the CDN URL stable, or does it require API keys?
+- Are there GDPR/COPPA implications for minors in a school context?
+
+**Fix:** Either:
+1. **Self-host the sound files** — download from SND.dev, put in `public/sounds/`, modify `ui-sounds.js` to load locally. Eliminates third-party dependency.
+2. **Document and verify** — read `public/ui-sounds.js` to understand the load path, confirm no tracking, add to privacy docs.
+
+CEO recommendation: **Self-host.** Sound files are small (usually <100KB total for 11 effects). Removes a network dependency, improves load speed, eliminates privacy questions. One-time 30-minute task.
+
+#### MISSING-3: Accessibility concerns
+
+The plan focuses on pixel-perfect visual parity but doesn't mention accessibility. Issues:
+- **Sounds with no aria-live alternative** — deaf/hard-of-hearing students get no feedback
+- **Focus mode overlay** — no documented focus trap (WCAG 2.4.3)
+- **Keyboard shortcuts** — plan says "full v1 parity (j/k, h/w, p, f, Esc, arrows)" but doesn't mention visible alternatives for discoverability (WCAG 2.1.1)
+- **`.collapsible` height animation** — needs `aria-expanded` on toggle buttons
+- **Custom color themes** — Japanese text contrast on warm-beige background needs WCAG AA verification
+
+**Fix:** Add an accessibility sub-phase. Include:
+- `aria-expanded` on collapsible toggle buttons
+- `aria-live="polite"` region for correct/wrong feedback (text backup for sounds)
+- Focus trap in FocusMode using `focus-trap-react` or manual
+- Visible keyboard shortcut legend (toggleable with `?` key)
+- Color contrast audit with axe-core
+
+This is a 30-minute add during Phase 6F (Badges + polish).
+
+#### MISSING-4: Gradual rollout / feature flag
+
+**The plan ships Phase 6 as a big-bang CSS rewrite.** Users on v2 production will see a completely different UI instantly. If something breaks:
+- No A/B comparison
+- No rollback without git revert + redeploy (1-2 min window of breakage)
+- No way to test with real users before full rollout
+
+**Fix:** Add a feature flag via query param (`?classicUI=1`) or localStorage (`iq-use-v1-ui`). Default to NEW v1 style, but allow flipping back to current v2 Tailwind style for the first week. Remove flag after validation.
+
+Simpler alternative: Launch on a single lesson first (Lesson 15), verify for 24 hours, then enable on the other 3.
+
+#### MISSING-5: Playwright visual regression tests (plan CEO question #10)
+
+**The plan asks** whether to add Playwright visual regression tests in Phase 6 or defer. **CEO answer: Add them in Phase 6.**
+
+Rationale: This is a presentation-layer rewrite with the explicit goal of matching v1. Without pixel-level comparison, there's no objective way to know when "parity" is achieved. Store tests (the existing 133) don't cover visual output at all.
+
+Minimum viable: Playwright screenshot tests for:
+- Home view (light + dark)
+- Question view with one of each 7 input types
+- Progress panel (closed + open)
+- Focus mode
+- Teacher panel
+
+That's ~20 snapshots. Compare against v1 HTML screenshots as the ground truth. Phase 6G becomes: "run snapshot diff, iterate until diff < threshold."
+
+#### MISSING-6: Bundle size impact
+
+**The plan adds 3,000+ lines of CSS** (v1-design-tokens.css + v1-dualscope.css) on top of existing `interactive-quiz.css` (3,209 lines). Total CSS payload for quiz pages: ~6,500 lines.
+
+No mention of:
+- Bundle size measurement before/after
+- CSS code splitting per route
+- `@next/bundle-analyzer` integration (previously recommended in audit IMP-3)
+
+**Fix:** Add `@next/bundle-analyzer` NOW (pending item IMP-3 from 2026-04-08 review). Measure the Phase 6 impact. If quiz route CSS >100KB gzipped, investigate pruning unused rules with PurgeCSS or similar.
+
+#### MISSING-7: View transition decision (plan CEO question #5)
+
+The plan asks whether to implement the 200ms crossfade. CEO answer: **Skip for now, add in Phase 7 polish.** Use GSAP timeline on the view wrapper when you do add it — do not use the experimental View Transitions API (bad browser support + SSR complications).
+
+#### MISSING-8: Overview view strategy (plan CEO question #7)
+
+The plan proposes showing a generic section list instead of v1's lesson-specific conjunction grids. CEO answer: **Ship neither.** Hide the "Overview" tab entirely for now and mark the view as coming-soon. Shipping a weaker version damages the "pixel-perfect v1 parity" promise.
+
+---
+
+### IMPROVEMENTS
+
+#### IMP-1: Use `iq-sound-muted` localStorage key for backward compat
+
+**Plan question #6:** "use the same localStorage key as v1 so returning students keep their preference?"
+
+**CEO answer: YES, absolutely.** Reuse `iq-sound-muted`. The v2 codebase already reuses v1's Firebase paths and localStorage keys for quiz progress — sound mute should follow the same pattern. Cost: zero. Benefit: returning students don't lose preference.
+
+#### IMP-2: Address pending audit items in the same Phase
+
+While doing the CSS work, also clean up these items from the 2026-04-10 audit that are still open:
+- **GSAP-3:** Remove `tw-animate-css` (unused, violates GSAP-First)
+- **GSAP-1/2:** Document `@keyframes fadeIn` and `transition` on `*` as CLAUDE.md exemptions
+- **SEC-1:** Add CSP header to `vercel.json` (required for BUG-1 fix anyway)
+- **SEC-2:** Add `poweredByHeader: false` to `next.config.ts` (1 line)
+
+All together: ~10 minutes of additional work that closes 4 outstanding items.
+
+#### IMP-3: Commit checkpoint strategy
+
+Phase 6 has 7 sittings (6A through 6G). Each sitting should be one commit minimum, ideally one PR. Rationale: if Phase 6C breaks question cards, you can revert ONLY that commit instead of losing Phase 6A+B work.
+
+---
+
+### Answers to Plan's 10 CEO Questions (consolidated)
+
+| # | Question | CEO Answer |
+|---|----------|-----------|
+| 1 | CSS scoping strategy | Use CSS `@scope` at-rule (baseline since Dec 2025) |
+| 2 | FeedbackPopup morph vs Portal | Keep Portal, position with `getBoundingClientRect()` to look in-place |
+| 3 | Lesson-specific theming | Option (b): extract per-lesson color maps to LessonMeta |
+| 4 | Sound library loading | Route-conditional in QuizClient.tsx, not root layout |
+| 5 | View transition timing | Skip for Phase 6, add in Phase 7 polish |
+| 6 | `soundMuted` localStorage key | Reuse v1's `iq-sound-muted` |
+| 7 | Overview view divergence | Hide the tab entirely, mark coming-soon |
+| 8 | Collapsible state persistence | Local component state, not store |
+| 9 | Visual regression safety | `@scope` + route-boundary CSS imports + Playwright snapshots |
+| 10 | Test coverage | Add Playwright visual regression in Phase 6, not deferred |
+
+---
+
+### Priority Table (Phase 6)
+
+| # | Type | Severity | Impact |
+|---|------|----------|--------|
+| BIG-ONE | Use `@scope` | CRITICAL | Eliminates find-replace fragility, 50x faster |
+| BUG-1 | CSP missing | HIGH | Phase 6 will break when CSP is eventually added |
+| BUG-2 | Sound race | HIGH | Silent UX bug (no feedback in first 500ms) |
+| BUG-3 | Script in root layout | MEDIUM | Wastes bandwidth on non-quiz pages |
+| BUG-4 | data-theme vs .dark | MEDIUM | Dark mode partially broken in copied CSS |
+| BUG-5 | collapsibleState in store | MEDIUM | Unnecessary store complexity |
+| BUG-6 | FeedbackPopup morph risk | MEDIUM | React reconciliation flicker |
+| MISSING-1 | Lesson colors | HIGH | Visual regression on 3 of 4 lessons |
+| MISSING-2 | SND.dev privacy | MEDIUM | Privacy/compliance question |
+| MISSING-3 | Accessibility | MEDIUM | Deaf students get no feedback |
+| MISSING-4 | Gradual rollout | MEDIUM | No safe escape hatch |
+| MISSING-5 | Visual regression tests | MEDIUM | No objective parity measurement |
+| MISSING-6 | Bundle size | LOW | Unmeasured growth |
+| MISSING-7 | View transition | DEFERRED | Phase 7 polish |
+| MISSING-8 | Overview view | DEFERRED | Hide, don't ship weaker |
+
+**Summary: 1 CRITICAL recommendation, 6 BUGS, 8 MISSING items**
+**Estimated additional effort over the 7-sitting plan: 1-2 extra sittings for accessibility + visual regression tests**
+
+---
+
+### Pending items carried forward (STILL OPEN as of 2026-04-10)
+
+**v1 (3 items):**
+- 2 eiken files still have `filter:blur` in @keyframes (`universal_phrases`, `speaking_phrase_bank_simple`)
+- `sw.js` CACHE_NAME still v4, cross-origin fix never applied
+- Engoo Day 6 `.hdr` still has compound `backdrop-filter`
+
+**v2 security (2 items, blocking Phase 6):**
+- SEC-1: No CSP headers in vercel.json — **MUST FIX before Phase 6 ships** (per BUG-1)
+- SEC-2: `poweredByHeader: false` not set
+
+**Phase 5 bugs (4 items, from prior review):**
+- BUG-1: `leitner.prune()` uses `addedAt` only — active items can be pruned
+- BUG-2: `ReviewCard` switch has no exhaustive `never` check
+- BUG-3: `makeId` `:` collision risk for future eiken migration
+- BUG-4: Dynamic import chain has no `.catch()`
+
+---
+
+**Sources:**
+- [CSS @scope baseline 2026](https://web-standards.dev/news/2026/01/scope-css-baseline/)
+- [MDN @scope reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@scope)
+- [Smashing Magazine @scope guide](https://www.smashingmagazine.com/2026/02/css-scope-alternative-naming-conventions/)
+- [Next.js Script component](https://nextjs.org/docs/app/api-reference/components/script)
+- [postcss-prefix-selector fallback](https://github.com/jackall3n/postcss-scope)
+
+---
+
+**File:** `/Users/slimtetto/Projects/English-Resources/CO-PILOT-CEO-SUGGESTIONS.md`
+
+---
+
+## Previous: CEO Post-Implementation Review: Phase 5 Spaced Review (2026-04-10, Opus 4.6 max effort)
 
 **Plan reviewed:** `~/.claude/plans/nifty-dancing-graham.md` (Phase 5: Spaced Review)
 **Critical finding:** **Phase 5 is already shipped.** 129/129 tests passing. All 14 files from the plan exist and are fully wired. This is a post-implementation audit, not a pre-execution review.
