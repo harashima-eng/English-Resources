@@ -95,6 +95,10 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 | 2026-04-10 | Phase 2 review | `choices` field appears as instruction text on fillin/error/pair — not just on choice type |
 | 2026-04-10 | Phase 2 review | Extended answer fields (answer/translation/explanation/grammar) in 実戦問題5 apply to ALL types, not just choice |
 | 2026-04-10 | Phase 2 review | NavState.categoryMap keys vary per file — use `Record<string, number[]>`, not fixed keys |
+| 2026-04-10 | Phase 5 review | Leitner `prune()` must use `max(addedAt, lastReviewedAt)` — pruning by `addedAt` alone loses actively-struggling items |
+| 2026-04-10 | Phase 5 review | Plan test counts become stale fast (96 → 129 in one session) — always verify with `npx vitest run`, not plan text |
+| 2026-04-10 | Phase 5 review | Exhaustive switch with `never` check must be in EVERY type-discriminated render path, not just the main one |
+| 2026-04-10 | Phase 5 review | Dynamic import chains need `.catch()` — silent code-split failures drop user actions in production |
 
 ---
 ---
