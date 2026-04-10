@@ -4,7 +4,7 @@
    - HTML pages: Network-first with cache fallback (always fresh content)
    - Firebase/API requests: Network-only (real-time data) */
 
-var CACHE_NAME = 'eng-res-v4';
+var CACHE_NAME = 'eng-res-v5';
 
 var BASE = self.location.pathname.replace(/sw\.js$/, '');
 // GitHub Pages: '/English-Resources/'
@@ -75,6 +75,9 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
+  // Skip cross-origin requests — CSP blocks SW fetch for external resources
+  if (url.origin !== self.location.origin) return;
+
   // Static assets: cache-first
   if (isStaticAsset(url.pathname)) {
     event.respondWith(
@@ -88,6 +91,8 @@ self.addEventListener('fetch', function(event) {
             });
           }
           return response;
+        }).catch(function() {
+          return new Response('', { status: 408 });
         });
       })
     );
