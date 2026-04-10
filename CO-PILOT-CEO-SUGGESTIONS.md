@@ -115,7 +115,351 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 ---
 
-## CEO Review: Phase 6 Pixel-Perfect v1 Dualscope Parity (2026-04-10, Opus 4.6 max effort)
+## CEO Review: Phase 6 v2 REVISED (2026-04-10, Opus 4.6 max effort)
+
+**Plan reviewed:** `~/.claude/plans/nifty-dancing-graham.md` (Phase 6 v2 — CEO-revised)
+**Methodology:** Sonnet agent read actual source files (Lesson 15/16/17 HTML, `dualscope-lesson.css`, `ui-sounds.js`, `vercel.json`). Verified every claim against ground truth. Web search for `@scope` at-rule behavior with `:root` and `body`.
+
+---
+
+### What the revision got RIGHT (all previous CEO items addressed)
+
+| Prior Item | Revision |
+|-----------|----------|
+| BIG-ONE: Use `@scope` | ACCEPTED — Phase 6A reduced to 10 min |
+| BUG-1 CSP | FIXED in commit `65318f1` with 5 new directives — **VERIFIED: CSP is now in vercel.json** |
+| BUG-2 Sound race | Event-based `ui-sounds-ready` custom event instead of try/catch |
+| BUG-3 Script placement | Moved to `QuizClient.tsx` (route-level) |
+| BUG-4 `[data-theme]` | `useThemeBridge` hook mirrors next-themes to `data-theme` attribute |
+| BUG-5 `collapsibleState` | Removed from store, uses local `useState` |
+| BUG-6 FeedbackPopup | Kept Portal + `getBoundingClientRect()` positioning |
+| MISSING-1 Per-lesson accents | Added `accentColors` to LessonMeta |
+| MISSING-2 SND privacy | Self-host to `public/vendor/snd/` |
+| MISSING-3 Accessibility | Focus trap hook + visual twin for sounds + ARIA |
+| MISSING-4 Gradual rollout | DECLINED (acceptable for solo dev) |
+| MISSING-5 Playwright | DEFERRED to Phase 7 (acceptable) |
+| MISSING-6 Bundle size | `@next/bundle-analyzer` added in 6A |
+| MISSING-7 View transition | SKIP, defer to Phase 7 |
+| MISSING-8 Overview view | HIDE the button — good call |
+
+The revision is **substantive and thoughtful**. 13 of 15 items addressed, 2 declined with justification.
+
+---
+
+### CRITICAL NEW FINDINGS (not in original review)
+
+Sonnet agent's source verification revealed that **the revised plan's CSS strategy has a fatal flaw.** This supersedes the prior approval.
+
+#### CRITICAL-1: The inline `<style>` blocks MUST be ported — `dualscope-lesson.css` is NOT standalone
+
+**Plan assumes:** "Copy `dualscope-lesson.css` → `styles/v1-dualscope.css` wrapped in `@scope`. Done."
+
+**Reality:** `dualscope-lesson.css` has **no `:root` block** and no CSS variable definitions. The file's opening comments explicitly state:
+```
+/* LESSON-SPECIFIC: define :root variables in per-lesson <style> */
+/* LESSON-SPECIFIC: define [data-theme="dark"] variables in per-lesson <style> */
+```
+
+The 1,126-line CSS file references `var(--bg)`, `var(--text)`, `var(--accent)`, `var(--coord)`, `var(--cat-basic)`, etc. **throughout** — but none of these are defined within the file. They ALL come from the per-lesson inline `<style>` block.
+
+Each lesson HTML file has a **157-line `<style>` block** that contains:
+
+1. **Base design tokens** (lines 14–88): `--bg`, `--bg-warm`, `--card`, `--text`, `--text-secondary`, `--text-muted`, `--accent`, `--border`, `--shadow`, `--shadow-sm`, `--shadow-lg`, `--radius`, `--fs-qtext`, etc. — NONE of these are in dualscope-lesson.css.
+
+2. **Category tokens**: `--cat-basic`, `--cat-basic-light`, `--cat-comm`, `--cat-comm-light`, `--cat-advanced`, `--cat-advanced-light`
+
+3. **Lesson-specific type tokens**: `--coord`, `--subord`, `--correl`, `--adverb` (Lesson 15) — and their light variants
+
+4. **Component rules that consume the tokens** (lines 90–169):
+   - `[data-theme="dark"] body` → multi-layer radial gradient using the lesson palette
+   - `.home-title em` → gradient text using 3 lesson colors
+   - `.conj-section.coord/.subord/.correl/.adverb` → section backgrounds
+   - `.progress-bar-fill` → gradient using `--coord` and `--subord`
+   - `.search-input:focus` → focus ring using `--coord-light`
+   - `.toggle-btn.vocab/.hint/.answer` → button colors
+   - `.qnum` → badge background using `--coord-light`
+   - `.choices` → background + left border using `--correl`
+   - `.scramble` → background + border using `--subord`
+   - `.vocab-box`, `.hint-box`, `.ans-box` → colored left borders
+   - `@media (max-width: 768px) .mobile-nav-btn.active` → mobile nav state
+
+**Without porting these inline styles, the entire visual system collapses:**
+- `body` falls back to undefined `var(--bg)` and `var(--text)` — likely invisible text on white
+- No dark mode background gradient
+- No gradient title
+- No progress bar colors
+- No toggle button colors
+- No panel accent borders
+- No choice/scramble color coding
+
+The plan's `accentColors` map approach (which only defines 4 lesson-specific color variables) is **wildly insufficient**. It misses ~40 base tokens + dozens of component rules.
+
+**Fix:** Port each lesson's entire inline `<style>` block. Options:
+
+**Option A (recommended):** One scoped file per lesson + a shared base file
+```css
+/* styles/v1-dualscope-base.css — shared component rules */
+@scope (.quiz-root) {
+  /* paste dualscope-lesson.css contents */
+}
+
+/* styles/v1-dualscope-lesson15.css */
+@scope (.quiz-root[data-exam-id="dualscope-lesson15"]) {
+  :scope {
+    --bg: #F5F0E6;
+    --text: #1C1917;
+    --accent: #0D9488;
+    --coord: #0D9488;
+    /* ...all 40+ tokens */
+  }
+  /* component rules from inline <style> section B */
+  .home-title em { background: linear-gradient(...); }
+  .conj-section.coord { ... }
+  /* etc. */
+}
+```
+
+Dynamic import from QuizClient based on `examId`, or just import all 4 and let `@scope` handle the targeting.
+
+**Option B:** Merge all 4 lessons' inline styles into one file with attribute-scoped selectors (more CSS, but one import).
+
+Either way, **this adds ~600 lines of CSS work that the plan currently budgets zero time for.**
+
+#### CRITICAL-2: `accentColors` key names incompatible across lessons — plan strategy is broken
+
+**Plan strategy:** "Use Lesson 15's variable names (`--coord`, `--subord`, `--correl`, `--adverb`) across the board. Lesson 16 populates `--coord` with its prep color, etc."
+
+**Reality:** Lessons 16 and 17 use **completely different variable names AND different HTML class names**.
+
+**Lesson 16** (`Lesson 16｜名詞・冠詞・代名詞.html` lines 13–170):
+- Variables: `--prep`, `--noun`, `--article`, `--pronoun` (+ 4 lights)
+- HTML classes: `.conj-section.prep`, `.conj-section.noun`, `.conj-section.article`, `.conj-section.pronoun`
+- Even `--accent` is different: `#3D8BCA` (blue) vs Lesson 15's `#0D9488` (teal)
+- Component rules reference `var(--prep)`, `var(--pronoun)`, etc. — NOT `var(--coord)`
+
+**Lesson 17** (`Lesson 17｜形容詞・副詞・群動詞.html` lines 13–177):
+- Variables: `--adj`, `--adv`, `--phrasal`, `--quantity` (+ 4 lights)
+- HTML classes: `.conj-section.adj`, `.conj-section.adv`, `.conj-section.phrasal`, `.conj-section.quantity`
+- `--accent` is `#e8725c` (coral)
+- Has additional unique rules (`.home-bg` absolute positioning, `.question-category-badge` explicit styling)
+
+**Why the plan's strategy fails:**
+1. The CSS inside Lesson 16's HTML file references `var(--prep)`. If v2 only sets `--coord` (from the plan's shared naming), Lesson 16's `.conj-section.prep` element will have no color.
+2. Lesson 16's component rule `.toggle-btn.hint { background: var(--prep) }` won't match because dualscope-lesson.css doesn't have that rule — it's in Lesson 16's inline `<style>` which isn't being ported.
+3. The HTML DOM class names (`.conj-section.prep` vs `.conj-section.coord`) are fixed by the lesson data — renaming them would require rewriting the lesson content data structure.
+
+**This reinforces CRITICAL-1:** Port each lesson's inline `<style>` verbatim with its original variable names. Don't try to unify the naming scheme — each lesson has its own design system that was intentionally differentiated.
+
+#### CRITICAL-3: `@scope (.quiz-root)` breaks `body` and `html` selectors
+
+**Plan assumes:** `@scope (.quiz-root) { ... }` wrapping the entire `dualscope-lesson.css` will work unchanged.
+
+**Reality:** `dualscope-lesson.css` contains:
+- **Line 16:** `html { scroll-behavior: smooth; }` — won't match `html` inside `.quiz-root` because `html` is an ancestor of `.quiz-root`, not a descendant
+- **Lines 20–27:** `body { font-family: ...; background: var(--bg); color: var(--text); line-height: 1.6; ... }` — same problem
+- **Lines 862, 867:** `html.dark .retry-view-header { ... }` and `html.dark .retry-section-header { ... }` — same problem
+
+Inside `@scope (S)`, selectors only match descendants of elements matching `S`. `html` and `body` are ancestors of `.quiz-root`, not descendants. These rules will SILENTLY fail to apply.
+
+**Symptoms:** No body background. No body font. No smooth scroll. Retry view header loses dark mode colors.
+
+**Fix:**
+- Move the `html` and `body` rules OUT of the `@scope` wrapper. Put them in a separate scoped file that targets the whole app, OR rewrite them as `.quiz-root { ... }` component rules (if they should only apply inside the quiz).
+- Rewrite `html.dark .retry-*` to target the rule's container element or use a class on `.quiz-root.dark`.
+
+**Simplest mechanical fix:**
+```css
+/* Rules extracted from top of dualscope-lesson.css BEFORE the @scope wrapper */
+.quiz-root, .quiz-root * { box-sizing: border-box; }  /* from * reset */
+.quiz-root { 
+  font-family: ...; 
+  background: var(--bg); 
+  color: var(--text); 
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+@scope (.quiz-root) {
+  /* everything else */
+}
+```
+
+This requires reading the top ~30 lines of `dualscope-lesson.css` and splitting them off before the wrapper.
+
+---
+
+### BUGS (non-critical but real)
+
+#### BUG-1 (MEDIUM): Theme bridge FOUT on first paint (acknowledged but not mitigated in execution)
+
+**Plan says (gotcha #3):** "Before the [useThemeBridge] effect runs, the page may briefly have `.dark` without `[data-theme="dark"]`. Mitigation: also run the bridge in a `<script>` tag in the root layout head that reads localStorage synchronously (same trick v1 uses)."
+
+**Problem:** This mitigation is mentioned in the gotchas section but is **NOT in the Phase 6A execution steps**. If not implemented, dark-mode users will see a ~50ms flash of light theme on every page load — a noticeable FOUT.
+
+**Fix:** Add to Phase 6A execution (between steps 4 and 5):
+```tsx
+// app/layout.tsx — add inside <head>
+<script
+  dangerouslySetInnerHTML={{
+    __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');document.documentElement.dataset.theme='dark'}else{document.documentElement.dataset.theme='light'}}catch(e){}})();`,
+  }}
+/>
+```
+
+This is the "blocking synchronous theme init" pattern used by every SSR themed app. next-themes has an official helper for this.
+
+#### BUG-2 (MEDIUM): Bundle analyzer baseline is contaminated
+
+**Plan Phase 6A step 9:** "Install `@next/bundle-analyzer`, snapshot baseline bundle size."
+
+**Problem:** Steps 1-8 already add ~35KB CSS + ~30KB JS (snd.js) + patches. The "baseline" is measured AFTER these changes, making the before/after comparison meaningless.
+
+**Fix:** Move bundle analyzer installation + baseline snapshot to **Phase 6 Step 0** — BEFORE any changes. Then re-measure at Phase 6H. The delta accurately reflects Phase 6 work.
+
+#### BUG-3 (LOW): SND file URLs not pre-verified
+
+**Plan Phase 6A step 4:** "Download `snd.js` + SND01 kit to `public/vendor/snd/`"
+
+The plan's own CEO question #1 says: "Self-hosted SND audio files: where exactly? Need the exact manifest of files."
+
+**Problem:** If the file structure at `github.com/snd-lib/snd-lib@v1.2.4/dist/browser/` doesn't match assumptions, Phase 6A blocks until files are found. The ui-sounds.js currently expects `window.Snd` globally and `Snd.KITS.SND01` — verify these exist in whatever is downloaded.
+
+**Fix:** Phase 6 Step 0 should verify:
+1. `https://cdn.jsdelivr.net/gh/snd-lib/snd-lib@v1.2.4/dist/browser/snd.js` returns 200 and exposes `window.Snd`
+2. The kit files are in `kits/snd01/` at expected URLs
+3. `ui-sounds.js` line 19 (`typeof Snd === 'undefined'`) works with the self-hosted version
+
+---
+
+### MINOR ITEMS (good to fix while we're here)
+
+#### MINOR-1: Phase 6 CEO question #5 (Lesson 16/17 colors) is now answered
+
+Previously: "I only know Lesson 15's palette" — plan deferred to Phase 6B.
+
+**Answer from verification agent:**
+- **Lesson 16:** `--prep: #3D8BCA`, `--noun: #5A9A6E`, `--article: #E8725C`, `--pronoun: #9B7FCF`. Light variants: `#f0f7fc`, `#f3f9f5`, `#fef4f2`, `#f8f5fc`. `--accent: #3D8BCA`.
+- **Lesson 17:** `--adj: #e8725c`, `--adv: #3d8bca`, `--phrasal: #5a9a6e`, `--quantity: #9b7fcf`. Light variants: `#fef4f2`, `#f0f7fc`, `#f3f9f5`, `#f8f5fc`. `--accent: #e8725c`.
+
+Lesson 17 also has `.home-bg`, `.question-category-badge`, `.choice-explanations`, `.vocab-item` rules the other lessons don't have. Read the full `<style>` block during port.
+
+#### MINOR-2: `use-collapsible.ts` and `use-view-transition.ts` mentioned but not fully specified
+
+The plan lists these as new files but doesn't include code snippets like it does for `useThemeBridge` and `useFocusTrap`. During Phase 6A, decide the API for `useCollapsible` before implementing to avoid churn.
+
+Recommendation for `useCollapsible`:
+```typescript
+export function useCollapsible(open: boolean) {
+  const ref = useRef<HTMLDivElement>(null)
+  useGSAP(() => {
+    if (!ref.current) return
+    const el = ref.current
+    if (open) {
+      const height = el.scrollHeight
+      gsap.fromTo(el, { height: 0 }, { height, duration: 0.3, onComplete: () => { el.style.height = 'auto' } })
+    } else {
+      gsap.to(el, { height: 0, duration: 0.3 })
+    }
+  }, [open])
+  return ref
+}
+```
+
+---
+
+### Revised Priority Table (Phase 6 v2)
+
+| # | Type | Severity | Blocker? |
+|---|------|----------|----------|
+| CRITICAL-1 | Port inline `<style>` blocks | **BLOCKING** | YES — without this, Phase 6 ships broken visuals |
+| CRITICAL-2 | `accentColors` strategy broken | **BLOCKING** | YES — follows from CRITICAL-1 |
+| CRITICAL-3 | `@scope` breaks `body`/`html` rules | **BLOCKING** | YES — silent failure of body styling |
+| BUG-1 | Theme bridge FOUT | MEDIUM | NO — visible but cosmetic |
+| BUG-2 | Bundle analyzer baseline timing | MEDIUM | NO — measurement accuracy |
+| BUG-3 | SND URL verification | LOW | NO — Phase 6A checkpoint |
+| MINOR-1 | Lesson 16/17 colors documented | LOW | NO — just use the values above |
+| MINOR-2 | `useCollapsible` API | LOW | NO — implement in 6C |
+
+**Revised time estimate:**
+- Original plan: 5-6 hours
+- With CRITICAL fixes: **+2-3 hours** for porting inline styles + splitting body/html rules
+- **New estimate: 7-9 hours**
+
+### Revised Execution Order (insertions in bold)
+
+- **Step 0 (NEW, ~15 min):**
+  1. Install `@next/bundle-analyzer`
+  2. Take baseline bundle size snapshot
+  3. Verify SND file URLs return 200
+  4. Verify `ui-sounds.js` contract (window.Snd expected globally)
+
+- **Phase 6A (revised, ~1h instead of 30 min):**
+  1. Copy `dualscope-lesson.css` → `styles/v1-dualscope-base.css`
+  2. **Split `html` + `body` + `html.dark` rules OUT of the file (move to top, unwrapped)**
+  3. Wrap remainder in `@scope (.quiz-root) { ... }`
+  4. **NEW: Copy Lesson 15's inline `<style>` → `styles/v1-dualscope-lesson15.css`** wrapped in `@scope (.quiz-root[data-exam-id="dualscope-lesson15"])`
+  5. **NEW: Same for Lessons 16, 17, Practice 5** → 3 more files
+  6. **NEW: Add blocking inline theme script to `app/layout.tsx` <head>** (prevents FOUT)
+  7. Download snd.js + SND01 kit to `public/vendor/snd/`
+  8. Patch `ui-sounds.js` (ready event + local snd.js URL)
+  9. Create all 5 hooks
+  10. Create `lib/lesson-theme.ts`
+  11. Update `QuizClient.tsx` with `.quiz-root` wrapper, script tags, hook mounts
+  12. Verify: tsc + vitest + build clean; each of 4 lessons shows distinct v1 styling
+
+- Phase 6B–6H: **Remove step "Extract accent colors from Lesson 16/17/P5"** — it's now done in 6A step 5.
+
+---
+
+### Outstanding items carried forward
+
+**v1 (still open):**
+- 2 eiken files still have `filter:blur` in @keyframes
+- `sw.js` CACHE_NAME still v4
+- Engoo Day 6 `.hdr` still has compound `backdrop-filter`
+
+**Phase 5 bugs (from prior review, still open):**
+- BUG-1: `leitner.prune()` by `addedAt` only — active items can be pruned
+- BUG-2: `ReviewCard` switch has no exhaustive `never` check
+- BUG-3: `makeId` `:` collision risk
+- BUG-4: Dynamic import chain has no `.catch()`
+
+**v2 security (from 2026-04-10 audit):**
+- SEC-1: ~~No CSP headers~~ ✅ FIXED in commit `65318f1`
+- SEC-2: `poweredByHeader: false` — STILL OPEN
+- GSAP-3: `tw-animate-css` still installed — STILL OPEN
+
+---
+
+### Final Verdict
+
+**DO NOT ship Phase 6 as currently planned.** The `@scope` + `accentColors` strategy appears elegant but fails against the actual source structure. Three critical issues will cause silent visual regressions.
+
+**Required plan changes (before execution):**
+1. Acknowledge that `dualscope-lesson.css` is NOT standalone — inline `<style>` blocks are part of the design system
+2. Port per-lesson inline styles as separate scoped files (Option A) or merged (Option B)
+3. Split `body`/`html`/`html.dark` rules out of the `@scope` wrapper
+4. Add Step 0 for bundle baseline + SND URL verification
+5. Add inline blocking theme script to prevent FOUT
+6. Budget 2-3 additional hours
+
+Once these are addressed, the plan is solid and can ship.
+
+---
+
+**Sources:**
+- Source verification of Lesson 15/16/17 inline styles (Sonnet agent)
+- `dualscope-lesson.css` structure analysis
+- [CSS @scope scoping behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@scope)
+- [next-themes blocking script pattern](https://github.com/pacocoursey/next-themes)
+
+---
+
+**File:** `/Users/slimtetto/Projects/English-Resources/CO-PILOT-CEO-SUGGESTIONS.md`
+
+---
+
+## Previous: CEO Review: Phase 6 Pixel-Perfect v1 Dualscope Parity (2026-04-10, Opus 4.6 max effort)
 
 **Plan reviewed:** `~/.claude/plans/nifty-dancing-graham.md` (Phase 6: Pixel-Perfect v1 Parity)
 **Status:** Pre-execution. Phase 5 shipped (133/133 tests passing confirmed). Phase 6 is a dedicated presentation-layer rebuild to adopt v1's exact CSS + DOM + class names.
