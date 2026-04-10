@@ -110,6 +110,10 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 | 2026-04-10 | Phase 6 v2 review | Per-lesson content in v1 often has per-lesson CSS — don't try to unify variable names; port the originals |
 | 2026-04-10 | Phase 6 v2 review | Bundle analyzer baseline must be measured BEFORE changes start, not at the end of the setup phase |
 | 2026-04-10 | Phase 6 v2 review | next-themes FOUT prevention requires a blocking inline `<script>` in `<head>` — not just a useEffect |
+| 2026-04-11 | Phase 6 definitive | Practice 5 has its own 4-color palette that shares variable NAMES with Lesson 16 but different hex values — cannot unify scope |
+| 2026-04-11 | Phase 6 definitive | Always re-verify CEO critical bugs against source before sign-off — plan revisions may address comments without fixing root cause |
+| 2026-04-11 | Phase 6 definitive | `@scope (X)` drops ancestor selectors (`html`, `body`, `*`) silently with no CSS parser warning — must extract before wrapping |
+| 2026-04-11 | Phase 5 verification | Commit dc44792 fixed all 4 Phase 5 CEO bugs (prune, exhaustive check, ID collision, catch handlers) — verified in source |
 
 ---
 ---
