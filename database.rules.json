@@ -39,6 +39,45 @@
         }
       }
     },
+    "reveal-sessions": {
+      "$examId": {
+        ".read": true,
+        "active": {
+          ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        },
+        "name": {
+          ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "startedAt": {
+          ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+          ".validate": "newData.isNumber() || !newData.exists()"
+        },
+        "teacherEmail": {
+          ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "reveals": {
+          ".write": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
+          "$qkey": {
+            ".validate": "newData.isBoolean() || !newData.exists()"
+          }
+        },
+        "presence": {
+          "$deviceId": {
+            ".write": "newData.val() === null || (newData.hasChildren(['joinedAt']) && newData.child('joinedAt').isNumber())"
+          }
+        },
+        "responses": {
+          "$qkey": {
+            "$deviceId": {
+              ".write": "newData.val() === null || (newData.hasChildren(['type', 'timestamp']) && newData.child('type').isString() && newData.child('timestamp').isNumber())"
+            }
+          }
+        }
+      }
+    },
     "errors": {
       ".read": "auth != null && auth.token.email === 'harashima@komagome.ed.jp'",
       "$errorId": {
