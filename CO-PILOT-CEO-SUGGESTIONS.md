@@ -105,7 +105,220 @@ If Active Zone says "No active task" — CEO hasn't reviewed yet.
 
 ---
 
-## CEO Review: Phase 2 Type System + Data Extraction (2026-04-10, Opus 4.6 max effort)
+## CEO Post-Implementation Review: Phase 5 Spaced Review (2026-04-10, Opus 4.6 max effort)
+
+**Plan reviewed:** `~/.claude/plans/nifty-dancing-graham.md` (Phase 5: Spaced Review)
+**Critical finding:** **Phase 5 is already shipped.** 129/129 tests passing. All 14 files from the plan exist and are fully wired. This is a post-implementation audit, not a pre-execution review.
+
+**Methodology:** Sonnet agent verified every plan claim against actual code. Opus read the critical files (`leitner.ts`, `spaced-review-store.ts`, `quiz-store.ts recordAnswer`, `ReviewCard.tsx`). Web search for Leitner best practices 2026 + Zustand persist/hydration patterns.
+
+**Progress since last review (2026-04-08):**
+- Phase 2 (types + data): DONE
+- Phase 3 (quiz engine, ~25 components): DONE
+- Phase 4 (teacher reveal, dual-store architecture): DONE
+- Phase 5 (spaced review, Leitner 5-box): DONE
+- Tests: 96 → **129** (8 test files)
+
+---
+
+### BUGS in the Shipped Implementation
+
+#### BUG-1 (HIGH): `prune()` uses only `addedAt`, not `lastReviewedAt` — actively-struggling items get pruned
+
+**File:** `lib/spaced-review/leitner.ts` lines 95-106
+
+```typescript
+export function prune(items, cutoffDays = 90, now = Date.now()): SpacedReviewItem[] {
+  const cutoff = now - cutoffDays * DAY_MS
+  return items.filter((item) => {
+    if (typeof item.addedAt !== 'number') return false
+    if (typeof item.nextReview !== 'number') return false
+    return item.addedAt >= cutoff  // ← only checks addedAt
+  })
+}
+```
+
+**The bug:** A student who keeps getting the same question wrong for 91 days will have it silently pruned from their review queue — even though they just got it wrong yesterday. Combined with the store's dedup logic (`resetToBoxZero` in `addWrongAnswer` does NOT update `addedAt`), a persistently-wrong item keeps its original `addedAt` timestamp forever and eventually gets pruned despite active failures.
+
+**Why it matters:** The whole point of spaced review is to retain items the student struggles with. Pruning them silently defeats the purpose.
+
+**Fix:**
+```typescript
+return items.filter((item) => {
+  if (typeof item.addedAt !== 'number') return false
+  if (typeof item.nextReview !== 'number') return false
+  const lastTouch = item.lastReviewedAt ?? item.addedAt
+  return lastTouch >= cutoff
+})
+```
+
+Alternative: update `addedAt` in the dedup branch of `addWrongAnswer` (line 92-101 of `spaced-review-store.ts`) so re-encountering a wrong answer resets the prune clock.
+
+#### BUG-2 (MEDIUM): `ReviewCard` `renderByType` switch has no exhaustive `never` check
+
+**File:** `components/spaced-review/ReviewCard.tsx` lines 48-63
+
+```typescript
+switch (item.type) {
+  case 'choice': return <ChoiceReview ... />
+  case 'pair': return <PairReview ... />
+  // ...7 cases
+}
+// No default branch with `never` check
+```
+
+**The bug:** If a new `QuestionType` is ever added (e.g., `'matching'`), TypeScript won't catch that `ReviewCard` is missing the case. The function just returns `undefined`, React renders nothing, and the review card appears blank — silently broken.
+
+**Note:** `components/quiz/card/QuestionCard.tsx` uses exhaustive checks per CLAUDE.md ("Exhaustive type switch in `QuestionCard` with `never` check"). ReviewCard should match.
+
+**Fix:**
+```typescript
+switch (item.type) {
+  case 'choice': return <ChoiceReview ... />
+  // ... 7 cases
+  default: {
+    const _exhaustive: never = item.type
+    throw new Error(`Unknown question type: ${_exhaustive}`)
+  }
+}
+```
+
+#### BUG-3 (MEDIUM): `makeId` uses `:` delimiter — latent collision risk
+
+**File:** `lib/spaced-review/spaced-review-store.ts` line 71-73
+
+```typescript
+function makeId(examId: string, si: number, qi: number): string {
+  return `${examId}:${si}:${qi}`
+}
+```
+
+**The bug:** If any future `examId` contains a colon (e.g., `"eiken:pre1:part1"`), IDs collide. Current examIds are safe (`"dualscope-lesson15"` etc.), but this is a latent bug that will bite when eiken content is migrated.
+
+**Fix:** Use a delimiter that can't appear in slugs, or sanitize:
+```typescript
+function makeId(examId: string, si: number, qi: number): string {
+  return `${encodeURIComponent(examId)}:${si}:${qi}`
+}
+```
+
+#### BUG-4 (LOW): Dynamic import chain in `recordAnswer` has no error handling
+
+**File:** `lib/stores/quiz-store.ts` lines 277-294
+
+```typescript
+void import('@/lib/spaced-review/correct-display').then(({ getCorrectDisplay }) => {
+  dispatchWrongAnswerToReviewQueue(...)  // ← also does a dynamic import internally
+})
+```
+
+**The bug:** Two nested dynamic imports with no `.catch()`. If the code-split chunk fails to load (network error, deploy in flight), the wrong answer is silently dropped. User experience: "I got it wrong but it's not in my review queue."
+
+**Fix:** Add `.catch(err => errorLogger.log('spaced-review-dispatch', err))` to both import chains. The `error-logger` utility already exists per the Phase 4 notes.
+
+---
+
+### MISSING Features
+
+#### MISSING-1 (MEDIUM): No "undo" for mis-clicks in review mode
+
+If a student accidentally clicks "Got it right" on compose (or clicks the wrong choice button), there's no way to undo. The item gets promoted incorrectly and disappears from the queue if it was at box 4.
+
+**Suggestion:** Add an "Undo last" button in `ReviewHeader` or a brief toast with undo action (5-second window).
+
+#### MISSING-2 (LOW): No max queue size ceiling
+
+The queue grows unbounded. localStorage quota is ~5-10MB, so ~10,000 items is probably fine, but there's no safety net. A student spamming wrong answers could exceed quota (and the `lazyLocalStorage.setItem` silently swallows quota errors — line 29-32 of store).
+
+**Suggestion:** Cap at 500 items. When adding a new wrong answer beyond cap, evict the oldest non-due item first.
+
+#### MISSING-3 (LOW): `persist.version: 1` but no `migrate` function
+
+If the schema ever changes (e.g., add a new field to `SpacedReviewItem`), existing users' localStorage data won't be migrated — it'll be wiped on bump to `version: 2`. Not a bug now, but set up the migration slot early.
+
+**Suggestion:** Add a no-op `migrate: (state, version) => state` for now.
+
+#### MISSING-4 (LOW): No review stats / streak tracking
+
+v1 had review session streaks. The current implementation tracks per-session results but doesn't persist a lifetime "total reviewed" or "current review streak". Nice-to-have for Phase 7 polish.
+
+---
+
+### IMPROVEMENTS
+
+#### IMP-1: Document the shipped Phase 5 architecture in CLAUDE.md
+
+The v2 CLAUDE.md already has a "Spaced Review Architecture (Phase 5 — Complete)" section with excellent coverage. Good. Consider adding a "Known limitations" subsection listing BUG-1 through BUG-4 for future contributors.
+
+#### IMP-2: Add the Phase 5 lesson to memory
+
+This session's fresh finding should be in lessons learned:
+- **The plan said 96/96 tests; reality is 129/129.** Always verify tests count against `npx vitest run`, not plan text.
+- **Leitner `prune()` by `addedAt` only is a long-term memory bug.** Always prune by `max(addedAt, lastReviewedAt)`.
+
+---
+
+### What Got RIGHT (Architecture Wins)
+
+- **Middleware order correct:** `devtools → persist → immer` ✓
+- **`skipHydration: true` + manual rehydrate hook** ✓ (matches quiz-store pattern)
+- **`partialize`** only persists `items`, not session state ✓
+- **Lazy localStorage wrapper** handles SSR + test stubs gracefully ✓
+- **Global store, not factory** — correct choice for cross-lesson review ✓
+- **Session snapshot is a stable copy** — mutations to main queue during session don't affect ordering ✓
+- **Dynamic import from quiz-store** — keeps spaced-review out of test import graph ✓
+- **Pure leitner module** — 100% testable without store or React ✓
+- **`version: 1` on persist** — sets up future schema migrations ✓
+- **`correction` type handled correctly** — no `correctAnswer`, only `correctText` ✓ (CEO review from previous session was applied)
+- **Separate `correctDisplay` from raw `correctAnswer`** — UI vs data distinction ✓
+- **`recordAnswer` dispatches via nested dynamic import** — elegant decoupling ✓
+
+---
+
+### Priority Table (Phase 5)
+
+| # | Type | Severity | Fix effort |
+|---|------|----------|-----------|
+| BUG-1 | Long-term memory loss | HIGH | 3 lines in leitner.ts |
+| BUG-2 | Type safety | MEDIUM | 5 lines in ReviewCard.tsx |
+| BUG-3 | Latent collision | MEDIUM | 1 line in makeId() |
+| BUG-4 | Silent failure | LOW | 2 .catch() calls |
+| MISSING-1 | UX (undo) | MEDIUM | New button + state |
+| MISSING-2 | Quota safety | LOW | Ceiling check |
+| MISSING-3 | Schema migration | LOW | Add migrate fn |
+| MISSING-4 | Stats tracking | LOW | Future polish |
+
+**Summary: 4 BUGS (1 HIGH, 2 MEDIUM, 1 LOW), 4 MISSING items, 2 IMPROVEMENTS**
+**Critical fix: BUG-1 (5 min).** Phase 5 is otherwise production-ready.
+
+---
+
+### Outstanding Items from Previous Reviews (still open)
+
+**v1 (3 items, ~20 min):**
+- 2 eiken files (`universal_phrases`, `speaking_phrase_bank_simple`) still have `filter:blur` in @keyframes
+- `sw.js` CACHE_NAME still v4, cross-origin fix never applied
+- Engoo Day 6 `.hdr` still has compound `backdrop-filter`
+
+**v2 from audit 2026-04-10 (some now partially resolved by Phase 4/5 landing):**
+- SEC-1 (no CSP headers in vercel.json) — STILL OPEN
+- SEC-2 (`poweredByHeader: false`) — STILL OPEN
+- GSAP-3 (`tw-animate-css` still installed) — CHECK IF SHADCN NEEDS IT
+
+---
+
+**Sources:**
+- [Leitner system best practices 2026](https://okti.app/en/blog/spaced-repetition-explained/)
+- [Zustand persist skipHydration patterns](https://medium.com/@judemiracle/fixing-react-hydration-errors-when-using-zustand-persist-with-usesyncexternalstore-b6d7a40f2623)
+- [React 19 hydration guide](https://dev.to/melvinprince/mastering-hydration-in-react-19-the-ultimate-guide-to-faster-smarter-rendering-46ep)
+
+---
+
+**File:** `/Users/slimtetto/Projects/English-Resources/CO-PILOT-CEO-SUGGESTIONS.md`
+
+---
+
+## Previous: CEO Review: Phase 2 Type System + Data Extraction (2026-04-10, Opus 4.6 max effort)
 
 **Plan reviewed:** `~/.claude/plans/nifty-dancing-graham.md` (Phase 2 section)
 **Methodology:** Opus agent read all 5 source HTML files and verified every field, type, and edge case claim against actual grammarData. Web search for TypeScript discriminated union best practices and Zustand middleware patterns.
